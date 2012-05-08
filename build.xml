@@ -1,21 +1,22 @@
 <project name="multigraph" default="build">
   <loadproperties srcfile="build.properties" />
 
-  <target name="build">
-    <echo>this should run lint, concatenate and minify the js code</echo>
+  <target name="build" depends="clean,lint,concatenate,minify">
+  </target>
+
+  <target name="clean">
+    <delete dir="${build.dir}" />
   </target>
 
   <target name="concatenate">
-    <echo>this should concatenate all js files</echo>
     <concat destfile="${build.dir}/multigraph.js" fixlastline="yes" eol="lf">
       <filelist dir="${src.dir}" files="${concatenate.order}" />
-      <fileset dir="${src.dir}" includes="**/*.js" />
+      <fileset dir="${src.dir}" includes="**/*.js" excludes="${concatenate.order}" />
     </concat>
   </target>
 
   <target name="minify" depends="concatenate">
-    <echo>this should minify the code</echo>
-    <apply executable="java">
+    <apply executable="java" failonerror="true">
       <fileset dir="${build.dir}" includes="*.js" />
       <mapper type="glob" from="*.js" to="${build.dir}/*-min.js" />
       <arg line="-jar" />
@@ -28,7 +29,7 @@
   </target>
 
   <target name="lint">
-    <apply executable="java">
+    <apply executable="java" failonerror="true">
       <fileset dir="${src.dir}" includes="**/*.js"/>
       <arg line="-jar" />
       <arg path="${rhino}" />
