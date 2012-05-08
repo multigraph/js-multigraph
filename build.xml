@@ -2,19 +2,29 @@
   <loadproperties srcfile="build.properties" />
 
   <target name="build">
-    <echo>this should concatenate and minify the js code</echo>
+    <echo>this should run lint, concatenate and minify the js code</echo>
   </target>
 
   <target name="concatenate">
     <echo>this should concatenate all js files</echo>
     <concat destfile="${build.dir}/multigraph.js" fixlastline="yes" eol="lf">
-      <filelist dir="${src.dir}" files="${fileOrder}" />
+      <filelist dir="${src.dir}" files="${concatenate.order}" />
       <fileset dir="${src.dir}" includes="**/*.js" />
     </concat>
   </target>
 
-  <target name="minify">
+  <target name="minify" depends="concatenate">
     <echo>this should minify the code</echo>
+    <apply executable="java">
+      <fileset dir="${build.dir}" includes="*.js" />
+      <mapper type="glob" from="*.js" to="${build.dir}/*-min.js" />
+      <arg line="-jar" />
+      <arg path="${yuicompressor}" />
+      <arg line="${yuicompressor.options}" />
+      <srcfile />
+      <arg line="-o" />
+      <targetfile />
+    </apply>
   </target>
 
   <target name="lint">
@@ -23,7 +33,7 @@
       <arg line="-jar" />
       <arg path="${rhino}" />
       <arg path="${jshint}" />
-      <arg line="curly=true,forin=true,latedef=true,noempty=true,undef=true,noarg=true,eqeqeq=true,bitwise=true,strict=true,browser=true,immed=true,newcap=true,noarg=true,devel=true" />
+      <arg line="${jshint.options}" />
     </apply>
   </target>
 
