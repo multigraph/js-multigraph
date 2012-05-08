@@ -7,6 +7,10 @@
 
   <target name="concatenate">
     <echo>this should concatenate all js files</echo>
+    <concat destfile="${build.dir}/multigraph.js" fixlastline="yes" eol="lf">
+      <filelist dir="${src.dir}" files="${fileOrder}" />
+      <fileset dir="${src.dir}" includes="**/*.js" />
+    </concat>
   </target>
 
   <target name="minify">
