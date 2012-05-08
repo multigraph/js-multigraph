@@ -1,0 +1,29 @@
+<project name="multigraph" default="build">
+  <loadproperties srcfile="build.properties" />
+
+  <target name="build">
+    <echo>this should concatenate and minify the js code</echo>
+  </target>
+
+  <target name="concatenate">
+    <echo>this should concatenate all js files</echo>
+  </target>
+
+  <target name="minify">
+    <echo>this should minify the code</echo>
+  </target>
+
+  <target name="lint">
+    <apply executable="java">
+      <fileset dir="${src.dir}" includes="**/*.js"/>
+      <arg line="-jar" />
+      <arg path="${rhino}" />
+      <arg path="${jshint}" />
+      <arg line="curly=true,forin=true,latedef=true,noempty=true,undef=true,noarg=true,eqeqeq=true,bitwise=true,strict=true,browser=true,immed=true,newcap=true,noarg=true,devel=true" />
+    </apply>
+  </target>
+
+  <target name="test">
+    <echo>this should run all tests in the spec directory</echo>
+  </target>
+</project>
