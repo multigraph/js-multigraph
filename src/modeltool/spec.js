@@ -14,8 +14,12 @@ if(!window.multigraph.ModelTool) {
         pattern;
         
         this.hasA = function (attr) {
-            this[attr] = new window.multigraph.ModelTool.Attr(attr);
-            return this[attr];
+            if (typeof(attr) === 'string') {
+                this[attr] = new ns.Attr(attr);
+                return this[attr];
+            } else {
+                throw new Error("Spec: hasA parameter must be a string");
+            }
         };
         
         this.hasAn = this.hasA;
@@ -31,7 +35,7 @@ if(!window.multigraph.ModelTool) {
         this.create = function (name) {
             this[name] = function () {
                 for(var i in that) {
-                    if (that[i] instanceof window.multigraph.ModelTool.Attr) {
+                    if (that[i] instanceof ns.Attr) {
                         that[i].addTo(this);
                     }
                 }

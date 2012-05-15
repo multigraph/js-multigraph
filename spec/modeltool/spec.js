@@ -1,5 +1,7 @@
 describe("Spec", function () {
     var Spec = window.multigraph.ModelTool.Spec,
+    Attr = window.multigraph.ModelTool.Attr,
+    AttrList = window.multigraph.ModelTool.AttrList,
     s;
 
 
@@ -8,26 +10,34 @@ describe("Spec", function () {
     });
 
     describe("hasA method", function () {
-        xit("should create a new Attr with the specified name", function () {
-
+        it("should create a new Attr with the specified name", function () {
+            var a = s.hasA("friend");
+            expect(a instanceof Attr).toBe(true);
+            expect(s.friend).not.toBeUndefined();
         });
 
-        xit("should add the attribute to the spec object", function () {
-
+        it("should add the attribute to the spec object", function () {
+            s.hasA("friend");
+            expect(s.friend).not.toBeUndefined();
         });
 
-        xit("should return the object so it can be cascaded", function () {
-
+        it("should return the Attr object so it can be cascaded with other functions", function () {
+            var a = s.hasA("friend");
+            expect(a instanceof Attr).toBe(true);
+            expect(s.friend).not.toBeUndefined();
+            expect(a.validatesWith).not.toBeUndefined();
         });
 
-        xit("should throw an error if the parameter is not a string", function () {
-
+        it("should throw an error if the parameter is not a string", function () {
+            expect(function () {
+                s.hasA(5);
+            }).toThrow(new Error("Spec: hasA parameter must be a string"));
         });
     });
 
     describe("hasAn method", function () {
-        xit("should be an alias for the hasA method", function () {
-            
+        it("should be an alias for the hasA method", function () {
+            expect(this.hasAn).toEqual(this.hasA);
         });
     });
 
@@ -56,8 +66,33 @@ describe("Spec", function () {
     });
 
     describe("create method", function () {
-        xit("should return a constructor function that creates an object with all attributes", function () {
-            
+        var Card,
+        c;
+        beforeEach(function () {
+            s.hasA("suit").whichValidatesWith(function (suit) {
+                return ["clubs", "diamonds", "hearts", "spades"].indexOf(suit) > -1;
+            });
+
+            s.hasA("rank").whichValidatesWith(function (rank) {
+                return ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"].indexOf(rank) > -1;
+            });
+        });
+        it("should return a constructor function that creates an object with all attributes", function () {
+            Card = s.create();
+            c = new Card();
+            expect(c.suit).not.toBeUndefined();
+            expect(c.rank).not.toBeUndefined();
+        });
+
+        it("should not add any additional Attr methods", function () {
+            Card = s.create();
+            c = new Card();
+            expect(c.suit).not.toBeUndefined();
+            expect(c.rank).not.toBeUndefined();
+            expect(Card.validator).toBeUndefined();
+            expect(c.validator).toBeUndefined();
+            expect(c.validatesWith).toBeUndefined();
+            expect(c.whichValidatesWith).toBeUndefined();
         });
     });
 });
