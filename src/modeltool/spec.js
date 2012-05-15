@@ -25,7 +25,12 @@ if(!window.multigraph.ModelTool) {
         this.hasAn = this.hasA;
         
         this.hasMany = function (attrs) {
-            //console.log(attrs);
+            if(typeof(attrs) === 'string') {
+                this[attrs] = new ns.AttrList(attrs);
+                return this[attrs];
+            } else {
+                throw new Error("Spec: hasMany parameter must be a string");
+            }
         };
         
         this.looksLike = function (p) {
