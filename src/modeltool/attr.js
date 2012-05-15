@@ -44,6 +44,10 @@ if(!window.multigraph.ModelTool) {
 
         this.whichErrorsWith = this.errorsWith;
 
+        this.errorMessage = function () {
+            return errorMessage;
+        };
+
         //syntactic sugar
         this.and = this;
         this.which = this;

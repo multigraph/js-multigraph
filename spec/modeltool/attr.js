@@ -110,6 +110,15 @@ describe("Attr", function () {
         });
     });
 
+    describe("errorMessage method", function () {
+        it("should return the error message once it is set", function () {
+            a.errorsWith("Test Error Message");
+            expect(a.errorMessage()).toEqual("Test Error Message");
+            a.errorsWith("Test Error Messsage");
+            expect(a.errorMessage()).toEqual("Test Error Messsage");
+        });
+    });
+
     describe("addTo method", function () {
         it("should throw an error if the argument is not an object", function () {
             expect(function () {

@@ -19,11 +19,20 @@ if(!window.multigraph.ModelTool) {
         this.pop = delegate(arr, "pop");
 
         this.add = function (obj) {
+            if ((this.validator())(obj)) {
+                arr.push(obj);
+                return this;         
+            } else {
+                throw new Error(this.errorMessage());
+            }
             
         };
 
         this.at = function (index) {
-            
+            if (index < 0 || index >= this.size()) {
+                throw new Error("AttrList: Index out of bounds");
+            }
+            return arr[index];
         };
 
         //to keep things more java-y
