@@ -7,7 +7,6 @@ describe("AttrList", function () {
     });
 
     it("should be an Attr object", function () {
-        console.log(al);
         expect(al instanceof window.multigraph.ModelTool.Attr).toBe(true);
     });
 
@@ -91,6 +90,29 @@ describe("AttrList", function () {
                     return typeof(friend) === 'string';
                 }).add(1);
             }).toThrow(new Error("Invalid"))
+        });
+    });
+
+    describe("addTo method", function () {
+        var Person = {};
+
+        it("should add the AttrList to the specified object", function () {
+            al.addTo(Person);
+            expect(Person.friends).not.toBeUndefined();
+            expect(Person.friends().add).not.toBeUndefined();
+            expect(Person.friends().at).not.toBeUndefined();
+            expect(Person.friends().size).not.toBeUndefined();
+        });
+
+        it("should not add any additional AttrList functions to the specified object", function () {
+            al.addTo(Person);
+            expect(Person.friends().validatesWith).toBeUndefined();
+        });
+
+        it("should throw an error if the parameter is not an object", function () {
+            expect(function () {
+                al.addTo(5);
+            }).toThrow(new Error("AttrList: addTo method requires an object parameter"));
         });
     });
 });

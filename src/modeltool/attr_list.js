@@ -42,8 +42,21 @@ if(!window.multigraph.ModelTool) {
             return arr.length;
         };
 
-        this.addTo = function () {
-            console.log('hello world!');
+        this.addTo = function (obj) {
+            if(!obj || typeof(obj) !== 'object') {
+                throw new Error("AttrList: addTo method requires an object parameter");                
+            } else {
+                var actualList = {},
+                prop;
+                for(prop in that) {
+                    if(that.hasOwnProperty(prop)) {
+                        actualList[prop] = that[prop];
+                    }
+                }
+                obj[name] = function() {
+                    return actualList;
+                };
+            }
         };
     }
 
