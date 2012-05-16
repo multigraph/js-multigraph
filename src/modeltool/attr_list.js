@@ -19,7 +19,7 @@ if(!window.multigraph.ModelTool) {
         this.pop = delegate(arr, "pop");
 
         this.add = function (obj) {
-            if ((this.validator())(obj)) {
+            if ((that.validator())(obj)) {
                 arr.push(obj);
                 return this;         
             } else {

@@ -89,9 +89,9 @@ describe("Spec", function () {
                 return 100000000 <= id && id <= 999999999;
             }).and.errorsWith("id must be 9 digits");
 
-            /*s.hasMany("friends").whichValidatesWith(function (friend) {
+            s.hasMany("friends").whichValidatesWith(function (friend) {
                 return friend instanceof Person;
-            }).and.errorsWith("friend must be a person");*/
+            }).and.errorsWith("friend must be a person");
 
             Person = s.create();
 
@@ -100,10 +100,10 @@ describe("Spec", function () {
         });
 
         it("should return a constructor function that creates an object with all attributes", function () {
-            console.log(p);
             expect(p.name).not.toBeUndefined();
             expect(p.id).not.toBeUndefined();
-            //expect(p.friends).not.toBeUndefined();
+            expect(p.friends).not.toBeUndefined();
+            expect(p.friends().add).not.toBeUndefined();
         });
 
         it("should not add any additional Attr methods", function () {
