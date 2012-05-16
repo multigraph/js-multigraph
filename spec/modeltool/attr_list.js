@@ -1,4 +1,7 @@
+/*global describe, it, beforeEach, expect, xit, jasmine */
+
 describe("AttrList", function () {
+    "use strict";
     var AttrList = window.multigraph.ModelTool.AttrList,
     al;
 
@@ -76,7 +79,7 @@ describe("AttrList", function () {
             var t = function (friend) {
                 v();
                 return true;
-            }
+            };
 
             al.validatesWith(t);
             al.add("john");
@@ -89,7 +92,7 @@ describe("AttrList", function () {
                 al.errorsWith("Invalid").validatesWith(function (friend) {
                     return typeof(friend) === 'string';
                 }).add(1);
-            }).toThrow(new Error("Invalid"))
+            }).toThrow(new Error("Invalid"));
         });
     });
 

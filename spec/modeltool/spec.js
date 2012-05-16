@@ -1,4 +1,7 @@
+/*global describe, it, beforeEach, expect, xit, jasmine */
+
 describe("Spec", function () {
+    "use strict";
     var Spec = window.multigraph.ModelTool.Spec,
     Attr = window.multigraph.ModelTool.Attr,
     AttrList = window.multigraph.ModelTool.AttrList,

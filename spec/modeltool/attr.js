@@ -1,4 +1,7 @@
+/*global describe, it, beforeEach, expect, xit, jasmine */
+
 describe("Attr", function () {
+    "use strict";
     var Attr = window.multigraph.ModelTool.Attr,
     suits = ['clubs', 'diamonds', 'hearts', 'spades'],
     a,
@@ -99,7 +102,7 @@ describe("Attr", function () {
 
         it("should throw an error if the parameter is not a string", function () {
             expect(function () {
-                a.errorsWith(5)
+                a.errorsWith(5);
             }).toThrow(new Error("Attr: errorsWith method requires string parameter"));
         });
     });
@@ -143,7 +146,7 @@ describe("Attr", function () {
             var rank = new Attr("rank");
             rank.validatesWith(function (rank) {
                 return ranks.indexOf(rank) >= 0;
-            })
+            });
             rank.errorsWith("rank must be a normal card rank");
 
             var suit = new Attr("suit")
