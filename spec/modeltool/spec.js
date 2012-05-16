@@ -68,6 +68,42 @@ describe("Spec", function () {
         });
     });
 
+
+    describe("buildsWith method", function () {
+        xit("should take any number of string parameters", function () {
+            
+        });
+
+        xit("should accept a function as an optional final argument", function () {
+
+        });
+
+        //???? not sure if this will cause a 'chicken or egg' problem
+        xit("should throw an error if any of the strings are not defined as attributes", function () {
+
+        });
+
+        xit("should accept strings preceded with a % as the final parameters before the optional function", function () {
+
+        });
+
+        xit("should require the constructor to be called with the non-% parameters", function () {
+
+        });
+
+        xit("should require that the resulting constructor's parameters pass the appropriate validators", function () {
+
+        });
+
+        //think of the optional function as an initializer that is run after the attributes are set
+        //for example, consider the Deck model. In addition to setting up the hasMany("cards") attribute,
+        //we'll want to create a nested for loop that creates a card of each suit/rank combination
+        //that would be the 'initializer' function
+        xit("should call the optional function after the attributes are set in the constructor", function () {
+            
+        });
+    });
+
     describe("looksLike method", function () {
         xit("should be way more interesting than it currently is", function () {
 
