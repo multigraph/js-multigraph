@@ -17,6 +17,17 @@ describe("AttrList", function () {
         expect(al.pop).not.toBeUndefined();
     });
 
+    //test the inheritance bug
+    it("should allow for multiple attr_lists to be created", function () {
+        var al2 = new AttrList("suit");
+
+        al.validatesWith(function (suit) {
+            return (suit === "diamonds");
+        });
+
+        expect(al.validator() !== al2.validator()).toBe(true);
+    });
+
     describe("size method", function () {
         it("should be initialized to 0", function () {
             expect(al.size()).toEqual(0);

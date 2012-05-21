@@ -10,20 +10,34 @@ if(!window.multigraph.ModelTool) {
     "use strict";
     function AttrList(name) {
         var that = this,
+        attr = new window.multigraph.ModelTool.Attr(name),
         arr = [];
 
         var delegate = function (obj, func) {
-            return function() { return obj[func].apply(obj, arguments); };
+            return function () { return obj[func].apply(that, arguments); };
         };
         
         this.pop = delegate(arr, "pop");
+
+        for (var i in attr) {
+            if (attr.hasOwnProperty(i)) {
+                if (typeof(attr[i]) === 'function') {
+                    this[i] = delegate(attr, i);
+                }
+            }
+        }
+
+        //added since it's hard to inherit these properties from attr
+        //via delegation
+        this.and = that;
+        this.which = that;
 
         this.add = function (obj) {
             if ((that.validator())(obj)) {
                 arr.push(obj);
                 return this;         
             } else {
-                throw new Error(this.errorMessage());
+                throw new Error(that.errorMessage());
             }
             
         };
@@ -49,7 +63,8 @@ if(!window.multigraph.ModelTool) {
                 var actualList = {},
                 prop;
                 for(prop in that) {
-                    if(that.hasOwnProperty(prop)) {
+                    if (that.hasOwnProperty(prop) && !attr[prop]) {
+                        //console.log("adding..." + prop);
                         actualList[prop] = that[prop];
                     }
                 }
@@ -60,9 +75,12 @@ if(!window.multigraph.ModelTool) {
         };
     }
 
-    AttrList.prototype = new window.multigraph.ModelTool.Attr(name);
 
-    var al = new AttrList();
+    //this needs to stay if we're going to use instanceof
+    //but note we override all of the methods via delegation
+    //so it's not doing anything except for making an AttrList
+    //an instance of Attr
+    AttrList.prototype = new window.multigraph.ModelTool.Attr(name);
 
     ns.AttrList = AttrList;
 }(window.multigraph.ModelTool));
