@@ -89,7 +89,6 @@ describe("Spec", function () {
         });
     });
 
-
     describe("buildsWith method", function () {
         xit("should take any number of string parameters", function () {
             
@@ -150,9 +149,21 @@ describe("Spec", function () {
                 return friend instanceof Person;
             }).and.errorsWith("friend must be a person");
 
-            Person = s.create();
+            s.respondsTo("runsForOffice", function () {
+                return this.name() + " is running for office!";
+            });
 
+            s.respondsTo("returnsNull", function () {
+                return null;
+            });
+
+            s.respondsTo("addsTwoNumbers", function (numA, numB) {
+                return numA+numB;
+            });
+            
+            Person = s.create();
             p = new Person();
+            p.name("Mark");
 
         });
 
@@ -168,6 +179,14 @@ describe("Spec", function () {
             expect(p.validator).toBeUndefined();
             expect(p.validatesWith).toBeUndefined();
             expect(p.whichValidatesWith).toBeUndefined();
+        });
+
+        it("should add all specified methods to the object", function () {
+            expect(p.runsForOffice).not.toBeUndefined();
+            expect(p.runsForOffice()).toEqual("Mark is running for office!");
+            expect(p.returnsNull).not.toBeUndefined();
+            expect(p.returnsNull()).toBe(null);
+            expect(p.addsTwoNumbers(3,2)).toEqual(5);
         });
     });
 

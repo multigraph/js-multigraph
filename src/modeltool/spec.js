@@ -11,7 +11,9 @@ if(!window.multigraph.ModelTool) {
     function Spec(n) {
         var that = this,
         name = n,
-        pattern;
+        methods = [],
+        pattern,
+        Method = window.multigraph.ModelTool.Method;
         
         this.hasA = function (attr) {
             if (typeof(attr) === 'string') {
@@ -36,15 +38,26 @@ if(!window.multigraph.ModelTool) {
         this.looksLike = function (p) {
             pattern = p;
         };
+
+        this.respondsTo = function (methodName, methodBody) {
+            var m = new Method(methodName, methodBody);
+            methods.push(m);
+        };
         
         this.create = function (name) {
+            var i;
             this[name] = function () {
-                for(var i in that) {
+                for(i in that) {
                     if (that[i] instanceof ns.Attr) {
                         that[i].addTo(this);
                     }
                 }
-                
+
+                //add methods
+                for (i = 0; i < methods.length; ++i) {
+                    methods[i].addTo(this);
+                }
+
                 this.toString = pattern;
             };
             return this[name];
