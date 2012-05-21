@@ -17,17 +17,6 @@ describe("AttrList", function () {
         expect(al.pop).not.toBeUndefined();
     });
 
-    //test the inheritance bug
-    it("should allow for multiple attr_lists to be created", function () {
-        var al2 = new AttrList("suit");
-
-        al.validatesWith(function (suit) {
-            return (suit === "diamonds");
-        });
-
-        expect(al.validator() !== al2.validator()).toBe(true);
-    });
-
     describe("size method", function () {
         it("should be initialized to 0", function () {
             expect(al.size()).toEqual(0);
@@ -123,10 +112,31 @@ describe("AttrList", function () {
             expect(Person.friends().validatesWith).toBeUndefined();
         });
 
+
+	it("should accept the creation of two lists on the same object", function() {
+	    var al2 = new AttrList("cats");
+	    al.addTo(Person);
+	    al2.addTo(Person);
+            expect(Person.friends).not.toBeUndefined();
+            expect(Person.cats).not.toBeUndefined();
+	});
+
+        //test for the inheritance bug
+        it("should allow for multiple attr_lists to be created", function () {
+            var al2 = new AttrList("suit");
+            
+            al.validatesWith(function (suit) {
+                return (suit === "diamonds");
+            });
+
+            expect(al.validator() !== al2.validator()).toBe(true);
+        });
+
         it("should throw an error if the parameter is not an object", function () {
             expect(function () {
                 al.addTo(5);
             }).toThrow(new Error("AttrList: addTo method requires an object parameter"));
         });
+
     });
 });
