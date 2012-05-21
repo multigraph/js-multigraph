@@ -3,10 +3,48 @@
 describe("ModelTool", function () {
     "use strict";
     describe("Model function", function() {
-        var Model = window.multigraph.ModelTool.Model;
+        var model = window.multigraph.ModelTool.Model,
+        Attr = window.multigraph.ModelTool.Attr,
+        Axis;
 
-        xit("should take a name and specification and return an object model", function () {
+        beforeEach(function() {
+            Axis = model('Axis', function() {
+                this.hasA("id");
+                this.hasMany("things");
+                
+            });
+        });
 
+        it("should take a name and specification and return an object model", function () {
+            var a;
+            
+            a = new Axis();
+            expect(a.id).not.toBeUndefined();
+            expect(typeof(a.id) === 'function').toBe(true);
+            expect(a instanceof Axis).toBe(true);
+        });
+        
+        it("should allow two models with hasMany to be created", function() {
+            var Graph,
+            g,
+            a;
+            Graph = model('Graph', function() {
+                this.hasMany("axes").which.validatesWith(function (axis) {
+                    return axis instanceof Axis;
+                });
+            });         
+            g = new Graph();
+            a = new Axis();
+            
+            g.axes().add(a);
+            expect(a instanceof Axis).toBe(true);
+            
+            expect(a.id).not.toBeUndefined();
+            expect(typeof(a.id) === 'function').toBe(true);
+            expect(a instanceof Axis).toBe(true);
+            expect(g.axes).not.toBeUndefined();
+            expect(typeof(g.axes) === 'function').toBe(true);
+            expect(g instanceof Graph).toBe(true);
         });
 
         xit("should throw an error if the name is not a string", function () {
@@ -24,7 +62,7 @@ describe("ModelTool", function () {
             c,
             d;
 
-            Card = new Model("Card", function () {
+            Card = model("Card", function () {
                 this.hasA("suit");
                 this.suit.validatesWith(function (suit) {
                     return ["clubs", "diamonds", "hearts", "spades"].indexOf(suit) > -1;
@@ -38,7 +76,7 @@ describe("ModelTool", function () {
                 });
             });
 
-            Deck = new Model("Deck", function () {
+            Deck = model("Deck", function () {
                 this.hasMany("cards").validatesWith(function (card) {
                     return (card instanceof Card); 
                 });
