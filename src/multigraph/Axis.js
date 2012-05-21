@@ -9,24 +9,19 @@ if(!window.multigraph) {
         this.hasAn("id").which.validatesWith(function(id) {
             return typeof(id) === 'string';
         });
-
-        this.hasMany("things").which.validatesWith(function(thing) {
-            return typeof(thing) === 'string';
+        this.hasAn("orientation").which.validatesWith(function(orientation) {
+	    return (orientation === 'horizontal') || (orientation === 'vertical');
         });
+        this.hasA("min").which.validatesWith(function(id) {
+            return typeof(id) === 'string';
+        });
+        this.hasA("max").which.validatesWith(function(id) {
+            return typeof(id) === 'string';
+        });
+
     });
 
     ns.Axis = Axis;
-
-
-    var Graph = window.multigraph.ModelTool.Model( 'Graph', function() {
-
-        this.hasMany("axes").which.validatesWith(function(axis) {
-		return axis instanceof window.multigraph.Axis;
-        });
-
-    });
-
-    ns.Graph = Graph;
 
 
 }(window.multigraph));

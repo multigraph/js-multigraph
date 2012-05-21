@@ -5,12 +5,8 @@ describe("Axis", function () {
 
     var Axis = window.multigraph.Axis;
 
-    console.log('and Axis is:');
-    console.log(Axis);
-
     it("should be able to create an Axis", function () {
         var a  = new Axis();
-        //expect(typeof(a)).toBe('Axis');
 	expect(a instanceof Axis).toBe(true);
     });
 
@@ -20,13 +16,5 @@ describe("Axis", function () {
 	var id = a.id();
 	expect(id === 'the-id').toBe(true);
     });
-
-    it("should not be able to set a numeric id attribute", function () {
-        var a  = new Axis();
-	a.id(5+'');
-	var id = a.id();
-	expect(id === 5).toBe(false);
-    });
-
 
 });
