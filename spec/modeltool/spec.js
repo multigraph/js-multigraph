@@ -61,6 +61,27 @@ describe("Spec", function () {
             expect(al instanceof window.multigraph.ModelTool.AttrList).toBe(true);
         });
 
+        it("should be callable twice on the same spec", function() {
+            var al = s.hasMany("friends"),
+            al2 = s.hasMany("cats");
+
+            expect(s.friends).not.toBeUndefined();
+            expect(s.cats).not.toBeUndefined();
+            expect(al instanceof window.multigraph.ModelTool.AttrList).toBe(true);
+            expect(al2 instanceof window.multigraph.ModelTool.AttrList).toBe(true);
+        });
+
+        it("should be callable twice on 2 different specs", function() {
+            var s2 = new Spec(),
+            al = s.hasMany("friends"),
+            al2 = s2.hasMany("cats");
+
+            expect(s.friends).not.toBeUndefined();
+            expect(s2.cats).not.toBeUndefined();
+            expect(al instanceof window.multigraph.ModelTool.AttrList).toBe(true);
+            expect(al2 instanceof window.multigraph.ModelTool.AttrList).toBe(true);
+        });
+
         it("should throw an error if the parameter is not a string", function () {
             expect(function () {
                 s.hasMany(5);

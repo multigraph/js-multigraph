@@ -53,12 +53,12 @@ describe("Attr", function () {
             expect(a.validator()).toEqual(v);
         });
 
-	it("should allow for multiple attrs to be created with different validators", function () {
-	    var r;
+        it("should allow for multiple attrs to be created with different validators", function () {
+            var r;
             
-	    a.validatesWith(function (suit) {
-		return ["clubs", "diamonds", "hearts", "spades"].indexOf(suit) >= 0;
-	    });
+            a.validatesWith(function (suit) {
+                return ["clubs", "diamonds", "hearts", "spades"].indexOf(suit) >= 0;
+            });
 
             r = new Attr("rank");
             expect(r.validator() !== a.validator()).toBe(true);

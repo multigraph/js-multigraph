@@ -113,13 +113,13 @@ describe("AttrList", function () {
         });
 
 
-	it("should accept the creation of two lists on the same object", function() {
-	    var al2 = new AttrList("cats");
-	    al.addTo(Person);
-	    al2.addTo(Person);
+        it("should accept the creation of two lists on the same object", function() {
+            var al2 = new AttrList("cats");
+            al.addTo(Person);
+            al2.addTo(Person);
             expect(Person.friends).not.toBeUndefined();
             expect(Person.cats).not.toBeUndefined();
-	});
+        });
 
         //test for the inheritance bug
         it("should allow for multiple attr_lists to be created", function () {
