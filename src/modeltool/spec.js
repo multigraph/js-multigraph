@@ -45,9 +45,9 @@ if(!window.multigraph.ModelTool) {
         };
         
         this.create = function (name) {
-            var i;
             this[name] = function () {
-                for(i in that) {
+                var i;
+                for (i in that) {
                     if (that[i] instanceof ns.Attr) {
                         that[i].addTo(this);
                     }
