@@ -26,9 +26,9 @@ describe("AttrList", function () {
         });
 
         it("should increase when an object is added", function () {
-            var size = al.size();
+            var size = obj.friends().size();
             obj.friends().add("john");
-            expect(al.size()).toEqual(size+1);
+            expect(obj.friends().size()).toEqual(size+1);
         });
 
         xit("should decrease when an object is removed", function () {
