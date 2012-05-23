@@ -55,7 +55,7 @@ if(!window.multigraph.ModelTool) {
                 };
 
                 //to keep things more java-y
-                actualList.get = this.at;
+                actualList.get = actualList.at;
 
                 actualList.size = function () {
                     return arr.length;
