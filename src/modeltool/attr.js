@@ -61,7 +61,7 @@ if(!window.multigraph.ModelTool) {
                 throw new Error("Attr: addAttr method requires an object parameter");
             }
             
-            var attribute = name;
+            var attribute;
             
             obj[name] = function (newValue) {
                 if (newValue) {

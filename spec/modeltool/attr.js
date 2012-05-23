@@ -147,10 +147,18 @@ describe("Attr", function () {
             }).toThrow(new Error("Attr: addAttr method requires an object parameter"));
         });
 
+
+
         it("should add the attribute to the specified object", function () {
             a.addTo(Card);
             expect(Card.suit).not.toBeUndefined();
         });
+
+        it("should default the value of the attribute to undefined, unless specified otherwise", function () {
+            a.addTo(Card);
+            expect(Card.suit()).toBeUndefined();
+        });
+
     });
 
     describe("full example", function () {
