@@ -3,10 +3,13 @@
 describe("AttrList", function () {
     "use strict";
     var AttrList = window.multigraph.ModelTool.AttrList,
-    al;
+    al,
+    obj;
 
     beforeEach(function () {
         al = new AttrList("friends");
+        obj = {};
+        al.addTo(obj);
     });
 
     it("should be an Attr object", function () {
@@ -14,17 +17,17 @@ describe("AttrList", function () {
     });
 
     it("should have a pop function", function () {
-        expect(al.pop).not.toBeUndefined();
+        expect(obj.friends().pop).not.toBeUndefined();
     });
 
     describe("size method", function () {
         it("should be initialized to 0", function () {
-            expect(al.size()).toEqual(0);
+            expect(obj.friends().size()).toEqual(0);
         });
 
         it("should increase when an object is added", function () {
             var size = al.size();
-            al.add("john");
+            obj.friends().add("john");
             expect(al.size()).toEqual(size+1);
         });
 
@@ -35,31 +38,31 @@ describe("AttrList", function () {
 
     describe("at method", function () {
         it("should return the element at a given index", function () {
-            al.add("john");
-            expect(al.at(0)).toEqual("john");
-            al.add("semmy");
-            expect(al.at(0)).toEqual("john");
-            expect(al.at(1)).toEqual("semmy");
-            al.add("mark");
-            expect(al.at(0)).toEqual("john");
-            expect(al.at(1)).toEqual("semmy");
-            expect(al.at(2)).toEqual("mark");
+            obj.friends().add("john");
+            expect(obj.friends().at(0)).toEqual("john");
+            obj.friends().add("semmy");
+            expect(obj.friends().at(0)).toEqual("john");
+            expect(obj.friends().at(1)).toEqual("semmy");
+            obj.friends().add("mark");
+            expect(obj.friends().at(0)).toEqual("john");
+            expect(obj.friends().at(1)).toEqual("semmy");
+            expect(obj.friends().at(2)).toEqual("mark");
         });
 
         it("should throw an exception if the parameter is out of bounds", function () {
-            al.add("john");
-            al.add("semmy");
+            obj.friends().add("john");
+            obj.friends().add("semmy");
 
             expect(function() {
-                al.at(-1);
+                obj.friends().at(-1);
             }).toThrow(new Error("AttrList: Index out of bounds"));
 
             expect(function() {
-                al.at(1);
+                obj.friends().at(1);
             }).not.toThrow(new Error("AttrList: Index out of bounds"));
   
             expect(function() {
-                al.at(2);
+                obj.friends().at(2);
             }).toThrow(new Error("AttrList: Index out of bounds"));
         });
 
@@ -67,11 +70,11 @@ describe("AttrList", function () {
 
     describe("add method", function () {
         it("should add an element to the end of the list", function () {
-            al.add("john");
-            expect(al.at(al.size()-1)).toEqual("john");
-            al.add("semmy");
-            expect(al.at(al.size()-2)).toEqual("john");
-            expect(al.at(al.size()-1)).toEqual("semmy");
+            obj.friends().add("john");
+            expect(obj.friends().at(obj.friends().size()-1)).toEqual("john");
+            obj.friends().add("semmy");
+            expect(obj.friends().at(obj.friends().size()-2)).toEqual("john");
+            expect(obj.friends().at(obj.friends().size()-1)).toEqual("semmy");
         });
 
         it("should call the validator function", function () {
@@ -82,7 +85,8 @@ describe("AttrList", function () {
             };
 
             al.validatesWith(t);
-            al.add("john");
+            al.addTo(obj);
+            obj.friends().add("john");
             expect(v).toHaveBeenCalled();
 
         });
@@ -91,7 +95,9 @@ describe("AttrList", function () {
             expect(function () {
                 al.errorsWith("Invalid").validatesWith(function (friend) {
                     return typeof(friend) === 'string';
-                }).add(1);
+                });
+                al.addTo(obj);
+                obj.friends().add(1);
             }).toThrow(new Error("Invalid"));
         });
     });
