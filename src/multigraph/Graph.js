@@ -16,6 +16,19 @@ if(!window.multigraph) {
 
     });
 
+
+    Graph.prototype.axisById = function(id) {
+      // return a pointer to the axis for this graph that has the given id, if any
+	var axes = this.axes();
+	for (var i=0; i<axes.size(); ++i) {
+	    if (axes.get(i).id() === id) {
+		return axes.get(i);
+	    }
+	}
+	return null;
+    }
+
+
     ns.Graph = Graph;
 
 

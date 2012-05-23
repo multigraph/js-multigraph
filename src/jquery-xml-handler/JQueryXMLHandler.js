@@ -1,5 +1,5 @@
 /*
- * This file defines a single global object named jQueryXMLHandler,
+ * This file defines a single object named window.multigraph.jQueryXMLHandler,
  * which has a single method named 'mixin', which adds two methods to
  * each of our domain objects (Graph, Axis, Plot).  The first is a
  * "parse" method, for translating a JQuery XML object into an
@@ -34,11 +34,20 @@
  * @param parse      the name (a string) to use for the parse function
  * @param serialize  the name (a string) to use for the serialize function
  */
-var jQueryXMLHandler = jQueryXMLHandler ? jQueryXMLHandler : { 'mixinfuncs' : [] }
-jQueryXMLHandler.mixin = function(parse, serialize) {
 
-    $.each(jQueryXMLHandler.mixinfuncs, function(i,func) {
-        func(parse,serialize);
-    });
-
+if(!window.multigraph) {
+    window.multigraph = {};
 }
+
+(function (ns) {
+    "use strict";
+
+    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { 'mixinfuncs' : [] }
+    ns.jQueryXMLHandler.mixin = function(nsObj, parse, serialize) {
+        $.each(ns.jQueryXMLHandler.mixinfuncs, function(i,func) {
+            func(nsObj, parse, serialize);
+        });
+
+    }
+
+})(window.multigraph);
