@@ -90,12 +90,37 @@ describe("Spec", function () {
     });
 
     describe("buildsWith method", function () {
-        xit("should take any number of string parameters", function () {
-            
+        it("should take any number of string parameters", function () {
+            expect(function () {
+                s.buildsWith("larry", "moe", 3.4);
+            }).toThrow(new Error("Spec: buildsWith parameters must be strings except for a function as the optional final parameter"));
+            expect(function () {
+                s.buildsWith("larry", 3.4, "moe", "curly");
+            }).toThrow(new Error("Spec: buildsWith parameters must be strings except for a function as the optional final parameter"));
+            expect(function () {
+                s.buildsWith("larry", "moe", "curly", "semmy", "john");
+            }).not.toThrow(new Error("Spec: buildsWith parameters must be strings except for a function as the optional final parameter"));
+            s = new Spec();
+            expect(function () {
+                s.buildsWith("larry", "curly", "moe", "semmy", "john", "mark", "anotherMark");
+            }).not.toThrow(new Error("Spec: buildsWith parameters must be strings except for a function as the optional final parameter"));
         });
 
-        xit("should accept a function as an optional final argument", function () {
-
+        it("should accept a function as an optional final argument", function () {
+            var f = function () {
+                return true;
+            },  g = function () {
+                return false;
+            };
+            expect(function () {
+                s.buildsWith("larry", "moe", f, g);
+            }).toThrow(new Error("Spec: buildsWith parameters must be strings except for a function as the optional final parameter"));
+            expect(function () {
+                s.buildsWith("larry", "moe", g, "curly", "semmy", "john");
+            }).toThrow(new Error("Spec: buildsWith parameters must be strings except for a function as the optional final parameter"));
+            expect(function () {
+                s.buildsWith("larry", f);
+            }).not.toThrow(new Error("Spec: buildsWith parameters must be strings except for a function as the optional final parameter"));
         });
 
         //???? not sure if this will cause a 'chicken or egg' problem
@@ -103,8 +128,16 @@ describe("Spec", function () {
 
         });
 
-        xit("should accept strings preceded with a % as the final parameters before the optional function", function () {
-
+        it("should accept strings preceded with a % as the final parameters before the optional function", function () {
+            expect(function () {
+                s.buildsWith("larry", "%moe", "curly");
+            }).toThrow(new Error("Spec: buildsWith requires parameters preceded with a % to be the final parameters before the optional function"));
+            expect(function () {
+                s.buildsWith("larry", "moe", "curly", "%semmy");
+            }).not.toThrow(new Error("Spec: buildsWith requires parameters preceded with a % to be the final parameters before the optional function"));
+            expect(function () {
+                s.buildsWith("larry", "moe", "curly", "%semmy", "%john", function () { return false; });
+            }).not.toThrow(new Error("Spec: buildsWith requires parameters preceded with a % to be the final parameters before the optional function"));
         });
 
         xit("should require the constructor to be called with the non-% parameters", function () {

@@ -34,6 +34,55 @@ if(!window.multigraph.ModelTool) {
                 throw new Error("Spec: hasMany parameter must be a string");
             }
         };
+
+        this.buildsWith = function () {
+            if (arguments.length === 0) {
+                requiredArgs = new Array();
+                optionalArgs = new Array();
+                return this;//What should occur when no arguments are passed to the function?
+            }
+            var optionalParamFlag = false; //set to true when the first optional parameter is found
+                                           //checks for proper grouping of optional parameters
+            for (var i=0; i<arguments.length-1; i++) {
+                if (typeof(arguments[i]) !== 'string') {
+                    throw new Error("Spec: buildsWith parameters must be strings except for a function as the optional final parameter");
+                } else if (optionalParamFlag === true && arguments[i].charAt(0) !== '%') {
+                    throw new Error("Spec: buildsWith requires parameters preceded with a % to be the final parameters before the optional function");
+                } else if (optionalParamFlag === false && arguments[i].charAt(0) === '%') {
+                    optionalParamFlag = true;
+                }
+            }
+            if (typeof(arguments[arguments.length-1]) === 'string') {
+                if (optionalParamFlag === true && arguments[arguments.length-1].charAt(0) !== '%') {
+                    throw new Error("Spec: buildsWith requires parameters preceded with a % to be the final parameters before the optional function");
+                } else {
+                    for (var i=0; i<arguments.length; i++) {
+                        requiredArgs = new Array();
+                        optionalArgs = new Array();
+                        if (arguments[i].charAt(0) !== '%') {
+                            requiredArgs.push(arguments[i]);
+                        } else if (arguments[i].charAt(0) === '%') {
+                            optionalArgs.push(arguments[i].slice(1));
+                        }
+                    }
+                    return this;
+                }
+            } else if (typeof(arguments[arguments.length-1]) === 'function') {
+                requiredArgs = new Array();
+                optionalArgs = new Array();
+                for (var i=0; i<arguments.length-1; i++) {
+                    if (arguments[i].charAt(0) !== '%') {
+                        requiredArgs.push(arguments[i]);
+                    } else if (arguments[i].charAt(0) === '%') {
+                        optionalArgs.push(arguments[i].slice(1));
+                    }
+                }
+                arguments[arguments.length-1]();
+                return this;
+            } else {
+                throw new Error("Spec: buildsWith parameters must be strings except for a function as the optional final parameter");
+            }
+        };
         
         this.looksLike = function (p) {
             pattern = p;
