@@ -11,7 +11,7 @@ describe("Graph", function () {
     });
 
     it("should be able to create a Graph", function () {
-	expect(g instanceof Graph).toBe(true);
+        expect(g instanceof Graph).toBe(true);
     });
 
     describe("Children", function () {

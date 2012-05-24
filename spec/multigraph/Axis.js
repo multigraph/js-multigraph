@@ -11,13 +11,13 @@ describe("Axis", function () {
     });
 
     it("should be able to create an Axis", function () {
-	expect(a instanceof Axis).toBe(true);
+        expect(a instanceof Axis).toBe(true);
     });
 
     describe("id attribute", function () {
         it("should be able to set/get the id attribute", function () {
-	    a.id('the-id');
-	    expect(a.id() === 'the-id').toBe(true);
+            a.id('the-id');
+            expect(a.id() === 'the-id').toBe(true);
         });
 
         it("should throw an error if the parameter is not a string", function () {
@@ -30,8 +30,8 @@ describe("Axis", function () {
 
     describe("min attribute", function () {
         it("should be able to set/get the min attribute", function () {
-	    a.min('the-min');
-	    expect(a.min() === 'the-min').toBe(true);
+            a.min('the-min');
+            expect(a.min() === 'the-min').toBe(true);
         });
 
         it("should throw an error if the parameter is not a string", function () {
@@ -44,8 +44,8 @@ describe("Axis", function () {
 
     describe("max attribute", function () {
         it("should be able to set/get the max attribute", function () {
-	    a.max('the-max');
-	    expect(a.max() === 'the-max').toBe(true);
+            a.max('the-max');
+            expect(a.max() === 'the-max').toBe(true);
         });
 
         it("should throw an error if the parameter is not a string", function () {

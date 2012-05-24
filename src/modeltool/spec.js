@@ -36,14 +36,18 @@ if(!window.multigraph.ModelTool) {
         };
 
         this.buildsWith = function () {
+            var optionalArgs,
+            requiredArgs,
+            i;
+
             if (arguments.length === 0) {
-                requiredArgs = new Array();
-                optionalArgs = new Array();
+                requiredArgs = [];
+                optionalArgs = [];
                 return this;//What should occur when no arguments are passed to the function?
             }
             var optionalParamFlag = false; //set to true when the first optional parameter is found
                                            //checks for proper grouping of optional parameters
-            for (var i=0; i<arguments.length-1; i++) {
+            for (i=0; i<arguments.length-1; i++) {
                 if (typeof(arguments[i]) !== 'string') {
                     throw new Error("Spec: buildsWith parameters must be strings except for a function as the optional final parameter");
                 } else if (optionalParamFlag === true && arguments[i].charAt(0) !== '%') {
@@ -56,9 +60,9 @@ if(!window.multigraph.ModelTool) {
                 if (optionalParamFlag === true && arguments[arguments.length-1].charAt(0) !== '%') {
                     throw new Error("Spec: buildsWith requires parameters preceded with a % to be the final parameters before the optional function");
                 } else {
-                    for (var i=0; i<arguments.length; i++) {
-                        requiredArgs = new Array();
-                        optionalArgs = new Array();
+                    for (i=0; i<arguments.length; i++) {
+                        requiredArgs = [];
+                        optionalArgs = [];
                         if (arguments[i].charAt(0) !== '%') {
                             requiredArgs.push(arguments[i]);
                         } else if (arguments[i].charAt(0) === '%') {
@@ -68,9 +72,9 @@ if(!window.multigraph.ModelTool) {
                     return this;
                 }
             } else if (typeof(arguments[arguments.length-1]) === 'function') {
-                requiredArgs = new Array();
-                optionalArgs = new Array();
-                for (var i=0; i<arguments.length-1; i++) {
+                requiredArgs = [];
+                optionalArgs = [];
+                for (i=0; i<arguments.length-1; i++) {
                     if (arguments[i].charAt(0) !== '%') {
                         requiredArgs.push(arguments[i]);
                     } else if (arguments[i].charAt(0) === '%') {

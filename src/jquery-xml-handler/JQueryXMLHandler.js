@@ -42,12 +42,12 @@ if(!window.multigraph) {
 (function (ns) {
     "use strict";
 
-    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { 'mixinfuncs' : [] }
+    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { 'mixinfuncs' : [] };
     ns.jQueryXMLHandler.mixin = function(nsObj, parse, serialize) {
         $.each(ns.jQueryXMLHandler.mixinfuncs, function(i,func) {
             func(nsObj, parse, serialize);
         });
 
-    }
+    };
 
-})(window.multigraph);
+}(window.multigraph));

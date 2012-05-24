@@ -10,7 +10,7 @@ if(!window.multigraph) {
             return typeof(id) === 'string';
         });
         this.hasAn("orientation").which.validatesWith(function(orientation) {
-	    return (orientation === 'horizontal') || (orientation === 'vertical');
+            return (orientation === 'horizontal') || (orientation === 'vertical');
         });
         this.hasA("min").which.validatesWith(function(id) {
             return typeof(id) === 'string';
