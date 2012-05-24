@@ -51,16 +51,15 @@ describe("Graph", function () {
             expect(g.plots().at(0) === p).toBe(true);
         });
 
-        xit("should be able to set/get attributes of tags added to a Graph", function () {
-// Will need to modify indices after bugfix
+        it("should be able to set/get attributes of tags added to a Graph", function () {
             h.id("larry").min("10");
             v.max("200").orientation("vertical").id("curly");
             g.axes().add(h);
             g.axes().add(v);
-            expect(g.axes().at(5).id() === "larry").toBe(true);
-            expect(g.axes().at(6).max() === "200").toBe(true);
-            g.axes().at(5).id("moe");
-            expect(g.axes().at(5).id() === "moe").toBe(true);
+            expect(g.axes().at(0).id() === "larry").toBe(true);
+            expect(g.axes().at(1).max() === "200").toBe(true);
+            g.axes().at(0).id("moe");
+            expect(g.axes().at(0).id() === "moe").toBe(true);
         });
 
     });
