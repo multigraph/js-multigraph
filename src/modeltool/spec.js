@@ -56,7 +56,7 @@ if(!window.multigraph.ModelTool) {
                 throw new Error("Spec: attribute " + attr + " does not exist!");
             }
             return result;
-        }
+        };
 
         this.method = function (m) {
             var result;
@@ -73,7 +73,7 @@ if(!window.multigraph.ModelTool) {
             }
 
             return result;
-        }
+        };
 
 
         this.buildsWith = function () {
