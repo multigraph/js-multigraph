@@ -149,21 +149,21 @@ describe("Spec", function () {
 
 
 
-    describe("buildsWith method", function () {
+    describe("isBuiltWith method", function () {
         it("should take any number of string parameters", function () {
             expect(function () {
-                s.buildsWith("larry", "moe", 3.4);
-            }).toThrow(new Error("Spec: buildsWith parameters must be strings except for a function as the optional final parameter"));
+                s.isBuiltWith("larry", "moe", 3.4);
+            }).toThrow(new Error("Spec: isBuiltWith parameters must be strings except for a function as the optional final parameter"));
             expect(function () {
-                s.buildsWith("larry", 3.4, "moe", "curly");
-            }).toThrow(new Error("Spec: buildsWith parameters must be strings except for a function as the optional final parameter"));
+                s.isBuiltWith("larry", 3.4, "moe", "curly");
+            }).toThrow(new Error("Spec: isBuiltWith parameters must be strings except for a function as the optional final parameter"));
             expect(function () {
-                s.buildsWith("larry", "moe", "curly", "semmy", "john");
-            }).not.toThrow(new Error("Spec: buildsWith parameters must be strings except for a function as the optional final parameter"));
+                s.isBuiltWith("larry", "moe", "curly", "semmy", "john");
+            }).not.toThrow(new Error("Spec: isBuiltWith parameters must be strings except for a function as the optional final parameter"));
             s = new Spec();
             expect(function () {
-                s.buildsWith("larry", "curly", "moe", "semmy", "john", "mark", "anotherMark");
-            }).not.toThrow(new Error("Spec: buildsWith parameters must be strings except for a function as the optional final parameter"));
+                s.isBuiltWith("larry", "curly", "moe", "semmy", "john", "mark", "anotherMark");
+            }).not.toThrow(new Error("Spec: isBuiltWith parameters must be strings except for a function as the optional final parameter"));
         });
 
         it("should accept a function as an optional final argument", function () {
@@ -173,48 +173,29 @@ describe("Spec", function () {
                 return false;
             };
             expect(function () {
-                s.buildsWith("larry", "moe", f, g);
-            }).toThrow(new Error("Spec: buildsWith parameters must be strings except for a function as the optional final parameter"));
+                s.isBuiltWith("larry", "moe", f, g);
+            }).toThrow(new Error("Spec: isBuiltWith parameters must be strings except for a function as the optional final parameter"));
             expect(function () {
-                s.buildsWith("larry", "moe", g, "curly", "semmy", "john");
-            }).toThrow(new Error("Spec: buildsWith parameters must be strings except for a function as the optional final parameter"));
+                s.isBuiltWith("larry", "moe", g, "curly", "semmy", "john");
+            }).toThrow(new Error("Spec: isBuiltWith parameters must be strings except for a function as the optional final parameter"));
             expect(function () {
-                s.buildsWith("larry", f);
-            }).not.toThrow(new Error("Spec: buildsWith parameters must be strings except for a function as the optional final parameter"));
-        });
-
-        //???? not sure if this will cause a 'chicken or egg' problem
-        xit("should throw an error if any of the strings are not defined as attributes", function () {
-
+                s.isBuiltWith("larry", f);
+            }).not.toThrow(new Error("Spec: isBuiltWith parameters must be strings except for a function as the optional final parameter"));
         });
 
         it("should accept strings preceded with a % as the final parameters before the optional function", function () {
             expect(function () {
-                s.buildsWith("larry", "%moe", "curly");
-            }).toThrow(new Error("Spec: buildsWith requires parameters preceded with a % to be the final parameters before the optional function"));
+                s.isBuiltWith("larry", "%moe", "curly");
+            }).toThrow(new Error("Spec: isBuiltWith requires parameters preceded with a % to be the final parameters before the optional function"));
             expect(function () {
-                s.buildsWith("larry", "moe", "curly", "%semmy");
-            }).not.toThrow(new Error("Spec: buildsWith requires parameters preceded with a % to be the final parameters before the optional function"));
+                s.isBuiltWith("larry", "moe", "curly", "%semmy");
+            }).not.toThrow(new Error("Spec: isBuiltWith requires parameters preceded with a % to be the final parameters before the optional function"));
             expect(function () {
-                s.buildsWith("larry", "moe", "curly", "%semmy", "%john", function () { return false; });
-            }).not.toThrow(new Error("Spec: buildsWith requires parameters preceded with a % to be the final parameters before the optional function"));
+                s.isBuiltWith("larry", "moe", "curly", "%semmy", "%john", function () { return false; });
+            }).not.toThrow(new Error("Spec: isBuiltWith requires parameters preceded with a % to be the final parameters before the optional function"));
         });
 
-        xit("should require the constructor to be called with the non-% parameters", function () {
 
-        });
-
-        xit("should require that the resulting constructor's parameters pass the appropriate validators", function () {
-
-        });
-
-        //think of the optional function as an initializer that is run after the attributes are set
-        //for example, consider the Deck model. In addition to setting up the hasMany("cards") attribute,
-        //we'll want to create a nested for loop that creates a card of each suit/rank combination
-        //that would be the 'initializer' function
-        xit("should call the optional function after the attributes are set in the constructor", function () {
-            
-        });
     });
 
     describe("looksLike method", function () {
@@ -281,6 +262,75 @@ describe("Spec", function () {
             expect(p.returnsNull()).toBe(null);
             expect(p.addsTwoNumbers(3,2)).toEqual(5);
         });
+
+        it("should throw an error if any of the strings are not defined as attributes but are specified in isBuiltWith", function () {
+            var Person;
+            s.hasA("firstName");
+            s.hasA("lastName");
+            s.hasAn("id");
+            s.isBuiltWith("firstName","lastName","ied");
+            expect(function () {
+                Person = s.create();
+            }).toThrow(new Error("ied, specified in the isBuiltWith method, is not an attribute"));
+
+            s.isBuiltWith("firstName","lastName","id");
+            expect(function () {
+                Person = s.create();
+            }).not.toThrow(new Error("ied, specified in the isBuiltWith method, is not an attribute"));
+
+            s.isBuiltWith("firstName","lastName","%ied");
+            expect(function () {
+                Person = s.create();
+            }).toThrow(new Error("ied, specified in the isBuiltWith method, is not an attribute"));
+
+            s.isBuiltWith("firstName","lastName","%id");
+            expect(function () {
+                Person = s.create();
+            }).not.toThrow(new Error("ied, specified in the isBuiltWith method, is not an attribute"));
+        });
+
+
+        it("should require the constructor to be called with the non-% parameters", function () {
+            var Person,
+            AnotherPerson
+            p;
+            s.hasA("firstName");
+            s.hasA("lastName");
+            s.hasAn("id");
+
+            s.isBuiltWith("firstName", "lastName", "%id");
+
+            Person = s.create();
+
+            //s.isBuiltWith("firstName", "lastName", "id");
+
+            //AnotherPerson = s.create();
+            
+            expect(function () {
+                p = new Person("semmy");
+            }).toThrow(new Error("Constructor requires firstName, lastName to be specified"));
+
+            expect(function () {
+                p = new Person("semmy","purewal");
+            }).not.toThrow(new Error("Constructor requires firstName, lastName to be specified"));
+
+            expect(function () {
+                p = new Person("semmy","purewal", 100);
+            }).not.toThrow(new Error("Constructor requires firstName, lastName to be specified"));
+        });
+
+        xit("should require that the resulting constructor's parameters pass the appropriate validators", function () {
+
+        });
+
+        //think of the optional function as an initializer that is run after the attributes are set
+        //for example, consider the Deck model. In addition to setting up the hasMany("cards") attribute,
+        //we'll want to create a nested for loop that creates a card of each suit/rank combination
+        //that would be the 'initializer' function
+        xit("should call the optional function after the attributes are set in the constructor", function () {
+            
+        });
+
     });
 
 

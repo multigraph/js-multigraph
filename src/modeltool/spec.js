@@ -14,6 +14,8 @@ if(!window.multigraph.ModelTool) {
         methods = {},
         attributes = {},
         pattern,
+        requiredConstructorArgs = [],
+        optionalConstructorArgs = [],
         Method = window.multigraph.ModelTool.Method;
         
         this.hasA = function (attr) {
@@ -76,56 +78,33 @@ if(!window.multigraph.ModelTool) {
         };
 
 
-        this.buildsWith = function () {
-            var optionalArgs,
-            requiredArgs,
+        this.isBuiltWith = function () {
+            var optionalParamFlag = false,
             i;
 
-            if (arguments.length === 0) {
-                requiredArgs = [];
-                optionalArgs = [];
-                return this;//What should occur when no arguments are passed to the function?
-            }
-            var optionalParamFlag = false; //set to true when the first optional parameter is found
-                                           //checks for proper grouping of optional parameters
-            for (i=0; i<arguments.length-1; i++) {
-                if (typeof(arguments[i]) !== 'string') {
-                    throw new Error("Spec: buildsWith parameters must be strings except for a function as the optional final parameter");
-                } else if (optionalParamFlag === true && arguments[i].charAt(0) !== '%') {
-                    throw new Error("Spec: buildsWith requires parameters preceded with a % to be the final parameters before the optional function");
-                } else if (optionalParamFlag === false && arguments[i].charAt(0) === '%') {
+            requiredConstructorArgs = [];
+            optionalConstructorArgs = [];
+
+            for (i = 0; i < arguments.length; ++i) {
+                if (typeof(arguments[i]) === "string" && arguments[i].charAt(0) !== '%') {
+                    //in required parms
+                    if (optionalParamFlag) {
+                        //throw error
+                        throw new Error("Spec: isBuiltWith requires parameters preceded with a % to be the final parameters before the optional function");
+                    } else {
+                        //insert into required array
+                        requiredConstructorArgs.push(arguments[i]);
+                    }
+                } else if(typeof(arguments[i]) === "string" && arguments[i].charAt(0) === '%') {
+                    //in optional parms
                     optionalParamFlag = true;
-                }
-            }
-            if (typeof(arguments[arguments.length-1]) === 'string') {
-                if (optionalParamFlag === true && arguments[arguments.length-1].charAt(0) !== '%') {
-                    throw new Error("Spec: buildsWith requires parameters preceded with a % to be the final parameters before the optional function");
+                    //insert into optional array
+                    optionalConstructorArgs.push(arguments[i].slice(1));
+                } else if(typeof(arguments[i]) === "function" && i === arguments.length - 1) {
+                    //init function
                 } else {
-                    for (i=0; i<arguments.length; i++) {
-                        requiredArgs = [];
-                        optionalArgs = [];
-                        if (arguments[i].charAt(0) !== '%') {
-                            requiredArgs.push(arguments[i]);
-                        } else if (arguments[i].charAt(0) === '%') {
-                            optionalArgs.push(arguments[i].slice(1));
-                        }
-                    }
-                    return this;
+                    throw new Error("Spec: isBuiltWith parameters must be strings except for a function as the optional final parameter");
                 }
-            } else if (typeof(arguments[arguments.length-1]) === 'function') {
-                requiredArgs = [];
-                optionalArgs = [];
-                for (i=0; i<arguments.length-1; i++) {
-                    if (arguments[i].charAt(0) !== '%') {
-                        requiredArgs.push(arguments[i]);
-                    } else if (arguments[i].charAt(0) === '%') {
-                        optionalArgs.push(arguments[i].slice(1));
-                    }
-                }
-                arguments[arguments.length-1]();
-                return this;
-            } else {
-                throw new Error("Spec: buildsWith parameters must be strings except for a function as the optional final parameter");
             }
         };
         
@@ -139,9 +118,27 @@ if(!window.multigraph.ModelTool) {
         };
         
         this.create = function (name) {
-            this[name] = function () {
-                var i;
+            var i,
+            err;
 
+            //check to make sure that isBuiltWith
+            for (i = 0; i < requiredConstructorArgs.length; ++i) {
+                try {
+                    this.attribute(requiredConstructorArgs[i]);
+                } catch (e) {
+                    throw new Error(requiredConstructorArgs[i] + ", specified in the isBuiltWith method, is not an attribute");
+                }
+            }
+
+            for (i = 0; i < optionalConstructorArgs.length; ++i) {
+                try {
+                    this.attribute(optionalConstructorArgs[i]);
+                } catch (e) {
+                    throw new Error(optionalConstructorArgs[i] + ", specified in the isBuiltWith method, is not an attribute");
+                }
+            }
+
+            this[name] = function () {
                 //add attributes
                 for(i in attributes) {
                     if(attributes.hasOwnProperty(i)) {
@@ -157,6 +154,27 @@ if(!window.multigraph.ModelTool) {
                 }
 
                 this.toString = pattern;
+
+
+                //use constructor args to build object
+                if (arguments.length < requiredConstructorArgs.length) {
+                    //throw error
+                    err = "Constructor requires ";
+                    for(i = 0; i < requiredConstructorArgs.length; ++i) {
+                        err += requiredConstructorArgs[i];
+                        err += i===requiredConstructorArgs.length-1?"":", ";
+                    }
+                    err += " to be specified"
+                    throw new Error(err);
+                } else {
+                    for (i = 0; i < arguments.length; ++i) {
+                        if(i < requiredConstructorArgs.length) {
+                            //this[requiredConstructorArgs[i]](arguments[i]);
+                        } else {
+                            //this[optionalConstructorArgs[i]](arguments[i]);
+                        }
+                    }
+                }
             };
             return this[name];
         };        
