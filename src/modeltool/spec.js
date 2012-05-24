@@ -11,14 +11,18 @@ if(!window.multigraph.ModelTool) {
     function Spec(n) {
         var that = this,
         name = n,
-        methods = [],
+        methods = {},
+        attributes = {},
         pattern,
         Method = window.multigraph.ModelTool.Method;
         
         this.hasA = function (attr) {
+            var attribute;
             if (typeof(attr) === 'string') {
-                this[attr] = new ns.Attr(attr);
-                return this[attr];
+                //this[attr] = new ns.Attr(attr);
+                attribute = new ns.Attr(attr);
+                attributes[attr] = attribute;
+                return attribute;
             } else {
                 throw new Error("Spec: hasA parameter must be a string");
             }
@@ -27,13 +31,50 @@ if(!window.multigraph.ModelTool) {
         this.hasAn = this.hasA;
         
         this.hasMany = function (attrs) {
+            var attribute;
             if(typeof(attrs) === 'string') {
-                this[attrs] = new ns.AttrList(attrs);
-                return this[attrs];
+                //this[attrs] = new ns.AttrList(attrs);
+                attribute = new ns.AttrList(attrs);
+                attributes[attrs] = attribute;
+                return attribute;
+                //return this[attrs];
             } else {
                 throw new Error("Spec: hasMany parameter must be a string");
             }
         };
+
+        this.attribute = function (attr) {
+            var result;
+
+            if (typeof(attr) !== "string") {
+                throw new Error("Spec: expected string argument to attribute method, but recieved " + attr);
+            }
+
+            result = attributes[attr];
+
+            if (result === undefined) {
+                throw new Error("Spec: attribute " + attr + " does not exist!");
+            }
+            return result;
+        }
+
+        this.method = function (m) {
+            var result;
+
+            if (typeof(m) !== "string") {
+                throw new Error("Spec: expected string argument to method method, but recieved " + m);
+            }
+
+
+            result = methods[m];
+
+            if(result === undefined) {
+                throw new Error("Spec: method " + m + " does not exist!");
+            }
+
+            return result;
+        }
+
 
         this.buildsWith = function () {
             var optionalArgs,
@@ -94,21 +135,25 @@ if(!window.multigraph.ModelTool) {
 
         this.respondsTo = function (methodName, methodBody) {
             var m = new Method(methodName, methodBody);
-            methods.push(m);
+            methods[methodName] = m;
         };
         
         this.create = function (name) {
             this[name] = function () {
                 var i;
-                for (i in that) {
-                    if (that[i] instanceof ns.Attr) {
-                        that[i].addTo(this);
+
+                //add attributes
+                for(i in attributes) {
+                    if(attributes.hasOwnProperty(i)) {
+                        attributes[i].addTo(this);
                     }
                 }
 
                 //add methods
-                for (i = 0; i < methods.length; ++i) {
-                    methods[i].addTo(this);
+                for(i in methods) {
+                    if(methods.hasOwnProperty(i)) {
+                        methods[i].addTo(this);
+                    }
                 }
 
                 this.toString = pattern;

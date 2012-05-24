@@ -16,18 +16,18 @@ describe("Spec", function () {
         it("should create a new Attr with the specified name", function () {
             var a = s.hasA("friend");
             expect(a instanceof Attr).toBe(true);
-            expect(s.friend).not.toBeUndefined();
+            expect(s.attribute("friend")).not.toBeUndefined();
         });
 
         it("should add the attribute to the spec object", function () {
             s.hasA("friend");
-            expect(s.friend).not.toBeUndefined();
+            expect(s.attribute("friend")).not.toBeUndefined();
         });
 
         it("should return the Attr object so it can be cascaded with other functions", function () {
             var a = s.hasA("friend");
             expect(a instanceof Attr).toBe(true);
-            expect(s.friend).not.toBeUndefined();
+            expect(s.attribute("friend")).not.toBeUndefined();
             expect(a.validatesWith).not.toBeUndefined();
         });
 
@@ -52,8 +52,8 @@ describe("Spec", function () {
 
         it("should add the AttrList to the Spec object", function () {
             s.hasMany("friends");
-            expect(s.friends).not.toBeUndefined();
-            expect(s.friends instanceof window.multigraph.ModelTool.AttrList).toBe(true);
+            expect(s.attribute("friends")).not.toBeUndefined();
+            expect(s.attribute("friends") instanceof window.multigraph.ModelTool.AttrList).toBe(true);
         });
 
         it("should return the AttrList so it can be cascaded", function () {
@@ -65,8 +65,8 @@ describe("Spec", function () {
             var al = s.hasMany("friends"),
             al2 = s.hasMany("cats");
 
-            expect(s.friends).not.toBeUndefined();
-            expect(s.cats).not.toBeUndefined();
+            expect(s.attribute("friends")).not.toBeUndefined();
+            expect(s.attribute("cats")).not.toBeUndefined();
             expect(al instanceof window.multigraph.ModelTool.AttrList).toBe(true);
             expect(al2 instanceof window.multigraph.ModelTool.AttrList).toBe(true);
         });
@@ -76,8 +76,8 @@ describe("Spec", function () {
             al = s.hasMany("friends"),
             al2 = s2.hasMany("cats");
 
-            expect(s.friends).not.toBeUndefined();
-            expect(s2.cats).not.toBeUndefined();
+            expect(s.attribute("friends")).not.toBeUndefined();
+            expect(s2.attribute("cats")).not.toBeUndefined();
             expect(al instanceof window.multigraph.ModelTool.AttrList).toBe(true);
             expect(al2 instanceof window.multigraph.ModelTool.AttrList).toBe(true);
         });
@@ -88,6 +88,66 @@ describe("Spec", function () {
             }).toThrow(new Error("Spec: hasMany parameter must be a string"));
         });
     });
+
+    describe("attribute method", function () {
+        it("should return the attribute object associated with the attribute name", function () {
+            var a,
+            al;
+
+            s.hasA("name");
+            a = s.attribute("name");
+            expect(a instanceof window.multigraph.ModelTool.Attr).toBe(true);
+            expect(a instanceof window.multigraph.ModelTool.AttrList).toBe(false);
+
+            s.hasMany("friends");
+            al = s.attribute("friends");
+            expect(al instanceof window.multigraph.ModelTool.Attr).toBe(true);
+            expect(al instanceof window.multigraph.ModelTool.AttrList).toBe(true);
+        });
+
+        it("should throw an error if the attribute doesn't exist", function () {
+            var a;
+            expect(function () {
+                a = s.attribute("name");
+            }).toThrow(new Error("Spec: attribute name does not exist!"));
+        });
+
+        it("should throw an error if the argument is not a string", function () {
+            expect(function () {
+                s.attribute(5);
+            }).toThrow(new Error("Spec: expected string argument to attribute method, but recieved 5"));
+        });
+    });
+
+    describe("method method", function () {
+        it("should return the method object associated with the method name", function () {
+            var m;
+            s.respondsTo("isAwesome", function () {
+                return true;
+            });
+
+            m = s.method("isAwesome");
+
+            expect(m instanceof window.multigraph.ModelTool.Method).toBe(true);
+        });
+
+        it("should throw an error if the method doesn't exist", function () {
+            var m;
+            expect(function () {
+                m = s.method("isAwesome");
+            }).toThrow(new Error("Spec: method isAwesome does not exist!"));
+        });
+
+        it("should throw an error if the argument is not a string", function () {
+            expect(function () {
+                s.method(5);
+            }).toThrow(new Error("Spec: expected string argument to method method, but recieved 5"));
+        });
+    });
+
+
+
+
 
     describe("buildsWith method", function () {
         it("should take any number of string parameters", function () {

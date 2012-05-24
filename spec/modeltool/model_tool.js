@@ -64,10 +64,10 @@ describe("ModelTool", function () {
 
             Card = model("Card", function () {
                 this.hasA("suit");
-                this.suit.validatesWith(function (suit) {
+                this.attribute("suit").validatesWith(function (suit) {
                     return ["clubs", "diamonds", "hearts", "spades"].indexOf(suit) > -1;
                 });
-                this.suit.errorsWith("invalid suit");
+                this.attribute("suit").errorsWith("invalid suit");
                 
                 //this.isBuiltWith('rank','suit');
                 
