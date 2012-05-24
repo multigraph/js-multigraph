@@ -13,7 +13,7 @@ if(!window.multigraph) {
             return (orientation === 'horizontal') || (orientation === 'vertical');
         });
         this.hasA("type").which.validatesWith(function(type) {
-	    return typeof(type) === 'string' && ((type.toLowerCase() === 'number') || (type.toLowerCase() === 'datetime'));
+            return typeof(type) === 'string' && ((type.toLowerCase() === 'number') || (type.toLowerCase() === 'datetime'));
         });
         this.hasA("min").which.validatesWith(function(id) {
             return typeof(id) === 'string';

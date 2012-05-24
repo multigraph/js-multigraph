@@ -4,6 +4,7 @@ describe("Graph", function () {
     "use strict";
 
     var Graph = window.multigraph.Graph,
+        Axis = window.multigraph.Axis,
         g;
 
     beforeEach(function () {
@@ -15,8 +16,7 @@ describe("Graph", function () {
     });
 
     describe("Children", function () {
-        var Axis = window.multigraph.Axis,
-            Plot = window.multigraph.Plot,
+        var Plot = window.multigraph.Plot,
             h,
             v,
             p;
@@ -65,7 +65,6 @@ describe("Graph", function () {
     });
 
     it("should be able to create a Graph with an axis and then fetch that axis", function() {
-        var Axis  = window.multigraph.Axis;
         var g = new Graph();
         var a = new Axis();
         a.id('x');

@@ -31,12 +31,12 @@ describe("Axis", function () {
 
     describe("type attribute", function () {
         it("should return undefined if it has not been set", function () {
-	    expect(a.type() === undefined).toBe(true);
+            expect(a.type() === undefined).toBe(true);
         });
 
         it("should be able to set/get the type attribute", function () {
-	    a.type('number');
-	    expect(a.type() === 'number').toBe(true);
+            a.type('number');
+            expect(a.type() === 'number').toBe(true);
         });
 
         it("should throw an error if the parameter is not 'number' or 'datetime'", function () {
