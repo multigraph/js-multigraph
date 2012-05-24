@@ -23,6 +23,12 @@ describe("Axis parsing", function () {
         expect(a.id() === 'x').toBe(true);
     });
 
+    it("should be able to parse an axis from XML and read its 'type' attribute", function () {
+        var xmlString2 = '<verticalaxis id="y" type="number" max="10"/>';
+	var b = Axis.parseXML('vertical', $(xmlString2));
+        expect(b.type() === 'number').toBe(true);
+    });
+
     it("should be able to parse an axis from XML and read its 'min' attribute", function () {
 	var a = Axis.parseXML('horizontal', $xml);
         expect(a.min() === '0').toBe(true);
@@ -34,8 +40,11 @@ describe("Axis parsing", function () {
     });
 
     it("should be able to parse an axis from XML, then serialize it, and get the same XML as the original", function () {
+        var xmlString2 = '<verticalaxis id="y" type="datetime" max="10"/>';
 	var a = Axis.parseXML('horizontal', $xml);
+	var b = Axis.parseXML('vertical', $(xmlString2));
         expect(a.serialize() === xmlString).toBe(true);
+        expect(b.serialize() === xmlString2).toBe(true);
     });
 
 });

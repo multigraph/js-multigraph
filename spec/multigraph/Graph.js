@@ -70,7 +70,6 @@ describe("Graph", function () {
         var a = new Axis();
         a.id('x');
         g.axes().add(a);
-        console.log(g.axes());
         expect(g.axes().get(0) === a).toBe(true);
     });
 
