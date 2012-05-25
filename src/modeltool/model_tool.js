@@ -12,8 +12,8 @@ if(!window.multigraph.ModelTool) {
     function Model(name, specification) {
         var s = new ns.Spec();
         specification.call(s);
-        return s.create(name);        
+        return s.create("whatever");        
     }
 
-    ns.Model = Model;
+    ns.OldModel = Model;
 }(window.multigraph.ModelTool));

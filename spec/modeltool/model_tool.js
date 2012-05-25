@@ -8,7 +8,7 @@ describe("ModelTool", function () {
         Axis;
 
         beforeEach(function() {
-            Axis = model('Axis', function() {
+            Axis = new model('Axis', function() {
                 this.hasA("id");
                 this.hasMany("things");
                 
@@ -28,7 +28,7 @@ describe("ModelTool", function () {
             var Graph,
             g,
             a;
-            Graph = model('Graph', function() {
+            Graph = new model('Graph', function() {
                 this.hasMany("axes").which.validatesWith(function (axis) {
                     return axis instanceof Axis;
                 });
@@ -62,7 +62,7 @@ describe("ModelTool", function () {
             c,
             d;
 
-            Card = model("Card", function () {
+            Card = new model("Card", function () {
                 this.hasA("suit");
                 this.attribute("suit").validatesWith(function (suit) {
                     return ["clubs", "diamonds", "hearts", "spades"].indexOf(suit) > -1;
@@ -76,7 +76,7 @@ describe("ModelTool", function () {
                 });
             });
 
-            Deck = model("Deck", function () {
+            Deck = new model("Deck", function () {
                 this.hasMany("cards").validatesWith(function (card) {
                     return (card instanceof Card); 
                 });

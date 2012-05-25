@@ -17,6 +17,11 @@ if(!window.multigraph.ModelTool) {
         optionalConstructorArgs = [],
         Method = window.multigraph.ModelTool.Method,
         initializer = function () {};
+
+        //temporary fix so API stays the same
+        if (arguments.length > 1) {
+            specification = arguments[arguments.length-1];
+        }
         
         this.hasA = function (attr) {
             var attribute;
@@ -186,9 +191,9 @@ if(!window.multigraph.ModelTool) {
             return s.create();
         } else if (specification) {
             throw new Error("Spec: specification parameter must be a function");
-            //throw error
         }
 
     }
     ns.Spec = Spec;
+    ns.Model = Spec;
 }(window.multigraph.ModelTool));
