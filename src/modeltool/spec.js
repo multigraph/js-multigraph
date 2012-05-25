@@ -16,7 +16,8 @@ if(!window.multigraph.ModelTool) {
         pattern,
         requiredConstructorArgs = [],
         optionalConstructorArgs = [],
-        Method = window.multigraph.ModelTool.Method;
+        Method = window.multigraph.ModelTool.Method,
+        initializer = function () {};
         
         this.hasA = function (attr) {
             var attribute;
@@ -102,6 +103,7 @@ if(!window.multigraph.ModelTool) {
                     optionalConstructorArgs.push(arguments[i].slice(1));
                 } else if(typeof(arguments[i]) === "function" && i === arguments.length - 1) {
                     //init function
+                    initializer = arguments[i];
                 } else {
                     throw new Error("Spec: isBuiltWith parameters must be strings except for a function as the optional final parameter");
                 }
@@ -139,6 +141,7 @@ if(!window.multigraph.ModelTool) {
             }
 
             this[name] = function () {
+                var i;
                 //add attributes
                 for(i in attributes) {
                     if(attributes.hasOwnProperty(i)) {
@@ -155,7 +158,6 @@ if(!window.multigraph.ModelTool) {
 
                 this.toString = pattern;
 
-
                 //use constructor args to build object
                 if (arguments.length < requiredConstructorArgs.length) {
                     //throw error
@@ -164,17 +166,18 @@ if(!window.multigraph.ModelTool) {
                         err += requiredConstructorArgs[i];
                         err += i===requiredConstructorArgs.length-1?"":", ";
                     }
-                    err += " to be specified"
+                    err += " to be specified";
                     throw new Error(err);
                 } else {
                     for (i = 0; i < arguments.length; ++i) {
                         if(i < requiredConstructorArgs.length) {
-                            //this[requiredConstructorArgs[i]](arguments[i]);
+                            this[requiredConstructorArgs[i]](arguments[i]);
                         } else {
-                            //this[optionalConstructorArgs[i]](arguments[i]);
+                            this[optionalConstructorArgs[i-requiredConstructorArgs.length]](arguments[i]);
                         }
                     }
                 }
+                initializer.call(this);
             };
             return this[name];
         };        

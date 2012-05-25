@@ -292,8 +292,10 @@ describe("Spec", function () {
 
         it("should require the constructor to be called with the non-% parameters", function () {
             var Person,
-            AnotherPerson
             p;
+
+
+            s = new Spec();
             s.hasA("firstName");
             s.hasA("lastName");
             s.hasAn("id");
@@ -301,10 +303,6 @@ describe("Spec", function () {
             s.isBuiltWith("firstName", "lastName", "%id");
 
             Person = s.create();
-
-            //s.isBuiltWith("firstName", "lastName", "id");
-
-            //AnotherPerson = s.create();
             
             expect(function () {
                 p = new Person("semmy");
@@ -319,44 +317,167 @@ describe("Spec", function () {
             }).not.toThrow(new Error("Constructor requires firstName, lastName to be specified"));
         });
 
-        xit("should require that the resulting constructor's parameters pass the appropriate validators", function () {
+        it("should set the attributes associated with the attributes to the appropriate values", function () {
+            var Card,
+            Thing,
+            t1,
+            t2,
+            t3,
+            c;
 
+            s = new Spec();
+            s.hasA("rank");
+            s.hasA("suit");
+            s.isBuiltWith("rank","suit");
+
+            Card = s.create();
+
+            c = new Card("ace", "diamonds");
+            
+            expect(c.rank()).toBe("ace");
+            expect(c.suit()).toBe("diamonds");
+
+            s = new Spec();
+            s.hasA("thing1");
+            s.hasA("thing2");
+            s.hasA("thing3");
+            s.isBuiltWith("thing1", "%thing2", "%thing3");
+
+            Thing = s.create();
+            t1 = new Thing(5);
+            t2 = new Thing(10, 20);
+            t3 = new Thing(20, 30, 40);
+
+            expect(t1.thing1()).toBe(5);
+            expect(t1.thing2()).toBe(undefined);
+            expect(t1.thing3()).toBe(undefined);            
+            expect(t2.thing1()).toBe(10);
+            expect(t2.thing2()).toBe(20);
+            expect(t2.thing3()).toBe(undefined);            
+            expect(t3.thing1()).toBe(20);
+            expect(t3.thing2()).toBe(30);
+            expect(t3.thing3()).toBe(40);
+        });
+
+        it("should require that the resulting constructor's parameters pass the appropriate validators", function () {
+            var thing1Validator = jasmine.createSpy(),
+            thing2Validator = jasmine.createSpy(),
+            thing3Validator = jasmine.createSpy(),
+            Thing,
+            t1,
+            t2,
+            t3;
+
+            s = new Spec();
+
+            s.hasA("thing1").which.validatesWith(function () { thing1Validator(); return true; });
+            s.hasA("thing2").which.validatesWith(function () { thing2Validator(); return true; });
+            s.hasA("thing3").which.validatesWith(function () { thing3Validator(); return true; });
+            s.isBuiltWith("thing1", "%thing2", "%thing3");
+
+            Thing = s.create();
+            t1 = new Thing(10);
+            expect(thing1Validator).toHaveBeenCalled();
+            expect(thing2Validator).not.toHaveBeenCalled();
+            expect(thing3Validator).not.toHaveBeenCalled();
+
+            t2 = new Thing(10, 20);
+            expect(thing1Validator).toHaveBeenCalled();
+            expect(thing2Validator).toHaveBeenCalled();
+            expect(thing3Validator).not.toHaveBeenCalled();
+
+            t1 = new Thing(10, 20, 30);
+            expect(thing1Validator).toHaveBeenCalled();
+            expect(thing2Validator).toHaveBeenCalled();
+            expect(thing3Validator).toHaveBeenCalled();
         });
 
         //think of the optional function as an initializer that is run after the attributes are set
         //for example, consider the Deck model. In addition to setting up the hasMany("cards") attribute,
         //we'll want to create a nested for loop that creates a card of each suit/rank combination
         //that would be the 'initializer' function
-        xit("should call the optional function after the attributes are set in the constructor", function () {
-            
-        });
+        it("should call the optional function after the attributes are set in the constructor", function () {
+            var initializer = jasmine.createSpy(),
+            Thing,
+            t1, 
+            t2,
+            t3;
 
+            s = new Spec();
+            s.hasA("thing1");
+            s.hasA("thing2");
+            s.hasA("thing3");
+            s.isBuiltWith("thing1", "%thing2", "%thing3", initializer);
+
+            Thing = s.create();
+            t1 = new Thing(5);
+            expect(initializer).toHaveBeenCalled();
+
+            t2 = new Thing(10, 20);
+            expect(initializer).toHaveBeenCalled();
+
+            t3 = new Thing(20, 30, 40);
+            expect(initializer).toHaveBeenCalled();
+        });
     });
 
 
-    xit("should work with this example", function () {
-        /*var Card,
-        Deck;
+    it("should work with this example", function () {
+        var CardSpec,
+        Card,
+        DeckSpec,
+        Deck,
+        d,
+        i,
+        j,
+        suits = ["clubs", "diamonds", "hearts", "spades"],
+        ranks = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"];
 
 
-        var Card = new Spec(function () {
-            this.hasA("suit");
-            this.suit.validatesWith(function (suit) {
-                return ["clubs", "diamonds", "hearts", "spades"].indexOf(suit) > -1;
-            });
+        CardSpec = new Spec();
+        CardSpec.hasA("suit");
+        CardSpec.attribute("suit").validatesWith(function (suit) {
+            return suits.indexOf(suit) > -1;
+        });
 
-            this.isBuiltWith('rank','suit');
+        CardSpec.isBuiltWith('rank','suit');
+        
+        CardSpec.hasA("rank").whichValidatesWith(function (rank) {
+                return rank.indexOf(rank) > -1;
+        });
 
-            this.hasA("rank").whichValidatesWith(function (rank) {
-                return ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"].indexOf(rank) > -1;
-            });
-        }).create("Card");
+        CardSpec.looksLike(function () {
+            return this.rank() + " of " + this.suit();
+        });
 
+        Card = CardSpec.create();
 
-        Deck = new Spec(function () {
-            this.hasMany("cards").validatesWith(function (card) {
-                return (card instanceof Card); 
-            });
-        }).create("Deck");*/
+        var c = new Card("5", "diamonds");
+        expect(c.toString()).toBe("5 of diamonds");
+
+        DeckSpec = new Spec();
+        DeckSpec.hasMany("cards").validatesWith(function (card) {
+            return (card instanceof Card); 
+        });
+
+        DeckSpec.isBuiltWith(function () {
+            for (i = 0; i < suits.length; ++i) {
+                for (j = 0; j < ranks.length; ++j) {
+                    this.cards().add(new Card(ranks[j], suits[i]));
+                }
+            }
+        });
+    
+        Deck = DeckSpec.create();
+
+        d = new Deck();
+        for (i = 0; i < d.cards().size(); ++i) {
+            //console.log(d.cards().at(i).toString());
+        }
+
+        expect(d.cards().at(0).toString()).toEqual("2 of clubs");
+        expect(d.cards().at(51).toString()).toEqual("A of spades");
+        
+
     });
 });
