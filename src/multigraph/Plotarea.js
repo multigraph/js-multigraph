@@ -7,22 +7,22 @@ if(!window.multigraph) {
 
     var Plotarea = ns.ModelTool.Model('Plotarea', function () {
         this.hasA("marginbottom").which.validatesWith(function (marginbottom) {
-            return typeof(marginbottom) === 'string';
+            return ns.utilityFunctions.validateInteger(marginbottom);
         });
         this.hasA("marginleft").which.validatesWith(function (marginleft) {
-            return typeof(marginleft) === 'string';
+            return ns.utilityFunctions.validateInteger(marginleft);
         });
         this.hasA("margintop").which.validatesWith(function (margintop) {
-            return typeof(margintop) === 'string';
+            return ns.utilityFunctions.validateInteger(margintop);
         });
         this.hasA("marginright").which.validatesWith(function (marginright) {
-            return typeof(marginright) === 'string';
+            return ns.utilityFunctions.validateInteger(marginright);
         });
         this.hasA("border").which.validatesWith(function (border) {
-            return typeof(border) === 'string';
+            return ns.utilityFunctions.validateInteger(border);
         });
         this.hasA("bordercolor").which.validatesWith(function (bordercolor) {
-            return typeof(bordercolor) === 'string';
+            return ns.utilityFunctions.validateColor(bordercolor);
         });
 
     });

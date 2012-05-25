@@ -7,22 +7,22 @@ if(!window.multigraph) {
 
     var Window = ns.ModelTool.Model( 'Window', function () {
         this.hasA("width").which.validatesWith(function (width) {
-            return typeof(width) === 'string';
+            return ns.utilityFunctions.validateInteger(width);
         });
         this.hasA("height").which.validatesWith(function (height) {
-            return typeof(height) === 'string';
+            return ns.utilityFunctions.validateInteger(height);
         });
         this.hasA("border").which.validatesWith(function (border) {
-            return typeof(border) === 'string';
+            return ns.utilityFunctions.validateInteger(border);
         });
         this.hasA("margin").which.validatesWith(function (margin) {
-            return typeof(margin) === 'string';
+            return ns.utilityFunctions.validateInteger(margin);
         });
         this.hasA("padding").which.validatesWith(function (padding) {
-            return typeof(padding) === 'string';
+            return ns.utilityFunctions.validateInteger(padding);
         });
         this.hasA("bordercolor").which.validatesWith(function (bordercolor) {
-            return typeof(bordercolor) === 'string';
+            return ns.utilityFunctions.validateColor(bordercolor);
         });
 
     });

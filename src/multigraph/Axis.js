@@ -15,20 +15,20 @@ if(!window.multigraph) {
         this.hasA("type").which.validatesWith(function (type) {
             return typeof(type) === 'string' && ((type.toLowerCase() === 'number') || (type.toLowerCase() === 'datetime'));
         });
-        this.hasA("min").which.validatesWith(function (id) {
-            return typeof(id) === 'string';
+        this.hasA("min").which.validatesWith(function (min) {
+            return typeof(min) === 'string';
         });
         this.hasA("max").which.validatesWith(function (max) {
             return typeof(max) === 'string';
         });
         this.hasAn("anchor").which.validatesWith(function (anchor) {
-            return typeof(anchor) === 'string';
+            return ns.utilityFunctions.validateCoordinatePair(anchor);
         });
         this.hasA("base").which.validatesWith(function (base) {
-            return typeof(base) === 'string';
+            return ns.utilityFunctions.validateCoordinatePair(base);
         });
         this.hasA("position").which.validatesWith(function (position) {
-            return typeof(position) === 'string';
+            return ns.utilityFunctions.validateCoordinatePair(position);
         });
 
     });
