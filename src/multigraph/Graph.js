@@ -5,12 +5,15 @@ if(!window.multigraph) {
 (function (ns) {
     "use strict";
 
-    var Graph = window.multigraph.ModelTool.Model( 'Graph', function() {
+    var Graph = window.multigraph.ModelTool.Model( 'Graph', function () {
 
-        this.hasMany("axes").which.validatesWith(function(axis) {
+        this.hasA("window").which.validatesWith(function (window) {
+                return window instanceof window.multigraph.Window;
+        });
+        this.hasMany("axes").which.validatesWith(function (axis) {
                 return axis instanceof window.multigraph.Axis;
         });
-        this.hasMany("plots").which.validatesWith(function(plot) {
+        this.hasMany("plots").which.validatesWith(function (plot) {
                 return plot instanceof window.multigraph.Plot;
         });
 
