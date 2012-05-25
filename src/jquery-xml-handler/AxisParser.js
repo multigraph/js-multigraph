@@ -4,7 +4,8 @@ if(!window.multigraph) {
 
 (function (ns) {
     "use strict";
-    
+
+    var attributes = ['id', 'type', 'min', 'max', 'anchor', 'base', 'position'];
     ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { 'mixinfuncs' : [] };
     ns.jQueryXMLHandler.mixinfuncs.push(function(nsObj, parse, serialize) {
         
@@ -23,29 +24,16 @@ if(!window.multigraph) {
         };
         
         nsObj.Axis.prototype[serialize] = function() {
-            var attributeStrings = [];
+            var attributeStrings = [],
+                i;
             attributeStrings.push(this.orientation() + 'axis');
-            if (this.id() !== undefined) {
-                attributeStrings.push('id="' + this.id() + '"');
+
+            for(i = 0; i < attributes.length; i++) {
+                if (this[attributes[i]]() !== undefined) {
+                    attributeStrings.push(attributes[i] + '="' + this[attributes[i]]() + '"');
+                }
             }
-            if (this.type() !== undefined) {
-                attributeStrings.push('type="' + this.type() + '"');
-            }
-            if (this.min() !== undefined) {
-                attributeStrings.push('min="' + this.min() + '"');
-            }
-            if (this.max() !== undefined) {
-                attributeStrings.push('max="' + this.max() + '"');
-            }
-            if (this.anchor() !== undefined) {
-                attributeStrings.push('anchor="' + this.anchor() + '"');
-            }
-            if (this.base() !== undefined) {
-                attributeStrings.push('base="' + this.base() + '"');
-            }
-            if (this.position() !== undefined) {
-                attributeStrings.push('position="' + this.position() + '"');
-            }
+
             return '<' + attributeStrings.join(' ') + '/>';
         };
 

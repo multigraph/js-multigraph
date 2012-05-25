@@ -4,11 +4,12 @@ if(!window.multigraph) {
 
 (function (ns) {
     "use strict";
-    
+
+    var attributes = ['width', 'height', 'border', 'margin', 'padding', 'bordercolor'];
     ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { 'mixinfuncs' : [] };
     ns.jQueryXMLHandler.mixinfuncs.push(function(nsObj, parse, serialize) {
         
-        nsObj.Window[parse] = function(xml) {
+        nsObj.Window[parse] = function (xml) {
             var window = new nsObj.Window();
             if (xml) {
                 window.width(xml.attr('width'));
@@ -21,26 +22,15 @@ if(!window.multigraph) {
             return window;
         };
         
-        nsObj.Window.prototype[serialize] = function() {
-            var attributeStrings = [];
+        nsObj.Window.prototype[serialize] = function () {
+            var attributeStrings = [],
+                i;
             attributeStrings.push('window');
-            if (this.width() !== undefined) {
-                attributeStrings.push('width="' + this.width() + '"');
-            }
-            if (this.height() !== undefined) {
-                attributeStrings.push('height="' + this.height() + '"');
-            }
-            if (this.border() !== undefined) {
-                attributeStrings.push('border="' + this.border() + '"');
-            }
-            if (this.margin() !== undefined) {
-                attributeStrings.push('margin="' + this.margin() + '"');
-            }
-            if (this.padding() !== undefined) {
-                attributeStrings.push('padding="' + this.padding() + '"');
-            }
-            if (this.bordercolor() !== undefined) {
-                attributeStrings.push('bordercolor="' + this.bordercolor() + '"');
+
+            for (i = 0; i < attributes.length; i++) {
+                if (this[attributes[i]]() !== undefined) {
+                    attributeStrings.push(attributes[i] + '="' + this[attributes[i]]() + '"');
+                }
             }
             return '<' + attributeStrings.join(' ') + '/>';
         };

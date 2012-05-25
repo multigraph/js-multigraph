@@ -4,11 +4,12 @@ if(!window.multigraph) {
 
 (function (ns) {
     "use strict";
-    
+
+    var attributes = ['marginbottom', 'marginleft', 'margintop', 'marginright', 'border', 'bordercolor'];
     ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { 'mixinfuncs' : [] };
     ns.jQueryXMLHandler.mixinfuncs.push(function(nsObj, parse, serialize) {
         
-        nsObj.Plotarea[parse] = function(xml) {
+        nsObj.Plotarea[parse] = function (xml) {
             var plotarea = new nsObj.Plotarea();
             if (xml) {
                 plotarea.marginbottom(xml.attr('marginbottom'));
@@ -21,27 +22,17 @@ if(!window.multigraph) {
             return plotarea;
         };
         
-        nsObj.Plotarea.prototype[serialize] = function() {
-            var attributeStrings = [];
+        nsObj.Plotarea.prototype[serialize] = function () {
+            var attributeStrings = [],
+                i;
             attributeStrings.push('plotarea');
-            if (this.marginbottom() !== undefined) {
-                attributeStrings.push('marginbottom="' + this.marginbottom() + '"');
+
+            for(i = 0; i < attributes.length; i++) {
+                if (this[attributes[i]]() !== undefined) {
+                    attributeStrings.push(attributes[i] + '="' + this[attributes[i]]() + '"');
+                }
             }
-            if (this.marginleft() !== undefined) {
-                attributeStrings.push('marginleft="' + this.marginleft() + '"');
-            }
-            if (this.margintop() !== undefined) {
-                attributeStrings.push('margintop="' + this.margintop() + '"');
-            }
-            if (this.marginright() !== undefined) {
-                attributeStrings.push('marginright="' + this.marginright() + '"');
-            }
-            if (this.border() !== undefined) {
-                attributeStrings.push('border="' + this.border() + '"');
-            }
-            if (this.bordercolor() !== undefined) {
-                attributeStrings.push('bordercolor="' + this.bordercolor() + '"');
-            }
+
             return '<' + attributeStrings.join(' ') + '/>';
         };
 
