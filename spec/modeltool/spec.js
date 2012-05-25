@@ -145,10 +145,6 @@ describe("Spec", function () {
         });
     });
 
-
-
-
-
     describe("isBuiltWith method", function () {
         it("should take any number of string parameters", function () {
             expect(function () {
@@ -421,11 +417,37 @@ describe("Spec", function () {
         });
     });
 
+    it("should allow for a specification function to be sent in that bootstraps the model", function () {
+        var Person,
+        p;
+
+        Person = new Spec(function () {
+            this.hasA("firstName");
+            this.hasA("lastName");
+            this.hasAn("id");
+            this.hasMany("friends");
+            this.isBuiltWith("firstName", "lastName", "%id");
+        });
+
+        p = new Person("Mark", "Phillips");
+
+        expect(p instanceof Person).toBe(true);
+        expect(p.firstName()).toBe("Mark");
+        expect(p.lastName()).toBe("Phillips");
+        expect(p.id()).toBe(undefined);
+    });
+
+    it("should throw an error if the specification parameter is not a function", function () {
+        var s;
+        expect(function () {
+            s = new Spec(5);
+        }).toThrow("Spec: specification parameter must be a function");
+    });
+
 
     it("should work with this example", function () {
         var CardSpec,
         Card,
-        DeckSpec,
         Deck,
         d,
         i,
@@ -455,20 +477,19 @@ describe("Spec", function () {
         var c = new Card("5", "diamonds");
         expect(c.toString()).toBe("5 of diamonds");
 
-        DeckSpec = new Spec();
-        DeckSpec.hasMany("cards").validatesWith(function (card) {
-            return (card instanceof Card); 
-        });
+        Deck = new Spec(function () {
+            this.hasMany("cards").validatesWith(function (card) {
+                return (card instanceof Card); 
+            });
 
-        DeckSpec.isBuiltWith(function () {
-            for (i = 0; i < suits.length; ++i) {
-                for (j = 0; j < ranks.length; ++j) {
-                    this.cards().add(new Card(ranks[j], suits[i]));
+            this.isBuiltWith(function () {
+                for (i = 0; i < suits.length; ++i) {
+                    for (j = 0; j < ranks.length; ++j) {
+                        this.cards().add(new Card(ranks[j], suits[i]));
+                    }
                 }
-            }
+            });
         });
-    
-        Deck = DeckSpec.create();
 
         d = new Deck();
         for (i = 0; i < d.cards().size(); ++i) {

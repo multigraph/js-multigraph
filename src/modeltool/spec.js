@@ -8,9 +8,8 @@ if(!window.multigraph.ModelTool) {
 
 (function (ns) {
     "use strict";
-    function Spec(n) {
+    function Spec(specification) {
         var that = this,
-        name = n,
         methods = {},
         attributes = {},
         pattern,
@@ -180,7 +179,16 @@ if(!window.multigraph.ModelTool) {
                 initializer.call(this);
             };
             return this[name];
-        };        
+        };
+        if (specification && typeof(specification) === "function") {
+            var s = new Spec();
+            specification.call(s);
+            return s.create();
+        } else if (specification) {
+            throw new Error("Spec: specification parameter must be a function");
+            //throw error
+        }
+
     }
     ns.Spec = Spec;
 }(window.multigraph.ModelTool));
