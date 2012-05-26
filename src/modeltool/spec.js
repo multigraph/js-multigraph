@@ -16,14 +16,19 @@ if(!window.multigraph.ModelTool) {
         requiredConstructorArgs = [],
         optionalConstructorArgs = [],
         Method = window.multigraph.ModelTool.Method,
-        initializer = function () {};
+        initializer = function () {},
+        constructor = function () {},
+        model = function () { return constructor(arguments); };
+
+
+
 
         //temporary fix so API stays the same
         if (arguments.length > 1) {
             specification = arguments[arguments.length-1];
         }
         
-        this.hasA = function (attr) {
+        model.hasA = function (attr) {
             var attribute;
             if (typeof(attr) === 'string') {
                 //this[attr] = new ns.Attr(attr);
@@ -35,12 +40,12 @@ if(!window.multigraph.ModelTool) {
             }
         };
         
-        this.hasAn = this.hasA;
+        model.hasAn = model.hasA;
         
-        this.hasMany = function (attrs) {
+        model.hasMany = function (attrs) {
             var attribute;
             if(typeof(attrs) === 'string') {
-                //this[attrs] = new ns.AttrList(attrs);
+                //model[attrs] = new ns.AttrList(attrs);
                 attribute = new ns.AttrList(attrs);
                 attributes[attrs] = attribute;
                 return attribute;
@@ -50,7 +55,7 @@ if(!window.multigraph.ModelTool) {
             }
         };
 
-        this.attribute = function (attr) {
+        model.attribute = function (attr) {
             var result;
 
             if (typeof(attr) !== "string") {
@@ -65,7 +70,7 @@ if(!window.multigraph.ModelTool) {
             return result;
         };
 
-        this.method = function (m) {
+        model.method = function (m) {
             var result;
 
             if (typeof(m) !== "string") {
@@ -83,7 +88,7 @@ if(!window.multigraph.ModelTool) {
         };
 
 
-        this.isBuiltWith = function () {
+        model.isBuiltWith = function () {
             var optionalParamFlag = false,
             i;
 
@@ -114,16 +119,16 @@ if(!window.multigraph.ModelTool) {
             }
         };
         
-        this.looksLike = function (p) {
+        model.looksLike = function (p) {
             pattern = p;
         };
 
-        this.respondsTo = function (methodName, methodBody) {
+        model.respondsTo = function (methodName, methodBody) {
             var m = new Method(methodName, methodBody);
             methods[methodName] = m;
         };
         
-        this.create = function (name) {
+        model.create = function (name) {
             var i,
             err;
 
@@ -144,7 +149,7 @@ if(!window.multigraph.ModelTool) {
                 }
             }
 
-            this[name] = function () {
+            constructor = function () {
                 var i;
                 //add attributes
                 for(i in attributes) {
@@ -174,7 +179,7 @@ if(!window.multigraph.ModelTool) {
                     throw new Error(err);
                 } else {
                     for (i = 0; i < arguments.length; ++i) {
-                        if(i < requiredConstructorArgs.length) {
+                        if (i < requiredConstructorArgs.length) {
                             this[requiredConstructorArgs[i]](arguments[i]);
                         } else {
                             this[optionalConstructorArgs[i-requiredConstructorArgs.length]](arguments[i]);
@@ -183,8 +188,10 @@ if(!window.multigraph.ModelTool) {
                 }
                 initializer.call(this);
             };
-            return this[name];
+
+            return constructor;
         };
+
         if (specification && typeof(specification) === "function") {
             var s = new Spec();
             specification.call(s);
@@ -193,6 +200,7 @@ if(!window.multigraph.ModelTool) {
             throw new Error("Spec: specification parameter must be a function");
         }
 
+        return model;
     }
     ns.Spec = Spec;
     ns.Model = Spec;

@@ -492,9 +492,9 @@ describe("Spec", function () {
         });
 
         d = new Deck();
-        for (i = 0; i < d.cards().size(); ++i) {
+        //for (i = 0; i < d.cards().size(); ++i) {
             //console.log(d.cards().at(i).toString());
-        }
+        //}
 
         expect(d.cards().at(0).toString()).toEqual("2 of clubs");
         expect(d.cards().at(51).toString()).toEqual("A of spades");
