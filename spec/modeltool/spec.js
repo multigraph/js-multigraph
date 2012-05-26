@@ -1,15 +1,15 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
 
-describe("Spec", function () {
+describe("Model", function () {
     "use strict";
-    var Spec = window.multigraph.ModelTool.Spec,
+    var Model = window.multigraph.ModelTool.Model,
     Attr = window.multigraph.ModelTool.Attr,
     AttrList = window.multigraph.ModelTool.AttrList,
     s;
 
 
     beforeEach(function () {
-        s = new Spec();
+        s = new Model();
     });
 
     describe("hasA method", function () {
@@ -34,7 +34,7 @@ describe("Spec", function () {
         it("should throw an error if the parameter is not a string", function () {
             expect(function () {
                 s.hasA(5);
-            }).toThrow(new Error("Spec: hasA parameter must be a string"));
+            }).toThrow(new Error("Model: hasA parameter must be a string"));
         });
     });
 
@@ -50,7 +50,7 @@ describe("Spec", function () {
             expect(al instanceof window.multigraph.ModelTool.AttrList).toBe(true);
         });
 
-        it("should add the AttrList to the Spec object", function () {
+        it("should add the AttrList to the Model object", function () {
             s.hasMany("friends");
             expect(s.attribute("friends")).not.toBeUndefined();
             expect(s.attribute("friends") instanceof window.multigraph.ModelTool.AttrList).toBe(true);
@@ -72,7 +72,7 @@ describe("Spec", function () {
         });
 
         it("should be callable twice on 2 different specs", function() {
-            var s2 = new Spec(),
+            var s2 = new Model(),
             al = s.hasMany("friends"),
             al2 = s2.hasMany("cats");
 
@@ -85,7 +85,7 @@ describe("Spec", function () {
         it("should throw an error if the parameter is not a string", function () {
             expect(function () {
                 s.hasMany(5);
-            }).toThrow(new Error("Spec: hasMany parameter must be a string"));
+            }).toThrow(new Error("Model: hasMany parameter must be a string"));
         });
     });
 
@@ -109,13 +109,13 @@ describe("Spec", function () {
             var a;
             expect(function () {
                 a = s.attribute("name");
-            }).toThrow(new Error("Spec: attribute name does not exist!"));
+            }).toThrow(new Error("Model: attribute name does not exist!"));
         });
 
         it("should throw an error if the argument is not a string", function () {
             expect(function () {
                 s.attribute(5);
-            }).toThrow(new Error("Spec: expected string argument to attribute method, but recieved 5"));
+            }).toThrow(new Error("Model: expected string argument to attribute method, but recieved 5"));
         });
     });
 
@@ -135,13 +135,13 @@ describe("Spec", function () {
             var m;
             expect(function () {
                 m = s.method("isAwesome");
-            }).toThrow(new Error("Spec: method isAwesome does not exist!"));
+            }).toThrow(new Error("Model: method isAwesome does not exist!"));
         });
 
         it("should throw an error if the argument is not a string", function () {
             expect(function () {
                 s.method(5);
-            }).toThrow(new Error("Spec: expected string argument to method method, but recieved 5"));
+            }).toThrow(new Error("Model: expected string argument to method method, but recieved 5"));
         });
     });
 
@@ -149,17 +149,17 @@ describe("Spec", function () {
         it("should take any number of string parameters", function () {
             expect(function () {
                 s.isBuiltWith("larry", "moe", 3.4);
-            }).toThrow(new Error("Spec: isBuiltWith parameters must be strings except for a function as the optional final parameter"));
+            }).toThrow(new Error("Model: isBuiltWith parameters must be strings except for a function as the optional final parameter"));
             expect(function () {
                 s.isBuiltWith("larry", 3.4, "moe", "curly");
-            }).toThrow(new Error("Spec: isBuiltWith parameters must be strings except for a function as the optional final parameter"));
+            }).toThrow(new Error("Model: isBuiltWith parameters must be strings except for a function as the optional final parameter"));
             expect(function () {
                 s.isBuiltWith("larry", "moe", "curly", "semmy", "john");
-            }).not.toThrow(new Error("Spec: isBuiltWith parameters must be strings except for a function as the optional final parameter"));
-            s = new Spec();
+            }).not.toThrow(new Error("Model: isBuiltWith parameters must be strings except for a function as the optional final parameter"));
+            s = new Model();
             expect(function () {
                 s.isBuiltWith("larry", "curly", "moe", "semmy", "john", "mark", "anotherMark");
-            }).not.toThrow(new Error("Spec: isBuiltWith parameters must be strings except for a function as the optional final parameter"));
+            }).not.toThrow(new Error("Model: isBuiltWith parameters must be strings except for a function as the optional final parameter"));
         });
 
         it("should accept a function as an optional final argument", function () {
@@ -170,25 +170,25 @@ describe("Spec", function () {
             };
             expect(function () {
                 s.isBuiltWith("larry", "moe", f, g);
-            }).toThrow(new Error("Spec: isBuiltWith parameters must be strings except for a function as the optional final parameter"));
+            }).toThrow(new Error("Model: isBuiltWith parameters must be strings except for a function as the optional final parameter"));
             expect(function () {
                 s.isBuiltWith("larry", "moe", g, "curly", "semmy", "john");
-            }).toThrow(new Error("Spec: isBuiltWith parameters must be strings except for a function as the optional final parameter"));
+            }).toThrow(new Error("Model: isBuiltWith parameters must be strings except for a function as the optional final parameter"));
             expect(function () {
                 s.isBuiltWith("larry", f);
-            }).not.toThrow(new Error("Spec: isBuiltWith parameters must be strings except for a function as the optional final parameter"));
+            }).not.toThrow(new Error("Model: isBuiltWith parameters must be strings except for a function as the optional final parameter"));
         });
 
         it("should accept strings preceded with a % as the final parameters before the optional function", function () {
             expect(function () {
                 s.isBuiltWith("larry", "%moe", "curly");
-            }).toThrow(new Error("Spec: isBuiltWith requires parameters preceded with a % to be the final parameters before the optional function"));
+            }).toThrow(new Error("Model: isBuiltWith requires parameters preceded with a % to be the final parameters before the optional function"));
             expect(function () {
                 s.isBuiltWith("larry", "moe", "curly", "%semmy");
-            }).not.toThrow(new Error("Spec: isBuiltWith requires parameters preceded with a % to be the final parameters before the optional function"));
+            }).not.toThrow(new Error("Model: isBuiltWith requires parameters preceded with a % to be the final parameters before the optional function"));
             expect(function () {
                 s.isBuiltWith("larry", "moe", "curly", "%semmy", "%john", function () { return false; });
-            }).not.toThrow(new Error("Spec: isBuiltWith requires parameters preceded with a % to be the final parameters before the optional function"));
+            }).not.toThrow(new Error("Model: isBuiltWith requires parameters preceded with a % to be the final parameters before the optional function"));
         });
 
 
@@ -206,7 +206,7 @@ describe("Spec", function () {
         p;
 
         beforeEach(function () {
-            s = new Spec();
+            s = new Model();
             s.hasA("name").whichValidatesWith(function (name) {
                 return name.length > 3;
             }).and.errorsWith("name must be at least 3 characters");
@@ -291,7 +291,7 @@ describe("Spec", function () {
             p;
 
 
-            s = new Spec();
+            s = new Model();
             s.hasA("firstName");
             s.hasA("lastName");
             s.hasAn("id");
@@ -321,7 +321,7 @@ describe("Spec", function () {
             t3,
             c;
 
-            s = new Spec();
+            s = new Model();
             s.hasA("rank");
             s.hasA("suit");
             s.isBuiltWith("rank","suit");
@@ -333,7 +333,7 @@ describe("Spec", function () {
             expect(c.rank()).toBe("ace");
             expect(c.suit()).toBe("diamonds");
 
-            s = new Spec();
+            s = new Model();
             s.hasA("thing1");
             s.hasA("thing2");
             s.hasA("thing3");
@@ -364,7 +364,7 @@ describe("Spec", function () {
             t2,
             t3;
 
-            s = new Spec();
+            s = new Model();
 
             s.hasA("thing1").which.validatesWith(function () { thing1Validator(); return true; });
             s.hasA("thing2").which.validatesWith(function () { thing2Validator(); return true; });
@@ -399,7 +399,7 @@ describe("Spec", function () {
             t2,
             t3;
 
-            s = new Spec();
+            s = new Model();
             s.hasA("thing1");
             s.hasA("thing2");
             s.hasA("thing3");
@@ -421,7 +421,7 @@ describe("Spec", function () {
         var Person,
         p;
 
-        Person = new Spec(function () {
+        Person = new Model(function () {
             this.hasA("firstName");
             this.hasA("lastName");
             this.hasAn("id");
@@ -440,13 +440,13 @@ describe("Spec", function () {
     it("should throw an error if the specification parameter is not a function", function () {
         var s;
         expect(function () {
-            s = new Spec(5);
-        }).toThrow("Spec: specification parameter must be a function");
+            s = new Model(5);
+        }).toThrow("Model: specification parameter must be a function");
     });
 
 
     it("should work with this example", function () {
-        var CardSpec,
+        var CardModel,
         Card,
         Deck,
         d,
@@ -456,28 +456,28 @@ describe("Spec", function () {
         ranks = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"];
 
 
-        CardSpec = new Spec();
-        CardSpec.hasA("suit");
-        CardSpec.attribute("suit").validatesWith(function (suit) {
+        CardModel = new Model();
+        CardModel.hasA("suit");
+        CardModel.attribute("suit").validatesWith(function (suit) {
             return suits.indexOf(suit) > -1;
         });
 
-        CardSpec.isBuiltWith('rank','suit');
+        CardModel.isBuiltWith('rank','suit');
         
-        CardSpec.hasA("rank").whichValidatesWith(function (rank) {
+        CardModel.hasA("rank").whichValidatesWith(function (rank) {
                 return rank.indexOf(rank) > -1;
         });
 
-        CardSpec.looksLike(function () {
+        CardModel.looksLike(function () {
             return this.rank() + " of " + this.suit();
         });
 
-        Card = CardSpec.create();
+        Card = CardModel.create();
 
         var c = new Card("5", "diamonds");
         expect(c.toString()).toBe("5 of diamonds");
 
-        Deck = new Spec(function () {
+        Deck = new Model(function () {
             this.hasMany("cards").validatesWith(function (card) {
                 return (card instanceof Card); 
             });

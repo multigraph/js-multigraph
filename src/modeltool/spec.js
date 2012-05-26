@@ -8,7 +8,7 @@ if(!window.multigraph.ModelTool) {
 
 (function (ns) {
     "use strict";
-    function Spec(specification) {
+    function Model(specification) {
         var that = this,
         methods = {},
         attributes = {},
@@ -36,7 +36,7 @@ if(!window.multigraph.ModelTool) {
                 attributes[attr] = attribute;
                 return attribute;
             } else {
-                throw new Error("Spec: hasA parameter must be a string");
+                throw new Error("Model: hasA parameter must be a string");
             }
         };
         
@@ -51,7 +51,7 @@ if(!window.multigraph.ModelTool) {
                 return attribute;
                 //return this[attrs];
             } else {
-                throw new Error("Spec: hasMany parameter must be a string");
+                throw new Error("Model: hasMany parameter must be a string");
             }
         };
 
@@ -59,13 +59,13 @@ if(!window.multigraph.ModelTool) {
             var result;
 
             if (typeof(attr) !== "string") {
-                throw new Error("Spec: expected string argument to attribute method, but recieved " + attr);
+                throw new Error("Model: expected string argument to attribute method, but recieved " + attr);
             }
 
             result = attributes[attr];
 
             if (result === undefined) {
-                throw new Error("Spec: attribute " + attr + " does not exist!");
+                throw new Error("Model: attribute " + attr + " does not exist!");
             }
             return result;
         };
@@ -74,14 +74,14 @@ if(!window.multigraph.ModelTool) {
             var result;
 
             if (typeof(m) !== "string") {
-                throw new Error("Spec: expected string argument to method method, but recieved " + m);
+                throw new Error("Model: expected string argument to method method, but recieved " + m);
             }
 
 
             result = methods[m];
 
             if(result === undefined) {
-                throw new Error("Spec: method " + m + " does not exist!");
+                throw new Error("Model: method " + m + " does not exist!");
             }
 
             return result;
@@ -100,7 +100,7 @@ if(!window.multigraph.ModelTool) {
                     //in required parms
                     if (optionalParamFlag) {
                         //throw error
-                        throw new Error("Spec: isBuiltWith requires parameters preceded with a % to be the final parameters before the optional function");
+                        throw new Error("Model: isBuiltWith requires parameters preceded with a % to be the final parameters before the optional function");
                     } else {
                         //insert into required array
                         requiredConstructorArgs.push(arguments[i]);
@@ -114,7 +114,7 @@ if(!window.multigraph.ModelTool) {
                     //init function
                     initializer = arguments[i];
                 } else {
-                    throw new Error("Spec: isBuiltWith parameters must be strings except for a function as the optional final parameter");
+                    throw new Error("Model: isBuiltWith parameters must be strings except for a function as the optional final parameter");
                 }
             }
         };
@@ -193,15 +193,14 @@ if(!window.multigraph.ModelTool) {
         };
 
         if (specification && typeof(specification) === "function") {
-            var s = new Spec();
+            var s = new Model();
             specification.call(s);
             return s.create();
         } else if (specification) {
-            throw new Error("Spec: specification parameter must be a function");
+            throw new Error("Model: specification parameter must be a function");
         }
 
         return model;
     }
-    ns.Spec = Spec;
-    ns.Model = Spec;
+    ns.Model = Model;
 }(window.multigraph.ModelTool));
