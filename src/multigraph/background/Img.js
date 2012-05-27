@@ -23,7 +23,7 @@ if(!window.multigraph.Background) {
             return ns.utilityFunctions.validateCoordinatePair(position);
         });
         this.hasA("frame").which.validatesWith(function (frame) {
-            return ns.utilityFunctions.validateColor(frame);
+            return frame === 'padding' || frame === 'plot';
         });
 
     });

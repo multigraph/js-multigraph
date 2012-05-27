@@ -7,7 +7,7 @@ if(!window.multigraph) {
 
     var attributes = ['src', 'anchor', 'base', 'position', 'frame'];
     ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { 'mixinfuncs' : [] };
-    ns.jQueryXMLHandler.mixinfuncs.push(function(nsObj, parse, serialize) {
+    ns.jQueryXMLHandler.mixinfuncs.push(function (nsObj, parse, serialize) {
         
         nsObj.Background.Img[parse] = function (xml) {
             var img = new nsObj.Background.Img();
