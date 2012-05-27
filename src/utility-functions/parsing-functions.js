@@ -10,7 +10,7 @@ if (!window.multigraph.utilityFunctions) {
     "use strict";
 
     ns.utilityFunctions.parseInteger = function (number) {
-        return parseInt(number);
+        return parseInt(number, 10);
     };
 
     ns.utilityFunctions.parseDouble = function (number) {
