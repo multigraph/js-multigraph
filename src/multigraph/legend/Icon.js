@@ -9,7 +9,7 @@ if(!window.multigraph.Legend) {
 (function (ns) {
     "use strict";
 
-    var Icon = ns.ModelTool.Model( 'Icon', function () {
+    var Icon = new ns.ModelTool.Model( 'Icon', function () {
         this.hasA("height").which.validatesWith(function (height) {
             return typeof(height) === 'string';
         });

@@ -5,7 +5,7 @@ if(!window.multigraph) {
 (function (ns) {
     "use strict";
 
-    var Plot = window.multigraph.ModelTool.Model( 'Plot', function() {
+    var Plot = new ns.ModelTool.Model( 'Plot', function() {
         this.hasA("horizontalaxis").which.validatesWith(function(axis) {
             return axis instanceof window.multigraph.Axis;
         });

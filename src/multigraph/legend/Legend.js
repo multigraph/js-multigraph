@@ -12,7 +12,7 @@ if (!window.multigraph) {
         Icon = ns.Legend.Icon;
     }
 
-    Legend = ns.ModelTool.Model( 'Legend', function () {
+    Legend = new ns.ModelTool.Model( 'Legend', function () {
         this.hasA("visible").which.validatesWith(function (visible) {
             return visible === 'true' || visible === 'false';
         });

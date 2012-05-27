@@ -12,7 +12,7 @@ if (!window.multigraph) {
         Img = ns.Background.Img;
     }
 
-    Background = ns.ModelTool.Model( 'Background', function () {
+    Background = new ns.ModelTool.Model( 'Background', function () {
         this.hasA("color").which.validatesWith(function (color) {
             return ns.utilityFunctions.validateColor(color);
         });
