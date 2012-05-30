@@ -7,11 +7,12 @@ describe("Legend parsing", function () {
         jQueryXMLHandler = window.multigraph.jQueryXMLHandler,
         xmlString = '<background color="0x123456"/>',
         $xml,
-        l;
+        l,
+        b;
 
     beforeEach(function () {
         jQueryXMLHandler.mixin(window.multigraph, 'parseXML', 'serialize');
-	$xml = $(xmlString);
+        $xml = $(xmlString);
         l = Legend.parseXML($xml);
     });
 
@@ -29,7 +30,7 @@ describe("Legend parsing", function () {
         beforeEach(function () {
             xmlString = '<background color="0x123456"><img src="http://www.example.com/corgi_pool.gif"/></background>';
             jQueryXMLHandler.mixin(window.multigraph, 'parseXML', 'serialize');
-	    $xml = $(xmlString);
+            $xml = $(xmlString);
             b = Legend.parseXML($xml);
         });
 
@@ -44,7 +45,7 @@ describe("Legend parsing", function () {
         it("should be able to parse a background with children from XML, serialize it and get the same XML as the original", function () {
             var xmlString2 = '<background color="0x459996"><img src="http://www.example.com/flavor_explosion.png" anchor="0 1" frame="padding"/></background>';
             expect(l.serialize() === xmlString).toBe(true);
-	    l = Legend.parseXML($(xmlString2));
+            l = Legend.parseXML($(xmlString2));
             expect(l.serialize() === xmlString2).toBe(true);
         });
 

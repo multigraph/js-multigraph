@@ -5,7 +5,7 @@ if (!window.multigraph) {
 (function (ns) {
     "use strict";
 
-    var Icon = undefined,
+    var Icon,
         Legend;
 
     if (ns.Legend && ns.Legend.Icon) {

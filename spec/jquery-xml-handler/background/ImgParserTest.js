@@ -11,7 +11,7 @@ describe("Background Img parsing", function () {
 
     beforeEach(function () {
         jQueryXMLHandler.mixin(window.multigraph, 'parseXML', 'serialize');
-	$xml = $(xmlString);
+        $xml = $(xmlString);
         image = Img.parseXML($xml);
     });
 
@@ -42,7 +42,7 @@ describe("Background Img parsing", function () {
     it("should be able to parse a img from XML, serialize it and get the same XML as the original", function () {
         var xmlString2 = '<img src="http://www.example.com/sleepy_puppy.gif" base="1 0" position="1 -1"/>';
         expect(image.serialize() === xmlString).toBe(true);
-	image = Img.parseXML($(xmlString2));
+        image = Img.parseXML($(xmlString2));
         expect(image.serialize() === xmlString2).toBe(true);
     });
 

@@ -5,7 +5,7 @@ if (!window.multigraph) {
 (function (ns) {
     "use strict";
 
-    var Img = undefined,
+    var Img,
         Background;
 
     if (ns.Background && ns.Background.Img) {
