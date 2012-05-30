@@ -10,7 +10,7 @@ if (!window.multigraph.Plot) {
     "use strict";
 
     var Filter,
-        Option = undefined;
+        Option;
 
     if (ns.Plot.Filter && ns.Plot.Filter.Option) {
         Option = ns.Plot.Filter.Option;

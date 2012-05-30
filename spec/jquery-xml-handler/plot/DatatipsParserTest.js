@@ -56,7 +56,7 @@ describe("Plot Datatips parsing", function () {
         beforeEach(function () {
             xmlString = '<datatips format="datetime" bgcolor="0x123456" bgalpha="5" border="7" bordercolor="0xBA789B" pad="2"><variable format="number"/></datatips>';
             jQueryXMLHandler.mixin(window.multigraph, 'parseXML', 'serialize');
-	    $xml = $(xmlString);
+            $xml = $(xmlString);
             d = Datatips.parseXML($xml);
         });
 
@@ -66,7 +66,7 @@ describe("Plot Datatips parsing", function () {
 
         it("should be able to parse a datatips with multiple children from XML", function () {
             xmlString = '<datatips format="datetime" bgcolor="0x123456" bgalpha="5" border="7" bordercolor="0xBA789B" pad="2"><variable format="number"/><variable format="number"/><variable format="datetime"/></datatips>';
-	    $xml = $(xmlString);
+            $xml = $(xmlString);
             d = Datatips.parseXML($xml);
             expect(d).not.toBeUndefined();
         });

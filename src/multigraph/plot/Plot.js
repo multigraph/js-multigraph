@@ -6,10 +6,10 @@ if (!window.multigraph) {
     "use strict";
 
     var Plot,
-        Legend = undefined,
-        Filter = undefined,
-        Renderer = undefined,
-        Datatips = undefined;
+        Legend,
+        Filter,
+        Renderer,
+        Datatips;
 
     if (ns.Plot) {
         if (ns.Plot.Legend) {

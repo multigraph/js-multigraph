@@ -37,7 +37,7 @@ describe("Plot Renderer parsing", function () {
         beforeEach(function () {
             xmlString = '<renderer type="bar"><option name="barwidth" value="3"/></renderer>';
             jQueryXMLHandler.mixin(window.multigraph, 'parseXML', 'serialize');
-	    $xml = $(xmlString);
+            $xml = $(xmlString);
             r = Renderer.parseXML($xml);
         });
 
@@ -47,7 +47,7 @@ describe("Plot Renderer parsing", function () {
 
         it("should be able to parse a renderer with multiple children from XML", function () {
             xmlString = '<renderer type="point"><option name="size" value="3"/><option name="shape" value="circle"/><option name="linewidth" value="7"/></renderer>';
-	    $xml = $(xmlString);
+            $xml = $(xmlString);
             r = Renderer.parseXML($xml);
             expect(r).not.toBeUndefined();
         });

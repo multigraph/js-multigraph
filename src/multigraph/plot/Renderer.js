@@ -10,7 +10,7 @@ if (!window.multigraph.Plot) {
     "use strict";
 
     var Renderer,
-        Option = undefined;
+        Option;
 
     if (ns.Plot.Renderer && ns.Plot.Renderer.Option) {
         Option = ns.Plot.Renderer.Option;

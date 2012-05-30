@@ -36,7 +36,7 @@ describe("Plot Filter parsing", function () {
         beforeEach(function () {
             xmlString = '<filter type="number"><option name="fred" value="jim"/></filter>';
             jQueryXMLHandler.mixin(window.multigraph, 'parseXML', 'serialize');
-	    $xml = $(xmlString);
+            $xml = $(xmlString);
             f = Filter.parseXML($xml);
         });
 
@@ -48,7 +48,7 @@ describe("Plot Filter parsing", function () {
 
         it("should be able to parse a filter with multiple children from XML", function () {
             xmlString = '<filter type="datetime"><option name="fred"/><option name="larry" value="curly"/><option name="moe" value="jim"/></filter>';
-	    $xml = $(xmlString);
+            $xml = $(xmlString);
             f = Filter.parseXML($xml);
             expect(f).not.toBeUndefined();
         });

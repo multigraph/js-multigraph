@@ -5,7 +5,7 @@ if(!window.multigraph) {
 (function (ns) {
     "use strict";
 
-    var attributes = ['visible', 'base', 'anchor', 'position', 'frmae', 'color', 'bordercolor', 'opacity', 'border', 'rows', 'columns', 'cornerradius', 'padding'],
+    var attributes = ['visible', 'base', 'anchor', 'position', 'frame', 'color', 'bordercolor', 'opacity', 'border', 'rows', 'columns', 'cornerradius', 'padding'],
         Icon = ns.Legend.Icon;
 
     ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { 'mixinfuncs' : [] };

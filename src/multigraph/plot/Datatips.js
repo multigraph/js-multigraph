@@ -10,7 +10,7 @@ if (!window.multigraph.Plot) {
     "use strict";
 
     var Datatips,
-        DatatipsVariable = undefined;
+        DatatipsVariable;
 
     if (ns.Plot.Datatips && ns.Plot.Datatips.Variable) {
         DatatipsVariable = ns.Plot.Datatips.Variable;
