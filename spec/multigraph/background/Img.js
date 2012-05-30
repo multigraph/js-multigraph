@@ -48,8 +48,8 @@ describe("Background Img", function () {
 
     describe("frame attribute", function () {
         it("should be able to set/get the frame attribute", function () {
-            image.frame('3');
-            expect(image.frame() === '3').toBe(true);
+            image.frame('padding');
+            expect(image.frame() === 'padding').toBe(true);
         });
 
     });

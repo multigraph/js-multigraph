@@ -5,14 +5,14 @@ if (!window.multigraph) {
 (function (ns) {
     "use strict";
 
-    var Img = undefined,
+    var Img,
         Background;
 
     if (ns.Background && ns.Background.Img) {
         Img = ns.Background.Img;
     }
 
-    Background = ns.ModelTool.Model( 'Background', function () {
+    Background = new ns.ModelTool.Model( 'Background', function () {
         this.hasA("color").which.validatesWith(function (color) {
             return ns.utilityFunctions.validateColor(color);
         });

@@ -10,9 +10,9 @@ if(!window.multigraph) {
         i;
 
     ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { 'mixinfuncs' : [] };
-    ns.jQueryXMLHandler.mixinfuncs.push(function(nsObj, parse, serialize) {
+    ns.jQueryXMLHandler.mixinfuncs.push(function (nsObj, parse, serialize) {
 
-        nsObj.Background[parse] = function(xml) {
+        nsObj.Background[parse] = function (xml) {
             var background = new nsObj.Background();
             if (xml) {
                 background.color(xml.attr('color'));
@@ -23,7 +23,7 @@ if(!window.multigraph) {
             return background;
         };
 
-        nsObj.Background.prototype[serialize] = function() {
+        nsObj.Background.prototype[serialize] = function () {
             var attributeStrings = [],
                 output,
                 i;

@@ -5,7 +5,7 @@ if(!window.multigraph) {
 (function (ns) {
     "use strict";
 
-    var Graph = window.multigraph.ModelTool.Model( 'Graph', function () {
+    var Graph = new ns.ModelTool.Model( 'Graph', function () {
 
         this.hasA("window").which.validatesWith(function (window) {
                 return window instanceof window.multigraph.Window;

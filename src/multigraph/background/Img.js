@@ -9,7 +9,7 @@ if(!window.multigraph.Background) {
 (function (ns) {
     "use strict";
 
-    var Img = ns.ModelTool.Model( 'Img', function () {
+    var Img = new ns.ModelTool.Model( 'Img', function () {
         this.hasA("src").which.validatesWith(function (src) {
             return typeof(src) === 'string';
         });
@@ -23,7 +23,7 @@ if(!window.multigraph.Background) {
             return ns.utilityFunctions.validateCoordinatePair(position);
         });
         this.hasA("frame").which.validatesWith(function (frame) {
-            return ns.utilityFunctions.validateColor(frame);
+            return frame === 'padding' || frame === 'plot';
         });
 
     });

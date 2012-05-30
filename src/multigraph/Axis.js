@@ -5,7 +5,7 @@ if(!window.multigraph) {
 (function (ns) {
     "use strict";
 
-    var Axis = window.multigraph.ModelTool.Model( 'Axis', function () {
+    var Axis = new ns.ModelTool.Model( 'Axis', function () {
         this.hasAn("id").which.validatesWith(function (id) {
             return typeof(id) === 'string';
         });

@@ -496,7 +496,7 @@ describe("Model", function () {
 
         d = new Deck();
         //for (i = 0; i < d.cards().size(); ++i) {
-        //    console.log(d.cards().at(i).toString());
+            //console.log(d.cards().at(i).toString());
         //}
 
         expect(d.cards().at(0).toString()).toEqual("2 of clubs");

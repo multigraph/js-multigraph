@@ -5,7 +5,7 @@ if(!window.multigraph) {
 (function (ns) {
     "use strict";
 
-    var Window = ns.ModelTool.Model( 'Window', function () {
+    var Window = new ns.ModelTool.Model( 'Window', function () {
         this.hasA("width").which.validatesWith(function (width) {
             return ns.utilityFunctions.validateInteger(width);
         });

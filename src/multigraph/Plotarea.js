@@ -5,7 +5,7 @@ if(!window.multigraph) {
 (function (ns) {
     "use strict";
 
-    var Plotarea = ns.ModelTool.Model('Plotarea', function () {
+    var Plotarea = new ns.ModelTool.Model('Plotarea', function () {
         this.hasA("marginbottom").which.validatesWith(function (marginbottom) {
             return ns.utilityFunctions.validateInteger(marginbottom);
         });
