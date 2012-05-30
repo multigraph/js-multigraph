@@ -24,16 +24,16 @@ if (!window.multigraph) {
 //                plot.verticalaxis(graph.axisById( xml.find(">verticalaxis").attr('ref') ));
 
                 if (xml.find('legend')) {
-                    plot.legend(Legend.parseXML(xml.find('legend')));
+                    plot.legend(Legend[parse](xml.find('legend')));
                 }
                 if (xml.find('renderer')) {
-                    plot.renderer(Renderer.parseXML(xml.find("renderer")));
+                    plot.renderer(Renderer[parse](xml.find("renderer")));
                 }
                 if (xml.find('filter')) {
-                    plot.filter(Filter.parseXML(xml.find("filter")));
+                    plot.filter(Filter[parse](xml.find("filter")));
                 }
                 if (xml.find('datatips')) {
-                    plot.datatips(Datatips.parseXML(xml.find("datatips")));
+                    plot.datatips(Datatips[parse](xml.find("datatips")));
                 }
 
             }
@@ -54,19 +54,19 @@ if (!window.multigraph) {
                 output += '<verticalaxis ref="' + this.verticalaxis().id()+ '"/>';
             }
 
-            legendString = this.legend().serialize();
+            legendString = this.legend()[serialize]();
             if (legendString !== '<legend/>') {
                 output += legendString;
             }
-            rendererString = this.renderer().serialize();
+            rendererString = this.renderer()[serialize]();
             if (rendererString !== '<renderer/>') {
                 output += rendererString;
             }
-            filterString = this.filter().serialize();
+            filterString = this.filter()[serialize]();
             if (filterString !== '<filter/>') {
                 output += filterString;
             }
-            datatipsString = this.datatips().serialize();
+            datatipsString = this.datatips()[serialize]();
             if (datatipsString !== '<datatips/>') {
                 output += datatipsString;
             }

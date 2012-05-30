@@ -28,7 +28,7 @@ if(!window.multigraph) {
                 legend.cornerradius(xml.attr('cornerradius'));
                 legend.padding(xml.attr('padding'));
                 if (xml.find('icon')) {
-                    legend.icon(Icon.parseXML(xml.find("icon")));
+                    legend.icon(Icon[parse](xml.find("icon")));
                 }
             }
             return legend;
@@ -49,7 +49,7 @@ if(!window.multigraph) {
 
             output = '<' + attributeStrings.join(' ');
             if (this.icon()) {
-                output += '>' + this.icon().serialize() + '</legend>';
+                output += '>' + this.icon()[serialize]() + '</legend>';
             } else {
                 output += '/>';
             }
