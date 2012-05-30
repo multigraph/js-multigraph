@@ -231,7 +231,7 @@ describe("Model", function () {
                 return numA+numB;
             });
             
-            Person = s.create();
+            Person = s;
             p = new Person();
             p.name("Mark");
 
@@ -326,20 +326,25 @@ describe("Model", function () {
             s.hasA("suit");
             s.isBuiltWith("rank","suit");
 
-            Card = s.create();
+            Card = new Model();
+
+            Card.hasA("rank");
+            Card.hasA("suit");
+            Card.isBuiltWith("rank","suit");
 
             c = new Card("ace", "diamonds");
             
             expect(c.rank()).toBe("ace");
             expect(c.suit()).toBe("diamonds");
+            expect(c.hasA).toBe(undefined);
+            expect(Card.hasA).not.toBe(undefined);
 
-            s = new Model();
-            s.hasA("thing1");
-            s.hasA("thing2");
-            s.hasA("thing3");
-            s.isBuiltWith("thing1", "%thing2", "%thing3");
+            Thing = new Model();
+            Thing.hasA("thing1");
+            Thing.hasA("thing2");
+            Thing.hasA("thing3");
+            Thing.isBuiltWith("thing1", "%thing2", "%thing3");
 
-            Thing = s.create();
             t1 = new Thing(5);
             t2 = new Thing(10, 20);
             t3 = new Thing(20, 30, 40);
@@ -364,14 +369,14 @@ describe("Model", function () {
             t2,
             t3;
 
-            s = new Model();
+            Thing = new Model();
 
-            s.hasA("thing1").which.validatesWith(function () { thing1Validator(); return true; });
-            s.hasA("thing2").which.validatesWith(function () { thing2Validator(); return true; });
-            s.hasA("thing3").which.validatesWith(function () { thing3Validator(); return true; });
-            s.isBuiltWith("thing1", "%thing2", "%thing3");
+            Thing.hasA("thing1").which.validatesWith(function () { thing1Validator(); return true; });
+            Thing.hasA("thing2").which.validatesWith(function () { thing2Validator(); return true; });
+            Thing.hasA("thing3").which.validatesWith(function () { thing3Validator(); return true; });
+            Thing.isBuiltWith("thing1", "%thing2", "%thing3");
 
-            Thing = s.create();
+            //Thing = s.create();
             t1 = new Thing(10);
             expect(thing1Validator).toHaveBeenCalled();
             expect(thing2Validator).not.toHaveBeenCalled();
@@ -399,13 +404,13 @@ describe("Model", function () {
             t2,
             t3;
 
-            s = new Model();
-            s.hasA("thing1");
-            s.hasA("thing2");
-            s.hasA("thing3");
-            s.isBuiltWith("thing1", "%thing2", "%thing3", initializer);
+            Thing = new Model();
+            Thing.hasA("thing1");
+            Thing.hasA("thing2");
+            Thing.hasA("thing3");
+            Thing.isBuiltWith("thing1", "%thing2", "%thing3", initializer);
 
-            Thing = s.create();
+            //Thing = s.create();
             t1 = new Thing(5);
             expect(initializer).toHaveBeenCalled();
 
@@ -435,6 +440,7 @@ describe("Model", function () {
         expect(p.firstName()).toBe("Mark");
         expect(p.lastName()).toBe("Phillips");
         expect(p.id()).toBe(undefined);
+        expect(Person.hasA).not.toBe(undefined);
     });
 
     it("should throw an error if the specification parameter is not a function", function () {
@@ -446,8 +452,7 @@ describe("Model", function () {
 
 
     it("should work with this example", function () {
-        var CardModel,
-        Card,
+        var Card,
         Deck,
         d,
         i,
@@ -456,23 +461,21 @@ describe("Model", function () {
         ranks = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"];
 
 
-        CardModel = new Model();
-        CardModel.hasA("suit");
-        CardModel.attribute("suit").validatesWith(function (suit) {
+        Card = new Model();
+        Card.hasA("suit");
+        Card.attribute("suit").validatesWith(function (suit) {
             return suits.indexOf(suit) > -1;
         });
 
-        CardModel.isBuiltWith('rank','suit');
+        Card.isBuiltWith('rank','suit');
         
-        CardModel.hasA("rank").whichValidatesWith(function (rank) {
+        Card.hasA("rank").whichValidatesWith(function (rank) {
                 return rank.indexOf(rank) > -1;
         });
 
-        CardModel.looksLike(function () {
+        Card.looksLike(function () {
             return this.rank() + " of " + this.suit();
         });
-
-        Card = CardModel.create();
 
         var c = new Card("5", "diamonds");
         expect(c.toString()).toBe("5 of diamonds");
@@ -493,12 +496,10 @@ describe("Model", function () {
 
         d = new Deck();
         //for (i = 0; i < d.cards().size(); ++i) {
-            //console.log(d.cards().at(i).toString());
+        //    console.log(d.cards().at(i).toString());
         //}
 
         expect(d.cards().at(0).toString()).toEqual("2 of clubs");
         expect(d.cards().at(51).toString()).toEqual("A of spades");
-        
-
     });
 });
