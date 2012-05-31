@@ -42,7 +42,7 @@ if(!window.multigraph) {
         }
     }
 
-    var Axis = new ns.ModelTool.Model( 'Axis', function () {
+    Axis = new ns.ModelTool.Model( 'Axis', function () {
         this.hasA("title").which.validatesWith(function (title) {
             return title instanceof ns.Axis.Title;
         });

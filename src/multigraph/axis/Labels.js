@@ -38,7 +38,7 @@ if (!window.multigraph.Axis) {
         this.hasA("spacing").which.validatesWith(function (spacing) {
             return typeof(spacing) === 'string';
         });
-        this.hasA("function").which.validatesWith(function (funct) {
+        this.hasA("labelsfunction").which.validatesWith(function (funct) {
             return typeof(funct) === 'string';
         });
         this.hasA("densityfactor").which.validatesWith(function (densityfactor) {
