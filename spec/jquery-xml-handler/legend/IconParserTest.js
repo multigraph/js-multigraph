@@ -15,8 +15,9 @@ describe("Legend Icon parsing", function () {
         icon = Icon.parseXML($xml);
     });
 
-    it("should be able to parse a background from XML", function () {
+    it("should be able to parse a icon from XML", function () {
         expect(icon).not.toBeUndefined();
+        expect(icon instanceof Icon).toBe(true);
     });
 
     it("should be able to parse a icon from XML and read its 'height' attribute", function () {

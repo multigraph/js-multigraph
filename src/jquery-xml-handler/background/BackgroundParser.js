@@ -17,7 +17,7 @@ if(!window.multigraph) {
             if (xml) {
                 background.color(xml.attr('color'));
                 if (xml.find('img')) {
-                    background.img(Img.parseXML(xml.find("img")));
+                    background.img(Img[parse](xml.find("img")));
                 }
             }
             return background;
@@ -38,7 +38,7 @@ if(!window.multigraph) {
 
             output = '<' + attributeStrings.join(' ');
             if (this.img()) {
-                output += '>' + this.img().serialize() + '</background>';
+                output += '>' + this.img()[serialize]() + '</background>';
             } else {
                 output += '/>';
             }
