@@ -31,8 +31,12 @@
 
   <target name="lint">
     <apply executable="java" failonerror="true">
-      <fileset dir="${src.dir}" includes="**/*.js"/>
-      <fileset dir="${test.dir}" includes="**/*.js"/>
+      <fileset dir="${src.dir}" includes="**/*.js">
+        <modified />
+      </fileset>
+      <fileset dir="${test.dir}" includes="**/*.js">
+        <modified />
+      </fileset>
       <arg line="-jar" />
       <arg path="${rhino}" />
       <arg path="${jshint}" />
