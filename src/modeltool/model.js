@@ -17,6 +17,8 @@ if(!window.multigraph.ModelTool) {
         requiredConstructorArgs = [],
         optionalConstructorArgs = [],
         Method = window.multigraph.ModelTool.Method,
+        property,
+        listProperties,
         initializer = function () {},
         constructor = function () {},
         model = function () {
@@ -59,37 +61,52 @@ if(!window.multigraph.ModelTool) {
             }
         };
 
-        model.attribute = function (attr) {
+        /* private method that abstracts the following two */
+        property = function (type, name) {
             var result;
 
-            if (typeof(attr) !== "string") {
-                throw new Error("Model: expected string argument to attribute method, but recieved " + attr);
+            if (typeof(name) !== "string") {
+                throw new Error("Model: expected string argument to " + type + " method, but recieved " + name);
             }
 
-            result = attributes[attr];
+            result = type==="attribute"?attributes[name]:methods[name];
 
             if (result === undefined) {
-                throw new Error("Model: attribute " + attr + " does not exist!");
+                throw new Error("Model: " + type + " " + name  + " does not exist!");
             }
+
             return result;
+        }
+
+        listProperties = function (type) {
+            var i,
+            list = [],
+            properties = type==="attributes"?attributes:methods;
+            
+            for (i in properties) {
+                list.push(i);
+            }
+
+            return list;
+        }
+
+
+
+        model.attribute = function (attr) {
+            return property("attribute", attr);
         };
+
+        model.attributes = function () {
+            return listProperties("attributes");
+        }
 
         model.method = function (m) {
-            var result;
-
-            if (typeof(m) !== "string") {
-                throw new Error("Model: expected string argument to method method, but recieved " + m);
-            }
-
-            result = methods[m];
-
-            if(result === undefined) {
-                throw new Error("Model: method " + m + " does not exist!");
-            }
-
-            return result;
+            return property("method", m);
         };
-
+        
+        model.methods = function () {
+            return listProperties("methods");
+        };
 
         model.isBuiltWith = function () {
             var optionalParamFlag = false,
@@ -135,10 +152,8 @@ if(!window.multigraph.ModelTool) {
             methods[methodName] = m;
         };
         
-        model.create = function (name) {
-            var that = this,
-            i,
-            err;
+        model.validate = function () {
+            var i;
 
             //check to make sure that isBuiltWith has actual attributes
             for (i = 0; i < requiredConstructorArgs.length; ++i) {
@@ -157,8 +172,19 @@ if(!window.multigraph.ModelTool) {
                 }
             }
 
+            //check for method/attribute collisions
+            //need to implement methods and attributes functions first
+        };
+
+        model.create = function (name) {
+            var that = this,
+            err;
+
+            model.validate();
+
             constructor = function () {
                 var i;
+
                 //add attributes
                 for(i in attributes) {
                     if(attributes.hasOwnProperty(i)) {

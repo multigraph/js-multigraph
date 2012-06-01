@@ -119,6 +119,38 @@ describe("Model", function () {
         });
     });
 
+    describe("attributes method", function () {
+        it("should return an empty array if the model has no attributes", function () {
+            expect(s.attributes()).toEqual([]);
+        });
+
+        it("should return an array of Model attribute names", function () {
+            s.hasA("firstName");
+            s.hasA("lastName");
+            s.hasAn("id");
+            expect(s.attributes().length === 3);
+            expect(s.attributes().indexOf("firstName") > -1).toBe(true);
+            expect(s.attributes().indexOf("lastName") > -1).toBe(true);
+            expect(s.attributes().indexOf("id") > -1).toBe(true);
+        });
+
+
+    });
+
+    describe("methods method", function () {
+        it("should return an empty array if the model has no methods", function () {
+            expect(s.methods()).toEqual([]);
+        });
+
+        it("should return an array of Model method names", function () {
+            s.respondsTo("runsForOffice", function () {});
+            s.respondsTo("somethingElse", function () {});
+            expect(s.methods().length === 2);
+            expect(s.methods().indexOf("runsForOffice") > -1).toBe(true);
+            expect(s.methods().indexOf("somethingElse") > -1).toBe(true);
+        });
+    });
+
     describe("method method", function () {
         it("should return the method object associated with the method name", function () {
             var m;
@@ -200,6 +232,40 @@ describe("Model", function () {
         });
     });
 
+    describe("validate method", function () {
+        var Person,
+        m;
+
+        beforeEach(function () {
+            m = new Model();
+        });
+
+        it("should throw an error if any of the strings are not defined as attributes but are specified in isBuiltWith", function () {
+            m.hasA("firstName");
+            m.hasA("lastName");
+            m.hasAn("id");
+            m.isBuiltWith("firstName","lastName","ied");
+            expect(function () {
+                Person = m.validate();
+            }).toThrow(new Error("ied, specified in the isBuiltWith method, is not an attribute"));
+
+            m.isBuiltWith("firstName","lastName","id");
+            expect(function () {
+                Person = m.validate();
+            }).not.toThrow(new Error("ied, specified in the isBuiltWith method, is not an attribute"));
+
+            m.isBuiltWith("firstName","lastName","%ied");
+            expect(function () {
+                Person = m.validate();
+            }).toThrow(new Error("ied, specified in the isBuiltWith method, is not an attribute"));
+
+            m.isBuiltWith("firstName","lastName","%id");
+            expect(function () {
+                Person = m.validate();
+            }).not.toThrow(new Error("ied, specified in the isBuiltWith method, is not an attribute"));
+        });
+    });
+
     describe("create method", function () {
         var s,
         Person,
@@ -259,31 +325,7 @@ describe("Model", function () {
             expect(p.addsTwoNumbers(3,2)).toEqual(5);
         });
 
-        it("should throw an error if any of the strings are not defined as attributes but are specified in isBuiltWith", function () {
-            var Person;
-            s.hasA("firstName");
-            s.hasA("lastName");
-            s.hasAn("id");
-            s.isBuiltWith("firstName","lastName","ied");
-            expect(function () {
-                Person = s.create();
-            }).toThrow(new Error("ied, specified in the isBuiltWith method, is not an attribute"));
 
-            s.isBuiltWith("firstName","lastName","id");
-            expect(function () {
-                Person = s.create();
-            }).not.toThrow(new Error("ied, specified in the isBuiltWith method, is not an attribute"));
-
-            s.isBuiltWith("firstName","lastName","%ied");
-            expect(function () {
-                Person = s.create();
-            }).toThrow(new Error("ied, specified in the isBuiltWith method, is not an attribute"));
-
-            s.isBuiltWith("firstName","lastName","%id");
-            expect(function () {
-                Person = s.create();
-            }).not.toThrow(new Error("ied, specified in the isBuiltWith method, is not an attribute"));
-        });
 
 
         it("should require the constructor to be called with the non-% parameters", function () {
