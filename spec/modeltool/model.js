@@ -274,7 +274,7 @@ describe("Model", function () {
         });
     });
 
-    describe("create method", function () {
+    describe("resulting constructor function", function () {
         var s,
         Person,
         p;
@@ -333,22 +333,18 @@ describe("Model", function () {
             expect(p.addsTwoNumbers(3,2)).toEqual(5);
         });
 
-
-
-
         it("should require the constructor to be called with the non-% parameters", function () {
             var Person,
             p;
 
+            Person = new Model();
+            Person.hasA("firstName");
+            Person.hasA("lastName");
+            Person.hasAn("id");
 
-            s = new Model();
-            s.hasA("firstName");
-            s.hasA("lastName");
-            s.hasAn("id");
+            Person.isBuiltWith("firstName", "lastName", "%id");
 
-            s.isBuiltWith("firstName", "lastName", "%id");
-
-            Person = s.create();
+            //Person = s.create();
             
             expect(function () {
                 p = new Person("semmy");
@@ -545,9 +541,6 @@ describe("Model", function () {
         });
 
         d = new Deck();
-        //for (i = 0; i < d.cards().size(); ++i) {
-            //console.log(d.cards().at(i).toString());
-        //}
 
         expect(d.cards().at(0).toString()).toEqual("2 of clubs");
         expect(d.cards().at(51).toString()).toEqual("A of spades");

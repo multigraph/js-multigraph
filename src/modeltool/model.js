@@ -19,11 +19,12 @@ if(!window.multigraph.ModelTool) {
         Method = window.multigraph.ModelTool.Method,
         property,
         listProperties,
+        create,
         initializer = function () {},
         constructor = function () {},
         model = function () {
             if (modified) {
-                model.create();
+                create();
             }
             return constructor.apply(this, arguments);
         };
@@ -61,7 +62,7 @@ if(!window.multigraph.ModelTool) {
             }
         };
 
-        /* private method that abstracts the following two */
+        /* private method that abstracts attribute/method */
         property = function (type, name) {
             var result;
 
@@ -78,6 +79,7 @@ if(!window.multigraph.ModelTool) {
             return result;
         };
 
+        /* private method that abstracts attributes/methods */
         listProperties = function (type) {
             var i,
             list = [],
@@ -91,7 +93,6 @@ if(!window.multigraph.ModelTool) {
 
             return list;
         };
-
 
         model.attribute = function (attr) {
             return property("attribute", attr);
@@ -181,33 +182,31 @@ if(!window.multigraph.ModelTool) {
                     throw new Error("Model: invalid model specification to " + attributes[i] + " being both an attribute and method");
                 }
             }
-
-            //looks good!
-            return true;
         };
 
-        model.create = function (name) {
+        /* private function that creates the constructor */
+        create = function (name) {
             var that = this,
             err;
 
+            //validate the model first
             model.validate();
 
             constructor = function () {
                 var i;
 
-                //add attributes
-                for(i in attributes) {
-                    if(attributes.hasOwnProperty(i)) {
-                        attributes[i].addTo(this);
+                var addProperties = function (obj, type) {
+                    var properties = type==="attributes"?attributes:methods;
+                    for (i in properties) {
+                        if (properties.hasOwnProperty(i)) {
+                            properties[i].addTo(obj);
+                        }
                     }
-                }
+                };
 
-                //add methods
-                for(i in methods) {
-                    if(methods.hasOwnProperty(i)) {
-                        methods[i].addTo(this);
-                    }
-                }
+                //add attributes
+                addProperties(this, "attributes");
+                addProperties(this, "methods");
 
                 this.toString = pattern;
 
