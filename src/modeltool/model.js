@@ -33,33 +33,34 @@ if(!window.multigraph.ModelTool) {
         if (arguments.length > 1) {
             specification = arguments[arguments.length-1];
         }
-        
-        model.hasA = function (attr) {
+
+        /* private method that abstracts hasA/hasMany */
+        var hasAProperty = function (type, name) {
             var attribute;
 
+            var Property = type==="Attr"?ns.Attr:ns.AttrList,
+            methodName = type==="Attr"?"hasA":"hasMany",
+            attribute;
+
             modified = true;
-            if (typeof(attr) === 'string') {
-                attribute = new ns.Attr(attr);
-                attributes[attr] = attribute;
+            
+            if (typeof(name) === 'string') {
+                attribute = new Property(name);
+                attributes[name] = attribute;
                 return attribute;
             } else {
-                throw new Error("Model: hasA parameter must be a string");
+                throw new Error("Model: " + methodName + " parameter must be a string");
             }
+        }
+
+        model.hasA = function (attr) {
+            return hasAProperty("Attr", attr);
         };
         
         model.hasAn = model.hasA;
         
         model.hasMany = function (attrs) {
-            var attribute;
-
-            modified = true;
-            if(typeof(attrs) === 'string') {
-                attribute = new ns.AttrList(attrs);
-                attributes[attrs] = attribute;
-                return attribute;
-            } else {
-                throw new Error("Model: hasMany parameter must be a string");
-            }
+            return hasAProperty("AttrList", attrs);
         };
 
         /* private method that abstracts attribute/method */
