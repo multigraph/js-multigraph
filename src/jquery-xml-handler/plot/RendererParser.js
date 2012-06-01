@@ -15,9 +15,11 @@ if (!window.multigraph) {
         nsObj.Plot.Renderer[parse] = function (xml) {
             var renderer = new nsObj.Plot.Renderer();
             if (xml) {
-                $.each(xml.find(">option"), function(i,e) {
-                    renderer.options().add( nsObj.Plot.Renderer.Option[parse]($(e)) );
-                });
+                if (xml.find('option').length > 0) {
+                    $.each(xml.find(">option"), function(i,e) {
+                        renderer.options().add( nsObj.Plot.Renderer.Option[parse]($(e)) );
+                    });
+                }
                 renderer.type(xml.attr('type'));
             }
             return renderer;

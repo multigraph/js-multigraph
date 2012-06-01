@@ -14,9 +14,11 @@ if (!window.multigraph) {
         nsObj.Plot.Filter[parse] = function (xml) {
             var filter = new nsObj.Plot.Filter();
             if (xml) {
-                $.each(xml.find(">option"), function(i,e) {
-                    filter.options().add( nsObj.Plot.Filter.Option[parse]($(e)) );
-                });
+                if (xml.find('option').length > 0) {
+                    $.each(xml.find(">option"), function(i,e) {
+                        filter.options().add( nsObj.Plot.Filter.Option[parse]($(e)) );
+                    });
+                }
                 filter.type(xml.attr('type'));
             }
             return filter;

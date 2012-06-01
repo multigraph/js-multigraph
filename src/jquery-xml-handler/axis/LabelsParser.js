@@ -26,7 +26,7 @@ if (!window.multigraph.Axis) {
                 labels.spacing(xml.attr('spacing'));
                 labels.labelsfunction(xml.attr('function'));
                 labels.densityfactor(xml.attr('densityfactor'));
-                if (xml.find('>label')) {
+                if (xml.find('>label').length > 0) {
                     $.each(xml.find('>label'), function (i,e) {
                         labels.label().add( nsObj.Axis.Labels.Label[parse]($(e)) );
                     });

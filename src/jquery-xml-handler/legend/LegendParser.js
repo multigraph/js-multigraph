@@ -27,7 +27,7 @@ if(!window.multigraph) {
                 legend.columns(xml.attr('columns'));
                 legend.cornerradius(xml.attr('cornerradius'));
                 legend.padding(xml.attr('padding'));
-                if (xml.find('icon')) {
+                if (xml.find('icon').length > 0) {
                     legend.icon(Icon[parse](xml.find("icon")));
                 }
             }

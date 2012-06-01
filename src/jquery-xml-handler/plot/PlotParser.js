@@ -23,16 +23,16 @@ if (!window.multigraph) {
                 // same for verticalaxis property...
 //                plot.verticalaxis(graph.axisById( xml.find(">verticalaxis").attr('ref') ));
 
-                if (xml.find('legend')) {
+                if (xml.find('legend').length > 0) {
                     plot.legend(Legend[parse](xml.find('legend')));
                 }
-                if (xml.find('renderer')) {
+                if (xml.find('renderer').length > 0) {
                     plot.renderer(Renderer[parse](xml.find("renderer")));
                 }
-                if (xml.find('filter')) {
+                if (xml.find('filter').length > 0) {
                     plot.filter(Filter[parse](xml.find("filter")));
                 }
-                if (xml.find('datatips')) {
+                if (xml.find('datatips').length > 0) {
                     plot.datatips(Datatips[parse](xml.find("datatips")));
                 }
 
@@ -54,21 +54,17 @@ if (!window.multigraph) {
                 output += '<verticalaxis ref="' + this.verticalaxis().id()+ '"/>';
             }
 
-            legendString = this.legend()[serialize]();
-            if (legendString !== '<legend/>') {
-                output += legendString;
+            if (this.legend()) {
+                output += this.legend()[serialize]();
             }
-            rendererString = this.renderer()[serialize]();
-            if (rendererString !== '<renderer/>') {
-                output += rendererString;
+            if (this.renderer()) {
+                output += this.renderer()[serialize]();
             }
-            filterString = this.filter()[serialize]();
-            if (filterString !== '<filter/>') {
-                output += filterString;
+            if (this.filter()) {
+                output += this.filter()[serialize]();
             }
-            datatipsString = this.datatips()[serialize]();
-            if (datatipsString !== '<datatips/>') {
-                output += datatipsString;
+            if (this.datatips()) {
+                output += this.datatips()[serialize]();
             }
 
             output += '</plot>';

@@ -14,9 +14,11 @@ if (!window.multigraph) {
         nsObj.Plot.Datatips[parse] = function (xml) {
             var datatips = new nsObj.Plot.Datatips();
             if (xml) {
-                $.each(xml.find("variable"), function(i,e) {
-                    datatips.variables().add( nsObj.Plot.Datatips.Variable[parse]($(e)) );
-                });
+                if (xml.find('variable').length > 0) {
+                    $.each(xml.find("variable"), function(i,e) {
+                        datatips.variables().add( nsObj.Plot.Datatips.Variable[parse]($(e)) );
+                    });
+                }
                 datatips.format(xml.attr('format'));
                 datatips.bgcolor(xml.attr('bgcolor'));
                 datatips.bgalpha(xml.attr('bgalpha'));

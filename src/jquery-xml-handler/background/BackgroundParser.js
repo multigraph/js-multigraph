@@ -16,7 +16,7 @@ if(!window.multigraph) {
             var background = new nsObj.Background();
             if (xml) {
                 background.color(xml.attr('color'));
-                if (xml.find('img')) {
+                if (xml.find('img').length > 0) {
                     background.img(Img[parse](xml.find("img")));
                 }
             }
