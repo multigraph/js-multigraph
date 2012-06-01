@@ -109,7 +109,7 @@ describe("Axis parsing", function () {
 
     it("should be able to parse an axis from XML, then serialize it, and get the same XML as the original", function () {
         var xmlString2 = '<verticalaxis id="y" type="datetime" max="10"/>',
-	    b = Axis.parseXML($(xmlString2), 'vertical');
+        b = Axis.parseXML($(xmlString2), 'vertical');
         expect(axis.serialize() === xmlString).toBe(true);
         expect(b.serialize() === xmlString2).toBe(true);
     });
