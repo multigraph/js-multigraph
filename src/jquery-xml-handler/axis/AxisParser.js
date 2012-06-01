@@ -5,7 +5,7 @@ if (!window.multigraph) {
 (function (ns) {
     "use strict";
 
-    var attributes = ['id', 'type', 'length', 'position', 'pregap', 'postgap', 'anchor', 'base', 'min', 'minoffset', 'minposition', 'max', 'maxoffset', 'maxposition', 'positionbase', 'color'],
+    var attributes = ['id', 'type', 'length', 'position', 'pregap', 'postgap', 'anchor', 'base', 'min', 'minoffset', 'minposition', 'max', 'maxoffset', 'maxposition', 'positionbase', 'color', 'tickmin', 'tickmax', 'highlightstyle', 'linewidth'],
         children = ['title', 'labels', 'grid', 'pan', 'zoom', 'binding', 'axiscontrols'];
 
     ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { 'mixinfuncs' : [] };
@@ -14,29 +14,19 @@ if (!window.multigraph) {
         nsObj.Axis[parse] = function(xml, orient) {
             var orientation = $(xml).prop('tagName').toLowerCase().replace('axis', ''),
                 axis = new nsObj.Axis().orientation(orientation),
-                childModels = [
-                    new nsObj.Axis.Title(),
-                    new nsObj.Axis.Labels(),
-                    new nsObj.Axis.Grid(),
-                    new nsObj.Axis.Pan(),
-                    new nsObj.Axis.Zoom(),
-                    new nsObj.Axis.Binding(),
-                    new nsObj.Axis.AxisControls()
-                ],
+                childModels = ['Title', 'Labels', 'Grid', 'Pan', 'Zoom', 'Binding', 'AxisControls'],
                 i;
 
             if (xml) {
-/*                    
                 for (i = 0; i < children.length; i++) {
-                    console.log(xml.find(children[i]));
-                    if (xml.find(children[i])) {
-                        axis[children[i]]([childModels[i]][parse](xml.find([children[i]])));
+                    if (xml.find(children[i]).length > 0) {
+                        axis[children[i]](ns.Axis[childModels[i]][parse](xml.find(children[i])));
                     }
                 }
-*/
 
                 axis.id(xml.attr('id'));
                 axis.type(xml.attr('type'));
+                axis.length(xml.attr('length'));
                 axis.position(xml.attr('position'));
                 axis.pregap(xml.attr('pregap'));
                 axis.postgap(xml.attr('postgap'));
@@ -50,6 +40,10 @@ if (!window.multigraph) {
                 axis.maxposition(xml.attr('maxposition'));
                 axis.positionbase(xml.attr('positionbase'));
                 axis.color(xml.attr('color'));
+                axis.tickmin(xml.attr('tickmin'));
+                axis.tickmax(xml.attr('tickmax'));
+                axis.highlightstyle(xml.attr('highlightstyle'));
+                axis.linewidth(xml.attr('linewidth'));
             }
             return axis;
         };
@@ -67,17 +61,16 @@ if (!window.multigraph) {
                 }
             }
 
-/*
             for (i = 0; i < children.length; i++) {
                 if (this[children[i]]()) {
                     childStrings.push(this[children[i]]()[serialize]());
                 }
             }
-*/
+
             output = '<' + attributeStrings.join(' ');
 
             if (childStrings.length > 0) {
-                output += '>' + childStrings.join('') + '<' + this.orientation() + 'axis>';
+                output += '>' + childStrings.join('') + '</' + this.orientation() + 'axis>';
             } else {
                 output += '/>';
             }
