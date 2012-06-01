@@ -264,6 +264,14 @@ describe("Model", function () {
                 Person = m.validate();
             }).not.toThrow(new Error("ied, specified in the isBuiltWith method, is not an attribute"));
         });
+
+        it("should throw an error on method/attribute name collisions", function () {
+            m.hasA("firstName");
+            m.respondsTo("firstName", function () {});
+            expect(function () {
+                m.validate();
+            }).toThrow(new Error("Model: invalid model specification to firstName being both an attribute and method"));
+        });
     });
 
     describe("create method", function () {

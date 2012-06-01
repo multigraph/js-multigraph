@@ -76,7 +76,7 @@ if(!window.multigraph.ModelTool) {
             }
 
             return result;
-        }
+        };
 
         listProperties = function (type) {
             var i,
@@ -84,12 +84,13 @@ if(!window.multigraph.ModelTool) {
             properties = type==="attributes"?attributes:methods;
             
             for (i in properties) {
-                list.push(i);
+                if (properties.hasOwnProperty(i)) {
+                    list.push(i);
+                }
             }
 
             return list;
-        }
-
+        };
 
 
         model.attribute = function (attr) {
@@ -98,7 +99,7 @@ if(!window.multigraph.ModelTool) {
 
         model.attributes = function () {
             return listProperties("attributes");
-        }
+        };
 
         model.method = function (m) {
             return property("method", m);
@@ -153,7 +154,9 @@ if(!window.multigraph.ModelTool) {
         };
         
         model.validate = function () {
-            var i;
+            var i,
+            attributes = this.attributes(),
+            methods = this.methods();
 
             //check to make sure that isBuiltWith has actual attributes
             for (i = 0; i < requiredConstructorArgs.length; ++i) {
@@ -173,7 +176,14 @@ if(!window.multigraph.ModelTool) {
             }
 
             //check for method/attribute collisions
-            //need to implement methods and attributes functions first
+            for (i = 0; i < attributes.length; i++) {
+                if (methods.indexOf(attributes[i]) > -1) {
+                    throw new Error("Model: invalid model specification to " + attributes[i] + " being both an attribute and method");
+                }
+            }
+
+            //looks good!
+            return true;
         };
 
         model.create = function (name) {
