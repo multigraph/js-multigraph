@@ -31,8 +31,6 @@ if(!window.multigraph.ModelTool) {
             }
         };
 
-        this.whichValidatesWith = this.validatesWith;
-
         this.errorsWith = function (error) {
             if (typeof(error) === 'string') {
                 errorMessage = error;
@@ -41,8 +39,6 @@ if(!window.multigraph.ModelTool) {
                 throw new Error("Attr: errorsWith method requires string parameter");
             }
         };
-
-        this.whichErrorsWith = this.errorsWith;
 
         this.errorMessage = function () {
             return errorMessage;

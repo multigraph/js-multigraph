@@ -80,8 +80,9 @@ describe("Attr", function () {
         });
     });
 
+    /* DEPRECATED */
     describe("whichValidatesWith method", function () {
-        it("should be an alias for the validatesWith method", function () {
+        xit("should be an alias for the validatesWith method", function () {
             expect(a.validatesWith).toEqual(a.whichValidatesWith);
         });
     });
@@ -121,8 +122,9 @@ describe("Attr", function () {
         });
     });
 
+    /* DEPRECATED */
     describe("whichErrorsWith method", function () {
-        it("should be an alias for the validatesWith method", function () {
+        xit("should be an alias for the validatesWith method", function () {
             expect(a.errorsWith).toEqual(a.whichErrorsWith);
         });
     });
@@ -172,7 +174,7 @@ describe("Attr", function () {
             rank.errorsWith("rank must be a normal card rank");
 
             var suit = new Attr("suit")
-                .whichValidatesWith(function (suit) {
+                .which.validatesWith(function (suit) {
                     return suits.indexOf(suit) >= 0;
                 })
                 .and.errorsWith("suit must be a normal card suit");

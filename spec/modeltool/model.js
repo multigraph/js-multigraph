@@ -281,15 +281,15 @@ describe("Model", function () {
 
         beforeEach(function () {
             s = new Model();
-            s.hasA("name").whichValidatesWith(function (name) {
+            s.hasA("name").which.validatesWith(function (name) {
                 return name.length > 3;
             }).and.errorsWith("name must be at least 3 characters");
             
-            s.hasAn("id").whichValidatesWith(function (id) {
+            s.hasAn("id").which.validatesWith(function (id) {
                 return 100000000 <= id && id <= 999999999;
             }).and.errorsWith("id must be 9 digits");
 
-            s.hasMany("friends").whichValidatesWith(function (friend) {
+            s.hasMany("friends").which.validatesWith(function (friend) {
                 return friend instanceof Person;
             }).and.errorsWith("friend must be a person");
 
@@ -322,7 +322,8 @@ describe("Model", function () {
             expect(Person.validator).toBeUndefined();
             expect(p.validator).toBeUndefined();
             expect(p.validatesWith).toBeUndefined();
-            expect(p.whichValidatesWith).toBeUndefined();
+            expect(p.which).toBeUndefined();
+            expect(p.and).toBeUndefined();
         });
 
         it("should add all specified methods to the object", function () {
@@ -515,7 +516,7 @@ describe("Model", function () {
 
         Card.isBuiltWith('rank','suit');
         
-        Card.hasA("rank").whichValidatesWith(function (rank) {
+        Card.hasA("rank").which.validatesWith(function (rank) {
                 return rank.indexOf(rank) > -1;
         });
 
