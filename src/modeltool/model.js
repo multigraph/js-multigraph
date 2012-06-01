@@ -196,7 +196,8 @@ if(!window.multigraph.ModelTool) {
                 var i;
 
                 var addProperties = function (obj, type) {
-                    var properties = type==="attributes"?attributes:methods;
+                    var properties = type==="attributes"?attributes:methods,
+                    i;
                     for (i in properties) {
                         if (properties.hasOwnProperty(i)) {
                             properties[i].addTo(obj);
