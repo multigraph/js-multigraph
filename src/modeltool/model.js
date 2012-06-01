@@ -16,7 +16,9 @@ if(!window.multigraph.ModelTool) {
         modified = false,
         requiredConstructorArgs = [],
         optionalConstructorArgs = [],
-        Method = window.multigraph.ModelTool.Method,
+        Method = ns.Method,
+        Attr = ns.Attr,
+        AttrList = ns.AttrList,
         property,
         listProperties,
         create,
@@ -34,9 +36,19 @@ if(!window.multigraph.ModelTool) {
             specification = arguments[arguments.length-1];
         }
 
+        //handle specification function
+        if (specification && typeof(specification) === "function") {
+            model = new Model();
+            specification.call(model);
+        } else if (specification) {
+            throw new Error("Model: specification parameter must be a function");
+        }
+
+
+        /********** BEGIN PRIVATE METHODS ****************/
         /* private method that abstracts hasA/hasMany */
         var hasAProperty = function (type, name) {
-            var Property = type==="Attr"?ns.Attr:ns.AttrList,
+            var Property = type==="Attr"?Attr:AttrList,
             methodName = type==="Attr"?"hasA":"hasMany",
             attribute;
 
@@ -49,16 +61,6 @@ if(!window.multigraph.ModelTool) {
             } else {
                 throw new Error("Model: " + methodName + " parameter must be a string");
             }
-        };
-
-        model.hasA = function (attr) {
-            return hasAProperty("Attr", attr);
-        };
-        
-        model.hasAn = model.hasA;
-        
-        model.hasMany = function (attrs) {
-            return hasAProperty("AttrList", attrs);
         };
 
         /* private method that abstracts attribute/method */
@@ -91,6 +93,71 @@ if(!window.multigraph.ModelTool) {
             }
 
             return list;
+        };
+
+        /* private function that creates the constructor */
+        create = function (name) {
+            var that = this,
+            err;
+
+            //validate the model first
+            model.validate();
+
+            constructor = function () {
+                var i;
+
+                var addProperties = function (obj, type) {
+                    var properties = type==="attributes"?attributes:methods,
+                    i;
+                    for (i in properties) {
+                        if (properties.hasOwnProperty(i)) {
+                            properties[i].addTo(obj);
+                        }
+                    }
+                };
+
+                //add attributes
+                addProperties(this, "attributes");
+                addProperties(this, "methods");
+
+                this.toString = pattern;
+
+                //use constructor args to build object
+                if (arguments.length < requiredConstructorArgs.length) {
+                    //throw error
+                    err = "Constructor requires ";
+                    for(i = 0; i < requiredConstructorArgs.length; ++i) {
+                        err += requiredConstructorArgs[i];
+                        err += i===requiredConstructorArgs.length-1?"":", ";
+                    }
+                    err += " to be specified";
+                    throw new Error(err);
+                } else {
+                    for (i = 0; i < arguments.length; ++i) {
+                        if (i < requiredConstructorArgs.length) {
+                            this[requiredConstructorArgs[i]](arguments[i]);
+                        } else {
+                            this[optionalConstructorArgs[i-requiredConstructorArgs.length]](arguments[i]);
+                        }
+                    }
+                }
+                initializer.call(this);
+            };
+
+            return constructor;
+        };
+        /*********** END PRIVATE METHODS **************/
+
+
+        /*********** BEGIN PUBLIC API *****************/
+        model.hasA = function (attr) {
+            return hasAProperty("Attr", attr);
+        };
+        
+        model.hasAn = model.hasA;
+        
+        model.hasMany = function (attrs) {
+            return hasAProperty("AttrList", attrs);
         };
 
         model.attribute = function (attr) {
@@ -181,69 +248,15 @@ if(!window.multigraph.ModelTool) {
                     throw new Error("Model: invalid model specification to " + attributes[i] + " being both an attribute and method");
                 }
             }
+
+            //set modifiedSinceLastValidation to false
+            modified = false;
         };
+        /************** END PUBLIC API ****************/
 
-        /* private function that creates the constructor */
-        create = function (name) {
-            var that = this,
-            err;
-
-            //validate the model first
-            model.validate();
-
-            constructor = function () {
-                var i;
-
-                var addProperties = function (obj, type) {
-                    var properties = type==="attributes"?attributes:methods,
-                    i;
-                    for (i in properties) {
-                        if (properties.hasOwnProperty(i)) {
-                            properties[i].addTo(obj);
-                        }
-                    }
-                };
-
-                //add attributes
-                addProperties(this, "attributes");
-                addProperties(this, "methods");
-
-                this.toString = pattern;
-
-                //use constructor args to build object
-                if (arguments.length < requiredConstructorArgs.length) {
-                    //throw error
-                    err = "Constructor requires ";
-                    for(i = 0; i < requiredConstructorArgs.length; ++i) {
-                        err += requiredConstructorArgs[i];
-                        err += i===requiredConstructorArgs.length-1?"":", ";
-                    }
-                    err += " to be specified";
-                    throw new Error(err);
-                } else {
-                    for (i = 0; i < arguments.length; ++i) {
-                        if (i < requiredConstructorArgs.length) {
-                            this[requiredConstructorArgs[i]](arguments[i]);
-                        } else {
-                            this[optionalConstructorArgs[i-requiredConstructorArgs.length]](arguments[i]);
-                        }
-                    }
-                }
-                initializer.call(this);
-            };
-
-            return constructor;
-        };
-
-        modified = false;
-
-        if (specification && typeof(specification) === "function") {
-            var s = new Model();
-            specification.call(s);
-            return s;
-        } else if (specification) {
-            throw new Error("Model: specification parameter must be a function");
-        }
+        //here we are returning our model object
+        //which is a function with a bunch of methods that
+        //manipulate how the function behaves
         return model;
     }
     ns.Model = Model;
