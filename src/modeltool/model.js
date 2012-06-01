@@ -36,7 +36,6 @@ if(!window.multigraph.ModelTool) {
 
             modified = true;
             if (typeof(attr) === 'string') {
-                //this[attr] = new ns.Attr(attr);
                 attribute = new ns.Attr(attr);
                 attributes[attr] = attribute;
                 return attribute;
@@ -52,11 +51,9 @@ if(!window.multigraph.ModelTool) {
 
             modified = true;
             if(typeof(attrs) === 'string') {
-                //model[attrs] = new ns.AttrList(attrs);
                 attribute = new ns.AttrList(attrs);
                 attributes[attrs] = attribute;
                 return attribute;
-                //return this[attrs];
             } else {
                 throw new Error("Model: hasMany parameter must be a string");
             }
@@ -65,7 +62,6 @@ if(!window.multigraph.ModelTool) {
         model.attribute = function (attr) {
             var result;
 
-            modified = true;
             if (typeof(attr) !== "string") {
                 throw new Error("Model: expected string argument to attribute method, but recieved " + attr);
             }
@@ -81,11 +77,9 @@ if(!window.multigraph.ModelTool) {
         model.method = function (m) {
             var result;
 
-            modified = true;
             if (typeof(m) !== "string") {
                 throw new Error("Model: expected string argument to method method, but recieved " + m);
             }
-
 
             result = methods[m];
 
@@ -146,7 +140,7 @@ if(!window.multigraph.ModelTool) {
             i,
             err;
 
-            //check to make sure that isBuiltWith
+            //check to make sure that isBuiltWith has actual attributes
             for (i = 0; i < requiredConstructorArgs.length; ++i) {
                 try {
                     this.attribute(requiredConstructorArgs[i]);
@@ -166,7 +160,6 @@ if(!window.multigraph.ModelTool) {
             constructor = function () {
                 var i;
                 //add attributes
-                //console.log("this: "+this);
                 for(i in attributes) {
                     if(attributes.hasOwnProperty(i)) {
                         attributes[i].addTo(this);
@@ -213,7 +206,6 @@ if(!window.multigraph.ModelTool) {
             var s = new Model();
             specification.call(s);
             return s;
-            //return s.create();
         } else if (specification) {
             throw new Error("Model: specification parameter must be a function");
         }
