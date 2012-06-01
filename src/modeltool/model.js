@@ -36,8 +36,6 @@ if(!window.multigraph.ModelTool) {
 
         /* private method that abstracts hasA/hasMany */
         var hasAProperty = function (type, name) {
-            var attribute;
-
             var Property = type==="Attr"?ns.Attr:ns.AttrList,
             methodName = type==="Attr"?"hasA":"hasMany",
             attribute;
@@ -51,7 +49,7 @@ if(!window.multigraph.ModelTool) {
             } else {
                 throw new Error("Model: " + methodName + " parameter must be a string");
             }
-        }
+        };
 
         model.hasA = function (attr) {
             return hasAProperty("Attr", attr);
