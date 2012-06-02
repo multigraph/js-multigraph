@@ -29,6 +29,9 @@ if(!window.multigraph.ModelTool) {
         this.and = that;
         this.which = that;
 
+        //syntactic sugar to keep things grammatically correct
+        this.validateWith = this.validatesWith;
+
         this.addTo = function (obj) {
             var prop,
             arr = [],
@@ -67,6 +70,7 @@ if(!window.multigraph.ModelTool) {
             }
         };
     }
+
 
 
     //this needs to stay if we're going to use instanceof

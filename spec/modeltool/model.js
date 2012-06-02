@@ -289,7 +289,7 @@ describe("Model", function () {
                 return 100000000 <= id && id <= 999999999;
             }).and.errorsWith("id must be 9 digits");
 
-            s.hasMany("friends").which.validatesWith(function (friend) {
+            s.hasMany("friends").which.validateWith(function (friend) {
                 return friend instanceof Person;
             }).and.errorsWith("friend must be a person");
 
@@ -528,7 +528,7 @@ describe("Model", function () {
         expect(c.toString()).toBe("5 of diamonds");
 
         Deck = new Model(function () {
-            this.hasMany("cards").validatesWith(function (card) {
+            this.hasMany("cards").which.validateWith(function (card) {
                 return (card instanceof Card); 
             });
 

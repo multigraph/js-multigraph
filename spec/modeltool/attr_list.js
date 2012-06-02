@@ -20,6 +20,10 @@ describe("AttrList", function () {
         expect(obj.friends().pop).not.toBeUndefined();
     });
 
+    it("should have a validateWith function which is an alias for validatesWith", function () {
+        expect(al.validateWith).toBe(al.validatesWith);
+    });
+
     describe("size method", function () {
         it("should be initialized to 0", function () {
             expect(obj.friends().size()).toEqual(0);
