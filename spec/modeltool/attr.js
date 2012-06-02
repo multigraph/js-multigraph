@@ -62,8 +62,6 @@ describe("Attr", function () {
 
             r = new Attr("rank");
             expect(r.validator() !== a.validator()).toBe(true);
-            
-
         });
 
 
@@ -97,6 +95,45 @@ describe("Attr", function () {
         it("should return the object", function () {
             expect(a.which).toEqual(a);
         });
+    });
+
+    describe("defaultsTo method", function () {
+        var age,
+        obj;
+        beforeEach(function () {
+            obj = {},
+            age = new Attr("age");
+        });
+
+        it("should validate the default value when it is added to an object", function () {
+            var spy = jasmine.createSpy(),
+            v = function (age) {
+                spy();
+                return (typeof(age) === "number" && age >= 0);
+            };
+
+            age.validatesWith(v).and.defaultsTo(0);
+            age.addTo(obj);
+            expect(spy).toHaveBeenCalled();
+
+            age.defaultsTo(-5);
+            expect(function () {
+                age.addTo(obj);
+            }).toThrow("Attr: Default value of -5 does not pass validation for age");
+        });
+
+        it("should set the attribute to the parameter for all new objects", function () {
+            age.defaultsTo(0);
+            age.addTo(obj);
+            expect(obj.age()).toBe(0);
+        });
+
+        it("should return the Attr object for cascading", function () {
+            var result = age.defaultsTo(0);
+            expect(result).toBe(age);
+        });
+
+
     });
 
     describe("errorsWith method", function () {
