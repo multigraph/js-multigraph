@@ -7,15 +7,19 @@ Then you can add properties and methods to the model like this:
     Person.hasA("firstName");
     Person.hasA("lastName");
     Person.hasAn("id");
-    Person.hasMany("friends");
 
-    Person.attribute("friends").validatesWith(function (friend) {
+    Person.hasMany("friends").which.validatesWith(function (friend) {
         return friend instanceof Person;
+    });
+
+    Person.attribute("id").validatesWith(function (id) { 
+        return typeof(id) === "Number";
     });
 
     Person.respondsTo("isFriendsWith", function (friend) {
         this.friends().add(friend);
     });
+
 
 If you're comfortable with anonymous functions, you can send a specification
 function to the constructor:
@@ -63,6 +67,43 @@ model spec, but old objects will not enjoy the new features:
    });
 
    var a = new Person();
-   a.firstName("Angel").lastName("Brown").id(500);  //fine
+   a.firstName("John").lastName("Maxwell").id(500);  //fine
 
    p.id(501); //throws an error
+
+
+Right now, you can do the following with a Model object:
+//attribute related
+hasA -- creates an encapsulated attribute
+hasAn -- syntactic sugar for hasA
+hasMany -- creates an encapsulated list of encapsulated attributes
+attributes -- returns an array of attribute names as strings
+attribute -- returns the specified Attr or AttrList object
+
+//method related
+respondsTo -- creates a method
+methods -- returns an array of method names as string
+method -- returns the specified Method object
+
+//constructor related
+isBuiltWith -- accepts a series of strings that should be attributes, those prepended with '%' are optional in the constructor
+
+Attr and AttrList objects respond to the following methods:
+validatesWith -- accepts a function that returns true if the parameter is valid for the attribute
+errorsWith -- accepts a string that defines the error message if the parameter does not pass validation
+defaultsTo -- accepts a default value for the attribute
+addTo -- accepts an object to attach this attribute to
+and -- syntactic sugar, a pointer to the Attr object
+which -- syntactic sugar, a pointer to the Attr object
+
+AttrList also aliases 'validateWith' for 'validatesWith' to maintain grammatical consistency
+
+We hope to add the following self-explanatory functionality to Attr and AttrList:
+isImmutable
+isNotNull
+isNotUndefined
+
+
+and the following functionality to Model:
+isA -- inherits from the specified model
+isAn -- syntactic sugar for isA
