@@ -64,7 +64,7 @@ if(!window.multigraph.ModelTool) {
                     return arr.length;
                 };
 
-                obj[name] = function() {
+                obj[name] = function () {
                     return actualList;
                 };
             }

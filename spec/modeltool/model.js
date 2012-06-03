@@ -497,7 +497,6 @@ describe("Model", function () {
         }).toThrow("Model: specification parameter must be a function");
     });
 
-
     it("should work with this example", function () {
         var Card,
         Deck,
@@ -545,5 +544,61 @@ describe("Model", function () {
 
         expect(d.cards().at(0).toString()).toEqual("2 of clubs");
         expect(d.cards().at(51).toString()).toEqual("A of spades");
+    });
+
+
+    it("should also work with this example", function () {
+        var Card,
+        Deck,
+        suits = ["clubs", "diamonds", "hearts", "spades"],
+        ranks = ["2","3","4","5","6","7","8","9","10","J","Q","K","A"];
+        
+        Card = new Model(function () {
+            this.hasA("suit").which.validatesWith(function (suit) {
+                return suits.indexOf(suit) > -1;
+            });
+
+            this.hasA("rank").which.validatesWith(function (rank) {
+                return ranks.indexOf(rank) > -1;
+            });
+
+            this.isBuiltWith("rank","suit");
+
+            this.looksLike(function () {
+                return this.rank() + " of " + this.suit();
+            });
+        });
+
+        Deck = new Model(function () {
+            var rank,
+            suit;
+
+            this.hasMany("cards").which.validateWith(function (card) {
+                return card instanceof Card;
+            });
+
+            this.isBuiltWith(function () {
+                for (suit = 0; suit < suits.length; suit++) {
+                    for (rank = 0; rank < ranks.length; rank++) {
+                        this.cards().add(new Card(ranks[rank], suits[suit]));
+                    }
+                }
+            });
+
+            this.looksLike(function () {
+                var card,
+                result = "";
+
+                for(card = 0; card < this.cards().size(); ++card) {
+                    result += this.cards().at(card).toString() + "\n";
+                }
+
+                return result;
+            });
+        });
+
+        var d = new Deck();
+        //console.log(d.toString());
+        
     });
 });

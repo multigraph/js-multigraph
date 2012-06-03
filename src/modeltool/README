@@ -8,7 +8,7 @@ Then you can add properties and methods to the model like this:
     Person.hasA("lastName");
     Person.hasAn("id");
 
-    Person.hasMany("friends").which.validatesWith(function (friend) {
+    Person.hasMany("friends").which.validateWith(function (friend) {
         return friend instanceof Person;
     });
 
