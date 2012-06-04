@@ -175,6 +175,24 @@ describe("Attr", function () {
         });
     });
 
+    describe("isImmutable method", function () {
+        xit("should change validator so that it never passes", function () {
+
+        });
+
+        xit("should disable validator setter", function () {
+
+        });
+
+        xit("should check to make sure that the attribute gets set via a call to isBuiltWith", function () {
+
+        });
+
+        xit("should throw an immutability error if the setter is called", function () {
+
+        });
+    });
+
     describe("addTo method", function () {
         it("should throw an error if the argument is not an object", function () {
             expect(function () {
