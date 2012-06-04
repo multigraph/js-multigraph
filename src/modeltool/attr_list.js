@@ -21,6 +21,9 @@ if(!window.multigraph.ModelTool) {
         //syntactic sugar to keep things grammatically correct
         this.validateWith = this.validatesWith;
 
+        //disable defaultsTo until we figure out how to make it make sense
+        this.defaultsTo = undefined;
+
         this.addTo = function (obj) {
             var prop,
             arr = [],

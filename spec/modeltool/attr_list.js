@@ -24,6 +24,10 @@ describe("AttrList", function () {
         expect(al.validateWith).toBe(al.validatesWith);
     });
 
+    it("should disable defaultsTo, at least for the time being", function () {
+        expect(al.defaultsTo).toBeUndefined();
+    });
+
     describe("size method", function () {
         it("should be initialized to 0", function () {
             expect(obj.friends().size()).toEqual(0);
