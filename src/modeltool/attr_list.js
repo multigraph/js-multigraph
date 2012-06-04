@@ -9,25 +9,14 @@ if(!window.multigraph.ModelTool) {
 (function (ns) {
     "use strict";
     function AttrList(name) {
-        var that = this,
-        attr = new window.multigraph.ModelTool.Attr(name);
+        var that = this;
+
+        //this is where the inheritance happens now
+        ns.Attr.call(this, name);
 
         var delegate = function (obj, func) {
             return function () { return obj[func].apply(that, arguments); };
         };
-
-        for (var i in attr) {
-            if (attr.hasOwnProperty(i)) {
-                if (typeof(attr[i]) === 'function') {
-                    this[i] = delegate(attr, i);
-                }
-            }
-        }
-
-        //added since it's hard to inherit these properties from attr
-        //via delegation
-        this.and = that;
-        this.which = that;
 
         //syntactic sugar to keep things grammatically correct
         this.validateWith = this.validatesWith;
