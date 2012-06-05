@@ -12,7 +12,8 @@ if(!window.multigraph.ModelTool) {
     var Attr = function (name, err) {
         var validator = function () { return true; },
         errorMessage = err || "invalid setter call for " + name,
-        defaultValue;
+        defaultValue,
+        isImmutable = false;
 
         if(name === undefined || typeof(name) !== 'string') {
             throw new Error("Attr: constructor requires a name parameter which must be a string");
@@ -50,6 +51,11 @@ if(!window.multigraph.ModelTool) {
             return errorMessage;
         };
 
+        this.isImmutable = function () {
+            isImmutable = true;
+            return this;
+        };
+
         //syntactic sugar
         this.and = this;
         this.which = this;
@@ -74,6 +80,9 @@ if(!window.multigraph.ModelTool) {
             obj[name] = function (newValue) {
                 if (newValue) {
                     //setter
+                    if (isImmutable && attribute !== undefined) {
+                        throw new Error("cannot set the immutable property " + name + " after it has been set");
+                    } else
                     if (!validator(newValue)) {
                         throw new Error(errorMessage);
                     } else {
