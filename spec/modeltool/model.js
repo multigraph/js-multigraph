@@ -133,8 +133,6 @@ describe("Model", function () {
             expect(s.attributes().indexOf("lastName") > -1).toBe(true);
             expect(s.attributes().indexOf("id") > -1).toBe(true);
         });
-
-
     });
 
     describe("methods method", function () {
@@ -174,6 +172,33 @@ describe("Model", function () {
             expect(function () {
                 s.method(5);
             }).toThrow(new Error("Model: expected string argument to method method, but recieved 5"));
+        });
+    });
+
+    describe("isImmutable", function () {
+        it("should be defined", function () {
+            expect(s.isImmutable).toBeDefined();
+        });
+
+        it("should make all attributes immutable when the constructor is called", function () {
+            var p,
+                Person = new Model(function () {
+                    this.isImmutable();
+                    this.hasA("firstName");
+                    this.hasA("lastName");
+                    this.isBuiltWith("firstName", "lastName");
+                });
+
+            p = new Person("hello", "world");
+            expect(p.firstName()).toBe("hello");
+            expect(function () {
+                p.firstName("newname");
+            }).toThrow(new Error("cannot set the immutable property firstName after it has been set"));
+
+            expect(p.lastName()).toBe("world");
+            expect(function () {
+                p.lastName("newlastname");
+            }).toThrow(new Error("cannot set the immutable property lastName after it has been set"));
         });
     });
 
@@ -238,6 +263,32 @@ describe("Model", function () {
 
         beforeEach(function () {
             m = new Model();
+        });
+
+        it("should throw an error if the object is immutable and any of the attributes aren't required in isBuiltWith", function () {
+            var p;
+            m.hasA("firstName");
+            m.hasA("lastName");
+            m.isImmutable();
+            expect(function () {
+                p = new m();
+            }).toThrow(new Error("immutable objects must have all attributes required in a call to isBuiltWith"));
+
+            m.isBuiltWith("firstName", "lastName");
+
+            expect(function () {
+                p = new m("hello", "world");
+            }).not.toThrow(new Error("immutable objects must have all attributes required in a call to isBuiltWith"));
+
+            expect(function () {
+                p = new m();
+            }).toThrow("Constructor requires firstName, lastName to be specified");
+
+            p = new m("hello", "world");
+            
+            expect(function () {
+                p.firstName("newName");
+            }).toThrow("cannot set the immutable property firstName after it has been set");
         });
 
         it("should throw an error if any of the strings are not defined as attributes but are specified in isBuiltWith", function () {
@@ -546,14 +597,15 @@ describe("Model", function () {
         expect(d.cards().at(51).toString()).toEqual("A of spades");
     });
 
-
     it("should also work with this example", function () {
         var Card,
-        Deck,
-        suits = ["clubs", "diamonds", "hearts", "spades"],
-        ranks = ["2","3","4","5","6","7","8","9","10","J","Q","K","A"];
+            Deck,
+            suits = ["clubs", "diamonds", "hearts", "spades"],
+            ranks = ["2","3","4","5","6","7","8","9","10","J","Q","K","A"];
         
         Card = new Model(function () {
+            this.isImmutable();
+        
             this.hasA("suit").which.validatesWith(function (suit) {
                 return suits.indexOf(suit) > -1;
             });
@@ -598,7 +650,9 @@ describe("Model", function () {
         });
 
         var d = new Deck();
-        //console.log(d.toString());
-        
+
+        expect(function () {
+            d.cards().at(5).suit("diamonds");
+        }).toThrow("cannot set the immutable property suit after it has been set");
     });
 });

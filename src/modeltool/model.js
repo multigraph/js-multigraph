@@ -22,6 +22,7 @@ if(!window.multigraph.ModelTool) {
         property,
         listProperties,
         create,
+        isImmutable,
         initializer = function () {},
         constructor = function () {},
         model = function () {
@@ -104,17 +105,20 @@ if(!window.multigraph.ModelTool) {
             model.validate();
 
             constructor = function () {
-                var i;
-
-                var addProperties = function (obj, type) {
-                    var properties = type==="attributes"?attributes:methods,
-                    i;
-                    for (i in properties) {
-                        if (properties.hasOwnProperty(i)) {
-                            properties[i].addTo(obj);
+                var i,
+                    addProperties = function (obj, type) {
+                        var properties = type==="attributes"?attributes:methods,
+                            i;
+                        for (i in properties) {
+                            if (properties.hasOwnProperty(i)) {
+                                //if the object is immutable, all attributes should be immutable
+                                if(properties === attributes && isImmutable) {
+                                    properties[i].isImmutable();
+                                }
+                                properties[i].addTo(obj);
+                            }
                         }
-                    }
-                };
+                    };
 
                 //add attributes
                 addProperties(this, "attributes");
@@ -208,6 +212,10 @@ if(!window.multigraph.ModelTool) {
             }
         };
         
+        model.isImmutable = function () {
+            isImmutable = true;
+        };
+
         model.looksLike = function (p) {
             modified = true;
             pattern = p;
@@ -215,7 +223,6 @@ if(!window.multigraph.ModelTool) {
 
         model.respondsTo = function (methodName, methodBody) {
             var m = new Method(methodName, methodBody);
-
             modified = true;
             methods[methodName] = m;
         };
@@ -246,6 +253,15 @@ if(!window.multigraph.ModelTool) {
             for (i = 0; i < attributes.length; i++) {
                 if (methods.indexOf(attributes[i]) > -1) {
                     throw new Error("Model: invalid model specification to " + attributes[i] + " being both an attribute and method");
+                }
+            }
+
+            //check to make sure that all attributes are requiredConstructorArgs if the object is immutable
+            if (isImmutable) {
+                for (i = 0; i < attributes.length; i++) {
+                    if (requiredConstructorArgs.indexOf(attributes[i]) < 0) {
+                        throw new Error("immutable objects must have all attributes required in a call to isBuiltWith");
+                    }
                 }
             }
 
