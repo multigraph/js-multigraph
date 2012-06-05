@@ -262,29 +262,29 @@ describe("Model", function () {
         m;
 
         beforeEach(function () {
-            m = new Model();
+            Person = new Model();
         });
 
         it("should throw an error if the object is immutable and any of the attributes aren't required in isBuiltWith", function () {
             var p;
-            m.hasA("firstName");
-            m.hasA("lastName");
-            m.isImmutable();
+            Person.hasA("firstName");
+            Person.hasA("lastName");
+            Person.isImmutable();
             expect(function () {
-                p = new m();
+                p = new Person();
             }).toThrow(new Error("immutable objects must have all attributes required in a call to isBuiltWith"));
 
-            m.isBuiltWith("firstName", "lastName");
+            Person.isBuiltWith("firstName", "lastName");
 
             expect(function () {
-                p = new m("hello", "world");
+                p = new Person("hello", "world");
             }).not.toThrow(new Error("immutable objects must have all attributes required in a call to isBuiltWith"));
 
             expect(function () {
-                p = new m();
+                p = new Person();
             }).toThrow("Constructor requires firstName, lastName to be specified");
 
-            p = new m("hello", "world");
+            p = new Person("hello", "world");
             
             expect(function () {
                 p.firstName("newName");
@@ -292,35 +292,35 @@ describe("Model", function () {
         });
 
         it("should throw an error if any of the strings are not defined as attributes but are specified in isBuiltWith", function () {
-            m.hasA("firstName");
-            m.hasA("lastName");
-            m.hasAn("id");
-            m.isBuiltWith("firstName","lastName","ied");
+            Person.hasA("firstName");
+            Person.hasA("lastName");
+            Person.hasAn("id");
+            Person.isBuiltWith("firstName","lastName","ied");
             expect(function () {
-                Person = m.validate();
+                Person.validate();
             }).toThrow(new Error("ied, specified in the isBuiltWith method, is not an attribute"));
 
-            m.isBuiltWith("firstName","lastName","id");
+            Person.isBuiltWith("firstName","lastName","id");
             expect(function () {
-                Person = m.validate();
+                Person.validate();
             }).not.toThrow(new Error("ied, specified in the isBuiltWith method, is not an attribute"));
 
-            m.isBuiltWith("firstName","lastName","%ied");
+            Person.isBuiltWith("firstName","lastName","%ied");
             expect(function () {
-                Person = m.validate();
+                Person = Person.validate();
             }).toThrow(new Error("ied, specified in the isBuiltWith method, is not an attribute"));
 
-            m.isBuiltWith("firstName","lastName","%id");
+            Person.isBuiltWith("firstName","lastName","%id");
             expect(function () {
-                Person = m.validate();
+                Person = Person.validate();
             }).not.toThrow(new Error("ied, specified in the isBuiltWith method, is not an attribute"));
         });
 
         it("should throw an error on method/attribute name collisions", function () {
-            m.hasA("firstName");
-            m.respondsTo("firstName", function () {});
+            Person.hasA("firstName");
+            Person.respondsTo("firstName", function () {});
             expect(function () {
-                m.validate();
+                Person.validate();
             }).toThrow(new Error("Model: invalid model specification to firstName being both an attribute and method"));
         });
     });

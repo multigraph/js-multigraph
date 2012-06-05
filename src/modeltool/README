@@ -88,10 +88,14 @@ method -- returns the specified Method object
 //constructor related
 isBuiltWith -- accepts a series of strings that should be attributes, those prepended with '%' are optional in the constructor
 
+//modifier
+isImmutable -- makes the object immutable and forces all attributes to be required in an isBuiltWith call
+
 Attr and AttrList objects respond to the following methods:
 validatesWith -- accepts a function that returns true if the parameter is valid for the attribute
 errorsWith -- accepts a string that defines the error message if the parameter does not pass validation
-defaultsTo -- accepts a default value for the attribute
+defaultsTo -- accepts a default value for the attribute (not currently available for AttrList)
+isImmutable -- makes it so the attribute cannot be changed once it is set
 addTo -- accepts an object to attach this attribute to
 and -- syntactic sugar, a pointer to the Attr object
 which -- syntactic sugar, a pointer to the Attr object
@@ -99,7 +103,6 @@ which -- syntactic sugar, a pointer to the Attr object
 AttrList also aliases 'validateWith' for 'validatesWith' to maintain grammatical consistency
 
 We hope to add the following self-explanatory functionality to Attr and AttrList:
-isImmutable
 isNotNull
 isNotUndefined
 
