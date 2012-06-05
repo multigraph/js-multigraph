@@ -132,8 +132,6 @@ describe("Attr", function () {
             var result = age.defaultsTo(0);
             expect(result).toBe(age);
         });
-
-
     });
 
     describe("errorsWith method", function () {
@@ -172,6 +170,40 @@ describe("Attr", function () {
             expect(a.errorMessage()).toEqual("Test Error Message");
             a.errorsWith("Test Error Messsage");
             expect(a.errorMessage()).toEqual("Test Error Messsage");
+        });
+    });
+
+    describe("isImmutable method", function () {
+        var card;
+
+        beforeEach(function () {
+            card = {};
+            a.isImmutable().and.validatesWith(function (suit) {
+                return ["clubs", "diamonds", "hearts", "spades"].indexOf(suit) > -1;
+            });
+            a.addTo(card);
+        });
+
+        it("should allow for the setter to be called once after it is added to an object", function () {
+            card.suit("diamonds");
+            expect(card.suit()).toBe("diamonds");
+        });
+
+        it("should still validate it the first time it is set", function () {
+            expect(function () {
+                card.suit("notARealRank");
+            }).toThrow(new Error("invalid setter call for suit"));
+        });
+
+        it("should throw an error if the setter is called once the attribute is set", function () {
+            card.suit("diamonds");
+            expect(function () {
+                card.suit("hearts");
+            }).toThrow(new Error("cannot set the immutable property suit after it has been set"));
+        });
+
+        it("should return the Attr object for chaining", function () {
+            expect(a.isImmutable()).toBe(a);
         });
     });
 
