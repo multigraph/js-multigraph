@@ -21,8 +21,14 @@ if(!window.multigraph.ModelTool) {
         //syntactic sugar to keep things grammatically correct
         this.validateWith = this.validatesWith;
 
-        //disable defaultsTo until we figure out how to make it make sense
-        this.defaultsTo = undefined;
+        //disable defaultsTo and isImmutable until we figure out how to make it make sense
+        this.defaultsTo = function () {
+            //no op
+        };
+
+        this.isImmutable = function () {
+            //no op
+        };
 
         this.addTo = function (obj) {
             var prop,
