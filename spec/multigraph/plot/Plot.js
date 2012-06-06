@@ -12,6 +12,7 @@ describe("Plot", function () {
         RendererOption = window.multigraph.Plot.Renderer.Option,
         Datatips = window.multigraph.Plot.Datatips,
         DatatipsVariable = window.multigraph.Plot.Datatips.Variable,
+        DataVariable = window.multigraph.Data.Variables.Variable,
         p;
 
     beforeEach(function () {
@@ -61,6 +62,31 @@ describe("Plot", function () {
             expect(p.horizontalaxis().min() === 'auto').toBe(true);
             expect(p.verticalaxis().id() === 'yaxis').toBe(true);
             expect(p.verticalaxis().max() === '200').toBe(true);
+        });
+
+    });
+
+    describe("Data Variable's", function () {
+        var v,
+            v2;
+
+        beforeEach(function () {
+            v = new DataVariable();
+            v2 = new DataVariable();
+            v.id('x').column('2');
+            v2.id('y').column('1');
+        });
+
+        it("should be able to add a variable to a Plot", function () {
+            p.variable().add(v);
+            expect(p.variable().at(0) === v).toBe(true);
+        });
+
+        it("should be able to add multiple variables to a Plot", function () {
+            p.variable().add(v);
+            p.variable().add(v2);
+            expect(p.variable().at(0) === v).toBe(true);
+            expect(p.variable().at(1) === v2).toBe(true);
         });
 
     });

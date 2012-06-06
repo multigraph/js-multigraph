@@ -4,19 +4,140 @@ describe("Plot parsing", function () {
     "use strict";
 
     var Plot = window.multigraph.Plot,
+        Graph = window.multigraph.Graph,
+        Axis = window.multigraph.Axis,
+        Variable = window.multigraph.Data.Variables.Variable,
         jQueryXMLHandler = window.multigraph.jQueryXMLHandler,
-        xmlString  = '<plot></plot>',
+        xmlString = '<plot></plot>',
         plot,
+        graph,
+        haxis,
+        vaxis,
+        variable1,
+        variable2,
+        variable3,    
         $xml;
 
     beforeEach(function () {
         jQueryXMLHandler.mixin(window.multigraph, 'parseXML', 'serialize');
 	$xml = $(xmlString);
+        
     });
 
     it("should be able to parse a plot from XML", function () {
         plot = Plot.parseXML($xml);
         expect(plot).not.toBeUndefined();
+    });
+
+    describe("Axis parsing", function () {
+
+        beforeEach(function () {
+            xmlString = '<plot><horizontalaxis ref="x"/><verticalaxis ref="y"/></plot>';
+            $xml = $(xmlString);
+            graph = new Graph();
+            haxis = new Axis();
+            haxis.orientation('horizontal').id('x');
+            vaxis = new Axis();
+            vaxis.orientation('vertical').id('y');
+            graph.axes().add(haxis);
+            graph.axes().add(vaxis);
+        });
+
+        it("should be able to parse a plot with axis children from XML", function () {
+            plot = Plot.parseXML($xml, graph);
+            expect(plot).not.toBeUndefined();
+            expect(plot instanceof Plot).toBe(true);
+            expect(plot.horizontalaxis() instanceof Axis).toBe(true);            
+            expect(plot.verticalaxis() instanceof Axis).toBe(true);            
+        });
+
+        it("should throw an error if an axis with the ref's id is not in the graph", function () {
+            xmlString = '<plot><horizontalaxis ref="x2"/><verticalaxis ref="y"></plot>';
+            $xml = $(xmlString);
+            expect( function () {
+                Plot.parseXML($xml, graph);
+            }).toThrow(new Error('The graph does not contain an axis with an id of: x2'));
+        });
+
+        it("should be able to parse a plot with axis children from XML, serialize it and get the same XML as the original", function () {
+            plot = Plot.parseXML($xml, graph);
+            expect(plot.serialize() === xmlString).toBe(true);
+        });
+    });
+
+    describe("Variable parsing", function () {
+        var variables;
+
+        beforeEach(function () {
+            xmlString = '<plot><horizontalaxis><variable ref="x"/></horizontalaxis><verticalaxis><variable ref="y"/><variable ref="y1"/></verticalaxis></plot>';
+            $xml = $(xmlString);
+            graph = new Graph();
+            haxis = new Axis();
+            haxis.orientation('horizontal').id('x');
+            vaxis = new Axis();
+            vaxis.orientation('vertical').id('y');
+            variable1 = new Variable();
+            variable2 = new Variable();
+            variable3 = new Variable();
+            variables = new window.multigraph.Data.Variables();
+            variable1.id('x').column('1');
+            variable2.id('y').column('2');
+            variable3.id('y1').column('3');
+            variables.variable().add(variable1);
+            variables.variable().add(variable2);
+            variables.variable().add(variable3);
+            graph.axes().add(haxis);
+            graph.axes().add(vaxis);
+            graph.data().add(new window.multigraph.Data());
+            graph.data().at(0).variables(variables);
+        });
+
+        it("should be able to parse a plot with variable children from XML", function () {
+            plot = Plot.parseXML($xml, graph);
+            expect(plot).not.toBeUndefined();
+            expect(plot instanceof Plot).toBe(true);
+//            expect(plot.horizontalaxis() instanceof Axis).toBe(true);            
+//            expect(plot.verticalaxis() instanceof Axis).toBe(true);            
+            expect(plot.variable().at(0) instanceof Variable).toBe(true);
+            expect(plot.variable().at(1) instanceof Variable).toBe(true);
+            expect(plot.variable().at(2) instanceof Variable).toBe(true);
+        });
+
+        it("should throw an error if a variable with the ref's id is not in the graph", function () {
+            xmlString = '<plot><horizontalaxis><variable ref="x"/></horizontalaxis><verticalaxis><variable ref="y3"/><variable ref="y1"/></verticalaxis></plot>';
+            $xml = $(xmlString);
+            expect( function () {
+                Plot.parseXML($xml, graph);
+            }).toThrow(new Error('The graph does not contain a variable with an id of: y3'));
+        });
+
+        it("should be able to parse a plot with axis children from XML, serialize it and get the same XML as the original", function () {
+            plot = Plot.parseXML($xml, graph);
+            expect(plot.serialize() === xmlString).toBe(true);
+        });
+    });
+
+    describe("Legend parsing", function () {
+        var Legend = window.multigraph.Plot.Legend;
+
+        beforeEach(function () {
+            xmlString = '<plot><legend visible="true" label="curly"/></plot>';
+            $xml = $(xmlString);
+        });
+
+        it("should be able to parse a plot with a Legend child from XML", function () {
+            plot = Plot.parseXML($xml);
+            expect(plot).not.toBeUndefined();
+            expect(plot instanceof Plot).toBe(true);
+            expect(plot.legend() instanceof Legend).toBe(true);
+            
+        });
+
+        it("should be able to parse a plot with a Legend child from XML, serialize it and get the same XML as the original", function () {
+            plot = Plot.parseXML($xml);
+            expect(plot.serialize() === xmlString).toBe(true);
+            
+        });
     });
 
     describe("Legend parsing", function () {
@@ -203,26 +324,5 @@ describe("Plot parsing", function () {
 
     });
 
-/*
-    it("should be able to parse an axis from XML and read its 'id' attribute", function () {
-	var a = Axis.parseXML('horizontal', $xml);
-        expect(a.id() === 'x').toBe(true);
-    });
-
-    it("should be able to parse an axis from XML and read its 'min' attribute", function () {
-	var a = Axis.parseXML('horizontal', $xml);
-        expect(a.min() === '0').toBe(true);
-    });
-
-    it("should be able to parse an axis from XML and read its 'max' attribute", function () {
-	var a = Axis.parseXML('horizontal', $xml);
-        expect(a.max() === '10').toBe(true);
-    });
-
-    it("should be able to parse an axis from XML, then serialize it, and get the same XML as the original", function () {
-	var a = Axis.parseXML('horizontal', $xml);
-        expect(a.serialize() === xmlString).toBe(true);
-    });
-*/
 
 });
