@@ -26,6 +26,7 @@ if (!window.multigraph.Plot) {
         this.hasMany("options").which.validatesWith(function (option) {
             return option instanceof ns.Plot.Renderer.Option;
         });
+        this.isBuiltWith('type');
 
     });
 

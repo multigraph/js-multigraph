@@ -76,9 +76,9 @@ describe("Plot parsing", function () {
             haxis.orientation('horizontal').id('x');
             vaxis = new Axis();
             vaxis.orientation('vertical').id('y');
-            variable1 = new Variable();
-            variable2 = new Variable();
-            variable3 = new Variable();
+            variable1 = new Variable('x');
+            variable2 = new Variable('y');
+            variable3 = new Variable('y1');
             variables = new window.multigraph.Data.Variables();
             variable1.id('x').column('1');
             variable2.id('y').column('2');

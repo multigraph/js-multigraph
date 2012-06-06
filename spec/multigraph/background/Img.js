@@ -7,7 +7,7 @@ describe("Background Img", function () {
         image;
 
     beforeEach(function () {
-        image = new Img();
+        image = new Img('http://example.com/cool_dogs.gif');
     });
 
     it("should be able to create a Img", function () {
@@ -15,6 +15,9 @@ describe("Background Img", function () {
     });
 
     describe("src attribute", function () {
+        it("should default the src attribute to the passed value", function () {
+            expect(image.src() === 'http://example.com/cool_dogs.gif').toBe(true);
+        });
         it("should be able to set/get the src attribute", function () {
             image.src('http://example.com/cool_dog.gif');
             expect(image.src() === 'http://example.com/cool_dog.gif').toBe(true);

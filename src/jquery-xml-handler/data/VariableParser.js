@@ -14,9 +14,9 @@ if (!window.multigraph.Data) {
     ns.jQueryXMLHandler.mixinfuncs.push(function (nsObj, parse, serialize) {
         
         nsObj.Data.Variables.Variable[parse] = function (xml) {
-            var variable = new nsObj.Data.Variables.Variable();
-            if (xml) {
-                variable.id(xml.attr('id'));
+            var variable;
+            if (xml && xml.attr('id')) {
+                variable = new nsObj.Data.Variables.Variable(xml.attr('id'));
                 variable.column(xml.attr('column'));
                 variable.type(xml.attr('type'));
                 variable.missingvalue(xml.attr('missingvalue'));

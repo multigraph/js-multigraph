@@ -26,6 +26,7 @@ if (!window.multigraph.Plot.Renderer) {
         this.hasA("max").which.validatesWith(function (max) {
             return ns.utilityFunctions.validateDouble(max);
         });
+        this.isBuiltWith('name', 'value');
 
     });
 

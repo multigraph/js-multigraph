@@ -7,7 +7,7 @@ describe("Axis Binding", function () {
         binding;
 
     beforeEach(function () {
-        binding = new Binding();
+        binding = new Binding('y', '70', '5');
     });
 
     it("should be able to create a Binding", function () {

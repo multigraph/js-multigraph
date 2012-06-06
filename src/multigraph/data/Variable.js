@@ -29,7 +29,7 @@ if (!window.multigraph.Data.Variables) {
         this.hasA("missingop").which.validatesWith(function (missingop) {
             return typeof(missingop) === 'string';
         });
-
+        this.isBuiltWith('id');
     });
 
     ns.Data.Variables.Variable = Variable;

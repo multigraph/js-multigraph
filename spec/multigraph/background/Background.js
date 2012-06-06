@@ -24,7 +24,7 @@ describe("Background", function () {
         var image;
 
         beforeEach(function () {
-            image = new Img();
+            image = new Img('http://example.com/cool_dog.gif');
         });
 
         it("should be able to add a Img to a Background", function () {
@@ -48,8 +48,7 @@ describe("Background", function () {
         });
 
         it("should not keep old data around when an Img is replaced", function () {
-            var image2 = new Img();
-            image2.src("http://example.com/cool_dog.gif");
+            var image2 = new Img('http://example.com/cool_dog.gif');
             b.img(image);
             b.img().src("http://example.com/lazy_cat.gif");
             b.img().base("0 1");

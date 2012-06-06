@@ -71,8 +71,8 @@ describe("Plot", function () {
             v2;
 
         beforeEach(function () {
-            v = new DataVariable();
-            v2 = new DataVariable();
+            v = new DataVariable('x');
+            v2 = new DataVariable('y');
             v.id('x').column('2');
             v2.id('y').column('1');
         });
@@ -123,7 +123,7 @@ describe("Plot", function () {
         var renderer;
 
         beforeEach(function () {
-            renderer = new Renderer();
+            renderer = new Renderer('line');
         });
 
         it("should be able to add a renderer to a Plot", function () {
@@ -132,12 +132,10 @@ describe("Plot", function () {
         });
 
         it("should be able to add axes with attributes and children to a Plot", function () {
-            var option = new RendererOption(),
-                option2 = new RendererOption();
+            var option = new RendererOption('barwidth', '3'),
+                option2 = new RendererOption('linecolor', '0x345678');
             renderer.type("bar");
-            option.name("barwidth").value("3");
             renderer.options().add(option);
-            option2.name("linecolor").value("0x345678");
             renderer.options().add(option2);
             p.renderer(renderer);
             expect(p.renderer().type() === "bar").toBe(true);
@@ -146,10 +144,9 @@ describe("Plot", function () {
         });
 
         it("should be able to set/get attributes of renderers added to a Plot", function () {
-            var option = new RendererOption(),
-                option2 = new RendererOption();
+            var option = new RendererOption('barwidth', '3'),
+                option2 = new RendererOption('linecolor', '0x345678');
             renderer.options().add(option);
-            option2.name("linecolor").value("0x345678");
             renderer.options().add(option2);
             p.renderer(renderer);
             p.renderer().type("line");

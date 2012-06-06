@@ -14,11 +14,9 @@ if (!window.multigraph.Axis) {
     ns.jQueryXMLHandler.mixinfuncs.push(function (nsObj, parse, serialize) {
         
         nsObj.Axis.Binding[parse] = function (xml) {
-            var binding = new nsObj.Axis.Binding();
-            if (xml) {
-                binding.id(xml.attr('id'));
-                binding.min(xml.attr('min'));
-                binding.max(xml.attr('max'));
+            var binding;
+            if (xml && xml.attr('id') && xml.attr('min') && xml.attr('max')) {
+                binding = new nsObj.Axis.Binding(xml.attr('id'), xml.attr('min'), xml.attr('max'));
             }
             return binding;
         };

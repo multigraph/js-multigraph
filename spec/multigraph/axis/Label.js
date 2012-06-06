@@ -7,7 +7,7 @@ describe("Axis Label", function () {
         label;
 
     beforeEach(function () {
-        label = new Label();
+        label = new Label('10 5 3 2 1 .1 .01');
     });
 
     it("should be able to create a Label", function () {
