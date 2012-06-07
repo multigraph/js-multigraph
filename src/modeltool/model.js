@@ -41,6 +41,7 @@ if(!window.multigraph.ModelTool) {
         if (specification && typeof(specification) === "function") {
             model = new Model();
             specification.call(model);
+            return model;
         } else if (specification) {
             throw new Error("Model: specification parameter must be a function");
         }

@@ -133,6 +133,19 @@ describe("Model", function () {
             expect(s.attributes().indexOf("lastName") > -1).toBe(true);
             expect(s.attributes().indexOf("id") > -1).toBe(true);
         });
+
+        it("should work when the model is created using a specification function", function () {
+            var Person = new Model(function () {
+                this.hasA("firstName");
+                this.hasA("lastName");
+                this.hasAn("id");
+            });
+
+            expect(Person.attributes().length === 3);
+            expect(Person.attributes().indexOf("firstName") > -1).toBe(true);
+            expect(Person.attributes().indexOf("lastName") > -1).toBe(true);
+            expect(Person.attributes().indexOf("id") > -1).toBe(true);
+        });
     });
 
     describe("methods method", function () {
