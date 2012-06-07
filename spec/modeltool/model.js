@@ -175,7 +175,17 @@ describe("Model", function () {
         });
     });
 
-    describe("isImmutable", function () {
+    describe("isA method", function () {
+        xit("should throw an error if the argument is not a Model", function () {
+            
+        });
+
+        xit("should give all properties of argument model to this model", function () {
+
+        });
+    });
+
+    describe("isImmutable method", function () {
         it("should be defined", function () {
             expect(s.isImmutable).toBeDefined();
         });
