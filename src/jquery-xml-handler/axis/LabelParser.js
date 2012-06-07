@@ -14,14 +14,14 @@ if (!window.multigraph.Axis) {
     ns.jQueryXMLHandler.mixinfuncs.push(function (nsObj, parse, serialize) {
         
         nsObj.Axis.Labels.Label[parse] = function (xml) {
-            var label = new nsObj.Axis.Labels.Label();
-            if (xml) {
+            var label;
+            if (xml && xml.attr('spacing') !== undefined) {
+                label = new nsObj.Axis.Labels.Label(xml.attr('spacing'));
                 label.format(xml.attr('format'));
                 label.start(xml.attr('start'));
                 label.angle(xml.attr('angle'));
                 label.position(xml.attr('position'));
                 label.anchor(xml.attr('anchor'));
-                label.spacing(xml.attr('spacing'));
                 label.densityfactor(xml.attr('densityfactor'));
             }
             return label;

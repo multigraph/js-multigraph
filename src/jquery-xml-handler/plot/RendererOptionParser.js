@@ -10,10 +10,9 @@ if (!window.multigraph) {
     ns.jQueryXMLHandler.mixinfuncs.push(function (nsObj, parse, serialize) {
         
         nsObj.Plot.Renderer.Option[parse] = function (xml) {
-            var option = new nsObj.Plot.Renderer.Option();
-            if (xml) {
-                option.name(xml.attr('name'));
-                option.value(xml.attr('value'));
+            var option;
+            if (xml && xml.attr('name') && xml.attr('value')) {
+                option = new nsObj.Plot.Renderer.Option(xml.attr('name'), xml.attr('value'));
                 option.min(xml.attr('min'));
                 option.max(xml.attr('max'));
             }

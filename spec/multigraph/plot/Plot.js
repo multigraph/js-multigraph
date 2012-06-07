@@ -12,6 +12,7 @@ describe("Plot", function () {
         RendererOption = window.multigraph.Plot.Renderer.Option,
         Datatips = window.multigraph.Plot.Datatips,
         DatatipsVariable = window.multigraph.Plot.Datatips.Variable,
+        DataVariable = window.multigraph.Data.Variables.Variable,
         p;
 
     beforeEach(function () {
@@ -65,6 +66,31 @@ describe("Plot", function () {
 
     });
 
+    describe("Data Variable's", function () {
+        var v,
+            v2;
+
+        beforeEach(function () {
+            v = new DataVariable('x');
+            v2 = new DataVariable('y');
+            v.id('x').column('2');
+            v2.id('y').column('1');
+        });
+
+        it("should be able to add a variable to a Plot", function () {
+            p.variable().add(v);
+            expect(p.variable().at(0) === v).toBe(true);
+        });
+
+        it("should be able to add multiple variables to a Plot", function () {
+            p.variable().add(v);
+            p.variable().add(v2);
+            expect(p.variable().at(0) === v).toBe(true);
+            expect(p.variable().at(1) === v2).toBe(true);
+        });
+
+    });
+
     describe("Legend", function () {
         var legend;
 
@@ -97,7 +123,7 @@ describe("Plot", function () {
         var renderer;
 
         beforeEach(function () {
-            renderer = new Renderer();
+            renderer = new Renderer('line');
         });
 
         it("should be able to add a renderer to a Plot", function () {
@@ -106,12 +132,10 @@ describe("Plot", function () {
         });
 
         it("should be able to add axes with attributes and children to a Plot", function () {
-            var option = new RendererOption(),
-                option2 = new RendererOption();
+            var option = new RendererOption('barwidth', '3'),
+                option2 = new RendererOption('linecolor', '0x345678');
             renderer.type("bar");
-            option.name("barwidth").value("3");
             renderer.options().add(option);
-            option2.name("linecolor").value("0x345678");
             renderer.options().add(option2);
             p.renderer(renderer);
             expect(p.renderer().type() === "bar").toBe(true);
@@ -120,10 +144,9 @@ describe("Plot", function () {
         });
 
         it("should be able to set/get attributes of renderers added to a Plot", function () {
-            var option = new RendererOption(),
-                option2 = new RendererOption();
+            var option = new RendererOption('barwidth', '3'),
+                option2 = new RendererOption('linecolor', '0x345678');
             renderer.options().add(option);
-            option2.name("linecolor").value("0x345678");
             renderer.options().add(option2);
             p.renderer(renderer);
             p.renderer().type("line");

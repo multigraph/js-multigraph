@@ -26,7 +26,6 @@ if (!window.multigraph) {
         }
     }
 
-
     Plot = new ns.ModelTool.Model( 'Plot', function () {
         this.hasA("legend").which.validatesWith(function (legend) {
             return legend instanceof window.multigraph.Plot.Legend;
@@ -36,6 +35,9 @@ if (!window.multigraph) {
         });
         this.hasA("verticalaxis").which.validatesWith(function (axis) {
             return axis instanceof window.multigraph.Axis;
+        });
+        this.hasMany("variable").which.validatesWith(function (variable) {
+            return variable instanceof window.multigraph.Data.Variables.Variable;
         });
         this.hasA("filter").which.validatesWith(function (filter) {
             return filter instanceof window.multigraph.Plot.Filter;

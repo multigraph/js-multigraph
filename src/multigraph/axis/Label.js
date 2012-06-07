@@ -35,6 +35,7 @@ if (!window.multigraph.Axis.Labels) {
         this.hasA("densityfactor").which.validatesWith(function (densityfactor) {
             return typeof(densityfactor) === 'string';
         });
+        this.isBuiltWith('spacing');
 
     });
 

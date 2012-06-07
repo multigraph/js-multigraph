@@ -36,7 +36,7 @@ describe("Renderer Option parsing", function () {
     });
 
     it("should be able to parse a option from XML, serialize it and get the same XML as the original", function () {
-        var xmlString2 = '<option name="linewidth" min="0" max="2"/>';
+        var xmlString2 = '<option name="linewidth" value="1" max="2"/>';
         expect(option.serialize() === xmlString).toBe(true);
 	option = Option.parseXML($(xmlString2));
         expect(option.serialize() === xmlString2).toBe(true);

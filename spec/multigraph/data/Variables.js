@@ -35,7 +35,7 @@ describe("Data Variables", function () {
             variable;
 
         beforeEach(function () {
-            variable = new Variable();
+            variable = new Variable('x');
         });
 
         it("should be able to add a Variable to a Variables", function () {
@@ -44,8 +44,8 @@ describe("Data Variables", function () {
         });
 
         it("should be able to add many Variable tags to a Variables tag", function () {
-            var variable2 = new Variable(),
-                variable3 = new Variable();
+            var variable2 = new Variable('y'),
+                variable3 = new Variable('y2');
             variables.variable().add(variable);
             variables.variable().add(variable2);
             variables.variable().add(variable3);
@@ -61,8 +61,8 @@ describe("Data Variables", function () {
         });
 
         it("should be able to add many Variable tags with attributes to a Variables tag", function () {
-            var variable2 = new Variable(),
-                variable3 = new Variable();
+            var variable2 = new Variable('y'),
+                variable3 = new Variable('y2');
             variable.id("x").column("1").type("number");
             variable2.id("y").type("number").column("2").missingvalue('-2000');
             variable3.id("y1").column("3").type("datetime");
@@ -75,8 +75,8 @@ describe("Data Variables", function () {
         });
 
         it("should be able to set/get attributes of an Variable added to a Variables", function () {
-            var variable2 = new Variable(),
-                variable3 = new Variable();
+            var variable2 = new Variable('y'),
+                variable3 = new Variable('y1');
             variable.id("x").column("1").type("number");
             variable2.id("y").type("number").column("2");
             variable3.id("y1").column("3").type("datetime");

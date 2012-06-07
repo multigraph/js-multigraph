@@ -7,7 +7,7 @@ describe("Renderer", function () {
         r;
 
     beforeEach(function () {
-        r = new Renderer();
+        r = new Renderer('line');
     }); 
 
     it("should be able to create a Renderer", function () {
@@ -36,7 +36,7 @@ describe("Renderer", function () {
             option;
 
         beforeEach(function () {
-            option = new Option();
+            option = new Option('linewidth', '100');
         });
 
         it("should be able to add a Option to a Renderer", function () {
@@ -45,7 +45,7 @@ describe("Renderer", function () {
         });
 
         it("should be able to add multiple Options to a Renderer", function () {
-            var option2 = new Option();
+            var option2 = new Option('linecolor', '0x123456');
             r.options().add(option);
             r.options().add(option2);
             expect(r.options().at(0) === option).toBe(true);
@@ -60,14 +60,10 @@ describe("Renderer", function () {
         });
 
         it("should be able to add multiple Options with attributes to a Renderer", function () {
-            var option2 = new Option(),
-                option3 = new Option();
+            var option2 = new Option('linecolor', '0x123456'),
+                option3 = new Option('dotsize', '2');
             option.name("linewidth");
             option.value("13");
-            option2.name("linecolor");
-            option2.value("0x123456");
-            option3.name("dotsize");
-            option3.value("2");
             option3.min("2");
             r.options().add(option);
             r.options().add(option2);

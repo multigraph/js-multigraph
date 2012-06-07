@@ -83,7 +83,7 @@ describe("Axis Labels", function () {
             label;
 
         beforeEach(function () {
-            label = new Label();
+            label = new Label("10 5 1");
         });
 
         it("should be able to add a Label to a Labels", function () {
@@ -92,8 +92,8 @@ describe("Axis Labels", function () {
         });
 
         it("should be able to add many Label tags to a Labels tag", function () {
-            var label2 = new Label(),
-                label3 = new Label();
+            var label2 = new Label("10 5 1"),
+                label3 = new Label("10 5 1");
             l.label().add(label);
             l.label().add(label2);
             l.label().add(label3);
@@ -110,8 +110,8 @@ describe("Axis Labels", function () {
         });
 
         it("should be able to add many Label tags with attributes to a Labels tag", function () {
-            var label2 = new Label(),
-                label3 = new Label();
+            var label2 = new Label("10 5 1"),
+                label3 = new Label("10 5 1");
             label.spacing("100 10 5 1").position("1 0");
             label2.spacing("10 5 1").angle("-7").anchor("1 1");
             label3.spacing("10 5 1").position("0 0");
@@ -124,8 +124,8 @@ describe("Axis Labels", function () {
         });
 
         it("should be able to set/get attributes of an Label added to a Labels", function () {
-            var label2 = new Label(),
-                label3 = new Label();
+            var label2 = new Label("10 5 1"),
+                label3 = new Label("10 5 1");
             label.spacing("100 10 5 1").position("1 0");
             label2.spacing("10 5 1").angle("-7").anchor("1 1");
             label3.spacing("10 5 1").position("0 0");

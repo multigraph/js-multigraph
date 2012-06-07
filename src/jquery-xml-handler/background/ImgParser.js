@@ -10,9 +10,9 @@ if(!window.multigraph) {
     ns.jQueryXMLHandler.mixinfuncs.push(function (nsObj, parse, serialize) {
         
         nsObj.Background.Img[parse] = function (xml) {
-            var img = new nsObj.Background.Img();
-            if (xml) {
-                img.src(xml.attr('src'));
+            var img;
+            if (xml && xml.attr('src') !== undefined) {
+                img = new nsObj.Background.Img(xml.attr('src'));
                 img.anchor(xml.attr('anchor'));
                 img.base(xml.attr('base'));
                 img.position(xml.attr('position'));

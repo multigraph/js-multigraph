@@ -19,6 +19,7 @@ if (!window.multigraph.Axis) {
         this.hasA("max").which.validatesWith(function (max) {
             return typeof(max) === 'string';
         });
+        this.isBuiltWith('id', 'min', 'max');
 
     });
 

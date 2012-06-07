@@ -13,14 +13,14 @@ if (!window.multigraph) {
     ns.jQueryXMLHandler.mixinfuncs.push(function (nsObj, parse, serialize) {
 
         nsObj.Plot.Renderer[parse] = function (xml) {
-            var renderer = new nsObj.Plot.Renderer();
-            if (xml) {
+            var renderer;
+            if (xml && xml.attr('type') !== undefined) {
+                renderer = new nsObj.Plot.Renderer(xml.attr('type'));
                 if (xml.find('option').length > 0) {
                     $.each(xml.find(">option"), function(i,e) {
                         renderer.options().add( nsObj.Plot.Renderer.Option[parse]($(e)) );
                     });
                 }
-                renderer.type(xml.attr('type'));
             }
             return renderer;
         };

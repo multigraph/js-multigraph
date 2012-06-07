@@ -113,11 +113,11 @@ describe("Data", function () {
         });
 
         it("should be able to add a Variables with attributes and children to a Data", function () {
-            var variable = new Variable(),
-                variable2 = new Variable();
+            var variable = new Variable('x'),
+                variable2 = new Variable('y');
             variables.missingvalue('11');
-            variable.id('x').column('1').missingop('eq');
-            variable2.id('y').column('2').missingvalue('12');
+            variable.column('1').missingop('eq');
+            variable2.column('2').missingvalue('12');
             variables.variable().add(variable);
             variables.variable().add(variable2);
             d.variables(variables);
@@ -127,8 +127,8 @@ describe("Data", function () {
         });
 
         it("should be able to set/get attributes of variables added to a Data", function () {
-            var variable = new Variable(),
-                variable2 = new Variable();
+            var variable = new Variable('x'),
+                variable2 = new Variable('y');
             variables.variable().add(variable);
             variables.variable().add(variable2);
             d.variables(variables);

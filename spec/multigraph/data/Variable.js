@@ -7,7 +7,7 @@ describe("Data Variable", function () {
         variable;
 
     beforeEach(function () {
-        variable = new Variable();
+        variable = new Variable('x');
     });
 
     it("should be able to create a Variable", function () {
@@ -16,7 +16,6 @@ describe("Data Variable", function () {
 
     describe("id attribute", function () {
         it("should be able to set/get the id attribute", function () {
-            expect(variable.id() === undefined).toBe(true);
             variable.id('x');
             expect(variable.id() === 'x').toBe(true);
         });

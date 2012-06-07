@@ -25,6 +25,7 @@ if(!window.multigraph.Background) {
         this.hasA("frame").which.validatesWith(function (frame) {
             return frame === 'padding' || frame === 'plot';
         });
+        this.isBuiltWith('src');
 
     });
 

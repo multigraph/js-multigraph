@@ -277,11 +277,10 @@ describe("Axis", function () {
         });
 
         it("should be able to add a Labels with attributes and children to a Axis", function () {
-            var label = new Label(),
-                label2 = new Label();
+            var label = new Label('10 1 .2'),
+                label2 = new Label('100 50 25');
             labels.position('1 1');
-            label.spacing('10 1 .2');
-            label2.anchor('0 0').spacing('100 50 25');
+            label2.anchor('0 0');
             labels.label().add(label);
             labels.label().add(label2);
             a.labels(labels);
@@ -291,14 +290,13 @@ describe("Axis", function () {
         });
 
         it("should be able to set/get attributes of labels added to a Axis", function () {
-            var label = new Label(),
-                label2 = new Label();
+            var label = new Label('20 10 2 1'),
+                label2 = new Label('200 100');
             labels.label().add(label);
             labels.label().add(label2);
             a.labels(labels);
             a.labels().position('1 1').angle('40');
-            a.labels().label().at(0).spacing('20 10 2 1');
-            a.labels().label().at(1).spacing('200 100').anchor('0 1').angle('14');
+            a.labels().label().at(1).anchor('0 1').angle('14');
             expect(a.labels().position() === "1 1").toBe(true);
             expect(a.labels().angle() === "40").toBe(true);
             expect(a.labels().label().at(0).spacing() === '20 10 2 1').toBe(true);
@@ -396,7 +394,7 @@ describe("Axis", function () {
         var binding;
 
         beforeEach(function () {
-            binding = new Binding();
+            binding = new Binding('x', '0', '12');
         });
 
         it("should be able to add a Binding to a Axis", function () {
@@ -412,8 +410,6 @@ describe("Axis", function () {
 
         it("should be able to set/get attributes from a binding added to a Axis", function () {
             a.binding(binding);
-            a.binding().id('x');
-            a.binding().max('12');
             expect(a.binding().id() === 'x').toBe(true);
             expect(a.binding().max() === '12').toBe(true);
         });

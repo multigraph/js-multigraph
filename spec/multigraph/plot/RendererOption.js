@@ -7,7 +7,7 @@ describe("Plot Renderer Option", function () {
         option;
 
     beforeEach(function () {
-        option = new Option();
+        option = new Option('barwidth', '2');
     });
 
     it("should be able to create a Renderer Option", function () {
