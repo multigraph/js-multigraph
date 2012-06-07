@@ -42,10 +42,10 @@ if(!window.multigraph.ModelTool) {
         if (specification && typeof(specification) === "function") {
             model = new Model();
             specification.call(model);
+            return model;
         } else if (specification) {
             throw new Error("Model: specification parameter must be a function");
         }
-
 
         /********** BEGIN PRIVATE METHODS ****************/
         /* private method that abstracts hasA/hasMany */
@@ -87,7 +87,7 @@ if(!window.multigraph.ModelTool) {
             var i,
             list = [],
             properties = type==="attributes"?attributes:methods;
-            
+
             for (i in properties) {
                 if (properties.hasOwnProperty(i)) {
                     list.push(i);
@@ -108,6 +108,7 @@ if(!window.multigraph.ModelTool) {
 
             constructor = function () {
                 var i,
+                //isImmutableCache = isImmutable;
                     addProperties = function (obj, type) {
                         var properties = type==="attributes"?attributes:methods,
                             i;
@@ -126,6 +127,7 @@ if(!window.multigraph.ModelTool) {
                 for (i = 0; i < parents.length; i++) {
                     parents[i].apply(this, arguments);
                 }
+                //isImmutable = isImmutableCache;  //in case it gets changed in the super class
 
 
                 //add attributes
@@ -156,12 +158,6 @@ if(!window.multigraph.ModelTool) {
                 initializer.call(this);
             };
 
-
-            /*console.log("prototypes set");
-            var p = new constructor();
-            console.log("hello:" + (p instanceof parents[0]));*/
-            //console.log(p instanceof parents[0]);
-
             return constructor;
         };
         /*********** END PRIVATE METHODS **************/
@@ -177,7 +173,6 @@ if(!window.multigraph.ModelTool) {
         model.hasMany = function (attrs) {
             return hasAProperty("AttrList", attrs);
         };
-
 
         model.isA = function (parent) {
             var isAModel = function (potentialModel) {
@@ -313,8 +308,6 @@ if(!window.multigraph.ModelTool) {
             modified = false;
         };
         /************** END PUBLIC API ****************/
-
-
 
 
         

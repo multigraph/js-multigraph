@@ -128,10 +128,31 @@ describe("Model", function () {
             s.hasA("firstName");
             s.hasA("lastName");
             s.hasAn("id");
-            expect(s.attributes().length === 3);
+            expect(s.attributes().length === 3).toBe(true);
             expect(s.attributes().indexOf("firstName") > -1).toBe(true);
             expect(s.attributes().indexOf("lastName") > -1).toBe(true);
             expect(s.attributes().indexOf("id") > -1).toBe(true);
+        });
+
+        it("should return an array of Model attribute names even if created via a model specification", function () {
+            var Person = new Model(function () {
+                this.hasA("firstName");
+                this.hasA("lastName");
+                this.hasA("job");
+            });
+
+            var Employee = new Model(function () {
+                this.isA(Person);
+                this.hasA("salary");
+            });
+
+            Person.hasA("thing");
+
+            expect(Person.attributes().length === 4).toBe(true);
+            expect(Person.attributes().indexOf("firstName") > -1).toBe(true);
+            expect(Person.attributes().indexOf("thing") > -1).toBe(true);
+            expect(Person.attributes().indexOf("job") > -1).toBe(true);
+
         });
     });
 
@@ -191,7 +212,7 @@ describe("Model", function () {
                     return "hello from " + this.firstName();
                 });
             });
-
+           
             Employee = new Model(function () {
                 this.isA(Person);
                 this.hasA("salary").which.validatesWith(function (salary) {
@@ -202,6 +223,32 @@ describe("Model", function () {
                     return "hello from employee " + this.firstName() + " who has salary " + this.salary();
                 });
             });
+        });
+
+        //check immutability with isA, how should that be handled?
+        xit("should not be immutable if the parent model is not immutable", function () {
+            Person = new Model(function () {
+                this.hasA("firstName");
+                this.hasA("lastName");
+            });
+
+            //Person.isImmutable();
+            //Person.isBuiltWith("firstName", "%lastName");
+
+            //p = new Person("hello","world");
+
+            Employee = new Model(function () {
+                this.isA(Person);
+                this.hasA("salary");
+            });
+
+            /*expect(function () {
+                p = new Person();
+            }).toThrow();*/
+
+
+            //e = new Employee();
+
         });
 
         it("should throw an error if the argument is not a Model", function () {
@@ -295,6 +342,9 @@ describe("Model", function () {
         });
 
         //isA is going to affect isBuiltWith -- not sure how to handle that
+
+
+
     });
 
     describe("isImmutable method", function () {
