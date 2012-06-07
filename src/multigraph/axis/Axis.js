@@ -68,7 +68,7 @@ if(!window.multigraph) {
             return typeof(id) === 'string';
         });
         this.hasA("type").which.validatesWith(function (type) {
-            return typeof(type) === 'string' && ((type.toLowerCase() === 'number') || (type.toLowerCase() === 'datetime'));
+            return typeof(type) === 'string' && (type.toLowerCase() === 'number' || type.toLowerCase() === 'datetime');
         });
         this.hasA("length").which.validatesWith(function (length) {
             return typeof(length) === 'string';
@@ -130,6 +130,7 @@ if(!window.multigraph) {
         this.hasA("orientation").which.validatesWith(function (orientation) {
             return typeof(orientation) === 'string' && ((orientation.toLowerCase() === 'horizontal') || (orientation.toLowerCase() === 'vertical'));
         });
+        this.isBuiltWith('orientation');
 
     });
 

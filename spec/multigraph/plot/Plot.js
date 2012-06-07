@@ -28,10 +28,8 @@ describe("Plot", function () {
             v;
 
         beforeEach(function () {
-            h = new Axis(),
-            v = new Axis();
-            h.orientation("horizontal");
-            v.orientation("vertical");
+            h = new Axis('horizontal'),
+            v = new Axis('vertical');
         });
 
         it("should be able to add a horizontal axis to a Plot", function () {

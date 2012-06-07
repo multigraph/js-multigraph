@@ -11,9 +11,9 @@ if (!window.multigraph) {
     ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { 'mixinfuncs' : [] };
     ns.jQueryXMLHandler.mixinfuncs.push(function(nsObj, parse, serialize) {
         
-        nsObj.Axis[parse] = function(xml, orient) {
+        nsObj.Axis[parse] = function(xml) {
             var orientation = $(xml).prop('tagName').toLowerCase().replace('axis', ''),
-                axis = new nsObj.Axis().orientation(orientation),
+                axis = new nsObj.Axis(orientation),
                 childModels = ['Title', 'Labels', 'Grid', 'Pan', 'Zoom', 'Binding', 'AxisControls'],
                 i;
 

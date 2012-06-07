@@ -22,13 +22,13 @@ describe("Graph", function () {
             p;
 
         beforeEach(function () {
-            h = new Axis(),
-            v = new Axis(),
+            h = new Axis('horizontal'),
+            v = new Axis('vertical'),
             p = new Plot();
         });
 
         it("should be able to add multiple tags to a Graph", function () {
-            var h2 = new Axis();
+            var h2 = new Axis('horizontal');
             g.axes().add(h);
             g.axes().add(h2);
             g.axes().add(v);
@@ -66,7 +66,7 @@ describe("Graph", function () {
 
     it("should be able to create a Graph with an axis and then fetch that axis", function() {
         var g = new Graph();
-        var a = new Axis();
+        var a = new Axis('horizontal');
         a.id('x');
         g.axes().add(a);
         expect(g.axes().get(0) === a).toBe(true);
@@ -74,12 +74,12 @@ describe("Graph", function () {
 
     xit("should be able to create two graphs, each with an axis, and keep the axes distinct", function() {
         var g1 = new Graph();
-        var a1 = new Axis();
+        var a1 = new Axis('vertical');
         a1.id('a1');
         g1.axes().add(a1);
 
         var g2 = new Graph();
-        var a2 = new Axis();
+        var a2 = new Axis('vertical');
         a2.id('a2');
         g2.axes().add(a2);
 

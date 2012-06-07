@@ -15,8 +15,7 @@ describe("Axis", function () {
         a;
 
     beforeEach(function () {
-        a = new Axis();
-        a.orientation('horizontal');
+        a = new Axis('horizontal');
     });
 
     it("should be able to create an Axis", function () {
