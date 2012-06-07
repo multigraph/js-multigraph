@@ -176,13 +176,125 @@ describe("Model", function () {
     });
 
     describe("isA method", function () {
-        xit("should throw an error if the argument is not a Model", function () {
+        var Person, 
+            Employee,
+            e,
+            p;
+
+        beforeEach(function () {
+            Person = new Model(function () {
+                this.hasA("firstName");
+                this.hasA("lastName");
+                this.hasMany("friends");
+
+                this.respondsTo("sayHello", function () {
+                    return "hello from " + this.firstName();
+                });
+            });
+
+            Employee = new Model(function () {
+                this.isA(Person);
+                this.hasA("salary").which.validatesWith(function (salary) {
+                    return typeof(salary) === "number";
+                });
+
+                this.respondsTo("sayHello", function () {
+                    return "hello from employee " + this.firstName() + " who has salary " + this.salary();
+                });
+            });
+        });
+
+        it("should throw an error if the argument is not a Model", function () {
+            expect(function () {
+                Person = new Model(function () {
+                    this.isA(5);
+                });
+            }).toThrow(new Error("Model: parameter sent to isA function must be a Model"));
+
+            expect(function () {
+                Person = new Model(function () {
+                    this.isA(function () { });
+                });
+            }).toThrow(new Error("Model: parameter sent to isA function must be a Model"));
+
+            expect(function () {
+                Person = new Model(function () {
+                    this.hasA("name");
+                });
+
+                Employee = new Model(function () {
+                    this.isA(Person);
+                    this.hasA("salary");
+                });
+            }).not.toThrow(new Error("Model: parameter sent to isA function must be a Model"));
+        });
+
+        it("should throw an error if multiple inheritance is attempted", function () {
+            var Car = new Model(),
+                Pickup = new Model(),
+                ElCamino;
             
+            expect(function () {
+                ElCamino = new Model(function () {
+                    this.isA(Car);
+                    this.isA(Pickup);
+                })
+            }).toThrow("Model: Model only supports single inheritance at this time");
         });
 
-        xit("should give all properties of argument model to this model", function () {
+        it("should give all properties of argument model to this model", function () {
+            var e2;
 
+            e = new Employee();
+            p = new Person();
+
+            expect(e.firstName).not.toBeUndefined();
+            expect(e.lastName).not.toBeUndefined();
+            expect(e.friends).not.toBeUndefined();
+            expect(e.salary).not.toBeUndefined();
+
+            expect(p.salary).toBeUndefined();
+
+            e.firstName("Semmy").lastName("Purewal").salary(5000);
+            p.firstName("John").lastName("Frimmell");
+            expect(e.firstName()).toBe("Semmy");
+            expect(e.lastName()).toBe("Purewal");
+            expect(e.salary()).toBe(5000);
+            expect(p.firstName()).toBe("John");
+            expect(p.lastName()).toBe("Frimmell");
+
+            e2 = new Employee();
+            e2.firstName("Mark").lastName("Phillips").salary(5001);
+
+            expect(e2.firstName()).toBe("Mark");
+            expect(e2.lastName()).toBe("Phillips");
+            expect(e2.salary()).toBe(5001);
+            expect(e.firstName()).toBe("Semmy");
+            expect(e.lastName()).toBe("Purewal");
+            expect(e.salary()).toBe(5000);
         });
+
+        it("objects of the resulting model should be an instanceof argument model", function () {
+            e = new Employee();
+            p = new Person();
+            expect(e instanceof Employee).toBe(true);
+            expect(e instanceof Person).toBe(true);
+            expect(p instanceof Person).toBe(true);
+            expect(p instanceof Employee).toBe(false);
+        });
+
+        it("methods in current model should override any methods in previous model", function () {
+            e = new Employee();
+            p = new Person();
+            
+            e.firstName("John").salary(5000);
+            p.firstName("Semmy");
+
+            expect(e.sayHello()).toEqual("hello from employee John who has salary 5000");
+            expect(p.sayHello()).toEqual("hello from Semmy");
+        });
+
+        //isA is going to affect isBuiltWith -- not sure how to handle that
     });
 
     describe("isImmutable method", function () {

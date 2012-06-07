@@ -16,6 +16,7 @@ if(!window.multigraph.ModelTool) {
         modified = false,
         requiredConstructorArgs = [],
         optionalConstructorArgs = [],
+        parents = [],
         Method = ns.Method,
         Attr = ns.Attr,
         AttrList = ns.AttrList,
@@ -99,6 +100,7 @@ if(!window.multigraph.ModelTool) {
         /* private function that creates the constructor */
         create = function (name) {
             var that = this,
+            i,
             err;
 
             //validate the model first
@@ -119,6 +121,12 @@ if(!window.multigraph.ModelTool) {
                             }
                         }
                     };
+
+                //call super-model constructor(s)
+                for (i = 0; i < parents.length; i++) {
+                    parents[i].apply(this, arguments);
+                }
+
 
                 //add attributes
                 addProperties(this, "attributes");
@@ -148,6 +156,12 @@ if(!window.multigraph.ModelTool) {
                 initializer.call(this);
             };
 
+
+            /*console.log("prototypes set");
+            var p = new constructor();
+            console.log("hello:" + (p instanceof parents[0]));*/
+            //console.log(p instanceof parents[0]);
+
             return constructor;
         };
         /*********** END PRIVATE METHODS **************/
@@ -162,6 +176,36 @@ if(!window.multigraph.ModelTool) {
         
         model.hasMany = function (attrs) {
             return hasAProperty("AttrList", attrs);
+        };
+
+
+        model.isA = function (parent) {
+            var isAModel = function (potentialModel) {
+                var i,
+                    M = new Model();
+                for (i in M) {
+                    if (M.hasOwnProperty(i) && typeof(potentialModel[i]) !== typeof(M[i])) {
+                        return false;
+                    }
+                }
+                return true;
+            };
+
+            //confirm parent is a model via duck-typing
+            if (typeof (parent) !== "function" || !isAModel(parent)) {
+                throw new Error("Model: parameter sent to isA function must be a Model");
+            }
+
+            //only allow single inheritance for now
+            if (parents.length === 0) {
+                parents.push(parent);
+            } else {
+                throw new Error("Model: Model only supports single inheritance at this time");
+            }
+
+            for (var i = 0; i < parents.length; i++) {
+                model.prototype = new parents[i]();
+            }
         };
 
         model.attribute = function (attr) {
@@ -270,10 +314,17 @@ if(!window.multigraph.ModelTool) {
         };
         /************** END PUBLIC API ****************/
 
+
+
+
+        
         //here we are returning our model object
         //which is a function with a bunch of methods that
         //manipulate how the function behaves
         return model;
     }
+
+
+
     ns.Model = Model;
 }(window.multigraph.ModelTool));
