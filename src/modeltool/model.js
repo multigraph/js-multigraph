@@ -137,26 +137,30 @@ if(!window.multigraph.ModelTool) {
                 this.toString = pattern;
 
                 //use constructor args to build object
-                if (arguments.length < requiredConstructorArgs.length) {
-                    //throw error
-                    err = "Constructor requires ";
-                    for(i = 0; i < requiredConstructorArgs.length; ++i) {
-                        err += requiredConstructorArgs[i];
-                        err += i===requiredConstructorArgs.length-1?"":", ";
-                    }
-                    err += " to be specified";
-                    throw new Error(err);
-                } else {
-                    for (i = 0; i < arguments.length; ++i) {
-                        if (i < requiredConstructorArgs.length) {
-                            this[requiredConstructorArgs[i]](arguments[i]);
-                        } else {
-                            this[optionalConstructorArgs[i-requiredConstructorArgs.length]](arguments[i]);
+                if(arguments.length > 0) {
+                    if (arguments.length < requiredConstructorArgs.length) {
+                        //throw error
+                        err = "Constructor requires ";
+                        for(i = 0; i < requiredConstructorArgs.length; ++i) {
+                            err += requiredConstructorArgs[i];
+                            err += i===requiredConstructorArgs.length-1?"":", ";
+                        }
+                        err += " to be specified";
+                        throw new Error(err);
+                    } else {
+                        for (i = 0; i < arguments.length; ++i) {
+                            if (i < requiredConstructorArgs.length) {
+                                this[requiredConstructorArgs[i]](arguments[i]);
+                            } else {
+                                this[optionalConstructorArgs[i-requiredConstructorArgs.length]](arguments[i]);
+                            }
                         }
                     }
                 }
                 initializer.call(this);
             };
+            
+
 
             return constructor;
         };
@@ -202,6 +206,9 @@ if(!window.multigraph.ModelTool) {
                 model.prototype = new parents[i]();
             }
         };
+
+        model.isAn = model.isA;
+
 
         model.attribute = function (attr) {
             return property("attribute", attr);

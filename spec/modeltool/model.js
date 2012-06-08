@@ -342,10 +342,61 @@ describe("Model", function () {
             expect(p instanceof Employee).toBe(false);
         });
 
-        xit("should not throw an error if isBuiltWith is specified in the super-model", function () {
+        it("should allow for deeper inheritance hierarchies", function () {
+            var A, B, C, D, E, a, b, c, d, e;
+
+            A = new Model();
+            B = new Model(function () {
+                this.isAn(A);
+            });
+            C = new Model(function () {
+                this.isA(B);
+            });
+            D = new Model(function () {
+                this.isA(B);
+            });
+            E = new Model(function () {
+                this.isA(D);
+            });
+
+            a = new A();
+            b = new B();
+            c = new C();
+            d = new D();
+            e = new E();
+            
+            expect(a instanceof A).toBe(true);
+            expect(a instanceof B).toBe(false);
+            expect(a instanceof C).toBe(false);
+            expect(a instanceof D).toBe(false);
+            expect(a instanceof E).toBe(false);
+            expect(b instanceof B).toBe(true);
+            expect(b instanceof A).toBe(true);
+            expect(b instanceof C).toBe(false);
+            expect(b instanceof D).toBe(false);
+            expect(b instanceof E).toBe(false);
+            expect(c instanceof C).toBe(true);
+            expect(c instanceof B).toBe(true);
+            expect(c instanceof D).toBe(false);
+            expect(c instanceof E).toBe(false);
+            expect(d instanceof A).toBe(true);
+            expect(d instanceof B).toBe(true);
+            expect(d instanceof C).toBe(false);
+            expect(d instanceof D).toBe(true);
+            expect(d instanceof E).toBe(false);
+            expect(e instanceof A).toBe(true);
+            expect(e instanceof B).toBe(true);
+            expect(e instanceof C).toBe(false);
+            expect(e instanceof D).toBe(true);
+            expect(e instanceof E).toBe(true);
+
+        });
+
+        it("should not throw an error if isBuiltWith is specified in the super-model", function () {
             Person = new Model(function () {
                 this.hasA("name");
-                this.isBuiltWith("name");
+                this.hasAn("id");
+                this.isBuiltWith("name", "id");
             });
 
             Employee = new Model(function () {
@@ -358,8 +409,8 @@ describe("Model", function () {
             }).not.toThrow(new Error("Constructor requires name to be specified"));
 
             expect(function () {
-                p = new Person();
-            }).toThrow(new Error("Constructor requires name to be specified"));
+                p = new Person("semmy");
+            }).toThrow(new Error("Constructor requires name, id to be specified"));
         });
     });
 
@@ -469,7 +520,7 @@ describe("Model", function () {
             }).not.toThrow(new Error("immutable objects must have all attributes required in a call to isBuiltWith"));
 
             expect(function () {
-                p = new Person();
+                p = new Person("hello");
             }).toThrow("Constructor requires firstName, lastName to be specified");
 
             p = new Person("hello", "world");
@@ -571,6 +622,10 @@ describe("Model", function () {
             expect(p.returnsNull).not.toBeUndefined();
             expect(p.returnsNull()).toBe(null);
             expect(p.addsTwoNumbers(3,2)).toEqual(5);
+        });
+
+        it("should allow for an empty constructor", function () {
+            
         });
 
         it("should require the constructor to be called with the non-% parameters", function () {
