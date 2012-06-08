@@ -225,32 +225,6 @@ describe("Model", function () {
             });
         });
 
-        //check immutability with isA, how should that be handled?
-        xit("should not be immutable if the parent model is not immutable", function () {
-            Person = new Model(function () {
-                this.hasA("firstName");
-                this.hasA("lastName");
-            });
-
-            //Person.isImmutable();
-            //Person.isBuiltWith("firstName", "%lastName");
-
-            //p = new Person("hello","world");
-
-            Employee = new Model(function () {
-                this.isA(Person);
-                this.hasA("salary");
-            });
-
-            /*expect(function () {
-                p = new Person();
-            }).toThrow();*/
-
-
-            //e = new Employee();
-
-        });
-
         it("should throw an error if the argument is not a Model", function () {
             expect(function () {
                 Person = new Model(function () {
@@ -321,14 +295,7 @@ describe("Model", function () {
             expect(e.salary()).toBe(5000);
         });
 
-        it("objects of the resulting model should be an instanceof argument model", function () {
-            e = new Employee();
-            p = new Person();
-            expect(e instanceof Employee).toBe(true);
-            expect(e instanceof Person).toBe(true);
-            expect(p instanceof Person).toBe(true);
-            expect(p instanceof Employee).toBe(false);
-        });
+
 
         it("methods in current model should override any methods in previous model", function () {
             e = new Employee();
@@ -341,10 +308,59 @@ describe("Model", function () {
             expect(p.sayHello()).toEqual("hello from Semmy");
         });
 
-        //isA is going to affect isBuiltWith -- not sure how to handle that
+        //check immutability with isA, how should that be handled?
+        xit("should not be immutable if the parent model is not immutable", function () {
+            Person = new Model(function () {
+                this.hasA("firstName");
+                this.hasA("lastName");
+            });
+
+            //Person.isImmutable();
+            //Person.isBuiltWith("firstName", "%lastName");
+
+            //p = new Person("hello","world");
+
+            Employee = new Model(function () {
+                this.isA(Person);
+                this.hasA("salary");
+            });
+
+            /*expect(function () {
+                p = new Person();
+            }).toThrow();*/
 
 
+            //e = new Employee();
+        });
 
+        it("objects of the resulting model should be an instanceof argument model", function () {
+            e = new Employee();
+            p = new Person();
+            expect(e instanceof Employee).toBe(true);
+            expect(e instanceof Person).toBe(true);
+            expect(p instanceof Person).toBe(true);
+            expect(p instanceof Employee).toBe(false);
+        });
+
+        xit("should not throw an error if isBuiltWith is specified in the super-model", function () {
+            Person = new Model(function () {
+                this.hasA("name");
+                this.isBuiltWith("name");
+            });
+
+            Employee = new Model(function () {
+                this.isA(Person);
+                this.hasA("salary");
+            });
+
+            expect(function () {
+                e = new Employee();
+            }).not.toThrow(new Error("Constructor requires name to be specified"));
+
+            expect(function () {
+                p = new Person();
+            }).toThrow(new Error("Constructor requires name to be specified"));
+        });
     });
 
     describe("isImmutable method", function () {
