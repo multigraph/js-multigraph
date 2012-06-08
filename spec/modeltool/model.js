@@ -313,6 +313,8 @@ describe("Model", function () {
             Person = new Model(function () {
                 this.hasA("firstName");
                 this.hasA("lastName");
+                this.isImmutable();
+                this.isBuiltWith("firstName", "lastName");
             });
 
             //Person.isImmutable();
@@ -323,12 +325,21 @@ describe("Model", function () {
             Employee = new Model(function () {
                 this.isA(Person);
                 this.hasA("salary");
+                //this.isBuiltWith("lastName");
             });
 
-            /*expect(function () {
-                p = new Person();
-            }).toThrow();*/
+            e = new Employee();
+            e.lastName("hello");
+            //console.log(e.lastName());
 
+            expect(function () {
+                p = new Person("semmy");
+            }).toThrow("Constructor requires firstName, lastName to be specified");
+
+            expect(function () {
+                //e = new Employee("purewal");
+                //e.lastName("anotherLastName");
+            }).not.toThrow();
 
             //e = new Employee();
         });

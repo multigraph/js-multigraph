@@ -209,7 +209,6 @@ if(!window.multigraph.ModelTool) {
 
         model.isAn = model.isA;
 
-
         model.attribute = function (attr) {
             return property("attribute", attr);
         };
