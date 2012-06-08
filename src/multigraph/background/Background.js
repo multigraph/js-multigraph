@@ -6,7 +6,9 @@ if (!window.multigraph) {
     "use strict";
 
     var Img,
-        Background;
+        Background,
+        defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = ns.utilityFunctions.getKeys(defaultValues.background);
 
     if (ns.Background && ns.Background.Img) {
         Img = ns.Background.Img;
@@ -17,9 +19,10 @@ if (!window.multigraph) {
             return ns.utilityFunctions.validateColor(color);
         });
         this.hasA("img").which.validatesWith(function (img) {
-            return img instanceof window.multigraph.Background.Img;
+            return img instanceof ns.Background.Img;
         });
 
+        ns.utilityFunctions.insertDefaults(this, defaultValues.background, attributes);
     });
 
     ns.Background = Background;

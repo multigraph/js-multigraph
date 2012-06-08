@@ -6,7 +6,9 @@ if (!window.multigraph) {
     "use strict";
 
     var Icon,
-        Legend;
+        Legend,
+        defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = ns.utilityFunctions.getKeys(defaultValues.legend);
 
     if (ns.Legend && ns.Legend.Icon) {
         Icon = ns.Legend.Icon;
@@ -53,9 +55,10 @@ if (!window.multigraph) {
             return ns.utilityFunctions.validateInteger(padding);
         });
         this.hasA("icon").which.validatesWith(function (icon) {
-            return icon instanceof window.multigraph.Legend.Icon;
+            return icon instanceof ns.Legend.Icon;
         });
 
+        ns.utilityFunctions.insertDefaults(this, defaultValues.legend, attributes);
     });
 
     ns.Legend = Legend;

@@ -10,7 +10,9 @@ if (!window.multigraph.Axis) {
     "use strict";
 
     var Label,
-        Labels;
+        Labels,
+        defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = ns.utilityFunctions.getKeys(defaultValues.horizontalaxis.labels);
 
     if (ns.Axis.Labels && ns.Axis.Labels.Label) {
         Label = ns.Axis.Labels.Label;
@@ -38,12 +40,14 @@ if (!window.multigraph.Axis) {
         this.hasA("spacing").which.validatesWith(function (spacing) {
             return typeof(spacing) === 'string';
         });
-        this.hasA("labelsfunction").which.validatesWith(function (funct) {
+        this.hasA("function").which.validatesWith(function (funct) {
             return typeof(funct) === 'string';
         });
         this.hasA("densityfactor").which.validatesWith(function (densityfactor) {
             return typeof(densityfactor) === 'string';
         });
+
+        ns.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis.labels, attributes);
     });
 
     ns.Axis.Labels = Labels;

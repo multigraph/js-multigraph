@@ -9,7 +9,9 @@ if (!window.multigraph.Axis) {
 (function (ns) {
     "use strict";
 
-    var Zoom = new ns.ModelTool.Model( 'Zoom', function () {
+    var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = ns.utilityFunctions.getKeys(defaultValues.horizontalaxis.zoom),
+        Zoom = new ns.ModelTool.Model( 'Zoom', function () {
         this.hasA("allowed").which.validatesWith(function (allowed) {
             return allowed === 'yes' || allowed === 'no';
         });
@@ -23,6 +25,7 @@ if (!window.multigraph.Axis) {
             return typeof(anchor) === 'string';
         });
 
+        ns.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis.zoom, attributes);
     });
 
     ns.Axis.Zoom = Zoom;

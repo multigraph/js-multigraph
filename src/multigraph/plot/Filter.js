@@ -10,7 +10,9 @@ if (!window.multigraph.Plot) {
     "use strict";
 
     var Filter,
-        Option;
+        Option,
+        defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = ns.utilityFunctions.getKeys(defaultValues.plot.filter);
 
     if (ns.Plot.Filter && ns.Plot.Filter.Option) {
         Option = ns.Plot.Filter.Option;
@@ -24,6 +26,7 @@ if (!window.multigraph.Plot) {
             return typeof(type) === 'string';
         });
 
+        ns.utilityFunctions.insertDefaults(this, defaultValues.plot.filter, attributes);
     });
 
     ns.Plot.Filter = Filter;

@@ -9,7 +9,7 @@ if (!window.multigraph.Axis) {
 (function (ns) {
     "use strict";
 
-    var attributes = ['format', 'start', 'angle', 'position', 'anchor', 'densityfactor'],
+    var attributes = ['format', 'start', 'angle', 'position', 'anchor', 'densityfactor', 'function'],
         Labels = ns.Axis.Labels;
 
     ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { 'mixinfuncs' : [] };
@@ -24,7 +24,7 @@ if (!window.multigraph.Axis) {
                 labels.position(xml.attr('position'));
                 labels.anchor(xml.attr('anchor'));
                 labels.spacing(xml.attr('spacing'));
-                labels.labelsfunction(xml.attr('function'));
+                labels['function'](xml.attr('function'));
                 labels.densityfactor(xml.attr('densityfactor'));
                 if (xml.find('>label').length > 0) {
                     $.each(xml.find('>label'), function (i,e) {
@@ -46,10 +46,6 @@ if (!window.multigraph.Axis) {
                 if (this[attributes[i]]() !== undefined) {
                     attributeStrings.push(attributes[i] + '="' + this[attributes[i]]() + '"');
                 }
-            }
-
-            if (this.labelsfunction() !== undefined) {
-                attributeStrings.push('function="' + this.labelsfunction() + '"');
             }
 
             output = '<' + attributeStrings.join(' ');

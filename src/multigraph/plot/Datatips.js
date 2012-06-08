@@ -10,7 +10,10 @@ if (!window.multigraph.Plot) {
     "use strict";
 
     var Datatips,
-        DatatipsVariable;
+        DatatipsVariable,
+        defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = ns.utilityFunctions.getKeys(defaultValues.plot.datatips);
+
 
     if (ns.Plot.Datatips && ns.Plot.Datatips.Variable) {
         DatatipsVariable = ns.Plot.Datatips.Variable;
@@ -39,6 +42,7 @@ if (!window.multigraph.Plot) {
             return ns.utilityFunctions.validateInteger(pad);
         });
 
+        ns.utilityFunctions.insertDefaults(this, defaultValues.plot.datatips, attributes);
     });
 
     ns.Plot.Datatips = Datatips;

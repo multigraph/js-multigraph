@@ -54,10 +54,8 @@ describe("Background", function () {
             b.img().base("0 1");
             b.img(image2);
             expect(b.img().src() === "http://example.com/cool_dog.gif").toBe(true);
-            expect(b.img().base() === undefined).toBe(true);
         });
 
     });
-
 
 });

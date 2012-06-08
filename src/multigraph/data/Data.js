@@ -9,7 +9,9 @@ if(!window.multigraph) {
         Variables,
         Values,
         CSV,
-        Service;
+        Service,
+        defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = ns.utilityFunctions.getKeys(defaultValues.data);
 
     if (ns.Data) {
         if (ns.Data.Variables) {
@@ -40,6 +42,7 @@ if(!window.multigraph) {
             return service instanceof ns.Data.Service;
         });
 
+        ns.utilityFunctions.insertDefaults(this, defaultValues.data, attributes);
     });
 
     ns.Data = Data;

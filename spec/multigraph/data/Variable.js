@@ -33,9 +33,10 @@ describe("Data Variable", function () {
 
     describe("type attribute", function () {
         it("should be able to set/get the type attribute", function () {
-            expect(variable.type() === undefined).toBe(true);
             variable.type('number');
             expect(variable.type() === 'number').toBe(true);
+            variable.type('datetime');
+            expect(variable.type() === 'datetime').toBe(true);
         });
 
     });

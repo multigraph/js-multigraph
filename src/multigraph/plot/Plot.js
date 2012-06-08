@@ -9,7 +9,9 @@ if (!window.multigraph) {
         Legend,
         Filter,
         Renderer,
-        Datatips;
+        Datatips,
+        defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = ns.utilityFunctions.getKeys(defaultValues.plot);
 
     if (ns.Plot) {
         if (ns.Plot.Legend) {
@@ -48,6 +50,8 @@ if (!window.multigraph) {
         this.hasA("datatips").which.validatesWith(function (datatips) {
             return datatips instanceof window.multigraph.Plot.Datatips;
         });
+
+        ns.utilityFunctions.insertDefaults(this, defaultValues.plot, attributes);
     });
 
     ns.Plot = Plot;

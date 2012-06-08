@@ -1,4 +1,4 @@
-if(!window.multigraph) {
+if (!window.multigraph) {
     window.multigraph = {};
 }
 
@@ -13,7 +13,9 @@ if(!window.multigraph) {
         Pan,
         Zoom,
         Binding,
-        AxisControls;
+        AxisControls,
+        defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = ns.utilityFunctions.getKeys(defaultValues.horizontalaxis);
 
     if (ns.Axis) {
         if (ns.Axis.Title) {
@@ -132,6 +134,7 @@ if(!window.multigraph) {
         });
         this.isBuiltWith('orientation');
 
+        ns.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis, attributes);
     });
 
     ns.Axis = Axis;

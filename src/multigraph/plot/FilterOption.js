@@ -13,7 +13,9 @@ if (!window.multigraph.Plot.Filter) {
 (function (ns) {
     "use strict";
 
-    var Option = new ns.ModelTool.Model( 'FilterOption', function () {
+    var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = ns.utilityFunctions.getKeys(defaultValues.plot.filter.option),
+        Option = new ns.ModelTool.Model( 'FilterOption', function () {
         this.hasA("name").which.validatesWith(function (name) {
             return typeof(name) === 'string';
         });
@@ -21,6 +23,7 @@ if (!window.multigraph.Plot.Filter) {
             return typeof(value) === 'string';
         });
 
+        ns.utilityFunctions.insertDefaults(this, defaultValues.plot.filter.option, attributes);
     });
 
     ns.Plot.Filter.Option = Option;

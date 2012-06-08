@@ -9,7 +9,9 @@ if (!window.multigraph.Axis) {
 (function (ns) {
     "use strict";
 
-    var Pan = new ns.ModelTool.Model( 'Pan', function () {
+    var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = ns.utilityFunctions.getKeys(defaultValues.horizontalaxis.pan),
+        Pan = new ns.ModelTool.Model( 'Pan', function () {
         this.hasA("allowed").which.validatesWith(function (allowed) {
             return allowed === 'yes' || allowed === 'no';
         });
@@ -20,6 +22,7 @@ if (!window.multigraph.Axis) {
             return typeof(max) === 'string';
         });
 
+        ns.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis.pan, attributes);
     });
 
     ns.Axis.Pan = Pan;

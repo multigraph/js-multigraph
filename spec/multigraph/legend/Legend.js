@@ -115,10 +115,8 @@ describe("Legend", function () {
             l.icon().width("28");
             l.icon(icon2);
             expect(l.icon().border() === "5").toBe(true);
-            expect(l.icon().height() === undefined).toBe(true);
         });
 
     });
-
 
 });

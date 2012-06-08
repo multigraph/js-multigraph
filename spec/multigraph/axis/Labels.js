@@ -64,8 +64,8 @@ describe("Axis Labels", function () {
 
     describe("function attribute", function () {
         it("should be able to set/get the function attribute", function () {
-            l.labelsfunction('fred');
-            expect(l.labelsfunction() === 'fred').toBe(true);
+            l['function']('fred');
+            expect(l['function']() === 'fred').toBe(true);
         });
 
     });

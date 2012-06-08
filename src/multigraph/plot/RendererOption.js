@@ -13,24 +13,26 @@ if (!window.multigraph.Plot.Renderer) {
 (function (ns) {
     "use strict";
 
-    var Option = new ns.ModelTool.Model( 'RendererOption', function () {
-        this.hasA("name").which.validatesWith(function (name) {
-            return typeof(name) === 'string';
-        });
-        this.hasA("value").which.validatesWith(function (value) {
-            return typeof(value) === 'string';
-        });
-        this.hasA("min").which.validatesWith(function (min) {
-            return ns.utilityFunctions.validateDouble(min);
-        });
-        this.hasA("max").which.validatesWith(function (max) {
-            return ns.utilityFunctions.validateDouble(max);
-        });
-        this.isBuiltWith('name', 'value');
+    var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = ns.utilityFunctions.getKeys(defaultValues.plot.renderer.option),
+        Option = new ns.ModelTool.Model( 'RendererOption', function () {
+            this.hasA("name").which.validatesWith(function (name) {
+                return typeof(name) === 'string';
+            });
+            this.hasA("value").which.validatesWith(function (value) {
+                return typeof(value) === 'string';
+            });
+            this.hasA("min").which.validatesWith(function (min) {
+                return ns.utilityFunctions.validateDouble(min);
+            });
+            this.hasA("max").which.validatesWith(function (max) {
+                return ns.utilityFunctions.validateDouble(max);
+            });
+            this.isBuiltWith('name', 'value');
 
-    });
+            ns.utilityFunctions.insertDefaults(this, defaultValues.plot.renderer.option, attributes);
+        });
 
     ns.Plot.Renderer.Option = Option;
-
 
 }(window.multigraph));

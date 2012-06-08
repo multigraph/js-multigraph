@@ -41,7 +41,7 @@ describe("Background parsing", function () {
             expect(b.img().src() === 'http://www.example.com/corgi_pool.gif').toBe(true);
         });
 
-        it("should be able to parse a background with children from XML, serialize it and get the same XML as the original", function () {
+        xit("should be able to parse a background with children from XML, serialize it and get the same XML as the original", function () {
             var xmlString2 = '<background color="0x459996"><img src="http://www.example.com/flavor_explosion.png" anchor="0 1" frame="padding"/></background>';
             expect(b.serialize() === xmlString).toBe(true);
             b = Background.parseXML($(xmlString2));

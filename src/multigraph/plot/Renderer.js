@@ -10,7 +10,9 @@ if (!window.multigraph.Plot) {
     "use strict";
 
     var Renderer,
-        Option;
+        Option,
+        defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = ns.utilityFunctions.getKeys(defaultValues.plot.renderer);
 
     if (ns.Plot.Renderer && ns.Plot.Renderer.Option) {
         Option = ns.Plot.Renderer.Option;
@@ -28,6 +30,7 @@ if (!window.multigraph.Plot) {
         });
         this.isBuiltWith('type');
 
+        ns.utilityFunctions.insertDefaults(this, defaultValues.plot.renderer, attributes);
     });
 
     ns.Plot.Renderer = Renderer;
