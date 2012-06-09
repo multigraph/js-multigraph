@@ -108,7 +108,6 @@ if(!window.multigraph.ModelTool) {
 
             constructor = function () {
                 var i,
-                //isImmutableCache = isImmutable;
                     addProperties = function (obj, type) {
                         var properties = type==="attributes"?attributes:methods,
                             i;
@@ -122,12 +121,6 @@ if(!window.multigraph.ModelTool) {
                             }
                         }
                     };
-
-                //call super-model constructor(s)
-                for (i = 0; i < parents.length; i++) {
-                    parents[i].apply(this, arguments);
-                }
-                //isImmutable = isImmutableCache;  //in case it gets changed in the super class
 
 
                 //add attributes
@@ -179,7 +172,10 @@ if(!window.multigraph.ModelTool) {
         };
 
         model.isA = function (parent) {
-            var isAModel = function (potentialModel) {
+            var i,
+                parentAttributes,
+                parentMethods,
+                isAModel = function (potentialModel) {
                 var i,
                     M = new Model();
                 for (i in M) {
@@ -202,7 +198,22 @@ if(!window.multigraph.ModelTool) {
                 throw new Error("Model: Model only supports single inheritance at this time");
             }
 
-            for (var i = 0; i < parents.length; i++) {
+            //add attributes and methods to current model
+            parentAttributes = parents[0].attributes();
+            for (i = 0; i < parentAttributes.length; ++i) {
+                if (attributes[parentAttributes[i]] === undefined) {
+                    attributes[parentAttributes[i]] = parents[0].attribute(parentAttributes[i]);
+                }
+            }
+
+            parentMethods = parents[0].methods();
+            for (i = 0; i < parentMethods.length; ++i) {
+                if (methods[parentMethods[i]] === undefined) {
+                    methods[parentMethods[i]] = parents[0].method(parentMethods[i]);
+                }
+            }            
+
+            for (i = 0; i < parents.length; i++) {
                 model.prototype = new parents[i]();
             }
         };

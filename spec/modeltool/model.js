@@ -265,7 +265,6 @@ describe("Model", function () {
 
         it("should give all properties of argument model to this model", function () {
             var e2;
-
             e = new Employee();
             p = new Person();
 
@@ -273,8 +272,8 @@ describe("Model", function () {
             expect(e.lastName).not.toBeUndefined();
             expect(e.friends).not.toBeUndefined();
             expect(e.salary).not.toBeUndefined();
-
             expect(p.salary).toBeUndefined();
+
 
             e.firstName("Semmy").lastName("Purewal").salary(5000);
             p.firstName("John").lastName("Frimmell");
@@ -309,7 +308,7 @@ describe("Model", function () {
         });
 
         //check immutability with isA, how should that be handled?
-        xit("should not be immutable if the parent model is not immutable", function () {
+        it("should not be immutable if the parent model is not immutable", function () {
             Person = new Model(function () {
                 this.hasA("firstName");
                 this.hasA("lastName");
@@ -317,31 +316,28 @@ describe("Model", function () {
                 this.isBuiltWith("firstName", "lastName");
             });
 
-            //Person.isImmutable();
-            //Person.isBuiltWith("firstName", "%lastName");
-
-            //p = new Person("hello","world");
+            p = new Person("hello","world");
+            expect(p.firstName()).toBe("hello");
+            expect(p.lastName()).toBe("world");
 
             Employee = new Model(function () {
                 this.isA(Person);
                 this.hasA("salary");
-                //this.isBuiltWith("lastName");
+                this.isBuiltWith("lastName");
             });
-
-            e = new Employee();
-            e.lastName("hello");
-            //console.log(e.lastName());
 
             expect(function () {
                 p = new Person("semmy");
             }).toThrow("Constructor requires firstName, lastName to be specified");
 
             expect(function () {
-                //e = new Employee("purewal");
-                //e.lastName("anotherLastName");
+                e = new Employee();
+                e.lastName("hello");
+                //e.lastName("world");
             }).not.toThrow();
 
-            //e = new Employee();
+            expect(e.lastName()).toBe("world");
+
         });
 
         it("objects of the resulting model should be an instanceof argument model", function () {
