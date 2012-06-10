@@ -128,11 +128,12 @@ describe("Model", function () {
             s.hasA("firstName");
             s.hasA("lastName");
             s.hasAn("id");
-            expect(s.attributes().length === 3);
+            expect(s.attributes().length === 3).toBe(true);
             expect(s.attributes().indexOf("firstName") > -1).toBe(true);
             expect(s.attributes().indexOf("lastName") > -1).toBe(true);
             expect(s.attributes().indexOf("id") > -1).toBe(true);
         });
+
 
         it("should work when the model is created using a specification function", function () {
             var Person = new Model(function () {
@@ -145,6 +146,26 @@ describe("Model", function () {
             expect(Person.attributes().indexOf("firstName") > -1).toBe(true);
             expect(Person.attributes().indexOf("lastName") > -1).toBe(true);
             expect(Person.attributes().indexOf("id") > -1).toBe(true);
+        });
+
+        it("should return an array of Model attribute names even if created via a model specification", function () {
+            var Person = new Model(function () {
+                this.hasA("firstName");
+                this.hasA("lastName");
+                this.hasA("job");
+            });
+
+            var Employee = new Model(function () {
+                this.isA(Person);
+                this.hasA("salary");
+            });
+
+            Person.hasA("thing");
+
+            expect(Person.attributes().length === 4).toBe(true);
+            expect(Person.attributes().indexOf("firstName") > -1).toBe(true);
+            expect(Person.attributes().indexOf("thing") > -1).toBe(true);
+            expect(Person.attributes().indexOf("job") > -1).toBe(true);
         });
     });
 
@@ -188,7 +209,237 @@ describe("Model", function () {
         });
     });
 
-    describe("isImmutable", function () {
+    describe("isA method", function () {
+        var Person, 
+            Employee,
+            e,
+            p;
+
+        beforeEach(function () {
+            Person = new Model(function () {
+                this.hasA("firstName");
+                this.hasA("lastName");
+                this.hasMany("friends");
+
+                this.respondsTo("sayHello", function () {
+                    return "hello from " + this.firstName();
+                });
+            });
+           
+            Employee = new Model(function () {
+                this.isA(Person);
+                this.hasA("salary").which.validatesWith(function (salary) {
+                    return typeof(salary) === "number";
+                });
+
+                this.respondsTo("sayHello", function () {
+                    return "hello from employee " + this.firstName() + " who has salary " + this.salary();
+                });
+            });
+        });
+
+        it("should throw an error if the argument is not a Model", function () {
+            expect(function () {
+                Person = new Model(function () {
+                    this.isA(5);
+                });
+            }).toThrow(new Error("Model: parameter sent to isA function must be a Model"));
+
+            expect(function () {
+                Person = new Model(function () {
+                    this.isA(function () { });
+                });
+            }).toThrow(new Error("Model: parameter sent to isA function must be a Model"));
+
+            expect(function () {
+                Person = new Model(function () {
+                    this.hasA("name");
+                });
+
+                Employee = new Model(function () {
+                    this.isA(Person);
+                    this.hasA("salary");
+                });
+            }).not.toThrow(new Error("Model: parameter sent to isA function must be a Model"));
+        });
+
+        it("should throw an error if multiple inheritance is attempted", function () {
+            var Car = new Model(),
+                Pickup = new Model(),
+                ElCamino;
+            
+            expect(function () {
+                ElCamino = new Model(function () {
+                    this.isA(Car);
+                    this.isA(Pickup);
+                })
+            }).toThrow("Model: Model only supports single inheritance at this time");
+        });
+
+        it("should give all properties of argument model to this model", function () {
+            var e2;
+            e = new Employee();
+            p = new Person();
+
+            expect(e.firstName).not.toBeUndefined();
+            expect(e.lastName).not.toBeUndefined();
+            expect(e.friends).not.toBeUndefined();
+            expect(e.salary).not.toBeUndefined();
+            expect(p.salary).toBeUndefined();
+
+
+            e.firstName("Semmy").lastName("Purewal").salary(5000);
+            p.firstName("John").lastName("Frimmell");
+            expect(e.firstName()).toBe("Semmy");
+            expect(e.lastName()).toBe("Purewal");
+            expect(e.salary()).toBe(5000);
+            expect(p.firstName()).toBe("John");
+            expect(p.lastName()).toBe("Frimmell");
+
+            e2 = new Employee();
+            e2.firstName("Mark").lastName("Phillips").salary(5001);
+
+            expect(e2.firstName()).toBe("Mark");
+            expect(e2.lastName()).toBe("Phillips");
+            expect(e2.salary()).toBe(5001);
+            expect(e.firstName()).toBe("Semmy");
+            expect(e.lastName()).toBe("Purewal");
+            expect(e.salary()).toBe(5000);
+        });
+
+
+
+        it("methods in current model should override any methods in previous model", function () {
+            e = new Employee();
+            p = new Person();
+            
+            e.firstName("John").salary(5000);
+            p.firstName("Semmy");
+
+            expect(e.sayHello()).toEqual("hello from employee John who has salary 5000");
+            expect(p.sayHello()).toEqual("hello from Semmy");
+        });
+
+        //check immutability with isA, how should that be handled?
+        it("should not be immutable if the parent model is not immutable", function () {
+            Person = new Model(function () {
+                this.hasA("firstName");
+                this.hasA("lastName");
+                this.isImmutable();
+                this.isBuiltWith("firstName", "lastName");
+            });
+
+            p = new Person("hello","world");
+            expect(p.firstName()).toBe("hello");
+            expect(p.lastName()).toBe("world");
+
+            Employee = new Model(function () {
+                this.isA(Person);
+                this.hasA("salary");
+                this.isBuiltWith("lastName");
+            });
+
+            expect(function () {
+                p = new Person("semmy");
+            }).toThrow("Constructor requires firstName, lastName to be specified");
+
+            expect(function () {
+                e = new Employee();
+                e.lastName("hello");
+                e.lastName("world");
+            }).not.toThrow();
+
+            expect(e.lastName()).toBe("world");
+
+            expect(function () {
+                p = new Person("john", "resig");
+                p.lastName("smith");
+            }).toThrow("cannot set the immutable property lastName after it has been set");
+
+        });
+
+        it("objects of the resulting model should be an instanceof argument model", function () {
+            e = new Employee();
+            p = new Person();
+            expect(e instanceof Employee).toBe(true);
+            expect(e instanceof Person).toBe(true);
+            expect(p instanceof Person).toBe(true);
+            expect(p instanceof Employee).toBe(false);
+        });
+
+        it("should allow for deeper inheritance hierarchies", function () {
+            var A, B, C, D, E, a, b, c, d, e;
+
+            A = new Model();
+            B = new Model(function () {
+                this.isAn(A);
+            });
+            C = new Model(function () {
+                this.isA(B);
+            });
+            D = new Model(function () {
+                this.isA(B);
+            });
+            E = new Model(function () {
+                this.isA(D);
+            });
+
+            a = new A();
+            b = new B();
+            c = new C();
+            d = new D();
+            e = new E();
+            
+            expect(a instanceof A).toBe(true);
+            expect(a instanceof B).toBe(false);
+            expect(a instanceof C).toBe(false);
+            expect(a instanceof D).toBe(false);
+            expect(a instanceof E).toBe(false);
+            expect(b instanceof B).toBe(true);
+            expect(b instanceof A).toBe(true);
+            expect(b instanceof C).toBe(false);
+            expect(b instanceof D).toBe(false);
+            expect(b instanceof E).toBe(false);
+            expect(c instanceof C).toBe(true);
+            expect(c instanceof B).toBe(true);
+            expect(c instanceof D).toBe(false);
+            expect(c instanceof E).toBe(false);
+            expect(d instanceof A).toBe(true);
+            expect(d instanceof B).toBe(true);
+            expect(d instanceof C).toBe(false);
+            expect(d instanceof D).toBe(true);
+            expect(d instanceof E).toBe(false);
+            expect(e instanceof A).toBe(true);
+            expect(e instanceof B).toBe(true);
+            expect(e instanceof C).toBe(false);
+            expect(e instanceof D).toBe(true);
+            expect(e instanceof E).toBe(true);
+
+        });
+
+        it("should not throw an error if isBuiltWith is specified in the super-model", function () {
+            Person = new Model(function () {
+                this.hasA("name");
+                this.hasAn("id");
+                this.isBuiltWith("name", "id");
+            });
+
+            Employee = new Model(function () {
+                this.isA(Person);
+                this.hasA("salary");
+            });
+
+            expect(function () {
+                e = new Employee();
+            }).not.toThrow(new Error("Constructor requires name to be specified"));
+
+            expect(function () {
+                p = new Person("semmy");
+            }).toThrow(new Error("Constructor requires name, id to be specified"));
+        });
+    });
+        
+    describe("isImmutable method", function ()  {
         it("should be defined", function () {
             expect(s.isImmutable).toBeDefined();
         });
@@ -294,7 +545,7 @@ describe("Model", function () {
             }).not.toThrow(new Error("immutable objects must have all attributes required in a call to isBuiltWith"));
 
             expect(function () {
-                p = new Person();
+                p = new Person("hello");
             }).toThrow("Constructor requires firstName, lastName to be specified");
 
             p = new Person("hello", "world");
@@ -396,6 +647,10 @@ describe("Model", function () {
             expect(p.returnsNull).not.toBeUndefined();
             expect(p.returnsNull()).toBe(null);
             expect(p.addsTwoNumbers(3,2)).toEqual(5);
+        });
+
+        it("should allow for an empty constructor", function () {
+            
         });
 
         it("should require the constructor to be called with the non-% parameters", function () {

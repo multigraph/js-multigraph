@@ -173,6 +173,33 @@ describe("Attr", function () {
         });
     });
 
+    describe("isMutable method", function () {
+        var card;
+        
+        beforeEach(function () {
+            card = {};
+            a.isImmutable().and.validatesWith(function (suit) {
+                return ["clubs", "diamonds", "hearts", "spades"].indexOf(suit) > -1;
+            });
+        });
+
+        it("should make a formerly immutable attribute mutable again", function () {
+            a.isMutable();
+            a.addTo(card);
+            card.suit("clubs");
+            expect(card.suit()).toBe("clubs");
+            card.suit("hearts");
+            expect(card.suit()).toBe("hearts");
+            card.suit("diamonds");
+            expect(card.suit()).toBe("diamonds");
+        });
+
+        it("should return the attribute for chaining", function () {
+            expect(a.isMutable()).toBe(a);
+        });
+
+    });
+
     describe("isImmutable method", function () {
         var card;
 
@@ -232,6 +259,31 @@ describe("Attr", function () {
 
     });
 
+    describe("clone method", function () {
+        var attribute = new Attr("test"),
+            validator = function () {
+                return 5 > 3;
+            },
+           error = "5 must be greater than 3",
+           def = 5,
+           clonedAttr,
+           objA = {},
+           objB = {};
+
+        attribute.validatesWith(validator).and.errorsWith(error).and.defaultsTo(def);
+        clonedAttr = attribute.clone();
+
+        expect(clonedAttr.validator()).toBe(validator);
+        expect(clonedAttr.errorMessage()).toBe(error);
+
+        attribute.addTo(objA);
+        clonedAttr.addTo(objB);
+
+        expect(objA.test()).toBe(def);
+        expect(objB.test()).toBe(def);
+        expect(objA.test()).toEqual(objB.test());
+    });
+    
     describe("full example", function () {
         it("should work with this example", function () {
             var ranks = ['2','3','4','5','6','7','8','9','10','J','Q','K','A'];

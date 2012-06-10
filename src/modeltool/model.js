@@ -16,6 +16,7 @@ if(!window.multigraph.ModelTool) {
         modified = false,
         requiredConstructorArgs = [],
         optionalConstructorArgs = [],
+        parents = [],
         Method = ns.Method,
         Attr = ns.Attr,
         AttrList = ns.AttrList,
@@ -45,7 +46,6 @@ if(!window.multigraph.ModelTool) {
         } else if (specification) {
             throw new Error("Model: specification parameter must be a function");
         }
-
 
         /********** BEGIN PRIVATE METHODS ****************/
         /* private method that abstracts hasA/hasMany */
@@ -87,7 +87,7 @@ if(!window.multigraph.ModelTool) {
             var i,
             list = [],
             properties = type==="attributes"?attributes:methods;
-            
+
             for (i in properties) {
                 if (properties.hasOwnProperty(i)) {
                     list.push(i);
@@ -100,6 +100,7 @@ if(!window.multigraph.ModelTool) {
         /* private function that creates the constructor */
         create = function (name) {
             var that = this,
+            i,
             err;
 
             //validate the model first
@@ -121,6 +122,7 @@ if(!window.multigraph.ModelTool) {
                         }
                     };
 
+
                 //add attributes
                 addProperties(this, "attributes");
                 addProperties(this, "methods");
@@ -128,26 +130,30 @@ if(!window.multigraph.ModelTool) {
                 this.toString = pattern;
 
                 //use constructor args to build object
-                if (arguments.length < requiredConstructorArgs.length) {
-                    //throw error
-                    err = "Constructor requires ";
-                    for(i = 0; i < requiredConstructorArgs.length; ++i) {
-                        err += requiredConstructorArgs[i];
-                        err += i===requiredConstructorArgs.length-1?"":", ";
-                    }
-                    err += " to be specified";
-                    throw new Error(err);
-                } else {
-                    for (i = 0; i < arguments.length; ++i) {
-                        if (i < requiredConstructorArgs.length) {
-                            this[requiredConstructorArgs[i]](arguments[i]);
-                        } else {
-                            this[optionalConstructorArgs[i-requiredConstructorArgs.length]](arguments[i]);
+                if(arguments.length > 0) {
+                    if (arguments.length < requiredConstructorArgs.length) {
+                        //throw error
+                        err = "Constructor requires ";
+                        for(i = 0; i < requiredConstructorArgs.length; ++i) {
+                            err += requiredConstructorArgs[i];
+                            err += i===requiredConstructorArgs.length-1?"":", ";
+                        }
+                        err += " to be specified";
+                        throw new Error(err);
+                    } else {
+                        for (i = 0; i < arguments.length; ++i) {
+                            if (i < requiredConstructorArgs.length) {
+                                this[requiredConstructorArgs[i]](arguments[i]);
+                            } else {
+                                this[optionalConstructorArgs[i-requiredConstructorArgs.length]](arguments[i]);
+                            }
                         }
                     }
                 }
                 initializer.call(this);
             };
+            
+
 
             return constructor;
         };
@@ -164,6 +170,57 @@ if(!window.multigraph.ModelTool) {
         model.hasMany = function (attrs) {
             return hasAProperty("AttrList", attrs);
         };
+
+        model.isA = function (parent) {
+            var i,
+                parentAttributes,
+                parentMethods,
+                isAModel = function (potentialModel) {
+                var i,
+                    M = new Model();
+                for (i in M) {
+                    if (M.hasOwnProperty(i) && typeof(potentialModel[i]) !== typeof(M[i])) {
+                        return false;
+                    }
+                }
+                return true;
+            };
+
+            //confirm parent is a model via duck-typing
+            if (typeof (parent) !== "function" || !isAModel(parent)) {
+                throw new Error("Model: parameter sent to isA function must be a Model");
+            }
+
+            //only allow single inheritance for now
+            if (parents.length === 0) {
+                parents.push(parent);
+            } else {
+                throw new Error("Model: Model only supports single inheritance at this time");
+            }
+
+            //add attributes and methods to current model
+            parentAttributes = parents[0].attributes();
+            for (i = 0; i < parentAttributes.length; ++i) {
+                if (attributes[parentAttributes[i]] === undefined) {
+                    attributes[parentAttributes[i]] = parents[0].attribute(parentAttributes[i]).clone();
+                    //subclass attributes are mutable by default
+                    attributes[parentAttributes[i]].isMutable();
+                }
+            }
+
+            parentMethods = parents[0].methods();
+            for (i = 0; i < parentMethods.length; ++i) {
+                if (methods[parentMethods[i]] === undefined) {
+                    methods[parentMethods[i]] = parents[0].method(parentMethods[i]);
+                }
+            }            
+
+            for (i = 0; i < parents.length; i++) {
+                model.prototype = new parents[i]();
+            }
+        };
+
+        model.isAn = model.isA;
 
         model.attribute = function (attr) {
             return property("attribute", attr);
@@ -271,10 +328,15 @@ if(!window.multigraph.ModelTool) {
         };
         /************** END PUBLIC API ****************/
 
+
+        
         //here we are returning our model object
         //which is a function with a bunch of methods that
         //manipulate how the function behaves
         return model;
     }
+
+
+
     ns.Model = Model;
 }(window.multigraph.ModelTool));
