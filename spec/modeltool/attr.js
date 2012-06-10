@@ -232,6 +232,31 @@ describe("Attr", function () {
 
     });
 
+    describe("clone method", function () {
+        var attribute = new Attr("test"),
+            validator = function () {
+                return 5 > 3;
+            },
+           error = "5 must be greater than 3",
+           def = 5,
+           clonedAttr,
+           objA = {},
+           objB = {};
+
+        attribute.validatesWith(validator).and.errorsWith(error).and.defaultsTo(def);
+        clonedAttr = attribute.clone();
+
+        expect(clonedAttr.validator()).toBe(validator);
+        expect(clonedAttr.errorMessage()).toBe(error);
+
+        attribute.addTo(objA);
+        clonedAttr.addTo(objB);
+
+        expect(objA.test()).toBe(def);
+        expect(objB.test()).toBe(def);
+        expect(objA.test()).toEqual(objB.test());
+    });
+    
     describe("full example", function () {
         it("should work with this example", function () {
             var ranks = ['2','3','4','5','6','7','8','9','10','J','Q','K','A'];
