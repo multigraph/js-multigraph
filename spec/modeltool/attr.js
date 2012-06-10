@@ -245,8 +245,6 @@ describe("Attr", function () {
             }).toThrow(new Error("Attr: addAttr method requires an object parameter"));
         });
 
-
-
         it("should add the attribute to the specified object", function () {
             a.addTo(Card);
             expect(Card.suit).not.toBeUndefined();
@@ -260,28 +258,30 @@ describe("Attr", function () {
     });
 
     describe("clone method", function () {
-        var attribute = new Attr("test"),
+        it("should clone all aspects of the attribute and return a new one", function () {
+            var attribute = new Attr("test"),
             validator = function () {
                 return 5 > 3;
             },
-           error = "5 must be greater than 3",
-           def = 5,
-           clonedAttr,
-           objA = {},
-           objB = {};
+            error = "5 must be greater than 3",
+            def = 5,
+            clonedAttr,
+            objA = {},
+            objB = {};
 
-        attribute.validatesWith(validator).and.errorsWith(error).and.defaultsTo(def);
-        clonedAttr = attribute.clone();
-
-        expect(clonedAttr.validator()).toBe(validator);
-        expect(clonedAttr.errorMessage()).toBe(error);
-
-        attribute.addTo(objA);
-        clonedAttr.addTo(objB);
-
-        expect(objA.test()).toBe(def);
-        expect(objB.test()).toBe(def);
-        expect(objA.test()).toEqual(objB.test());
+            attribute.validatesWith(validator).and.errorsWith(error).and.defaultsTo(def);
+            clonedAttr = attribute.clone();
+            
+            expect(clonedAttr.validator()).toBe(validator);
+            expect(clonedAttr.errorMessage()).toBe(error);
+            
+            attribute.addTo(objA);
+            clonedAttr.addTo(objB);
+            
+            expect(objA.test()).toBe(def);
+            expect(objB.test()).toBe(def);
+            expect(objA.test()).toEqual(objB.test());
+        });
     });
     
     describe("full example", function () {
