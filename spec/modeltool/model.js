@@ -333,10 +333,15 @@ describe("Model", function () {
             expect(function () {
                 e = new Employee();
                 e.lastName("hello");
-                //e.lastName("world");
+                e.lastName("world");
             }).not.toThrow();
 
             expect(e.lastName()).toBe("world");
+
+            expect(function () {
+                p = new Person("john", "resig");
+                p.lastName("smith");
+            }).toThrow("cannot set the immutable property lastName after it has been set");
 
         });
 

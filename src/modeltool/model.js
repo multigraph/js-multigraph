@@ -202,7 +202,9 @@ if(!window.multigraph.ModelTool) {
             parentAttributes = parents[0].attributes();
             for (i = 0; i < parentAttributes.length; ++i) {
                 if (attributes[parentAttributes[i]] === undefined) {
-                    attributes[parentAttributes[i]] = parents[0].attribute(parentAttributes[i]);
+                    attributes[parentAttributes[i]] = parents[0].attribute(parentAttributes[i]).clone();
+                    //subclass attributes are mutable by default
+                    attributes[parentAttributes[i]].isMutable();
                 }
             }
 
