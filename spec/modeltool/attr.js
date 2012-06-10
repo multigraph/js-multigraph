@@ -173,6 +173,33 @@ describe("Attr", function () {
         });
     });
 
+    describe("isMutable method", function () {
+        var card;
+        
+        beforeEach(function () {
+            card = {};
+            a.isImmutable().and.validatesWith(function (suit) {
+                return ["clubs", "diamonds", "hearts", "spades"].indexOf(suit) > -1;
+            });
+        });
+
+        it("should make a formerly immutable attribute mutable again", function () {
+            a.isMutable();
+            a.addTo(card);
+            card.suit("clubs");
+            expect(card.suit()).toBe("clubs");
+            card.suit("hearts");
+            expect(card.suit()).toBe("hearts");
+            card.suit("diamonds");
+            expect(card.suit()).toBe("diamonds");
+        });
+
+        it("should return the attribute for chaining", function () {
+            expect(a.isMutable()).toBe(a);
+        });
+
+    });
+
     describe("isImmutable method", function () {
         var card;
 

@@ -56,6 +56,11 @@ if(!window.multigraph.ModelTool) {
             return this;
         };
 
+        this.isMutable = function () {
+            isImmutable = false;
+            return this;
+        };
+
         this.clone = function () {
             var result = new Attr(name);
             result.validatesWith(validator).errorsWith(errorMessage).defaultsTo(defaultValue);
