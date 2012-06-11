@@ -1,6 +1,6 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
 
-describe("Axis parsing", function () {
+describe("Graph parsing", function () {
     "use strict";
 
     var Axis = window.multigraph.Axis,
@@ -41,7 +41,7 @@ describe("Axis parsing", function () {
         expect(g instanceof Graph).toBe(true);
     });
 
-    it("should be able to parse an axis from XML, then serialize it, and get the same XML as the original", function () {
+    it("should be able to parse a graph from XML, then serialize it, and get the same XML as the original", function () {
         expect(g.serialize() === xmlString).toBe(true);
 	$xml = $(xmlString2);
         g = Graph.parseXML($xml);
