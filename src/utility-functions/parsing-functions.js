@@ -50,7 +50,7 @@ if (!window.multigraph.utilityFunctions) {
                 'bordercolor': '0x000000'
             },
             'ui': {
-                'eventhandler': undefined
+                'eventhandler': 'saui'
             },
             'networkmonitor': {
                 'visible' : undefined,
@@ -100,19 +100,22 @@ if (!window.multigraph.utilityFunctions) {
             },
             'title': {
                 'content': undefined,
-                'base': undefined,
-                'border': undefined,
-                'color': undefined,
-                'bordercolor': undefined,
-                'opacity': undefined,
-                'padding': undefined,
+                'base': '0 1',
+                'border': '0',
+                'color': '0xffffff',
+                'bordercolor': '0x000000',
+                'opacity': '1.0',
+                'padding': '0',
                 'cornerradius': undefined,
-                'position': undefined,
-                'anchor': undefined
+                'position': '0 0',
+                'anchor': '0 1'
             },
             'horizontalaxis': {
                 'title': {
                     'content': undefined,
+//                    'fontname': 'default',
+//                    'fontsize': '12',
+//                    'fontcolor': '0x000000',
                     'position': '0 -20',
                     'anchor': '0 1',
                     'angle': '0'
@@ -126,8 +129,15 @@ if (!window.multigraph.utilityFunctions) {
                         'anchor': undefined,
                         'spacing': undefined,
                         'densityfactor': undefined
+//                        'fontname': undefined,
+//                        'fontsize': undefined,
+//                        'fontcolor': undefined
                     },
+//                    'fontname': 'default',
+//                    'fontsize': '12',
+//                    'fontcolor': '0x000000',
                     'format': '%1d',
+//                    'visible': 'true',
                     'start': '0',
                     'angle': '0.0',
                     'position': '0 0',
@@ -164,27 +174,30 @@ if (!window.multigraph.utilityFunctions) {
                 'type': 'number',
                 'length': '1.0',
                 'position': '0 0',
-                'pregap': undefined,
-                'postgap': undefined,
+                'pregap': '0',
+                'postgap': '0',
                 'anchor': '-1',
                 'base': '-1 1',
                 'min': 'auto',
-                'minoffset': undefined,
+                'minoffset': '0',
                 'minposition': '-1',
                 'max': 'auto',
-                'maxoffset': undefined,
+                'maxoffset': '0',
                 'maxposition': '1',
                 'positionbase': undefined,
                 'color': '0x000000',
                 'tickmin': '-3',
                 'tickmax': '3',
-                'highlightstyle': undefined,
+                'highlightstyle': 'axis',
                 'linewidth': '1',
                 'orientation': undefined
             },
             'verticalaxis': {
                 'title': {
                     'content': undefined,
+//                    'fontname': 'default',
+//                    'fontsize': '12',
+//                    'fontcolor': '0x000000',
                     'position': '0 -20',
                     'anchor': '0 1',
                     'angle': '0'
@@ -198,14 +211,21 @@ if (!window.multigraph.utilityFunctions) {
                         'anchor': undefined,
                         'spacing': undefined,
                         'densityfactor': undefined
+//                        'fontname': undefined,
+//                        'fontsize': undefined,
+//                        'fontcolor': undefined
                     },
+//                    'fontname': 'default',
+//                    'fontsize': '12',
+//                    'fontcolor': '0x000000',
                     'format': '%1d',
+                    'visible': 'true',
                     'start': '0',
                     'angle': '0.0',
                     'position': '0 0',
                     'anchor': '0 0',
                     'spacing': '10000 5000 2000 1000 500 200 100 50 20 10 5 2 1 0.1 0.01 0.001',
-                    'defaultDatetimeSpacing': '1000Y 500Y 200Y 100Y 50Y 20Y 10Y 5Y 2Y 1Y 6M 3M 2M 1M 7D 3D 2D 1D 12H 6H 3H 2H 1H',
+//                    'defaultDatetimeSpacing': '1000Y 500Y 200Y 100Y 50Y 20Y 10Y 5Y 2Y 1Y 6M 3M 2M 1M 7D 3D 2D 1D 12H 6H 3H 2H 1H',
                     'function': undefined,
                     'densityfactor': undefined
                 },
@@ -236,21 +256,21 @@ if (!window.multigraph.utilityFunctions) {
                 'type': 'number',
                 'length': '1.0',
                 'position': '0 0',
-                'pregap': undefined,
-                'postgap': undefined,
+                'pregap': '0',
+                'postgap': '0',
                 'anchor': '-1',
-                'base': '-1 -1',
+                'base': '-1 1',
                 'min': 'auto',
-                'minoffset': undefined,
+                'minoffset': '0',
                 'minposition': '-1',
                 'max': 'auto',
-                'maxoffset': undefined,
+                'maxoffset': '0',
                 'maxposition': '1',
                 'positionbase': undefined,
                 'color': '0x000000',
                 'tickmin': '-3',
                 'tickmax': '3',
-                'highlightstyle': undefined,
+                'highlightstyle': 'axis',
                 'linewidth': '1',
                 'orientation': undefined
             },
@@ -293,18 +313,19 @@ if (!window.multigraph.utilityFunctions) {
                         'min': undefined,
                         'max': undefined
                     },
-                    'type': undefined
+                    'type': 'line'
                 },
                 'datatips':{
                     'variable': {
                         'format': undefined
                     },
+//                    'visible': 'false',
                     'format': undefined,
-                    'bgcolor': undefined,
-                    'bgalpha': undefined,
-                    'border': undefined,
-                    'bordercolor': undefined,
-                    'pad': undefined
+                    'bgcolor': '0xeeeeee',
+                    'bgalpha': '1.0',
+                    'border': '1',
+                    'bordercolor': '0x000000',
+                    'pad': '2'
                 }
             },
             'data': {

@@ -17,13 +17,35 @@ describe("Graph", function () {
 
     describe("Children", function () {
         var Plot = window.multigraph.Plot,
+            Window = window.multigraph.Window,
+            UI = window.multigraph.UI,
+            NetworkMonitor = window.multigraph.NetworkMonitor,
+            Debugger = window.multigraph.Debugger,
+            Legend = window.multigraph.Legend,
+            Background = window.multigraph.Background,
+            Plotarea = window.multigraph.Plotarea,
+            Data = window.multigraph.Data,
             h,
             v,
+            w,
+            ui,
+            debug,
+            legend,
+            background,
+            plotarea,
+            data,
             p;
 
         beforeEach(function () {
             h = new Axis('horizontal'),
             v = new Axis('vertical'),
+            w = new Window(),
+            ui = new UI(),
+            debug = new Debugger(),
+            legend = new Legend(),
+            background = new Background(),
+            plotarea = new Plotarea(),
+            data = new Data(),
             p = new Plot();
         });
 
@@ -33,10 +55,24 @@ describe("Graph", function () {
             g.axes().add(h2);
             g.axes().add(v);
             g.plots().add(p);
+            g.data().add(data);
+            g.window(w);
+            g.ui(ui);
+            g.Debugger(debug);
+            g.legend(legend);
+            g.background(background);
+            g.plotarea(plotarea);
             expect(g.axes().at(0) === h).toBe(true);
             expect(g.axes().at(1) === h2).toBe(true);
             expect(g.axes().at(2) === v).toBe(true);
             expect(g.plots().at(0) === p).toBe(true);
+            expect(g.data().at(0) === data).toBe(true);
+            expect(g.window() === w).toBe(true);
+            expect(g.ui() === ui).toBe(true);
+            expect(g.Debugger() === debug).toBe(true);
+            expect(g.legend() === legend).toBe(true);
+            expect(g.background() === background).toBe(true);
+            expect(g.plotarea() === plotarea).toBe(true);
         });
 
         it("should be able to add multiple tags with attr's to a Graph", function () {
