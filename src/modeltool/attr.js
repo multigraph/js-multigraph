@@ -209,5 +209,10 @@ if(!window.multigraph.ModelTool) {
         return typeof(this.param) === val;
     }});
 
+    Attr.addValidator({isOneOf: function (val) {
+        this.message = this.param + " should be one of the set: " + val;
+        return val.indexOf(this.param) > -1;
+    }});
+
     ns.Attr = Attr;
 }(window.multigraph.ModelTool));

@@ -93,6 +93,19 @@ describe("Attr", function () {
         });
     });
 
+    describe("isOneOf method", function () {
+        it("should throw an error if the parameter does not come from the specified set", function () {
+            var a = new Attr("suit"),
+                Card = {};
+            
+            a.isOneOf(["clubs","diamonds","hearts","spades"]);
+            a.addTo(Card);
+            expect(function () {
+                Card.suit("cubs");
+            }).toThrow("cubs should be one of the set: clubs,diamonds,hearts,spades");
+        });
+    });
+
     describe("validator method", function () {
         var validator;
         it("should return the validator function", function () {
