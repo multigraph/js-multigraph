@@ -397,7 +397,7 @@ describe("Attr", function () {
         it("should throw an error if the object has more than one key/value pair", function () {
             expect(function () {
                 Attr.addValidator({whatever: 5, anotherKey: 6});
-            }).toThrow("validator must be an object of the form { name: function }, and should not have any other keys")
+            }).toThrow("validator must be an object of the form { name: function }, and should not have any other keys");
         });
 
         it("should add the validator object to the static validators list", function () {
