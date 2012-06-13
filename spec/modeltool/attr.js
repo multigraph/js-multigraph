@@ -38,6 +38,61 @@ describe("Attr", function () {
         }).toThrow(new Error("invalid setter call for suit"));
     });
 
+    describe("isGreaterThan method", function () {
+        it("once added to the object, it should throw an error if the argument is not greater than the parameter", function () {
+            var num = new Attr("num"),
+                obj = {};
+            
+            num.isGreaterThan(5);
+            num.addTo(obj);
+
+            expect(function () {
+                obj.num(4);
+            }).toThrow("4 should be greater than 5");
+        });
+    });
+
+    describe("isLessThan method", function () {
+        it("once added to the object, it should throw an error if the argument is not less than the parameter", function () {
+            var num = new Attr("num"),
+                obj = {};
+            num.isGreaterThan(5);
+            num.isLessThan(10);
+            num.addTo(obj);
+
+            expect(function () {
+                obj.num(4);
+            }).toThrow("4 should be greater than 5");
+
+            expect(function () {
+                obj.num(12);
+            }).toThrow("12 should be less than 10");
+        });
+    });
+
+    describe("isA method", function () {
+        it("once added to the object, it should throw an error if the argument is not the correct type", function () {
+            var num = new Attr("num"),
+                obj = {};
+
+            num.isA("number").and.isGreaterThan(5).and.isLessThan(10);
+
+            num.addTo(obj);
+
+            expect(function () {
+                obj.num(4);
+            }).toThrow("4 should be greater than 5");
+
+            expect(function () {
+                obj.num(12);
+            }).toThrow("12 should be less than 10");
+
+            expect(function () {
+                obj.num("hello");
+            }).toThrow("hello should be a number");
+        });
+    });
+
     describe("validator method", function () {
         var validator;
         it("should return the validator function", function () {
@@ -328,6 +383,44 @@ describe("Attr", function () {
         });
     });
     
+    describe("static addValidator method", function () {
+        it("should throw an error if the parameter is not an object", function () {
+            expect(function () {
+                Attr.addValidator(5);
+            }).toThrow(new Error("validator must be an object of the form { name: function }"));
+
+            expect(function () {
+                Attr.addValidator(function () { return false; });
+            }).toThrow(new Error("validator must be an object of the form { name: function }"));
+        });
+
+        it("should throw an error if the object has more than one key/value pair", function () {
+            expect(function () {
+                Attr.addValidator({whatever: 5, anotherKey: 6});
+            }).toThrow("validator must be an object of the form { name: function }, and should not have any other keys")
+        });
+
+        it("should add the validator object to the static validators list", function () {
+            expect(function () {
+                Attr.addValidator({isGreaterThan5: function (thing) {
+                    this.message = "Expected " + thing + " to be greater than 5";
+                    return thing > 5;
+                }});
+            }).not.toThrow();
+
+            expect(Attr.validators.isGreaterThan5).not.toBeUndefined();
+        });
+
+        it("should throw an error if a validator is added that already exists", function () {
+            expect(function () {
+                Attr.addValidator({isGreaterThan5: function (thing) {
+                    return false;
+                }});
+            }).toThrow("Validator 'isGreaterThan5' already defined");
+        });
+    });
+
+
     describe("full example", function () {
         it("should work with this example", function () {
             var ranks = ['2','3','4','5','6','7','8','9','10','J','Q','K','A'];

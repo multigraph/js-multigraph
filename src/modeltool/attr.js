@@ -11,6 +11,7 @@ if(!window.multigraph.ModelTool) {
 
     var Attr = function (name, err) {
         var validatorFunctions = [],
+            that = this,
             errorMessage = err || "invalid setter call for " + name,
             defaultValue,
             i,
@@ -108,6 +109,8 @@ if(!window.multigraph.ModelTool) {
             return validator;
         };
 
+
+
         this.addTo = function (obj) {
             var attribute;
 
@@ -139,7 +142,74 @@ if(!window.multigraph.ModelTool) {
                 }
             };
         };
+
+        //add validators
+        for (i in Attr.validators) {
+            if (Attr.validators.hasOwnProperty(i)) {
+                (function (func) {
+                    that[i] = function (val) {
+                        that.validatesWith(function (param) {
+                            var obj = {},
+                            result;
+                            obj.param = param;
+                            result = func.call(obj, val);
+                            this.message = obj.message;
+                            return result;   
+                        });
+                        return that;
+                    }
+                }(Attr.validators[i]));
+            }
+        }
     };
+
+    Attr.validators = {};
+
+    Attr.addValidator = function (v) {
+        var prop,
+            count = 0;
+
+        //v should be an object
+        if (typeof(v) !== "object") {
+            throw new Error("validator must be an object of the form { name: function }");
+        }
+        
+        //v should have exactly 1 property that is a function
+        for (prop in v) {
+            if (v.hasOwnProperty(prop)) {
+                count++;
+                if (typeof(v[prop]) !== 'function' || count > 1) {
+                    throw new Error("validator must be an object of the form { name: function }, and should not have any other keys");
+                }
+            }
+        }
+        
+        //add it to the validators object
+        for (prop in v) {
+            if (v.hasOwnProperty(prop)) {
+                if (Attr.validators[prop] === undefined) {
+                    Attr.validators[prop] = v[prop];
+                } else {
+                    throw new Error("Validator '" + prop +"' already defined");
+                }
+            }
+        };
+    };
+
+    Attr.addValidator({isGreaterThan: function (val) {
+        this.message = this.param + " should be greater than " + val;
+        return this.param > val;
+    }});
+
+    Attr.addValidator({isLessThan: function (val) {
+        this.message = this.param + " should be less than " + val;
+        return this.param < val;
+    }});
+
+    Attr.addValidator({isA: function (val) {
+        this.message = this.param + " should be a " + val;
+        return typeof(this.param) === val;
+    }});
 
     ns.Attr = Attr;
 }(window.multigraph.ModelTool));
