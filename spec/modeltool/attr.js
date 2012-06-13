@@ -408,7 +408,7 @@ describe("Attr", function () {
                 }});
             }).not.toThrow();
 
-            expect(Attr.validators.isGreaterThan5).not.toBeUndefined();
+            expect((new Attr("whatever")).isGreaterThan5).not.toBeUndefined();
         });
 
         it("should throw an error if a validator is added that already exists", function () {

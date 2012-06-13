@@ -9,6 +9,8 @@ if(!window.multigraph.ModelTool) {
 (function (ns) {
     "use strict";
 
+    var validators = {};
+
     var Attr = function (name, err) {
         var validatorFunctions = [],
             that = this,
@@ -33,9 +35,6 @@ if(!window.multigraph.ModelTool) {
                 }
                 return true;
             };
-
-
-
 
         validatorFunctions.push({ validator: function () { return true; } });
 
@@ -144,8 +143,8 @@ if(!window.multigraph.ModelTool) {
         };
 
         //add validators
-        for (i in Attr.validators) {
-            if (Attr.validators.hasOwnProperty(i)) {
+        for (i in validators) {
+            if (validators.hasOwnProperty(i)) {
                 (function (func) {
                     that[i] = function (val) {
                         that.validatesWith(function (param) {
@@ -158,12 +157,12 @@ if(!window.multigraph.ModelTool) {
                         });
                         return that;
                     }
-                }(Attr.validators[i]));
+                }(validators[i]));
             }
         }
     };
 
-    Attr.validators = {};
+    //validators = {};
 
     Attr.addValidator = function (v) {
         var prop,
@@ -187,8 +186,8 @@ if(!window.multigraph.ModelTool) {
         //add it to the validators object
         for (prop in v) {
             if (v.hasOwnProperty(prop)) {
-                if (Attr.validators[prop] === undefined) {
-                    Attr.validators[prop] = v[prop];
+                if (validators[prop] === undefined) {
+                    validators[prop] = v[prop];
                 } else {
                     throw new Error("Validator '" + prop +"' already defined");
                 }
