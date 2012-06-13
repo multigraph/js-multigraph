@@ -60,6 +60,44 @@ describe("Attr", function () {
             expect(a.validator()("goodbye")).toBe(false);
         });
 
+        it("should allow for a new error message to be set using this.message in the specified function", function () {
+            var obj = {},
+                v = function (num) {
+                    this.message = "Expected " + num + " to be bigger than 5";
+                    return num > 5;
+                };
+
+            a.validatesWith(v);
+
+            a.validatesWith(function (num) {
+                this.message = "Expected " + num + " to be less than 10";
+                return num < 10;
+            });
+
+            a.validatesWith(function (num) {
+                this.message = "Expected " + num + " to be divisible by 4";
+                return num%4 === 0;
+            });
+
+            a.addTo(obj);
+            expect(function () {
+                obj.suit(3);
+            }).toThrow("Expected 3 to be bigger than 5");
+
+            expect(function () {
+                obj.suit(12);
+            }).toThrow("Expected 12 to be less than 10");
+
+            expect(function () {
+                obj.suit(7);
+            }).toThrow("Expected 7 to be divisible by 4");
+            
+            expect(function () {
+                obj.suit(8);
+            }).not.toThrow();
+
+        });
+
         it("should allow for multiple attrs to be created with different validators", function () {
             var r;
             
@@ -86,11 +124,11 @@ describe("Attr", function () {
     });
 
     /* DEPRECATED */
-    describe("whichValidatesWith method", function () {
+    /*describe("whichValidatesWith method", function () {
         xit("should be an alias for the validatesWith method", function () {
             expect(a.validatesWith).toEqual(a.whichValidatesWith);
         });
-    });
+    });*/
 
     describe("and syntactic sugar", function () {
         it("should return the object", function () {
@@ -165,11 +203,10 @@ describe("Attr", function () {
     });
 
     /* DEPRECATED */
-    describe("whichErrorsWith method", function () {
-        xit("should be an alias for the validatesWith method", function () {
-            expect(a.errorsWith).toEqual(a.whichErrorsWith);
-        });
-    });
+    /*describe("whichErrorsWith method", function () {
+        expect(a.errorsWith).toEqual(a.whichErrorsWith);
+    });*/
+    //);
 
     describe("errorMessage method", function () {
         it("should return the error message once it is set", function () {

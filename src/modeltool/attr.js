@@ -16,15 +16,27 @@ if(!window.multigraph.ModelTool) {
             i,
             isImmutable = false,
             validator = function (thingBeingValidated) {
+                var obj = {};
                 for (i = 0; i < validatorFunctions.length; ++i) {
-                    if (!validatorFunctions[i](thingBeingValidated)) {
+                    //a little magic to keep the old API working
+                    if (validatorFunctions[i].validator.call(obj, thingBeingValidated) === false) {
+                        if (obj.message !== undefined) {
+                            errorMessage = obj.message;
+                        }
                         return false;
                     }
+
+                    /*if (!validatorFunctions[i].validator(thingBeingValidated)) {
+                        return false;
+                    }*/
                 }
                 return true;
             };
 
-        validatorFunctions.push(function () { return true; });
+
+
+
+        validatorFunctions.push({ validator: function () { return true; } });
 
         if(name === undefined || typeof(name) !== 'string') {
             throw new Error("Attr: constructor requires a name parameter which must be a string");
@@ -37,7 +49,7 @@ if(!window.multigraph.ModelTool) {
         this.validatesWith = function (v) {
             //validator should be a function
             if (typeof(v) === 'function') {
-                validatorFunctions.push(v);
+                validatorFunctions.push({ validator: v });
                 //validator = v;
                 return this;
             } else {
@@ -78,7 +90,7 @@ if(!window.multigraph.ModelTool) {
                 i;
 
             for (i = 0; i < validatorFunctions.length; ++i) {
-                result.validatesWith(validatorFunctions[i]);
+                result.validatesWith(validatorFunctions[i].validator);
             }
 
             result.errorsWith(errorMessage).defaultsTo(defaultValue);
