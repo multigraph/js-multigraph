@@ -10,10 +10,21 @@ if(!window.multigraph.ModelTool) {
     "use strict";
 
     var Attr = function (name, err) {
-        var validator = function () { return true; },
-        errorMessage = err || "invalid setter call for " + name,
-        defaultValue,
-        isImmutable = false;
+        var validatorFunctions = [],
+            errorMessage = err || "invalid setter call for " + name,
+            defaultValue,
+            i,
+            isImmutable = false,
+            validator = function (thingBeingValidated) {
+                for (i = 0; i < validatorFunctions.length; ++i) {
+                    if (!validatorFunctions[i](thingBeingValidated)) {
+                        return false;
+                    }
+                }
+                return true;
+            };
+
+        validatorFunctions.push(function () { return true; });
 
         if(name === undefined || typeof(name) !== 'string') {
             throw new Error("Attr: constructor requires a name parameter which must be a string");
@@ -26,7 +37,8 @@ if(!window.multigraph.ModelTool) {
         this.validatesWith = function (v) {
             //validator should be a function
             if (typeof(v) === 'function') {
-                validator = v;
+                validatorFunctions.push(v);
+                //validator = v;
                 return this;
             } else {
                 throw new Error("Attr: validator must be a function");
@@ -62,8 +74,14 @@ if(!window.multigraph.ModelTool) {
         };
 
         this.clone = function () {
-            var result = new Attr(name);
-            result.validatesWith(validator).errorsWith(errorMessage).defaultsTo(defaultValue);
+            var result = new Attr(name),
+                i;
+
+            for (i = 0; i < validatorFunctions.length; ++i) {
+                result.validatesWith(validatorFunctions[i]);
+            }
+
+            result.errorsWith(errorMessage).defaultsTo(defaultValue);
             if (isImmutable) {
                 result.isImmutable();
             }
@@ -110,5 +128,6 @@ if(!window.multigraph.ModelTool) {
             };
         };
     };
+
     ns.Attr = Attr;
 }(window.multigraph.ModelTool));

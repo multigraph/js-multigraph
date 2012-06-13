@@ -47,10 +47,17 @@ describe("Attr", function () {
     });
 
     describe("validatesWith method", function () {
-        it("should set the validator method", function () {
-            var v = function () { return false; };
+        it("should add a new validation criteria", function () {
+            var v = function (thing) {
+                if (thing === "hello") {
+                    return true;
+                } else {
+                    return false;
+                }
+            };
             a.validatesWith(v);
-            expect(a.validator()).toEqual(v);
+            expect(a.validator()("hello")).toBe(true);
+            expect(a.validator()("goodbye")).toBe(false);
         });
 
         it("should allow for multiple attrs to be created with different validators", function () {
@@ -272,7 +279,7 @@ describe("Attr", function () {
             attribute.validatesWith(validator).and.errorsWith(error).and.defaultsTo(def);
             clonedAttr = attribute.clone();
             
-            expect(clonedAttr.validator()).toBe(validator);
+            expect(clonedAttr.validator()()).toBe(true);
             expect(clonedAttr.errorMessage()).toBe(error);
             
             attribute.addTo(objA);
