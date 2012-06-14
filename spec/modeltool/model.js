@@ -272,7 +272,7 @@ describe("Model", function () {
                 ElCamino = new Model(function () {
                     this.isA(Car);
                     this.isA(Pickup);
-                })
+                });
             }).toThrow("Model: Model only supports single inheritance at this time");
         });
 
