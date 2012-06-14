@@ -88,9 +88,6 @@ Card = new Model(function () {
 });
 
 Deck = new Model(function () {
-     var rank,
-         suit;
-
      this.hasMany("cards").eachOfWhich.isA(Card);
 
      this.isBuiltWith(function () {
