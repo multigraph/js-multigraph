@@ -102,6 +102,7 @@ if(!window.multigraph.ModelTool) {
         //syntactic sugar
         this.and = this;
         this.which = this;
+        this.eachOfWhich = this;
 
         this.validator = function () {
             return validator;
@@ -163,56 +164,52 @@ if(!window.multigraph.ModelTool) {
         }
     };
 
-    Attr.addValidator = function (v) {
+    Attr.addValidator = function (name, v) {
         var prop,
             count = 0;
 
-        //v should be an object
-        if (typeof(v) !== "object") {
-            throw new Error("validator must be an object of the form { name: function }");
+        if (name === undefined || typeof(name) !== "string") {
+            throw new Error("addValidator requires a name to be specified as the first parameter");
         }
-        
-        //v should have exactly 1 property that is a function
-        for (prop in v) {
-            if (v.hasOwnProperty(prop)) {
-                count++;
-                if (typeof(v[prop]) !== 'function' || count > 1) {
-                    throw new Error("validator must be an object of the form { name: function }, and should not have any other keys");
-                }
-            }
+
+        if (v === undefined || typeof(v) !== "function") {
+            throw new Error("addValidator requires a function as the second parameter");
         }
-        
-        //add it to the validators object
-        for (prop in v) {
-            if (v.hasOwnProperty(prop)) {
-                if (validators[prop] === undefined) {
-                    validators[prop] = v[prop];
-                } else {
-                    throw new Error("Validator '" + prop +"' already defined");
-                }
-            }
+
+        if (validators[name] === undefined) {
+            validators[name] = v;
+        } else {
+            throw new Error("Validator '" + name +"' already defined");
         }
     };
 
-    Attr.addValidator({isGreaterThan: function (val) {
+    Attr.addValidator("isGreaterThan", function (val) {
         this.message = this.param + " should be greater than " + val;
         return this.param > val;
-    }});
+    });
 
-    Attr.addValidator({isLessThan: function (val) {
+    Attr.addValidator("isLessThan", function (val) {
         this.message = this.param + " should be less than " + val;
         return this.param < val;
-    }});
+    });
 
-    Attr.addValidator({isA: function (val) {
-        this.message = this.param + " should be a " + val;
-        return typeof(this.param) === val;
-    }});
+    Attr.addValidator("isA", function (val) {
+        var types = ["string", "number", "boolean", "function", "object"];
+        if (typeof(val) === "string" && types.indexOf(val) > -1) {
+            this.message = this.param + " should be a " + val;
+            return typeof(this.param) === val;
+        } else if (typeof(val) === "string") {
+            throw new Error("Attr: isA accepts a string which is one of " + types);
+        } else {
+            this.message = this.param + " should be an Object";
+            return this.param instanceof val;
+        }
+    });
 
-    Attr.addValidator({isOneOf: function (val) {
+    Attr.addValidator("isOneOf", function (val) {
         this.message = this.param + " should be one of the set: " + val;
         return val.indexOf(this.param) > -1;
-    }});
+    });
 
     ns.Attr = Attr;
 }(window.multigraph.ModelTool));

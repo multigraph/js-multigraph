@@ -827,16 +827,9 @@ describe("Model", function () {
 
 
         Card = new Model();
-        Card.hasA("suit");
-        Card.attribute("suit").validatesWith(function (suit) {
-            return suits.indexOf(suit) > -1;
-        });
-
+        Card.hasA("suit").which.isA("string").and.isOneOf(suits);
         Card.isBuiltWith('rank','suit');
-        
-        Card.hasA("rank").which.validatesWith(function (rank) {
-                return rank.indexOf(rank) > -1;
-        });
+        Card.hasA("rank").which.isA("string").and.isOneOf(ranks);
 
         Card.looksLike(function () {
             return this.rank() + " of " + this.suit();
@@ -844,11 +837,17 @@ describe("Model", function () {
 
         var c = new Card("5", "diamonds");
         expect(c.toString()).toBe("5 of diamonds");
+        
+        expect(function () {
+            c.rank(10);
+        }).toThrow();
+
+        expect(function () {
+            c.rank("10");
+        }).not.toThrow();
 
         Deck = new Model(function () {
-            this.hasMany("cards").which.validateWith(function (card) {
-                return (card instanceof Card); 
-            });
+            this.hasMany("cards").which.isA(Card);
 
             this.isBuiltWith(function () {
                 for (i = 0; i < suits.length; ++i) {
@@ -863,6 +862,10 @@ describe("Model", function () {
 
         expect(d.cards().at(0).toString()).toEqual("2 of clubs");
         expect(d.cards().at(51).toString()).toEqual("A of spades");
+
+        expect(function () {
+            d.cards().add(5);
+        }).toThrow("5 should be an Object");
     });
 
     it("should also work with this example", function () {
@@ -873,29 +876,20 @@ describe("Model", function () {
         
         Card = new Model(function () {
             this.isImmutable();
-        
-            this.hasA("suit").which.validatesWith(function (suit) {
-                return suits.indexOf(suit) > -1;
-            });
-
-            this.hasA("rank").which.validatesWith(function (rank) {
-                return ranks.indexOf(rank) > -1;
-            });
-
+            this.hasA("suit").which.isOneOf(suits);
+            this.hasA("rank").which.isOneOf(ranks);
             this.isBuiltWith("rank","suit");
-
             this.looksLike(function () {
                 return this.rank() + " of " + this.suit();
             });
+
         });
 
         Deck = new Model(function () {
             var rank,
             suit;
 
-            this.hasMany("cards").which.validateWith(function (card) {
-                return card instanceof Card;
-            });
+            this.hasMany("cards").eachOfWhich.isA(Card);
 
             this.isBuiltWith(function () {
                 for (suit = 0; suit < suits.length; suit++) {

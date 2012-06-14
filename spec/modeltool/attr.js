@@ -91,6 +91,17 @@ describe("Attr", function () {
                 obj.num("hello");
             }).toThrow("hello should be a number");
         });
+
+        it("should throw an error if the parameter is a string and not one of the JS predefined types", function () {
+            var num = new Attr("num"),
+                obj = {};
+
+            expect(function () {
+                num.isA("nmbr");
+                num.addTo(obj);
+                obj.num(5);
+            }).toThrow();
+        });
     });
 
     describe("isOneOf method", function () {
@@ -397,7 +408,7 @@ describe("Attr", function () {
     });
     
     describe("static addValidator method", function () {
-        it("should throw an error if the parameter is not an object", function () {
+        xit("should throw an error if the parameter is not an object", function () {
             expect(function () {
                 Attr.addValidator(5);
             }).toThrow(new Error("validator must be an object of the form { name: function }"));
@@ -407,18 +418,39 @@ describe("Attr", function () {
             }).toThrow(new Error("validator must be an object of the form { name: function }"));
         });
 
-        it("should throw an error if the object has more than one key/value pair", function () {
+        xit("should throw an error if the object has more than one key/value pair", function () {
             expect(function () {
                 Attr.addValidator({whatever: 5, anotherKey: 6});
             }).toThrow("validator must be an object of the form { name: function }, and should not have any other keys");
         });
 
+        it("should throw an error if the first parameter is absent or not a string", function () {
+            expect(function () {
+                Attr.addValidator();
+            }).toThrow(new Error("addValidator requires a name to be specified as the first parameter"));
+
+            expect(function () {
+                Attr.addValidator(5);
+            }).toThrow(new Error("addValidator requires a name to be specified as the first parameter"));
+        });
+
+        it("should throw an error if the second parameter is absent or not a function", function () {
+            expect(function () {
+                Attr.addValidator("isGreaterThan");
+            }).toThrow("addValidator requires a function as the second parameter");
+
+            expect(function () {
+                Attr.addValidator("isGreaterThan", 5);
+            }).toThrow("addValidator requires a function as the second parameter");
+        });
+
+
         it("should add the validator object to the static validators list", function () {
             expect(function () {
-                Attr.addValidator({isGreaterThan5: function (thing) {
+                Attr.addValidator("isGreaterThan5", function (thing) {
                     this.message = "Expected " + thing + " to be greater than 5";
                     return thing > 5;
-                }});
+                });
             }).not.toThrow();
 
             expect((new Attr("whatever")).isGreaterThan5).not.toBeUndefined();
@@ -426,9 +458,9 @@ describe("Attr", function () {
 
         it("should throw an error if a validator is added that already exists", function () {
             expect(function () {
-                Attr.addValidator({isGreaterThan5: function (thing) {
+                Attr.addValidator("isGreaterThan5", function (thing) {
                     return false;
-                }});
+                });
             }).toThrow("Validator 'isGreaterThan5' already defined");
         });
     });
@@ -437,19 +469,11 @@ describe("Attr", function () {
     describe("full example", function () {
         it("should work with this example", function () {
             var ranks = ['2','3','4','5','6','7','8','9','10','J','Q','K','A'];
+            var suits = ['clubs', 'diamonds', 'hearts', 'spades'];
         
-            var rank = new Attr("rank");
-            rank.validatesWith(function (rank) {
-                return ranks.indexOf(rank) >= 0;
-            });
-            rank.errorsWith("rank must be a normal card rank");
+            var rank = new Attr("rank").which.isA('string').and.isOneOf(ranks);
+            var suit = new Attr("suit").which.isA('string').and.isOneOf(suits);
 
-            var suit = new Attr("suit")
-                .which.validatesWith(function (suit) {
-                    return suits.indexOf(suit) >= 0;
-                })
-                .and.errorsWith("suit must be a normal card suit");
-            
             var Card = {};
 
             rank.addTo(Card);
@@ -458,6 +482,14 @@ describe("Attr", function () {
             Card.rank("5").suit("clubs");
             expect(Card.suit()).toEqual("clubs");
             expect(Card.rank()).toEqual("5");
+
+            expect(function () {
+                Card.rank(5);
+            }).toThrow();
+
+            expect(function () {
+                Card.rank("5");
+            }).not.toThrow();
         });
     });
 });
