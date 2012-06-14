@@ -43,6 +43,8 @@ function to the constructor:
         });
     });
 
+
+
 Finally, you can create a person by calling the model as a constructor:
 
     var p = new Person(),
@@ -62,15 +64,43 @@ And manipulate the objects:
 If you later change the model, all new objects will be created with the updated
 model spec, but old objects will not enjoy the new features:
 
-   Person.hasAn("id").which.validatesWith(function (id) {
-       return typeof(id) === "number";
-   });
+   Person.hasAn("id");
 
    var a = new Person();
    a.firstName("John").lastName("Maxwell").id(500);  //fine
 
    p.id(501); //throws an error
 
+
+Some basic validation is built in as well, so you can define more robust models:
+
+var Card,
+    Deck,
+    suits = ["clubs", "diamonds", "hearts", "spades"],
+    ranks = ["2","3","4","5","6","7","8","9","10","J","Q","K","A"];
+        
+Card = new Model(function () {
+     this.isImmutable();
+     this.hasA("suit").which.isOneOf(suits);
+     this.hasA("rank").which.isOneOf(ranks);
+
+     this.isBuiltWith("rank","suit");
+});
+
+Deck = new Model(function () {
+     var rank,
+         suit;
+
+     this.hasMany("cards").eachOfWhich.isA(Card);
+
+     this.isBuiltWith(function () {
+          for (suit = 0; suit < suits.length; suit++) {
+               for (rank = 0; rank < ranks.length; rank++) {
+                   this.cards().add(new Card(ranks[rank], suits[suit]));
+               }
+           }
+     });
+});
 
 Right now, you can do the following with a Model object:
 //attribute related
@@ -91,22 +121,44 @@ isBuiltWith -- accepts a series of strings that should be attributes, those prep
 //modifier
 isImmutable -- makes the object immutable and forces all attributes to be required in an isBuiltWith call
 
+//inheritance
+isA -- inherits from the specified model
+isAn -- syntactic sugar for isA
+
 Attr and AttrList objects respond to the following methods:
 validatesWith -- accepts a function that returns true if the parameter is valid for the attribute
-errorsWith -- accepts a string that defines the error message if the parameter does not pass validation
+/* DEPRECATED */ errorsWith -- accepts a string that defines the error message if the parameter does not pass validation
 defaultsTo -- accepts a default value for the attribute (not currently available for AttrList)
 isImmutable -- makes it so the attribute cannot be changed once it is set
 addTo -- accepts an object to attach this attribute to
 and -- syntactic sugar, a pointer to the Attr object
 which -- syntactic sugar, a pointer to the Attr object
+eachOfWhich -- syntactic sugar, a pointer to the Attr object
+
+Attr and AttrList objects also have the following built-in validators
+isGreaterThan
+isLessThan
+isA
+isOneOf
+
+You can set up your own validators by using the validatesWith or validateWith methods.
+Here, you set the error message with 'this.message'
+
+this.hasA("twoLetterWord").which.isA("string").and.validatesWith(function (word) {
+    this.message = word + "is not a two-letter string!"
+    return word.length() === 2;
+});
+
+You can also add custom reusable validators to Attr objects. In addition to getting
+this.message, you also can use this.param to access the setter's actual parameter.
+
+Attr.addValidator("isNoLongerThan", function (val) {
+    this.message = this.param + " should be less than " + val;
+    return this.param.length() <= val;
+});
 
 AttrList also aliases 'validateWith' for 'validatesWith' to maintain grammatical consistency
 
 We hope to add the following self-explanatory functionality to Attr and AttrList:
 isNotNull
 isNotUndefined
-
-
-and the following functionality to Model:
-isA -- inherits from the specified model
-isAn -- syntactic sugar for isA

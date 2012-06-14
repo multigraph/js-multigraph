@@ -142,6 +142,8 @@ if(!window.multigraph.ModelTool) {
             };
         };
 
+
+        //add the default validators
         addDefaultValidator = function (name) {
             that[name] = function (val) {
                 that.validatesWith(function (param) {

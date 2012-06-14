@@ -914,6 +914,10 @@ describe("Model", function () {
         var d = new Deck();
 
         expect(function () {
+            d.cards().add(5);
+        }).toThrow("5 should be an Object");
+
+        expect(function () {
             d.cards().at(5).suit("diamonds");
         }).toThrow("cannot set the immutable property suit after it has been set");
     });
