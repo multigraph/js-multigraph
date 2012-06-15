@@ -11,10 +11,10 @@ if(!window.multigraph.ModelTool) {
 
     var validators = {};
 
-    var Attr = function (name, err) {
+    var Attr = function (name) {
         var validatorFunctions = [],
             that = this,
-            errorMessage = err || "invalid setter call for " + name,
+            errorMessage = "invalid setter call for " + name,
             defaultValue,
             i,
             prop,
@@ -34,15 +34,11 @@ if(!window.multigraph.ModelTool) {
                 return true;
             };
 
-        //add deafult validator
+        //add default 'true' validator
         validatorFunctions.push({ validator: function () { return true; } });
 
         if(name === undefined || typeof(name) !== 'string') {
             throw new Error("Attr: constructor requires a name parameter which must be a string");
-        }
-
-        if(err && typeof(err) !== 'string') {
-            throw new Error("Attr: second parameter should be a string representing an error message");
         }
 
         this.validatesWith = function (v) {
@@ -107,8 +103,6 @@ if(!window.multigraph.ModelTool) {
         this.validator = function () {
             return validator;
         };
-
-
 
         this.addTo = function (obj) {
             var attribute;

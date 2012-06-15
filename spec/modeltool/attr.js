@@ -3,36 +3,37 @@
 describe("Attr", function () {
     "use strict";
     var Attr = window.multigraph.ModelTool.Attr,
-    suits = ['clubs', 'diamonds', 'hearts', 'spades'],
-    a,
-    Card;
+        suits = ['clubs', 'diamonds', 'hearts', 'spades'],
+        suit,
+        ranks = ['2','3','4','5','6','7','8','9','10','J','Q','K'],
+        rank,
+        num,
+        obj,
+        Card;
 
     beforeEach(function () {
-        a = new Attr("suit");
+        suit = new Attr("suit");
+        rank = new Attr("rank");
+        num = new Attr("num");
         Card = {};
+        obj = {};
     });
 
     it("should throw an error on an empty or no string parameter", function () {
         expect(function () {
-            a = new Attr();
+            suit = new Attr();
         }).toThrow(new Error("Attr: constructor requires a name parameter which must be a string"));
 
         expect(function () {
-            a = new Attr(5);
+            suit = new Attr(5);
         }).toThrow(new Error("Attr: constructor requires a name parameter which must be a string"));
-    });
-
-    it("should throw an error if the error argument is not a string", function () {
-        expect(function () {
-            a = new Attr("suit", 5);
-        }).toThrow(new Error("Attr: second parameter should be a string representing an error message"));
     });
 
     it("once added to an object, it should throw a default error if the set value doesn't pass the validator", function () {
-        a.validatesWith(function (suit) {
+        suit.validatesWith(function (suit) {
             return suits.indexOf(suit) > 0;
         });
-        a.addTo(Card);
+        suit.addTo(Card);
         expect(function () {
             Card.suit(4);
         }).toThrow(new Error("invalid setter call for suit"));
@@ -40,9 +41,6 @@ describe("Attr", function () {
 
     describe("isGreaterThan method", function () {
         it("once added to the object, it should throw an error if the argument is not greater than the parameter", function () {
-            var num = new Attr("num"),
-                obj = {};
-            
             num.isGreaterThan(5);
             num.addTo(obj);
 
@@ -54,8 +52,6 @@ describe("Attr", function () {
 
     describe("isLessThan method", function () {
         it("once added to the object, it should throw an error if the argument is not less than the parameter", function () {
-            var num = new Attr("num"),
-                obj = {};
             num.isGreaterThan(5);
             num.isLessThan(10);
             num.addTo(obj);
@@ -72,9 +68,6 @@ describe("Attr", function () {
 
     describe("isA method", function () {
         it("once added to the object, it should throw an error if the argument is not the correct type", function () {
-            var num = new Attr("num"),
-                obj = {};
-
             num.isA("number").and.isGreaterThan(5).and.isLessThan(10);
 
             num.addTo(obj);
@@ -93,9 +86,6 @@ describe("Attr", function () {
         });
 
         it("should throw an error if the parameter is a string and not one of the JS predefined types", function () {
-            var num = new Attr("num"),
-                obj = {};
-
             expect(function () {
                 num.isA("nmbr");
                 num.addTo(obj);
@@ -106,11 +96,8 @@ describe("Attr", function () {
 
     describe("isOneOf method", function () {
         it("should throw an error if the parameter does not come from the specified set", function () {
-            var a = new Attr("suit"),
-                Card = {};
-            
-            a.isOneOf(["clubs","diamonds","hearts","spades"]);
-            a.addTo(Card);
+            suit.isOneOf(suits);
+            suit.addTo(Card);
             expect(function () {
                 Card.suit("cubs");
             }).toThrow("cubs should be one of the set: clubs,diamonds,hearts,spades");
@@ -118,10 +105,8 @@ describe("Attr", function () {
     });
 
     describe("validator method", function () {
-        var validator;
         it("should return the validator function", function () {
-            validator = a.validator();
-            expect(typeof(validator)).toBe('function');
+            expect(typeof(suit.validator())).toBe('function');
         });
     });
 
@@ -134,9 +119,9 @@ describe("Attr", function () {
                     return false;
                 }
             };
-            a.validatesWith(v);
-            expect(a.validator()("hello")).toBe(true);
-            expect(a.validator()("goodbye")).toBe(false);
+            suit.validatesWith(v);
+            expect(suit.validator()("hello")).toBe(true);
+            expect(suit.validator()("goodbye")).toBe(false);
         });
 
         it("should allow for a new error message to be set using this.message in the specified function", function () {
@@ -146,19 +131,19 @@ describe("Attr", function () {
                     return num > 5;
                 };
 
-            a.validatesWith(v);
+            suit.validatesWith(v);
 
-            a.validatesWith(function (num) {
+            suit.validatesWith(function (num) {
                 this.message = "Expected " + num + " to be less than 10";
                 return num < 10;
             });
 
-            a.validatesWith(function (num) {
+            suit.validatesWith(function (num) {
                 this.message = "Expected " + num + " to be divisible by 4";
                 return num%4 === 0;
             });
 
-            a.addTo(obj);
+            suit.addTo(obj);
             expect(function () {
                 obj.suit(3);
             }).toThrow("Expected 3 to be bigger than 5");
@@ -178,46 +163,42 @@ describe("Attr", function () {
         });
 
         it("should allow for multiple attrs to be created with different validators", function () {
-            var r;
-            
-            a.validatesWith(function (suit) {
+            suit.validatesWith(function (suit) {
                 return ["clubs", "diamonds", "hearts", "spades"].indexOf(suit) >= 0;
             });
 
-            r = new Attr("rank");
-            expect(r.validator() !== a.validator()).toBe(true);
+            expect(rank.validator() !== suit.validator()).toBe(true);
         });
 
 
         it("should return the Attr object for cascading", function () {
-            expect(a.validatesWith(function () {
+            expect(suit.validatesWith(function () {
                 return false;
-            })).toEqual(a);
+            })).toEqual(suit);
         });
 
         it("should throw an error if the argument is not a function", function () {
             expect(function () {
-                a.validatesWith(5);
+                suit.validatesWith(5);
             }).toThrow(new Error("Attr: validator must be a function"));
         });
     });
 
-    /* DEPRECATED */
-    /*describe("whichValidatesWith method", function () {
-        xit("should be an alias for the validatesWith method", function () {
-            expect(a.validatesWith).toEqual(a.whichValidatesWith);
-        });
-    });*/
-
     describe("and syntactic sugar", function () {
         it("should return the object", function () {
-            expect(a.and).toEqual(a);
+            expect(suit.and).toEqual(suit);
         });
     });
 
     describe("which syntactic sugar", function () {
         it("should return the object", function () {
-            expect(a.which).toEqual(a);
+            expect(suit.which).toEqual(suit);
+        });
+    });
+
+    describe("eachOfWhich syntactic sugar", function () {
+        it("should return the object", function () {
+            expect(suit.eachOfWhich).toEqual(suit);
         });
     });
 
@@ -260,39 +241,33 @@ describe("Attr", function () {
 
     describe("errorsWith method", function () {
         it("should set the error string", function () {
-            a.errorsWith("suit must be one of 'clubs', 'diamonds', 'hearts', 'spades'");
-            a.validatesWith(function (suit) {
+            suit.errorsWith("suit must be one of 'clubs', 'diamonds', 'hearts', 'spades'");
+            suit.validatesWith(function (suit) {
                 return suits.indexOf(suit) > 0;                
             });
-            a.addTo(Card);
+            suit.addTo(Card);
             expect(function () {
                 Card.suit(5);
             }).toThrow(new Error("suit must be one of 'clubs', 'diamonds', 'hearts', 'spades'"));
         });
 
         it("should return the Attr object for cascading", function () {
-            expect(a.errorsWith('hello world!')).toEqual(a);
+            expect(suit.errorsWith('hello world!')).toEqual(suit);
         });
 
         it("should throw an error if the parameter is not a string", function () {
             expect(function () {
-                a.errorsWith(5);
+                suit.errorsWith(5);
             }).toThrow(new Error("Attr: errorsWith method requires string parameter"));
         });
     });
 
-    /* DEPRECATED */
-    /*describe("whichErrorsWith method", function () {
-        expect(a.errorsWith).toEqual(a.whichErrorsWith);
-    });*/
-    //);
-
     describe("errorMessage method", function () {
         it("should return the error message once it is set", function () {
-            a.errorsWith("Test Error Message");
-            expect(a.errorMessage()).toEqual("Test Error Message");
-            a.errorsWith("Test Error Messsage");
-            expect(a.errorMessage()).toEqual("Test Error Messsage");
+            suit.errorsWith("Test Error Message");
+            expect(suit.errorMessage()).toEqual("Test Error Message");
+            suit.errorsWith("Test Error Messsage");
+            expect(suit.errorMessage()).toEqual("Test Error Messsage");
         });
     });
 
@@ -301,14 +276,14 @@ describe("Attr", function () {
         
         beforeEach(function () {
             card = {};
-            a.isImmutable().and.validatesWith(function (suit) {
+            suit.isImmutable().and.validatesWith(function (suit) {
                 return ["clubs", "diamonds", "hearts", "spades"].indexOf(suit) > -1;
             });
         });
 
         it("should make a formerly immutable attribute mutable again", function () {
-            a.isMutable();
-            a.addTo(card);
+            suit.isMutable();
+            suit.addTo(card);
             card.suit("clubs");
             expect(card.suit()).toBe("clubs");
             card.suit("hearts");
@@ -318,7 +293,7 @@ describe("Attr", function () {
         });
 
         it("should return the attribute for chaining", function () {
-            expect(a.isMutable()).toBe(a);
+            expect(suit.isMutable()).toBe(suit);
         });
 
     });
@@ -328,10 +303,10 @@ describe("Attr", function () {
 
         beforeEach(function () {
             card = {};
-            a.isImmutable().and.validatesWith(function (suit) {
+            suit.isImmutable().and.validatesWith(function (suit) {
                 return ["clubs", "diamonds", "hearts", "spades"].indexOf(suit) > -1;
             });
-            a.addTo(card);
+            suit.addTo(card);
         });
 
         it("should allow for the setter to be called once after it is added to an object", function () {
@@ -353,28 +328,28 @@ describe("Attr", function () {
         });
 
         it("should return the Attr object for chaining", function () {
-            expect(a.isImmutable()).toBe(a);
+            expect(suit.isImmutable()).toBe(suit);
         });
     });
 
     describe("addTo method", function () {
         it("should throw an error if the argument is not an object", function () {
             expect(function () {
-                a.addTo();
+                suit.addTo();
             }).toThrow(new Error("Attr: addAttr method requires an object parameter"));
 
             expect(function () {
-                a.addTo(5);
+                suit.addTo(5);
             }).toThrow(new Error("Attr: addAttr method requires an object parameter"));
         });
 
         it("should add the attribute to the specified object", function () {
-            a.addTo(Card);
+            suit.addTo(Card);
             expect(Card.suit).not.toBeUndefined();
         });
 
         it("should default the value of the attribute to undefined, unless specified otherwise", function () {
-            a.addTo(Card);
+            suit.addTo(Card);
             expect(Card.suit()).toBeUndefined();
         });
 
