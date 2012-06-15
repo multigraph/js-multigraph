@@ -20,19 +20,22 @@ if(!window.multigraph.ModelTool) {
             prop,
             addDefaultValidator,
             isImmutable = false,
-            validator = function (thingBeingValidated) {
-                var obj = {};
-                for (i = 0; i < validatorFunctions.length; ++i) {
-                    //a little magic to keep the old API working
-                    if (validatorFunctions[i].validator.call(obj, thingBeingValidated) === false) {
-                        if (obj.message !== undefined) {
-                            errorMessage = obj.message;
-                        }
-                        return false;
+            validator;
+
+        /* This is the validator that combines all the specified validators */
+        validator = function (thingBeingValidated) {
+            var obj = {};
+            for (i = 0; i < validatorFunctions.length; ++i) {
+                //a little magic to keep the old API working
+                if (validatorFunctions[i].validator.call(obj, thingBeingValidated) === false) {
+                    if (obj.message !== undefined) {
+                        errorMessage = obj.message;
                     }
+                    return false;
                 }
-                return true;
-            };
+            }
+            return true;
+        };
 
         //add default 'true' validator
         validatorFunctions.push({ validator: function () { return true; } });
@@ -42,16 +45,15 @@ if(!window.multigraph.ModelTool) {
         }
 
         this.validatesWith = function (v) {
-            //validator should be a function
             if (typeof(v) === 'function') {
                 validatorFunctions.push({ validator: v });
-                //validator = v;
                 return this;
             } else {
                 throw new Error("Attr: validator must be a function");
             }
         };
 
+        /* DEPRECATED */
         this.errorsWith = function (error) {
             if (typeof(error) === 'string') {
                 errorMessage = error;
@@ -66,6 +68,7 @@ if(!window.multigraph.ModelTool) {
             return this;
         };
 
+        /* DEPRECATED */
         this.errorMessage = function () {
             return errorMessage;
         };
@@ -136,8 +139,7 @@ if(!window.multigraph.ModelTool) {
             };
         };
 
-
-        //add the default validators
+        //add a default validator
         addDefaultValidator = function (name) {
             that[name] = function (val) {
                 that.validatesWith(function (param) {
@@ -152,7 +154,7 @@ if(!window.multigraph.ModelTool) {
             };
         };
 
-        //add validators
+        //add default validator set
         for (prop in validators) {
             if (validators.hasOwnProperty(prop)) {
                 addDefaultValidator(prop, validators[prop]);
