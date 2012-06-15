@@ -30,6 +30,10 @@ if(!window.multigraph.ModelTool) {
             //no op
         };
 
+        this.isMutable = function () {
+            //no op
+        };
+
         this.addTo = function (obj) {
             var prop,
             arr = [],
@@ -68,8 +72,6 @@ if(!window.multigraph.ModelTool) {
             }
         };
     }
-
-
 
     //this needs to stay if we're going to use instanceof
     //but note we override all of the methods via delegation

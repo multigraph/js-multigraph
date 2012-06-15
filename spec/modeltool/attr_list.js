@@ -69,7 +69,6 @@ describe("AttrList", function () {
                 obj.friends().at(2);
             }).toThrow(new Error("AttrList: Index out of bounds"));
         });
-
     });
 
     describe("add method", function () {
@@ -97,7 +96,8 @@ describe("AttrList", function () {
 
         it("should throw an error when the object does not pass validation", function () {
             expect(function () {
-                al.errorsWith("Invalid").validatesWith(function (friend) {
+                al.validatesWith(function (friend) {
+                    this.message = "Invalid";
                     return typeof(friend) === 'string';
                 });
                 al.addTo(obj);
