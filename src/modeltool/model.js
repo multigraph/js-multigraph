@@ -172,12 +172,20 @@ if(!window.multigraph.ModelTool) {
         };
 
         model.isA = function (parent) {
+
             var i,
                 parentAttributes,
                 parentMethods,
-                isAModel = function (potentialModel) {
+                isAModel;
+
+
+
+            modified = true;
+
+            //checks to make sure a potentialModel has all attributes of a model
+            isAModel = function (potentialModel) {
                 var i,
-                    M = new Model();
+                M = new Model();
                 for (i in M) {
                     if (M.hasOwnProperty(i) && typeof(potentialModel[i]) !== typeof(M[i])) {
                         return false;

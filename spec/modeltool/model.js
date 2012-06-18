@@ -5,35 +5,36 @@ describe("Model", function () {
     var Model = window.multigraph.ModelTool.Model,
     Attr = window.multigraph.ModelTool.Attr,
     AttrList = window.multigraph.ModelTool.AttrList,
-    s;
+    Method = window.multigraph.ModelTool.Method,
+    Person;
 
 
     beforeEach(function () {
-        s = new Model();
+        Person = new Model();
     });
 
     describe("hasA method", function () {
         it("should create a new Attr with the specified name", function () {
-            var a = s.hasA("friend");
+            var a = Person.hasA("friend");
             expect(a instanceof Attr).toBe(true);
-            expect(s.attribute("friend")).not.toBeUndefined();
+            expect(Person.attribute("friend")).not.toBeUndefined();
         });
 
         it("should add the attribute to the spec object", function () {
-            s.hasA("friend");
-            expect(s.attribute("friend")).not.toBeUndefined();
+            Person.hasA("friend");
+            expect(Person.attribute("friend")).not.toBeUndefined();
         });
 
         it("should return the Attr object so it can be cascaded with other functions", function () {
-            var a = s.hasA("friend");
+            var a = Person.hasA("friend");
             expect(a instanceof Attr).toBe(true);
-            expect(s.attribute("friend")).not.toBeUndefined();
+            expect(Person.attribute("friend")).not.toBeUndefined();
             expect(a.validatesWith).not.toBeUndefined();
         });
 
         it("should throw an error if the parameter is not a string", function () {
             expect(function () {
-                s.hasA(5);
+                Person.hasA(5);
             }).toThrow(new Error("Model: hasA parameter must be a string"));
         });
     });
@@ -46,45 +47,45 @@ describe("Model", function () {
 
     describe("hasMany method", function () {
         it("should create a new AttrList object with the specified name", function () {
-            var al = s.hasMany("friends");
-            expect(al instanceof window.multigraph.ModelTool.AttrList).toBe(true);
+            var al = Person.hasMany("friends");
+            expect(al instanceof AttrList).toBe(true);
         });
 
         it("should add the AttrList to the Model object", function () {
-            s.hasMany("friends");
-            expect(s.attribute("friends")).not.toBeUndefined();
-            expect(s.attribute("friends") instanceof window.multigraph.ModelTool.AttrList).toBe(true);
+            Person.hasMany("friends");
+            expect(Person.attribute("friends")).not.toBeUndefined();
+            expect(Person.attribute("friends") instanceof AttrList).toBe(true);
         });
 
         it("should return the AttrList so it can be cascaded", function () {
-            var al = s.hasMany("friends");
-            expect(al instanceof window.multigraph.ModelTool.AttrList).toBe(true);
+            var al = Person.hasMany("friends");
+            expect(al instanceof AttrList).toBe(true);
         });
 
         it("should be callable twice on the same spec", function() {
-            var al = s.hasMany("friends"),
-            al2 = s.hasMany("cats");
+            var al = Person.hasMany("friends"),
+            al2 = Person.hasMany("cats");
 
-            expect(s.attribute("friends")).not.toBeUndefined();
-            expect(s.attribute("cats")).not.toBeUndefined();
-            expect(al instanceof window.multigraph.ModelTool.AttrList).toBe(true);
-            expect(al2 instanceof window.multigraph.ModelTool.AttrList).toBe(true);
+            expect(Person.attribute("friends")).not.toBeUndefined();
+            expect(Person.attribute("cats")).not.toBeUndefined();
+            expect(al instanceof AttrList).toBe(true);
+            expect(al2 instanceof AttrList).toBe(true);
         });
 
         it("should be callable twice on 2 different specs", function() {
-            var s2 = new Model(),
-            al = s.hasMany("friends"),
-            al2 = s2.hasMany("cats");
+            var m2 = new Model(),
+            al = Person.hasMany("friends"),
+            al2 = m2.hasMany("cats");
 
-            expect(s.attribute("friends")).not.toBeUndefined();
-            expect(s2.attribute("cats")).not.toBeUndefined();
-            expect(al instanceof window.multigraph.ModelTool.AttrList).toBe(true);
-            expect(al2 instanceof window.multigraph.ModelTool.AttrList).toBe(true);
+            expect(Person.attribute("friends")).not.toBeUndefined();
+            expect(m2.attribute("cats")).not.toBeUndefined();
+            expect(al instanceof AttrList).toBe(true);
+            expect(al2 instanceof AttrList).toBe(true);
         });
 
         it("should throw an error if the parameter is not a string", function () {
             expect(function () {
-                s.hasMany(5);
+                Person.hasMany(5);
             }).toThrow(new Error("Model: hasMany parameter must be a string"));
         });
     });
@@ -94,44 +95,44 @@ describe("Model", function () {
             var a,
             al;
 
-            s.hasA("name");
-            a = s.attribute("name");
-            expect(a instanceof window.multigraph.ModelTool.Attr).toBe(true);
-            expect(a instanceof window.multigraph.ModelTool.AttrList).toBe(false);
+            Person.hasA("name");
+            a = Person.attribute("name");
+            expect(a instanceof Attr).toBe(true);
+            expect(a instanceof AttrList).toBe(false);
 
-            s.hasMany("friends");
-            al = s.attribute("friends");
-            expect(al instanceof window.multigraph.ModelTool.Attr).toBe(true);
-            expect(al instanceof window.multigraph.ModelTool.AttrList).toBe(true);
+            Person.hasMany("friends");
+            al = Person.attribute("friends");
+            expect(al instanceof Attr).toBe(true);
+            expect(al instanceof AttrList).toBe(true);
         });
 
         it("should throw an error if the attribute doesn't exist", function () {
             var a;
             expect(function () {
-                a = s.attribute("name");
+                a = Person.attribute("name");
             }).toThrow(new Error("Model: attribute name does not exist!"));
         });
 
         it("should throw an error if the argument is not a string", function () {
             expect(function () {
-                s.attribute(5);
+                Person.attribute(5);
             }).toThrow(new Error("Model: expected string argument to attribute method, but recieved 5"));
         });
     });
 
     describe("attributes method", function () {
         it("should return an empty array if the model has no attributes", function () {
-            expect(s.attributes()).toEqual([]);
+            expect(Person.attributes()).toEqual([]);
         });
 
         it("should return an array of Model attribute names", function () {
-            s.hasA("firstName");
-            s.hasA("lastName");
-            s.hasAn("id");
-            expect(s.attributes().length === 3).toBe(true);
-            expect(s.attributes().indexOf("firstName") > -1).toBe(true);
-            expect(s.attributes().indexOf("lastName") > -1).toBe(true);
-            expect(s.attributes().indexOf("id") > -1).toBe(true);
+            Person.hasA("firstName");
+            Person.hasA("lastName");
+            Person.hasAn("id");
+            expect(Person.attributes().length === 3).toBe(true);
+            expect(Person.attributes().indexOf("firstName") > -1).toBe(true);
+            expect(Person.attributes().indexOf("lastName") > -1).toBe(true);
+            expect(Person.attributes().indexOf("id") > -1).toBe(true);
         });
 
 
@@ -171,40 +172,40 @@ describe("Model", function () {
 
     describe("methods method", function () {
         it("should return an empty array if the model has no methods", function () {
-            expect(s.methods()).toEqual([]);
+            expect(Person.methods()).toEqual([]);
         });
 
         it("should return an array of Model method names", function () {
-            s.respondsTo("runsForOffice", function () {});
-            s.respondsTo("somethingElse", function () {});
-            expect(s.methods().length === 2);
-            expect(s.methods().indexOf("runsForOffice") > -1).toBe(true);
-            expect(s.methods().indexOf("somethingElse") > -1).toBe(true);
+            Person.respondsTo("runsForOffice", function () {});
+            Person.respondsTo("somethingElse", function () {});
+            expect(Person.methods().length === 2);
+            expect(Person.methods().indexOf("runsForOffice") > -1).toBe(true);
+            expect(Person.methods().indexOf("somethingElse") > -1).toBe(true);
         });
     });
 
     describe("method method", function () {
         it("should return the method object associated with the method name", function () {
             var m;
-            s.respondsTo("isAwesome", function () {
+            Person.respondsTo("isAwesome", function () {
                 return true;
             });
 
-            m = s.method("isAwesome");
+            m = Person.method("isAwesome");
 
-            expect(m instanceof window.multigraph.ModelTool.Method).toBe(true);
+            expect(m instanceof Method).toBe(true);
         });
 
         it("should throw an error if the method doesn't exist", function () {
             var m;
             expect(function () {
-                m = s.method("isAwesome");
+                m = Person.method("isAwesome");
             }).toThrow(new Error("Model: method isAwesome does not exist!"));
         });
 
         it("should throw an error if the argument is not a string", function () {
             expect(function () {
-                s.method(5);
+                Person.method(5);
             }).toThrow(new Error("Model: expected string argument to method method, but recieved 5"));
         });
     });
@@ -307,8 +308,6 @@ describe("Model", function () {
             expect(e.salary()).toBe(5000);
         });
 
-
-
         it("methods in current model should override any methods in previous model", function () {
             e = new Employee();
             p = new Person();
@@ -320,7 +319,6 @@ describe("Model", function () {
             expect(p.sayHello()).toEqual("hello from Semmy");
         });
 
-        //check immutability with isA, how should that be handled?
         it("should not be immutable if the parent model is not immutable", function () {
             Person = new Model(function () {
                 this.hasA("firstName");
@@ -417,6 +415,125 @@ describe("Model", function () {
 
         });
 
+        it("should create different attrs for each instance of the submodel", function () {
+            var A,
+                a1,
+                a2,
+                B,
+                b1,
+                b2;
+
+            A = new Model(function () {
+                this.hasA("thing");
+            });
+
+            B = new Model(function () {
+                this.isAn(A);
+            });
+
+            var a1 = new A();
+            var a2 = new A();
+
+            expect(a1.thing()).toBeUndefined();
+            expect(a2.thing()).toBeUndefined();
+            a1.thing(5);
+            expect(a1.thing()).toBeDefined();
+            expect(a2.thing()).toBeUndefined();
+
+            var b1 = new B();
+            var b2 = new B();
+
+            expect(b1.thing()).toBeUndefined();
+            expect(b2.thing()).toBeUndefined();
+            b1.thing(5);
+            expect(b1.thing()).toBeDefined();
+            expect(b2.thing()).toBeUndefined();
+        });
+
+        it("should create different attr lists for each instance of the submodel", function () {
+            var A,
+                a,
+                B,
+                b1,
+                b2;
+
+            A = new Model(function () {
+                this.hasMany("things");
+            });
+
+            B = new Model(function () {
+                this.isAn(A);
+            });
+
+            a = new A();
+            expect(a.things).toBeDefined();
+            expect(a.things().size()).toBe(0);
+
+            a.things().add(5);
+            a.things().add(6);
+            expect(a.things().size()).toBe(2);
+
+            b1 = new B();
+            expect(b1.things).toBeDefined();
+            expect(b1.things().size()).toBe(0);
+            //b1.things().add(7);
+            //expect(b1.things().size()).toBe(1);
+
+            b2 = new B();
+            //expect(b2.things).toBeDefined();
+            //expect(b2.things().size()).toBe(0);
+        });
+
+        xit("should offer access to the super classes initializer function", function () {
+            var initializer,
+                A,
+                a,
+                B,
+                b,
+                spy = jasmine.createSpy();
+            
+            initializer = function () {
+                var i;
+                for (i = 0; i < 10; ++i) {
+                    this.things().add(i);
+                }
+                spy();
+            };
+            
+            A = new Model(function () {
+                this.hasMany("things").eachOfWhich.isA("number");
+                this.isBuiltWith(initializer);
+            });
+
+            a = new A();
+            expect(a.things()).toBeDefined();
+            expect(spy).toHaveBeenCalled();
+            expect(spy.calls.length).toEqual(1);
+            expect(a.things().at(0)).toBe(0);
+            expect(a.things().size()).toBe(10);
+
+            B = new Model(function () {
+                this.isAn(A);
+            });
+
+            b = new B();
+            expect(b.things()).toBeDefined();
+
+            expect(spy.calls.length).toEqual(2);
+            expect(b.things().at(0)).toBe(0);
+            expect(b.things().size()).toBe(10);
+
+            var c = new B();
+            expect(c.things).toBeDefined();
+            expect(c.things().at(0)).toBe(0);
+            expect(c.things().size()).toBe(10);
+            
+            c.things().add(20);
+            expect(c.things().size()).toBe(11);
+            expect(a.things().size()).toBe(10);
+            //expect(b.things().size()).toBe(10);
+        });
+
         it("should not throw an error if isBuiltWith is specified in the super-model", function () {
             Person = new Model(function () {
                 this.hasA("name");
@@ -441,7 +558,7 @@ describe("Model", function () {
         
     describe("isImmutable method", function ()  {
         it("should be defined", function () {
-            expect(s.isImmutable).toBeDefined();
+            expect(Person.isImmutable).toBeDefined();
         });
 
         it("should make all attributes immutable when the constructor is called", function () {
@@ -469,17 +586,17 @@ describe("Model", function () {
     describe("isBuiltWith method", function () {
         it("should take any number of string parameters", function () {
             expect(function () {
-                s.isBuiltWith("larry", "moe", 3.4);
+                Person.isBuiltWith("larry", "moe", 3.4);
             }).toThrow(new Error("Model: isBuiltWith parameters must be strings except for a function as the optional final parameter"));
             expect(function () {
-                s.isBuiltWith("larry", 3.4, "moe", "curly");
+                Person.isBuiltWith("larry", 3.4, "moe", "curly");
             }).toThrow(new Error("Model: isBuiltWith parameters must be strings except for a function as the optional final parameter"));
             expect(function () {
-                s.isBuiltWith("larry", "moe", "curly", "semmy", "john");
+                Person.isBuiltWith("larry", "moe", "curly", "semmy", "john");
             }).not.toThrow(new Error("Model: isBuiltWith parameters must be strings except for a function as the optional final parameter"));
-            s = new Model();
+            //s = new Model();
             expect(function () {
-                s.isBuiltWith("larry", "curly", "moe", "semmy", "john", "mark", "anotherMark");
+                Person.isBuiltWith("larry", "curly", "moe", "semmy", "john", "mark", "anotherMark");
             }).not.toThrow(new Error("Model: isBuiltWith parameters must be strings except for a function as the optional final parameter"));
         });
 
@@ -490,25 +607,25 @@ describe("Model", function () {
                 return false;
             };
             expect(function () {
-                s.isBuiltWith("larry", "moe", f, g);
+                Person.isBuiltWith("larry", "moe", f, g);
             }).toThrow(new Error("Model: isBuiltWith parameters must be strings except for a function as the optional final parameter"));
             expect(function () {
-                s.isBuiltWith("larry", "moe", g, "curly", "semmy", "john");
+                Person.isBuiltWith("larry", "moe", g, "curly", "semmy", "john");
             }).toThrow(new Error("Model: isBuiltWith parameters must be strings except for a function as the optional final parameter"));
             expect(function () {
-                s.isBuiltWith("larry", f);
+                Person.isBuiltWith("larry", f);
             }).not.toThrow(new Error("Model: isBuiltWith parameters must be strings except for a function as the optional final parameter"));
         });
 
         it("should accept strings preceded with a % as the final parameters before the optional function", function () {
             expect(function () {
-                s.isBuiltWith("larry", "%moe", "curly");
+                Person.isBuiltWith("larry", "%moe", "curly");
             }).toThrow(new Error("Model: isBuiltWith requires parameters preceded with a % to be the final parameters before the optional function"));
             expect(function () {
-                s.isBuiltWith("larry", "moe", "curly", "%semmy");
+                Person.isBuiltWith("larry", "moe", "curly", "%semmy");
             }).not.toThrow(new Error("Model: isBuiltWith requires parameters preceded with a % to be the final parameters before the optional function"));
             expect(function () {
-                s.isBuiltWith("larry", "moe", "curly", "%semmy", "%john", function () { return false; });
+                Person.isBuiltWith("larry", "moe", "curly", "%semmy", "%john", function () { return false; });
             }).not.toThrow(new Error("Model: isBuiltWith requires parameters preceded with a % to be the final parameters before the optional function"));
         });
 
@@ -595,32 +712,31 @@ describe("Model", function () {
         p;
 
         beforeEach(function () {
-            s = new Model();
-            s.hasA("name").which.validatesWith(function (name) {
+            Person = new Model();
+            Person.hasA("name").which.validatesWith(function (name) {
                 return name.length > 3;
             }).and.errorsWith("name must be at least 3 characters");
             
-            s.hasAn("id").which.validatesWith(function (id) {
+            Person.hasAn("id").which.validatesWith(function (id) {
                 return 100000000 <= id && id <= 999999999;
             }).and.errorsWith("id must be 9 digits");
 
-            s.hasMany("friends").which.validateWith(function (friend) {
+            Person.hasMany("friends").which.validateWith(function (friend) {
                 return friend instanceof Person;
             }).and.errorsWith("friend must be a person");
 
-            s.respondsTo("runsForOffice", function () {
+            Person.respondsTo("runsForOffice", function () {
                 return this.name() + " is running for office!";
             });
 
-            s.respondsTo("returnsNull", function () {
+            Person.respondsTo("returnsNull", function () {
                 return null;
             });
 
-            s.respondsTo("addsTwoNumbers", function (numA, numB) {
+            Person.respondsTo("addsTwoNumbers", function (numA, numB) {
                 return numA+numB;
             });
             
-            Person = s;
             p = new Person();
             p.name("Mark");
 
@@ -664,7 +780,7 @@ describe("Model", function () {
 
             Person.isBuiltWith("firstName", "lastName", "%id");
 
-            //Person = s.create();
+            //Person = Person.create();
             
             expect(function () {
                 p = new Person("semmy");
