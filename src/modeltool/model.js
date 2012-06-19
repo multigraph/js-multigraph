@@ -10,28 +10,28 @@ if(!window.multigraph.ModelTool) {
     "use strict";
     function Model(specification) {
         var that = this,
-        methods = {},
-        attributes = {},
-        pattern,
-        modified = false,
-        requiredConstructorArgs = [],
-        optionalConstructorArgs = [],
-        parents = [],
-        Method = ns.Method,
-        Attr = ns.Attr,
-        AttrList = ns.AttrList,
-        property,
-        listProperties,
-        create,
-        isImmutable,
-        initializer = function () {},
-        constructor = function () {},
-        model = function () {
-            if (modified) {
-                create();
-            }
-            return constructor.apply(this, arguments);
-        };
+            methods = {},
+            attributes = {},
+            pattern,
+            modified = false,
+            requiredConstructorArgs = [],
+            optionalConstructorArgs = [],
+            parents = [],
+            Method = ns.Method,
+            Attr = ns.Attr,
+            AttrList = ns.AttrList,
+            property,
+            listProperties,
+            create,
+            isImmutable,
+            initializer = function () {},
+            constructor = function () {},
+            model = function () {
+                if (modified) {
+                    create();
+                }
+                return constructor.apply(this, arguments);
+            };
 
         //temporary fix so API stays the same
         if (arguments.length > 1) {
@@ -100,8 +100,8 @@ if(!window.multigraph.ModelTool) {
         /* private function that creates the constructor */
         create = function (name) {
             var that = this,
-            i,
-            err;
+                i,
+                err;
 
             //validate the model first
             model.validate();
@@ -152,9 +152,6 @@ if(!window.multigraph.ModelTool) {
                 }
                 initializer.call(this);
             };
-            
-
-
             return constructor;
         };
         /*********** END PRIVATE METHODS **************/
@@ -172,20 +169,17 @@ if(!window.multigraph.ModelTool) {
         };
 
         model.isA = function (parent) {
-
             var i,
                 parentAttributes,
                 parentMethods,
                 isAModel;
-
-
 
             modified = true;
 
             //checks to make sure a potentialModel has all attributes of a model
             isAModel = function (potentialModel) {
                 var i,
-                M = new Model();
+                    M = new Model();
                 for (i in M) {
                     if (M.hasOwnProperty(i) && typeof(potentialModel[i]) !== typeof(M[i])) {
                         return false;
@@ -229,6 +223,10 @@ if(!window.multigraph.ModelTool) {
         };
 
         model.isAn = model.isA;
+
+        model.parent = function () {
+            return parent[0].apply(this, arguments);
+        };
 
         model.attribute = function (attr) {
             return property("attribute", attr);

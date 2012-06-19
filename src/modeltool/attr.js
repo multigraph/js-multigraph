@@ -20,7 +20,8 @@ if(!window.multigraph.ModelTool) {
             prop,
             addDefaultValidator,
             isImmutable = false,
-            validator;
+            validator,
+            AttrList = window.multigraph.ModelTool.AttrList;
 
         /* This is the validator that combines all the specified validators */
         validator = function (thingBeingValidated) {
@@ -84,8 +85,9 @@ if(!window.multigraph.ModelTool) {
         };
 
         this.clone = function () {
-            var result = new Attr(name),
+            var result = (this instanceof AttrList)?new AttrList(name):new Attr(name),
                 i;
+
 
             for (i = 0; i < validatorFunctions.length; ++i) {
                 result.validatesWith(validatorFunctions[i].validator);
@@ -95,6 +97,7 @@ if(!window.multigraph.ModelTool) {
             if (isImmutable) {
                 result.isImmutable();
             }
+
             return result;
         };
 
