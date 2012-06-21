@@ -515,25 +515,25 @@ describe("Model", function () {
 
             B = new Model(function () {
                 this.isAn(A);
-                //this.isBuiltWith(this.parent().initializer());
+                this.isBuiltWith(this.parent);
             });
 
             b = new B();
             expect(b.things()).toBeDefined();
 
-            expect(spy.calls.length).toEqual(2);
-            //expect(b.things().at(0)).toBe(0);
-            //expect(b.things().size()).toBe(10);
+            expect(spy.calls.length).toEqual(3);
+            expect(b.things().at(0)).toBe(0);
+            expect(b.things().size()).toBe(10);
 
-            //var c = new B();
-            //expect(c.things).toBeDefined();
-            //expect(c.things().at(0)).toBe(0);
-            //expect(c.things().size()).toBe(10);
+            var c = new B();
+            expect(c.things).toBeDefined();
+            expect(c.things().at(0)).toBe(0);
+            expect(c.things().size()).toBe(10);
             
-            //c.things().add(20);
-            //expect(c.things().size()).toBe(11);
+            c.things().add(20);
+            expect(c.things().size()).toBe(11);
             expect(a.things().size()).toBe(10);
-            //expect(b.things().size()).toBe(10);
+            expect(b.things().size()).toBe(10);
         });
 
         it("should not throw an error if isBuiltWith is specified in the super-model", function () {

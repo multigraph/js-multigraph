@@ -225,7 +225,7 @@ if(!window.multigraph.ModelTool) {
         model.isAn = model.isA;
 
         model.parent = function () {
-            return parent[0].apply(this, arguments);
+            return parents[0].apply(this, arguments);
         };
 
         model.attribute = function (attr) {
