@@ -106,6 +106,7 @@ hasAn -- syntactic sugar for hasA
 hasMany -- creates an encapsulated list of encapsulated attributes
 attributes -- returns an array of attribute names as strings
 attribute -- returns the specified Attr or AttrList object
+parent -- returns the constructor of the parent, if one exists
 
 //method related
 respondsTo -- creates a method
@@ -114,6 +115,7 @@ method -- returns the specified Method object
 
 //constructor related
 isBuiltWith -- accepts a series of strings that should be attributes, those prepended with '%' are optional in the constructor
+            -- also accepts an initializer as the final argument
 
 //modifier
 isImmutable -- makes the object immutable and forces all attributes to be required in an isBuiltWith call
