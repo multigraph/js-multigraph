@@ -13,7 +13,7 @@ if (!window.multigraph) {
             var option = new nsObj.Plot.Filter.Option();
             if (xml) {
                 option.name(xml.attr('name'));
-                option.value(xml.attr('value'));
+                option.value(xml.attr('value') === '' ? undefined : xml.attr('value'));
             }
             return option;
         };
