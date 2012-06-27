@@ -431,8 +431,8 @@ describe("Model", function () {
                 this.isAn(A);
             });
 
-            var a1 = new A();
-            var a2 = new A();
+            a1 = new A();
+            a2 = new A();
 
             expect(a1.thing()).toBeUndefined();
             expect(a2.thing()).toBeUndefined();
@@ -440,8 +440,8 @@ describe("Model", function () {
             expect(a1.thing()).toBeDefined();
             expect(a2.thing()).toBeUndefined();
 
-            var b1 = new B();
-            var b2 = new B();
+            b1 = new B();
+            b2 = new B();
 
             expect(b1.thing()).toBeUndefined();
             expect(b2.thing()).toBeUndefined();

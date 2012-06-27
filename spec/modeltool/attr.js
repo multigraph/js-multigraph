@@ -343,6 +343,16 @@ describe("Attr", function () {
 
     });
 
+    describe("resulting getter/setter", function () {
+        it("should correctly set the attribute, even if it is falsy", function () {
+            var attr = new Attr("x"),
+                obj = {};
+            attr.addTo(obj);
+            obj.x(0);
+            expect(obj.x()).toBe(0);
+        });
+    });
+
     describe("clone method", function () {
         it("should clone all aspects of the attribute and return a new one", function () {
             var attribute = new Attr("test"),

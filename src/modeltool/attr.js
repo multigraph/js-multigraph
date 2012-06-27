@@ -124,7 +124,7 @@ if(!window.multigraph.ModelTool) {
             }
             
             obj[name] = function (newValue) {
-                if (newValue) {
+                if (newValue !== undefined) {
                     //setter
                     if (isImmutable && attribute !== undefined) {
                         throw new Error("cannot set the immutable property " + name + " after it has been set");
