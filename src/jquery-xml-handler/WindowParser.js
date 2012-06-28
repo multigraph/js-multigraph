@@ -5,7 +5,7 @@ if(!window.multigraph) {
 (function (ns) {
     "use strict";
 
-    var attributes = ['width', 'height', 'border', 'margin', 'padding', 'bordercolor'];
+    var scalarAttributes = ['width', 'height', 'border', 'padding', 'bordercolor'];
     ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { 'mixinfuncs' : [] };
     ns.jQueryXMLHandler.mixinfuncs.push(function(nsObj, parse, serialize) {
         
@@ -15,7 +15,11 @@ if(!window.multigraph) {
                 window.width(xml.attr('width'));
                 window.height(xml.attr('height'));
                 window.border(xml.attr('border'));
-                window.margin(xml.attr('margin'));
+
+                (function (m) {
+                    window.margin().set(m,m,m,m);
+                })(parseInt(xml.attr('margin')));
+
                 window.padding(xml.attr('padding'));
                 window.bordercolor(xml.attr('bordercolor'));
             }
@@ -23,16 +27,18 @@ if(!window.multigraph) {
         };
         
         nsObj.Window.prototype[serialize] = function () {
-            var attributeStrings = [],
+            var strings = [],
                 i;
-            attributeStrings.push('window');
+            strings.push('window');
 
-            for (i = 0; i < attributes.length; i++) {
-                if (this[attributes[i]]() !== undefined) {
-                    attributeStrings.push(attributes[i] + '="' + this[attributes[i]]() + '"');
+            strings.push('margin="' + this.margin().top() + '"');
+
+            for (i = 0; i < scalarAttributes.length; i++) {
+                if (this[scalarAttributes[i]]() !== undefined) {
+                    strings.push(scalarAttributes[i] + '="' + this[scalarAttributes[i]]() + '"');
                 }
             }
-            return '<' + attributeStrings.join(' ') + '/>';
+            return '<' + strings.join(' ') + '/>';
         };
 
     });

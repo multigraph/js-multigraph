@@ -18,7 +18,8 @@ if (!window.multigraph) {
                 return ns.utilityFunctions.validateInteger(border);
             });
             this.hasA("margin").which.validatesWith(function (margin) {
-                return ns.utilityFunctions.validateInteger(margin);
+                //return ns.utilityFunctions.validateInteger(margin);
+                return margin instanceof ns.math.Insets;
             });
             this.hasA("padding").which.validatesWith(function (padding) {
                 return ns.utilityFunctions.validateInteger(padding);
@@ -27,7 +28,11 @@ if (!window.multigraph) {
                 return ns.utilityFunctions.validateColor(bordercolor);
             });
 
-            ns.utilityFunctions.insertDefaults(this, defaultValues.window, attributes);
+            this.isBuiltWith(function() {
+                this.margin( new ns.math.Insets(0,0,0,0) );
+            });
+
+//            ns.utilityFunctions.insertDefaults(this, defaultValues.window, attributes);
 
         });
 

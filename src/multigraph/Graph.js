@@ -42,6 +42,19 @@ if (!window.multigraph) {
                 return data instanceof window.multigraph.Data;
             });
 
+            this.hasA("windowPaddingInsets").which.validatesWith(function (data) {
+                return data instanceof window.multigraph.math.Insets;
+            });
+
+            this.isBuiltWith(function() {
+                this.windowPaddingInsets(new window.multigraph.math.Insets(0,0,0,0));
+            });
+
+            this.respondsTo("postParse", function() {
+                var p = parseInt(this.window().padding());
+                this.windowPaddingInsets().set(p,p,p,p);
+            });
+
             ns.utilityFunctions.insertDefaults(this, defaultValues, attributes);
         });
 

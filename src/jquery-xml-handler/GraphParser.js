@@ -15,7 +15,10 @@ if(!window.multigraph) {
                 // (1st generation) child nodes of OBJ corresponding to xml tag TAG
                 if (xml.find('>window').length > 0) {
                     graph.window( nsObj.Window[parse](xml.find('>window')) );
+                } else {
+                    graph.window( nsObj.Window[parse]() );
                 }
+
                 if (xml.find('>ui').length > 0) {
                     graph.ui( nsObj.UI[parse](xml.find('>ui')) );
                 }
@@ -49,6 +52,7 @@ if(!window.multigraph) {
                 $.each(xml.find(">data"), function (i,e) {
                     graph.data().add( nsObj.Data[parse]($(e)) );
                 });
+                graph.postParse();
             }
             return graph;
         };
