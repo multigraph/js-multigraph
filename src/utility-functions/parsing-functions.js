@@ -42,11 +42,11 @@ if (!window.multigraph.utilityFunctions) {
         
         return {
             'window': {
-                'width': undefined,
-                'height': undefined,
-                'border': '2',
-                'margin': '2',
-                'padding': '5',
+//              'width': undefined,
+//              'height': undefined,
+                'border': 2,
+                'margin': new ns.math.Insets(2,2,2,2),
+                'padding': new ns.math.Insets(5,5,5,5),
                 'bordercolor': '0x000000'
             },
             'ui': {
@@ -91,10 +91,7 @@ if (!window.multigraph.utilityFunctions) {
                 'color': '0xffffff'
             },
             'plotarea': {
-                'marginbottom': '35',
-                'marginleft': '38',
-                'margintop': '10',
-                'marginright': '35',
+                'margin' : new ns.math.Insets(/*top*/10 , /*left*/38, /*bottom*/35, /*right*/35),
                 'border': '0',
                 'bordercolor': '0xeeeeee'
             },

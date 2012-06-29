@@ -5,22 +5,31 @@ if(!window.multigraph) {
 (function (ns) {
     "use strict";
 
-    var scalarAttributes = ['width', 'height', 'border', 'padding', 'bordercolor'];
+    var scalarAttributes = ['width', 'height', 'border', 'bordercolor'];
     ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { 'mixinfuncs' : [] };
     ns.jQueryXMLHandler.mixinfuncs.push(function(nsObj, parse, serialize) {
         
         nsObj.Window[parse] = function (xml) {
             var window = new nsObj.Window();
             if (xml) {
-                window.width(xml.attr('width'));
-                window.height(xml.attr('height'));
-                window.border(xml.attr('border'));
+                if (xml.attr('width') !== undefined) {
+                    window.width(parseInt(xml.attr('width')));
+                }
+                if (xml.attr('height') !== undefined) {
+                    window.height(parseInt(xml.attr('height')));
+                }
+                if (xml.attr('border') !== undefined) {
+                    window.border(parseInt(xml.attr('border')));
+                }
 
                 (function (m) {
                     window.margin().set(m,m,m,m);
                 })(parseInt(xml.attr('margin')));
 
-                window.padding(xml.attr('padding'));
+                (function (m) {
+                    window.padding().set(m,m,m,m);
+                })(parseInt(xml.attr('padding')));
+
                 window.bordercolor(xml.attr('bordercolor'));
             }
             return window;
@@ -32,6 +41,7 @@ if(!window.multigraph) {
             strings.push('window');
 
             strings.push('margin="' + this.margin().top() + '"');
+            strings.push('padding="' + this.padding().top() + '"');
 
             for (i = 0; i < scalarAttributes.length; i++) {
                 if (this[scalarAttributes[i]]() !== undefined) {

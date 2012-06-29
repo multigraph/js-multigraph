@@ -8,23 +8,18 @@ if(!window.multigraph) {
     var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = ns.utilityFunctions.getKeys(defaultValues.plotarea),
         Plotarea = new ns.ModelTool.Model('Plotarea', function () {
-            this.hasA("marginbottom").which.validatesWith(function (marginbottom) {
-                return ns.utilityFunctions.validateInteger(marginbottom);
-            });
-            this.hasA("marginleft").which.validatesWith(function (marginleft) {
-                return ns.utilityFunctions.validateInteger(marginleft);
-            });
-            this.hasA("margintop").which.validatesWith(function (margintop) {
-                return ns.utilityFunctions.validateInteger(margintop);
-            });
-            this.hasA("marginright").which.validatesWith(function (marginright) {
-                return ns.utilityFunctions.validateInteger(marginright);
+            this.hasA("margin").which.validatesWith(function (margin) {
+                return margin instanceof ns.math.Insets;
             });
             this.hasA("border").which.validatesWith(function (border) {
                 return ns.utilityFunctions.validateInteger(border);
             });
             this.hasA("bordercolor").which.validatesWith(function (bordercolor) {
                 return ns.utilityFunctions.validateColor(bordercolor);
+            });
+
+            this.isBuiltWith(function() {
+                this.margin( new ns.math.Insets(0,0,0,0) );
             });
 
             ns.utilityFunctions.insertDefaults(this, defaultValues.plotarea, attributes);

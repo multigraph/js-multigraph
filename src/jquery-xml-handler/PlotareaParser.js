@@ -5,17 +5,17 @@ if(!window.multigraph) {
 (function (ns) {
     "use strict";
 
-    var attributes = ['marginbottom', 'marginleft', 'margintop', 'marginright', 'border', 'bordercolor'];
+    var scalarAttributes = ['border', 'bordercolor'];
     ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { 'mixinfuncs' : [] };
     ns.jQueryXMLHandler.mixinfuncs.push(function(nsObj, parse, serialize) {
         
         nsObj.Plotarea[parse] = function (xml) {
             var plotarea = new nsObj.Plotarea();
             if (xml) {
-                plotarea.marginbottom(xml.attr('marginbottom'));
-                plotarea.marginleft(xml.attr('marginleft'));
-                plotarea.margintop(xml.attr('margintop'));
-                plotarea.marginright(xml.attr('marginright'));
+                plotarea.margin().bottom(parseInt(xml.attr('marginbottom')));
+                plotarea.margin().left(parseInt(xml.attr('marginleft')));
+                plotarea.margin().top(parseInt(xml.attr('margintop')));
+                plotarea.margin().right(parseInt(xml.attr('marginright')));
                 plotarea.border(xml.attr('border'));
                 plotarea.bordercolor(xml.attr('bordercolor'));
             }
@@ -23,17 +23,22 @@ if(!window.multigraph) {
         };
         
         nsObj.Plotarea.prototype[serialize] = function () {
-            var attributeStrings = [],
+            var strings = [],
                 i;
-            attributeStrings.push('plotarea');
+            strings.push('plotarea');
 
-            for(i = 0; i < attributes.length; i++) {
-                if (this[attributes[i]]() !== undefined) {
-                    attributeStrings.push(attributes[i] + '="' + this[attributes[i]]() + '"');
+            strings.push('margintop="' + this.margin().top() + '"');
+            strings.push('marginleft="' + this.margin().left() + '"');
+            strings.push('marginbottom="' + this.margin().bottom() + '"');
+            strings.push('marginright="' + this.margin().right() + '"');
+
+            for(i = 0; i < scalarAttributes.length; i++) {
+                if (this[scalarAttributes[i]]() !== undefined) {
+                    strings.push(scalarAttributes[i] + '="' + this[scalarAttributes[i]]() + '"');
                 }
             }
 
-            return '<' + attributeStrings.join(' ') + '/>';
+            return '<' + strings.join(' ') + '/>';
         };
 
     });

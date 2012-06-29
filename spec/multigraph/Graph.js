@@ -128,17 +128,6 @@ describe("Graph", function () {
 
     });
 
-    xit("should have a certain good behavior", function() {
-        var arr = [];
-        var a = { 'name' : 'fred' };
-        arr.push(a);
-        console.log('at 1, a.name => ' + a.name);
-        console.log('at 1, arr[0].name => ' + arr[0].name);
-        a.name = 'joe';
-        console.log('at 2, a.name => ' + a.name);
-        console.log('at 2, arr[0].name => ' + arr[0].name);
-    });
-
     xit("should be able to create a Graph with an axis having a given id, and then fetch that axis's id from the graph", function() {
         var g = new Graph();
         var a = new Axis();
@@ -153,5 +142,33 @@ describe("Graph", function () {
         console.log('at 3, g.axes().get(0).id() => ' + g.axes().get(0).id());
         expect(g.axes().get(0).id() === 'x').toBe(true);
     });
+
+    it("should be able to call initializeGeometry",  function() {
+        var g = new Graph();
+        expect(function() {
+            g.initializeGeometry(200, 100);
+        }).not.toThrow();
+        expect(g.windowBox().width() === 200).toBe(true);
+        expect(g.windowBox().height() === 100).toBe(true);
+
+//        var defaults = window.multigraph.utilityFunctions.getDefaultValuesFromXSD();
+
+//        console.log(defaults.window.margin.left());
+//        console.log(defaults.window.margin.right());
+//        console.log(defaults.window.border);
+//        console.log(defaults.window.padding.left());
+//        console.log(defaults.window.padding.right());
+
+//        expect(g.paddingBox().width()
+//               ===
+//               (200
+//                - defaults.window.margin.left()
+//                - defaults.window.margin.right()
+//                - 2*defaults.window.border
+//                - defaults.window.padding.left()
+//                - defaults.window.padding.right())).toBe(true);
+
+    });
+
 
 });

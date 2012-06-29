@@ -5,7 +5,7 @@ describe("Plotarea parsing", function () {
 
     var Plotarea = window.multigraph.Plotarea,
         jQueryXMLHandler = window.multigraph.jQueryXMLHandler,
-        xmlString = '<plotarea marginbottom="19" marginleft="10" margintop="5" marginright="5" border="0" bordercolor="0x111223"/>',
+        xmlString = '<plotarea margintop="5" marginleft="10" marginbottom="19" marginright="5" border="0" bordercolor="0x111223"/>',
         $xml,
         p;
 
@@ -15,20 +15,20 @@ describe("Plotarea parsing", function () {
         p = Plotarea.parseXML($xml);
     });
 
-    it("should be able to parse a plotarea from XML and read its 'marginbottom' attribute", function () {
-        expect(p.marginbottom() === '19').toBe(true);
+    it("should be able to parse a plotarea from XML and read its 'margin().bottom' attribute", function () {
+        expect(p.margin().bottom() === 19).toBe(true);
     });
 
-    it("should be able to parse a plotarea from XML and read its 'marginleft' attribute", function () {
-        expect(p.marginleft() === '10').toBe(true);
+    it("should be able to parse a plotarea from XML and read its 'margin().left' attribute", function () {
+        expect(p.margin().left() === 10).toBe(true);
     });
 
-    it("should be able to parse a plotarea from XML and read its 'margintop' attribute", function () {
-        expect(p.margintop() === '5').toBe(true);
+    it("should be able to parse a plotarea from XML and read its 'margin().top' attribute", function () {
+        expect(p.margin().top() === 5).toBe(true);
     });
 
-    it("should be able to parse a plotarea from XML and read its 'marginright' attribute", function () {
-        expect(p.marginright() === '5').toBe(true);
+    it("should be able to parse a plotarea from XML and read its 'margin().right' attribute", function () {
+        expect(p.margin().right() === 5).toBe(true);
     });
 
     it("should be able to parse a plotarea from XML and read its 'border' attribute", function () {
@@ -40,10 +40,10 @@ describe("Plotarea parsing", function () {
     });
 
     it("should be able to parse a plotarea from XML, serialize it and get the same XML as the original", function () {
-        var xmlString2 = '<plotarea margintop="12" marginright="9" border="1" bordercolor="0xABC312"/>';
+        var xmlString2 = '<plotarea margintop="5" marginleft="10" marginbottom="19" marginright="5" border="0" bordercolor="0x111223"/>';
         expect(p.serialize() === xmlString).toBe(true);
 	p = Plotarea.parseXML($(xmlString2));
-//        expect(p.serialize() === xmlString2).toBe(true);
+        expect(p.serialize() === xmlString2).toBe(true);
     });
 
 });

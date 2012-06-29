@@ -5,12 +5,19 @@ if (!window.multigraph) {
 (function (ns) {
     "use strict";
 
+    var Box = window.multigraph.math.Box;
+
     var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = ns.utilityFunctions.getKeys(defaultValues),
         Graph = new ns.ModelTool.Model( 'Graph', function () {
             this.hasA("window").which.validatesWith(function (w) {
                 return w instanceof window.multigraph.Window;
             });
+            this.hasA("plotarea").which.validatesWith(function (plotarea) {
+                return plotarea instanceof window.multigraph.Plotarea;
+            });
+
+
             this.hasA("ui").which.validatesWith(function (ui) {
                 return ui instanceof window.multigraph.UI;
             });
@@ -26,9 +33,7 @@ if (!window.multigraph) {
             this.hasA("background").which.validatesWith(function (background) {
                 return background instanceof window.multigraph.Background;
             });
-            this.hasA("plotarea").which.validatesWith(function (plotarea) {
-                return plotarea instanceof window.multigraph.Plotarea;
-            });
+
             this.hasA("title").which.validatesWith(function (title) {
                 return title instanceof window.multigraph.Title;
             });
@@ -42,17 +47,45 @@ if (!window.multigraph) {
                 return data instanceof window.multigraph.Data;
             });
 
-            this.hasA("windowPaddingInsets").which.validatesWith(function (data) {
-                return data instanceof window.multigraph.math.Insets;
+            this.hasA("windowBox").which.validatesWith(function(val) {
+                return val instanceof Box;
             });
-
+            this.hasA("paddingBox").which.validatesWith(function(val) {
+                return val instanceof Box;
+            });
+            this.hasA("plotBox").which.validatesWith(function(val) {
+                return val instanceof Box;
+            });
+            
             this.isBuiltWith(function() {
-                this.windowPaddingInsets(new window.multigraph.math.Insets(0,0,0,0));
+                this.window( new window.multigraph.Window() );
+                this.plotarea( new window.multigraph.Plotarea() );
             });
 
             this.respondsTo("postParse", function() {
-                var p = parseInt(this.window().padding());
-                this.windowPaddingInsets().set(p,p,p,p);
+            });
+
+            this.respondsTo("initializeGeometry", function(width, height) {
+                this.windowBox( new Box(width, height) );
+                this.paddingBox( new Box(( width
+                                           - ( this.window().margin().left()  + this.window().border() + this.window().padding().left()  )
+                                           - ( this.window().margin().right() + this.window().border() + this.window().padding().right() )
+                                         ),
+                                         ( height
+                                           - ( this.window().margin().top()    + this.window().border() + this.window().padding().top()    )
+                                           - ( this.window().margin().bottom() + this.window().border() + this.window().padding().bottom() )
+                                         )
+                                        )
+                               );
+                this.plotBox( new Box(( this.paddingBox().width() -
+                                        ( this.plotarea().margin().left() + this.plotarea().margin().right())
+                                      ),
+                                      (
+                                          this.paddingBox().height() -
+                                              ( this.plotarea().margin().top() + this.plotarea().margin().bottom())
+                                      )
+                                     )
+                            );
             });
 
             ns.utilityFunctions.insertDefaults(this, defaultValues, attributes);

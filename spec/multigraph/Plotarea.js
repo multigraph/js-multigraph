@@ -14,34 +14,34 @@ describe("Plotarea", function () {
         expect(p instanceof Plotarea).toBe(true);
     });
 
-    describe("marginbottom attribute", function () {
+    describe("margin().bottom attribute", function () {
         it("should be able to set/get the marginbottom attribute", function () {
-            p.marginbottom('5');
-            expect(p.marginbottom() === '5').toBe(true);
+            p.margin().bottom(5);
+            expect(p.margin().bottom() === 5).toBe(true);
         });
 
     });
 
-    describe("marginleft attribute", function () {
-        it("should be able to set/get the marginleft attribute", function () {
-            p.marginleft('5');
-            expect(p.marginleft() === '5').toBe(true);
+    describe("margin()left attribute", function () {
+        it("should be able to set/get the margin().left attribute", function () {
+            p.margin().left(5);
+            expect(p.margin().left() === 5).toBe(true);
         });
 
     });
 
-    describe("margintop attribute", function () {
-        it("should be able to set/get the margintop attribute", function () {
-            p.margintop('5');
-            expect(p.margintop() === '5').toBe(true);
+    describe("margin()top attribute", function () {
+        it("should be able to set/get the margin().top attribute", function () {
+            p.margin().top(5);
+            expect(p.margin().top() === 5).toBe(true);
         });
 
     });
 
-    describe("marginright attribute", function () {
-        it("should be able to set/get the marginright attribute", function () {
-            p.marginright('5');
-            expect(p.marginright() === '5').toBe(true);
+    describe("margin()right attribute", function () {
+        it("should be able to set/get the margin().right attribute", function () {
+            p.margin().right(5);
+            expect(p.margin().right() === 5).toBe(true);
         });
 
     });
