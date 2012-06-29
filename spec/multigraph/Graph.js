@@ -5,7 +5,8 @@ describe("Graph", function () {
 
     var Graph = window.multigraph.Graph,
         Axis = window.multigraph.Axis,
-        g;
+        g,
+        defaults = window.multigraph.utilityFunctions.getDefaultValuesFromXSD();
 
     beforeEach(function () {
         g = new Graph();
@@ -108,7 +109,7 @@ describe("Graph", function () {
         expect(g.axes().get(0) === a).toBe(true);
     });
 
-    xit("should be able to create two graphs, each with an axis, and keep the axes distinct", function() {
+    it("should be able to create two graphs, each with an axis, and keep the axes distinct", function() {
         var g1 = new Graph();
         var a1 = new Axis('vertical');
         a1.id('a1');
@@ -119,54 +120,60 @@ describe("Graph", function () {
         a2.id('a2');
         g2.axes().add(a2);
 
-        console.log('g1.axes().size() => ' + g1.axes().size());
-        console.log('g2.axes().size() => ' + g2.axes().size());
-
         expect(g1.axes().get(0).id() === 'a1').toBe(true);
         expect(g2.axes().get(0).id() === 'a2').toBe(true);
-        //expect(g1.axes().size() === 1).toBe(true);
-
     });
 
-    xit("should be able to create a Graph with an axis having a given id, and then fetch that axis's id from the graph", function() {
+    it("should be able to create a Graph with an axis having a given id, and then fetch that axis's id from the graph", function() {
         var g = new Graph();
         var a = new Axis();
-        a.id('x');
-        console.log('at 1, a.id() => ' + a.id());
-        console.log('at 1, g.axes().get(0).id() => ' + g.axes().get(0).id());
+        a.id('myaxis');
         g.axes().add(a);
-        console.log('at 2, a.id() => ' + a.id());
-        console.log('at 2, g.axes().get(0).id() => ' + g.axes().get(0).id());
-        g.axes().get(0).id('y');
-        console.log('at 3, a.id() => ' + a.id());
-        console.log('at 3, g.axes().get(0).id() => ' + g.axes().get(0).id());
-        expect(g.axes().get(0).id() === 'x').toBe(true);
+        expect(g.axes().get(0).id() === 'myaxis').toBe(true);
     });
 
-    it("should be able to call initializeGeometry",  function() {
-        var g = new Graph();
-        expect(function() {
-            g.initializeGeometry(200, 100);
-        }).not.toThrow();
-        expect(g.windowBox().width() === 200).toBe(true);
-        expect(g.windowBox().height() === 100).toBe(true);
+    describe("initializeGeometry", function() {
 
-//        var defaults = window.multigraph.utilityFunctions.getDefaultValuesFromXSD();
+        it("should not throw an error", function() {
+            expect(function() {
+                g.initializeGeometry(300, 200);
+            }).not.toThrow();
+        });
 
-//        console.log(defaults.window.margin.left());
-//        console.log(defaults.window.margin.right());
-//        console.log(defaults.window.border);
-//        console.log(defaults.window.padding.left());
-//        console.log(defaults.window.padding.right());
+        it("should set the correct window width and height", function() {
+            g.initializeGeometry(300, 200);
+            expect(g.windowBox().width() === 300).toBe(true);
+            expect(g.windowBox().height() === 200).toBe(true);
+        });
 
-//        expect(g.paddingBox().width()
-//               ===
-//               (200
-//                - defaults.window.margin.left()
-//                - defaults.window.margin.right()
-//                - 2*defaults.window.border
-//                - defaults.window.padding.left()
-//                - defaults.window.padding.right())).toBe(true);
+        it("should compute the correct paddingBox dimensions", function() {
+            g.initializeGeometry(300, 200);
+            expect(g.paddingBox().width() ===
+                   (300 - defaults.window.margin().left() - defaults.window.margin().right()
+                    - 2*defaults.window.border
+                    - defaults.window.padding().left() - defaults.window.padding().right())
+                  ).toBe(true);
+            expect(g.paddingBox().height() ===
+                   (200 - defaults.window.margin().top() - defaults.window.margin().bottom()
+                    - 2*defaults.window.border
+                    - defaults.window.padding().top() - defaults.window.padding().bottom())
+                  ).toBe(true);
+        });
+
+        it("should compute the correct plotBox dimensions", function() {
+            g.initializeGeometry(300, 200);
+            expect(g.plotBox().width() ===
+                   g.paddingBox().width()
+                   - (defaults.plotarea.margin().left()
+                      + defaults.plotarea.margin().right())
+                  ).toBe(true);
+            expect(g.plotBox().height() ===
+                   g.paddingBox().height()
+                   - (defaults.plotarea.margin().top()
+                      + defaults.plotarea.margin().bottom())
+                  ).toBe(true);
+        });
+
 
     });
 

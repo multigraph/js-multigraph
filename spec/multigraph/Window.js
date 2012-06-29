@@ -4,10 +4,12 @@ describe("Window", function () {
     "use strict";
 
     var Window = window.multigraph.Window,
-        w;
+        w,
+        defaultValues;
 
     beforeEach(function () {
         w = new Window();
+        defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD();
     });
 
     it("should be able to create a Window", function () {
@@ -19,7 +21,6 @@ describe("Window", function () {
             w.width(100);
             expect(w.width() === 100).toBe(true);
         });
-
     });
 
     describe("height attribute", function () {
@@ -27,31 +28,34 @@ describe("Window", function () {
             w.height(250);
             expect(w.height() === 250).toBe(true);
         });
-
     });
 
     describe("border attribute", function () {
+        it("should have a border attribute which has been initialized to the correct default value", function () {
+            expect(w.border() === defaultValues.window.border).toBe(true);
+        });
         it("should be able to set/get the border attribute", function () {
             w.border(3);
             expect(w.border() === 3).toBe(true);
         });
-
     });
 
     describe("margin attribute", function () {
-        xit("should be able to set/get the margin attribute", function () {
-            w.margin('5');
-            expect(w.margin() === '5').toBe(true);
+        it("should have a margin attribute which has been initialized to the correct default value", function () {
+            expect(w.margin().top()    === defaultValues.window.margin().top()   ).toBe(true);
+            expect(w.margin().left()   === defaultValues.window.margin().left()  ).toBe(true);
+            expect(w.margin().bottom() === defaultValues.window.margin().bottom()).toBe(true);
+            expect(w.margin().right()  === defaultValues.window.margin().right() ).toBe(true);
         });
-
     });
 
     describe("padding attribute", function () {
-        xit("should be able to set/get the padding attribute", function () {
-            w.padding('200');
-            expect(w.padding() === '200').toBe(true);
+        it("should have a padding attribute which has been initialized to the correct default value", function () {
+            expect(w.padding().top()    === defaultValues.window.padding().top()   ).toBe(true);
+            expect(w.padding().left()   === defaultValues.window.padding().left()  ).toBe(true);
+            expect(w.padding().bottom() === defaultValues.window.padding().bottom()).toBe(true);
+            expect(w.padding().right()  === defaultValues.window.padding().right() ).toBe(true);
         });
-
     });
 
     describe("bordercolor attribute", function () {
