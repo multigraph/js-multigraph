@@ -22,9 +22,9 @@ if (!window.multigraph) {
                 datatips.format(xml.attr('format'));
                 datatips.bgcolor(xml.attr('bgcolor'));
                 datatips.bgalpha(xml.attr('bgalpha'));
-                datatips.border(xml.attr('border'));
+                datatips.border(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr('border')));
                 datatips.bordercolor(xml.attr('bordercolor'));
-                datatips.pad(xml.attr('pad'));
+                datatips.pad(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr('pad')));
 
             }
             return datatips;

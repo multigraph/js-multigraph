@@ -10,15 +10,15 @@ if (!window.multigraph) {
         Window = new ns.ModelTool.Model( 'Window', function () {
 
             this.hasA("width").which.validatesWith(function (width) {
-                return ns.utilityFunctions.validateIntegerCorrectly(width);
+                return ns.utilityFunctions.validateInteger(width);
             });
 
             this.hasA("height").which.validatesWith(function (height) {
-                return ns.utilityFunctions.validateIntegerCorrectly(height);
+                return ns.utilityFunctions.validateInteger(height);
             });
 
             this.hasA("border").which.validatesWith(function (border) {
-                return ns.utilityFunctions.validateIntegerCorrectly(border);
+                return ns.utilityFunctions.validateInteger(border);
             }).defaultsTo(defaultValues.window.border);
 
             this.hasA("margin").which.validatesWith(function (margin) {

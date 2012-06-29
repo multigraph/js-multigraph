@@ -34,6 +34,11 @@ if (!window.multigraph.utilityFunctions) {
         return parseInt(number, 10);
     };
 
+    ns.utilityFunctions.parseIntegerOrUndefined = function (number) {
+        number = parseInt(number, 10);
+        return isNaN(number) === true ? undefined : number;
+    };
+
     ns.utilityFunctions.parseDouble = function (number) {
         return Number(number);
     };
@@ -64,7 +69,7 @@ if (!window.multigraph.utilityFunctions) {
                 'icon' : {
                     'height': '30',
                     'width': '40',
-                    'border': '1'
+                    'border': 1
                 },
                 'visible': undefined,
                 'base': '1 1',
@@ -74,11 +79,11 @@ if (!window.multigraph.utilityFunctions) {
                 'color': '0xffffff',
                 'bordercolor': '0x000000',
                 'opacity': '1.0',
-                'border': '1',
+                'border': 1,
                 'rows': undefined,
-                'columns': '1',
-                'cornerradius': '0',
-                'padding': '0'
+                'columns': 1,
+                'cornerradius': 0,
+                'padding': 0
             },
             'background': {
                 'img': {
@@ -320,9 +325,9 @@ if (!window.multigraph.utilityFunctions) {
                     'format': undefined,
                     'bgcolor': '0xeeeeee',
                     'bgalpha': '1.0',
-                    'border': '1',
+                    'border': 1,
                     'bordercolor': '0x000000',
-                    'pad': '2'
+                    'pad': 2
                 }
             },
             'data': {

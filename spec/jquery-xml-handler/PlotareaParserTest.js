@@ -32,7 +32,7 @@ describe("Plotarea parsing", function () {
     });
 
     it("should be able to parse a plotarea from XML and read its 'border' attribute", function () {
-        expect(p.border() === '0').toBe(true);
+        expect(p.border() === 0).toBe(true);
     });
 
     it("should be able to parse a plotarea from XML and read its 'bordercolor' attribute", function () {

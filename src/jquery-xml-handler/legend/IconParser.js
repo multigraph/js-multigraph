@@ -14,7 +14,7 @@ if(!window.multigraph) {
             if (xml) {
                 icon.height(xml.attr('height'));
                 icon.width(xml.attr('width'));
-                icon.border(xml.attr('border'));
+                icon.border(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr('border')));
             }
             return icon;
         };

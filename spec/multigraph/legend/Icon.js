@@ -32,8 +32,8 @@ describe("Legend Icon", function () {
 
     describe("border attribute", function () {
         it("should be able to set/get the border attribute", function () {
-            icon.border('5');
-            expect(icon.border() === '5').toBe(true);
+            icon.border(5);
+            expect(icon.border() === 5).toBe(true);
         });
 
     });

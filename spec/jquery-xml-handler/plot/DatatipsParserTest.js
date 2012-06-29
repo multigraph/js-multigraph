@@ -32,7 +32,7 @@ describe("Plot Datatips parsing", function () {
     });
 
     it("should be able to parse a datatips from XML and read its 'border' attribute", function () {
-        expect(d.border() === '2').toBe(true);
+        expect(d.border() === 2).toBe(true);
     });
 
     it("should be able to parse a datatips from XML and read its 'bordercolor' attribute", function () {
@@ -40,14 +40,15 @@ describe("Plot Datatips parsing", function () {
     });
 
     it("should be able to parse a datatips from XML and read its 'pad' attribute", function () {
-        expect(d.pad() === '1').toBe(true);
+        expect(d.pad() === 1).toBe(true);
     });
 
     it("should be able to parse a datatips from XML, serialize it and get the same XML as the original", function () {
         var xmlString2 = '<datatips format="datetime" bgcolor="0x125621" border="5"/>';
         expect(d.serialize() === xmlString).toBe(true);
 	d = Datatips.parseXML($(xmlString2));
-//        expect(d.serialize() === xmlString2).toBe(true);
+        //removed due to defaults
+        //expect(d.serialize() === xmlString2).toBe(true);
     });
 
     describe("Variable parsing", function () {

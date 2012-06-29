@@ -14,14 +14,6 @@ if (!window.multigraph.utilityFunctions) {
     };
 
     ns.utilityFunctions.validateInteger = function (number) {
-        return typeof(number) === 'string';
-    };
-
-    ns.utilityFunctions.validateIntegerCorrectly = function (number) {
-        //NOTE: this function will eventually replace validateInteger, once I know
-        // for sure that there isn't something deeper going on with the above
-        // implementation.  John, feel free to rename this to validateInteger and remove
-        // the above one if you concur. --Mark, Thu Jun 28 21:25:10 EDT 2012.
         return (typeof(number) === 'number') && (number === parseInt(number));
     };
 

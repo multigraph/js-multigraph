@@ -22,11 +22,11 @@ if(!window.multigraph) {
                 legend.color(xml.attr('color'));
                 legend.bordercolor(xml.attr('bordercolor'));
                 legend.opacity(xml.attr('opacity'));
-                legend.border(xml.attr('border'));
-                legend.rows(xml.attr('rows'));
-                legend.columns(xml.attr('columns'));
-                legend.cornerradius(xml.attr('cornerradius'));
-                legend.padding(xml.attr('padding'));
+                legend.border(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr('border')));
+                legend.rows(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr('rows')));
+                legend.columns(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr('columns')));
+                legend.cornerradius(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr('cornerradius')));
+                legend.padding(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr('padding')));
                 if (xml.find('icon').length > 0) {
                     legend.icon(Icon[parse](xml.find("icon")));
                 }

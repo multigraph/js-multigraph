@@ -30,8 +30,8 @@ describe("Plot Datatips", function () {
     });
 
     it("should be able to set/get the border attribute", function () {
-        datatips.border("5");
-        expect(datatips.border() === "5").toBe(true);
+        datatips.border(5);
+        expect(datatips.border() === 5).toBe(true);
     });
 
     it("should be able to set/get the bordercolor attribute", function () {
@@ -40,8 +40,8 @@ describe("Plot Datatips", function () {
     });
 
     it("should be able to set/get the pad attribute", function () {
-        datatips.pad("7");
-        expect(datatips.pad() === "7").toBe(true);
+        datatips.pad(7);
+        expect(datatips.pad() === 7).toBe(true);
     });
 
     describe("Datatips Variable", function () {

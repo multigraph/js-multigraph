@@ -220,9 +220,9 @@ describe("Plot", function () {
             datatips.format("number");
             datatips.bgcolor("0xAABBCC");
             datatips.bgalpha("2");
-            datatips.border("7");
+            datatips.border(7);
             datatips.bordercolor("0x123421");
-            datatips.pad("4");
+            datatips.pad(4);
             variable.format("datetime");
             datatips.variables().add(variable);
             variable2.format("number");
@@ -231,9 +231,9 @@ describe("Plot", function () {
             expect(p.datatips().format() === "number").toBe(true);
             expect(p.datatips().bgcolor() === "0xAABBCC").toBe(true);
             expect(p.datatips().bgalpha() === "2").toBe(true);
-            expect(p.datatips().border() === "7").toBe(true);
+            expect(p.datatips().border() === 7).toBe(true);
             expect(p.datatips().bordercolor() === "0x123421").toBe(true);
-            expect(p.datatips().pad() === "4").toBe(true);
+            expect(p.datatips().pad() === 4).toBe(true);
             expect(p.datatips().variables().at(0) === variable).toBe(true);
             expect(p.datatips().variables().at(1) === variable2).toBe(true);
         });
@@ -247,9 +247,9 @@ describe("Plot", function () {
             p.datatips().format("datetime");
             p.datatips().bgcolor("0xAABBDC");
             p.datatips().bgalpha("3");
-            p.datatips().border("8");
+            p.datatips().border(8);
             p.datatips().bordercolor("0xD23421");
-            p.datatips().pad("4");
+            p.datatips().pad(4);
 
             variable2.format("number");
             p.datatips().variables().add(variable2);
@@ -258,9 +258,9 @@ describe("Plot", function () {
             expect(p.datatips().format() === "datetime").toBe(true);
             expect(p.datatips().bgcolor() === "0xAABBDC").toBe(true);
             expect(p.datatips().bgalpha() === "3").toBe(true);
-            expect(p.datatips().border() === "8").toBe(true);
+            expect(p.datatips().border() === 8).toBe(true);
             expect(p.datatips().bordercolor() === "0xD23421").toBe(true);
-            expect(p.datatips().pad() === "4").toBe(true);
+            expect(p.datatips().pad() === 4).toBe(true);
             expect(p.datatips().variables().at(0).format() === 'number').toBe(true);
             expect(p.datatips().variables().at(1).format() === 'number').toBe(true);
         });

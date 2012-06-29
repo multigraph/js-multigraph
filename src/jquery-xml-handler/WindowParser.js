@@ -13,22 +13,22 @@ if(!window.multigraph) {
             var window = new nsObj.Window();
             if (xml) {
                 if (xml.attr('width') !== undefined) {
-                    window.width(parseInt(xml.attr('width')));
+                    window.width(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr('width')));
                 }
                 if (xml.attr('height') !== undefined) {
-                    window.height(parseInt(xml.attr('height')));
+                    window.height(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr('height')));
                 }
                 if (xml.attr('border') !== undefined) {
-                    window.border(parseInt(xml.attr('border')));
+                    window.border(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr('border')));
                 }
 
                 (function (m) {
                     window.margin().set(m,m,m,m);
-                })(parseInt(xml.attr('margin')));
+                })(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr('margin')));
 
                 (function (m) {
                     window.padding().set(m,m,m,m);
-                })(parseInt(xml.attr('padding')));
+                })(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr('padding')));
 
                 window.bordercolor(xml.attr('bordercolor'));
             }

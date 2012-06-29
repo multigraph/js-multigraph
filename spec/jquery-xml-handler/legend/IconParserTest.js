@@ -29,7 +29,7 @@ describe("Legend Icon parsing", function () {
     });
 
     it("should be able to parse a icon from XML and read its 'border' attribute", function () {
-        expect(icon.border() === '7').toBe(true);
+        expect(icon.border() === 7).toBe(true);
     });
 
     it("should be able to parse a icon from XML, serialize it and get the same XML as the original", function () {

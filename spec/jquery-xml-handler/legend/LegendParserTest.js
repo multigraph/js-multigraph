@@ -46,23 +46,23 @@ describe("Legend parsing", function () {
     });
 
     it("should be able to parse a legend from XML and read its 'border' attribute", function () {
-        expect(l.border() === '10').toBe(true);
+        expect(l.border() === 10).toBe(true);
     });
 
     it("should be able to parse a legend from XML and read its 'rows' attribute", function () {
-        expect(l.rows() === '4').toBe(true);
+        expect(l.rows() === 4).toBe(true);
     });
 
     it("should be able to parse a legend from XML and read its 'columns' attribute", function () {
-        expect(l.columns() === '3').toBe(true);
+        expect(l.columns() === 3).toBe(true);
     });
 
     it("should be able to parse a legend from XML and read its 'cornerradius' attribute", function () {
-        expect(l.cornerradius() === '5').toBe(true);
+        expect(l.cornerradius() === 5).toBe(true);
     });
 
     it("should be able to parse a legend from XML and read its 'padding' attribute", function () {
-        expect(l.padding() === '4').toBe(true);
+        expect(l.padding() === 4).toBe(true);
     });
 
     describe("Icon parsing", function () {
@@ -89,7 +89,7 @@ describe("Legend parsing", function () {
         });
 
         it("should be able to parse a icon from XML and read its 'border' attribute", function () {
-            expect(l.icon().border() === '2').toBe(true);
+            expect(l.icon().border() === 2).toBe(true);
         });
 
         xit("should be able to parse a legend with children from XML, serialize it and get the same XML as the original", function () {

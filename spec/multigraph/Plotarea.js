@@ -51,8 +51,8 @@ describe("Plotarea", function () {
             expect(p.border() === defaultValues.plotarea.border).toBe(true);
         });
         it("should be able to set/get the border attribute", function () {
-            p.border('3');
-            expect(p.border() === '3').toBe(true);
+            p.border(3);
+            expect(p.border() === 3).toBe(true);
         });
 
     });

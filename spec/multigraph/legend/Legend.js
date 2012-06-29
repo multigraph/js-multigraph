@@ -55,28 +55,28 @@ describe("Legend", function () {
     });
 
     it("should be able to set/get the border attribute", function () {
-        l.border("2");
-        expect(l.border() === "2").toBe(true);
+        l.border(2);
+        expect(l.border() === 2).toBe(true);
     });
 
     it("should be able to set/get the rows attribute", function () {
-        l.rows("6");
-        expect(l.rows() === "6").toBe(true);
+        l.rows(6);
+        expect(l.rows() === 6).toBe(true);
     });
 
     it("should be able to set/get the columns attribute", function () {
-        l.columns("13");
-        expect(l.columns() === "13").toBe(true);
+        l.columns(13);
+        expect(l.columns() === 13).toBe(true);
     });
 
     it("should be able to set/get the cornerradius attribute", function () {
-        l.cornerradius("25");
-        expect(l.cornerradius() === "25").toBe(true);
+        l.cornerradius(25);
+        expect(l.cornerradius() === 25).toBe(true);
     });
 
     it("should be able to set/get the padding attribute", function () {
-        l.padding("0x121756");
-        expect(l.padding() === "0x121756").toBe(true);
+        l.padding(3);
+        expect(l.padding() === 3).toBe(true);
     });
 
     describe("Icon", function () {
@@ -109,12 +109,13 @@ describe("Legend", function () {
 
         it("should not keep old data around when an Icon is replaced", function () {
             var icon2 = new Icon();
-            icon2.border("5");
+            icon2.border(5);
             l.icon(icon);
             l.icon().height("4");
             l.icon().width("28");
             l.icon(icon2);
-            expect(l.icon().border() === "5").toBe(true);
+            expect(l.icon().border() === 5).toBe(true);
+            expect(l.icon().height() === "4").toBe(false);
         });
 
     });
