@@ -202,7 +202,11 @@ if(!window.multigraph.ModelTool) {
         } else if (typeof(val) === "string") {
             throw new Error("Attr: isA accepts a string which is one of " + types);
         } else {
-            this.message = this.param + " should be an Object";
+            if (this.param.toString !== undefined)  {
+                this.message = this.param.toString() + " should be an Object";
+            } else {
+                this.message = "parameter should be an Object";
+            }
             return this.param instanceof val;
         }
     });

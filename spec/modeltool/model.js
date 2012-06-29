@@ -1039,4 +1039,21 @@ describe("Model", function () {
             d.cards().at(5).suit("diamonds");
         }).toThrow("cannot set the immutable property suit after it has been set");
     });
+
+
+    describe("Mark's isA/validator bug", function () {
+        it("should not throw an error", function () {
+            var Dog = new Model(function() {
+                this.hasA("name"); //bizarre
+            });
+            
+            var Person = new Model(function() {
+                this.hasA("dog").which.isA(Dog);
+            });
+            
+            var d = new Dog();
+            var p = new Person();
+            p.dog(d);
+        });
+    });
 });

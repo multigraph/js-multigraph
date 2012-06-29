@@ -87,6 +87,29 @@ describe("Attr", function () {
             }).toThrow("hello should be a number");
         });
 
+        it("should allow for constructor types to be sent in", function () {
+            var a,
+                t,
+                Thing = function () {
+
+                };
+
+              
+
+            a = new Attr("thing");
+            a.isA(Thing);
+            t = new Thing();
+            a.addTo(obj);
+
+            expect(function () {
+                obj.thing(5);
+            }).toThrow("5 should be an Object");
+
+            expect(function () {
+                obj.thing(t);
+            }).not.toThrow();
+        });
+
         it("should throw an error if the parameter is a string and not one of the JS predefined types", function () {
             expect(function () {
                 num.isA("nmbr");
