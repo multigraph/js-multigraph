@@ -97,7 +97,7 @@ if (!window.multigraph.utilityFunctions) {
             },
             'plotarea': {
                 'margin' : function() { return new ns.math.Insets(/*top*/10 , /*left*/38, /*bottom*/35, /*right*/35) },
-                'border': '0',
+                'border': 0,
                 'bordercolor': '0xeeeeee'
             },
             'title': {
