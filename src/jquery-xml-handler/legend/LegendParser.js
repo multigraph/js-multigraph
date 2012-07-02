@@ -5,7 +5,7 @@ if(!window.multigraph) {
 (function (ns) {
     "use strict";
 
-    var attributes = ['visible', 'base', 'anchor', 'position', 'frame', 'color', 'bordercolor', 'opacity', 'border', 'rows', 'columns', 'cornerradius', 'padding'],
+    var scalarAttributes = ['visible', 'base', 'anchor', 'position', 'frame', 'color', 'bordercolor', 'opacity', 'border', 'rows', 'columns', 'cornerradius', 'padding'],
         Icon = ns.Legend.Icon;
 
     ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { 'mixinfuncs' : [] };
@@ -36,18 +36,16 @@ if(!window.multigraph) {
 
         nsObj.Legend.prototype[serialize] = function () {
             var attributeStrings = [],
-                output,
+                output = '<legend ',
                 i;
 
-            attributeStrings.push('legend');
-
-            for (i = 0; i < attributes.length; i++) {
-                if (this[attributes[i]]() !== undefined) {
-                    attributeStrings.push(attributes[i] + '="' + this[attributes[i]]() + '"');
+            for (i = 0; i < scalarAttributes.length; i++) {
+                if (this[scalarAttributes[i]]() !== undefined) {
+                    attributeStrings.push(scalarAttributes[i] + '="' + this[scalarAttributes[i]]() + '"');
                 }
             }
 
-            output = '<' + attributeStrings.join(' ');
+            output +=  attributeStrings.join(' ');
             if (this.icon()) {
                 output += '>' + this.icon()[serialize]() + '</legend>';
             } else {

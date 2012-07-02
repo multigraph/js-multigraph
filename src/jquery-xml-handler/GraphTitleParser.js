@@ -5,7 +5,7 @@ if (!window.multigraph) {
 (function (ns) {
     "use strict";
 
-    var attributes = ['border', 'color', 'bordercolor', 'opacity', 'padding', 'cornerradius', 'base', 'position', 'anchor'];
+    var scalarAttributes = ['border', 'color', 'bordercolor', 'opacity', 'padding', 'cornerradius', 'base', 'position', 'anchor'];
     ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { 'mixinfuncs' : [] };
     ns.jQueryXMLHandler.mixinfuncs.push(function (nsObj, parse, serialize) {
         
@@ -28,18 +28,16 @@ if (!window.multigraph) {
 
         nsObj.Title.prototype[serialize] = function () {
             var attributeStrings = [],
-                output,
+                output = '<title ',
                 i;
 
-            attributeStrings.push('title');
-
-            for (i = 0; i < attributes.length; i++) {
-                if (this[attributes[i]]() !== undefined) {
-                    attributeStrings.push(attributes[i] + '="' + this[attributes[i]]() + '"');
+            for (i = 0; i < scalarAttributes.length; i++) {
+                if (this[scalarAttributes[i]]() !== undefined) {
+                    attributeStrings.push(scalarAttributes[i] + '="' + this[scalarAttributes[i]]() + '"');
                 }
             }
 
-            output = '<' + attributeStrings.join(' ');
+            output += attributeStrings.join(' ');
 
             if (this.content() !== undefined && this.content() !== '') {
                 output += '>' + this.content() + '</title>';

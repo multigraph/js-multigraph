@@ -21,9 +21,7 @@ if (!window.multigraph.Data) {
         };
         
         nsObj.Data.Values.prototype[serialize] = function () {
-            var output;
-
-            output = '<values';
+            var output = '<values';
 
             if (this.content() !== undefined && this.content() !== '') {
                 output += '>' + this.content() + '</values>';

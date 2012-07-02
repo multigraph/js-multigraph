@@ -24,11 +24,11 @@ if(!window.multigraph) {
 
                 (function (m) {
                     window.margin().set(m,m,m,m);
-                })(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr('margin')));
+                }(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr('margin'))));
 
                 (function (m) {
                     window.padding().set(m,m,m,m);
-                })(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr('padding')));
+                }(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr('padding'))));
 
                 window.bordercolor(xml.attr('bordercolor'));
             }
@@ -36,19 +36,22 @@ if(!window.multigraph) {
         };
         
         nsObj.Window.prototype[serialize] = function () {
-            var strings = [],
+            var attributeStrings = [],
+                output = '<window ',
                 i;
-            strings.push('window');
 
-            strings.push('margin="' + this.margin().top() + '"');
-            strings.push('padding="' + this.padding().top() + '"');
+            attributeStrings.push('margin="' + this.margin().top() + '"');
+            attributeStrings.push('padding="' + this.padding().top() + '"');
 
             for (i = 0; i < scalarAttributes.length; i++) {
                 if (this[scalarAttributes[i]]() !== undefined) {
-                    strings.push(scalarAttributes[i] + '="' + this[scalarAttributes[i]]() + '"');
+                    attributeStrings.push(scalarAttributes[i] + '="' + this[scalarAttributes[i]]() + '"');
                 }
             }
-            return '<' + strings.join(' ') + '/>';
+
+            output += attributeStrings.join(' ') + '/>';
+
+            return output;
         };
 
     });

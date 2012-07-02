@@ -10,15 +10,15 @@ if (!window.multigraph) {
     ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { 'mixinfuncs' : [] };
     ns.jQueryXMLHandler.mixinfuncs.push(function(nsObj, parse, serialize) {
         
-        nsObj.Data[parse] = function(xml, orient) {
+        nsObj.Data[parse] = function (xml, orient) {
             var data = new nsObj.Data(),
-                childModels = ['Variables', 'Values', 'CSV', 'Service'],
+                childModelNames = ['Variables', 'Values', 'CSV', 'Service'],
                 i;
 
             if (xml) {
                 for (i = 0; i < children.length; i++) {
                     if (xml.find(children[i]).length > 0) {
-                        data[children[i]](ns.Data[childModels[i]][parse](xml.find(children[i])));
+                        data[children[i]](ns.Data[childModelNames[i]][parse](xml.find(children[i])));
                     }
                 }
 
@@ -26,12 +26,10 @@ if (!window.multigraph) {
             return data;
         };
         
-        nsObj.Data.prototype[serialize] = function() {
+        nsObj.Data.prototype[serialize] = function () {
             var childStrings = [],
-                output,
+                output = '<data',
                 i;
-
-            output = '<data';
 
             for (i = 0; i < children.length; i++) {
                 if (this[children[i]]()) {

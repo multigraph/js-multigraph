@@ -5,7 +5,7 @@ if(!window.multigraph) {
 (function (ns) {
     "use strict";
 
-    var attributes = ['height', 'width', 'border'];
+    var scalarAttributes = ['height', 'width', 'border'];
     ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { 'mixinfuncs' : [] };
     ns.jQueryXMLHandler.mixinfuncs.push(function (nsObj, parse, serialize) {
         
@@ -21,16 +21,18 @@ if(!window.multigraph) {
         
         nsObj.Legend.Icon.prototype[serialize] = function () {
             var attributeStrings = [],
+                output = '<icon ',
                 i;
-            attributeStrings.push('icon');
 
-            for (i = 0; i < attributes.length; i++) {
-                if (this[attributes[i]]() !== undefined) {
-                    attributeStrings.push(attributes[i] + '="' + this[attributes[i]]() + '"');
+            for (i = 0; i < scalarAttributes.length; i++) {
+                if (this[scalarAttributes[i]]() !== undefined) {
+                    attributeStrings.push(scalarAttributes[i] + '="' + this[scalarAttributes[i]]() + '"');
                 }
             }
 
-            return '<' + attributeStrings.join(' ') + '/>';
+            output += attributeStrings.join(' ') + '/>';
+
+            return output;
         };
 
     });

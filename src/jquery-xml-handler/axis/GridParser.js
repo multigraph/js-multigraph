@@ -9,7 +9,7 @@ if (!window.multigraph.Axis) {
 (function (ns) {
     "use strict";
 
-    var attributes = ['color', 'visible'];
+    var scalarAttributes = ['color', 'visible'];
     ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { 'mixinfuncs' : [] };
     ns.jQueryXMLHandler.mixinfuncs.push(function (nsObj, parse, serialize) {
         
@@ -24,16 +24,18 @@ if (!window.multigraph.Axis) {
         
         nsObj.Axis.Grid.prototype[serialize] = function () {
             var attributeStrings = [],
+                output = '<grid ',
                 i;
-            attributeStrings.push('grid');
 
-            for (i = 0; i < attributes.length; i++) {
-                if (this[attributes[i]]() !== undefined) {
-                    attributeStrings.push(attributes[i] + '="' + this[attributes[i]]() + '"');
+            for (i = 0; i < scalarAttributes.length; i++) {
+                if (this[scalarAttributes[i]]() !== undefined) {
+                    attributeStrings.push(scalarAttributes[i] + '="' + this[scalarAttributes[i]]() + '"');
                 }
             }
 
-            return '<' + attributeStrings.join(' ') + '/>';
+            output += attributeStrings.join(' ') + '/>';
+
+            return output;
         };
 
     });

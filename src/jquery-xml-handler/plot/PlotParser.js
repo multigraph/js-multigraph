@@ -8,14 +8,13 @@ if (!window.multigraph) {
     ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { 'mixinfuncs' : [] };
     ns.jQueryXMLHandler.mixinfuncs.push(function(nsObj, parse, serialize) {
 
-        var Plot = window.multigraph.Plot,
-            Legend = nsObj.Plot.Legend,
-            Filter = nsObj.Plot.Filter,
-            Renderer = nsObj.Plot.Renderer,
-            Datatips = nsObj.Plot.Datatips;
-
         nsObj.Plot[parse] = function(xml, graph) {
-            var plot = new nsObj.Plot(),
+            var Plot = window.multigraph.Plot,
+                Legend = nsObj.Plot.Legend,
+                Filter = nsObj.Plot.Filter,
+                Renderer = nsObj.Plot.Renderer,
+                Datatips = nsObj.Plot.Datatips,
+                plot = new Plot(),
                 axis,
                 variable;
             if (xml) {

@@ -29,8 +29,8 @@ if (!window.multigraph.Axis) {
         
         nsObj.Axis.Labels.Label.prototype[serialize] = function () {
             var attributeStrings = [],
+                output = '<label ',
                 i;
-            attributeStrings.push('label');
 
             for (i = 0; i < attributes.length; i++) {
                 if (this[attributes[i]]() !== undefined) {
@@ -38,7 +38,9 @@ if (!window.multigraph.Axis) {
                 }
             }
 
-            return '<' + attributeStrings.join(' ') + '/>';
+            output += attributeStrings.join(' ') + '/>';
+
+            return output;
         };
 
     });

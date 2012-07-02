@@ -9,13 +9,13 @@ if (!window.multigraph.Axis) {
 (function (ns) {
     "use strict";
 
-    var attributes = ['id', 'min', 'max'];
+    var scalarAttributes = ['id', 'min', 'max'];
     ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { 'mixinfuncs' : [] };
     ns.jQueryXMLHandler.mixinfuncs.push(function (nsObj, parse, serialize) {
         
         nsObj.Axis.Binding[parse] = function (xml) {
             var binding;
-            if (xml && xml.attr('id') && xml.attr('min') && xml.attr('max')) {
+            if (xml && xml.attr('id') !== undefined && xml.attr('min') !== undefined && xml.attr('max') !== undefined) {
                 binding = new nsObj.Axis.Binding(xml.attr('id'), xml.attr('min'), xml.attr('max'));
             }
             return binding;
@@ -23,16 +23,18 @@ if (!window.multigraph.Axis) {
         
         nsObj.Axis.Binding.prototype[serialize] = function () {
             var attributeStrings = [],
+                output = '<binding ',
                 i;
-            attributeStrings.push('binding');
 
-            for (i = 0; i < attributes.length; i++) {
-                if (this[attributes[i]]() !== undefined) {
-                    attributeStrings.push(attributes[i] + '="' + this[attributes[i]]() + '"');
+            for (i = 0; i < scalarAttributes.length; i++) {
+                if (this[scalarAttributes[i]]() !== undefined) {
+                    attributeStrings.push(scalarAttributes[i] + '="' + this[scalarAttributes[i]]() + '"');
                 }
             }
 
-            return '<' + attributeStrings.join(' ') + '/>';
+            output += attributeStrings.join(' ') + '/>';
+
+            return output;
         };
 
     });

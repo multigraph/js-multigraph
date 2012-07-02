@@ -5,7 +5,7 @@ if (!window.multigraph) {
 (function (ns) {
     "use strict";
 
-    var attributes = ['type'],
+    var scalarAttributes = ['type'],
         Option = ns.Plot.Filter.Option;
 
     ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { 'mixinfuncs' : [] };
@@ -15,7 +15,7 @@ if (!window.multigraph) {
             var filter = new nsObj.Plot.Filter();
             if (xml) {
                 if (xml.find('option').length > 0) {
-                    $.each(xml.find(">option"), function(i,e) {
+                    $.each(xml.find(">option"), function (i, e) {
                         filter.options().add( nsObj.Plot.Filter.Option[parse]($(e)) );
                     });
                 }
@@ -26,18 +26,16 @@ if (!window.multigraph) {
 
         nsObj.Plot.Filter.prototype[serialize] = function () {
             var attributeStrings = [],
-                output,
+                output = '<filter ',
                 i;
 
-            attributeStrings.push('filter');
-
-            for (i = 0; i < attributes.length; i++) {
-                if (this[attributes[i]]() !== undefined) {
-                    attributeStrings.push(attributes[i] + '="' + this[attributes[i]]() + '"');
+            for (i = 0; i < scalarAttributes.length; i++) {
+                if (this[scalarAttributes[i]]() !== undefined) {
+                    attributeStrings.push(scalarAttributes[i] + '="' + this[scalarAttributes[i]]() + '"');
                 }
             }
 
-            output = '<' + attributeStrings.join(' ');
+            output += attributeStrings.join(' ');
 
             if (this.options().size() !== 0) {
                 output += '>';

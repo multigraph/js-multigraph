@@ -23,22 +23,24 @@ if(!window.multigraph) {
         };
         
         nsObj.Plotarea.prototype[serialize] = function () {
-            var strings = [],
+            var attributeStrings = [],
+                output = '<plotarea ',
                 i;
-            strings.push('plotarea');
 
-            strings.push('margintop="' + this.margin().top() + '"');
-            strings.push('marginleft="' + this.margin().left() + '"');
-            strings.push('marginbottom="' + this.margin().bottom() + '"');
-            strings.push('marginright="' + this.margin().right() + '"');
+            attributeStrings.push('margintop="' + this.margin().top() + '"');
+            attributeStrings.push('marginleft="' + this.margin().left() + '"');
+            attributeStrings.push('marginbottom="' + this.margin().bottom() + '"');
+            attributeStrings.push('marginright="' + this.margin().right() + '"');
 
             for(i = 0; i < scalarAttributes.length; i++) {
                 if (this[scalarAttributes[i]]() !== undefined) {
-                    strings.push(scalarAttributes[i] + '="' + this[scalarAttributes[i]]() + '"');
+                    attributeStrings.push(scalarAttributes[i] + '="' + this[scalarAttributes[i]]() + '"');
                 }
             }
 
-            return '<' + strings.join(' ') + '/>';
+            output += attributeStrings.join(' ') + '/>';
+
+            return output;
         };
 
     });

@@ -5,7 +5,7 @@ if(!window.multigraph) {
 (function (ns) {
     "use strict";
 
-    var attributes = ['color'],
+    var scalarAttributes = ['color'],
         Img = ns.Background.Img,
         i;
 
@@ -25,18 +25,16 @@ if(!window.multigraph) {
 
         nsObj.Background.prototype[serialize] = function () {
             var attributeStrings = [],
-                output,
+                output = '<background ',
                 i;
 
-            attributeStrings.push('background');
-
-            for (i = 0; i < attributes.length; i++) {
-                if (this[attributes[i]]() !== undefined) {
-                    attributeStrings.push(attributes[i] + '="' + this[attributes[i]]() + '"');
+            for (i = 0; i < scalarAttributes.length; i++) {
+                if (this[scalarAttributes[i]]() !== undefined) {
+                    attributeStrings.push(scalarAttributes[i] + '="' + this[scalarAttributes[i]]() + '"');
                 }
             }
 
-            output = '<' + attributeStrings.join(' ');
+            output += attributeStrings.join(' ');
             if (this.img()) {
                 output += '>' + this.img()[serialize]() + '</background>';
             } else {

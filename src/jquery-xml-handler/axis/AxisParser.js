@@ -5,7 +5,7 @@ if (!window.multigraph) {
 (function (ns) {
     "use strict";
 
-    var attributes = ['id', 'type', 'length', 'position', 'pregap', 'postgap', 'anchor', 'base', 'min', 'minoffset', 'minposition', 'max', 'maxoffset', 'maxposition', 'positionbase', 'color', 'tickmin', 'tickmax', 'highlightstyle', 'linewidth'],
+    var scalarAttributes = ['id', 'type', 'length', 'position', 'pregap', 'postgap', 'anchor', 'base', 'min', 'minoffset', 'minposition', 'max', 'maxoffset', 'maxposition', 'positionbase', 'color', 'tickmin', 'tickmax', 'highlightstyle', 'linewidth'],
         children = ['title', 'labels', 'grid', 'pan', 'zoom', 'binding', 'axiscontrols'];
 
     ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { 'mixinfuncs' : [] };
@@ -14,13 +14,13 @@ if (!window.multigraph) {
         nsObj.Axis[parse] = function(xml) {
             var orientation = $(xml).prop('tagName').toLowerCase().replace('axis', ''),
                 axis = new nsObj.Axis(orientation),
-                childModels = ['Title', 'Labels', 'Grid', 'Pan', 'Zoom', 'Binding', 'AxisControls'],
+                childModelNames = ['Title', 'Labels', 'Grid', 'Pan', 'Zoom', 'Binding', 'AxisControls'],
                 i;
 
             if (xml) {
                 for (i = 0; i < children.length; i++) {
                     if (xml.find(children[i]).length > 0) {
-                        axis[children[i]](ns.Axis[childModels[i]][parse](xml.find(children[i])));
+                        axis[children[i]](ns.Axis[childModelNames[i]][parse](xml.find(children[i])));
                     }
                 }
 
@@ -51,13 +51,12 @@ if (!window.multigraph) {
         nsObj.Axis.prototype[serialize] = function() {
             var attributeStrings = [],
                 childStrings = [],
-                output,
+                output = '<' + this.orientation() + 'axis ',
                 i;
-            attributeStrings.push(this.orientation() + 'axis');
 
-            for (i = 0; i < attributes.length; i++) {
-                if (this[attributes[i]]() !== undefined) {
-                    attributeStrings.push(attributes[i] + '="' + this[attributes[i]]() + '"');
+            for (i = 0; i < scalarAttributes.length; i++) {
+                if (this[scalarAttributes[i]]() !== undefined) {
+                    attributeStrings.push(scalarAttributes[i] + '="' + this[scalarAttributes[i]]() + '"');
                 }
             }
 
@@ -67,7 +66,7 @@ if (!window.multigraph) {
                 }
             }
 
-            output = '<' + attributeStrings.join(' ');
+            output += attributeStrings.join(' ');
 
             if (childStrings.length > 0) {
                 output += '>' + childStrings.join('') + '</' + this.orientation() + 'axis>';

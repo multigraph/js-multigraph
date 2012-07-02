@@ -9,7 +9,7 @@ if (!window.multigraph.Axis) {
 (function (ns) {
     "use strict";
 
-    var attributes = ['allowed', 'min', 'max', 'anchor'];
+    var scalarAttributes = ['allowed', 'min', 'max', 'anchor'];
     ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { 'mixinfuncs' : [] };
     ns.jQueryXMLHandler.mixinfuncs.push(function (nsObj, parse, serialize) {
         
@@ -26,16 +26,18 @@ if (!window.multigraph.Axis) {
         
         nsObj.Axis.Zoom.prototype[serialize] = function () {
             var attributeStrings = [],
+                output = '<zoom ',
                 i;
-            attributeStrings.push('zoom');
 
-            for (i = 0; i < attributes.length; i++) {
-                if (this[attributes[i]]() !== undefined) {
-                    attributeStrings.push(attributes[i] + '="' + this[attributes[i]]() + '"');
+            for (i = 0; i < scalarAttributes.length; i++) {
+                if (this[scalarAttributes[i]]() !== undefined) {
+                    attributeStrings.push(scalarAttributes[i] + '="' + this[scalarAttributes[i]]() + '"');
                 }
             }
 
-            return '<' + attributeStrings.join(' ') + '/>';
+            output += attributeStrings.join(' ') + '/>';
+
+            return output;
         };
 
     });
