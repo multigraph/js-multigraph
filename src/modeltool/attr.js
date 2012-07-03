@@ -1,7 +1,6 @@
 /*
   + Why is validatorFunctions an array of objects keyed by the string 'validator', rather than just a list of functions?
     Does it have to do with the comment about keeping the old API working?
-  + use of name isImmutable for private variable clashes with isImmutable() method; suggest var mutable instead?
   + what about isNotGreaterThan()?, isNotLessThan()?  Or, better still: a general 'not' operator, as in jasmine?
   + use of deprecated errorsWith in implementation of clone()?
 */
@@ -28,7 +27,7 @@ if(!window.multigraph.ModelTool) {
             i,
             prop,
             addDefaultValidator,
-            isImmutable = false,
+            immutable = false,
             validator,
             AttrList = window.multigraph.ModelTool.AttrList;
 
@@ -50,9 +49,6 @@ if(!window.multigraph.ModelTool) {
         getDefaultValue = function() {
             return (typeof(defaultValueOrFunction) === 'function') ? defaultValueOrFunction() : defaultValueOrFunction;
         };
-
-        //add default 'true' validator
-        //validatorFunctions.push({ validator: function () { return true; } });
 
         if (name === undefined || typeof(name) !== 'string') {
             throw new Error("Attr: constructor requires a name parameter which must be a string");
@@ -88,12 +84,12 @@ if(!window.multigraph.ModelTool) {
         };
 
         this.isImmutable = function () {
-            isImmutable = true;
+            immutable = true;
             return this;
         };
 
         this.isMutable = function () {
-            isImmutable = false;
+            immutable = false;
             return this;
         };
 
@@ -107,7 +103,7 @@ if(!window.multigraph.ModelTool) {
             }
 
             result.errorsWith(errorMessage).defaultsTo(defaultValueOrFunction);
-            if (isImmutable) {
+            if (immutable) {
                 result.isImmutable();
             }
 
@@ -142,7 +138,7 @@ if(!window.multigraph.ModelTool) {
             obj[name] = function (newValue) {
                 if (newValue !== undefined) {
                     //setter
-                    if (isImmutable && attribute !== undefined) {
+                    if (immutable && attribute !== undefined) {
                         throw new Error("cannot set the immutable property " + name + " after it has been set");
                     } else
                     if (!validator(newValue)) {
