@@ -556,6 +556,45 @@ describe("Model", function () {
                 p = new Person("semmy");
             }).toThrow(new Error("Constructor requires name, id to be specified"));
         });
+
+        xit("should allow circular isA references", function () {
+            var Human = new Model(function () {
+                console.log("at 1");
+                this.hasA("ferret").which.isA(Ferret);
+                this.hasA("name").which.isA("string");
+                this.isBuiltWith("name");
+            });
+
+            console.log("at 2");
+            var Person = new Model(function () {
+                console.log("at 3");
+                this.hasA("ferret").which.validatesWith(function (ferret) {
+                    console.log("at 4");
+                    return ferret instanceof Ferret;
+                });
+                this.hasA("name").which.isA("string");
+                this.isBuiltWith("name");
+            });
+
+            console.log("at 5");
+            var Ferret = new Model(function () {
+                this.hasA("owner").which.isA(Human);
+                this.hasA("name").which.isA("string");
+                this.isBuiltWith("name");
+            });
+
+            var ferret = new Ferret("moe");
+            var human = new Human("curly");
+            var person = new Person("larry");
+
+            expect(function () {
+                person.ferret(ferret);
+            }).not.toThrow();
+            human.ferret(ferret);
+            ferret.owner(human);
+            console.log(human.ferret().name());
+            console.log(ferret.owner().name());
+        });
     });
         
     describe("isImmutable method", function ()  {
