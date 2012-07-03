@@ -467,4 +467,65 @@ describe("Attr", function () {
             }).not.toThrow();
         });
     });
+
+
+    describe("integer validation", function() {
+
+        it("should not throw an error when an integer is assigned", function() {
+            var index = new Attr("index").which.isA('integer');
+            var obj = {};
+            index.addTo(obj);
+            expect(function () {
+                obj.index(-1);
+            }).not.toThrow();
+        });
+
+        it("should throw an error when a non-integer number is assigned", function() {
+            var index = new Attr("index").which.isA('integer');
+            var obj = {};
+            index.addTo(obj);
+            expect(function () {
+                obj.index(-1.2);
+            }).toThrow(new Error("-1.2 should be an integer"));
+            expect(function () {
+                obj.index("fred");
+            }).toThrow(new Error("fred should be an integer"));
+        });
+
+        it("should correctly set/get values", function() {
+            var index = new Attr("index").which.isA('integer');
+            var obj = {};
+            index.addTo(obj);
+            obj.index(-1);
+            expect(obj.index()).toBe(-1);
+        });
+
+    });
+
+    describe("default values as functions", function() {
+
+        it("should call the function each time a default is assigned", function() {
+            var Dog = function (name) {
+                this.name = name;
+            };
+            var count = 0;
+            var dog = new Attr("dog").which.isA(Dog).defaultsTo(function () {
+                ++count;
+                return new Dog("spot");
+            });
+            var fred = {};
+            dog.addTo(fred);
+            expect(fred.dog().name).toBe("spot");
+            fred.dog().name = 'rover';
+            expect(fred.dog().name).toBe("rover");
+            var jane = {};
+            dog.addTo(jane);
+            expect(jane.dog().name).toBe("spot");
+            expect(fred.dog().name).toBe("rover");
+            expect(count).toBe(2);
+        });
+
+    });
+
+
 });

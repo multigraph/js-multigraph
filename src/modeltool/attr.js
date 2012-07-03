@@ -1,3 +1,11 @@
+/*
+  + Why is validatorFunctions an array of objects keyed by the string 'validator', rather than just a list of functions?
+    Does it have to do with the comment about keeping the old API working?
+  + use of name isImmutable for private variable clashes with isImmutable() method; suggest var mutable instead?
+  + what about isNotGreaterThan()?, isNotLessThan()?  Or, better still: a general 'not' operator, as in jasmine?
+  + use of deprecated errorsWith in implementation of clone()?
+*/
+
 if(!window.multigraph) {
     window.multigraph = {};
 }
@@ -15,7 +23,8 @@ if(!window.multigraph.ModelTool) {
         var validatorFunctions = [],
             that = this,
             errorMessage = "invalid setter call for " + name,
-            defaultValue,
+            defaultValueOrFunction,
+            getDefaultValue,
             i,
             prop,
             addDefaultValidator,
@@ -38,16 +47,20 @@ if(!window.multigraph.ModelTool) {
             return true;
         };
 
-        //add default 'true' validator
-        validatorFunctions.push({ validator: function () { return true; } });
+        getDefaultValue = function() {
+            return (typeof(defaultValueOrFunction) === 'function') ? defaultValueOrFunction() : defaultValueOrFunction;
+        };
 
-        if(name === undefined || typeof(name) !== 'string') {
+        //add default 'true' validator
+        //validatorFunctions.push({ validator: function () { return true; } });
+
+        if (name === undefined || typeof(name) !== 'string') {
             throw new Error("Attr: constructor requires a name parameter which must be a string");
         }
 
         this.validatesWith = function (v) {
             if (typeof(v) === 'function') {
-                validatorFunctions.push({ validator: v });
+                validatorFunctions.push({ "validator" : v });
                 return this;
             } else {
                 throw new Error("Attr: validator must be a function");
@@ -65,7 +78,7 @@ if(!window.multigraph.ModelTool) {
         };
 
         this.defaultsTo = function (value) {
-            defaultValue = value;
+            defaultValueOrFunction = value;
             return this;
         };
 
@@ -93,7 +106,7 @@ if(!window.multigraph.ModelTool) {
                 result.validatesWith(validatorFunctions[i].validator);
             }
 
-            result.errorsWith(errorMessage).defaultsTo(defaultValue);
+            result.errorsWith(errorMessage).defaultsTo(defaultValueOrFunction);
             if (isImmutable) {
                 result.isImmutable();
             }
@@ -111,11 +124,14 @@ if(!window.multigraph.ModelTool) {
         };
 
         this.addTo = function (obj) {
-            var attribute;
+            var attribute,
+                defaultValue;
 
             if (!obj || typeof(obj) !== 'object') {
                 throw new Error("Attr: addAttr method requires an object parameter");
             }
+
+            defaultValue = getDefaultValue();
 
             if (defaultValue !== undefined && validator(defaultValue)) {
                 attribute = defaultValue;
@@ -166,9 +182,6 @@ if(!window.multigraph.ModelTool) {
     };
 
     Attr.addValidator = function (name, v) {
-        var prop,
-            count = 0;
-
         if (name === undefined || typeof(name) !== "string") {
             throw new Error("addValidator requires a name to be specified as the first parameter");
         }
@@ -199,6 +212,15 @@ if(!window.multigraph.ModelTool) {
         if (typeof(val) === "string" && types.indexOf(val) > -1) {
             this.message = this.param + " should be a " + val;
             return typeof(this.param) === val;
+        } else if (val === 'integer') {
+            // special case for 'integer'; since javascript has no integer type,
+            // just check for number type and check that it's numerically an int
+            if (this.param.toString !== undefined)  {
+                this.message = this.param.toString() + " should be an integer";
+            } else {
+                this.message = "parameter should be an integer";
+            }
+            return (typeof(this.param) === 'number') && (parseInt(this.param,10) === this.param);
         } else if (typeof(val) === "string") {
             throw new Error("Attr: isA accepts a string which is one of " + types);
         } else {
