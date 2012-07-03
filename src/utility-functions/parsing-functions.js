@@ -50,8 +50,8 @@ if (!window.multigraph.utilityFunctions) {
 //              'width': undefined,
 //              'height': undefined,
                 'border': 2,
-                'margin' : function() { return new ns.math.Insets(/*top*/2, /*left*/2, /*bottom*/2, /*right*/2) },
-                'padding': function() { return new ns.math.Insets(/*top*/5, /*left*/5, /*bottom*/5, /*right*/5) },
+                'margin' : function() { return new ns.math.Insets(/*top*/2, /*left*/2, /*bottom*/2, /*right*/2); },
+                'padding': function() { return new ns.math.Insets(/*top*/5, /*left*/5, /*bottom*/5, /*right*/5); },
                 'bordercolor': '0x000000'
             },
             'ui': {
@@ -96,7 +96,7 @@ if (!window.multigraph.utilityFunctions) {
                 'color': '0xffffff'
             },
             'plotarea': {
-                'margin' : function() { return new ns.math.Insets(/*top*/10 , /*left*/38, /*bottom*/35, /*right*/35) },
+                'margin' : function() { return new ns.math.Insets(/*top*/10 , /*left*/38, /*bottom*/35, /*right*/35); },
                 'border': 0,
                 'bordercolor': '0xeeeeee'
             },

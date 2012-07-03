@@ -54,7 +54,7 @@ if (!window.multigraph.math) {
             return ns.utilityFunctions.validateNumberRange(a, -1.0, 1.0);
         });
         this.hasA("b").which.validatesWith(function (b) {
-            return ( (typeof(b) === 'number') && (b === parseInt(b)) );
+            return ( (typeof(b) === 'number') && (b === parseInt(b,10)) );
         });
 
         this.respondsTo("calculateLength", function (totalLength) {
@@ -67,7 +67,7 @@ if (!window.multigraph.math) {
 
     });
 
-    Displacement.regExp = /^([\+-]?[0-9\.]+)([+\-])([0-9\.+\-]+)$/;
+    Displacement.regExp = /^([\+\-]?[0-9\.]+)([+\-])([0-9\.+\-]+)$/;
 
     Displacement.parse = function (string) {
         /**
@@ -78,11 +78,14 @@ if (!window.multigraph.math) {
          *     "+A"   ==>  a=A  b=0
          *     "-A"   ==>  a=-A b=0
          **/
-        var ar = Displacement.regExp.exec(string);
-        if (ar != null) {
-            var a = parseFloat(ar[1]),
-            b = parseFloat(ar[3]),
+        var ar = Displacement.regExp.exec(string),
+            d,
+            a,
+            b,
             sign;
+        if (ar !== null) {
+            a = parseFloat(ar[1]);
+            b = parseFloat(ar[3]);
             switch (ar[2]) {
             case "+":
                 sign = 1;
@@ -99,18 +102,18 @@ if (!window.multigraph.math) {
               throw new ParseError('parse error');
               }
             */
-            var d = new Displacement();
+            d = new Displacement();
             d.a(a);
             d.b(sign * b);
             return d;
         }
-        var a = parseFloat(string);
+        a = parseFloat(string);
         /*n
           if (isNaN(a)) {
           throw new ParseError('parse error');
           }
         */
-        var d = new Displacement();
+        d = new Displacement();
         d.a(a);
         d.b(0);
         return d;

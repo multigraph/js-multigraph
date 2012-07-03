@@ -149,28 +149,28 @@ describe("Graph", function () {
         it("should compute the correct paddingBox dimensions", function() {
             g.initializeGeometry(300, 200);
             expect(g.paddingBox().width() ===
-                   (300 - defaults.window.margin().left() - defaults.window.margin().right()
-                    - 2*defaults.window.border
-                    - defaults.window.padding().left() - defaults.window.padding().right())
+                   (300 - defaults.window.margin().left() - defaults.window.margin().right() -
+                    2*defaults.window.border -
+                    defaults.window.padding().left() - defaults.window.padding().right())
                   ).toBe(true);
             expect(g.paddingBox().height() ===
-                   (200 - defaults.window.margin().top() - defaults.window.margin().bottom()
-                    - 2*defaults.window.border
-                    - defaults.window.padding().top() - defaults.window.padding().bottom())
+                   (200 - defaults.window.margin().top() - defaults.window.margin().bottom() -
+                    2*defaults.window.border -
+                    defaults.window.padding().top() - defaults.window.padding().bottom())
                   ).toBe(true);
         });
 
         it("should compute the correct plotBox dimensions", function() {
             g.initializeGeometry(300, 200);
             expect(g.plotBox().width() ===
-                   g.paddingBox().width()
-                   - (defaults.plotarea.margin().left()
-                      + defaults.plotarea.margin().right())
+                   g.paddingBox().width() -
+                   (defaults.plotarea.margin().left() +
+                    defaults.plotarea.margin().right())
                   ).toBe(true);
             expect(g.plotBox().height() ===
-                   g.paddingBox().height()
-                   - (defaults.plotarea.margin().top()
-                      + defaults.plotarea.margin().bottom())
+                   g.paddingBox().height() -
+                   (defaults.plotarea.margin().top() +
+                    defaults.plotarea.margin().bottom())
                   ).toBe(true);
         });
 

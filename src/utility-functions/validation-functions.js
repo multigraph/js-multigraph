@@ -14,7 +14,7 @@ if (!window.multigraph.utilityFunctions) {
     };
 
     ns.utilityFunctions.validateInteger = function (number) {
-        return (typeof(number) === 'number') && (number === parseInt(number));
+        return (typeof(number) === 'number') && (number === parseInt(number,10));
     };
 
     ns.utilityFunctions.validateDouble = function (number) {

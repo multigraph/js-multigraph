@@ -67,13 +67,13 @@ if (!window.multigraph) {
 
             this.respondsTo("initializeGeometry", function(width, height) {
                 this.windowBox( new Box(width, height) );
-                this.paddingBox( new Box(( width
-                                           - ( this.window().margin().left()  + this.window().border() + this.window().padding().left()  )
-                                           - ( this.window().margin().right() + this.window().border() + this.window().padding().right() )
+                this.paddingBox( new Box(( width -
+                                           ( this.window().margin().left()  + this.window().border() + this.window().padding().left() ) -
+                                           ( this.window().margin().right() + this.window().border() + this.window().padding().right() )
                                          ),
-                                         ( height
-                                           - ( this.window().margin().top()    + this.window().border() + this.window().padding().top()    )
-                                           - ( this.window().margin().bottom() + this.window().border() + this.window().padding().bottom() )
+                                         ( height -
+                                           ( this.window().margin().top()    + this.window().border() + this.window().padding().top() ) -
+                                           ( this.window().margin().bottom() + this.window().border() + this.window().padding().bottom() )
                                          )
                                         )
                                );
