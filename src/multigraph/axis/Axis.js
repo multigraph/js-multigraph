@@ -130,12 +130,49 @@ if (!window.multigraph) {
             return typeof(linewidth) === 'string';
         });
         this.hasA("orientation").which.validatesWith(function (orientation) {
-            return typeof(orientation) === 'string' && ((orientation.toLowerCase() === 'horizontal') || (orientation.toLowerCase() === 'vertical'));
+            return (orientation === Axis.HORIZONTAL) || (orientation === Axis.VERTICAL);
         });
         this.isBuiltWith('orientation');
 
+        this.hasA("pixelLength").which.validatesWith(function (val) {
+            //TODO: this should be replaced with John's new integer validation after merging
+            return (typeof(val)==='number') && (val===parseInt(val));
+        });
+        this.hasA("parallelOffset").which.validatesWith(function (val) {
+            //TODO: this should be replaced with John's new number validation after merging
+            return typeof(val)==='number';
+        });
+        this.hasA("perpOffset").which.validatesWith(function (val) {
+            //TODO: this should be replaced with John's new number validation after merging
+            return typeof(val)==='number';
+        });
+
+        this.respondsTo("initializeGeometry", function() {
+            var dim = (orientation === Axis.VERTICAL) ? 'height' : 'width';
+/*
+            if (_orientation == AxisOrientation.HORIZONTAL) {
+                _pixelLength = _length.calculateLength( _graph.plotBox.width );
+                _parallelOffset = _position.x + (_base.x + 1) * _graph.plotBox.width/2 - (_anchor + 1) * _pixelLength / 2;
+                _perpOffset = _position.y + (_base.y + 1) * _graph.plotBox.height/2;
+            } else {
+                _pixelLength = _length.calculateLength( _graph.plotBox.height );
+                _parallelOffset = _position.y + (_base.y + 1) * _graph.plotBox.height/2 - (_anchor + 1) * _pixelLength / 2;
+                _perpOffset = _position.x + (_base.x + 1) * _graph.plotBox.width/2;
+            }
+            _minOffset = _minposition.calculateCoordinate(_pixelLength);
+            _maxOffset = _pixelLength - _maxposition.calculateCoordinate(_pixelLength);
+            _reversed = (_minOffset > _pixelLength - _maxOffset);
+            if (_haveDataMin && _haveDataMax) {
+                computeAxisToDataRatio();
+            }
+*/
+        });
+
         ns.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis, attributes);
     });
+
+    Axis.HORIZONTAL = 'horizontal';
+    Axis.VERTICAL   = 'vertical';
 
     ns.Axis = Axis;
     if (Title) {
