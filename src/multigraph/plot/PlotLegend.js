@@ -11,12 +11,12 @@ if (!window.multigraph.Plot) {
 
     var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = ns.utilityFunctions.getKeys(defaultValues.plot.legend),
-        Legend = new ns.ModelTool.Model( 'PlotLegend', function () {
+        Legend = new ns.ModelTool.Model( "PlotLegend", function () {
             this.hasA("visible").which.validatesWith(function (visible) {
-                return visible === 'true' || visible === 'false';
+                return visible === "true" || visible === "false";
             });
             this.hasA("label").which.validatesWith(function (label) {
-                return typeof(label) === 'string';
+                return typeof(label) === "string";
             });
 
             ns.utilityFunctions.insertDefaults(this, defaultValues.plot.legend, attributes);

@@ -9,17 +9,17 @@ if (!window.multigraph.Axis) {
 (function (ns) {
     "use strict";
 
-    var scalarAttributes = ['allowed', 'min', 'max', 'anchor'];
-    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { 'mixinfuncs' : [] };
+    var scalarAttributes = ["allowed", "min", "max", "anchor"];
+    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
     ns.jQueryXMLHandler.mixinfuncs.push(function (nsObj, parse, serialize) {
         
         nsObj.Axis.Zoom[parse] = function (xml) {
             var zoom = new nsObj.Axis.Zoom();
             if (xml) {
-                zoom.allowed(xml.attr('allowed'));
-                zoom.min(xml.attr('min'));
-                zoom.max(xml.attr('max'));
-                zoom.anchor(xml.attr('anchor'));
+                zoom.allowed(xml.attr("allowed"));
+                zoom.min(xml.attr("min"));
+                zoom.max(xml.attr("max"));
+                zoom.anchor(xml.attr("anchor"));
             }
             return zoom;
         };

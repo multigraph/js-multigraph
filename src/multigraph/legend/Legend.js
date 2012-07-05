@@ -14,9 +14,9 @@ if (!window.multigraph) {
         Icon = ns.Legend.Icon;
     }
 
-    Legend = new ns.ModelTool.Model( 'Legend', function () {
+    Legend = new ns.ModelTool.Model( "Legend", function () {
         this.hasA("visible").which.validatesWith(function (visible) {
-            return visible === 'true' || visible === 'false';
+            return visible === "true" || visible === "false";
         });
         this.hasA("base").which.validatesWith(function (base) {
             return ns.utilityFunctions.validateCoordinatePair(base);
@@ -28,7 +28,7 @@ if (!window.multigraph) {
             return ns.utilityFunctions.validateCoordinatePair(position);
         });
         this.hasA("frame").which.validatesWith(function (frame) {
-            return frame === 'plot' || frame === 'padding';
+            return frame === "plot" || frame === "padding";
         });
         this.hasA("color").which.validatesWith(function (color) {
             return ns.utilityFunctions.validateColor(color);

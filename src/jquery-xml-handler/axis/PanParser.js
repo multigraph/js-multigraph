@@ -9,16 +9,16 @@ if (!window.multigraph.Axis) {
 (function (ns) {
     "use strict";
 
-    var scalarAttributes = ['allowed', 'min', 'max'];
-    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { 'mixinfuncs' : [] };
+    var scalarAttributes = ["allowed", "min", "max"];
+    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
     ns.jQueryXMLHandler.mixinfuncs.push(function (nsObj, parse, serialize) {
         
         nsObj.Axis.Pan[parse] = function (xml) {
             var pan = new nsObj.Axis.Pan();
             if (xml) {
-                pan.allowed(xml.attr('allowed'));
-                pan.min(xml.attr('min'));
-                pan.max(xml.attr('max'));
+                pan.allowed(xml.attr("allowed"));
+                pan.min(xml.attr("min"));
+                pan.max(xml.attr("max"));
             }
             return pan;
         };

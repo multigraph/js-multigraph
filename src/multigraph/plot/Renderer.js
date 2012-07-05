@@ -18,17 +18,17 @@ if (!window.multigraph.Plot) {
         Option = ns.Plot.Renderer.Option;
     }
 
-    Renderer = new ns.ModelTool.Model( 'Renderer', function () {
+    Renderer = new ns.ModelTool.Model( "Renderer", function () {
         this.hasA("type").which.validatesWith(function (type) {
-            return type === 'line' || type === 'bar' ||
-                   type === 'fill' || type === 'point' ||
-                   type === 'barerror' || type === 'lineerror' ||
-                   type === 'pointline';
+            return type === "line" || type === "bar" ||
+                   type === "fill" || type === "point" ||
+                   type === "barerror" || type === "lineerror" ||
+                   type === "pointline";
         });
         this.hasMany("options").which.validatesWith(function (option) {
             return option instanceof ns.Plot.Renderer.Option;
         });
-        this.isBuiltWith('type');
+        this.isBuiltWith("type");
 
         ns.utilityFunctions.insertDefaults(this, defaultValues.plot.renderer, attributes);
     });

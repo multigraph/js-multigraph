@@ -11,17 +11,17 @@ if (!window.multigraph.Axis) {
 
     var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = ns.utilityFunctions.getKeys(defaultValues.horizontalaxis.binding),
-        Binding = new ns.ModelTool.Model( 'Binding', function () {
+        Binding = new ns.ModelTool.Model( "Binding", function () {
             this.hasA("id").which.validatesWith(function (id) {
-                return typeof(id) === 'string';
+                return typeof(id) === "string";
             });
             this.hasA("min").which.validatesWith(function (min) {
-                return typeof(min) === 'string';
+                return typeof(min) === "string";
             });
             this.hasA("max").which.validatesWith(function (max) {
-                return typeof(max) === 'string';
+                return typeof(max) === "string";
             });
-            this.isBuiltWith('id', 'min', 'max');
+            this.isBuiltWith("id", "min", "max");
 
             ns.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis.binding, attributes);
         });

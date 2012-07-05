@@ -19,18 +19,18 @@ if (!window.multigraph.Plot) {
         DatatipsVariable = ns.Plot.Datatips.Variable;
     }
 
-    Datatips = new ns.ModelTool.Model( 'Datatips', function () {
+    Datatips = new ns.ModelTool.Model( "Datatips", function () {
         this.hasMany("variables").which.validatesWith(function (variable) {
             return variable instanceof ns.Plot.Datatips.Variable;
         });
         this.hasA("format").which.validatesWith(function (format) {
-            return typeof(format) === 'string';
+            return typeof(format) === "string";
         });
         this.hasA("bgcolor").which.validatesWith(function (bgcolor) {
             return ns.utilityFunctions.validateColor(bgcolor);
         });
         this.hasA("bgalpha").which.validatesWith(function (bgalpha) {
-            return typeof(bgalpha) === 'string';
+            return typeof(bgalpha) === "string";
         });
         this.hasA("border").which.validatesWith(function (border) {
             return ns.utilityFunctions.validateInteger(border);

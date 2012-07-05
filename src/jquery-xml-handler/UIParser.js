@@ -5,14 +5,14 @@ if (!window.multigraph) {
 (function (ns) {
     "use strict";
 
-    var scalarAttributes = ['eventhandler'];
-    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { 'mixinfuncs' : [] };
+    var scalarAttributes = ["eventhandler"];
+    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
     ns.jQueryXMLHandler.mixinfuncs.push(function(nsObj, parse, serialize) {
         
         nsObj.UI[parse] = function (xml) {
             var ui = new nsObj.UI();
             if (xml) {
-                ui.eventhandler(xml.attr('eventhandler'));
+                ui.eventhandler(xml.attr("eventhandler"));
             }
             return ui;
         };

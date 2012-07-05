@@ -11,7 +11,7 @@ if (!window.multigraph.Axis) {
 
     var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = ns.utilityFunctions.getKeys(defaultValues.horizontalaxis.title),
-        Title = new ns.ModelTool.Model( 'AxisTitle', function () {
+        Title = new ns.ModelTool.Model( "AxisTitle", function () {
             this.hasA("content").which.isA("string");
             this.hasA("position").which.validatesWith(function (position) {
                 return ns.utilityFunctions.validateCoordinatePair(position);

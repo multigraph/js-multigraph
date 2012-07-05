@@ -14,14 +14,14 @@ if (!window.multigraph) {
         Img = ns.Background.Img;
     }
 
-    Background = new ns.ModelTool.Model( 'Background', function () {
+    Background = new ns.ModelTool.Model( "Background", function () {
         this.hasA("color").which.validatesWith(function (color) {
             return ns.utilityFunctions.validateColor(color);
         });
+//        this.hasAn("img").which.isA(ns.Background.Img);
         this.hasA("img").which.validatesWith(function (img) {
             return img instanceof ns.Background.Img;
         });
-
         ns.utilityFunctions.insertDefaults(this, defaultValues.background, attributes);
     });
 

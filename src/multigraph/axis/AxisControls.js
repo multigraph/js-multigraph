@@ -11,9 +11,9 @@ if (!window.multigraph.Axis) {
 
     var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = ns.utilityFunctions.getKeys(defaultValues.horizontalaxis.axiscontrols),
-        AxisControls = new ns.ModelTool.Model( 'AxisControls', function () {
+        AxisControls = new ns.ModelTool.Model( "AxisControls", function () {
             this.hasA("visible").which.validatesWith(function (visible) {
-                return typeof(visible) === 'string';
+                return typeof(visible) === "string";
             });
 
             ns.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis.axiscontrols, attributes);

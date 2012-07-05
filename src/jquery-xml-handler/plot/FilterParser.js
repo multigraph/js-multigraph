@@ -5,21 +5,19 @@ if (!window.multigraph) {
 (function (ns) {
     "use strict";
 
-    var scalarAttributes = ['type'],
-        Option = ns.Plot.Filter.Option;
-
-    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { 'mixinfuncs' : [] };
+    var scalarAttributes = ["type"];
+    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
     ns.jQueryXMLHandler.mixinfuncs.push(function (nsObj, parse, serialize) {
 
         nsObj.Plot.Filter[parse] = function (xml) {
             var filter = new nsObj.Plot.Filter();
             if (xml) {
-                if (xml.find('option').length > 0) {
+                if (xml.find("option").length > 0) {
                     $.each(xml.find(">option"), function (i, e) {
                         filter.options().add( nsObj.Plot.Filter.Option[parse]($(e)) );
                     });
                 }
-                filter.type(xml.attr('type'));
+                filter.type(xml.attr("type"));
             }
             return filter;
         };

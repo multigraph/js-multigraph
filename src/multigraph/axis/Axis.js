@@ -44,7 +44,7 @@ if (!window.multigraph) {
         }
     }
 
-    Axis = new ns.ModelTool.Model( 'Axis', function () {
+    Axis = new ns.ModelTool.Model( "Axis", function () {
         this.hasA("title").which.validatesWith(function (title) {
             return title instanceof ns.Axis.Title;
         });
@@ -67,20 +67,20 @@ if (!window.multigraph) {
             return axiscontrols instanceof ns.Axis.AxisControls;
         });
         this.hasAn("id").which.validatesWith(function (id) {
-            return typeof(id) === 'string';
+            return typeof(id) === "string";
         });
         this.hasA("type").which.validatesWith(function (type) {
-            return typeof(type) === 'string' && (type.toLowerCase() === 'number' || type.toLowerCase() === 'datetime');
+            return typeof(type) === "string" && (type.toLowerCase() === "number" || type.toLowerCase() === "datetime");
         });
         this.hasA("length").which.isA("number");
         this.hasA("position").which.validatesWith(function (position) {
             return ns.utilityFunctions.validateCoordinatePair(position);
         });
         this.hasA("pregap").which.validatesWith(function (pregap) {
-            return typeof(pregap) === 'string';
+            return typeof(pregap) === "string";
         });
         this.hasA("postgap").which.validatesWith(function (postgap) {
-            return typeof(postgap) === 'string';
+            return typeof(postgap) === "string";
         });
         this.hasAn("anchor").which.validatesWith(function (anchor) {
             return ns.utilityFunctions.validateCoordinatePair(anchor);
@@ -89,58 +89,58 @@ if (!window.multigraph) {
             return ns.utilityFunctions.validateCoordinatePair(base);
         });
         this.hasA("min").which.validatesWith(function (min) {
-            return typeof(min) === 'string';
+            return typeof(min) === "string";
         });
         this.hasA("minoffset").which.validatesWith(function (minoffset) {
-            return typeof(minoffset) === 'string';
+            return typeof(minoffset) === "string";
         });
         this.hasA("minposition").which.validatesWith(function (minposition) {
-            return typeof(minposition) === 'string';
+            return typeof(minposition) === "string";
         });
         this.hasA("max").which.validatesWith(function (max) {
-            return typeof(max) === 'string';
+            return typeof(max) === "string";
         });
         this.hasA("maxoffset").which.validatesWith(function (maxoffset) {
-            return typeof(maxoffset) === 'string';
+            return typeof(maxoffset) === "string";
         });
         this.hasA("maxposition").which.validatesWith(function (maxposition) {
-            return typeof(maxposition) === 'string';
+            return typeof(maxposition) === "string";
         });
         this.hasA("positionbase").which.validatesWith(function (positionbase) {
-            return typeof(positionbase) === 'string';
+            return typeof(positionbase) === "string";
         });
         this.hasA("color").which.validatesWith(function (color) {
             return ns.utilityFunctions.validateColor(color);
         });
         this.hasA("min").which.validatesWith(function (min) {
-            return typeof(min) === 'string';
+            return typeof(min) === "string";
         });
         this.hasA("tickmin").which.isA("integer");
         this.hasA("tickmax").which.isA("integer");
         this.hasA("highlightstyle").which.validatesWith(function (highlightstyle) {
-            return typeof(highlightstyle) === 'string';
+            return typeof(highlightstyle) === "string";
         });
         this.hasA("linewidth").which.isA("integer");
         this.hasA("orientation").which.validatesWith(function (orientation) {
             return (orientation === Axis.HORIZONTAL) || (orientation === Axis.VERTICAL);
         });
-        this.isBuiltWith('orientation');
+        this.isBuiltWith("orientation");
 
         this.hasA("pixelLength").which.validatesWith(function (val) {
             //TODO: this should be replaced with John's new integer validation after merging
-            return (typeof(val)==='number') && (val===parseInt(val));
+            return (typeof(val)==="number") && (val===parseInt(val));
         });
         this.hasA("parallelOffset").which.validatesWith(function (val) {
             //TODO: this should be replaced with John's new number validation after merging
-            return typeof(val)==='number';
+            return typeof(val)==="number";
         });
         this.hasA("perpOffset").which.validatesWith(function (val) {
             //TODO: this should be replaced with John's new number validation after merging
-            return typeof(val)==='number';
+            return typeof(val)==="number";
         });
 
         this.respondsTo("initializeGeometry", function() {
-            var dim = (orientation === Axis.VERTICAL) ? 'height' : 'width';
+            var dim = (orientation === Axis.VERTICAL) ? "height" : "width";
 /*
             if (_orientation == AxisOrientation.HORIZONTAL) {
                 _pixelLength = _length.calculateLength( _graph.plotBox.width );
@@ -163,8 +163,8 @@ if (!window.multigraph) {
         ns.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis, attributes);
     });
 
-    Axis.HORIZONTAL = 'horizontal';
-    Axis.VERTICAL   = 'vertical';
+    Axis.HORIZONTAL = "horizontal";
+    Axis.VERTICAL   = "vertical";
 
     ns.Axis = Axis;
     if (Title) {

@@ -18,15 +18,15 @@ if (!window.multigraph.Axis) {
         Label = ns.Axis.Labels.Label;
     }
 
-    Labels = new ns.ModelTool.Model( 'Labels', function () {
+    Labels = new ns.ModelTool.Model( "Labels", function () {
         this.hasMany("label").which.validatesWith(function (label) {
             return label instanceof ns.Axis.Labels.Label;
         });
         this.hasA("format").which.validatesWith(function (format) {
-            return typeof(format) === 'string';
+            return typeof(format) === "string";
         });
         this.hasA("start").which.validatesWith(function (start) {
-            return typeof(start) === 'string';
+            return typeof(start) === "string";
         });
         this.hasA("angle").which.isA("number");
         this.hasA("position").which.validatesWith(function (position) {
@@ -36,13 +36,13 @@ if (!window.multigraph.Axis) {
             return ns.utilityFunctions.validateCoordinatePair(anchor);
         });
         this.hasA("spacing").which.validatesWith(function (spacing) {
-            return typeof(spacing) === 'string';
+            return typeof(spacing) === "string";
         });
         this.hasA("function").which.validatesWith(function (funct) {
-            return typeof(funct) === 'string';
+            return typeof(funct) === "string";
         });
         this.hasA("densityfactor").which.validatesWith(function (densityfactor) {
-            return typeof(densityfactor) === 'string';
+            return typeof(densityfactor) === "string";
         });
 
         ns.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis.labels, attributes);

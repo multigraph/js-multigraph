@@ -7,7 +7,7 @@ if(!window.multigraph) {
 
     var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = ns.utilityFunctions.getKeys(defaultValues.plotarea),
-        Plotarea = new ns.ModelTool.Model('Plotarea', function () {
+        Plotarea = new ns.ModelTool.Model("Plotarea", function () {
 
             this.hasA("margin").which.validatesWith(function (margin) {
                 return margin instanceof ns.math.Insets;

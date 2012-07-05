@@ -35,14 +35,14 @@
  * @param serialize  the name (a string) to use for the serialize function
  */
 
-if(!window.multigraph) {
+if (!window.multigraph) {
     window.multigraph = {};
 }
 
 (function (ns) {
     "use strict";
 
-    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { 'mixinfuncs' : [] };
+    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
     ns.jQueryXMLHandler.mixin = function(nsObj, parse, serialize) {
         $.each(ns.jQueryXMLHandler.mixinfuncs, function(i,func) {
             func(nsObj, parse, serialize);

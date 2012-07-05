@@ -11,15 +11,15 @@ if (!window.multigraph.Axis) {
 
     var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = ns.utilityFunctions.getKeys(defaultValues.horizontalaxis.pan),
-        Pan = new ns.ModelTool.Model( 'Pan', function () {
+        Pan = new ns.ModelTool.Model( "Pan", function () {
         this.hasA("allowed").which.validatesWith(function (allowed) {
-            return allowed === 'yes' || allowed === 'no';
+            return allowed === "yes" || allowed === "no";
         });
         this.hasA("min").which.validatesWith(function (min) {
-            return typeof(min) === 'string';
+            return typeof(min) === "string";
         });
         this.hasA("max").which.validatesWith(function (max) {
-            return typeof(max) === 'string';
+            return typeof(max) === "string";
         });
 
         ns.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis.pan, attributes);

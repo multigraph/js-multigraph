@@ -18,12 +18,12 @@ if (!window.multigraph.Plot) {
         Option = ns.Plot.Filter.Option;
     }
 
-    Filter = new ns.ModelTool.Model( 'Filter', function () {
+    Filter = new ns.ModelTool.Model( "Filter", function () {
         this.hasMany("options").which.validatesWith(function (option) {
             return option instanceof ns.Plot.Filter.Option;
         });
         this.hasA("type").which.validatesWith(function (type) {
-            return typeof(type) === 'string';
+            return typeof(type) === "string";
         });
 
         ns.utilityFunctions.insertDefaults(this, defaultValues.plot.filter, attributes);

@@ -9,14 +9,14 @@ if (!window.multigraph.Data) {
 (function (ns) {
     "use strict";
 
-    var scalarAttributes = ['location'];
-    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { 'mixinfuncs' : [] };
+    var scalarAttributes = ["location"];
+    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
     ns.jQueryXMLHandler.mixinfuncs.push(function (nsObj, parse, serialize) {
         
         nsObj.Data.Service[parse] = function (xml) {
             var service = new nsObj.Data.Service();
             if (xml) {
-                service.location(xml.attr('location'));
+                service.location(xml.attr("location"));
             }
             return service;
         };

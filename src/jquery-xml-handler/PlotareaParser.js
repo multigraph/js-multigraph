@@ -1,23 +1,23 @@
-if(!window.multigraph) {
+if (!window.multigraph) {
     window.multigraph = {};
 }
 
 (function (ns) {
     "use strict";
 
-    var scalarAttributes = ['border', 'bordercolor'];
-    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { 'mixinfuncs' : [] };
+    var scalarAttributes = ["border", "bordercolor"];
+    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
     ns.jQueryXMLHandler.mixinfuncs.push(function(nsObj, parse, serialize) {
         
         nsObj.Plotarea[parse] = function (xml) {
             var plotarea = new nsObj.Plotarea();
             if (xml) {
-                plotarea.margin().bottom(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr('marginbottom')));
-                plotarea.margin().left(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr('marginleft')));
-                plotarea.margin().top(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr('margintop')));
-                plotarea.margin().right(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr('marginright')));
-                plotarea.border(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr('border')));
-                plotarea.bordercolor(xml.attr('bordercolor'));
+                plotarea.margin().bottom(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr("marginbottom")));
+                plotarea.margin().left(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr("marginleft")));
+                plotarea.margin().top(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr("margintop")));
+                plotarea.margin().right(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr("marginright")));
+                plotarea.border(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr("border")));
+                plotarea.bordercolor(xml.attr("bordercolor"));
             }
             return plotarea;
         };

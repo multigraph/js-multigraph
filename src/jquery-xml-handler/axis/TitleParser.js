@@ -9,17 +9,17 @@ if (!window.multigraph.Axis) {
 (function (ns) {
     "use strict";
 
-    var scalarAttributes = ['position', 'anchor', 'angle'];
-    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { 'mixinfuncs' : [] };
+    var scalarAttributes = ["position", "anchor", "angle"];
+    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
     ns.jQueryXMLHandler.mixinfuncs.push(function (nsObj, parse, serialize) {
         
         nsObj.Axis.Title[parse] = function (xml) {
             var title = new nsObj.Axis.Title();
             if (xml) {
                 title.content(xml.text());
-                title.position(xml.attr('position'));
-                title.anchor(xml.attr('anchor'));
-                title.angle(ns.utilityFunctions.parseDoubleOrUndefined(xml.attr('angle')));
+                title.position(xml.attr("position"));
+                title.anchor(xml.attr("anchor"));
+                title.angle(ns.utilityFunctions.parseDoubleOrUndefined(xml.attr("angle")));
             }
             return title;
         };

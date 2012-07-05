@@ -11,18 +11,18 @@ if (!window.multigraph.Axis) {
 
     var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = ns.utilityFunctions.getKeys(defaultValues.horizontalaxis.zoom),
-        Zoom = new ns.ModelTool.Model( 'Zoom', function () {
+        Zoom = new ns.ModelTool.Model( "Zoom", function () {
         this.hasA("allowed").which.validatesWith(function (allowed) {
-            return allowed === 'yes' || allowed === 'no';
+            return allowed === "yes" || allowed === "no";
         });
         this.hasA("min").which.validatesWith(function (min) {
-            return typeof(min) === 'string';
+            return typeof(min) === "string";
         });
         this.hasA("max").which.validatesWith(function (max) {
-            return typeof(max) === 'string';
+            return typeof(max) === "string";
         });
         this.hasA("anchor").which.validatesWith(function (anchor) {
-            return typeof(anchor) === 'string';
+            return typeof(anchor) === "string";
         });
 
         ns.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis.zoom, attributes);

@@ -5,15 +5,15 @@ if (!window.multigraph) {
 (function (ns) {
     "use strict";
 
-    var scalarAttributes = ['name', 'value'];
-    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { 'mixinfuncs' : [] };
+    var scalarAttributes = ["name", "value"];
+    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
     ns.jQueryXMLHandler.mixinfuncs.push(function (nsObj, parse, serialize) {
         
         nsObj.Plot.Filter.Option[parse] = function (xml) {
             var option = new nsObj.Plot.Filter.Option();
             if (xml) {
-                option.name(xml.attr('name'));
-                option.value(xml.attr('value') === '' ? undefined : xml.attr('value'));
+                option.name(xml.attr("name"));
+                option.value(xml.attr("value") === "" ? undefined : xml.attr("value"));
             }
             return option;
         };

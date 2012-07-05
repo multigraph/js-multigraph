@@ -5,26 +5,26 @@ if (!window.multigraph) {
 (function (ns) {
     "use strict";
 
-    var scalarAttributes = ['format', 'bgcolor', 'bgalpha', 'border', 'bordercolor', 'pad'],
+    var scalarAttributes = ["format", "bgcolor", "bgalpha", "border", "bordercolor", "pad"],
         Variable = ns.Plot.Datatips.Variable;
 
-    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { 'mixinfuncs' : [] };
+    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
     ns.jQueryXMLHandler.mixinfuncs.push(function (nsObj, parse, serialize) {
 
         nsObj.Plot.Datatips[parse] = function (xml) {
             var datatips = new nsObj.Plot.Datatips();
             if (xml) {
-                if (xml.find('variable').length > 0) {
+                if (xml.find("variable").length > 0) {
                     $.each(xml.find("variable"), function(i,e) {
                         datatips.variables().add( nsObj.Plot.Datatips.Variable[parse]($(e)) );
                     });
                 }
-                datatips.format(xml.attr('format'));
-                datatips.bgcolor(xml.attr('bgcolor'));
-                datatips.bgalpha(xml.attr('bgalpha'));
-                datatips.border(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr('border')));
-                datatips.bordercolor(xml.attr('bordercolor'));
-                datatips.pad(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr('pad')));
+                datatips.format(xml.attr("format"));
+                datatips.bgcolor(xml.attr("bgcolor"));
+                datatips.bgalpha(xml.attr("bgalpha"));
+                datatips.border(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr("border")));
+                datatips.bordercolor(xml.attr("bordercolor"));
+                datatips.pad(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr("pad")));
 
             }
             return datatips;

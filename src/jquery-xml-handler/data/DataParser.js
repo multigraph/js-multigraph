@@ -5,14 +5,13 @@ if (!window.multigraph) {
 (function (ns) {
     "use strict";
 
-    var children = ['variables', 'values', 'csv', 'service'];
-
-    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { 'mixinfuncs' : [] };
+    var children = ["variables", "values", "csv", "service"];
+    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
     ns.jQueryXMLHandler.mixinfuncs.push(function(nsObj, parse, serialize) {
         
         nsObj.Data[parse] = function (xml, orient) {
             var data = new nsObj.Data(),
-                childModelNames = ['Variables', 'Values', 'CSV', 'Service'],
+                childModelNames = ["Variables", "Values", "CSV", "Service"],
                 i;
 
             if (xml) {

@@ -9,15 +9,15 @@ if (!window.multigraph.Axis) {
 (function (ns) {
     "use strict";
 
-    var scalarAttributes = ['color', 'visible'];
-    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { 'mixinfuncs' : [] };
+    var scalarAttributes = ["color", "visible"];
+    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
     ns.jQueryXMLHandler.mixinfuncs.push(function (nsObj, parse, serialize) {
         
         nsObj.Axis.Grid[parse] = function (xml) {
             var grid = new nsObj.Axis.Grid();
             if (xml) {
-                grid.color(xml.attr('color'));
-                grid.visible(xml.attr('visible'));
+                grid.color(xml.attr("color"));
+                grid.visible(xml.attr("visible"));
             }
             return grid;
         };

@@ -5,15 +5,15 @@ if (!window.multigraph) {
 (function (ns) {
     "use strict";
 
-    var scalarAttributes = ['visible', 'fixed'];
-    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { 'mixinfuncs' : [] };
+    var scalarAttributes = ["visible", "fixed"];
+    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
     ns.jQueryXMLHandler.mixinfuncs.push(function(nsObj, parse, serialize) {
         
         nsObj.Debugger[parse] = function (xml) {
             var debug = new nsObj.Debugger();
             if (xml) {
-                debug.visible(xml.attr('visible'));
-                debug.fixed(xml.attr('fixed'));
+                debug.visible(xml.attr("visible"));
+                debug.fixed(xml.attr("fixed"));
             }
             return debug;
         };

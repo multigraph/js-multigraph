@@ -1,23 +1,20 @@
-if(!window.multigraph) {
+if (!window.multigraph) {
     window.multigraph = {};
 }
 
 (function (ns) {
     "use strict";
 
-    var scalarAttributes = ['color'],
-        Img = ns.Background.Img,
-        i;
-
-    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { 'mixinfuncs' : [] };
+    var scalarAttributes = ["color"];
+    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
     ns.jQueryXMLHandler.mixinfuncs.push(function (nsObj, parse, serialize) {
 
         nsObj.Background[parse] = function (xml) {
             var background = new nsObj.Background();
             if (xml) {
-                background.color(xml.attr('color'));
-                if (xml.find('img').length > 0) {
-                    background.img(Img[parse](xml.find("img")));
+                background.color(xml.attr("color"));
+                if (xml.find("img").length > 0) {
+                    background.img(nsObj.Background.Img[parse](xml.find("img")));
                 }
             }
             return background;

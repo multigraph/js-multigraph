@@ -9,25 +9,23 @@ if (!window.multigraph.Axis) {
 (function (ns) {
     "use strict";
 
-    var scalarAttributes = ['format', 'start', 'angle', 'position', 'anchor', 'densityfactor', 'function'],
-        Labels = ns.Axis.Labels;
-
-    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { 'mixinfuncs' : [] };
+    var scalarAttributes = ["format", "start", "angle", "position", "anchor", "densityfactor", "function"];
+    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
     ns.jQueryXMLHandler.mixinfuncs.push(function (nsObj, parse, serialize) {
 
         nsObj.Axis.Labels[parse] = function (xml) {
             var labels = new nsObj.Axis.Labels();
             if (xml) {
-                labels.format(xml.attr('format'));
-                labels.start(xml.attr('start'));
-                labels.angle(nsObj.utilityFunctions.parseDoubleOrUndefined(xml.attr('angle')));
-                labels.position(xml.attr('position'));
-                labels.anchor(xml.attr('anchor'));
-                labels.spacing(xml.attr('spacing'));
-                labels['function'](xml.attr('function'));
-                labels.densityfactor(xml.attr('densityfactor'));
-                if (xml.find('>label').length > 0) {
-                    $.each(xml.find('>label'), function (i,e) {
+                labels.format(xml.attr("format"));
+                labels.start(xml.attr("start"));
+                labels.angle(nsObj.utilityFunctions.parseDoubleOrUndefined(xml.attr("angle")));
+                labels.position(xml.attr("position"));
+                labels.anchor(xml.attr("anchor"));
+                labels.spacing(xml.attr("spacing"));
+                labels["function"](xml.attr("function"));
+                labels.densityfactor(xml.attr("densityfactor"));
+                if (xml.find(">label").length > 0) {
+                    $.each(xml.find(">label"), function (i,e) {
                         labels.label().add( nsObj.Axis.Labels.Label[parse]($(e)) );
                     });
                 }

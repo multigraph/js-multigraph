@@ -9,19 +9,17 @@ if (!window.multigraph.Data) {
 (function (ns) {
     "use strict";
 
-    var attributes = ['missingvalue', 'missingop'],
-        Variables = ns.Data.Variables;
-
-    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { 'mixinfuncs' : [] };
+    var attributes = ["missingvalue", "missingop"];
+    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
     ns.jQueryXMLHandler.mixinfuncs.push(function (nsObj, parse, serialize) {
 
         nsObj.Data.Variables[parse] = function (xml) {
             var variables = new nsObj.Data.Variables();
             if (xml) {
-                variables.missingvalue(xml.attr('missingvalue'));
-                variables.missingop(xml.attr('missingop'));
-                if (xml.find('>variable').length > 0) {
-                    $.each(xml.find('>variable'), function (i,e) {
+                variables.missingvalue(xml.attr("missingvalue"));
+                variables.missingop(xml.attr("missingop"));
+                if (xml.find(">variable").length > 0) {
+                    $.each(xml.find(">variable"), function (i,e) {
                         variables.variable().add( nsObj.Data.Variables.Variable[parse]($(e)) );
                     });
                 }

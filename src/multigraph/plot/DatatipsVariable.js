@@ -15,9 +15,9 @@ if (!window.multigraph.Plot.Datatips) {
 
     var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = ns.utilityFunctions.getKeys(defaultValues.plot.datatips.variable),
-        DatatipsVariable = new ns.ModelTool.Model( 'DatatipsVariable', function () {
+        DatatipsVariable = new ns.ModelTool.Model( "DatatipsVariable", function () {
             this.hasA("format").which.validatesWith(function (format) {
-                return typeof(format) === 'string';
+                return typeof(format) === "string";
             });
 
             ns.utilityFunctions.insertDefaults(this, defaultValues.plot.datatips.variable, attributes);

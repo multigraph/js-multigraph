@@ -5,15 +5,15 @@ if (!window.multigraph) {
 (function (ns) {
     "use strict";
 
-    var scalarAttributes = ['visible', 'fixed'];
-    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { 'mixinfuncs' : [] };
+    var scalarAttributes = ["visible", "fixed"];
+    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
     ns.jQueryXMLHandler.mixinfuncs.push(function(nsObj, parse, serialize) {
         
         nsObj.NetworkMonitor[parse] = function (xml) {
             var networkmonitor = new nsObj.NetworkMonitor();
             if (xml) {
-                networkmonitor.visible(xml.attr('visible'));
-                networkmonitor.fixed(xml.attr('fixed'));
+                networkmonitor.visible(xml.attr("visible"));
+                networkmonitor.fixed(xml.attr("fixed"));
             }
             return networkmonitor;
         };

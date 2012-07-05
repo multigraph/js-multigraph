@@ -5,7 +5,7 @@ if (!window.multigraph) {
 (function (ns) {
     "use strict";
 
-    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { 'mixinfuncs' : [] };
+    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
     ns.jQueryXMLHandler.mixinfuncs.push(function(nsObj, parse, serialize) {
 
         nsObj.Plot[parse] = function(xml, graph) {
@@ -20,51 +20,51 @@ if (!window.multigraph) {
             if (xml) {
                 // the Plot's horizontalaxis property is a pointer to an Axis object (not just the
                 // string id of the axis!)
-                if (xml.find(">horizontalaxis").length === 1 && xml.find(">horizontalaxis").attr('ref') !== undefined) {
+                if (xml.find(">horizontalaxis").length === 1 && xml.find(">horizontalaxis").attr("ref") !== undefined) {
                     if (graph) {
-                        axis = graph.axisById(xml.find(">horizontalaxis").attr('ref'));
+                        axis = graph.axisById(xml.find(">horizontalaxis").attr("ref"));
                         if (axis !== undefined) {
                             plot.horizontalaxis(axis);
                         } else {
-                            throw new Error('The graph does not contain an axis with an id of: ' + xml.find(">horizontalaxis").attr('ref'));
+                            throw new Error("The graph does not contain an axis with an id of: " + xml.find(">horizontalaxis").attr("ref"));
                         }
                     }
                 }
                 // same for verticalaxis property...
-                if (xml.find(">verticalaxis").length === 1 && xml.find(">verticalaxis").attr('ref') !== undefined) {
+                if (xml.find(">verticalaxis").length === 1 && xml.find(">verticalaxis").attr("ref") !== undefined) {
                     if (graph) {
-                        axis = graph.axisById(xml.find(">verticalaxis").attr('ref'));
+                        axis = graph.axisById(xml.find(">verticalaxis").attr("ref"));
                         if (axis !== undefined) {
                             plot.verticalaxis(axis);
                         } else {
-                            throw new Error('The graph does not contain an axis with an id of: ' + xml.find(">verticalaxis").attr('ref'));
+                            throw new Error("The graph does not contain an axis with an id of: " + xml.find(">verticalaxis").attr("ref"));
                         }
                     }
                 }
 
-                if (xml.find('variable').length > 0) {
+                if (xml.find("variable").length > 0) {
                     if (graph) {
-                        $.each(xml.find('variable'), function (i,e) {
-                            variable = graph.variableById( $(e).attr('ref') );
+                        $.each(xml.find("variable"), function (i,e) {
+                            variable = graph.variableById( $(e).attr("ref") );
                             if (variable !== undefined) {
                                 plot.variable().add(variable);
                             } else {
-                                throw new Error('The graph does not contain a variable with an id of: ' + $(e).attr('ref'));
+                                throw new Error("The graph does not contain a variable with an id of: " + $(e).attr("ref"));
                             }
                         });
                     }
                 }
 
-                if (xml.find('legend').length > 0) {
-                    plot.legend(Legend[parse](xml.find('legend')));
+                if (xml.find("legend").length > 0) {
+                    plot.legend(Legend[parse](xml.find("legend")));
                 }
-                if (xml.find('renderer').length > 0) {
+                if (xml.find("renderer").length > 0) {
                     plot.renderer(Renderer[parse](xml.find("renderer")));
                 }
-                if (xml.find('filter').length > 0) {
+                if (xml.find("filter").length > 0) {
                     plot.filter(Filter[parse](xml.find("filter")));
                 }
-                if (xml.find('datatips').length > 0) {
+                if (xml.find("datatips").length > 0) {
                     plot.datatips(Datatips[parse](xml.find("datatips")));
                 }
 

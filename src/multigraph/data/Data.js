@@ -28,7 +28,7 @@ if(!window.multigraph) {
         }
     }
 
-    Data = new ns.ModelTool.Model( 'Data', function () {
+    Data = new ns.ModelTool.Model( "Data", function () {
         this.hasA("variables").which.validatesWith(function (variables) {
             return variables instanceof ns.Data.Variables;
         });
