@@ -32,8 +32,8 @@ describe("Axis Label", function () {
 
     describe("angle attribute", function () {
         it("should be able to set/get the angle attribute", function () {
-            label.angle('5');
-            expect(label.angle() === '5').toBe(true);
+            label.angle(5);
+            expect(label.angle()).toBe(5);
         });
 
     });

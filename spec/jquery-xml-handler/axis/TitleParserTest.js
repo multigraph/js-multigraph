@@ -28,7 +28,7 @@ describe("Axis Title parsing", function () {
     });
 
     it("should be able to parse a title from XML and read its 'angle' attribute", function () {
-        expect(title.angle() === '70').toBe(true);
+        expect(title.angle()).toBe(70);
     });
 
     it("should be able to parse a title from XML and read its 'content'", function () {

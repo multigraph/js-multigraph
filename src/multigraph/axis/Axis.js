@@ -72,9 +72,7 @@ if (!window.multigraph) {
         this.hasA("type").which.validatesWith(function (type) {
             return typeof(type) === 'string' && (type.toLowerCase() === 'number' || type.toLowerCase() === 'datetime');
         });
-        this.hasA("length").which.validatesWith(function (length) {
-            return typeof(length) === 'string';
-        });
+        this.hasA("length").which.isA("number");
         this.hasA("position").which.validatesWith(function (position) {
             return ns.utilityFunctions.validateCoordinatePair(position);
         });
@@ -112,23 +110,17 @@ if (!window.multigraph) {
             return typeof(positionbase) === 'string';
         });
         this.hasA("color").which.validatesWith(function (color) {
-            return ns.utilityFunctions.validateCoordinatePair(color);
+            return ns.utilityFunctions.validateColor(color);
         });
         this.hasA("min").which.validatesWith(function (min) {
             return typeof(min) === 'string';
         });
-        this.hasA("tickmin").which.validatesWith(function (tickmin) {
-            return typeof(tickmin) === 'string';
-        });
-        this.hasA("tickmax").which.validatesWith(function (tickmax) {
-            return typeof(tickmax) === 'string';
-        });
+        this.hasA("tickmin").which.isA("integer");
+        this.hasA("tickmax").which.isA("integer");
         this.hasA("highlightstyle").which.validatesWith(function (highlightstyle) {
             return typeof(highlightstyle) === 'string';
         });
-        this.hasA("linewidth").which.validatesWith(function (linewidth) {
-            return typeof(linewidth) === 'string';
-        });
+        this.hasA("linewidth").which.isA("integer");
         this.hasA("orientation").which.validatesWith(function (orientation) {
             return (orientation === Axis.HORIZONTAL) || (orientation === Axis.VERTICAL);
         });

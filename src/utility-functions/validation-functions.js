@@ -18,12 +18,11 @@ if (!window.multigraph.utilityFunctions) {
     };
 
     ns.utilityFunctions.validateDouble = function (number) {
-        return typeof(number) === 'string' || typeof(number) === 'number';
+        return typeof(number) === 'number';
     };
 
     ns.utilityFunctions.validateNumberRange = function (number, lowerBound, upperBound) {
-        return typeof(number) === 'string' ||
-            (typeof(number) === 'number' && number >= lowerBound && number <= upperBound);
+        return typeof(number) === 'number' && number >= lowerBound && number <= upperBound;
     };
 
     ns.utilityFunctions.validateCoordinatePair = function (coord) {

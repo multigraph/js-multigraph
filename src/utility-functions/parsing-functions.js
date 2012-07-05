@@ -43,6 +43,11 @@ if (!window.multigraph.utilityFunctions) {
         return Number(number);
     };
 
+    ns.utilityFunctions.parseDoubleOrUndefined = function (number) {
+        number = parseFloat(number);
+        return isNaN(number) === true ? undefined : number;
+    };
+
     ns.utilityFunctions.getDefaultValuesFromXSD = function () {
         
         return {
@@ -67,8 +72,8 @@ if (!window.multigraph.utilityFunctions) {
             },
             'legend': {
                 'icon' : {
-                    'height': '30',
-                    'width': '40',
+                    'height': 30,
+                    'width': 40,
                     'border': 1
                 },
                 'visible': undefined,
@@ -78,7 +83,7 @@ if (!window.multigraph.utilityFunctions) {
                 'frame': 'plot',
                 'color': '0xffffff',
                 'bordercolor': '0x000000',
-                'opacity': '1.0',
+                'opacity': 1.0,
                 'border': 1,
                 'rows': undefined,
                 'columns': 1,
@@ -106,7 +111,7 @@ if (!window.multigraph.utilityFunctions) {
                 'border': '0',
                 'color': '0xffffff',
                 'bordercolor': '0x000000',
-                'opacity': '1.0',
+                'opacity': 1.0,
                 'padding': '0',
                 'cornerradius': undefined,
                 'position': '0 0',
@@ -120,7 +125,7 @@ if (!window.multigraph.utilityFunctions) {
 //                    'fontcolor': '0x000000',
                     'position': '0 -20',
                     'anchor': '0 1',
-                    'angle': '0'
+                    'angle': 0
                 },
                 'labels': {
                     'label': {
@@ -141,7 +146,7 @@ if (!window.multigraph.utilityFunctions) {
                     'format': '%1d',
 //                    'visible': 'true',
                     'start': '0',
-                    'angle': '0.0',
+                    'angle': 0.0,
                     'position': '0 0',
                     'anchor': '0 0',
                     'spacing': '10000 5000 2000 1000 500 200 100 50 20 10 5 2 1 0.1 0.01 0.001',
@@ -174,7 +179,7 @@ if (!window.multigraph.utilityFunctions) {
                 },
                 'id': undefined,
                 'type': 'number',
-                'length': '1.0',
+                'length': 1.0,
                 'position': '0 0',
                 'pregap': '0',
                 'postgap': '0',
@@ -188,10 +193,10 @@ if (!window.multigraph.utilityFunctions) {
                 'maxposition': '1',
                 'positionbase': undefined,
                 'color': '0x000000',
-                'tickmin': '-3',
-                'tickmax': '3',
+                'tickmin': -3,
+                'tickmax': 3,
                 'highlightstyle': 'axis',
-                'linewidth': '1',
+                'linewidth': 1,
                 'orientation': undefined
             },
             'verticalaxis': {

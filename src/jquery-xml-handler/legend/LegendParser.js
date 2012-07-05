@@ -21,7 +21,7 @@ if(!window.multigraph) {
                 legend.frame(xml.attr('frame'));
                 legend.color(xml.attr('color'));
                 legend.bordercolor(xml.attr('bordercolor'));
-                legend.opacity(xml.attr('opacity'));
+                legend.opacity(ns.utilityFunctions.parseDoubleOrUndefined(xml.attr("opacity")));
                 legend.border(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr('border')));
                 legend.rows(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr('rows')));
                 legend.columns(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr('columns')));

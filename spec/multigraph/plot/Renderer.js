@@ -60,8 +60,8 @@ describe("Renderer", function () {
         });
 
         it("should be able to add multiple Options with attributes to a Renderer", function () {
-            var option2 = new Option('linecolor', '0x123456'),
-                option3 = new Option('dotsize', '2');
+            var option2 = new Option("linecolor", "0x123456"),
+                option3 = new Option("dotsize", "2");
             option.name("linewidth");
             option.value("13");
             option3.min("2");
@@ -82,6 +82,5 @@ describe("Renderer", function () {
         });
 
     });
-
 
 });

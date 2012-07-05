@@ -48,8 +48,8 @@ describe("Graph Title", function () {
 
     describe("opacity attribute", function () {
         it("should be able to set/get the opacity attribute", function () {
-            title.opacity('1');
-            expect(title.opacity() === '1').toBe(true);
+            title.opacity(1);
+            expect(title.opacity()).toBe(1);
         });
 
     });

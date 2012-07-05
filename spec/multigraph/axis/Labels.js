@@ -32,8 +32,8 @@ describe("Axis Labels", function () {
 
     describe("angle attribute", function () {
         it("should be able to set/get the angle attribute", function () {
-            l.angle('5');
-            expect(l.angle() === '5').toBe(true);
+            l.angle(5);
+            expect(l.angle()).toBe(5);
         });
 
     });
@@ -113,7 +113,7 @@ describe("Axis Labels", function () {
             var label2 = new Label("10 5 1"),
                 label3 = new Label("10 5 1");
             label.spacing("100 10 5 1").position("1 0");
-            label2.spacing("10 5 1").angle("-7").anchor("1 1");
+            label2.spacing("10 5 1").angle(-7).anchor("1 1");
             label3.spacing("10 5 1").position("0 0");
             l.label().add(label);
             l.label().add(label2);
@@ -127,15 +127,15 @@ describe("Axis Labels", function () {
             var label2 = new Label("10 5 1"),
                 label3 = new Label("10 5 1");
             label.spacing("100 10 5 1").position("1 0");
-            label2.spacing("10 5 1").angle("-7").anchor("1 1");
+            label2.spacing("10 5 1").angle(-7).anchor("1 1");
             label3.spacing("10 5 1").position("0 0");
             l.label().add(label);
             l.label().add(label2);
             l.label().add(label3);
             expect(l.label().at(0).spacing() === "100 10 5 1").toBe(true);
-            expect(l.label().at(1).angle() === "-7").toBe(true);
-            l.label().at(1).angle('24');
-            expect(l.label().at(1).angle() === "24").toBe(true);
+            expect(l.label().at(1).angle()).toBe(-7);
+            l.label().at(1).angle(24);
+            expect(l.label().at(1).angle()).toBe(24);
         });
 
     });

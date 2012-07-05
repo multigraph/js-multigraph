@@ -19,7 +19,7 @@ if (!window.multigraph.Axis) {
                 title.content(xml.text());
                 title.position(xml.attr('position'));
                 title.anchor(xml.attr('anchor'));
-                title.angle(xml.attr('angle'));
+                title.angle(ns.utilityFunctions.parseDoubleOrUndefined(xml.attr('angle')));
             }
             return title;
         };

@@ -16,7 +16,7 @@ if (!window.multigraph) {
                 title.border(xml.attr('border'));
                 title.color(xml.attr('color'));
                 title.bordercolor(xml.attr('bordercolor'));
-                title.opacity(xml.attr('opacity'));
+                title.opacity(nsObj.utilityFunctions.parseDoubleOrUndefined(xml.attr('opacity')));
                 title.padding(xml.attr('padding'));
                 title.cornerradius(xml.attr('cornerradius'));
                 title.base(xml.attr('base'));

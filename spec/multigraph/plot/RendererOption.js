@@ -32,16 +32,16 @@ describe("Plot Renderer Option", function () {
 
     describe("min attribute", function () {
         it("should be able to set/get the min attribute", function () {
-            option.min('70');
-            expect(option.min() === '70').toBe(true);
+            option.min("70");
+            expect(option.min()).toBe("70");
         });
 
     });
 
     describe("max attribute", function () {
         it("should be able to set/get the max attribute", function () {
-            option.max('5');
-            expect(option.max() === '5').toBe(true);
+            option.max("5");
+            expect(option.max()).toBe("5");
         });
 
     });

@@ -42,7 +42,7 @@ describe("Legend parsing", function () {
     });
 
     it("should be able to parse a legend from XML and read its 'opacity' attribute", function () {
-        expect(l.opacity() === '1').toBe(true);
+        expect(l.opacity()).toBe(1);
     });
 
     it("should be able to parse a legend from XML and read its 'border' attribute", function () {
@@ -81,11 +81,11 @@ describe("Legend parsing", function () {
         });
 
         it("should be able to parse a icon from XML and read its 'height' attribute", function () {
-            expect(l.icon().height() === '35').toBe(true);
+            expect(l.icon().height()).toBe(35);
         });
 
         it("should be able to parse a icon from XML and read its 'width' attribute", function () {
-            expect(l.icon().width() === '50').toBe(true);
+            expect(l.icon().width()).toBe(50);
         });
 
         it("should be able to parse a icon from XML and read its 'border' attribute", function () {

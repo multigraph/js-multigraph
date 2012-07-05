@@ -19,7 +19,7 @@ if (!window.multigraph.Axis) {
                 label = new nsObj.Axis.Labels.Label(xml.attr('spacing'));
                 label.format(xml.attr('format'));
                 label.start(xml.attr('start'));
-                label.angle(xml.attr('angle'));
+                label.angle(nsObj.utilityFunctions.parseDoubleOrUndefined(xml.attr("angle")));
                 label.position(xml.attr('position'));
                 label.anchor(xml.attr('anchor'));
                 label.densityfactor(xml.attr('densityfactor'));

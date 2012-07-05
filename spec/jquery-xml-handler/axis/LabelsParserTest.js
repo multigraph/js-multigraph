@@ -28,7 +28,7 @@ describe("Axis Labels parsing", function () {
     });
 
     it("should be able to parse a labels from XML and read its 'angle' attribute", function () {
-        expect(labels.angle() === '9').toBe(true);
+        expect(labels.angle()).toBe(9);
     });
 
     it("should be able to parse a labels from XML and read its 'position' attribute", function () {

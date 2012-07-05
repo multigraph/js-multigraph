@@ -16,32 +16,32 @@ describe("Legend", function () {
 
     it("should be able to set/get the visible attribute", function () {
         l.visible("true");
-        expect(l.visible() === "true").toBe(true);
+        expect(l.visible()).toBe("true");
     });
 
     it("should be able to set/get the base attribute", function () {
         l.base("1 1");
-        expect(l.base() === "1 1").toBe(true);
+        expect(l.base()).toBe("1 1");
     });
 
     it("should be able to set/get the anchor attribute", function () {
         l.anchor("-1 1");
-        expect(l.anchor() === "-1 1").toBe(true);
+        expect(l.anchor()).toBe("-1 1");
     });
 
     it("should be able to set/get the position attribute", function () {
         l.position("1 -1");
-        expect(l.position() === "1 -1").toBe(true);
+        expect(l.position()).toBe("1 -1");
     });
 
     it("should be able to set/get the frame attribute", function () {
         l.frame("padding");
-        expect(l.frame() === "padding").toBe(true);
+        expect(l.frame()).toBe("padding");
     });
 
     it("should be able to set/get the color attribute", function () {
         l.color("0x121756");
-        expect(l.color() === "0x121756").toBe(true);
+        expect(l.color()).toBe("0x121756");
     });
 
     it("should be able to set/get the bordercolor attribute", function () {
@@ -50,8 +50,8 @@ describe("Legend", function () {
     });
 
     it("should be able to set/get the opacity attribute", function () {
-        l.opacity("0.1");
-        expect(l.opacity() === "0.1").toBe(true);
+        l.opacity(0.1);
+        expect(l.opacity()).toBe(0.1);
     });
 
     it("should be able to set/get the border attribute", function () {
@@ -93,29 +93,29 @@ describe("Legend", function () {
         });
 
         it("should be able to add an Icon with attributes to a Legend", function () {
-            icon.height("13");
-            icon.width("100");
+            icon.height(26);
+            icon.width(10);
             l.icon(icon);
             expect(l.icon() === icon).toBe(true);
         });
 
         it("should be able to set/get attributes of an Icon added to a Legend", function () {
             l.icon(icon);
-            l.icon().height("13");
-            l.icon().width("100");
-            expect(l.icon().height() === "13").toBe(true);
-            expect(l.icon().width() === "100").toBe(true);
+            l.icon().height(13);
+            l.icon().width(100);
+            expect(l.icon().height()).toBe(13);
+            expect(l.icon().width()).toBe(100);
         });
 
         it("should not keep old data around when an Icon is replaced", function () {
             var icon2 = new Icon();
             icon2.border(5);
             l.icon(icon);
-            l.icon().height("4");
-            l.icon().width("28");
+            l.icon().height(4);
+            l.icon().width(28);
             l.icon(icon2);
             expect(l.icon().border() === 5).toBe(true);
-            expect(l.icon().height() === "4").toBe(false);
+            expect(l.icon().height()).not.toBe(4);
         });
 
     });

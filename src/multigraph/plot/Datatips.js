@@ -38,9 +38,7 @@ if (!window.multigraph.Plot) {
         this.hasA("bordercolor").which.validatesWith(function (bordercolor) {
             return ns.utilityFunctions.validateColor(bordercolor);
         });
-        this.hasA("pad").which.validatesWith(function (pad) {
-            return ns.utilityFunctions.validateInteger(pad);
-        });
+        this.hasA("pad").which.isA("integer");
 
         ns.utilityFunctions.insertDefaults(this, defaultValues.plot.datatips, attributes);
     });

@@ -42,15 +42,9 @@ if (!window.multigraph) {
         this.hasA("border").which.validatesWith(function (border) {
             return ns.utilityFunctions.validateInteger(border);
         });
-        this.hasA("rows").which.validatesWith(function (rows) {
-            return ns.utilityFunctions.validateInteger(rows);
-        });
-        this.hasA("columns").which.validatesWith(function (columns) {
-            return ns.utilityFunctions.validateInteger(columns);
-        });
-        this.hasA("cornerradius").which.validatesWith(function (cornerradius) {
-            return ns.utilityFunctions.validateInteger(cornerradius);
-        });
+        this.hasA("rows").which.isA("integer");
+        this.hasA("columns").which.isA("integer");
+        this.hasA("cornerradius").which.isA("integer");
         this.hasA("padding").which.validatesWith(function (padding) {
             return ns.utilityFunctions.validateInteger(padding);
         });

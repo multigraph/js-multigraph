@@ -23,10 +23,10 @@ if (!window.multigraph.Plot.Renderer) {
                 return typeof(value) === 'string';
             });
             this.hasA("min").which.validatesWith(function (min) {
-                return ns.utilityFunctions.validateDouble(min);
+                return typeof(min) === 'string';
             });
             this.hasA("max").which.validatesWith(function (max) {
-                return ns.utilityFunctions.validateDouble(max);
+                return typeof(max) === 'string';
             });
             this.isBuiltWith('name', 'value');
 

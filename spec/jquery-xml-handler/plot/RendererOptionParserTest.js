@@ -28,11 +28,11 @@ describe("Renderer Option parsing", function () {
     });
 
     it("should be able to parse a option from XML and read its 'min' attribute", function () {
-        expect(option.min() === '10').toBe(true);
+        expect(option.min()).toBe('10');
     });
 
     it("should be able to parse a option from XML and read its 'max' attribute", function () {
-        expect(option.max() === '15').toBe(true);
+        expect(option.max()).toBe('15');
     });
 
     it("should be able to parse a option from XML, serialize it and get the same XML as the original", function () {

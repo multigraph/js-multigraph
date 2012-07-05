@@ -12,9 +12,9 @@ if(!window.multigraph) {
         nsObj.Legend.Icon[parse] = function (xml) {
             var icon = new nsObj.Legend.Icon();
             if (xml) {
-                icon.height(xml.attr('height'));
-                icon.width(xml.attr('width'));
-                icon.border(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr('border')));
+                icon.height(nsObj.utilityFunctions.parseIntegerOrUndefined(xml.attr("height")));
+                icon.width(nsObj.utilityFunctions.parseIntegerOrUndefined(xml.attr("width")));
+                icon.border(nsObj.utilityFunctions.parseIntegerOrUndefined(xml.attr("border")));
             }
             return icon;
         };

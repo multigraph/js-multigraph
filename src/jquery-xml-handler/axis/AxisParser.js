@@ -26,7 +26,7 @@ if (!window.multigraph) {
 
                 axis.id(xml.attr('id'));
                 axis.type(xml.attr('type'));
-                axis.length(xml.attr('length'));
+                axis.length(nsObj.utilityFunctions.parseDoubleOrUndefined(xml.attr('length')));
                 axis.position(xml.attr('position'));
                 axis.pregap(xml.attr('pregap'));
                 axis.postgap(xml.attr('postgap'));
@@ -40,10 +40,10 @@ if (!window.multigraph) {
                 axis.maxposition(xml.attr('maxposition'));
                 axis.positionbase(xml.attr('positionbase'));
                 axis.color(xml.attr('color'));
-                axis.tickmin(xml.attr('tickmin'));
-                axis.tickmax(xml.attr('tickmax'));
+                axis.tickmin(nsObj.utilityFunctions.parseIntegerOrUndefined(xml.attr("tickmin")));
+                axis.tickmax(nsObj.utilityFunctions.parseIntegerOrUndefined(xml.attr("tickmax")));
                 axis.highlightstyle(xml.attr('highlightstyle'));
-                axis.linewidth(xml.attr('linewidth'));
+                axis.linewidth(nsObj.utilityFunctions.parseIntegerOrUndefined(xml.attr("linewidth")));
             }
             return axis;
         };

@@ -20,7 +20,7 @@ if (!window.multigraph.Axis) {
             if (xml) {
                 labels.format(xml.attr('format'));
                 labels.start(xml.attr('start'));
-                labels.angle(xml.attr('angle'));
+                labels.angle(nsObj.utilityFunctions.parseDoubleOrUndefined(xml.attr('angle')));
                 labels.position(xml.attr('position'));
                 labels.anchor(xml.attr('anchor'));
                 labels.spacing(xml.attr('spacing'));

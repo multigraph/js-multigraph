@@ -183,16 +183,16 @@ describe("Axis", function () {
 
     describe("tickmin attribute", function () {
         it("should be able to set/get the tickmin attribute", function () {
-            a.tickmin('7');
-            expect(a.tickmin() === '7').toBe(true);
+            a.tickmin(7);
+            expect(a.tickmin()).toBe(7);
         });
 
     });
 
     describe("tickmax attribute", function () {
         it("should be able to set/get the tickmax attribute", function () {
-            a.tickmax('22');
-            expect(a.tickmax() === '22').toBe(true);
+            a.tickmax(22);
+            expect(a.tickmax()).toBe(22);
         });
 
     });
@@ -207,8 +207,8 @@ describe("Axis", function () {
 
     describe("linewidth attribute", function () {
         it("should be able to set/get the linewidth attribute", function () {
-            a.linewidth('5');
-            expect(a.linewidth() === '5').toBe(true);
+            a.linewidth(5);
+            expect(a.linewidth()).toBe(5);
         });
 
     });
@@ -292,14 +292,14 @@ describe("Axis", function () {
             labels.label().add(label);
             labels.label().add(label2);
             a.labels(labels);
-            a.labels().position('1 1').angle('40');
-            a.labels().label().at(1).anchor('0 1').angle('14');
+            a.labels().position("1 1").angle(40);
+            a.labels().label().at(1).anchor("0 1").angle(14);
             expect(a.labels().position() === "1 1").toBe(true);
-            expect(a.labels().angle() === "40").toBe(true);
+            expect(a.labels().angle()).toBe(40);
             expect(a.labels().label().at(0).spacing() === '20 10 2 1').toBe(true);
             expect(a.labels().label().at(1).spacing() === '200 100').toBe(true);
             expect(a.labels().label().at(1).anchor() === '0 1').toBe(true);
-            expect(a.labels().label().at(1).angle() === '14').toBe(true);
+            expect(a.labels().label().at(1).angle()).toBe(14);
         });
 
     });

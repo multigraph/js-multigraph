@@ -13,7 +13,7 @@ describe("Axis parsing", function () {
         Binding = window.multigraph.Axis.Binding,
         AxisControls = window.multigraph.Axis.AxisControls,
         jQueryXMLHandler = window.multigraph.jQueryXMLHandler,
-        xmlString = '<horizontalaxis id="x" type="number" length="1.0" position="1 1" pregap="2" postgap="4" anchor="0 1" base="1 -1" min="0" minoffset="19" minposition="0 0" max="10" maxoffset="2" maxposition="0 1" positionbase="0 0" color="0x123456" tickmin="-3" tickmax="3" highlightstyle="bold" linewidth="1"/>',
+        xmlString = '<horizontalaxis id="x" type="number" length="1" position="1 1" pregap="2" postgap="4" anchor="0 1" base="1 -1" min="0" minoffset="19" minposition="0 0" max="10" maxoffset="2" maxposition="0 1" positionbase="0 0" color="0x123456" tickmin="-3" tickmax="3" highlightstyle="bold" linewidth="1"/>',
         $xml,
         axis;
 
@@ -36,7 +36,7 @@ describe("Axis parsing", function () {
     });
 
     it("should be able to parse an axis from XML and read its 'length' attribute", function () {
-        expect(axis.length() === '1.0').toBe(true);
+        expect(axis.length()).toBe(1);
     });
 
     it("should be able to parse an axis from XML and read its 'position' attribute", function () {
@@ -92,11 +92,11 @@ describe("Axis parsing", function () {
     });
 
     it("should be able to parse an axis from XML and read its 'tickmin' attribute", function () {
-        expect(axis.tickmin() === '-3').toBe(true);
+        expect(axis.tickmin()).toBe(-3);
     });
 
     it("should be able to parse an axis from XML and read its 'tickmax' attribute", function () {
-        expect(axis.tickmax() === '3').toBe(true);
+        expect(axis.tickmax()).toBe(3);
     });
 
     it("should be able to parse an axis from XML and read its 'highlightstyle' attribute", function () {
@@ -104,7 +104,7 @@ describe("Axis parsing", function () {
     });
 
     it("should be able to parse an axis from XML and read its 'linewidth' attribute", function () {
-        expect(axis.linewidth() === '1').toBe(true);
+        expect(axis.linewidth()).toBe(1);
     });
 
     it("should be able to parse an axis from XML, then serialize it, and get the same XML as the original", function () {

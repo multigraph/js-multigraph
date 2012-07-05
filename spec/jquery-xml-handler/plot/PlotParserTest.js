@@ -201,7 +201,7 @@ describe("Plot parsing", function () {
             xmlString = '<plot><renderer type="point"><option name="size" value="3"/><option name="shape" value="circle"/><option name="linewidth" value="7"/></renderer></plot>';
             $xml = $(xmlString);
             plot = Plot.parseXML($xml);
-            expect(plot.serialize() === xmlString).toBe(true);
+            expect(plot.serialize()).toBe(xmlString);
         });
     });
 

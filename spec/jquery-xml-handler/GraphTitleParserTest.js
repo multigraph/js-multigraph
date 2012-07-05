@@ -33,7 +33,7 @@ describe("Graph Title parsing", function () {
     });
 
     it("should be able to parse a title from XML and read its 'opacity' attribute", function () {
-        expect(title.opacity() === '0').toBe(true);
+        expect(title.opacity()).toBe(0);
     });
 
     it("should be able to parse a title from XML and read its 'padding' attribute", function () {

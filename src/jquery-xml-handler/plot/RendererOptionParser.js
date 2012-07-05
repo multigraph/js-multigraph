@@ -13,8 +13,8 @@ if (!window.multigraph) {
             var option;
             if (xml && xml.attr('name') && xml.attr('value')) {
                 option = new nsObj.Plot.Renderer.Option(xml.attr('name'), xml.attr('value'));
-                option.min(xml.attr('min'));
-                option.max(xml.attr('max'));
+                option.min(xml.attr("min"));
+                option.max(xml.attr("max"));
             }
             return option;
         };

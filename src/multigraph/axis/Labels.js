@@ -28,9 +28,7 @@ if (!window.multigraph.Axis) {
         this.hasA("start").which.validatesWith(function (start) {
             return typeof(start) === 'string';
         });
-        this.hasA("angle").which.validatesWith(function (angle) {
-            return typeof(angle) === 'string';
-        });
+        this.hasA("angle").which.isA("number");
         this.hasA("position").which.validatesWith(function (position) {
             return ns.utilityFunctions.validateCoordinatePair(position);
         });

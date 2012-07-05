@@ -16,16 +16,16 @@ describe("Legend Icon", function () {
 
     describe("height attribute", function () {
         it("should be able to set/get the height attribute", function () {
-            icon.height('45');
-            expect(icon.height() === '45').toBe(true);
+            icon.height(45);
+            expect(icon.height()).toBe(45);
         });
 
     });
 
     describe("width attribute", function () {
         it("should be able to set/get the width attribute", function () {
-            icon.width('70');
-            expect(icon.width() === '70').toBe(true);
+            icon.width(70);
+            expect(icon.width()).toBe(70);
         });
 
     });

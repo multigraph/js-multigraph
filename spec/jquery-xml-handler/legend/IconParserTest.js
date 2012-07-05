@@ -21,15 +21,15 @@ describe("Legend Icon parsing", function () {
     });
 
     it("should be able to parse a icon from XML and read its 'height' attribute", function () {
-        expect(icon.height() === '12').toBe(true);
+        expect(icon.height()).toBe(12);
     });
 
     it("should be able to parse a icon from XML and read its 'width' attribute", function () {
-        expect(icon.width() === '59').toBe(true);
+        expect(icon.width()).toBe(59);
     });
 
     it("should be able to parse a icon from XML and read its 'border' attribute", function () {
-        expect(icon.border() === 7).toBe(true);
+        expect(icon.border()).toBe(7);
     });
 
     it("should be able to parse a icon from XML, serialize it and get the same XML as the original", function () {
