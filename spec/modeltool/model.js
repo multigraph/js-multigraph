@@ -557,15 +557,22 @@ describe("Model", function () {
             }).toThrow(new Error("Constructor requires name, id to be specified"));
         });
 
+        /* this feature has been deprecated until we can find a better way to 
+         * allow for non primitive 'isA' types
+         */
         xit("should allow circular isA references", function () {
-            var Human = new Model(function () {
-                console.log("at 1");
+            var Human, Ferret;
+
+            Ferret = new Model();
+
+            Human = new Model(function () {
+                //console.log("at 1");
                 this.hasA("ferret").which.isA(Ferret);
                 this.hasA("name").which.isA("string");
                 this.isBuiltWith("name");
             });
 
-            console.log("at 2");
+            //console.log("at 2");
             var Person = new Model(function () {
                 console.log("at 3");
                 this.hasA("ferret").which.validatesWith(function (ferret) {
@@ -576,8 +583,8 @@ describe("Model", function () {
                 this.isBuiltWith("name");
             });
 
-            console.log("at 5");
-            var Ferret = new Model(function () {
+            //console.log("at 5");
+            Ferret = new Model(function () {
                 this.hasA("owner").which.isA(Human);
                 this.hasA("name").which.isA("string");
                 this.isBuiltWith("name");
@@ -592,8 +599,8 @@ describe("Model", function () {
             }).not.toThrow();
             human.ferret(ferret);
             ferret.owner(human);
-            console.log(human.ferret().name());
-            console.log(ferret.owner().name());
+            //console.log(human.ferret().name());
+            //console.log(ferret.owner().name());
         });
     });
         
@@ -1004,7 +1011,11 @@ describe("Model", function () {
         }).not.toThrow();
 
         Deck = new Model(function () {
-            this.hasMany("cards").which.isA(Card);
+            //this.hasMany("cards").which.isA(Card);
+            this.hasMany("cards").eachOfWhich.validateWith(function (card) {
+                this.message = "a card must be a valid Card object.";
+                return card instanceof Card;
+            });
 
             this.isBuiltWith(function () {
                 for (i = 0; i < suits.length; ++i) {
@@ -1022,7 +1033,7 @@ describe("Model", function () {
 
         expect(function () {
             d.cards().add(5);
-        }).toThrow("5 should be an Object");
+        }).toThrow("a card must be a valid Card object.");
     });
 
     it("should also work with this example", function () {
@@ -1046,7 +1057,10 @@ describe("Model", function () {
             var rank,
             suit;
 
-            this.hasMany("cards").eachOfWhich.isA(Card);
+            //this.hasMany("cards").eachOfWhich.isA(Card);
+            this.hasMany("cards").eachOfWhich.validateWith(function (card) {
+                return card instanceof Card;
+            });
 
             this.isBuiltWith(function () {
                 for (suit = 0; suit < suits.length; suit++) {
@@ -1072,7 +1086,7 @@ describe("Model", function () {
 
         expect(function () {
             d.cards().add(5);
-        }).toThrow("5 should be an Object");
+        }).toThrow("invalid setter call for cards");
 
         expect(function () {
             d.cards().at(5).suit("diamonds");
@@ -1080,8 +1094,9 @@ describe("Model", function () {
     });
 
 
+    /* deprecated until we find a good solution */
     describe("Mark's isA/validator bug", function () {
-        it("should not throw an error", function () {
+        xit("should not throw an error", function () {
             var Dog = new Model(function() {
                 this.hasA("name"); //bizarre
             });

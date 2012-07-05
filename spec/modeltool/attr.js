@@ -87,7 +87,8 @@ describe("Attr", function () {
             }).toThrow("hello should be a number");
         });
 
-        it("should allow for constructor types to be sent in", function () {
+        //deprecated until we find a good way to handle circular references
+        xit("should allow for constructor types to be sent in", function () {
             var a,
                 t,
                 Thing = function () {
@@ -509,7 +510,9 @@ describe("Attr", function () {
                 this.name = name;
             };
             var count = 0;
-            var dog = new Attr("dog").which.isA(Dog).defaultsTo(function () {
+            var dog = new Attr("dog").which.validatesWith(function (dog) {
+                return dog instanceof Dog;
+            }).and.defaultsTo(function () {
                 ++count;
                 return new Dog("spot");
             });
