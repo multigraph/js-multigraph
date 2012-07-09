@@ -27,14 +27,9 @@ if (!window.multigraph.Data) {
         
         nsObj.Data.Variables.Variable.prototype[serialize] = function () {
             var attributeStrings = [],
-                output = '<variable ',
-                i;
+                output = '<variable ';
 
-            for (i = 0; i < scalarAttributes.length; i++) {
-                if (this[scalarAttributes[i]]() !== undefined) {
-                    attributeStrings.push(scalarAttributes[i] + '="' + this[scalarAttributes[i]]() + '"');
-                }
-            }
+            attributeStrings = ns.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
 
             output += attributeStrings.join(' ') + '/>';
 

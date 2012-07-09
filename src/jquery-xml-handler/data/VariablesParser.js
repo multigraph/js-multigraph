@@ -9,7 +9,7 @@ if (!window.multigraph.Data) {
 (function (ns) {
     "use strict";
 
-    var attributes = ["missingvalue", "missingop"];
+    var scalarAttributes = ["missingvalue", "missingop"];
     ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
     ns.jQueryXMLHandler.mixinfuncs.push(function (nsObj, parse, serialize) {
 
@@ -29,18 +29,12 @@ if (!window.multigraph.Data) {
 
         nsObj.Data.Variables.prototype[serialize] = function () {
             var attributeStrings = [],
-                output,
+                output = '<variables ',
                 i;
 
-            attributeStrings.push('variables');
+            attributeStrings = ns.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
 
-            for (i = 0; i < attributes.length; i++) {
-                if (this[attributes[i]]() !== undefined) {
-                    attributeStrings.push(attributes[i] + '="' + this[attributes[i]]() + '"');
-                }
-            }
-
-            output = '<' + attributeStrings.join(' ');
+            output += attributeStrings.join(' ');
 
             if (this.variable().size() > 0) {
                 output += '>';

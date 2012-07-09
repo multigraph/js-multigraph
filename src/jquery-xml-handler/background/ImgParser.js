@@ -23,14 +23,9 @@ if (!window.multigraph) {
         
         nsObj.Background.Img.prototype[serialize] = function () {
             var attributeStrings = [],
-                output = '<img ',
-                i;
+                output = '<img ';
 
-            for(i = 0; i < scalarAttributes.length; i++) {
-                if (this[scalarAttributes[i]]() !== undefined) {
-                    attributeStrings.push(scalarAttributes[i] + '="' + this[scalarAttributes[i]]() + '"');
-                }
-            }
+            attributeStrings = ns.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
 
             output += attributeStrings.join(' ') + '/>';
 

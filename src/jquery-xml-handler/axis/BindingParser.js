@@ -23,14 +23,9 @@ if (!window.multigraph.Axis) {
         
         nsObj.Axis.Binding.prototype[serialize] = function () {
             var attributeStrings = [],
-                output = '<binding ',
-                i;
+                output = '<binding ';
 
-            for (i = 0; i < scalarAttributes.length; i++) {
-                if (this[scalarAttributes[i]]() !== undefined) {
-                    attributeStrings.push(scalarAttributes[i] + '="' + this[scalarAttributes[i]]() + '"');
-                }
-            }
+            attributeStrings = ns.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
 
             output += attributeStrings.join(' ') + '/>';
 

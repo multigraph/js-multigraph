@@ -23,11 +23,7 @@ if (!window.multigraph) {
                 output = '<legend ',
                 i;
 
-            for(i = 0; i < scalarAttributes.length; i++) {
-                if (this[scalarAttributes[i]]() !== undefined) {
-                    attributeStrings.push(scalarAttributes[i] + '="' + this[scalarAttributes[i]]() + '"');
-                }
-            }
+            attributeStrings = ns.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
 
             output += attributeStrings.join(' ') + '/>';
 

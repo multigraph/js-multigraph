@@ -43,11 +43,7 @@ if (!window.multigraph) {
                 attributeStrings.push('bordercolor="' + this.bordercolor().getHexString() + '"');
             }
 
-            for (i = 0; i < scalarAttributes.length; i++) {
-                if (this[scalarAttributes[i]]() !== undefined) {
-                    attributeStrings.push(scalarAttributes[i] + '="' + this[scalarAttributes[i]]() + '"');
-                }
-            }
+            attributeStrings = ns.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
 
             output += attributeStrings.join(' ');
 

@@ -23,14 +23,9 @@ if (!window.multigraph.Data) {
         
         nsObj.Data.CSV.prototype[serialize] = function () {
             var attributeStrings = [],
-                output = '<csv ',
-                i;
+                output = '<csv ';
 
-            for (i = 0; i < scalarAttributes.length; i++) {
-                if (this[scalarAttributes[i]]() !== undefined) {
-                    attributeStrings.push(scalarAttributes[i] + '="' + this[scalarAttributes[i]]() + '"');
-                }
-            }
+            attributeStrings = ns.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
 
             output += attributeStrings.join(' ') + '/>';
 

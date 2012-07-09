@@ -9,7 +9,7 @@ if (!window.multigraph.Axis) {
 (function (ns) {
     "use strict";
 
-    var attributes = ["format", "start", "angle", "position", "anchor", "densityfactor", "spacing"];
+    var scalarAttributes = ["format", "start", "angle", "position", "anchor", "densityfactor", "spacing"];
     ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
     ns.jQueryXMLHandler.mixinfuncs.push(function (nsObj, parse, serialize) {
         
@@ -29,14 +29,9 @@ if (!window.multigraph.Axis) {
         
         nsObj.Axis.Labels.Label.prototype[serialize] = function () {
             var attributeStrings = [],
-                output = '<label ',
-                i;
+                output = '<label ';
 
-            for (i = 0; i < attributes.length; i++) {
-                if (this[attributes[i]]() !== undefined) {
-                    attributeStrings.push(attributes[i] + '="' + this[attributes[i]]() + '"');
-                }
-            }
+            attributeStrings = ns.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
 
             output += attributeStrings.join(' ') + '/>';
 

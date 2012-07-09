@@ -24,8 +24,7 @@ if (!window.multigraph) {
         
         nsObj.Plotarea.prototype[serialize] = function () {
             var attributeStrings = [],
-                output = '<plotarea ',
-                i;
+                output = '<plotarea ';
 
             attributeStrings.push('margintop="' + this.margin().top() + '"');
             attributeStrings.push('marginleft="' + this.margin().left() + '"');
@@ -36,11 +35,7 @@ if (!window.multigraph) {
                 attributeStrings.push('bordercolor="' + this.bordercolor().getHexString() + '"');
             }
 
-            for (i = 0; i < scalarAttributes.length; i++) {
-                if (this[scalarAttributes[i]]() !== undefined) {
-                    attributeStrings.push(scalarAttributes[i] + '="' + this[scalarAttributes[i]]() + '"');
-                }
-            }
+            attributeStrings = ns.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
 
             output += attributeStrings.join(' ') + '/>';
 

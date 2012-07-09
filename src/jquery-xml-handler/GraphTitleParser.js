@@ -28,8 +28,7 @@ if (!window.multigraph) {
 
         nsObj.Title.prototype[serialize] = function () {
             var attributeStrings = [],
-                output = '<title ',
-                i;
+                output = '<title ';
 
             if (this.color() !== undefined) {
                 attributeStrings.push('color="' + this.color().getHexString() + '"');
@@ -39,11 +38,7 @@ if (!window.multigraph) {
                 attributeStrings.push('bordercolor="' + this.bordercolor().getHexString() + '"');
             }
 
-            for (i = 0; i < scalarAttributes.length; i++) {
-                if (this[scalarAttributes[i]]() !== undefined) {
-                    attributeStrings.push(scalarAttributes[i] + '="' + this[scalarAttributes[i]]() + '"');
-                }
-            }
+            attributeStrings = ns.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
 
             output += attributeStrings.join(' ');
 

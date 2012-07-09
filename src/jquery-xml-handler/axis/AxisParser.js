@@ -50,24 +50,14 @@ if (!window.multigraph) {
         nsObj.Axis.prototype[serialize] = function() {
             var attributeStrings = [],
                 childStrings = [],
-                output = '<' + this.orientation() + 'axis ',
-                i;
+                output = '<' + this.orientation() + 'axis ';
 
             if (this.color() !== undefined) {
                 attributeStrings.push('color="' + this.color().getHexString() + '"');
             }
 
-            for (i = 0; i < scalarAttributes.length; i++) {
-                if (this[scalarAttributes[i]]() !== undefined) {
-                    attributeStrings.push(scalarAttributes[i] + '="' + this[scalarAttributes[i]]() + '"');
-                }
-            }
-
-            for (i = 0; i < children.length; i++) {
-                if (this[children[i]]()) {
-                    childStrings.push(this[children[i]]()[serialize]());
-                }
-            }
+            attributeStrings = ns.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
+            childStrings = ns.utilityFunctions.serializeChildModels(this, children, childStrings, serialize);
 
             output += attributeStrings.join(' ');
 

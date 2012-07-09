@@ -30,11 +30,14 @@ if (!window.multigraph) {
                 output = '<data',
                 i;
 
+            childStrings = ns.utilityFunctions.serializeChildModels(this, children, childStrings, serialize);
+/*
             for (i = 0; i < children.length; i++) {
                 if (this[children[i]]()) {
                     childStrings.push(this[children[i]]()[serialize]());
                 }
             }
+*/
 
             if (childStrings.length > 0) {
                 output += '>' + childStrings.join('') + '</data>';
