@@ -16,13 +16,12 @@ if (!window.multigraph) {
 
     Background = new ns.ModelTool.Model( "Background", function () {
         this.hasA("color").which.validatesWith(function (color) {
-            return ns.utilityFunctions.validateColor(color);
-        });
+            return color instanceof ns.math.RGBColor;
+        }).defaultsTo(ns.math.RGBColor.parse(defaultValues.background.color));
 //        this.hasAn("img").which.isA(ns.Background.Img);
         this.hasA("img").which.validatesWith(function (img) {
             return img instanceof ns.Background.Img;
         });
-        ns.utilityFunctions.insertDefaults(this, defaultValues.background, attributes);
     });
 
     ns.Background = Background;

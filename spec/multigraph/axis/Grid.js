@@ -16,8 +16,8 @@ describe("Axis Grid", function () {
 
     describe("color attribute", function () {
         it("should be able to set/get the color attribute", function () {
-            grid.color('0x638219');
-            expect(grid.color() === '0x638219').toBe(true);
+            grid.color(window.multigraph.math.RGBColor.parse("0x638219"));
+            expect(grid.color().getHexString()).toBe("0x638219");
         });
 
     });

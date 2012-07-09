@@ -19,7 +19,7 @@ if (!window.multigraph.math) {
         this.hasA("b").which.validatesWith(function (b) {
             return ns.utilityFunctions.validateNumberRange(b, 0, 1.0);
         });
-        this.looksLike(function () {
+        this.respondsTo("getHexString", function () {
             var numberToHex = function (number) {
                 number = parseInt(number * 255).toString(16);
                 if (number.length === 1) {
@@ -40,9 +40,12 @@ if (!window.multigraph.math) {
             grey,
             colorObj;
 
-        string = string.toLowerCase();
+        if (string === undefined) {
+            return undefined;
+        } else if (typeof(string) === 'string') {
+            string = string.toLowerCase();
 
-        switch (string) {
+            switch (string) {
             case "black":
                 red = 0;
                 green = 0;
@@ -95,9 +98,11 @@ if (!window.multigraph.math) {
                 green = parseInt(string.substring(2,4), 16) / 255;
                 blue = parseInt(string.substring(4,6), 16) / 255;
                 break;
+            }
+            colorObj = new RGBColor(red, green, blue);
+            return colorObj;
         }
-        colorObj = new RGBColor(red, green, blue);
-        return colorObj;
+        return undefined;
     };
     
     ns.math.RGBColor = RGBColor;

@@ -18,8 +18,8 @@ if(!window.multigraph) {
             }).defaultsTo(defaultValues.plotarea.border);
 
             this.hasA("bordercolor").which.validatesWith(function (bordercolor) {
-                return ns.utilityFunctions.validateColor(bordercolor);
-            }).defaultsTo(defaultValues.plotarea.bordercolor);
+                return bordercolor instanceof ns.math.RGBColor;
+            }).defaultsTo(ns.math.RGBColor.parse(defaultValues.plotarea.bordercolor));
 
             this.isBuiltWith(function() {
                 // temporary workaround until we can pass a function to be evaled to defaultsTo():

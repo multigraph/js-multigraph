@@ -20,8 +20,8 @@ describe("Plot Datatips", function () {
     });
 
     it("should be able to set/get the bgcolor attribute", function () {
-        datatips.bgcolor("0x999678");
-        expect(datatips.bgcolor() === "0x999678").toBe(true);
+        datatips.bgcolor(window.multigraph.math.RGBColor.parse("0x999678"));
+        expect(datatips.bgcolor().getHexString()).toBe("0x999678");
     });
 
     it("should be able to set/get the bgalpha attribute", function () {
@@ -35,8 +35,8 @@ describe("Plot Datatips", function () {
     });
 
     it("should be able to set/get the bordercolor attribute", function () {
-        datatips.bordercolor("0x121756");
-        expect(datatips.bordercolor() === "0x121756").toBe(true);
+        datatips.bordercolor(window.multigraph.math.RGBColor.parse("0x121756"));
+        expect(datatips.bordercolor().getHexString()).toBe("0x121756");
     });
 
     it("should be able to set/get the pad attribute", function () {

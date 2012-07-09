@@ -5,7 +5,7 @@ describe("Legend parsing", function () {
 
     var Legend = window.multigraph.Legend,
         jQueryXMLHandler = window.multigraph.jQueryXMLHandler,
-        xmlString = '<legend visible="true" base="-1 -1" anchor="0 0" frame="padding" color="0x56839c" bordercolor="0x941394" opacity="1" border="10" rows="4" columns="3" cornerradius="5" padding="4"/>',
+        xmlString = '<legend color="0x56839c" bordercolor="0x941394" visible="true" base="-1 -1" anchor="0 0" frame="padding" opacity="1" border="10" rows="4" columns="3" cornerradius="5" padding="4"/>',
         $xml,
         l,
         b;
@@ -34,11 +34,11 @@ describe("Legend parsing", function () {
     });
 
     it("should be able to parse a legend from XML and read its 'color' attribute", function () {
-        expect(l.color() === '0x56839c').toBe(true);
+        expect(l.color().getHexString()).toBe("0x56839c");
     });
 
     it("should be able to parse a legend from XML and read its 'bordercolor' attribute", function () {
-        expect(l.bordercolor() === '0x941394').toBe(true);
+        expect(l.bordercolor().getHexString()).toBe("0x941394");
     });
 
     it("should be able to parse a legend from XML and read its 'opacity' attribute", function () {

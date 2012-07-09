@@ -21,7 +21,7 @@ describe("Axis Grid parsing", function () {
     });
 
     it("should be able to parse a grid from XML and read its 'color' attribute", function () {
-        expect(grid.color() === '0x984545').toBe(true);
+        expect(grid.color().getHexString()).toBe("0x984545");
     });
 
     it("should be able to parse a grid from XML and read its 'visible' attribute", function () {

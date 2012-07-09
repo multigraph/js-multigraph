@@ -5,7 +5,7 @@ describe("Graph Title parsing", function () {
 
     var Title = window.multigraph.Title,
         jQueryXMLHandler = window.multigraph.jQueryXMLHandler,
-        xmlString = '<title border="2" color="0xfffaab" bordercolor="0x127752" opacity="0" padding="4" cornerradius="10" base="0 0" position="-1 1" anchor="1 1">Cool Cats</title>',
+        xmlString = '<title color="0xfffaab" bordercolor="0x127752" border="2" opacity="0" padding="4" cornerradius="10" base="0 0" position="-1 1" anchor="1 1">Cool Cats</title>',
         $xml,
         title;
 
@@ -25,11 +25,11 @@ describe("Graph Title parsing", function () {
     });
 
     it("should be able to parse a title from XML and read its 'color' attribute", function () {
-        expect(title.color() === '0xfffaab').toBe(true);
+        expect(title.color().getHexString()).toBe("0xfffaab");
     });
 
     it("should be able to parse a title from XML and read its 'bordercolor' attribute", function () {
-        expect(title.bordercolor() === '0x127752').toBe(true);
+        expect(title.bordercolor().getHexString()).toBe("0x127752");
     });
 
     it("should be able to parse a title from XML and read its 'opacity' attribute", function () {
@@ -61,10 +61,10 @@ describe("Graph Title parsing", function () {
     });
 
     it("should be able to parse a title from XML, serialize it and get the same XML as the original", function () {
-        var xmlString2 = '<title border="3" color="0xaafaab" padding="4" cornerradius="10" base="0 1" anchor="1 0"/>';
-        expect(title.serialize() === xmlString).toBe(true);
+        var xmlString2 = '<title border="3" opacity="1" padding="4" cornerradius="10" base="0 1" position="0 0" anchor="1 0"/>';
+        expect(title.serialize()).toBe(xmlString);
         title = Title.parseXML($(xmlString2));
-//        expect(title.serialize() === xmlString2).toBe(true);
+        expect(title.serialize()).toBe(xmlString2);
     });
 
 });

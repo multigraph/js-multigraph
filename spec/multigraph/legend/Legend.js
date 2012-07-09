@@ -40,13 +40,13 @@ describe("Legend", function () {
     });
 
     it("should be able to set/get the color attribute", function () {
-        l.color("0x121756");
-        expect(l.color()).toBe("0x121756");
+        l.color(window.multigraph.math.RGBColor.parse("0x121756"));
+        expect(l.color().getHexString()).toBe("0x121756");
     });
 
     it("should be able to set/get the bordercolor attribute", function () {
-        l.bordercolor("0x121756");
-        expect(l.bordercolor() === "0x121756").toBe(true);
+        l.bordercolor(window.multigraph.math.RGBColor.parse("0x121756"));
+        expect(l.bordercolor().getHexString()).toBe("0x121756");
     });
 
     it("should be able to set/get the opacity attribute", function () {

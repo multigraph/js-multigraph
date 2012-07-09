@@ -31,10 +31,10 @@ if (!window.multigraph) {
             return frame === "plot" || frame === "padding";
         });
         this.hasA("color").which.validatesWith(function (color) {
-            return ns.utilityFunctions.validateColor(color);
+            return color instanceof ns.math.RGBColor;
         });
         this.hasA("bordercolor").which.validatesWith(function (bordercolor) {
-            return ns.utilityFunctions.validateColor(bordercolor);
+            return bordercolor instanceof ns.math.RGBColor;
         });
         this.hasA("opacity").which.validatesWith(function (opacity) {
             return ns.utilityFunctions.validateNumberRange(opacity, 0.0, 1.0);

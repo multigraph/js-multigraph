@@ -20,7 +20,7 @@ describe("Background parsing", function () {
     });
 
     it("should be able to parse a background from XML and read its 'color' attribute", function () {
-        expect(b.color() === '0x123456').toBe(true);
+        expect(b.color().getHexString()).toBe("0x123456");
     });
 
     describe("Img parsing", function () {

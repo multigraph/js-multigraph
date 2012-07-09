@@ -5,7 +5,7 @@ if (!window.multigraph) {
 (function (ns) {
     "use strict";
 
-    var scalarAttributes = ["id", "type", "length", "position", "pregap", "postgap", "anchor", "base", "min", "minoffset", "minposition", "max", "maxoffset", "maxposition", "positionbase", "color", "tickmin", "tickmax", "highlightstyle", "linewidth"],
+    var scalarAttributes = ["id", "type", "length", "position", "pregap", "postgap", "anchor", "base", "min", "minoffset", "minposition", "max", "maxoffset", "maxposition", "positionbase", "tickmin", "tickmax", "highlightstyle", "linewidth"],
         children = ["title", "labels", "grid", "pan", "zoom", "binding", "axiscontrols"];
     ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
     ns.jQueryXMLHandler.mixinfuncs.push(function(nsObj, parse, serialize) {
@@ -38,7 +38,7 @@ if (!window.multigraph) {
                 axis.maxoffset(xml.attr("maxoffset"));
                 axis.maxposition(xml.attr("maxposition"));
                 axis.positionbase(xml.attr("positionbase"));
-                axis.color(xml.attr("color"));
+                axis.color(nsObj.math.RGBColor.parse(xml.attr("color")));
                 axis.tickmin(nsObj.utilityFunctions.parseIntegerOrUndefined(xml.attr("tickmin")));
                 axis.tickmax(nsObj.utilityFunctions.parseIntegerOrUndefined(xml.attr("tickmax")));
                 axis.highlightstyle(xml.attr("highlightstyle"));
@@ -52,6 +52,10 @@ if (!window.multigraph) {
                 childStrings = [],
                 output = '<' + this.orientation() + 'axis ',
                 i;
+
+            if (this.color() !== undefined) {
+                attributeStrings.push('color="' + this.color().getHexString() + '"');
+            }
 
             for (i = 0; i < scalarAttributes.length; i++) {
                 if (this[scalarAttributes[i]]() !== undefined) {

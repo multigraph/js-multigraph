@@ -16,8 +16,8 @@ describe("Background", function () {
     });
 
     it("should be able to set/get the color attribute", function () {
-        b.color("0x121756");
-        expect(b.color() === "0x121756").toBe(true);
+        b.color(window.multigraph.math.RGBColor.parse("0x121756"));
+        expect(b.color().getHexString()).toBe("0x121756");
     });
 
     describe("Img", function () {

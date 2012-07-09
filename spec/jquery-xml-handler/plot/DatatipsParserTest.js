@@ -5,7 +5,7 @@ describe("Plot Datatips parsing", function () {
 
     var Datatips = window.multigraph.Plot.Datatips,
         jQueryXMLHandler = window.multigraph.jQueryXMLHandler,
-        xmlString = '<datatips format="number" bgcolor="0x123456" bgalpha="1" border="2" bordercolor="0xFFFBBB" pad="1"/>',
+        xmlString = '<datatips bgcolor="0x123456" bordercolor="0xfffbbb" format="number" bgalpha="1" border="2" pad="1"/>',
         $xml,
         d;
 
@@ -24,7 +24,7 @@ describe("Plot Datatips parsing", function () {
     });
 
     it("should be able to parse a datatips from XML and read its 'bgcolor' attribute", function () {
-        expect(d.bgcolor() === '0x123456').toBe(true);
+        expect(d.bgcolor().getHexString()).toBe("0x123456");
     });
 
     it("should be able to parse a datatips from XML and read its 'bgalpha' attribute", function () {
@@ -36,7 +36,7 @@ describe("Plot Datatips parsing", function () {
     });
 
     it("should be able to parse a datatips from XML and read its 'bordercolor' attribute", function () {
-        expect(d.bordercolor() === '0xFFFBBB').toBe(true);
+        expect(d.bordercolor().getHexString()).toBe("0xfffbbb");
     });
 
     it("should be able to parse a datatips from XML and read its 'pad' attribute", function () {
@@ -44,7 +44,7 @@ describe("Plot Datatips parsing", function () {
     });
 
     it("should be able to parse a datatips from XML, serialize it and get the same XML as the original", function () {
-        var xmlString2 = '<datatips format="datetime" bgcolor="0x125621" border="5"/>';
+        var xmlString2 = '<datatips bgcolor="0x125621" format="datetime" border="5"/>';
         expect(d.serialize() === xmlString).toBe(true);
 	d = Datatips.parseXML($(xmlString2));
         //removed due to defaults
@@ -55,7 +55,7 @@ describe("Plot Datatips parsing", function () {
         var Variable = window.multigraph.Plot.Datatips.Variable;
 
         beforeEach(function () {
-            xmlString = '<datatips format="datetime" bgcolor="0x123456" bgalpha="5" border="7" bordercolor="0xBA789B" pad="2"><variable format="number"/></datatips>';
+            xmlString = '<datatips bgcolor="0x123456" bordercolor="0xba789b" format="datetime" bgalpha="5" border="7" pad="2"><variable format="number"/></datatips>';
             jQueryXMLHandler.mixin(window.multigraph, 'parseXML', 'serialize');
             $xml = $(xmlString);
             d = Datatips.parseXML($xml);
@@ -66,7 +66,7 @@ describe("Plot Datatips parsing", function () {
         });
 
         it("should be able to parse a datatips with multiple children from XML", function () {
-            xmlString = '<datatips format="datetime" bgcolor="0x123456" bgalpha="5" border="7" bordercolor="0xBA789B" pad="2"><variable format="number"/><variable format="number"/><variable format="datetime"/></datatips>';
+            xmlString = '<datatips bgcolor="0x123456" bordercolor="0xba789b" format="datetime" bgalpha="5" border="7" pad="2"><variable format="number"/><variable format="number"/><variable format="datetime"/></datatips>';
             $xml = $(xmlString);
             d = Datatips.parseXML($xml);
             expect(d).not.toBeUndefined();
@@ -77,7 +77,7 @@ describe("Plot Datatips parsing", function () {
         });
 
         it("should be able to parse a datatips with children from XML, serialize it and get the same XML as the original", function () {
-            var xmlString2 = '<datatips format="datetime" bgcolor="0x123456" bgalpha="5" border="7" bordercolor="0xBA789B" pad="2"><variable format="number"/><variable format="number"/><variable format="datetime"/></datatips>';
+            var xmlString2 = '<datatips bgcolor="0x777456" bordercolor="0xba999b" format="datetime" bgalpha="5" border="7" pad="2"><variable format="number"/><variable format="number"/><variable format="datetime"/></datatips>';
             expect(d.serialize() === xmlString).toBe(true);
             d = Datatips.parseXML($(xmlString2));
             expect(d.serialize() === xmlString2).toBe(true);

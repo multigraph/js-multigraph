@@ -5,7 +5,7 @@ if (!window.multigraph) {
 (function (ns) {
     "use strict";
 
-    var scalarAttributes = ["border", "bordercolor"];
+    var scalarAttributes = ["border"];
     ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
     ns.jQueryXMLHandler.mixinfuncs.push(function(nsObj, parse, serialize) {
         
@@ -17,7 +17,7 @@ if (!window.multigraph) {
                 plotarea.margin().top(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr("margintop")));
                 plotarea.margin().right(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr("marginright")));
                 plotarea.border(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr("border")));
-                plotarea.bordercolor(xml.attr("bordercolor"));
+                plotarea.bordercolor(nsObj.math.RGBColor.parse(xml.attr("bordercolor")));
             }
             return plotarea;
         };
@@ -32,7 +32,11 @@ if (!window.multigraph) {
             attributeStrings.push('marginbottom="' + this.margin().bottom() + '"');
             attributeStrings.push('marginright="' + this.margin().right() + '"');
 
-            for(i = 0; i < scalarAttributes.length; i++) {
+            if (this.bordercolor() !== undefined) {
+                attributeStrings.push('bordercolor="' + this.bordercolor().getHexString() + '"');
+            }
+
+            for (i = 0; i < scalarAttributes.length; i++) {
                 if (this[scalarAttributes[i]]() !== undefined) {
                     attributeStrings.push(scalarAttributes[i] + '="' + this[scalarAttributes[i]]() + '"');
                 }

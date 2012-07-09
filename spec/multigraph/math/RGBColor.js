@@ -220,58 +220,58 @@ describe("RGBColor", function () {
         });
     });
 
-    describe("toString method", function () {
+    describe("getHexString method", function () {
         it("should serialize '0x123456' correctly", function () {
             var rgb2 = RGBColor.parse("0x123456");
-            expect(rgb2.toString()).toBe("0x123456");
+            expect(rgb2.getHexString()).toBe("0x123456");
         });
         it("should serialize '#878FF9' correctly", function () {
             var rgb2 = RGBColor.parse("#878FF9");
-            expect(rgb2.toString()).toBe("0x878ff9");
+            expect(rgb2.getHexString()).toBe("0x878ff9");
         });
         it("should serialize '0X3434aa' correctly", function () {
             var rgb2 = RGBColor.parse("0X3434aa");
-            expect(rgb2.toString()).toBe("0x3434aa");
+            expect(rgb2.getHexString()).toBe("0x3434aa");
         });
         it("should serialize 'black' correctly", function () {
             var rgb2 = RGBColor.parse("black");
-            expect(rgb2.toString()).toBe("0x000000");
+            expect(rgb2.getHexString()).toBe("0x000000");
         });
         it("should serialize 'red' correctly", function () {
             var rgb2 = RGBColor.parse("red");
-            expect(rgb2.toString()).toBe("0xff0000");
+            expect(rgb2.getHexString()).toBe("0xff0000");
         });
         it("should serialize 'green' correctly", function () {
             var rgb2 = RGBColor.parse("green");
-            expect(rgb2.toString()).toBe("0x00ff00");
+            expect(rgb2.getHexString()).toBe("0x00ff00");
         });
         it("should serialize 'blue' correctly", function () {
             var rgb2 = RGBColor.parse("blue");
-            expect(rgb2.toString()).toBe("0x0000ff");
+            expect(rgb2.getHexString()).toBe("0x0000ff");
         });
         it("should serialize 'yellow' correctly", function () {
             var rgb2 = RGBColor.parse("yellow");
-            expect(rgb2.toString()).toBe("0xffff00");
+            expect(rgb2.getHexString()).toBe("0xffff00");
         });
         it("should serialize 'magenta' correctly", function () {
             var rgb2 = RGBColor.parse("magenta");
-            expect(rgb2.toString()).toBe("0xff00ff");
+            expect(rgb2.getHexString()).toBe("0xff00ff");
         });
         it("should serialize 'cyan' correctly", function () {
             var rgb2 = RGBColor.parse("cyan");
-            expect(rgb2.toString()).toBe("0x00ffff");
+            expect(rgb2.getHexString()).toBe("0x00ffff");
         });
         it("should serialize 'white' correctly", function () {
             var rgb2 = RGBColor.parse("white");
-            expect(rgb2.toString()).toBe("0xffffff");
+            expect(rgb2.getHexString()).toBe("0xffffff");
         });
         it("should serialize 'grey' correctly", function () {
             var rgb2 = RGBColor.parse("grey");
-            expect(rgb2.toString()).toBe("0xeeeeee");
+            expect(rgb2.getHexString()).toBe("0xeeeeee");
         });
         it("should serialize 'BlAck' correctly", function () {
             var rgb2 = RGBColor.parse("BlAck");
-            expect(rgb2.toString()).toBe("0x000000");
+            expect(rgb2.getHexString()).toBe("0x000000");
         });
     });
 

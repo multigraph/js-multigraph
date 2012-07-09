@@ -5,7 +5,7 @@ if (!window.multigraph) {
 (function (ns) {
     "use strict";
 
-    var scalarAttributes = ["format", "bgcolor", "bgalpha", "border", "bordercolor", "pad"],
+    var scalarAttributes = ["format", "bgalpha", "border", "pad"],
         Variable = ns.Plot.Datatips.Variable;
 
     ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
@@ -20,10 +20,10 @@ if (!window.multigraph) {
                     });
                 }
                 datatips.format(xml.attr("format"));
-                datatips.bgcolor(xml.attr("bgcolor"));
+                datatips.bgcolor(ns.math.RGBColor.parse(xml.attr("bgcolor")));
                 datatips.bgalpha(xml.attr("bgalpha"));
                 datatips.border(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr("border")));
-                datatips.bordercolor(xml.attr("bordercolor"));
+                datatips.bordercolor(ns.math.RGBColor.parse(xml.attr("bordercolor")));
                 datatips.pad(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr("pad")));
 
             }
@@ -34,6 +34,14 @@ if (!window.multigraph) {
             var attributeStrings = [],
                 output = '<datatips ',
                 i;
+
+            if (this.bgcolor() !== undefined) {
+                attributeStrings.push('bgcolor="' + this.bgcolor().getHexString() + '"');
+            }
+
+            if (this.bordercolor() !== undefined) {
+                attributeStrings.push('bordercolor="' + this.bordercolor().getHexString() + '"');
+            }
 
             for (i = 0; i < scalarAttributes.length; i++) {
                 if (this[scalarAttributes[i]]() !== undefined) {

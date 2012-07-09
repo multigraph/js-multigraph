@@ -27,7 +27,7 @@ if (!window.multigraph.Plot) {
             return typeof(format) === "string";
         });
         this.hasA("bgcolor").which.validatesWith(function (bgcolor) {
-            return ns.utilityFunctions.validateColor(bgcolor);
+            return bgcolor instanceof ns.math.RGBColor;
         });
         this.hasA("bgalpha").which.validatesWith(function (bgalpha) {
             return typeof(bgalpha) === "string";
@@ -36,7 +36,7 @@ if (!window.multigraph.Plot) {
             return ns.utilityFunctions.validateInteger(border);
         });
         this.hasA("bordercolor").which.validatesWith(function (bordercolor) {
-            return ns.utilityFunctions.validateColor(bordercolor);
+            return bordercolor instanceof ns.math.RGBColor;
         });
         this.hasA("pad").which.isA("integer");
 

@@ -175,8 +175,8 @@ describe("Axis", function () {
 
     describe("color attribute", function () {
         it("should be able to set/get the color attribute", function () {
-            a.color('0x757431');
-            expect(a.color() === '0x757431').toBe(true);
+            a.color(window.multigraph.math.RGBColor.parse("0x757431"));
+            expect(a.color().getHexString()).toBe("0x757431");
         });
 
     });
@@ -324,9 +324,9 @@ describe("Axis", function () {
 
         it("should be able to set/get attributes from a grid added to a Axis", function () {
             a.grid(grid);
-            a.grid().visible('true').color('0x345345');
-            expect(a.grid().visible() === 'true').toBe(true);
-            expect(a.grid().color() === '0x345345').toBe(true);
+            a.grid().visible('true').color(window.multigraph.math.RGBColor.parse("0x345345"));
+            expect(a.grid().visible()).toBe("true");
+            expect(a.grid().color().getHexString()).toBe("0x345345");
         });
 
     });

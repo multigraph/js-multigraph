@@ -9,14 +9,14 @@ if (!window.multigraph.Axis) {
 (function (ns) {
     "use strict";
 
-    var scalarAttributes = ["color", "visible"];
+    var scalarAttributes = ["visible"];
     ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
     ns.jQueryXMLHandler.mixinfuncs.push(function (nsObj, parse, serialize) {
         
         nsObj.Axis.Grid[parse] = function (xml) {
             var grid = new nsObj.Axis.Grid();
             if (xml) {
-                grid.color(xml.attr("color"));
+                grid.color(nsObj.math.RGBColor.parse(xml.attr("color")));
                 grid.visible(xml.attr("visible"));
             }
             return grid;
@@ -26,6 +26,10 @@ if (!window.multigraph.Axis) {
             var attributeStrings = [],
                 output = '<grid ',
                 i;
+
+            if (this.color() !== undefined) {
+                attributeStrings.push('color="' + this.color().getHexString() + '"');
+            }
 
             for (i = 0; i < scalarAttributes.length; i++) {
                 if (this[scalarAttributes[i]]() !== undefined) {

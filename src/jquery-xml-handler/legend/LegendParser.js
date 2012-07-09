@@ -5,7 +5,7 @@ if (!window.multigraph) {
 (function (ns) {
     "use strict";
 
-    var scalarAttributes = ["visible", "base", "anchor", "position", "frame", "color", "bordercolor", "opacity", "border", "rows", "columns", "cornerradius", "padding"];
+    var scalarAttributes = ["visible", "base", "anchor", "position", "frame", "opacity", "border", "rows", "columns", "cornerradius", "padding"];
     ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
     ns.jQueryXMLHandler.mixinfuncs.push(function (nsObj, parse, serialize) {
 
@@ -17,8 +17,8 @@ if (!window.multigraph) {
                 legend.anchor(xml.attr("anchor"));
                 legend.position(xml.attr("position"));
                 legend.frame(xml.attr("frame"));
-                legend.color(xml.attr("color"));
-                legend.bordercolor(xml.attr("bordercolor"));
+                legend.color(nsObj.math.RGBColor.parse(xml.attr("color")));
+                legend.bordercolor(nsObj.math.RGBColor.parse(xml.attr("bordercolor")));
                 legend.opacity(ns.utilityFunctions.parseDoubleOrUndefined(xml.attr("opacity")));
                 legend.border(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr("border")));
                 legend.rows(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr("rows")));
@@ -36,6 +36,14 @@ if (!window.multigraph) {
             var attributeStrings = [],
                 output = '<legend ',
                 i;
+
+            if (this.color() !== undefined) {
+                attributeStrings.push('color="' + this.color().getHexString() + '"');
+            }
+
+            if (this.bordercolor() !== undefined) {
+                attributeStrings.push('bordercolor="' + this.bordercolor().getHexString() + '"');
+            }
 
             for (i = 0; i < scalarAttributes.length; i++) {
                 if (this[scalarAttributes[i]]() !== undefined) {

@@ -60,8 +60,8 @@ describe("Window", function () {
 
     describe("bordercolor attribute", function () {
         it("should be able to set/get the bordercolor attribute", function () {
-            w.bordercolor('0x456210');
-            expect(w.bordercolor() === '0x456210').toBe(true);
+            w.bordercolor(window.multigraph.math.RGBColor.parse("0x456210"));
+            expect(w.bordercolor().getHexString()).toBe("0x456210");
         });
 
     });

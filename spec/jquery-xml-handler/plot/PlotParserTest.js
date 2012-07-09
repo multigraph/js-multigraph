@@ -252,7 +252,7 @@ describe("Plot parsing", function () {
             DatatipsVariable = window.multigraph.Plot.Datatips.Variable;
 
         beforeEach(function () {
-            xmlString = '<plot><datatips format="number" bgcolor="0x123456" bgalpha="1" border="2" bordercolor="0xFFFBBB" pad="1"/></plot>';
+            xmlString = '<plot><datatips bgcolor="0x123456" bordercolor="0xfffbbb" format="number" bgalpha="1" border="2" pad="1"/></plot>';
             $xml = $(xmlString);
         });
 
@@ -265,7 +265,7 @@ describe("Plot parsing", function () {
         });
 
         it("should be able to parse a plot with a complex Datatips child from XML", function () {
-            xmlString = '<plot><datatips format="number" bgcolor="0x123456" bgalpha="1" border="2" bordercolor="0xFFFBBB" pad="1"><variable format="number"/><variable format="number"/><variable format="datetime"/></datatips></plot>';
+            xmlString = '<plot><datatips bgcolor="0x123456" bordercolor="0xffddbb" format="number" bgalpha="1" border="2" pad="1"><variable format="number"/><variable format="number"/><variable format="datetime"/></datatips></plot>';
             $xml = $(xmlString);
             plot = Plot.parseXML($xml);
             expect(plot).not.toBeUndefined();
@@ -282,7 +282,7 @@ describe("Plot parsing", function () {
         });
 
         it("should be able to parse a plot with a complex Datatips child from XML, serialize it and get the same XML as the original", function () {
-            xmlString = '<plot><datatips format="number" bgcolor="0x123456" bgalpha="1" border="2" bordercolor="0xFFFBBB" pad="1"><variable format="number"/><variable format="number"/><variable format="datetime"/></datatips></plot>';
+            xmlString = '<plot><datatips bgcolor="0x1234aa" bordercolor="0xddfaaa" format="number" bgalpha="1" border="2" pad="1"><variable format="number"/><variable format="number"/><variable format="datetime"/></datatips></plot>';
             $xml = $(xmlString);
             plot = Plot.parseXML($xml);
             expect(plot.serialize() === xmlString).toBe(true);
@@ -298,7 +298,7 @@ describe("Plot parsing", function () {
             FilterOption = window.multigraph.Plot.Filter.Option;
 
         beforeEach(function () {
-            xmlString = '<plot><renderer type="point"><option name="size" value="3"/><option name="shape" value="circle"/><option name="linewidth" value="7"/></renderer><filter type="point"><option name="size" value="3"/><option name="shape" value="circle"/><option name="linewidth" value="7"/></filter><datatips format="number" bgcolor="0x123456" bgalpha="1" border="2" bordercolor="0xFFFBBB" pad="1"/></plot>';
+            xmlString = '<plot><renderer type="point"><option name="size" value="3"/><option name="shape" value="circle"/><option name="linewidth" value="7"/></renderer><filter type="point"><option name="size" value="3"/><option name="shape" value="circle"/><option name="linewidth" value="7"/></filter><datatips bgcolor="0x12fff6" bordercolor="0xfffbbb" format="number" bgalpha="1" border="2" pad="1"/></plot>';
             $xml = $(xmlString);
         });
 

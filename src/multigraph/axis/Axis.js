@@ -110,7 +110,7 @@ if (!window.multigraph) {
             return typeof(positionbase) === "string";
         });
         this.hasA("color").which.validatesWith(function (color) {
-            return ns.utilityFunctions.validateColor(color);
+            return color instanceof ns.math.RGBColor;
         });
         this.hasA("min").which.validatesWith(function (min) {
             return typeof(min) === "string";

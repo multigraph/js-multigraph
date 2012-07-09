@@ -81,8 +81,8 @@ if (!window.multigraph.utilityFunctions) {
                 "anchor": "1 1",
                 "position": "0 0",
                 "frame": "plot",
-                "color": "0xffffff",
-                "bordercolor": "0x000000",
+//                "color": "0xffffff",
+//                "bordercolor": "0x000000",
                 "opacity": 1.0,
                 "border": 1,
                 "rows": undefined,
@@ -109,8 +109,8 @@ if (!window.multigraph.utilityFunctions) {
                 "content": undefined,
                 "base": "0 1",
                 "border": "0",
-                "color": "0xffffff",
-                "bordercolor": "0x000000",
+//                "color": "0xffffff",
+//                "bordercolor": "0x000000",
                 "opacity": 1.0,
                 "padding": "0",
                 "cornerradius": undefined,
@@ -155,7 +155,7 @@ if (!window.multigraph.utilityFunctions) {
                     "densityfactor": undefined
                 },
                 "grid": {
-                    "color": "0xeeeeee",
+//                    "color": "0xeeeeee",
                     "visible": "false"
                 },
                 "pan": {
@@ -192,7 +192,7 @@ if (!window.multigraph.utilityFunctions) {
                 "maxoffset": "0",
                 "maxposition": "1",
                 "positionbase": undefined,
-                "color": "0x000000",
+//                "color": "0x000000",
                 "tickmin": -3,
                 "tickmax": 3,
                 "highlightstyle": "axis",
@@ -237,7 +237,7 @@ if (!window.multigraph.utilityFunctions) {
                     "densityfactor": undefined
                 },
                 "grid": {
-                    "color": "0xeeeeee",
+//                    "color": "0xeeeeee",
                     "visible": "false"
                 },
                 "pan": {
@@ -274,7 +274,7 @@ if (!window.multigraph.utilityFunctions) {
                 "maxoffset": "0",
                 "maxposition": "1",
                 "positionbase": undefined,
-                "color": "0x000000",
+//                "color": "0x000000",
                 "tickmin": "-3",
                 "tickmax": "3",
                 "highlightstyle": "axis",
@@ -328,10 +328,10 @@ if (!window.multigraph.utilityFunctions) {
                     },
 //                    "visible": "false",
                     "format": undefined,
-                    "bgcolor": "0xeeeeee",
+//                    "bgcolor": "0xeeeeee",
                     "bgalpha": "1.0",
                     "border": 1,
-                    "bordercolor": "0x000000",
+//                    "bordercolor": "0x000000",
                     "pad": 2
                 }
             },

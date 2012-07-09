@@ -5,7 +5,7 @@ describe("Plotarea parsing", function () {
 
     var Plotarea = window.multigraph.Plotarea,
         jQueryXMLHandler = window.multigraph.jQueryXMLHandler,
-        xmlString = '<plotarea margintop="5" marginleft="10" marginbottom="19" marginright="5" border="0" bordercolor="0x111223"/>',
+        xmlString = '<plotarea margintop="5" marginleft="10" marginbottom="19" marginright="5" bordercolor="0x111223" border="0"/>',
         $xml,
         p;
 
@@ -36,14 +36,14 @@ describe("Plotarea parsing", function () {
     });
 
     it("should be able to parse a plotarea from XML and read its 'bordercolor' attribute", function () {
-        expect(p.bordercolor() === '0x111223').toBe(true);
+        expect(p.bordercolor().getHexString()).toBe("0x111223");
     });
 
     it("should be able to parse a plotarea from XML, serialize it and get the same XML as the original", function () {
-        var xmlString2 = '<plotarea margintop="5" marginleft="10" marginbottom="19" marginright="5" border="0" bordercolor="0x111223"/>';
-        expect(p.serialize() === xmlString).toBe(true);
+        var xmlString2 = '<plotarea margintop="5" marginleft="10" marginbottom="19" marginright="5" bordercolor="0xeeeeee" border="0"/>';
+        expect(p.serialize()).toBe(xmlString);
 	p = Plotarea.parseXML($(xmlString2));
-        expect(p.serialize() === xmlString2).toBe(true);
+        expect(p.serialize()).toBe(xmlString2);
     });
 
 });

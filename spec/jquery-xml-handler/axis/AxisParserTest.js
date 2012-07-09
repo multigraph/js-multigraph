@@ -13,7 +13,7 @@ describe("Axis parsing", function () {
         Binding = window.multigraph.Axis.Binding,
         AxisControls = window.multigraph.Axis.AxisControls,
         jQueryXMLHandler = window.multigraph.jQueryXMLHandler,
-        xmlString = '<horizontalaxis id="x" type="number" length="1" position="1 1" pregap="2" postgap="4" anchor="0 1" base="1 -1" min="0" minoffset="19" minposition="0 0" max="10" maxoffset="2" maxposition="0 1" positionbase="0 0" color="0x123456" tickmin="-3" tickmax="3" highlightstyle="bold" linewidth="1"/>',
+        xmlString = '<horizontalaxis color="0x123456" id="x" type="number" length="1" position="1 1" pregap="2" postgap="4" anchor="0 1" base="1 -1" min="0" minoffset="19" minposition="0 0" max="10" maxoffset="2" maxposition="0 1" positionbase="0 0" tickmin="-3" tickmax="3" highlightstyle="bold" linewidth="1"/>',
         $xml,
         axis;
 
@@ -88,7 +88,7 @@ describe("Axis parsing", function () {
     });
 
     it("should be able to parse an axis from XML and read its 'color' attribute", function () {
-        expect(axis.color() === '0x123456').toBe(true);
+        expect(axis.color().getHexString()).toBe("0x123456");
     });
 
     it("should be able to parse an axis from XML and read its 'tickmin' attribute", function () {

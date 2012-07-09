@@ -5,14 +5,13 @@ if (!window.multigraph) {
 (function (ns) {
     "use strict";
 
-    var scalarAttributes = ["color"];
     ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
     ns.jQueryXMLHandler.mixinfuncs.push(function (nsObj, parse, serialize) {
 
         nsObj.Background[parse] = function (xml) {
             var background = new nsObj.Background();
             if (xml) {
-                background.color(xml.attr("color"));
+                background.color(nsObj.math.RGBColor.parse(xml.attr("color")));
                 if (xml.find("img").length > 0) {
                     background.img(nsObj.Background.Img[parse](xml.find("img")));
                 }
@@ -22,13 +21,10 @@ if (!window.multigraph) {
 
         nsObj.Background.prototype[serialize] = function () {
             var attributeStrings = [],
-                output = '<background ',
-                i;
+                output = '<background ';
 
-            for (i = 0; i < scalarAttributes.length; i++) {
-                if (this[scalarAttributes[i]]() !== undefined) {
-                    attributeStrings.push(scalarAttributes[i] + '="' + this[scalarAttributes[i]]() + '"');
-                }
+            if (this.color() !== undefined) {
+                attributeStrings.push('color="' + this.color().getHexString() + '"');
             }
 
             output += attributeStrings.join(' ');

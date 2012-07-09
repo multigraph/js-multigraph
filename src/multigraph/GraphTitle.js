@@ -13,10 +13,10 @@ if (!window.multigraph) {
                 return typeof(border) === "string";
             });
             this.hasA("color").which.validatesWith(function (color) {
-                return ns.utilityFunctions.validateColor(color);
+                return color instanceof ns.math.RGBColor;
             });
             this.hasA("bordercolor").which.validatesWith(function (bordercolor) {
-                return ns.utilityFunctions.validateColor(bordercolor);
+                return bordercolor instanceof ns.math.RGBColor;
             });
             this.hasA("opacity").which.isA("number");
             this.hasA("padding").which.validatesWith(function (padding) {

@@ -32,16 +32,16 @@ describe("Graph Title", function () {
 
     describe("color attribute", function () {
         it("should be able to set/get the color attribute", function () {
-            title.color('0x12ffa8');
-            expect(title.color() === '0x12ffa8').toBe(true);
+            title.color(window.multigraph.math.RGBColor.parse("0x12ffa8"));
+            expect(title.color().getHexString()).toBe("0x12ffa8");
         });
 
     });
 
     describe("bordercolor attribute", function () {
         it("should be able to set/get the bordercolor attribute", function () {
-            title.bordercolor('0xadd728');
-            expect(title.bordercolor() === '0xadd728').toBe(true);
+            title.bordercolor(window.multigraph.math.RGBColor.parse("0xadd728"));
+            expect(title.bordercolor().getHexString()).toBe("0xadd728");
         });
 
     });

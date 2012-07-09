@@ -13,7 +13,7 @@ if (!window.multigraph.Axis) {
         attributes = ns.utilityFunctions.getKeys(defaultValues.horizontalaxis.grid),
         Grid = new ns.ModelTool.Model( "Grid", function () {
             this.hasA("color").which.validatesWith(function (color) {
-                return ns.utilityFunctions.validateColor(color);
+                return color instanceof ns.math.RGBColor;
             });
             this.hasA("visible").which.validatesWith(function (visible) {
                 return visible === "true" || visible === "false";
