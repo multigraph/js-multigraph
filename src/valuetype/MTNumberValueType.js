@@ -15,6 +15,7 @@ if (!window.multigraph.valuetype) {
     var MTNumberValueType = new ns.ModelTool.Model("MTNumberValueType", function() {
 
         this.hasA("value").which.isA('number');
+        //this.hasA("value");
 
         this.isBuiltWith("value");
 
