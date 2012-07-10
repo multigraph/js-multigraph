@@ -1,0 +1,186 @@
+This file describes the overall architecture of the Multigraph source
+code, at a very general level.  This documentation is under
+construction and is currently incomplete (and possibly inaccurate) in
+several ways -- don't take it literally!
+
+========================================================================
+
+OVERVIEW OF CLASS HEIRARCHY
+---------------------------
+
+DataValueType: enum [ NUMBER, DATETIME, ... ]
+DataValue
+  NumberValue
+  DatetimeValue
+DataMeasure
+  NumberMeasure
+  DatetimeMeasure
+DatetimeUnit: enum [ MILLISECOND, SECOND, MINUTE, HOUR, DAY, WEEK, MONTH, YEAR ]
+Formatter
+  NumberFormatter
+  DatetimeFormatter
+Labeler
+  NumberLabeler
+  DatetimeLabeler
+Axis
+Legend
+Title
+Data
+  ArrayData
+  CSVData
+  WebServiceData
+DataIterator
+Plot
+Graph
+Multigraph
+
+========================================================================
+
+MORE DETAILS
+------------
+
+DataValueType
+  enum: [NUMBER, DATETIME, ...]
+
+DataValue
+  getRealValue():number
+  compareTo(v:DataValue):int
+
+  -- NumberValue
+
+  -- DatetimeValue (subclass of DataValue)
+
+     -- DatetimeValueCalendar (subclass of DatetimeValue)
+          add(unit:DatetimeUnit, n:int)
+          firstSpacingLocationAtOrAfter(start:DatetimeValueCalendar, spacing:DatetimeMeasure)
+
+DataMeasure
+  getRealValue():number  (???)
+
+  -- NumberMeasure (subclass of DataMeasure)
+       NumberMeasure(x:number) [[ constructor ]]
+
+  -- DatetimeMeasure (subclass of DataMeasure)
+       DatetimeMeasure(measure:number, unit:DatetimeUnit)
+
+DatetimeUnit
+  enum type for datetime units: MILLISECOND, SECOND, MINUTE, HOUR, DAY, WEEK, MONTH, YEAR
+
+Formatter
+  format(v:DataValue):String
+  getMaxLength():int
+  Formatter.create(type:DataValueType, formatString:String):Formatter
+
+Labeler
+  axis:Axis
+  labelDensity():number
+  prepare(min:DataValue,max:DataValue)
+  hasNext():boolean
+  next():DataValue
+  renderLabel(v:DataValue)
+  Labeler.create(type:DataValueType, axis:Axis, spacing:DataMeasure, formatString:String, start:DataValue, position:DPoint, angle:number, anchor:DPoint):Labeler
+
+Axis
+  haveDataMin():Boolean
+  haveDataMax():Boolean
+  dataMin:number
+  dataMax:number
+  dataValueToAxisValue(v:DataValue)
+  currentLabeler:Labeler
+  currentLabelDensity:number
+  labelers:Array<Labeler>
+  drawGrid:Boolean
+  pepareRender()
+    [[ Set currentLabeler to the Labeler in the labelers array returning the largest density <= 0.8,
+       unless all have density > 0.8, in which case we take the one with the smallest density.
+       Also set currentLabelDensity to the density of currentLabeler. ]]
+
+  renderGrid(...)
+    [[ if geometry is not yet initialized, return immediately ]]
+    [[ if (!haveDataMin() || !haveDataMax()) return immediately ]]
+    prepareRender()
+    [[ if !drawGrid return now ]]
+    currentLabeler.prepare(dataMin, dataMax)
+    while (currentLabeler.hasNext()) {
+      var v:DataValue = currentLabeler.next()
+      var a:number = dataValueToAxisValue(v)
+      [[ draw horizontal or vertical line across plotarea at location 'a' on axis ]]
+    }
+
+  render(...)
+    [[ draw the axis line itself ]]
+    [[ draw the axis title, if any ]]
+    [[ if (!haveDataMin() || !haveDataMax()) return now ]]
+    currentLabeler.prepare(dataMin, dataMax)
+    while (_currentLabeler.hasNext()) {
+      var v:DataValue = currentLabeler.next()
+      var a:number = dataValueToAxisValue(v)
+      [[ draw tick mark at location 'a' on axis ]]
+      currentLabeler.renderLabel(v)
+    }
+
+Legend
+  initializeGeometry()
+  render(...)
+
+Title
+  initializeGeometry()
+  render(...)
+
+Graph
+   var axes:Array<Axis>
+   var plots:Array<Plot>
+   var datas:Array<Data>
+   initializeGeomery(...)
+      [[ set various internally used computed geometric values ]]
+      foreach axis { axis.initializeGeometry() }
+      legend.initializeGeometry()
+   render(...)
+      [[ clear screen ]]
+      [[ draw border (between margin and padding area) ]]
+      [[ draw background color, if any, clipped to padding area ]]
+      [[ draw background image, if any, clipped to padding area ]]
+      [[ draw plotbox border, if any, clippped to padding area ]]
+      foreach axis { axis.renderGrid(...) }
+      foreach plot { plot.render(...) }
+      foreach axis { axis.render(...) }
+      legend.render(...)
+      title.render(...)
+   prepareData(...)
+      foreach data in datas { data.prepareDataReset() }
+      foreach plot in plots { plot.prepareData() }
+
+Plot
+  var haxis:Axis
+  var vaxis:Axis
+  var renderer:Renderer
+  prepareData(...)
+  render(...)
+
+  -- DataPlot (subclass of Plot)
+  --   var data:Data
+  --   prepareData(...)
+  --     data.prepareData(haxis.dataMin, haxis.dataMax, 1)
+  --   render(...)
+  --     var iter:DataIterator = data.getIterator(..., haxis.dataMin, haxis.dataMax, 1)
+  --     renderer.begin(sprite)
+  --     while (iter.hasNext()) {
+  --         var vals:Array<DataValue> = iter.next()
+  --         renderer.dataPoint(vals)
+  --     }
+  --     renderer.end()
+
+Data
+  prepareDataReset(...)
+  prepareData(min, max, buffer)
+     (this might result in async callbacks being invoked later, which would in turn result in the Graph being re-rendered, if new data is available)
+  getIterator(variableIds:Array, min:Number, max:Number, buffer:int):DataIterator
+
+  -- ArrayData (subclass of Data)
+  -- CSVData (subclass of Data)
+  -- WebServiceData (subclass of Data)
+
+DataIterator
+  hasNext():Boolean
+  next():Array<DataValue>
+
