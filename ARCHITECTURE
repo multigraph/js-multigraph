@@ -48,11 +48,9 @@ DataValue
   -- NumberValue (subclass of DataValue)
   -- DatetimeValue (subclass of DataValue)
 
-     -- DatetimeValueCalendar (subclass of DatetimeValue)
-
 DataMeasure
   getRealValue():number
-  firstSpacingLocationAtOrAfter(start:DatetimeValueCalendar):DataValue
+  firstSpacingLocationAtOrAfter(v:DataValue, alignment:DataValue):DataValue
   -- NumberMeasure (subclass of DataMeasure)
        NumberMeasure(x:number) [[ constructor ]]
   -- DatetimeMeasure (subclass of DataMeasure)
