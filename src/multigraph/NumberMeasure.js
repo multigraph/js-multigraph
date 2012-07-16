@@ -18,8 +18,28 @@ if (!window.multigraph) {
     };
 
     NumberMeasure.prototype.firstSpacingLocationAtOrAfter = function(value, alignment)  {
-        // TODO: Not Yet Implemented
-        return 0;
+        var f,
+            n,
+            a = alignment.value,
+            v = value.value;
+
+        if (v >= a) {
+            f = (v - a) / this.measure;
+            n = Math.floor(f);
+            if (n === f) {
+                return new ns.Numbervalue(v);
+            } else {
+                return new ns.NumberValue(a + (n + 1) * this.measure);
+            }
+        } else {
+            f = (a - v) / this.measure;
+            n = Math.floor(f);
+            if (n === f) {
+                return new ns.NumberValue(v);
+            } else {
+                return new ns.NumberValue(a - n * this.measure);
+            }
+        }
     };
 
     NumberMeasure.parse = function(s) {

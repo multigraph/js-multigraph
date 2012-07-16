@@ -22,6 +22,14 @@ describe("NumberMeasure", function () {
         expect(x.getRealValue()).toEqual(-5.678);
     });
 
+    it("firstSpacingLocationAtOrAfter() should work correctly", function() {
+        //TODO: need more tests for this !!!
+        var value = new NumberValue(10.2);
+        var spacing = new NumberMeasure(1.0);
+        var alignment = new NumberValue(0);
+        expect(spacing.firstSpacingLocationAtOrAfter(value, alignment).getRealValue()).toEqual(11.0);
+    });
+
 
 
 
