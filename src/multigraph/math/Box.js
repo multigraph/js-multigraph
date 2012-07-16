@@ -1,3 +1,5 @@
+// 1. isA
+// 2. quotes
 if (!window.multigraph) {
     window.multigraph = {};
 }

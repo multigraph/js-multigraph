@@ -1,3 +1,7 @@
+// 1. Validation of b uses custom integer validation rather than isA or utility function
+// 2. Instance or two of using single quotes rather than double
+// 3. Why does displacement not use isBuiltWith("a","b"); ?
+
 if (!window.multigraph) {
     window.multigraph = {};
 }

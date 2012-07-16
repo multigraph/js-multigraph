@@ -1,3 +1,5 @@
+// 1. Uses single quotes rather than double quotes in several locations
+// 2. Uses validates with rather than isA
 if (!window.multigraph) {
     window.multigraph = {};
 }
