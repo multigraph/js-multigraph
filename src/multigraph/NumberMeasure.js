@@ -5,6 +5,9 @@ if (!window.multigraph) {
 (function (ns) {
     "use strict";
 
+    // Fudge factor for floating point comparisons:
+    var epsilon = 1E-12;
+
     var NumberMeasure = function(measure) {
         this.measure = measure;
     };
@@ -20,26 +23,22 @@ if (!window.multigraph) {
     NumberMeasure.prototype.firstSpacingLocationAtOrAfter = function(value, alignment)  {
         var f,
             n,
+            m,
             a = alignment.value,
-            v = value.value;
+            v = value.value,
+            s = Math.abs(this.measure);
 
-        if (v >= a) {
-            f = (v - a) / this.measure;
-            n = Math.floor(f);
-            if (n === f) {
-                return new ns.Numbervalue(v);
-            } else {
-                return new ns.NumberValue(a + (n + 1) * this.measure);
-            }
-        } else {
-            f = (a - v) / this.measure;
-            n = Math.floor(f);
-            if (n === f) {
-                return new ns.NumberValue(v);
-            } else {
-                return new ns.NumberValue(a - n * this.measure);
-            }
+        f = (v - a) / s;
+        n = Math.floor(f);
+        m = n + 1;
+        //if ((Math.abs(n - f) < epsilon) || (Math.abs(m - f) < epsilon)) {
+        //NOTE: by definition of n=floor(f), we know f >= n, so Math.abs(n - f) is the same as (f - n)
+        //Also by definition, floor(f)+1 >= f, so Math.abs(m - f) is the same as (m - f)
+        if ((f - n < epsilon) || (m - f < epsilon)) {
+            return new ns.NumberValue(v);
         }
+        return new ns.NumberValue(a + s * m);
+
     };
 
     NumberMeasure.parse = function(s) {
