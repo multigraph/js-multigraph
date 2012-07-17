@@ -57,7 +57,7 @@ if (!window.multigraph) {
             }
 
             attributeStrings = ns.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
-            attributeStrings.push('length="' + this.length().serialize() + '"')
+            attributeStrings.push('length="' + this.length().serialize() + '"');
 
             childStrings = ns.utilityFunctions.serializeChildModels(this, children, childStrings, serialize);
 

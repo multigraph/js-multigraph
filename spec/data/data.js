@@ -1,3 +1,5 @@
+/*global describe, it, beforeEach, expect, xit, jasmine */
+
 describe("data", function () {
     "use strict";
 
