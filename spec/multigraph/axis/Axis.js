@@ -55,6 +55,16 @@ describe("Axis", function () {
 
     });
 
+    describe("length attribute", function () {
+        it("should be able to set/get the length attribute", function () {
+            a.length(window.multigraph.math.Displacement.parse(".5+2"));
+            expect(a.length().serialize()).toBe("0.5+2");
+            a.length(window.multigraph.math.Displacement.parse(".7"));
+            expect(a.length().serialize()).toBe("0.7+0");
+        });
+
+    });
+
     describe("position attribute", function () {
         it("should be able to set/get the position attribute", function () {
             a.position('1 1');

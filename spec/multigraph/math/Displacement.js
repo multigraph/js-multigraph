@@ -7,7 +7,7 @@ describe("Displacement", function () {
         d;
 
     beforeEach(function () {
-        d = new Displacement();
+        d = new Displacement(1);
     });
 
     it("should be able to create a Displacement", function () {
@@ -48,14 +48,14 @@ describe("Displacement", function () {
         it("should throw an error if b attribute is a floating point number", function () {
             expect(function () {
                 d.b(20.5);
-            }).toThrow(new Error("invalid setter call for b"));
+            }).toThrow(new Error("20.5 should be an integer"));
         });
 
 
         it("should throw an error if b attribute is a string", function () {
             expect(function () {
                 d.b('fooya');
-            }).toThrow(new Error("invalid setter call for b"));
+            }).toThrow(new Error("fooya should be an integer"));
         });
 
     });
@@ -111,6 +111,37 @@ describe("Displacement", function () {
             var d2 = Displacement.parse("-1");
             expect(d2.a() === -1).toBe(true);
             expect(d2.b() === 0).toBe(true);
+        });
+    });
+
+    describe("serialize method", function () {
+        it("should serialize '1+20' correctly", function () {
+            var d2 = Displacement.parse("1+20");
+            expect(d2.serialize()).toBe("1+20");
+        });
+        it("should serialize '0.5-10' correctly", function () {
+            var d2 = Displacement.parse("0.5-10");
+            expect(d2.serialize()).toBe("0.5-10");
+        });
+        it("should serialize '1' correctly", function () {
+            var d2 = Displacement.parse("1");
+            expect(d2.serialize()).toBe("1+0");
+        });
+        it("should serialize '1.0' correctly", function () {
+            var d2 = Displacement.parse("1.0");
+            expect(d2.serialize()).toBe("1+0");
+        });
+        it("should serialize '0' correctly", function () {
+            var d2 = Displacement.parse("0");
+            expect(d2.serialize()).toBe("0+0");
+        });
+        it("should serialize '0.0' correctly", function () {
+            var d2 = Displacement.parse("0.0");
+            expect(d2.serialize()).toBe("0+0");
+        });
+        it("should serialize '-1' correctly", function () {
+            var d2 = Displacement.parse("-1");
+            expect(d2.serialize()).toBe("-1+0");
         });
     });
 

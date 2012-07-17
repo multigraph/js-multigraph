@@ -5,7 +5,7 @@ if (!window.multigraph) {
 (function (ns) {
     "use strict";
 
-    var scalarAttributes = ["id", "type", "length", "position", "pregap", "postgap", "anchor", "base", "min", "minoffset", "minposition", "max", "maxoffset", "maxposition", "positionbase", "tickmin", "tickmax", "highlightstyle", "linewidth"],
+    var scalarAttributes = ["id", "type", "position", "pregap", "postgap", "anchor", "base", "min", "minoffset", "minposition", "max", "maxoffset", "maxposition", "positionbase", "tickmin", "tickmax", "highlightstyle", "linewidth"],
         children = ["title", "labels", "grid", "pan", "zoom", "binding", "axiscontrols"];
     ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
     ns.jQueryXMLHandler.mixinfuncs.push(function(nsObj, parse, serialize) {
@@ -25,7 +25,7 @@ if (!window.multigraph) {
 
                 axis.id(xml.attr("id"));
                 axis.type(xml.attr("type"));
-                axis.length(nsObj.utilityFunctions.parseDoubleOrUndefined(xml.attr("length")));
+                axis.length(nsObj.math.Displacement.parse(xml.attr("length")));
                 axis.position(xml.attr("position"));
                 axis.pregap(xml.attr("pregap"));
                 axis.postgap(xml.attr("postgap"));
@@ -57,6 +57,8 @@ if (!window.multigraph) {
             }
 
             attributeStrings = ns.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
+            attributeStrings.push('length="' + this.length().serialize() + '"')
+
             childStrings = ns.utilityFunctions.serializeChildModels(this, children, childStrings, serialize);
 
             output += attributeStrings.join(' ');

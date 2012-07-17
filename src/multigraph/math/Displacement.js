@@ -1,7 +1,3 @@
-// 1. Validation of b uses custom integer validation rather than isA or utility function
-// 2. Instance or two of using single quotes rather than double
-// 3. Why does displacement not use isBuiltWith("a","b"); ?
-
 if (!window.multigraph) {
     window.multigraph = {};
 }
@@ -52,14 +48,13 @@ if (!window.multigraph.math) {
      *             |<------------------  L  -------------------->|
      *
      */
-    var Displacement = new ns.ModelTool.Model( 'Displacement', function () {
+    var Displacement = new ns.ModelTool.Model( "Displacement", function () {
         
         this.hasA("a").which.validatesWith(function (a) {
             return ns.utilityFunctions.validateNumberRange(a, -1.0, 1.0);
         });
-        this.hasA("b").which.validatesWith(function (b) {
-            return ( (typeof(b) === 'number') && (b === parseInt(b,10)) );
-        });
+        this.hasA("b").which.isA("integer").and.defaultsTo(0);
+        this.isBuiltWith("a", "%b");
 
         this.respondsTo("calculateLength", function (totalLength) {
             return this.a() * totalLength + this.b();
@@ -68,6 +63,17 @@ if (!window.multigraph.math) {
         this.respondsTo("calculateCoordinate", function (totalLength) {
             return (this.a() + 1) * totalLength/2.0 + this.b();
         });
+
+        this.respondsTo("serialize", function () {
+            var output = this.a();
+            if (this.b() !== undefined) {
+                if (this.b() >= 0) {
+                    output += "+";
+                }
+                output += this.b().toString(10);
+            }
+            return output;
+        })
 
     });
 
@@ -87,7 +93,9 @@ if (!window.multigraph.math) {
             a,
             b,
             sign;
-        if (ar !== null) {
+        if (string === undefined) {
+            d = new Displacement(1);
+        } else if (ar !== null) {
             a = parseFloat(ar[1]);
             b = parseFloat(ar[3]);
             switch (ar[2]) {
@@ -106,20 +114,16 @@ if (!window.multigraph.math) {
               throw new ParseError('parse error');
               }
             */
-            d = new Displacement();
-            d.a(a);
-            d.b(sign * b);
-            return d;
+            d = new Displacement(a, sign * b);
+        } else {
+            a = parseFloat(string);
+            /*n
+              if (isNaN(a)) {
+              throw new ParseError('parse error');
+              }
+            */
+            d = new Displacement(a);
         }
-        a = parseFloat(string);
-        /*n
-          if (isNaN(a)) {
-          throw new ParseError('parse error');
-          }
-        */
-        d = new Displacement();
-        d.a(a);
-        d.b(0);
         return d;
     };
     

@@ -72,7 +72,9 @@ if (!window.multigraph) {
         this.hasA("type").which.validatesWith(function (type) {
             return typeof(type) === "string" && (type.toLowerCase() === "number" || type.toLowerCase() === "datetime");
         });
-        this.hasA("length").which.isA("number");
+        this.hasA("length").which.validatesWith(function (length) {
+            return length instanceof ns.math.Displacement;
+        });
         this.hasA("position").which.validatesWith(function (position) {
             return ns.utilityFunctions.validateCoordinatePair(position);
         });
@@ -126,18 +128,9 @@ if (!window.multigraph) {
         });
         this.isBuiltWith("orientation");
 
-        this.hasA("pixelLength").which.validatesWith(function (val) {
-            //TODO: this should be replaced with John's new integer validation after merging
-            return (typeof(val)==="number") && (val===parseInt(val));
-        });
-        this.hasA("parallelOffset").which.validatesWith(function (val) {
-            //TODO: this should be replaced with John's new number validation after merging
-            return typeof(val)==="number";
-        });
-        this.hasA("perpOffset").which.validatesWith(function (val) {
-            //TODO: this should be replaced with John's new number validation after merging
-            return typeof(val)==="number";
-        });
+        this.hasA("pixelLength").which.isA("integer");
+        this.hasA("parallelOffset").which.isA("number");
+        this.hasA("perpOffset").which.isA("number");
 
         this.respondsTo("initializeGeometry", function() {
             var dim = (orientation === Axis.VERTICAL) ? "height" : "width";
