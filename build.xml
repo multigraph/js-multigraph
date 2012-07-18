@@ -31,7 +31,8 @@
 
   <target name="lint">
     <apply executable="java" failonerror="true">
-      <fileset dir="${src.dir}" includes="**/*.js">
+      <fileset dir="lint-stubs" includes="**/*.js"/>
+      <fileset dir="${src.dir}" includes="**/*.js" excludes="graphics/raphael/raphael.js">
         <modified />
       </fileset>
       <fileset dir="${test.dir}" includes="**/*.js">
