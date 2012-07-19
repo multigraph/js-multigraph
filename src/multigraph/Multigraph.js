@@ -6,28 +6,39 @@ if (!window.multigraph) {
     "use strict";
 
     var Multigraph = new ns.ModelTool.Model( "Graph", function () {
+
         this.hasMany("graphs").which.validatesWith(function (graph) {
             return graph instanceof window.multigraph.Graph;
         });
+
         this.hasA("divid").which.isA("string");
+
+        this.respondsTo("init", function() {
+            //NOTE: placeholder function.  This gets replaced by whatever graphics mixin is used.
+        });
+
    });
 
     Multigraph.createGraph = function(divid, muglurl) {
 
         ns.jQueryXMLMixin.apply(ns, 'parseXML', 'serialize');
+        ns.raphaelMixin.apply(ns);
 
-        var multigraph;
-
-        $.ajax({
+        var muglPromise = $.ajax({
             "url"      : muglurl,
             "dataType" : "xml",
-            "success"  : function(data) {
-                multigraph = ns.Multigraph.parseXML( $(data) );
-                multigraph.init(divid);
-            }
         });
 
-        return 0;
+        var deferred = $.Deferred();
+
+        muglPromise.done(function(data) {
+            var multigraph = ns.Multigraph.parseXML( $(data) );
+            multigraph.divid(divid);
+            multigraph.init();
+            deferred.resolve(multigraph);
+        });
+
+        return deferred.promise();
 
     };
 

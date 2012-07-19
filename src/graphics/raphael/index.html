@@ -94,6 +94,7 @@
   <script type="text/javascript" src="../../../src/jquery-xml-handler/MultigraphParser.js"></script>
 
   <script type="text/javascript" src="./raphael.js"></script>
+  <script type="text/javascript" src="./RaphaelMixin.js"></script>
   <script type="text/javascript" src="./multigraph/Multigraph.js"></script>
   <script type="text/javascript" src="./multigraph/Graph.js"></script>
 
@@ -111,7 +112,12 @@ $(document).ready(function() {
 
   var Multigraph = window.multigraph.Multigraph;
 
-  var multigraph = Multigraph.createGraph("mygraph", "./mymugl.xml");
+  var multigraphPromise = Multigraph.createGraph("mygraph", "./mymugl.xml");
+
+  multigraphPromise.done(function(multigraph) {
+    console.log('got a multigraph now:');
+    console.log(multigraph);
+  });
 
 });
 
