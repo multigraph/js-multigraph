@@ -8,8 +8,8 @@ if (!window.multigraph) {
     ns.raphaelMixin.add(function(ns) {
         var Graph = ns.Graph;
 
-        Graph.respondsTo("render", function(paper) {
-            paper.path("M 0,0 L 500,300 M 500,0 L 0,300");
+        Graph.respondsTo("render", function(paper, width, height) {
+            paper.path("M 0,0 L "+width+","+height+" M "+width+",0 L 0,"+height+"");
         });
 
     });

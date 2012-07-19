@@ -100,7 +100,7 @@
 
   <style type="text/css">
     #mygraph {
-      width: 500px;
+      width:  500px;
       height: 300px;
       border: 1px solid #000;
     }
@@ -115,8 +115,8 @@ $(document).ready(function() {
   var multigraphPromise = Multigraph.createGraph("mygraph", "./mymugl.xml");
 
   multigraphPromise.done(function(multigraph) {
-    console.log('got a multigraph now:');
-    console.log(multigraph);
+    console.log('got a multigraph now');
+    console.log('   its size is ' + multigraph.width() + ' X ' + multigraph.height());
   });
 
 });
@@ -128,6 +128,6 @@ $(document).ready(function() {
 <body>
 <center>
 <div id="mygraph">
-<center>
+</center>
 </body>
 </html>
