@@ -5,14 +5,14 @@ if (!window.multigraph) {
 (function (ns) {
     "use strict";
 
-    var scalarAttributes = ["id", "type", "position", "pregap", "postgap", "anchor", "base", "min", "minoffset", "minposition", "max", "maxoffset", "maxposition", "positionbase", "tickmin", "tickmax", "highlightstyle", "linewidth"],
+    var scalarAttributes = ["id", "type", "pregap", "postgap", "anchor", "min", "minoffset", "minposition", "max", "maxoffset", "maxposition", "positionbase", "tickmin", "tickmax", "highlightstyle", "linewidth"],
         children = ["title", "labels", "grid", "pan", "zoom", "binding", "axiscontrols"];
 
-    ns.jQueryXMLMixin.add(function(nsObj, parse, serialize) {
+    ns.jQueryXMLMixin.add(function(ns, parse, serialize) {
         
-        nsObj.Axis[parse] = function(xml) {
+        ns.Axis[parse] = function(xml) {
             var orientation = $(xml).prop("tagName").toLowerCase().replace("axis", ""),
-                axis = new nsObj.Axis(orientation),
+                axis = new ns.Axis(orientation),
                 childModelNames = ["Title", "Labels", "Grid", "Pan", "Zoom", "Binding", "AxisControls"],
                 i;
 
@@ -25,12 +25,18 @@ if (!window.multigraph) {
 
                 axis.id(xml.attr("id"));
                 axis.type(xml.attr("type"));
-                axis.length(nsObj.math.Displacement.parse(xml.attr("length")));
-                axis.position(xml.attr("position"));
+                axis.length(ns.math.Displacement.parse(xml.attr("length")));
+                if (xml.attr("position")) {
+                    axis.position(ns.math.Point.parse(xml.attr("position")));
+                }
                 axis.pregap(xml.attr("pregap"));
                 axis.postgap(xml.attr("postgap"));
-                axis.anchor(xml.attr("anchor"));
-                axis.base(xml.attr("base"));
+                if (xml.attr("anchor")) {
+                    axis.anchor(parseFloat(xml.attr("anchor")));
+                }
+                if (xml.attr("base")) {
+                    axis.base(ns.math.Point.parse(xml.attr("base")));
+                }
                 axis.min(xml.attr("min"));
                 axis.minoffset(xml.attr("minoffset"));
                 axis.minposition(xml.attr("minposition"));
@@ -38,16 +44,16 @@ if (!window.multigraph) {
                 axis.maxoffset(xml.attr("maxoffset"));
                 axis.maxposition(xml.attr("maxposition"));
                 axis.positionbase(xml.attr("positionbase"));
-                axis.color(nsObj.math.RGBColor.parse(xml.attr("color")));
-                axis.tickmin(nsObj.utilityFunctions.parseIntegerOrUndefined(xml.attr("tickmin")));
-                axis.tickmax(nsObj.utilityFunctions.parseIntegerOrUndefined(xml.attr("tickmax")));
+                axis.color(ns.math.RGBColor.parse(xml.attr("color")));
+                axis.tickmin(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr("tickmin")));
+                axis.tickmax(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr("tickmax")));
                 axis.highlightstyle(xml.attr("highlightstyle"));
-                axis.linewidth(nsObj.utilityFunctions.parseIntegerOrUndefined(xml.attr("linewidth")));
+                axis.linewidth(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr("linewidth")));
             }
             return axis;
         };
         
-        nsObj.Axis.prototype[serialize] = function() {
+        ns.Axis.prototype[serialize] = function() {
             var attributeStrings = [],
                 childStrings = [],
                 output = '<' + this.orientation() + 'axis ';
@@ -58,6 +64,8 @@ if (!window.multigraph) {
 
             attributeStrings = ns.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
             attributeStrings.push('length="' + this.length().serialize() + '"');
+            attributeStrings.push('position="' + this.position().serialize() + '"');
+            attributeStrings.push('base="' + this.base().serialize() + '"');
 
             childStrings = ns.utilityFunctions.serializeChildModels(this, children, childStrings, serialize);
 

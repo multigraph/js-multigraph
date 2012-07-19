@@ -4,6 +4,7 @@ describe("Axis", function () {
     "use strict";
 
     var Axis = window.multigraph.Axis,
+        Point = window.multigraph.math.Point,
         Title = window.multigraph.Axis.Title,
         Labels = window.multigraph.Axis.Labels,
         Label = window.multigraph.Axis.Labels.Label,
@@ -67,8 +68,9 @@ describe("Axis", function () {
 
     describe("position attribute", function () {
         it("should be able to set/get the position attribute", function () {
-            a.position('1 1');
-            expect(a.position() === '1 1').toBe(true);
+            a.position(new Point(1,1));
+            expect(a.position().x()).toEqual(1);
+            expect(a.position().y()).toEqual(1);
         });
 
         it("should throw an error if the parameter is not a string", function () {
@@ -97,22 +99,23 @@ describe("Axis", function () {
 
     describe("anchor attribute", function () {
         it("should be able to set/get the anchor attribute", function () {
-            a.anchor('0 -1');
-            expect(a.anchor() === '0 -1').toBe(true);
+            a.anchor(-0.8);
+            expect(a.anchor()).toEqual(-0.8);
         });
 
-        it("should throw an error if the parameter is not a string", function () {
+        it("should throw an error if the parameter is not a number", function () {
             expect(function () {
-                a.anchor(true);
-            }).toThrow(new Error("invalid setter call for anchor"));
+                a.anchor('foo');
+            }).toThrow(new Error("foo should be a number"));
         });
 
     });
 
     describe("base attribute", function () {
         it("should be able to set/get the base attribute", function () {
-            a.base('-1 0');
-            expect(a.base() === '-1 0').toBe(true);
+            a.base(new Point(-1,0));
+            expect(a.base().x()).toEqual(-1);
+            expect(a.base().y()).toEqual(0);
         });
 
         it("should throw an error if the parameter is not a string", function () {

@@ -100,8 +100,8 @@
 
   <style type="text/css">
     #mygraph {
-      width:  500px;
-      height: 300px;
+      width:  100%;
+      height: 100%;
       border: 1px solid #000;
     }
   </style>
@@ -116,7 +116,18 @@ $(document).ready(function() {
 
   multigraphPromise.done(function(multigraph) {
     console.log('got a multigraph now');
+  });
+
+  multigraphPromise.done(function(multigraph) {
     console.log('   its size is ' + multigraph.width() + ' X ' + multigraph.height());
+  });
+
+  multigraphPromise.done(function(multigraph) {
+    multigraph.init();
+  });
+
+  multigraphPromise.done(function(multigraph) {
+    console.log('   and the size is now ' + multigraph.width() + ' X ' + multigraph.height());
   });
 
 });
@@ -127,7 +138,7 @@ $(document).ready(function() {
 
 <body>
 <center>
-<div id="mygraph">
+<div id="mygraph"/>
 </center>
 </body>
 </html>

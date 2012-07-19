@@ -18,6 +18,9 @@ if (!window.multigraph) {
             this.$div($('#'+this.divid()));
             this.width(this.$div().width());
             this.height(this.$div().height());
+            if (this.paper()) {
+                this.paper().remove();
+            }
             this.paper(new Raphael(this.divid(), this.width(), this.height()));
             this.render();
         });

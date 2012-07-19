@@ -76,45 +76,53 @@ if (!window.multigraph) {
             return length instanceof ns.math.Displacement;
         });
         this.hasA("position").which.validatesWith(function (position) {
-            return ns.utilityFunctions.validateCoordinatePair(position);
+            return position instanceof ns.math.Point;
         });
         this.hasA("pregap").which.validatesWith(function (pregap) {
+            //TODO: number (but deprecated)
             return typeof(pregap) === "string";
         });
         this.hasA("postgap").which.validatesWith(function (postgap) {
+            //TODO: number (but deprecated)
             return typeof(postgap) === "string";
         });
-        this.hasAn("anchor").which.validatesWith(function (anchor) {
-            return ns.utilityFunctions.validateCoordinatePair(anchor);
-        });
+        this.hasAn("anchor").which.isA("number");
         this.hasA("base").which.validatesWith(function (base) {
-            return ns.utilityFunctions.validateCoordinatePair(base);
+            return base instanceof ns.math.Point;
         });
         this.hasA("min").which.validatesWith(function (min) {
+            //TODO: number
             return typeof(min) === "string";
         });
         this.hasA("minoffset").which.validatesWith(function (minoffset) {
+            //TODO: number
             return typeof(minoffset) === "string";
         });
         this.hasA("minposition").which.validatesWith(function (minposition) {
+            //TODO: number
             return typeof(minposition) === "string";
         });
         this.hasA("max").which.validatesWith(function (max) {
+            //TODO: number
             return typeof(max) === "string";
         });
         this.hasA("maxoffset").which.validatesWith(function (maxoffset) {
+            //TODO: number
             return typeof(maxoffset) === "string";
         });
         this.hasA("maxposition").which.validatesWith(function (maxposition) {
+            //TODO: number
             return typeof(maxposition) === "string";
         });
         this.hasA("positionbase").which.validatesWith(function (positionbase) {
+            //deprecated
             return typeof(positionbase) === "string";
         });
         this.hasA("color").which.validatesWith(function (color) {
             return color instanceof ns.math.RGBColor;
         });
         this.hasA("min").which.validatesWith(function (min) {
+            //TODO: number
             return typeof(min) === "string";
         });
         this.hasA("tickmin").which.isA("integer");
@@ -128,12 +136,20 @@ if (!window.multigraph) {
         });
         this.isBuiltWith("orientation");
 
-        this.hasA("pixelLength").which.isA("integer");
+        this.hasA("pixelLength").which.isA("number");
         this.hasA("parallelOffset").which.isA("number");
         this.hasA("perpOffset").which.isA("number");
 
-        this.respondsTo("initializeGeometry", function() {
-            var dim = (orientation === Axis.VERTICAL) ? "height" : "width";
+        this.respondsTo("initializeGeometry", function(graph) {
+            if (this.orientation() == Axis.HORIZONTAL) {
+                this.pixelLength(this.length().calculateLength( graph.plotBox().width() ));
+                this.parallelOffset( this.position().x() + (this.base().x() + 1) * graph.plotBox().width()/2 - (this.anchor() + 1) * this.pixelLength() / 2 );
+                this.perpOffset( this.position().y() + (this.base().y() + 1) * graph.plotBox().height() / 2 );
+            } else {
+                this.pixelLength( this.length().calculateLength( graph.plotBox().height() ) );
+                this.parallelOffset( this.position().y() + (this.base().y() + 1) * graph.plotBox().height()/2 - (this.anchor() + 1) * this.pixelLength() / 2 );
+                this.perpOffset( this.position().x() + (this.base().x() + 1) * graph.plotBox().width() / 2 );
+            }
 /*
             if (_orientation == AxisOrientation.HORIZONTAL) {
                 _pixelLength = _length.calculateLength( _graph.plotBox.width );

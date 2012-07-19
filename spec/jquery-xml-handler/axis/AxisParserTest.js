@@ -12,7 +12,7 @@ describe("Axis parsing", function () {
         Zoom = window.multigraph.Axis.Zoom,
         Binding = window.multigraph.Axis.Binding,
         AxisControls = window.multigraph.Axis.AxisControls,
-        xmlString = '<horizontalaxis color="0x123456" id="x" type="number" position="1 1" pregap="2" postgap="4" anchor="0 1" base="1 -1" min="0" minoffset="19" minposition="0 0" max="10" maxoffset="2" maxposition="0 1" positionbase="0 0" tickmin="-3" tickmax="3" highlightstyle="bold" linewidth="1" length="1+0"/>',
+        xmlString = '<horizontalaxis color="0x123456" id="x" type="number" pregap="2" postgap="4" anchor="1" min="0" minoffset="19" minposition="0 0" max="10" maxoffset="2" maxposition="0 1" positionbase="0 0" tickmin="-3" tickmax="3" highlightstyle="bold" linewidth="1" length="1+0" position="1,1" base="1,-1"/>',
         $xml,
         axis;
 
@@ -39,7 +39,8 @@ describe("Axis parsing", function () {
     });
 
     it("should be able to parse an axis from XML and read its 'position' attribute", function () {
-        expect(axis.position() === '1 1').toBe(true);
+        expect(axis.position().x()).toEqual(1);
+        expect(axis.position().y()).toEqual(1);
     });
 
     it("should be able to parse an axis from XML and read its 'pregap' attribute", function () {
@@ -51,11 +52,12 @@ describe("Axis parsing", function () {
     });
 
     it("should be able to parse an axis from XML and read its 'anchor' attribute", function () {
-        expect(axis.anchor() === '0 1').toBe(true);
+        expect(axis.anchor()).toEqual(1);
     });
 
     it("should be able to parse an axis from XML and read its 'base' attribute", function () {
-        expect(axis.base() === '1 -1').toBe(true);
+        expect(axis.base().x()).toEqual(1);
+        expect(axis.base().y()).toEqual(-1);
     });
 
     it("should be able to parse an axis from XML and read its 'min' attribute", function () {
@@ -107,8 +109,8 @@ describe("Axis parsing", function () {
     });
 
     it("should be able to parse an axis from XML, then serialize it, and get the same XML as the original", function () {
-        var xmlString2 = '<verticalaxis id="y" type="datetime" max="10"/>',
-        b = Axis.parseXML($(xmlString2), 'vertical');
+        var xmlString2 = '<verticalaxis id="y" type="datetime" max="10"/>';
+//        b = Axis.parseXML($(xmlString2), 'vertical');
         expect(axis.serialize()).toBe(xmlString);
 //        expect(b.serialize() === xmlString2).toBe(true);
     });
