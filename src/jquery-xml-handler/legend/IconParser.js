@@ -6,8 +6,8 @@ if (!window.multigraph) {
     "use strict";
 
     var scalarAttributes = ["height", "width", "border"];
-    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
-    ns.jQueryXMLHandler.mixinfuncs.push(function (nsObj, parse, serialize) {
+
+    ns.jQueryXMLMixin.add(function (nsObj, parse, serialize) {
         
         nsObj.Legend.Icon[parse] = function (xml) {
             var icon = new nsObj.Legend.Icon();

@@ -7,8 +7,8 @@ if (!window.multigraph) {
 
     var scalarAttributes = ["id", "type", "position", "pregap", "postgap", "anchor", "base", "min", "minoffset", "minposition", "max", "maxoffset", "maxposition", "positionbase", "tickmin", "tickmax", "highlightstyle", "linewidth"],
         children = ["title", "labels", "grid", "pan", "zoom", "binding", "axiscontrols"];
-    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
-    ns.jQueryXMLHandler.mixinfuncs.push(function(nsObj, parse, serialize) {
+
+    ns.jQueryXMLMixin.add(function(nsObj, parse, serialize) {
         
         nsObj.Axis[parse] = function(xml) {
             var orientation = $(xml).prop("tagName").toLowerCase().replace("axis", ""),

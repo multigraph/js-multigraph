@@ -14,7 +14,7 @@ if (!window.multigraph) {
 
     Multigraph.createGraph = function(divid, muglurl) {
 
-        ns.jQueryXMLHandler.mixin(ns, 'parseXML', 'serialize');
+        ns.jQueryXMLMixin.apply(ns, 'parseXML', 'serialize');
 
         var multigraph;
 

@@ -5,24 +5,23 @@ if (!window.multigraph) {
 (function (ns) {
     "use strict";
 
-    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
-    ns.jQueryXMLHandler.mixinfuncs.push(function(nsObj, parse, serialize) {
+    ns.jQueryXMLMixin.add(function(ns, parse, serialize) {
 
-        nsObj.Multigraph[parse] = function(xml) {
-            var Multigraph = new nsObj.Multigraph();
+        ns.Multigraph[parse] = function(xml) {
+            var Multigraph = new ns.Multigraph();
             if (xml) {
                 if (xml.find(">graph").length > 0) {
                     $.each(xml.find(">graph"), function (i,e) {
-                        Multigraph.graphs().add( nsObj.Graph[parse]($(e)) );
+                        Multigraph.graphs().add( ns.Graph[parse]($(e)) );
                     });
                 } else if (xml.find(">graph").length === 0 && xml.children().length > 0) {
-                    Multigraph.graphs().add( nsObj.Graph[parse](xml) );
+                    Multigraph.graphs().add( ns.Graph[parse](xml) );
                 }
             }
             return Multigraph;
         };
 
-        nsObj.Multigraph.prototype[serialize] = function () {
+        ns.Multigraph.prototype[serialize] = function () {
             var output = '<mugl>',
                 i;
 

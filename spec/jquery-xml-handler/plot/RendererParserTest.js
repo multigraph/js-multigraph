@@ -4,13 +4,12 @@ describe("Plot Renderer parsing", function () {
     "use strict";
 
     var Renderer = window.multigraph.Plot.Renderer,
-        jQueryXMLHandler = window.multigraph.jQueryXMLHandler,
         xmlString = '<renderer type="fill"/>',
         $xml,
         r;
 
     beforeEach(function () {
-        jQueryXMLHandler.mixin(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
 	$xml = $(xmlString);
         r = Renderer.parseXML($xml);
     });
@@ -36,7 +35,7 @@ describe("Plot Renderer parsing", function () {
 
         beforeEach(function () {
             xmlString = '<renderer type="bar"><option name="barwidth" value="3"/></renderer>';
-            jQueryXMLHandler.mixin(window.multigraph, 'parseXML', 'serialize');
+            window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
             $xml = $(xmlString);
             r = Renderer.parseXML($xml);
         });

@@ -5,8 +5,7 @@ if (!window.multigraph) {
 (function (ns) {
     "use strict";
 
-    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
-    ns.jQueryXMLHandler.mixinfuncs.push(function(nsObj, parse, serialize) {
+    ns.jQueryXMLMixin.add(function(nsObj, parse, serialize) {
 
         nsObj.Graph[parse] = function(xml) {
             var graph = new nsObj.Graph();

@@ -10,8 +10,8 @@ if (!window.multigraph.Axis) {
     "use strict";
 
     var scalarAttributes = ["format", "start", "angle", "position", "anchor", "densityfactor", "function"];
-    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
-    ns.jQueryXMLHandler.mixinfuncs.push(function (nsObj, parse, serialize) {
+
+    ns.jQueryXMLMixin.add(function (nsObj, parse, serialize) {
 
         nsObj.Axis.Labels[parse] = function (xml) {
             var labels = new nsObj.Axis.Labels();

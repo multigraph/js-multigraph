@@ -6,8 +6,8 @@ if (!window.multigraph) {
     "use strict";
 
     var children = ["variables", "values", "csv", "service"];
-    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
-    ns.jQueryXMLHandler.mixinfuncs.push(function(nsObj, parse, serialize) {
+
+    ns.jQueryXMLMixin.add(function(nsObj, parse, serialize) {
         
         nsObj.Data[parse] = function (xml, orient) {
             var data = new nsObj.Data(),

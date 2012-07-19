@@ -6,8 +6,8 @@ if (!window.multigraph) {
     "use strict";
 
     var scalarAttributes = ["visible", "base", "anchor", "position", "frame", "opacity", "border", "rows", "columns", "cornerradius", "padding"];
-    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
-    ns.jQueryXMLHandler.mixinfuncs.push(function (nsObj, parse, serialize) {
+
+    ns.jQueryXMLMixin.add(function (nsObj, parse, serialize) {
 
         nsObj.Legend[parse] = function (xml) {
             var legend = new nsObj.Legend();

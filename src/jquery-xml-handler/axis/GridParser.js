@@ -10,8 +10,8 @@ if (!window.multigraph.Axis) {
     "use strict";
 
     var scalarAttributes = ["visible"];
-    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
-    ns.jQueryXMLHandler.mixinfuncs.push(function (nsObj, parse, serialize) {
+
+    ns.jQueryXMLMixin.add(function (nsObj, parse, serialize) {
         
         nsObj.Axis.Grid[parse] = function (xml) {
             var grid = new nsObj.Axis.Grid();

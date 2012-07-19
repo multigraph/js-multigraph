@@ -4,13 +4,12 @@ describe("Data CSV parsing", function () {
     "use strict";
 
     var CSV = window.multigraph.Data.CSV,
-        jQueryXMLHandler = window.multigraph.jQueryXMLHandler,
         xmlString = '<csv location="http://example.com/CoolnessOfCats.csv"/>',
         $xml,
         csv;
 
     beforeEach(function () {
-        jQueryXMLHandler.mixin(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
         $xml = $(xmlString);
         csv = CSV.parseXML($xml);
     });

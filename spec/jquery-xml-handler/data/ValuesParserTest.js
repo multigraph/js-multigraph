@@ -4,13 +4,12 @@ describe("Data Values parsing", function () {
     "use strict";
 
     var Values = window.multigraph.Data.Values,
-        jQueryXMLHandler = window.multigraph.jQueryXMLHandler,
         xmlString = '<values>1,2,3</values>',
         $xml,
         values;
 
     beforeEach(function () {
-        jQueryXMLHandler.mixin(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
         $xml = $(xmlString);
         values = Values.parseXML($xml);
     });

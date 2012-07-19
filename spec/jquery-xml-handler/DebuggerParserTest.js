@@ -4,13 +4,12 @@ describe("Debugger parsing", function () {
     "use strict";
 
     var Debugger = window.multigraph.Debugger,
-        jQueryXMLHandler = window.multigraph.jQueryXMLHandler,
         xmlString = '<debugger visible="yes" fixed="no"/>',
         $xml,
         debug;
 
     beforeEach(function () {
-        jQueryXMLHandler.mixin(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
 	$xml = $(xmlString);
         debug = Debugger.parseXML($xml);
     });

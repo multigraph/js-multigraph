@@ -4,13 +4,12 @@ describe("Axis Label parsing", function () {
     "use strict";
 
     var Label = window.multigraph.Axis.Labels.Label,
-        jQueryXMLHandler = window.multigraph.jQueryXMLHandler,
         xmlString = '<label format="%2d" start="7" angle="45" position="-1 1" anchor="1 1" densityfactor=".9" spacing="200 100 75 50"/>',
         $xml,
         label;
 
     beforeEach(function () {
-        jQueryXMLHandler.mixin(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
         $xml = $(xmlString);
         label = Label.parseXML($xml);
     });

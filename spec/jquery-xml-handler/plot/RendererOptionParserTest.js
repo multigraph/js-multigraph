@@ -4,13 +4,12 @@ describe("Renderer Option parsing", function () {
     "use strict";
 
     var Option = window.multigraph.Plot.Renderer.Option,
-        jQueryXMLHandler = window.multigraph.jQueryXMLHandler,
         xmlString = '<option name="dotcolor" value="0x222222" min="10" max="15"/>',
         $xml,
         option;
 
     beforeEach(function () {
-        jQueryXMLHandler.mixin(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
 	$xml = $(xmlString);
         option = Option.parseXML($xml);
     });

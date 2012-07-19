@@ -4,13 +4,12 @@ describe("Axis Labels parsing", function () {
     "use strict";
 
     var Labels = window.multigraph.Axis.Labels,
-        jQueryXMLHandler = window.multigraph.jQueryXMLHandler,
         xmlString = '<labels format="%1d" start="10" angle="9" position="1 1" anchor="0 0" densityfactor=".5" function="fun" spacing="100 75 50 25 10 5 2 1 0.5 0.1"/>',
         $xml,
         labels;
 
     beforeEach(function () {
-        jQueryXMLHandler.mixin(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
         $xml = $(xmlString);
         labels = Labels.parseXML($xml);
     });
@@ -63,7 +62,7 @@ describe("Axis Labels parsing", function () {
 
         beforeEach(function () {
             xmlString = '<labels format="%1d" angle="9" position="-1 1" densityfactor=".5" function="larry"><label start="10" position="1 1" anchor="0 0" spacing="100 75"/><label format="%2d" start="10" angle="9" position="1 1" anchor="0 0" densityfactor=".5" spacing="50 25 10 5 2 1"/><label format="%2d" start="10" angle="9" position="1 1" densityfactor=".8" spacing="0.5 0.1"/></labels>';
-            jQueryXMLHandler.mixin(window.multigraph, 'parseXML', 'serialize');
+            window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
             $xml = $(xmlString);
             labels = Labels.parseXML($xml);
         });

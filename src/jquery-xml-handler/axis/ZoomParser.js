@@ -10,8 +10,8 @@ if (!window.multigraph.Axis) {
     "use strict";
 
     var scalarAttributes = ["allowed", "min", "max", "anchor"];
-    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
-    ns.jQueryXMLHandler.mixinfuncs.push(function (nsObj, parse, serialize) {
+
+    ns.jQueryXMLMixin.add(function (nsObj, parse, serialize) {
         
         nsObj.Axis.Zoom[parse] = function (xml) {
             var zoom = new nsObj.Axis.Zoom();

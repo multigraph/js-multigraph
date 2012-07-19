@@ -4,13 +4,12 @@ describe("Plot Datatips Variable parsing", function () {
     "use strict";
 
     var Variable = window.multigraph.Plot.Datatips.Variable,
-        jQueryXMLHandler = window.multigraph.jQueryXMLHandler,
         xmlString = '<variable format="number"/>',
         $xml,
         variable;
 
     beforeEach(function () {
-        jQueryXMLHandler.mixin(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
 	$xml = $(xmlString);
         variable = Variable.parseXML($xml);
     });

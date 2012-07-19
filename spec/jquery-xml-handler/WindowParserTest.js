@@ -4,13 +4,12 @@ describe("Window parsing", function () {
     "use strict";
 
     var Window = window.multigraph.Window,
-        jQueryXMLHandler = window.multigraph.jQueryXMLHandler,
         xmlString = '<window margin="1" padding="10" bordercolor="0x111223" width="2" height="97" border="0"/>',
         $xml,
         w;
 
     beforeEach(function () {
-        jQueryXMLHandler.mixin(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
 	$xml = $(xmlString);
         w = Window.parseXML($xml);
     });

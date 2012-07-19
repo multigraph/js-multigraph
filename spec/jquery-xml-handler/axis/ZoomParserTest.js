@@ -4,13 +4,12 @@ describe("Axis Zoom parsing", function () {
     "use strict";
 
     var Zoom = window.multigraph.Axis.Zoom,
-        jQueryXMLHandler = window.multigraph.jQueryXMLHandler,
         xmlString = '<zoom allowed="yes" min="0" max="80" anchor="1 1"/>',
         $xml,
         zoom;
 
     beforeEach(function () {
-        jQueryXMLHandler.mixin(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
         $xml = $(xmlString);
         zoom = Zoom.parseXML($xml);
     });

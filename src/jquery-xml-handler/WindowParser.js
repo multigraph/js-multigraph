@@ -6,8 +6,7 @@ if (!window.multigraph) {
     "use strict";
 
     var scalarAttributes = ["width", "height", "border"];
-    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
-    ns.jQueryXMLHandler.mixinfuncs.push(function(nsObj, parse, serialize) {
+    ns.jQueryXMLMixin.add(function(nsObj, parse, serialize) {
         
         nsObj.Window[parse] = function (xml) {
             var window = new nsObj.Window();

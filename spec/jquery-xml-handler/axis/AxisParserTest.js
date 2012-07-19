@@ -12,13 +12,12 @@ describe("Axis parsing", function () {
         Zoom = window.multigraph.Axis.Zoom,
         Binding = window.multigraph.Axis.Binding,
         AxisControls = window.multigraph.Axis.AxisControls,
-        jQueryXMLHandler = window.multigraph.jQueryXMLHandler,
         xmlString = '<horizontalaxis color="0x123456" id="x" type="number" position="1 1" pregap="2" postgap="4" anchor="0 1" base="1 -1" min="0" minoffset="19" minposition="0 0" max="10" maxoffset="2" maxposition="0 1" positionbase="0 0" tickmin="-3" tickmax="3" highlightstyle="bold" linewidth="1" length="1+0"/>',
         $xml,
         axis;
 
     beforeEach(function () {
-        jQueryXMLHandler.mixin(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
 	$xml = $(xmlString);
         axis = Axis.parseXML($xml);
     });

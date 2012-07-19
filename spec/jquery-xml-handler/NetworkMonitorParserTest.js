@@ -4,13 +4,12 @@ describe("NetworkMonitor parsing", function () {
     "use strict";
 
     var NetworkMonitor = window.multigraph.NetworkMonitor,
-        jQueryXMLHandler = window.multigraph.jQueryXMLHandler,
         xmlString = '<networkmonitor visible="yes" fixed="no"/>',
         $xml,
         nm;
 
     beforeEach(function () {
-        jQueryXMLHandler.mixin(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
 	$xml = $(xmlString);
         nm = NetworkMonitor.parseXML($xml);
     });

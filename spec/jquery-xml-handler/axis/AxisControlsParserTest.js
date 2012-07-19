@@ -4,13 +4,12 @@ describe("Axis AxisControls parsing", function () {
     "use strict";
 
     var AxisControls = window.multigraph.Axis.AxisControls,
-        jQueryXMLHandler = window.multigraph.jQueryXMLHandler,
         xmlString = '<axiscontrols visible="false"/>',
         $xml,
         axiscontrols;
 
     beforeEach(function () {
-        jQueryXMLHandler.mixin(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
         $xml = $(xmlString);
         axiscontrols = AxisControls.parseXML($xml);
     });

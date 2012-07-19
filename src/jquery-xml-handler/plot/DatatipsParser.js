@@ -8,8 +8,7 @@ if (!window.multigraph) {
     var scalarAttributes = ["format", "bgalpha", "border", "pad"],
         Variable = ns.Plot.Datatips.Variable;
 
-    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
-    ns.jQueryXMLHandler.mixinfuncs.push(function (nsObj, parse, serialize) {
+    ns.jQueryXMLMixin.add(function (nsObj, parse, serialize) {
 
         nsObj.Plot.Datatips[parse] = function (xml) {
             var datatips = new nsObj.Plot.Datatips();

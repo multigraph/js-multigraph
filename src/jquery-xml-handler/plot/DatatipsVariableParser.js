@@ -6,8 +6,8 @@ if (!window.multigraph) {
     "use strict";
 
     var scalarAttributes = ["format"];
-    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
-    ns.jQueryXMLHandler.mixinfuncs.push(function (nsObj, parse, serialize) {
+
+    ns.jQueryXMLMixin.add(function (nsObj, parse, serialize) {
         
         nsObj.Plot.Datatips.Variable[parse] = function (xml) {
             var variable = new nsObj.Plot.Datatips.Variable();

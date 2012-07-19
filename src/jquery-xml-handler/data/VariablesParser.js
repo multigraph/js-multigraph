@@ -10,8 +10,8 @@ if (!window.multigraph.Data) {
     "use strict";
 
     var scalarAttributes = ["missingvalue", "missingop"];
-    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
-    ns.jQueryXMLHandler.mixinfuncs.push(function (nsObj, parse, serialize) {
+
+    ns.jQueryXMLMixin.add(function (nsObj, parse, serialize) {
 
         nsObj.Data.Variables[parse] = function (xml) {
             var variables = new nsObj.Data.Variables();

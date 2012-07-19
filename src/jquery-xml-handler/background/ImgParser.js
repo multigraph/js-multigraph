@@ -6,8 +6,8 @@ if (!window.multigraph) {
     "use strict";
 
     var scalarAttributes = ["src", "anchor", "base", "position", "frame"];
-    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
-    ns.jQueryXMLHandler.mixinfuncs.push(function (nsObj, parse, serialize) {
+
+    ns.jQueryXMLMixin.add(function (nsObj, parse, serialize) {
         
         nsObj.Background.Img[parse] = function (xml) {
             var img;

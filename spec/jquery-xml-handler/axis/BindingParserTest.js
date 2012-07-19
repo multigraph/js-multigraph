@@ -4,13 +4,12 @@ describe("Axis Binding parsing", function () {
     "use strict";
 
     var Binding = window.multigraph.Axis.Binding,
-        jQueryXMLHandler = window.multigraph.jQueryXMLHandler,
         xmlString = '<binding id="y" min="-10" max="50"/>',
         $xml,
         binding;
 
     beforeEach(function () {
-        jQueryXMLHandler.mixin(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
         $xml = $(xmlString);
         binding = Binding.parseXML($xml);
     });

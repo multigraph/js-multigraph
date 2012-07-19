@@ -10,8 +10,8 @@ if (!window.multigraph.Axis) {
     "use strict";
 
     var scalarAttributes = ["allowed", "min", "max"];
-    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
-    ns.jQueryXMLHandler.mixinfuncs.push(function (nsObj, parse, serialize) {
+
+    ns.jQueryXMLMixin.add(function (nsObj, parse, serialize) {
         
         nsObj.Axis.Pan[parse] = function (xml) {
             var pan = new nsObj.Axis.Pan();

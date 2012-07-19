@@ -9,13 +9,12 @@ describe("Data parsing", function () {
         Variable = window.multigraph.Data.Variables.Variable,
         Service = window.multigraph.Data.Service,
         CSV = window.multigraph.Data.CSV,
-        jQueryXMLHandler = window.multigraph.jQueryXMLHandler,
         xmlString = '<data/>',
         $xml,
         data;
 
     beforeEach(function () {
-        jQueryXMLHandler.mixin(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
 	$xml = $(xmlString);
         data = Data.parseXML($xml);
     });

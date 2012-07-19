@@ -7,7 +7,6 @@ describe("Plot parsing", function () {
         Graph = window.multigraph.Graph,
         Axis = window.multigraph.Axis,
         Variable = window.multigraph.Data.Variables.Variable,
-        jQueryXMLHandler = window.multigraph.jQueryXMLHandler,
         xmlString = '<plot></plot>',
         plot,
         graph,
@@ -19,7 +18,7 @@ describe("Plot parsing", function () {
         $xml;
 
     beforeEach(function () {
-        jQueryXMLHandler.mixin(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
 	$xml = $(xmlString);
         
     });

@@ -4,13 +4,12 @@ describe("Axis Title parsing", function () {
     "use strict";
 
     var Title = window.multigraph.Axis.Title,
-        jQueryXMLHandler = window.multigraph.jQueryXMLHandler,
         xmlString = '<title position="-1 1" anchor="1 1" angle="70">A Title</title>',
         $xml,
         title;
 
     beforeEach(function () {
-        jQueryXMLHandler.mixin(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
         $xml = $(xmlString);
         title = Title.parseXML($xml);
     });

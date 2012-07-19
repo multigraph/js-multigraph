@@ -4,13 +4,12 @@ describe("UI parsing", function () {
     "use strict";
 
     var UI = window.multigraph.UI,
-        jQueryXMLHandler = window.multigraph.jQueryXMLHandler,
         xmlString = '<ui eventhandler="error"/>',
         $xml,
         ui;
 
     beforeEach(function () {
-        jQueryXMLHandler.mixin(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
 	$xml = $(xmlString);
         ui = UI.parseXML($xml);
     });

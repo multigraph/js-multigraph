@@ -6,8 +6,8 @@ if (!window.multigraph) {
     "use strict";
 
     var scalarAttributes = ["type"];
-    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
-    ns.jQueryXMLHandler.mixinfuncs.push(function (nsObj, parse, serialize) {
+
+    ns.jQueryXMLMixin.add(function (nsObj, parse, serialize) {
 
         nsObj.Plot.Filter[parse] = function (xml) {
             var filter = new nsObj.Plot.Filter();

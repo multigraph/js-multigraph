@@ -4,13 +4,12 @@ describe("Plot Legend parsing", function () {
     "use strict";
 
     var Legend = window.multigraph.Plot.Legend,
-        jQueryXMLHandler = window.multigraph.jQueryXMLHandler,
         xmlString = '<legend visible="true" label="curly"/>',
         $xml,
         legend;
 
     beforeEach(function () {
-        jQueryXMLHandler.mixin(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
 	$xml = $(xmlString);
         legend = Legend.parseXML($xml);
     });

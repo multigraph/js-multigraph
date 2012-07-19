@@ -4,13 +4,12 @@ describe("Plot Filter parsing", function () {
     "use strict";
 
     var Filter = window.multigraph.Plot.Filter,
-        jQueryXMLHandler = window.multigraph.jQueryXMLHandler,
         xmlString = '<filter type="number"/>',
         $xml,
         f;
 
     beforeEach(function () {
-        jQueryXMLHandler.mixin(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
 	$xml = $(xmlString);
         f = Filter.parseXML($xml);
     });
@@ -35,7 +34,7 @@ describe("Plot Filter parsing", function () {
 
         beforeEach(function () {
             xmlString = '<filter type="number"><option name="fred" value="jim"/></filter>';
-            jQueryXMLHandler.mixin(window.multigraph, 'parseXML', 'serialize');
+            window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
             $xml = $(xmlString);
             f = Filter.parseXML($xml);
         });

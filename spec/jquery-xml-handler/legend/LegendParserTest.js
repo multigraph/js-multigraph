@@ -4,14 +4,13 @@ describe("Legend parsing", function () {
     "use strict";
 
     var Legend = window.multigraph.Legend,
-        jQueryXMLHandler = window.multigraph.jQueryXMLHandler,
         xmlString = '<legend color="0x56839c" bordercolor="0x941394" visible="true" base="-1 -1" anchor="0 0" frame="padding" opacity="1" border="10" rows="4" columns="3" cornerradius="5" padding="4"/>',
         $xml,
         l,
         b;
 
     beforeEach(function () {
-        jQueryXMLHandler.mixin(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
         $xml = $(xmlString);
         l = Legend.parseXML($xml);
     });
@@ -70,7 +69,7 @@ describe("Legend parsing", function () {
 
         beforeEach(function () {
             xmlString = '<legend visible="true" base="-1 -1" anchor="0 0" frame="padding" color="0x56839c" bordercolor="0x941394" opacity="1" border="10" rows="4" columns="3" cornerradius="5" padding="2"><icon height="35" width="50" border="2"/></legend>';
-            jQueryXMLHandler.mixin(window.multigraph, 'parseXML', 'serialize');
+            window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
             $xml = $(xmlString);
             l = Legend.parseXML($xml);
         });

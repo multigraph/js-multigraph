@@ -9,8 +9,7 @@ if (!window.multigraph.Data) {
 (function (ns) {
     "use strict";
 
-    ns.jQueryXMLHandler = ns.jQueryXMLHandler ? ns.jQueryXMLHandler : { "mixinfuncs" : [] };
-    ns.jQueryXMLHandler.mixinfuncs.push(function (nsObj, parse, serialize) {
+    ns.jQueryXMLMixin.add(function (nsObj, parse, serialize) {
         
         nsObj.Data.Values[parse] = function (xml) {
             var values = new nsObj.Data.Values();

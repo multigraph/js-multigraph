@@ -4,13 +4,12 @@ describe("Background parsing", function () {
     "use strict";
 
     var Background = window.multigraph.Background,
-        jQueryXMLHandler = window.multigraph.jQueryXMLHandler,
         xmlString = '<background color="0x123456"/>',
         $xml,
         b;
 
     beforeEach(function () {
-        jQueryXMLHandler.mixin(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
         $xml = $(xmlString);
         b = Background.parseXML($xml);
     });
@@ -28,7 +27,7 @@ describe("Background parsing", function () {
 
         beforeEach(function () {
             xmlString = '<background color="0x123456"><img src="http://www.example.com/corgi_pool.gif"/></background>';
-            jQueryXMLHandler.mixin(window.multigraph, 'parseXML', 'serialize');
+            window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
             $xml = $(xmlString);
             b = Background.parseXML($xml);
         });
