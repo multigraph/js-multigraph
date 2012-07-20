@@ -44,7 +44,7 @@ describe("Plot", function () {
 
         it("should be able to add axes with attributes to a Plot", function () {
             h.id("xaxis");
-            v.min("auto").id("yaxis");
+            v.min(30).id("yaxis");
             p.horizontalaxis(h);
             p.verticalaxis(v);
             expect(p.horizontalaxis() === h).toBe(true);
@@ -54,12 +54,12 @@ describe("Plot", function () {
         it("should be able to set/get attributes of axes added to a Plot", function () {
             p.horizontalaxis(h);
             p.verticalaxis(v);
-            p.horizontalaxis().id("xaxis").min("auto");
-            p.verticalaxis().id("yaxis").max("200");
+            p.horizontalaxis().id("xaxis").min(12);
+            p.verticalaxis().id("yaxis").max(200);
             expect(p.horizontalaxis().id() === 'xaxis').toBe(true);
-            expect(p.horizontalaxis().min() === 'auto').toBe(true);
+            expect(p.horizontalaxis().min()).toBe(12);
             expect(p.verticalaxis().id() === 'yaxis').toBe(true);
-            expect(p.verticalaxis().max() === '200').toBe(true);
+            expect(p.verticalaxis().max()).toBe(200);
         });
 
     });

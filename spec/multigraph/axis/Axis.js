@@ -83,16 +83,16 @@ describe("Axis", function () {
 
     describe("pregap attribute", function () {
         it("should be able to set/get the pregap attribute", function () {
-            a.pregap('1 1');
-            expect(a.pregap() === '1 1').toBe(true);
+            a.pregap(2);
+            expect(a.pregap()).toBe(2);
         });
 
     });
 
     describe("postgap attribute", function () {
         it("should be able to set/get the postgap attribute", function () {
-            a.postgap('7');
-            expect(a.postgap() === '7').toBe(true);
+            a.postgap(7);
+            expect(a.postgap()).toBe(7);
         });
 
     });
@@ -128,60 +128,60 @@ describe("Axis", function () {
 
     describe("min attribute", function () {
         it("should be able to set/get the min attribute", function () {
-            a.min('17');
-            expect(a.min() === '17').toBe(true);
+            a.min(17);
+            expect(a.min()).toBe(17);
         });
 
-        it("should throw an error if the parameter is not a string", function () {
+        it("should throw an error if the parameter is not a number, datetime or 'auto'", function () {
             expect(function () {
                 a.min(true);
-            }).toThrow(new Error("invalid setter call for min"));
+            }).toThrow(new Error("true should be a number"));
         });
 
     });
 
     describe("minoffset attribute", function () {
         it("should be able to set/get the minoffset attribute", function () {
-            a.minoffset('9');
-            expect(a.minoffset() === '9').toBe(true);
+            a.minoffset(9);
+            expect(a.minoffset()).toBe(9);
         });
 
     });
 
     describe("minposition attribute", function () {
         it("should be able to set/get the minposition attribute", function () {
-            a.minposition('-1 1');
-            expect(a.minposition() === '-1 1').toBe(true);
+            a.minposition(-1);
+            expect(a.minposition()).toBe(-1);
         });
 
     });
 
     describe("max attribute", function () {
         it("should be able to set/get the max attribute", function () {
-            a.max('the-max');
-            expect(a.max() === 'the-max').toBe(true);
+            a.max(94);
+            expect(a.max()).toBe(94);
         });
 
-        it("should throw an error if the parameter is not a string", function () {
+        it("should throw an error if the parameter is not a number, datetime or 'auto'", function () {
             expect(function () {
-                a.max(true);
-            }).toThrow(new Error("invalid setter call for max"));
+                a.max('the-max');
+            }).toThrow(new Error("the-max should be a number"));
         });
 
     });
 
     describe("maxoffset attribute", function () {
         it("should be able to set/get the maxoffset attribute", function () {
-            a.maxoffset('8');
-            expect(a.maxoffset() === '8').toBe(true);
+            a.maxoffset(8);
+            expect(a.maxoffset()).toBe(8);
         });
 
     });
 
     describe("maxposition attribute", function () {
         it("should be able to set/get the maxposition attribute", function () {
-            a.maxposition('-1 0');
-            expect(a.maxposition() === '-1 0').toBe(true);
+            a.maxposition(10);
+            expect(a.maxposition()).toBe(10);
         });
 
     });

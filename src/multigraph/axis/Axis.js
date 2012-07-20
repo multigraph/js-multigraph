@@ -78,52 +78,26 @@ if (!window.multigraph) {
         this.hasA("position").which.validatesWith(function (position) {
             return position instanceof ns.math.Point;
         });
-        this.hasA("pregap").which.validatesWith(function (pregap) {
-            //TODO: number (but deprecated)
-            return typeof(pregap) === "string";
-        });
-        this.hasA("postgap").which.validatesWith(function (postgap) {
-            //TODO: number (but deprecated)
-            return typeof(postgap) === "string";
-        });
+        this.hasA("pregap").which.isA("number");
+        this.hasA("postgap").which.isA("number");
         this.hasAn("anchor").which.isA("number");
         this.hasA("base").which.validatesWith(function (base) {
             return base instanceof ns.math.Point;
         });
-        this.hasA("min").which.validatesWith(function (min) {
-            //TODO: number
-            return typeof(min) === "string";
-        });
-        this.hasA("minoffset").which.validatesWith(function (minoffset) {
-            //TODO: number
-            return typeof(minoffset) === "string";
-        });
-        this.hasA("minposition").which.validatesWith(function (minposition) {
-            //TODO: number
-            return typeof(minposition) === "string";
-        });
-        this.hasA("max").which.validatesWith(function (max) {
-            //TODO: number
-            return typeof(max) === "string";
-        });
-        this.hasA("maxoffset").which.validatesWith(function (maxoffset) {
-            //TODO: number
-            return typeof(maxoffset) === "string";
-        });
-        this.hasA("maxposition").which.validatesWith(function (maxposition) {
-            //TODO: number
-            return typeof(maxposition) === "string";
-        });
+        this.hasA("min").which.isA("number"); // TODO: Also datetime
+                                              //       also 'auto'         
+        this.hasA("minoffset").which.isA("number");
+        this.hasA("minposition").which.isA("number");
+        this.hasA("max").which.isA("number"); // TODO: Also datetime
+                                              //       also 'auto'         
+        this.hasA("maxoffset").which.isA("number");
+        this.hasA("maxposition").which.isA("number");
         this.hasA("positionbase").which.validatesWith(function (positionbase) {
             //deprecated
             return typeof(positionbase) === "string";
         });
         this.hasA("color").which.validatesWith(function (color) {
             return color instanceof ns.math.RGBColor;
-        });
-        this.hasA("min").which.validatesWith(function (min) {
-            //TODO: number
-            return typeof(min) === "string";
         });
         this.hasA("tickmin").which.isA("integer");
         this.hasA("tickmax").which.isA("integer");

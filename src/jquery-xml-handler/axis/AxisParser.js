@@ -29,20 +29,20 @@ if (!window.multigraph) {
                 if (xml.attr("position")) {
                     axis.position(ns.math.Point.parse(xml.attr("position")));
                 }
-                axis.pregap(xml.attr("pregap"));
-                axis.postgap(xml.attr("postgap"));
+                axis.pregap(ns.utilityFunctions.parseDoubleOrUndefined(xml.attr("pregap")));
+                axis.postgap(ns.utilityFunctions.parseDoubleOrUndefined(xml.attr("postgap")));
                 if (xml.attr("anchor")) {
                     axis.anchor(parseFloat(xml.attr("anchor")));
                 }
                 if (xml.attr("base")) {
                     axis.base(ns.math.Point.parse(xml.attr("base")));
                 }
-                axis.min(xml.attr("min"));
-                axis.minoffset(xml.attr("minoffset"));
-                axis.minposition(xml.attr("minposition"));
-                axis.max(xml.attr("max"));
-                axis.maxoffset(xml.attr("maxoffset"));
-                axis.maxposition(xml.attr("maxposition"));
+                axis.min(ns.utilityFunctions.parseDoubleOrUndefined(xml.attr("min")));
+                axis.minoffset(ns.utilityFunctions.parseDoubleOrUndefined(xml.attr("minoffset")));
+                axis.minposition(ns.utilityFunctions.parseDoubleOrUndefined(xml.attr("minposition")));
+                axis.max(ns.utilityFunctions.parseDoubleOrUndefined(xml.attr("max")));
+                axis.maxoffset(ns.utilityFunctions.parseDoubleOrUndefined(xml.attr("maxoffset")));
+                axis.maxposition(ns.utilityFunctions.parseDoubleOrUndefined(xml.attr("maxposition")));
                 axis.positionbase(xml.attr("positionbase"));
                 axis.color(ns.math.RGBColor.parse(xml.attr("color")));
                 axis.tickmin(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr("tickmin")));

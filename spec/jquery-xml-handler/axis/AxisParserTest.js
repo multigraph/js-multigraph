@@ -12,7 +12,7 @@ describe("Axis parsing", function () {
         Zoom = window.multigraph.Axis.Zoom,
         Binding = window.multigraph.Axis.Binding,
         AxisControls = window.multigraph.Axis.AxisControls,
-        xmlString = '<horizontalaxis color="0x123456" id="x" type="number" pregap="2" postgap="4" anchor="1" min="0" minoffset="19" minposition="0 0" max="10" maxoffset="2" maxposition="0 1" positionbase="0 0" tickmin="-3" tickmax="3" highlightstyle="bold" linewidth="1" length="1+0" position="1,1" base="1,-1"/>',
+        xmlString = '<horizontalaxis color="0x123456" id="x" type="number" pregap="2" postgap="4" anchor="1" min="0" minoffset="19" minposition="1" max="10" maxoffset="2" maxposition="15" positionbase="0 0" tickmin="-3" tickmax="3" highlightstyle="bold" linewidth="1" length="1+0" position="1,1" base="1,-1"/>',
         $xml,
         axis;
 
@@ -44,11 +44,11 @@ describe("Axis parsing", function () {
     });
 
     it("should be able to parse an axis from XML and read its 'pregap' attribute", function () {
-        expect(axis.pregap() === '2').toBe(true);
+        expect(axis.pregap()).toBe(2);
     });
 
     it("should be able to parse an axis from XML and read its 'postgap' attribute", function () {
-        expect(axis.postgap() === '4').toBe(true);
+        expect(axis.postgap()).toBe(4);
     });
 
     it("should be able to parse an axis from XML and read its 'anchor' attribute", function () {
@@ -61,27 +61,27 @@ describe("Axis parsing", function () {
     });
 
     it("should be able to parse an axis from XML and read its 'min' attribute", function () {
-        expect(axis.min() === '0').toBe(true);
+        expect(axis.min()).toBe(0);
     });
 
     it("should be able to parse an axis from XML and read its 'minoffset' attribute", function () {
-        expect(axis.minoffset() === '19').toBe(true);
+        expect(axis.minoffset()).toBe(19);
     });
 
     it("should be able to parse an axis from XML and read its 'minposition' attribute", function () {
-        expect(axis.minposition() === '0 0').toBe(true);
+        expect(axis.minposition()).toBe(1);
     });
 
     it("should be able to parse an axis from XML and read its 'max' attribute", function () {
-        expect(axis.max() === '10').toBe(true);
+        expect(axis.max()).toBe(10);
     });
 
     it("should be able to parse an axis from XML and read its 'maxoffset' attribute", function () {
-        expect(axis.maxoffset() === '2').toBe(true);
+        expect(axis.maxoffset()).toBe(2);
     });
 
     it("should be able to parse an axis from XML and read its 'maxposition' attribute", function () {
-        expect(axis.maxposition() === '0 1').toBe(true);
+        expect(axis.maxposition()).toBe(15);
     });
 
     it("should be able to parse an axis from XML and read its 'positionbase' attribute", function () {

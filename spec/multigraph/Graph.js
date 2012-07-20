@@ -77,8 +77,8 @@ describe("Graph", function () {
         });
 
         it("should be able to add multiple tags with attr's to a Graph", function () {
-            h.id("a id").min("10");
-            v.max("200").orientation("vertical").id("Another id");
+            h.id("a id").min(10);
+            v.max(200).orientation("vertical").id("Another id");
             p.horizontalaxis(h);
             g.axes().add(h);
             g.axes().add(v);
@@ -89,12 +89,12 @@ describe("Graph", function () {
         });
 
         it("should be able to set/get attributes of tags added to a Graph", function () {
-            h.id("larry").min("10");
-            v.max("200").orientation("vertical").id("curly");
+            h.id("larry").min(10);
+            v.max(200).orientation("vertical").id("curly");
             g.axes().add(h);
             g.axes().add(v);
             expect(g.axes().at(0).id() === "larry").toBe(true);
-            expect(g.axes().at(1).max() === "200").toBe(true);
+            expect(g.axes().at(1).max()).toBe(200);
             g.axes().at(0).id("moe");
             expect(g.axes().at(0).id() === "moe").toBe(true);
         });
