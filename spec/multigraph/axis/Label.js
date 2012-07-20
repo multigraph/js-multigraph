@@ -4,6 +4,7 @@ describe("Axis Label", function () {
     "use strict";
 
     var Label = window.multigraph.Axis.Labels.Label,
+        Point = window.multigraph.math.Point,
         label;
 
     beforeEach(function () {
@@ -40,16 +41,18 @@ describe("Axis Label", function () {
 
     describe("position attribute", function () {
         it("should be able to set/get the position attribute", function () {
-            label.position('0 1');
-            expect(label.position() === '0 1').toBe(true);
+            label.position(new Point(0,1));
+            expect(label.position().x()).toEqual(0);
+            expect(label.position().y()).toEqual(1);
         });
 
     });
 
     describe("anchor attribute", function () {
         it("should be able to set/get the anchor attribute", function () {
-            label.anchor('-1 1');
-            expect(label.anchor() === '-1 1').toBe(true);
+            label.anchor(new Point(-1,1));
+            expect(label.anchor().x()).toEqual(-1);
+            expect(label.anchor().y()).toEqual(1);
         });
 
     });
@@ -64,8 +67,8 @@ describe("Axis Label", function () {
 
     describe("densityfactor attribute", function () {
         it("should be able to set/get the densityfactor attribute", function () {
-            label.densityfactor('5');
-            expect(label.densityfactor() === '5').toBe(true);
+            label.densityfactor(5);
+            expect(label.densityfactor()).toEqual(5);
         });
 
     });

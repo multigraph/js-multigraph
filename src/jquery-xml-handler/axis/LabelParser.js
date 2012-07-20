@@ -9,7 +9,7 @@ if (!window.multigraph.Axis) {
 (function (ns) {
     "use strict";
 
-    var scalarAttributes = ["format", "start", "angle", "position", "anchor", "densityfactor", "spacing"];
+    var scalarAttributes = ["format", "start", "angle", "densityfactor", "spacing"];
 
     ns.jQueryXMLMixin.add(function (nsObj, parse, serialize) {
         
@@ -20,9 +20,13 @@ if (!window.multigraph.Axis) {
                 label.format(xml.attr("format"));
                 label.start(xml.attr("start"));
                 label.angle(nsObj.utilityFunctions.parseDoubleOrUndefined(xml.attr("angle")));
-                label.position(xml.attr("position"));
-                label.anchor(xml.attr("anchor"));
-                label.densityfactor(xml.attr("densityfactor"));
+                if (xml.attr("position") !== undefined) { 
+                    label.position(nsObj.math.Point.parse(xml.attr("position")));
+                }
+                if (xml.attr("anchor")) {
+                    label.anchor(nsObj.math.Point.parse(xml.attr("anchor")));
+                }
+                label.densityfactor(nsObj.utilityFunctions.parseDoubleOrUndefined(xml.attr("densityfactor")));
             }
             return label;
         };
@@ -32,7 +36,12 @@ if (!window.multigraph.Axis) {
                 output = '<label ';
 
             attributeStrings = ns.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
-
+            if (this.anchor()) {
+                attributeStrings.push('anchor="' + this.anchor().serialize() + '"');
+            }
+            if (this.position()) {
+                attributeStrings.push('position="' + this.position().serialize() + '"');
+            }
             output += attributeStrings.join(' ') + '/>';
 
             return output;

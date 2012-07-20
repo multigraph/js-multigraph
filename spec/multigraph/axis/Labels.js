@@ -4,6 +4,7 @@ describe("Axis Labels", function () {
     "use strict";
 
     var Labels = window.multigraph.Axis.Labels,
+        Point = window.multigraph.math.Point,
         l;
 
     beforeEach(function () {
@@ -104,7 +105,7 @@ describe("Axis Labels", function () {
 
         it("should be able to add a Label with attributes to a Labels", function () {
             label.spacing("10 5 1");
-            label.position("1 0");
+            label.position(new Point(1,0));
             l.label().add(label);
             expect(l.label().at(0) === label).toBe(true);
         });
@@ -112,9 +113,9 @@ describe("Axis Labels", function () {
         it("should be able to add many Label tags with attributes to a Labels tag", function () {
             var label2 = new Label("10 5 1"),
                 label3 = new Label("10 5 1");
-            label.spacing("100 10 5 1").position("1 0");
-            label2.spacing("10 5 1").angle(-7).anchor("1 1");
-            label3.spacing("10 5 1").position("0 0");
+            label.spacing("100 10 5 1").position(new Point(1,0));
+            label2.spacing("10 5 1").angle(-7).anchor(new Point(1,1));
+            label3.spacing("10 5 1").position(new Point(0,0));
             l.label().add(label);
             l.label().add(label2);
             l.label().add(label3);
@@ -126,9 +127,9 @@ describe("Axis Labels", function () {
         it("should be able to set/get attributes of an Label added to a Labels", function () {
             var label2 = new Label("10 5 1"),
                 label3 = new Label("10 5 1");
-            label.spacing("100 10 5 1").position("1 0");
-            label2.spacing("10 5 1").angle(-7).anchor("1 1");
-            label3.spacing("10 5 1").position("0 0");
+            label.spacing("100 10 5 1").position(new Point(1,0));
+            label2.spacing("10 5 1").angle(-7).anchor(new Point(1,1));
+            label3.spacing("10 5 1").position(new Point(0,0));
             l.label().add(label);
             l.label().add(label2);
             l.label().add(label3);

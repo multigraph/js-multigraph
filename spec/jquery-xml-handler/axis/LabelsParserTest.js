@@ -61,11 +61,43 @@ describe("Axis Labels parsing", function () {
         var Label = window.multigraph.Axis.Labels.Label;
 
         beforeEach(function () {
-            xmlString = '<labels format="%1d" angle="9" position="-1 1" densityfactor=".5" function="larry"><label start="10" position="1 1" anchor="0 0" spacing="100 75"/><label format="%2d" start="10" angle="9" position="1 1" anchor="0 0" densityfactor=".5" spacing="50 25 10 5 2 1"/><label format="%2d" start="10" angle="9" position="1 1" densityfactor=".8" spacing="0.5 0.1"/></labels>';
+            xmlString = '<labels'
+                +   ' format="%1d"'
+                +   ' start="0"'
+                +   ' angle="9"'
+                +   ' position="-1 1"'
+                +   ' anchor="0,0"'
+                +   ' densityfactor=".5"'
+                +   ' function="larry"'
+                +   '>'
+                + '<label'
+                +     ' start="10"'
+                +     ' spacing="100 75"'
+                +     ' anchor="0,0"'
+                +     ' position="1,1"'
+                +     '/>'
+                + '<label'
+                +     ' format="%2d"'
+                +     ' start="10"'
+                +     ' angle="9"'
+                +     ' densityfactor="0.5"'
+                +     ' spacing="50 25 10 5 2 1"'
+                +     ' anchor="0,0"'
+                +     ' position="1,1"'
+                +     '/>'
+                + '<label'
+                +     ' format="%2d"'
+                +     ' start="10"'
+                +     ' angle="9"'
+                +     ' densityfactor="0.8"'
+                +     ' spacing="0.5 0.1"'
+                +     ' position="1,1"'
+                +     '/>'
+                + '</labels>';
             window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
             $xml = $(xmlString);
             labels = Labels.parseXML($xml);
-        });
+        })
 
         it("should be able to parse a labels with children from XML", function () {
             expect(labels).not.toBeUndefined();
@@ -78,8 +110,8 @@ describe("Axis Labels parsing", function () {
             expect(labels.label().at(2) instanceof Label).toBe(true);
         });
 
-        xit("should be able to parse a labels with children from XML, serialize it and get the same XML as the original", function () {
-            expect(labels.serialize() === xmlString).toBe(true);
+        it("should be able to parse a labels with children from XML, serialize it and get the same XML as the original", function () {
+            expect(labels.serialize()).toBe(xmlString);
         });
 
     });

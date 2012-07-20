@@ -73,7 +73,7 @@ describe("Axis", function () {
             expect(a.position().y()).toEqual(1);
         });
 
-        it("should throw an error if the parameter is not a string", function () {
+        it("should throw an error if the parameter is not a point", function () {
             expect(function () {
                 a.position(true);
             }).toThrow(new Error("invalid setter call for position"));
@@ -290,7 +290,7 @@ describe("Axis", function () {
             var label = new Label('10 1 .2'),
                 label2 = new Label('100 50 25');
             labels.position('1 1');
-            label2.anchor('0 0');
+            label2.anchor(new Point(0,0));
             labels.label().add(label);
             labels.label().add(label2);
             a.labels(labels);
@@ -306,12 +306,12 @@ describe("Axis", function () {
             labels.label().add(label2);
             a.labels(labels);
             a.labels().position("1 1").angle(40);
-            a.labels().label().at(1).anchor("0 1").angle(14);
+            a.labels().label().at(1).anchor(new Point(0,1)).angle(14);
             expect(a.labels().position() === "1 1").toBe(true);
             expect(a.labels().angle()).toBe(40);
             expect(a.labels().label().at(0).spacing() === '20 10 2 1').toBe(true);
             expect(a.labels().label().at(1).spacing() === '200 100').toBe(true);
-            expect(a.labels().label().at(1).anchor() === '0 1').toBe(true);
+            expect(a.labels().label().at(1).anchor().serialize() === '0,1').toBe(true);
             expect(a.labels().label().at(1).angle()).toBe(14);
         });
 

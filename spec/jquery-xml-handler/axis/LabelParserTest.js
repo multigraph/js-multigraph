@@ -4,7 +4,15 @@ describe("Axis Label parsing", function () {
     "use strict";
 
     var Label = window.multigraph.Axis.Labels.Label,
-        xmlString = '<label format="%2d" start="7" angle="45" position="-1 1" anchor="1 1" densityfactor=".9" spacing="200 100 75 50"/>',
+        xmlString = '<label'
+        +    ' format="%2d"'
+        +    ' start="7"'
+        +    ' angle="45"'
+        +    ' densityfactor="0.9"'
+        +    ' spacing="200 100 75 50"'
+        +    ' anchor="1,1"'
+        +    ' position="-1,1"'
+        +    '/>',
         $xml,
         label;
 
@@ -32,11 +40,11 @@ describe("Axis Label parsing", function () {
     });
 
     it("should be able to parse a label from XML and read its 'position' attribute", function () {
-        expect(label.position() === '-1 1').toBe(true);
+        expect(label.position().serialize()).toEqual("-1,1");
     });
 
     it("should be able to parse a label from XML and read its 'anchor' attribute", function () {
-        expect(label.anchor() === '1 1').toBe(true);
+        expect(label.anchor().serialize()).toEqual("1,1");
     });
 
     it("should be able to parse a label from XML and read its 'spacing' attribute", function () {
@@ -44,14 +52,14 @@ describe("Axis Label parsing", function () {
     });
 
     it("should be able to parse a label from XML and read its 'densityfactor' attribute", function () {
-        expect(label.densityfactor() === '.9').toBe(true);
+        expect(label.densityfactor()).toEqual(0.9);
     });
 
     it("should be able to parse a label from XML, serialize it and get the same XML as the original", function () {
-        var xmlString2 = '<label start="10" angle="-30" anchor="1 1" spacing="25 10"/>';
-        expect(label.serialize() === xmlString).toBe(true);
+        var xmlString2 = '<label start="10" angle="-30" spacing="25 10" anchor="1,1"/>';
+        expect(label.serialize()).toBe(xmlString);
         label = Label.parseXML($(xmlString2));
-        expect(label.serialize() === xmlString2).toBe(true);
+        expect(label.serialize()).toBe(xmlString2);
     });
 
 });
