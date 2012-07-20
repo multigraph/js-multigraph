@@ -1,3 +1,25 @@
 <mugl>
-  <window margin="333" padding="444"/>
+    <horizontalaxis id="x" min="0" max="10"/>
+    <verticalaxis   id="y" min="0" max="10" position="5,0" length="1-20"/>
+    <plot>
+      <horizontalaxis ref="x">
+        <variable ref="x"/>
+      </horizontalaxis>
+      <verticalaxis ref="y">
+        <variable ref="y"/>
+      </verticalaxis>
+      <renderer type="line">
+      </renderer>
+    </plot>
+    <data>
+      <variables>
+        <variable column="0" id="x"/>
+        <variable column="1" id="y"/>
+      </variables>
+      <values>
+        1,2
+        3,4
+        5,6
+      </values>
+    </data>
 </mugl>

@@ -61,7 +61,7 @@ describe("Axis", function () {
             a.length(window.multigraph.math.Displacement.parse(".5+2"));
             expect(a.length().serialize()).toBe("0.5+2");
             a.length(window.multigraph.math.Displacement.parse(".7"));
-            expect(a.length().serialize()).toBe("0.7+0");
+            expect(a.length().serialize()).toBe("0.7");
         });
 
     });
@@ -150,10 +150,10 @@ describe("Axis", function () {
 
     describe("minposition attribute", function () {
         it("should be able to set/get the minposition attribute", function () {
-            a.minposition(-1);
-            expect(a.minposition()).toBe(-1);
+            a.minposition(new window.multigraph.math.Displacement(-1,1));
+            expect(a.minposition().a()).toEqual(-1);
+            expect(a.minposition().b()).toEqual(1);
         });
-
     });
 
     describe("max attribute", function () {
@@ -180,10 +180,10 @@ describe("Axis", function () {
 
     describe("maxposition attribute", function () {
         it("should be able to set/get the maxposition attribute", function () {
-            a.maxposition(10);
-            expect(a.maxposition()).toBe(10);
+            a.maxposition(new window.multigraph.math.Displacement(-1,1));
+            expect(a.maxposition().a()).toEqual(-1);
+            expect(a.maxposition().b()).toEqual(1);
         });
-
     });
 
     describe("color attribute", function () {

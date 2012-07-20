@@ -1,4 +1,4 @@
-/*global describe, it, beforeEach, expect, xit, jasmine */
+/*global describe, it, beforeEach, expect, it, jasmine */
 
 describe("Axis parsing", function () {
     "use strict";
@@ -12,7 +12,7 @@ describe("Axis parsing", function () {
         Zoom = window.multigraph.Axis.Zoom,
         Binding = window.multigraph.Axis.Binding,
         AxisControls = window.multigraph.Axis.AxisControls,
-        xmlString = '<horizontalaxis color="0x123456" id="x" type="number" pregap="2" postgap="4" anchor="1" min="0" minoffset="19" minposition="1" max="10" maxoffset="2" maxposition="15" positionbase="0 0" tickmin="-3" tickmax="3" highlightstyle="bold" linewidth="1" length="1+0" position="1,1" base="1,-1"/>',
+        xmlString = '<horizontalaxis color="0x123456" id="x" type="number" pregap="2" postgap="4" anchor="1" min="0" minoffset="19" max="10" maxoffset="2" positionbase="0 0" tickmin="-3" tickmax="3" highlightstyle="bold" linewidth="1" length="1" position="1,1" base="1,-1" minposition="-1" maxposition="1"/>',
         $xml,
         axis;
 
@@ -35,7 +35,7 @@ describe("Axis parsing", function () {
     });
 
     it("should be able to parse an axis from XML and read its 'length' attribute", function () {
-        expect(axis.length().serialize()).toBe("1+0");
+        expect(axis.length().serialize()).toBe("1");
     });
 
     it("should be able to parse an axis from XML and read its 'position' attribute", function () {
@@ -69,7 +69,8 @@ describe("Axis parsing", function () {
     });
 
     it("should be able to parse an axis from XML and read its 'minposition' attribute", function () {
-        expect(axis.minposition()).toBe(1);
+        expect(axis.minposition().a()).toBe(-1);
+        expect(axis.minposition().b()).toBe(0);
     });
 
     it("should be able to parse an axis from XML and read its 'max' attribute", function () {
@@ -81,7 +82,8 @@ describe("Axis parsing", function () {
     });
 
     it("should be able to parse an axis from XML and read its 'maxposition' attribute", function () {
-        expect(axis.maxposition()).toBe(15);
+        expect(axis.maxposition().a()).toBe(1);
+        expect(axis.maxposition().b()).toBe(0);
     });
 
     it("should be able to parse an axis from XML and read its 'positionbase' attribute", function () {
@@ -118,7 +120,7 @@ describe("Axis parsing", function () {
     describe("Title parsing", function () {
 
         beforeEach(function () {
-            xmlString = '<verticalaxis id="y2" type="number" length=".90"><title position="-1 1" anchor="1 1" angle="70">A Title</title></verticalaxis>';
+            xmlString = '<verticalaxis id="y2" type="number" pregap="0" postgap="0" anchor="-1" minoffset="0" maxoffset="0" tickmin="-3" tickmax="3" highlightstyle="axis" linewidth="1" length="0.9" position="0,0" base="-1,1" minposition="-1" maxposition="1"><title position="-1 1" anchor="1 1" angle="70">A Title</title></verticalaxis>';
             $xml = $(xmlString);
         });
 
@@ -130,7 +132,7 @@ describe("Axis parsing", function () {
 
         });
 
-        xit("should be able to parse a axis with a Title child from XML, serialize it and get the same XML as the original", function () {
+        it("should be able to parse a axis with a Title child from XML, serialize it and get the same XML as the original", function () {
             axis = Axis.parseXML($xml);
             expect(axis.serialize()).toBe(xmlString);
         });
@@ -140,7 +142,7 @@ describe("Axis parsing", function () {
     describe("Labels parsing", function () {
 
         beforeEach(function () {
-            xmlString = '<verticalaxis id="y2" type="number" length=".90"><labels format="%1d" start="10" angle="9" position="1 1" anchor="0 0" densityfactor=".5" function="fun" spacing="100 75 50 25 10 5 2 1 0.5 0.1"/></verticalaxis>';
+            xmlString = '<verticalaxis id="y2" type="number" pregap="0" postgap="0" anchor="-1" minoffset="0" maxoffset="0" tickmin="-3" tickmax="3" highlightstyle="axis" linewidth="1" length="0.9" position="0,0" base="-1,1" minposition="1" maxposition="1"><labels format="%1d" start="10" angle="9" position="1 1" anchor="0 0" densityfactor=".5" function="fun" spacing="100 75 50 25 10 5 2 1 0.5 0.1"/></verticalaxis>';
             $xml = $(xmlString);
         });
 
@@ -164,9 +166,9 @@ describe("Axis parsing", function () {
         });
 
 
-        xit("should be able to parse a axis with a Labels child from XML, serialize it and get the same XML as the original", function () {
+        it("should be able to parse a axis with a Labels child from XML, serialize it and get the same XML as the original", function () {
             axis = Axis.parseXML($xml);
-            expect(axis.serialize() === xmlString).toBe(true);
+            expect(axis.serialize()).toEqual(xmlString);
         });
 
         it("should be able to parse a axis with a complex Labels child from XML, serialize it and get thesame XML as the original", function () {
@@ -183,7 +185,7 @@ describe("Axis parsing", function () {
     describe("Grid parsing", function () {
 
         beforeEach(function () {
-            xmlString = '<verticalaxis id="y2" type="number" length=".90"><grid color="0x984545" visible="false"/></verticalaxis>';
+            xmlString = '<verticalaxis id="y2" type="number" pregap="0" postgap="0" anchor="-1" minoffset="0" maxoffset="0" tickmin="-3" tickmax="3" highlightstyle="axis" linewidth="1" length="0.9" position="0,0" base="-1,1" minposition="1" maxposition="1"><grid color="0x984545" visible="false"/></verticalaxis>';
             $xml = $(xmlString);
         });
 
@@ -195,9 +197,9 @@ describe("Axis parsing", function () {
 
         });
 
-        xit("should be able to parse a axis with a Grid child from XML, serialize it and get the same XML as the original", function () {
+        it("should be able to parse a axis with a Grid child from XML, serialize it and get the same XML as the original", function () {
             axis = Axis.parseXML($xml);
-            expect(axis.serialize() === xmlString).toBe(true);
+            expect(axis.serialize()).toEqual(xmlString);
         });
 
     });
@@ -205,7 +207,7 @@ describe("Axis parsing", function () {
     describe("Pan parsing", function () {
 
         beforeEach(function () {
-            xmlString = '<verticalaxis id="y2" type="number" length=".90"><pan allowed="yes" min="0" max="5"/></verticalaxis>';
+            xmlString = '<verticalaxis id="y2" type="number" pregap="0" postgap="0" anchor="-1" minoffset="0" maxoffset="0" tickmin="-3" tickmax="3" highlightstyle="axis" linewidth="1" length="0.9" position="0,0" base="-1,1" minposition="1" maxposition="1"><pan allowed="yes" min="0" max="5"/></verticalaxis>';
             $xml = $(xmlString);
         });
 
@@ -217,9 +219,9 @@ describe("Axis parsing", function () {
 
         });
 
-        xit("should be able to parse a axis with a Pan child from XML, serialize it and get the same XML as the original", function () {
+        it("should be able to parse a axis with a Pan child from XML, serialize it and get the same XML as the original", function () {
             axis = Axis.parseXML($xml);
-            expect(axis.serialize() === xmlString).toBe(true);
+            expect(axis.serialize()).toEqual(xmlString);
         });
 
     });
@@ -227,7 +229,7 @@ describe("Axis parsing", function () {
     describe("Zoom parsing", function () {
 
         beforeEach(function () {
-            xmlString = '<verticalaxis id="y2" type="number" length=".90"><zoom allowed="yes" min="0" max="80" anchor="1 1"/></verticalaxis>';
+            xmlString = '<verticalaxis id="y2" type="number" pregap="0" postgap="0" anchor="-1" minoffset="0" maxoffset="0" tickmin="-3" tickmax="3" highlightstyle="axis" linewidth="1" length="0.9" position="0,0" base="-1,1" minposition="1" maxposition="1"><zoom allowed="yes" min="0" max="80" anchor="1 1"/></verticalaxis>';
             $xml = $(xmlString);
         });
 
@@ -239,9 +241,9 @@ describe("Axis parsing", function () {
 
         });
 
-        xit("should be able to parse a axis with a Zoom child from XML, serialize it and get the same XML as the original", function () {
+        it("should be able to parse a axis with a Zoom child from XML, serialize it and get the same XML as the original", function () {
             axis = Axis.parseXML($xml);
-            expect(axis.serialize() === xmlString).toBe(true);
+            expect(axis.serialize()).toEqual(xmlString);
         });
 
     });
@@ -249,7 +251,7 @@ describe("Axis parsing", function () {
     describe("Binding parsing", function () {
 
         beforeEach(function () {
-            xmlString = '<verticalaxis id="y2" type="number" length=".90"><binding id="y" min="-10" max="50"/></verticalaxis>';
+            xmlString = '<verticalaxis id="y2" type="number" pregap="0" postgap="0" anchor="-1" minoffset="0" maxoffset="0" tickmin="-3" tickmax="3" highlightstyle="axis" linewidth="1" length="0.9" position="0,0" base="-1,1" minposition="1" maxposition="1"><binding id="y" min="-10" max="50"/></verticalaxis>';
             $xml = $(xmlString);
         });
 
@@ -261,9 +263,9 @@ describe("Axis parsing", function () {
 
         });
 
-        xit("should be able to parse a axis with a Binding child from XML, serialize it and get the same XML as the original", function () {
+        it("should be able to parse a axis with a Binding child from XML, serialize it and get the same XML as the original", function () {
             axis = Axis.parseXML($xml);
-            expect(axis.serialize() === xmlString).toBe(true);
+            expect(axis.serialize()).toEqual(xmlString);
         });
 
     });
@@ -271,7 +273,7 @@ describe("Axis parsing", function () {
     describe("AxisControls parsing", function () {
 
         beforeEach(function () {
-            xmlString = '<verticalaxis id="y2" type="number" length=".90"><axiscontrols visible="false"/></verticalaxis>';
+            xmlString = '<verticalaxis id="y2" type="number" pregap="0" postgap="0" anchor="-1" minoffset="0" maxoffset="0" tickmin="-3" tickmax="3" highlightstyle="axis" linewidth="1" length="0.9" position="0,0" base="-1,1" minposition="1" maxposition="1"><axiscontrols visible="false"/></verticalaxis>';
             $xml = $(xmlString);
         });
 
@@ -283,9 +285,9 @@ describe("Axis parsing", function () {
 
         });
 
-        xit("should be able to parse a axis with a Axiscontrols child from XML, serialize it and get the same XML as the original", function () {
+        it("should be able to parse a axis with a Axiscontrols child from XML, serialize it and get the same XML as the original", function () {
             axis = Axis.parseXML($xml);
-            expect(axis.serialize() === xmlString).toBe(true);
+            expect(axis.serialize()).toEqual(xmlString);
         });
 
     });
@@ -293,7 +295,7 @@ describe("Axis parsing", function () {
     describe("with multiple children", function () {
 
         beforeEach(function () {
-            xmlString = '<verticalaxis id="y2" type="number" length=".90"><title position="-1 1" anchor="1 1" angle="70">A Title</title><labels format="%1d" start="10" angle="9" position="1 1" anchor="0 0" densityfactor=".5" function="fun"><label spacing="200 100 50 10"/><label format="%2d" spacing="5 2 1 .5"/></labels><grid color="0x984545" visible="false"/><pan allowed="yes" min="0" max="5"/><zoom allowed="yes" min="0" max="80" anchor="1 1"/><binding id="y" min="-10" max="50"/><axiscontrols visible="false"/></verticalaxis>';
+            xmlString = '<verticalaxis id="y2" type="number" pregap="0" postgap="0" anchor="-1" minoffset="0" maxoffset="0" tickmin="-3" tickmax="3" highlightstyle="axis" linewidth="1" length="0.9" position="0,0" base="-1,1" minposition="1" maxposition="1"><title position="-1 1" anchor="1 1" angle="70">A Title</title><labels format="%1d" start="10" angle="9" position="1 1" anchor="0 0" densityfactor=".5" function="fun"><label spacing="200 100 50 10"/><label format="%2d" spacing="5 2 1 .5"/></labels><grid color="0x984545" visible="false"/><pan allowed="yes" min="0" max="5"/><zoom allowed="yes" min="0" max="80" anchor="1 1"/><binding id="y" min="-10" max="50"/><axiscontrols visible="false"/></verticalaxis>';
             $xml = $(xmlString);
         });
 
@@ -312,9 +314,9 @@ describe("Axis parsing", function () {
             expect(axis.axiscontrols() instanceof AxisControls).toBe(true);
         });
 
-        xit("should be able to parse a axis with multiple children from XML, serialize it and get the sameXML as the original", function () {
+        it("should be able to parse a axis with multiple children from XML, serialize it and get the sameXML as the original", function () {
             axis = Axis.parseXML($xml);
-            expect(axis.serialize() === xmlString).toBe(true);
+            expect(axis.serialize()).toEqual(xmlString);
         });
 
     });

@@ -5,7 +5,7 @@ if (!window.multigraph) {
 (function (ns) {
     "use strict";
 
-    var scalarAttributes = ["id", "type", "pregap", "postgap", "anchor", "min", "minoffset", "minposition", "max", "maxoffset", "maxposition", "positionbase", "tickmin", "tickmax", "highlightstyle", "linewidth"],
+    var scalarAttributes = ["id", "type", "pregap", "postgap", "anchor", "min", "minoffset", "max", "maxoffset", "positionbase", "tickmin", "tickmax", "highlightstyle", "linewidth"],
         children = ["title", "labels", "grid", "pan", "zoom", "binding", "axiscontrols"];
 
     ns.jQueryXMLMixin.add(function(ns, parse, serialize) {
@@ -37,12 +37,12 @@ if (!window.multigraph) {
                 if (xml.attr("base")) {
                     axis.base(ns.math.Point.parse(xml.attr("base")));
                 }
+                axis.minposition(ns.math.Displacement.parse(xml.attr("minposition")));
+                axis.maxposition(ns.math.Displacement.parse(xml.attr("maxposition")));
                 axis.min(ns.utilityFunctions.parseDoubleOrUndefined(xml.attr("min")));
                 axis.minoffset(ns.utilityFunctions.parseDoubleOrUndefined(xml.attr("minoffset")));
-                axis.minposition(ns.utilityFunctions.parseDoubleOrUndefined(xml.attr("minposition")));
                 axis.max(ns.utilityFunctions.parseDoubleOrUndefined(xml.attr("max")));
                 axis.maxoffset(ns.utilityFunctions.parseDoubleOrUndefined(xml.attr("maxoffset")));
-                axis.maxposition(ns.utilityFunctions.parseDoubleOrUndefined(xml.attr("maxposition")));
                 axis.positionbase(xml.attr("positionbase"));
                 axis.color(ns.math.RGBColor.parse(xml.attr("color")));
                 axis.tickmin(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr("tickmin")));
@@ -66,6 +66,8 @@ if (!window.multigraph) {
             attributeStrings.push('length="' + this.length().serialize() + '"');
             attributeStrings.push('position="' + this.position().serialize() + '"');
             attributeStrings.push('base="' + this.base().serialize() + '"');
+            attributeStrings.push('minposition="' + this.minposition().serialize() + '"');
+            attributeStrings.push('maxposition="' + this.maxposition().serialize() + '"');
 
             childStrings = ns.utilityFunctions.serializeChildModels(this, children, childStrings, serialize);
 

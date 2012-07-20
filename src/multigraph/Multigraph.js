@@ -17,6 +17,13 @@ if (!window.multigraph) {
             //NOTE: placeholder function.  This gets replaced by whatever graphics mixin is used.
         });
 
+        this.respondsTo("initializeGeometry", function(width, height) {
+            var i;
+            for (i=0; i<this.graphs().size(); ++i) {
+                this.graphs().at(i).initializeGeometry(width, height);
+            }
+        });
+
    });
 
     Multigraph.createGraph = function(divid, muglurl) {
@@ -26,7 +33,7 @@ if (!window.multigraph) {
 
         var muglPromise = $.ajax({
             "url"      : muglurl,
-            "dataType" : "xml",
+            "dataType" : "text",
         });
 
         var deferred = $.Deferred();

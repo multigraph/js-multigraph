@@ -65,8 +65,8 @@ if (!window.multigraph.math) {
         });
 
         this.respondsTo("serialize", function () {
-            var output = this.a();
-            if (this.b() !== undefined) {
+            var output = this.a().toString(10);
+            if (this.b() !== undefined && this.b() !== 0) {
                 if (this.b() >= 0) {
                     output += "+";
                 }

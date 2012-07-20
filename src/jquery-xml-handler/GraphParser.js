@@ -45,11 +45,11 @@ if (!window.multigraph) {
                 $.each(xml.find(">verticalaxis"), function (i,e) {
                     graph.axes().add( nsObj.Axis[parse]($(e)) );
                 });
-                $.each(xml.find(">plot"), function (i,e) {
-                    graph.plots().add( nsObj.Plot[parse]($(e), graph) );
-                });
                 $.each(xml.find(">data"), function (i,e) {
                     graph.data().add( nsObj.Data[parse]($(e)) );
+                });
+                $.each(xml.find(">plot"), function (i,e) {
+                    graph.plots().add( nsObj.Plot[parse]($(e), graph) );
                 });
                 graph.postParse();
             }

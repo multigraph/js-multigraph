@@ -87,11 +87,15 @@ if (!window.multigraph) {
         this.hasA("min").which.isA("number"); // TODO: Also datetime
                                               //       also 'auto'         
         this.hasA("minoffset").which.isA("number");
-        this.hasA("minposition").which.isA("number");
+        this.hasA("minposition").which.validatesWith(function (minposition) {
+            return minposition instanceof ns.math.Displacement;
+        });
         this.hasA("max").which.isA("number"); // TODO: Also datetime
                                               //       also 'auto'         
         this.hasA("maxoffset").which.isA("number");
-        this.hasA("maxposition").which.isA("number");
+        this.hasA("maxposition").which.validatesWith(function (maxposition) {
+            return maxposition instanceof ns.math.Displacement;
+        });
         this.hasA("positionbase").which.validatesWith(function (positionbase) {
             //deprecated
             return typeof(positionbase) === "string";
@@ -124,6 +128,8 @@ if (!window.multigraph) {
                 this.parallelOffset( this.position().y() + (this.base().y() + 1) * graph.plotBox().height()/2 - (this.anchor() + 1) * this.pixelLength() / 2 );
                 this.perpOffset( this.position().x() + (this.base().x() + 1) * graph.plotBox().width() / 2 );
             }
+            this.minoffset(this.minposition().calculateCoordinate(this.pixelLength()));
+            this.maxoffset(this.pixelLength() - this.maxposition().calculateCoordinate(this.pixelLength()));
 /*
             if (_orientation == AxisOrientation.HORIZONTAL) {
                 _pixelLength = _length.calculateLength( _graph.plotBox.width );

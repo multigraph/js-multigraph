@@ -66,6 +66,7 @@ if (!window.multigraph) {
             });
 
             this.respondsTo("initializeGeometry", function(width, height) {
+                var i;
                 this.windowBox( new Box(width, height) );
                 this.paddingBox( new Box(( width -
                                            ( this.window().margin().left()  + this.window().border() + this.window().padding().left() ) -
@@ -86,6 +87,9 @@ if (!window.multigraph) {
                                       )
                                      )
                             );
+                for (i = 0; i < this.axes().size(); ++i) {
+                    this.axes().at(i).initializeGeometry(this);
+                }
             });
 
             ns.utilityFunctions.insertDefaults(this, defaultValues, attributes);

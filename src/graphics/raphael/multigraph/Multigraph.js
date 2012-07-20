@@ -27,6 +27,7 @@ if (!window.multigraph) {
 
         ns.Multigraph.respondsTo("render", function() {
             var i;
+            this.initializeGeometry(this.width(), this.height());
             for (i=0; i<this.graphs().size(); ++i) {
                 this.graphs().at(i).render(this.paper(), this.width(), this.height());
             }
