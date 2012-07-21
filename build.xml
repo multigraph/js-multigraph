@@ -1,7 +1,34 @@
 <project name="multigraph" default="build">
   <loadproperties srcfile="build.properties" />
 
-  <target name="build" depends="clean,lint,concatenate,minify">
+
+<!--
+ PATH DEFINITIONS:
+    Each of the 'path' tags below defines a collection of files in a particular order.
+    These definitions are used elsewhere in this file to define the order in which
+    files are used when generating a concatenated build of multigraph, and/or when automatically
+    editing various html files (jasmine test running, raphael test files, etc).
+-->
+  <path id="path.multigraph-core-js">
+    <fileset dir="src/utility-functions" includes="**/*.js" />
+    <fileset dir="src/multigraph/math" includes="**/*.js" />
+    <fileset dir="src/data" includes="**/*.js" />
+    <fileset dir="src/multigraph" includes="**/*.js" excludes="src/multigraph/math/**/*.js"/>
+  </path>
+  <path id="path.jquery-xml-handler-js">
+    <filelist dir="src/jquery-xml-handler" files="JQueryXMLMixin.js"/>
+    <fileset dir="src/jquery-xml-handler" includes="**/*.js" excludes="JQueryXMLMixin.js" />
+  </path>
+  <path id="path.graphics-raphael-js">
+    <filelist dir="src/graphics/raphael" files="raphael.js"/>
+    <filelist dir="src/graphics/raphael" files="RaphaelMixin.js"/>
+    <fileset dir="src/graphics/raphael" includes="**/*.js" excludes="raphael.js RaphaelMixin.js" />
+  </path>
+  <path id="path.spec-js">
+    <fileset dir="spec" includes="**/*.js" />
+  </path>
+
+  <target name="build" depends="clean,lint,concatenate,minify,html">
   </target>
 
   <target name="clean">
@@ -9,10 +36,49 @@
     <delete file="${build.file.min}" />
   </target>
 
+  <target name="html" depends="jasmine-html,raphael-html">
+  </target>
+
+  <target name="jasmine-html">
+    <pathconvert property="scripttags.jasmine-src" pathsep="${line.separator}">
+      <path refid="path.multigraph-core-js"/>
+      <path refid="path.jquery-xml-handler-js"/>
+      <path refid="path.graphics-raphael-js"/>
+      <mapper type="regexp" from="^${basedir}/(.*)$" to='&lt;script type="text/javascript" src="../\1"&gt;&lt;/script&gt;'/>
+    </pathconvert>
+    <pathconvert property="scripttags.jasmine-spec" pathsep="${line.separator}">
+      <path refid="path.spec-js"/>
+      <mapper type="regexp" from="^${basedir}/spec/(.*)$" to='&lt;script type="text/javascript" src="\1"&gt;&lt;/script&gt;'/>
+    </pathconvert>
+    <replaceregexp flags="s">
+      <regexp pattern="&lt;!--BEGIN_ANT_LINES--&gt;.*&lt;!--END_ANT_LINES--&gt;"/>
+      <substitution expression="&lt;!--BEGIN_ANT_LINES--&gt;${line.separator}${scripttags.jasmine-src}${line.separator}${line.separator}${scripttags.jasmine-spec}${line.separator}&lt;!--END_ANT_LINES--&gt;"/>
+      <filelist dir="spec" files="index.html"/>
+    </replaceregexp>
+  </target>
+
+  <target name="raphael-html">
+    <pathconvert property="scripttags.mg-jq" pathsep="${line.separator}">
+      <path refid="path.multigraph-core-js"/>
+      <path refid="path.jquery-xml-handler-js"/>
+      <mapper type="regexp" from="^${basedir}/(.*)$" to='&lt;script type="text/javascript" src="../../../\1"&gt;&lt;/script&gt;'/>
+    </pathconvert>
+    <pathconvert property="scripttags.raphael" pathsep="${line.separator}">
+      <path refid="path.graphics-raphael-js"/>
+      <mapper type="regexp" from="^${basedir}/src/graphics/raphael/(.*)$" to='&lt;script type="text/javascript" src="\1"&gt;&lt;/script&gt;'/>
+    </pathconvert>
+    <replaceregexp flags="s">
+      <regexp pattern="&lt;!--BEGIN_ANT_LINES--&gt;.*&lt;!--END_ANT_LINES--&gt;"/>
+      <substitution expression="&lt;!--BEGIN_ANT_LINES--&gt;${line.separator}${scripttags.mg-jq}${line.separator}${line.separator}${scripttags.raphael}${line.separator}&lt;!--END_ANT_LINES--&gt;"/>
+      <filelist dir="src/graphics/raphael" files="index.html"/>
+    </replaceregexp>
+  </target>
+
   <target name="concatenate">
     <concat destfile="${build.dir}/multigraph.js" fixlastline="yes" eol="lf">
-      <filelist dir="${src.dir}" files="${concatenate.order}" />
-      <fileset dir="${src.dir}" includes="**/*.js" excludes="${concatenate.order}" />
+      <path refid="path.multigraph-core-js"/>
+      <path refid="path.jquery-xml-handler-js"/>
+      <path refid="path.graphics-raphael-js"/>
     </concat>
   </target>
 
@@ -30,8 +96,7 @@
   </target>
 
   <target name="lint">
-    <apply executable="java" failonerror="true">
-      <fileset dir="lint-stubs" includes="**/*.js"/>
+    <apply executable="java" failonerror="false">
       <fileset dir="${src.dir}" includes="**/*.js" excludes="graphics/raphael/raphael.js">
         <modified />
       </fileset>

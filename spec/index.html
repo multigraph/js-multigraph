@@ -15,186 +15,185 @@
 
   <script type="text/javascript" src="../lib/jermaine/jermaine.js"></script>
 
-  <!-- include src here -->
-  <!-- <script type="text/javascript" src="../src/modeltool/attr.js"></script>
-  <script type="text/javascript" src="../src/modeltool/attr_list.js"></script>
-  <script type="text/javascript" src="../src/modeltool/method.js"></script>
-  <script type="text/javascript" src="../src/modeltool/model.js"></script> -->
+<!-- 
+  The lines between BEGIN_ANT_LINES and END_ANT_LINES below are inserted/maintained automatically
+  by ant.  Do NOT edit them by hand; if you do, your edits will be lost next time ant is run.
+  If you need to modify the list of *.js files included here, first try simply running the ant
+  task that edits this file (look in build.xml to see which task that is); it constructs the list
+  of files below according to patterns, and it will pick up new files that match those patterns
+  automatically.  If you add a file that is not matched by one of the existing patterns, change
+  or add a pattern in the build.xml file to include your file.
+-->
+<!--BEGIN_ANT_LINES-->
+<script type="text/javascript" src="../src/utility-functions/parsing-functions.js"></script>
+<script type="text/javascript" src="../src/utility-functions/serializing-functions.js"></script>
+<script type="text/javascript" src="../src/utility-functions/validation-functions.js"></script>
+<script type="text/javascript" src="../src/multigraph/math/Box.js"></script>
+<script type="text/javascript" src="../src/multigraph/math/Displacement.js"></script>
+<script type="text/javascript" src="../src/multigraph/math/Insets.js"></script>
+<script type="text/javascript" src="../src/multigraph/math/Point.js"></script>
+<script type="text/javascript" src="../src/multigraph/math/RGBColor.js"></script>
+<script type="text/javascript" src="../src/data/data.js"></script>
+<script type="text/javascript" src="../src/multigraph/ComparatorMixins.js"></script>
+<script type="text/javascript" src="../src/multigraph/Debugger.js"></script>
+<script type="text/javascript" src="../src/multigraph/Graph.js"></script>
+<script type="text/javascript" src="../src/multigraph/GraphTitle.js"></script>
+<script type="text/javascript" src="../src/multigraph/Mixin.js"></script>
+<script type="text/javascript" src="../src/multigraph/Multigraph.js"></script>
+<script type="text/javascript" src="../src/multigraph/NetworkMonitor.js"></script>
+<script type="text/javascript" src="../src/multigraph/NumberMeasure.js"></script>
+<script type="text/javascript" src="../src/multigraph/NumberValue.js"></script>
+<script type="text/javascript" src="../src/multigraph/Plotarea.js"></script>
+<script type="text/javascript" src="../src/multigraph/UI.js"></script>
+<script type="text/javascript" src="../src/multigraph/Window.js"></script>
+<script type="text/javascript" src="../src/multigraph/axis/Axis.js"></script>
+<script type="text/javascript" src="../src/multigraph/axis/AxisControls.js"></script>
+<script type="text/javascript" src="../src/multigraph/axis/Binding.js"></script>
+<script type="text/javascript" src="../src/multigraph/axis/Grid.js"></script>
+<script type="text/javascript" src="../src/multigraph/axis/Label.js"></script>
+<script type="text/javascript" src="../src/multigraph/axis/Labels.js"></script>
+<script type="text/javascript" src="../src/multigraph/axis/Pan.js"></script>
+<script type="text/javascript" src="../src/multigraph/axis/Title.js"></script>
+<script type="text/javascript" src="../src/multigraph/axis/Zoom.js"></script>
+<script type="text/javascript" src="../src/multigraph/background/Background.js"></script>
+<script type="text/javascript" src="../src/multigraph/background/Img.js"></script>
+<script type="text/javascript" src="../src/multigraph/data/CSV.js"></script>
+<script type="text/javascript" src="../src/multigraph/data/Data.js"></script>
+<script type="text/javascript" src="../src/multigraph/data/Service.js"></script>
+<script type="text/javascript" src="../src/multigraph/data/Values.js"></script>
+<script type="text/javascript" src="../src/multigraph/data/Variable.js"></script>
+<script type="text/javascript" src="../src/multigraph/data/Variables.js"></script>
+<script type="text/javascript" src="../src/multigraph/legend/Icon.js"></script>
+<script type="text/javascript" src="../src/multigraph/legend/Legend.js"></script>
+<script type="text/javascript" src="../src/multigraph/plot/Datatips.js"></script>
+<script type="text/javascript" src="../src/multigraph/plot/DatatipsVariable.js"></script>
+<script type="text/javascript" src="../src/multigraph/plot/Filter.js"></script>
+<script type="text/javascript" src="../src/multigraph/plot/FilterOption.js"></script>
+<script type="text/javascript" src="../src/multigraph/plot/Plot.js"></script>
+<script type="text/javascript" src="../src/multigraph/plot/PlotLegend.js"></script>
+<script type="text/javascript" src="../src/multigraph/plot/Renderer.js"></script>
+<script type="text/javascript" src="../src/multigraph/plot/RendererOption.js"></script>
+<script type="text/javascript" src="../src/jquery-xml-handler/JQueryXMLMixin.js"></script>
+<script type="text/javascript" src="../src/jquery-xml-handler/DebuggerParser.js"></script>
+<script type="text/javascript" src="../src/jquery-xml-handler/GraphParser.js"></script>
+<script type="text/javascript" src="../src/jquery-xml-handler/GraphTitleParser.js"></script>
+<script type="text/javascript" src="../src/jquery-xml-handler/MultigraphParser.js"></script>
+<script type="text/javascript" src="../src/jquery-xml-handler/NetworkMonitorParser.js"></script>
+<script type="text/javascript" src="../src/jquery-xml-handler/PlotareaParser.js"></script>
+<script type="text/javascript" src="../src/jquery-xml-handler/UIParser.js"></script>
+<script type="text/javascript" src="../src/jquery-xml-handler/WindowParser.js"></script>
+<script type="text/javascript" src="../src/jquery-xml-handler/axis/AxisControlsParser.js"></script>
+<script type="text/javascript" src="../src/jquery-xml-handler/axis/AxisParser.js"></script>
+<script type="text/javascript" src="../src/jquery-xml-handler/axis/BindingParser.js"></script>
+<script type="text/javascript" src="../src/jquery-xml-handler/axis/GridParser.js"></script>
+<script type="text/javascript" src="../src/jquery-xml-handler/axis/LabelParser.js"></script>
+<script type="text/javascript" src="../src/jquery-xml-handler/axis/LabelsParser.js"></script>
+<script type="text/javascript" src="../src/jquery-xml-handler/axis/PanParser.js"></script>
+<script type="text/javascript" src="../src/jquery-xml-handler/axis/TitleParser.js"></script>
+<script type="text/javascript" src="../src/jquery-xml-handler/axis/ZoomParser.js"></script>
+<script type="text/javascript" src="../src/jquery-xml-handler/background/BackgroundParser.js"></script>
+<script type="text/javascript" src="../src/jquery-xml-handler/background/ImgParser.js"></script>
+<script type="text/javascript" src="../src/jquery-xml-handler/data/CSVParser.js"></script>
+<script type="text/javascript" src="../src/jquery-xml-handler/data/DataParser.js"></script>
+<script type="text/javascript" src="../src/jquery-xml-handler/data/ServiceParser.js"></script>
+<script type="text/javascript" src="../src/jquery-xml-handler/data/ValuesParser.js"></script>
+<script type="text/javascript" src="../src/jquery-xml-handler/data/VariableParser.js"></script>
+<script type="text/javascript" src="../src/jquery-xml-handler/data/VariablesParser.js"></script>
+<script type="text/javascript" src="../src/jquery-xml-handler/legend/IconParser.js"></script>
+<script type="text/javascript" src="../src/jquery-xml-handler/legend/LegendParser.js"></script>
+<script type="text/javascript" src="../src/jquery-xml-handler/plot/DatatipsParser.js"></script>
+<script type="text/javascript" src="../src/jquery-xml-handler/plot/DatatipsVariableParser.js"></script>
+<script type="text/javascript" src="../src/jquery-xml-handler/plot/FilterOptionParser.js"></script>
+<script type="text/javascript" src="../src/jquery-xml-handler/plot/FilterParser.js"></script>
+<script type="text/javascript" src="../src/jquery-xml-handler/plot/PlotLegendParser.js"></script>
+<script type="text/javascript" src="../src/jquery-xml-handler/plot/PlotParser.js"></script>
+<script type="text/javascript" src="../src/jquery-xml-handler/plot/RendererOptionParser.js"></script>
+<script type="text/javascript" src="../src/jquery-xml-handler/plot/RendererParser.js"></script>
+<script type="text/javascript" src="../src/graphics/raphael/raphael.js"></script>
+<script type="text/javascript" src="../src/graphics/raphael/RaphaelMixin.js"></script>
+<script type="text/javascript" src="../src/graphics/raphael/multigraph/Graph.js"></script>
+<script type="text/javascript" src="../src/graphics/raphael/multigraph/Multigraph.js"></script>
+<script type="text/javascript" src="../src/graphics/raphael/multigraph/axis/Axis.js"></script>
 
-  <script type="text/javascript" src="../src/data/data.js"></script>
-
-  <script type="text/javascript" src="../src/utility-functions/parsing-functions.js"></script>
-  <script type="text/javascript" src="../src/utility-functions/serializing-functions.js"></script>
-  <script type="text/javascript" src="../src/utility-functions/validation-functions.js"></script>
-  <script type="text/javascript" src="../src/multigraph/ComparatorMixins.js"></script>
-  <script type="text/javascript" src="../src/multigraph/NumberValue.js"></script>
-  <script type="text/javascript" src="../src/multigraph/NumberMeasure.js"></script>
-  <script type="text/javascript" src="../src/multigraph/math/Displacement.js"></script>
-  <script type="text/javascript" src="../src/multigraph/math/Insets.js"></script>
-  <script type="text/javascript" src="../src/multigraph/math/Box.js"></script>
-  <script type="text/javascript" src="../src/multigraph/math/RGBColor.js"></script>
-  <script type="text/javascript" src="../src/multigraph/math/Point.js"></script>
-  <script type="text/javascript" src="../src/multigraph/axis/Axis.js"></script>
-  <script type="text/javascript" src="../src/multigraph/axis/AxisControls.js"></script>
-  <script type="text/javascript" src="../src/multigraph/axis/Binding.js"></script>
-  <script type="text/javascript" src="../src/multigraph/axis/Grid.js"></script>
-  <script type="text/javascript" src="../src/multigraph/axis/Label.js"></script>
-  <script type="text/javascript" src="../src/multigraph/axis/Labels.js"></script>
-  <script type="text/javascript" src="../src/multigraph/axis/Pan.js"></script>
-  <script type="text/javascript" src="../src/multigraph/axis/Title.js"></script>
-  <script type="text/javascript" src="../src/multigraph/axis/Zoom.js"></script>
-  <script type="text/javascript" src="../src/multigraph/background/Img.js"></script>
-  <script type="text/javascript" src="../src/multigraph/background/Background.js"></script>
-  <script type="text/javascript" src="../src/multigraph/data/Data.js"></script>
-  <script type="text/javascript" src="../src/multigraph/data/CSV.js"></script>
-  <script type="text/javascript" src="../src/multigraph/data/Service.js"></script>
-  <script type="text/javascript" src="../src/multigraph/data/Values.js"></script>
-  <script type="text/javascript" src="../src/multigraph/data/Variable.js"></script>
-  <script type="text/javascript" src="../src/multigraph/data/Variables.js"></script>
-  <script type="text/javascript" src="../src/multigraph/Debugger.js"></script>
-  <script type="text/javascript" src="../src/multigraph/legend/Legend.js"></script>
-  <script type="text/javascript" src="../src/multigraph/legend/Icon.js"></script>
-  <script type="text/javascript" src="../src/multigraph/NetworkMonitor.js"></script>
-  <script type="text/javascript" src="../src/multigraph/plot/Plot.js"></script>
-  <script type="text/javascript" src="../src/multigraph/plot/Datatips.js"></script>
-  <script type="text/javascript" src="../src/multigraph/plot/DatatipsVariable.js"></script>
-  <script type="text/javascript" src="../src/multigraph/plot/Filter.js"></script>
-  <script type="text/javascript" src="../src/multigraph/plot/FilterOption.js"></script>
-  <script type="text/javascript" src="../src/multigraph/plot/PlotLegend.js"></script>
-  <script type="text/javascript" src="../src/multigraph/plot/Renderer.js"></script>
-  <script type="text/javascript" src="../src/multigraph/plot/RendererOption.js"></script>
-  <script type="text/javascript" src="../src/multigraph/Plotarea.js"></script>
-  <script type="text/javascript" src="../src/multigraph/GraphTitle.js"></script>
-  <script type="text/javascript" src="../src/multigraph/UI.js"></script>
-  <script type="text/javascript" src="../src/multigraph/Window.js"></script>
-  <script type="text/javascript" src="../src/multigraph/Graph.js"></script>
-  <script type="text/javascript" src="../src/multigraph/Multigraph.js"></script>
-  <script type="text/javascript" src="../src/multigraph/Mixin.js"></script>
-  <script type="text/javascript" src="../src/jquery-xml-handler/JQueryXMLMixin.js"></script>
-  <script type="text/javascript" src="../src/jquery-xml-handler/axis/AxisParser.js"></script>
-  <script type="text/javascript" src="../src/jquery-xml-handler/axis/AxisControlsParser.js"></script>
-  <script type="text/javascript" src="../src/jquery-xml-handler/axis/BindingParser.js"></script>
-  <script type="text/javascript" src="../src/jquery-xml-handler/axis/GridParser.js"></script>
-  <script type="text/javascript" src="../src/jquery-xml-handler/axis/LabelParser.js"></script>
-  <script type="text/javascript" src="../src/jquery-xml-handler/axis/LabelsParser.js"></script>
-  <script type="text/javascript" src="../src/jquery-xml-handler/axis/PanParser.js"></script>
-  <script type="text/javascript" src="../src/jquery-xml-handler/axis/TitleParser.js"></script>
-  <script type="text/javascript" src="../src/jquery-xml-handler/axis/ZoomParser.js"></script>
-  <script type="text/javascript" src="../src/jquery-xml-handler/background/BackgroundParser.js"></script>
-  <script type="text/javascript" src="../src/jquery-xml-handler/background/ImgParser.js"></script>
-  <script type="text/javascript" src="../src/jquery-xml-handler/data/DataParser.js"></script>
-  <script type="text/javascript" src="../src/jquery-xml-handler/data/CSVParser.js"></script>
-  <script type="text/javascript" src="../src/jquery-xml-handler/data/ServiceParser.js"></script>
-  <script type="text/javascript" src="../src/jquery-xml-handler/data/ValuesParser.js"></script>
-  <script type="text/javascript" src="../src/jquery-xml-handler/data/VariableParser.js"></script>
-  <script type="text/javascript" src="../src/jquery-xml-handler/data/VariablesParser.js"></script>
-  <script type="text/javascript" src="../src/jquery-xml-handler/DebuggerParser.js"></script>
-  <script type="text/javascript" src="../src/jquery-xml-handler/legend/LegendParser.js"></script>
-  <script type="text/javascript" src="../src/jquery-xml-handler/legend/IconParser.js"></script>
-  <script type="text/javascript" src="../src/jquery-xml-handler/NetworkMonitorParser.js"></script>
-  <script type="text/javascript" src="../src/jquery-xml-handler/plot/PlotParser.js"></script>
-  <script type="text/javascript" src="../src/jquery-xml-handler/plot/DatatipsParser.js"></script>
-  <script type="text/javascript" src="../src/jquery-xml-handler/plot/DatatipsVariableParser.js"></script>
-  <script type="text/javascript" src="../src/jquery-xml-handler/plot/FilterParser.js"></script>
-  <script type="text/javascript" src="../src/jquery-xml-handler/plot/FilterOptionParser.js"></script>
-  <script type="text/javascript" src="../src/jquery-xml-handler/plot/PlotLegendParser.js"></script>
-  <script type="text/javascript" src="../src/jquery-xml-handler/plot/RendererParser.js"></script>
-  <script type="text/javascript" src="../src/jquery-xml-handler/plot/RendererOptionParser.js"></script>
-  <script type="text/javascript" src="../src/jquery-xml-handler/PlotareaParser.js"></script>
-  <script type="text/javascript" src="../src/jquery-xml-handler/GraphTitleParser.js"></script>
-  <script type="text/javascript" src="../src/jquery-xml-handler/UIParser.js"></script>
-  <script type="text/javascript" src="../src/jquery-xml-handler/WindowParser.js"></script>
-  <script type="text/javascript" src="../src/jquery-xml-handler/GraphParser.js"></script>
-  <script type="text/javascript" src="../src/jquery-xml-handler/MultigraphParser.js"></script>
-
-  <!-- include specs here -->
-  <!-- <script type="text/javascript" src="modeltool/attr.js"></script>
-  <script type="text/javascript" src="modeltool/attr_list.js"></script>
-  <script type="text/javascript" src="modeltool/method.js"></script>
-  <script type="text/javascript" src="modeltool/model.js"></script> -->
-
-  <script type="text/javascript" src="data/data.js"></script>
-
-  <script type="text/javascript" src="multigraph/NumberValue.js"></script>
-  <script type="text/javascript" src="multigraph/NumberMeasure.js"></script>
-  <script type="text/javascript" src="multigraph/math/Displacement.js"></script>
-  <script type="text/javascript" src="multigraph/math/Insets.js"></script>
-  <script type="text/javascript" src="multigraph/math/Box.js"></script>
-  <script type="text/javascript" src="multigraph/math/RGBColor.js"></script>
-  <script type="text/javascript" src="multigraph/math/Point.js"></script>
-  <script type="text/javascript" src="multigraph/axis/Axis.js"></script>
-  <script type="text/javascript" src="multigraph/axis/AxisControls.js"></script>
-  <script type="text/javascript" src="multigraph/axis/Binding.js"></script>
-  <script type="text/javascript" src="multigraph/axis/Grid.js"></script>
-  <script type="text/javascript" src="multigraph/axis/Label.js"></script>
-  <script type="text/javascript" src="multigraph/axis/Labels.js"></script>
-  <script type="text/javascript" src="multigraph/axis/Pan.js"></script>
-  <script type="text/javascript" src="multigraph/axis/Title.js"></script>
-  <script type="text/javascript" src="multigraph/axis/Zoom.js"></script>
-  <script type="text/javascript" src="multigraph/background/Background.js"></script>
-  <script type="text/javascript" src="multigraph/background/Img.js"></script>
-  <script type="text/javascript" src="multigraph/data/Data.js"></script>
-  <script type="text/javascript" src="multigraph/data/CSV.js"></script>
-  <script type="text/javascript" src="multigraph/data/Service.js"></script>
-  <script type="text/javascript" src="multigraph/data/Values.js"></script>
-  <script type="text/javascript" src="multigraph/data/Variable.js"></script>
-  <script type="text/javascript" src="multigraph/data/Variables.js"></script>
-  <script type="text/javascript" src="multigraph/Debugger.js"></script>
-  <script type="text/javascript" src="multigraph/legend/Legend.js"></script>
-  <script type="text/javascript" src="multigraph/legend/Icon.js"></script>
-  <script type="text/javascript" src="multigraph/NetworkMonitor.js"></script>
-  <script type="text/javascript" src="multigraph/plot/Plot.js"></script>
-  <script type="text/javascript" src="multigraph/plot/Datatips.js"></script>
-  <script type="text/javascript" src="multigraph/plot/DatatipsVariable.js"></script>
-  <script type="text/javascript" src="multigraph/plot/Filter.js"></script>
-  <script type="text/javascript" src="multigraph/plot/FilterOption.js"></script>
-  <script type="text/javascript" src="multigraph/plot/PlotLegend.js"></script>
-  <script type="text/javascript" src="multigraph/plot/Renderer.js"></script>
-  <script type="text/javascript" src="multigraph/plot/RendererOption.js"></script>
-  <script type="text/javascript" src="multigraph/Plotarea.js"></script>
-  <script type="text/javascript" src="multigraph/GraphTitle.js"></script>
-  <script type="text/javascript" src="multigraph/UI.js"></script>
-  <script type="text/javascript" src="multigraph/Window.js"></script>
-  <script type="text/javascript" src="multigraph/Graph.js"></script>
-  <script type="text/javascript" src="multigraph/Multigraph.js"></script>
-  <script type="text/javascript" src="jquery-xml-handler/axis/AxisParserTest.js"></script>
-  <script type="text/javascript" src="jquery-xml-handler/axis/AxisControlsParserTest.js"></script>
-  <script type="text/javascript" src="jquery-xml-handler/axis/BindingParserTest.js"></script>
-  <script type="text/javascript" src="jquery-xml-handler/axis/GridParserTest.js"></script>
-  <script type="text/javascript" src="jquery-xml-handler/axis/LabelParserTest.js"></script>
-  <script type="text/javascript" src="jquery-xml-handler/axis/LabelsParserTest.js"></script>
-  <script type="text/javascript" src="jquery-xml-handler/axis/PanParserTest.js"></script>
-  <script type="text/javascript" src="jquery-xml-handler/axis/TitleParserTest.js"></script>
-  <script type="text/javascript" src="jquery-xml-handler/axis/ZoomParserTest.js"></script>
-  <script type="text/javascript" src="jquery-xml-handler/background/BackgroundParserTest.js"></script>
-  <script type="text/javascript" src="jquery-xml-handler/background/ImgParserTest.js"></script>
-  <script type="text/javascript" src="jquery-xml-handler/data/DataParserTest.js"></script>
-  <script type="text/javascript" src="jquery-xml-handler/data/CSVParserTest.js"></script>
-  <script type="text/javascript" src="jquery-xml-handler/data/ServiceParserTest.js"></script>
-  <script type="text/javascript" src="jquery-xml-handler/data/ValuesParserTest.js"></script>
-  <script type="text/javascript" src="jquery-xml-handler/data/VariableParserTest.js"></script>
-  <script type="text/javascript" src="jquery-xml-handler/data/VariablesParserTest.js"></script>
-  <script type="text/javascript" src="jquery-xml-handler/DebuggerParserTest.js"></script>
-  <script type="text/javascript" src="jquery-xml-handler/legend/LegendParserTest.js"></script>
-  <script type="text/javascript" src="jquery-xml-handler/legend/IconParserTest.js"></script>
-  <script type="text/javascript" src="jquery-xml-handler/NetworkMonitorParserTest.js"></script>
-  <script type="text/javascript" src="jquery-xml-handler/plot/PlotParserTest.js"></script>
-  <script type="text/javascript" src="jquery-xml-handler/plot/DatatipsParserTest.js"></script>
-  <script type="text/javascript" src="jquery-xml-handler/plot/DatatipsVariableParserTest.js"></script>
-  <script type="text/javascript" src="jquery-xml-handler/plot/FilterParserTest.js"></script>
-  <script type="text/javascript" src="jquery-xml-handler/plot/FilterOptionParserTest.js"></script>
-  <script type="text/javascript" src="jquery-xml-handler/plot/PlotLegendParserTest.js"></script>
-  <script type="text/javascript" src="jquery-xml-handler/plot/RendererParserTest.js"></script>
-  <script type="text/javascript" src="jquery-xml-handler/plot/RendererOptionParserTest.js"></script>
-  <script type="text/javascript" src="jquery-xml-handler/PlotareaParserTest.js"></script>
-  <script type="text/javascript" src="jquery-xml-handler/GraphTitleParserTest.js"></script>
-  <script type="text/javascript" src="jquery-xml-handler/UIParserTest.js"></script>
-  <script type="text/javascript" src="jquery-xml-handler/WindowParserTest.js"></script>
-  <script type="text/javascript" src="jquery-xml-handler/GraphParserTest.js"></script>
-  <script type="text/javascript" src="jquery-xml-handler/MultigraphParserTest.js"></script>
-
-
-
+<script type="text/javascript" src="data/data.js"></script>
+<script type="text/javascript" src="jquery-xml-handler/DebuggerParserTest.js"></script>
+<script type="text/javascript" src="jquery-xml-handler/GraphParserTest.js"></script>
+<script type="text/javascript" src="jquery-xml-handler/GraphTitleParserTest.js"></script>
+<script type="text/javascript" src="jquery-xml-handler/MultigraphParserTest.js"></script>
+<script type="text/javascript" src="jquery-xml-handler/NetworkMonitorParserTest.js"></script>
+<script type="text/javascript" src="jquery-xml-handler/PlotareaParserTest.js"></script>
+<script type="text/javascript" src="jquery-xml-handler/UIParserTest.js"></script>
+<script type="text/javascript" src="jquery-xml-handler/WindowParserTest.js"></script>
+<script type="text/javascript" src="jquery-xml-handler/axis/AxisControlsParserTest.js"></script>
+<script type="text/javascript" src="jquery-xml-handler/axis/AxisParserTest.js"></script>
+<script type="text/javascript" src="jquery-xml-handler/axis/BindingParserTest.js"></script>
+<script type="text/javascript" src="jquery-xml-handler/axis/GridParserTest.js"></script>
+<script type="text/javascript" src="jquery-xml-handler/axis/LabelParserTest.js"></script>
+<script type="text/javascript" src="jquery-xml-handler/axis/LabelsParserTest.js"></script>
+<script type="text/javascript" src="jquery-xml-handler/axis/PanParserTest.js"></script>
+<script type="text/javascript" src="jquery-xml-handler/axis/TitleParserTest.js"></script>
+<script type="text/javascript" src="jquery-xml-handler/axis/ZoomParserTest.js"></script>
+<script type="text/javascript" src="jquery-xml-handler/background/BackgroundParserTest.js"></script>
+<script type="text/javascript" src="jquery-xml-handler/background/ImgParserTest.js"></script>
+<script type="text/javascript" src="jquery-xml-handler/data/CSVParserTest.js"></script>
+<script type="text/javascript" src="jquery-xml-handler/data/DataParserTest.js"></script>
+<script type="text/javascript" src="jquery-xml-handler/data/ServiceParserTest.js"></script>
+<script type="text/javascript" src="jquery-xml-handler/data/ValuesParserTest.js"></script>
+<script type="text/javascript" src="jquery-xml-handler/data/VariableParserTest.js"></script>
+<script type="text/javascript" src="jquery-xml-handler/data/VariablesParserTest.js"></script>
+<script type="text/javascript" src="jquery-xml-handler/legend/IconParserTest.js"></script>
+<script type="text/javascript" src="jquery-xml-handler/legend/LegendParserTest.js"></script>
+<script type="text/javascript" src="jquery-xml-handler/plot/DatatipsParserTest.js"></script>
+<script type="text/javascript" src="jquery-xml-handler/plot/DatatipsVariableParserTest.js"></script>
+<script type="text/javascript" src="jquery-xml-handler/plot/FilterOptionParserTest.js"></script>
+<script type="text/javascript" src="jquery-xml-handler/plot/FilterParserTest.js"></script>
+<script type="text/javascript" src="jquery-xml-handler/plot/PlotLegendParserTest.js"></script>
+<script type="text/javascript" src="jquery-xml-handler/plot/PlotParserTest.js"></script>
+<script type="text/javascript" src="jquery-xml-handler/plot/RendererOptionParserTest.js"></script>
+<script type="text/javascript" src="jquery-xml-handler/plot/RendererParserTest.js"></script>
+<script type="text/javascript" src="multigraph/Debugger.js"></script>
+<script type="text/javascript" src="multigraph/Graph.js"></script>
+<script type="text/javascript" src="multigraph/GraphTitle.js"></script>
+<script type="text/javascript" src="multigraph/Multigraph.js"></script>
+<script type="text/javascript" src="multigraph/NetworkMonitor.js"></script>
+<script type="text/javascript" src="multigraph/NumberMeasure.js"></script>
+<script type="text/javascript" src="multigraph/NumberValue.js"></script>
+<script type="text/javascript" src="multigraph/Plotarea.js"></script>
+<script type="text/javascript" src="multigraph/UI.js"></script>
+<script type="text/javascript" src="multigraph/Window.js"></script>
+<script type="text/javascript" src="multigraph/axis/Axis.js"></script>
+<script type="text/javascript" src="multigraph/axis/AxisControls.js"></script>
+<script type="text/javascript" src="multigraph/axis/Binding.js"></script>
+<script type="text/javascript" src="multigraph/axis/Grid.js"></script>
+<script type="text/javascript" src="multigraph/axis/Label.js"></script>
+<script type="text/javascript" src="multigraph/axis/Labels.js"></script>
+<script type="text/javascript" src="multigraph/axis/Pan.js"></script>
+<script type="text/javascript" src="multigraph/axis/Title.js"></script>
+<script type="text/javascript" src="multigraph/axis/Zoom.js"></script>
+<script type="text/javascript" src="multigraph/background/Background.js"></script>
+<script type="text/javascript" src="multigraph/background/Img.js"></script>
+<script type="text/javascript" src="multigraph/data/CSV.js"></script>
+<script type="text/javascript" src="multigraph/data/Data.js"></script>
+<script type="text/javascript" src="multigraph/data/Service.js"></script>
+<script type="text/javascript" src="multigraph/data/Values.js"></script>
+<script type="text/javascript" src="multigraph/data/Variable.js"></script>
+<script type="text/javascript" src="multigraph/data/Variables.js"></script>
+<script type="text/javascript" src="multigraph/legend/Icon.js"></script>
+<script type="text/javascript" src="multigraph/legend/Legend.js"></script>
+<script type="text/javascript" src="multigraph/math/Box.js"></script>
+<script type="text/javascript" src="multigraph/math/Displacement.js"></script>
+<script type="text/javascript" src="multigraph/math/Insets.js"></script>
+<script type="text/javascript" src="multigraph/math/Point.js"></script>
+<script type="text/javascript" src="multigraph/math/RGBColor.js"></script>
+<script type="text/javascript" src="multigraph/plot/Datatips.js"></script>
+<script type="text/javascript" src="multigraph/plot/DatatipsVariable.js"></script>
+<script type="text/javascript" src="multigraph/plot/Filter.js"></script>
+<script type="text/javascript" src="multigraph/plot/FilterOption.js"></script>
+<script type="text/javascript" src="multigraph/plot/Plot.js"></script>
+<script type="text/javascript" src="multigraph/plot/PlotLegend.js"></script>
+<script type="text/javascript" src="multigraph/plot/Renderer.js"></script>
+<script type="text/javascript" src="multigraph/plot/RendererOption.js"></script>
+<!--END_ANT_LINES-->
 
   <script type="text/javascript">
     (function() {
