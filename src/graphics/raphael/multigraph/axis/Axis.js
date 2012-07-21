@@ -10,7 +10,7 @@ if (!window.multigraph) {
         ns.Axis.respondsTo("render", function(graph) {
             // NOTE: axes are drawn relative to the graph's plot area (plotBox); the coordinates
             //   below are relative to the coordinate system of that box.
-            if (this.orientation() == ns.Axis.HORIZONTAL) {
+            if (this.orientation() === ns.Axis.HORIZONTAL) {
                 //moveTo(this.parallelOffset(), this.perpOffset());
                 //lineTo(this.parallelOffset() + this.pixelLength(), this.perpOffset());
                 console.log("drawing horizontal axis from (" +

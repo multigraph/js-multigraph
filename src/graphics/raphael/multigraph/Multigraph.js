@@ -1,3 +1,5 @@
+/*global Raphael */
+
 if (!window.multigraph) {
     window.multigraph = {};
 }
@@ -21,7 +23,7 @@ if (!window.multigraph) {
             if (this.paper()) {
                 this.paper().remove();
             }
-            this.paper(new Raphael(this.divid(), this.width(), this.height()));
+            this.paper(new window.Raphael(this.divid(), this.width(), this.height()));
             this.render();
         });
 

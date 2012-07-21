@@ -1,31 +1,33 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
+/*jshint  laxbreak:true */
 
 describe("Graph parsing", function () {
     "use strict";
 
     var Axis = window.multigraph.Axis,
-        Plot = window.multigraph.Plot,
-        Window = window.multigraph.Window,
-        UI = window.multigraph.UI,
-        NetworkMonitor = window.multigraph.NetworkMonitor,
-        Debugger = window.multigraph.Debugger,
-        Legend = window.multigraph.Legend,
-        Background = window.multigraph.Background,
-        Plotarea = window.multigraph.Plotarea,
-        Data = window.multigraph.Data,
-        Graph = window.multigraph.Graph,
-        g,
-        h,
-        v,
-        w,
-        p,
-        ui,
-        debug,
-        legend,
-        background,
-        plotarea,
-        data,
-        xmlString =  '<graph>'
+    Plot = window.multigraph.Plot,
+    Window = window.multigraph.Window,
+    UI = window.multigraph.UI,
+    NetworkMonitor = window.multigraph.NetworkMonitor,
+    Debugger = window.multigraph.Debugger,
+    Legend = window.multigraph.Legend,
+    Background = window.multigraph.Background,
+    Plotarea = window.multigraph.Plotarea,
+    Data = window.multigraph.Data,
+    Graph = window.multigraph.Graph,
+    g,
+    h,
+    v,
+    w,
+    p,
+    ui,
+    debug,
+    legend,
+    background,
+    plotarea,
+    data,
+    xmlString =  ''
+        + '<graph>'
         +    '<window'
         +        ' margin="1"'
         +        ' padding="10"'
@@ -193,7 +195,8 @@ describe("Graph parsing", function () {
         +        '</values>'
         +    '</data>'
         + '</graph>',
-        xmlString2 = '<graph>'
+    xmlString2 = ''
+        + '<graph>'
         +     '<window'
         +         ' margin="1"'
         +         ' padding="10"'
@@ -346,7 +349,7 @@ describe("Graph parsing", function () {
         +         '</values>'
         +     '</data>'
         + '</graph>',
-        $xml;
+    $xml;
 
     beforeEach(function () {
         window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');

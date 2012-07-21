@@ -43,7 +43,7 @@ if (!window.multigraph) {
 
     NumberMeasure.parse = function(s) {
         return new NumberMeasure(parseFloat(s));
-    }
+    };
 
     ns.NumberMeasure = NumberMeasure;
 

@@ -31,6 +31,7 @@ if (!window.speedtester) {
 }
 
 (function(ns) {
+    "use strict";
 
     var SpeedTester = function() {
 
@@ -67,4 +68,4 @@ if (!window.speedtester) {
 
     ns.SpeedTester = SpeedTester;
 
-})(window.speedtester);
+}(window.speedtester));

@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    "use strict";
 
     var JSNumberValueType = window.multigraph.valuetype.JSNumberValueType,
         MTNumberValueType = window.multigraph.valuetype.MTNumberValueType,

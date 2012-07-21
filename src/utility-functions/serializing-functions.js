@@ -31,6 +31,6 @@ if (!window.multigraph.utilityFunctions) {
         }
 
         return childStrings;
-    }
+    };
 
 }(window.multigraph));

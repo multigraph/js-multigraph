@@ -33,7 +33,7 @@ if (!window.multigraph) {
 
         var muglPromise = $.ajax({
             "url"      : muglurl,
-            "dataType" : "text",
+            "dataType" : "text"
         });
 
         var deferred = $.Deferred();

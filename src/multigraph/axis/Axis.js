@@ -119,7 +119,7 @@ if (!window.multigraph) {
         this.hasA("perpOffset").which.isA("number");
 
         this.respondsTo("initializeGeometry", function(graph) {
-            if (this.orientation() == Axis.HORIZONTAL) {
+            if (this.orientation() === Axis.HORIZONTAL) {
                 this.pixelLength(this.length().calculateLength( graph.plotBox().width() ));
                 this.parallelOffset( this.position().x() + (this.base().x() + 1) * graph.plotBox().width()/2 - (this.anchor() + 1) * this.pixelLength() / 2 );
                 this.perpOffset( this.position().y() + (this.base().y() + 1) * graph.plotBox().height() / 2 );

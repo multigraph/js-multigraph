@@ -21,7 +21,7 @@ if (!window.multigraph.math) {
         });
         this.respondsTo("getHexString", function () {
             var numberToHex = function (number) {
-                number = parseInt(number * 255).toString(16);
+                number = parseInt(number * 255, 10).toString(16);
                 if (number.length === 1) {
                     number = "0" + number;
                 }

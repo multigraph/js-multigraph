@@ -1,4 +1,5 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
+/*jshint laxbreak:true */
 
 describe("Axis Labels parsing", function () {
     "use strict";
@@ -97,7 +98,7 @@ describe("Axis Labels parsing", function () {
             window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
             $xml = $(xmlString);
             labels = Labels.parseXML($xml);
-        })
+        });
 
         it("should be able to parse a labels with children from XML", function () {
             expect(labels).not.toBeUndefined();

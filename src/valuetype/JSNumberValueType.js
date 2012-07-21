@@ -27,7 +27,7 @@ if (!window.multigraph.valuetype) {
         return 1;
       }
       return 0;
-    }
+    };
 
     ns.valuetype.mixinComparators(JSNumberValueType.prototype);
 

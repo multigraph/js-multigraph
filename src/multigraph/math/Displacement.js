@@ -73,7 +73,7 @@ if (!window.multigraph.math) {
                 output += this.b().toString(10);
             }
             return output;
-        })
+        });
 
     });
 

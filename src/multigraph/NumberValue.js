@@ -24,7 +24,7 @@ if (!window.multigraph) {
             return 1;
         }
         return 0;
-    }
+    };
 
     NumberValue.prototype.add = function(/*DataMeasure*/ measure) {
         // NOTE: delibarately accessing the 'measure' property of a NumberMeasure here, rather
@@ -34,7 +34,7 @@ if (!window.multigraph) {
 
     NumberValue.parse = function(s) {
         return new NumberValue(parseFloat(s));
-    }
+    };
 
     ns.mixinComparators(NumberValue.prototype);
 
