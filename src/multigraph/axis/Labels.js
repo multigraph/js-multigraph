@@ -31,25 +31,16 @@ if (!window.multigraph.Axis) {
         });
         this.hasA("angle").which.isA("number");
         this.hasA("position").which.validatesWith(function (position) {
-            //TODO: Point
-            return ns.utilityFunctions.validateCoordinatePair(position);
+            return position instanceof ns.math.Point;
         });
         this.hasA("anchor").which.validatesWith(function (anchor) {
-            //TODO: Point
-            return ns.utilityFunctions.validateCoordinatePair(anchor);
+            return anchor instanceof ns.math.Point;
         });
         this.hasA("spacing").which.validatesWith(function (spacing) {
             //TODO: DataMeasure
             return typeof(spacing) === "string";
         });
-        this.hasA("function").which.validatesWith(function (funct) {
-            //NOTE: what's this?
-            return typeof(funct) === "string";
-        });
-        this.hasA("densityfactor").which.validatesWith(function (densityfactor) {
-            //TODO: number
-            return typeof(densityfactor) === "string";
-        });
+        this.hasA("densityfactor").which.isA("number");
 
         ns.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis.labels, attributes);
     });

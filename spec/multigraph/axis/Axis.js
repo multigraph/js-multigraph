@@ -289,14 +289,15 @@ describe("Axis", function () {
         it("should be able to add a Labels with attributes and children to a Axis", function () {
             var label = new Label('10 1 .2'),
                 label2 = new Label('100 50 25');
-            labels.position('1 1');
+            labels.position(new Point(1,1));
             label2.anchor(new Point(0,0));
             labels.label().add(label);
             labels.label().add(label2);
             a.labels(labels);
-            expect(a.labels().position() === "1 1").toBe(true);
-            expect(a.labels().label().at(0) === label).toBe(true);
-            expect(a.labels().label().at(1) === label2).toBe(true);
+            expect(a.labels().position().x()).toEqual(1);
+            expect(a.labels().position().y()).toEqual(1);
+            expect(a.labels().label().at(0)).toBe(label);
+            expect(a.labels().label().at(1)).toBe(label2);
         });
 
         it("should be able to set/get attributes of labels added to a Axis", function () {
@@ -305,13 +306,14 @@ describe("Axis", function () {
             labels.label().add(label);
             labels.label().add(label2);
             a.labels(labels);
-            a.labels().position("1 1").angle(40);
+            a.labels().position(new Point(1,1)).angle(40);
             a.labels().label().at(1).anchor(new Point(0,1)).angle(14);
-            expect(a.labels().position() === "1 1").toBe(true);
+            expect(a.labels().position().x()).toEqual(1);
+            expect(a.labels().position().y()).toEqual(1);
             expect(a.labels().angle()).toBe(40);
             expect(a.labels().label().at(0).spacing() === '20 10 2 1').toBe(true);
             expect(a.labels().label().at(1).spacing() === '200 100').toBe(true);
-            expect(a.labels().label().at(1).anchor().serialize() === '0,1').toBe(true);
+            expect(a.labels().label().at(1).anchor().serialize()).toEqual("0,1");
             expect(a.labels().label().at(1).angle()).toBe(14);
         });
 

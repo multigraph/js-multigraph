@@ -5,7 +5,15 @@ describe("Axis Labels parsing", function () {
     "use strict";
 
     var Labels = window.multigraph.Axis.Labels,
-        xmlString = '<labels format="%1d" start="10" angle="9" position="1 1" anchor="0 0" densityfactor=".5" function="fun" spacing="100 75 50 25 10 5 2 1 0.5 0.1"/>',
+        xmlString = '<labels'
+        +    ' format="%1d"'
+        +    ' start="10"'
+        +    ' angle="9"'
+        +    ' densityfactor="0.5"'
+        +    ' anchor="0,0"'
+        +    ' position="1,1"'
+        +    ' spacing="100 75 50 25 10 5 2 1 0.5 0.1"'
+        +    '/>',
         $xml,
         labels;
 
@@ -32,19 +40,15 @@ describe("Axis Labels parsing", function () {
     });
 
     it("should be able to parse a labels from XML and read its 'position' attribute", function () {
-        expect(labels.position() === '1 1').toBe(true);
+        expect(labels.position().serialize()).toEqual("1,1");
     });
 
     it("should be able to parse a labels from XML and read its 'anchor' attribute", function () {
-        expect(labels.anchor() === '0 0').toBe(true);
-    });
-
-    it("should be able to parse a labels from XML and read its 'function' attribute", function () {
-        expect(labels['function']() === 'fun').toBe(true);
+        expect(labels.anchor().serialize()).toEqual("0,0");
     });
 
     it("should be able to parse a labels from XML and read its 'densityfactor' attribute", function () {
-        expect(labels.densityfactor() === '.5').toBe(true);
+        expect(labels.densityfactor()).toEqual(0.5);
     });
 
     it("should be able to parse a labels from XML and read its 'spacing' attribute", function () {
@@ -52,10 +56,18 @@ describe("Axis Labels parsing", function () {
     });
 
     it("should be able to parse a labels with children from XML, serialize it and get the same XML as the original", function () {
-        var xmlString2 = '<labels format="%2d" angle="9" position="0 1" anchor="0 0" densityfactor=".8" spacing="100 75 50 25 10 5 2 1 0.5 0.1"/>';
-        expect(labels.serialize() === xmlString).toBe(true);
+        var xmlString2 = '<labels'
+            +    ' format="%2d"'
+            +    ' start="5"'
+            +    ' angle="9"'
+            +    ' densityfactor="0.8"'
+            +    ' anchor="0,0"'
+            +    ' position="0,1"'
+            +    ' spacing="100 75 50 25 10 5 2 1 0.5 0.1"'
+            +    '/>';
+        expect(labels.serialize()).toEqual(xmlString);
         labels = Labels.parseXML($(xmlString2));
-//        expect(labels.serialize() === xmlString2).toBe(true);
+        expect(labels.serialize()).toEqual(xmlString2);
     });
 
     describe("Label parsing", function () {
@@ -66,10 +78,9 @@ describe("Axis Labels parsing", function () {
                 +   ' format="%1d"'
                 +   ' start="0"'
                 +   ' angle="9"'
-                +   ' position="-1 1"'
+                +   ' densityfactor="0.5"'
                 +   ' anchor="0,0"'
-                +   ' densityfactor=".5"'
-                +   ' function="larry"'
+                +   ' position="-1,1"'
                 +   '>'
                 + '<label'
                 +     ' start="10"'

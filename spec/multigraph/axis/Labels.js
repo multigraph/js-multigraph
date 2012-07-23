@@ -41,16 +41,18 @@ describe("Axis Labels", function () {
 
     describe("position attribute", function () {
         it("should be able to set/get the position attribute", function () {
-            l.position('0 1');
-            expect(l.position() === '0 1').toBe(true);
+            l.position(new Point(0,1));
+            expect(l.position().x()).toEqual(0);
+            expect(l.position().y()).toEqual(1);
         });
 
     });
 
     describe("anchor attribute", function () {
         it("should be able to set/get the anchor attribute", function () {
-            l.anchor('-1 1');
-            expect(l.anchor() === '-1 1').toBe(true);
+            l.anchor(new Point(-1,1));
+            expect(l.anchor().x()).toEqual(-1);
+            expect(l.anchor().y()).toEqual(1);
         });
 
     });
@@ -63,18 +65,10 @@ describe("Axis Labels", function () {
 
     });
 
-    describe("function attribute", function () {
-        it("should be able to set/get the function attribute", function () {
-            l['function']('fred');
-            expect(l['function']() === 'fred').toBe(true);
-        });
-
-    });
-
     describe("densityfactor attribute", function () {
         it("should be able to set/get the densityfactor attribute", function () {
-            l.densityfactor('5');
-            expect(l.densityfactor() === '5').toBe(true);
+            l.densityfactor(5);
+            expect(l.densityfactor()).toEqual(5);
         });
 
     });

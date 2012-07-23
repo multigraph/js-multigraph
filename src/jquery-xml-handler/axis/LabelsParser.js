@@ -9,7 +9,7 @@ if (!window.multigraph.Axis) {
 (function (ns) {
     "use strict";
 
-    var scalarAttributes = ["format", "start", "angle", "position", "anchor", "densityfactor", "function"];
+    var scalarAttributes = ["format", "start", "angle", "densityfactor"];
 
     ns.jQueryXMLMixin.add(function (nsObj, parse, serialize) {
 
@@ -19,11 +19,14 @@ if (!window.multigraph.Axis) {
                 labels.format(xml.attr("format"));
                 labels.start(xml.attr("start"));
                 labels.angle(nsObj.utilityFunctions.parseDoubleOrUndefined(xml.attr("angle")));
-                labels.position(xml.attr("position"));
-                labels.anchor(xml.attr("anchor"));
+                if (xml.attr("anchor") !== undefined) {
+                    labels.anchor(nsObj.math.Point.parse(xml.attr("anchor")));
+                }
+                if (xml.attr("position") !== undefined) {
+                    labels.position(nsObj.math.Point.parse(xml.attr("position")));
+                }
                 labels.spacing(xml.attr("spacing"));
-                labels["function"](xml.attr("function"));
-                labels.densityfactor(xml.attr("densityfactor"));
+                labels.densityfactor(nsObj.utilityFunctions.parseDoubleOrUndefined(xml.attr("densityfactor")));
                 if (xml.find(">label").length > 0) {
                     $.each(xml.find(">label"), function (i,e) {
                         labels.label().add( nsObj.Axis.Labels.Label[parse]($(e)) );
@@ -39,7 +42,12 @@ if (!window.multigraph.Axis) {
                 i;
 
             attributeStrings = ns.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
-
+            if (this.anchor() !== undefined) {
+                attributeStrings.push('anchor="' + this.anchor().serialize() + '"')
+            }
+            if (this.position() !== undefined) {
+                attributeStrings.push('position="' + this.position().serialize() + '"')
+            }
             output += attributeStrings.join(' ');
 
             if (this.label().size() > 0) {
