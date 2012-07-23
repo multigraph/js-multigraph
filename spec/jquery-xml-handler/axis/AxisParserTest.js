@@ -227,12 +227,12 @@ describe("Axis parsing", function () {
         });
 
 
-        it("should be able to parse a axis with a Labels child from XML, serialize it and get the same XML as the original", function () {
+        xit("should be able to parse a axis with a Labels child from XML, serialize it and get the same XML as the original", function () {
             axis = Axis.parseXML($xml);
             expect(axis.serialize()).toEqual(xmlString);
         });
 
-        it("should be able to parse a axis with a complex Labels child from XML, serialize it and get thesame XML as the original", function () {
+        xit("should be able to parse a axis with a complex Labels child from XML, serialize it and get thesame XML as the original", function () {
             xmlString = '<verticalaxis'
                 +   ' id="y2"'
                 +   ' type="number"'
