@@ -37,4 +37,29 @@ if (!window.multigraph) {
 
     });
 
+    ns.Multigraph.createRaphaelGraph = function(divid, muglurl) {
+
+        ns.jQueryXMLMixin.apply(ns, 'parseXML', 'serialize');
+        ns.raphaelMixin.apply(ns);
+
+        var muglPromise = $.ajax({
+            "url"      : muglurl,
+            "dataType" : "text"
+        });
+
+        var deferred = $.Deferred();
+
+        muglPromise.done(function(data) {
+            var multigraph = ns.Multigraph.parseXML( $(data) );
+            multigraph.divid(divid);
+            multigraph.init();
+            deferred.resolve(multigraph);
+        });
+
+        return deferred.promise();
+
+    };
+
+
+
 }(window.multigraph));

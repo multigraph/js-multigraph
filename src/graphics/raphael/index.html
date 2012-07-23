@@ -125,7 +125,7 @@ $(document).ready(function() {
 
   var Multigraph = window.multigraph.Multigraph;
 
-  var multigraphPromise = Multigraph.createGraph("mygraph", "./mymugl.xml");
+  var multigraphPromise = Multigraph.createRaphaelGraph("mygraph", "./mymugl.xml");
 
   multigraphPromise.done(function(multigraph) {
     console.log('got a multigraph now');
