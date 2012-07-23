@@ -149,6 +149,12 @@ if (!window.multigraph) {
 */
         });
 
+/*
+        this.respondsTo("dataValueToAxisValue", function(v) {
+            return this.axisToDataRatio() * ( v - this.dataMin() ) + this.minOffset() + this.parallelOffset();
+        });
+*/
+
         ns.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis, attributes);
     });
 

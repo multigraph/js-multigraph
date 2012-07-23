@@ -7,11 +7,9 @@ if (!window.multigraph) {
 
     ns.canvasMixin.add(function(ns) {
 
+        ns.Multigraph.hasA("$div");    // jQuery object for the Multigraph div
         ns.Multigraph.hasA("canvas");  // canvas object itself (the '<canvas>' tag itself)
         ns.Multigraph.hasA("context"); // canvas context object
-
-        ns.Multigraph.hasA("$div");  // jQuery object for the Canvas paper's div
-
         ns.Multigraph.hasA("width").which.isA('number');
         ns.Multigraph.hasA("height").which.isA('number');
 
@@ -32,6 +30,7 @@ if (!window.multigraph) {
         ns.Multigraph.respondsTo("render", function() {
             var i;
             this.context().setTransform(1, 0, 0, 1, 0, 0);
+            this.context().transform(1,0,0,-1,0,this.height());
             this.context().clearRect(0, 0, this.width(), this.height());
             this.initializeGeometry(this.width(), this.height());
             for (i=0; i<this.graphs().size(); ++i) {

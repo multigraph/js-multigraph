@@ -19,15 +19,20 @@ if (!window.multigraph.math) {
         this.hasA("b").which.validatesWith(function (b) {
             return ns.utilityFunctions.validateNumberRange(b, 0, 1.0);
         });
-        this.respondsTo("getHexString", function () {
-            var numberToHex = function (number) {
-                number = parseInt(number * 255, 10).toString(16);
-                if (number.length === 1) {
-                    number = "0" + number;
-                }
-                return number;
-            };
-            return "0x" + numberToHex(this.r()) + numberToHex(this.g()) + numberToHex(this.b());
+
+        var numberToHex = function (number) {
+            number = parseInt(number * 255, 10).toString(16);
+            if (number.length === 1) {
+                number = "0" + number;
+            }
+            return number;
+        };
+
+        this.respondsTo("getHexString", function (prefix) {
+            if (!prefix) {
+                prefix = "0x";
+            }
+            return prefix + numberToHex(this.r()) + numberToHex(this.g()) + numberToHex(this.b());
         });
         this.isBuiltWith("r", "g", "b");
 

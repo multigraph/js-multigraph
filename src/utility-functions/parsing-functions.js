@@ -195,6 +195,7 @@ if (!window.multigraph.utilityFunctions) {
                 "maxposition": function() { return new ns.math.Displacement(1,0); },
                 "positionbase": undefined,
 //                "color": "0x000000",
+                "color": function() { return new ns.math.RGBColor(0,0,0); },
                 "tickmin": -3,
                 "tickmax": 3,
                 "highlightstyle": "axis",
