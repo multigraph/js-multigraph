@@ -24,6 +24,10 @@
     <filelist dir="src/graphics/raphael" files="RaphaelMixin.js"/>
     <fileset dir="src/graphics/raphael" includes="**/*.js" excludes="raphael.js RaphaelMixin.js" />
   </path>
+  <path id="path.graphics-canvas-js">
+    <filelist dir="src/graphics/canvas" files="CanvasMixin.js"/>
+    <fileset dir="src/graphics/canvas" includes="**/*.js" excludes="CanvasMixin.js" />
+  </path>
   <path id="path.spec-js">
     <fileset dir="spec" includes="**/*.js" />
   </path>
@@ -36,7 +40,7 @@
     <delete file="${build.file.min}" />
   </target>
 
-  <target name="html" depends="jasmine-html,raphael-html">
+  <target name="html" depends="jasmine-html,raphael-html,canvas-html">
   </target>
 
   <target name="jasmine-html">
@@ -44,6 +48,7 @@
       <path refid="path.multigraph-core-js"/>
       <path refid="path.jquery-xml-handler-js"/>
       <path refid="path.graphics-raphael-js"/>
+      <path refid="path.graphics-canvas-js"/>
       <mapper type="regexp" from="^${basedir}/(.*)$" to='&lt;script type="text/javascript" src="../\1"&gt;&lt;/script&gt;'/>
     </pathconvert>
     <pathconvert property="scripttags.jasmine-spec" pathsep="${line.separator}">
@@ -74,11 +79,29 @@
     </replaceregexp>
   </target>
 
+  <target name="canvas-html">
+    <pathconvert property="scripttags.mg-jq" pathsep="${line.separator}">
+      <path refid="path.multigraph-core-js"/>
+      <path refid="path.jquery-xml-handler-js"/>
+      <mapper type="regexp" from="^${basedir}/(.*)$" to='&lt;script type="text/javascript" src="../../../\1"&gt;&lt;/script&gt;'/>
+    </pathconvert>
+    <pathconvert property="scripttags.canvas" pathsep="${line.separator}">
+      <path refid="path.graphics-canvas-js"/>
+      <mapper type="regexp" from="^${basedir}/src/graphics/canvas/(.*)$" to='&lt;script type="text/javascript" src="\1"&gt;&lt;/script&gt;'/>
+    </pathconvert>
+    <replaceregexp flags="s">
+      <regexp pattern="&lt;!--BEGIN_ANT_LINES--&gt;.*&lt;!--END_ANT_LINES--&gt;"/>
+      <substitution expression="&lt;!--BEGIN_ANT_LINES--&gt;${line.separator}${scripttags.mg-jq}${line.separator}${line.separator}${scripttags.canvas}${line.separator}&lt;!--END_ANT_LINES--&gt;"/>
+      <filelist dir="src/graphics/canvas" files="index.html"/>
+    </replaceregexp>
+  </target>
+
   <target name="concatenate">
     <concat destfile="${build.dir}/multigraph.js" fixlastline="yes" eol="lf">
       <path refid="path.multigraph-core-js"/>
       <path refid="path.jquery-xml-handler-js"/>
       <path refid="path.graphics-raphael-js"/>
+      <path refid="path.graphics-canvas-js"/>
     </concat>
   </target>
 

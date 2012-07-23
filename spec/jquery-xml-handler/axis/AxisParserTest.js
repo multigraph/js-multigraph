@@ -1,4 +1,5 @@
-/*global describe, it, beforeEach, expect, it, jasmine */
+/*global xdescribe, describe, xit, beforeEach, expect, it, jasmine */
+/*jshint laxbreak:true */
 
 describe("Axis parsing", function () {
     "use strict";

@@ -1,0 +1,29 @@
+<mugl>
+    <window margin="2" padding="5" border="2"/>
+    <plotarea margintop="10" marginleft="38" marginbottom="35" marginright="35"/>
+    <horizontalaxis id="x" min="0" max="10" base="-1,0"/>
+    <verticalaxis   id="y"  min="0" max="10" length="1-20"/>
+    <verticalaxis   id="y2" min="0" max="10" length="1-20" base="0,-1"/>
+    <verticalaxis   id="y3" min="0" max="10" length="1-20" base="1,-1"/>
+    <plot>
+      <horizontalaxis ref="x">
+        <variable ref="x"/>
+      </horizontalaxis>
+      <verticalaxis ref="y">
+        <variable ref="y"/>
+      </verticalaxis>
+      <renderer type="line">
+      </renderer>
+    </plot>
+    <data>
+      <variables>
+        <variable column="0" id="x"/>
+        <variable column="1" id="y"/>
+      </variables>
+      <values>
+        1,2
+        3,4
+        5,6
+      </values>
+    </data>
+</mugl>
