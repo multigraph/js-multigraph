@@ -143,22 +143,22 @@ describe("Axis parsing", function () {
 
         beforeEach(function () {
             xmlString = '<verticalaxis'
-                +   ' id="y2"'
+                +   ' id="y1"'
                 +   ' type="number"'
                 +   ' pregap="0"'
                 +   ' postgap="0"'
                 +   ' anchor="-1"'
                 +   ' minoffset="0"'
-                +   ' minposition="-1"'
                 +   ' maxoffset="0"'
-                +   ' maxposition="1"'
                 +   ' tickmin="-3"'
                 +   ' tickmax="3"'
                 +   ' highlightstyle="axis"'
                 +   ' linewidth="1"'
-                +   ' length="0.9+0"'
+                +   ' length="0.9"'
                 +   ' position="0,0"'
                 +   ' base="-1,1"'
+                +   ' minposition="-1"'
+                +   ' maxposition="1"'
                 +    '>'
                 +  '<labels'
                 +     ' format="%1d"'
@@ -183,7 +183,7 @@ describe("Axis parsing", function () {
 
         it("should be able to parse a axis with a complex Labels child from XML", function () {
             xmlString = '<verticalaxis'
-                +   ' id="y2"'
+                +   ' id="y3"'
                 +   ' type="number"'
                 +   ' pregap="0"'
                 +   ' postgap="0"'
@@ -227,12 +227,12 @@ describe("Axis parsing", function () {
         });
 
 
-        xit("should be able to parse a axis with a Labels child from XML, serialize it and get the same XML as the original", function () {
+        it("should be able to parse a axis with a Labels child from XML, serialize it and get the same XML as the original", function () {
             axis = Axis.parseXML($xml);
             expect(axis.serialize()).toEqual(xmlString);
         });
 
-        xit("should be able to parse a axis with a complex Labels child from XML, serialize it and get thesame XML as the original", function () {
+        it("should be able to parse a axis with a complex Labels child from XML, serialize it and get thesame XML as the original", function () {
             xmlString = '<verticalaxis'
                 +   ' id="y2"'
                 +   ' type="number"'
@@ -240,16 +240,16 @@ describe("Axis parsing", function () {
                 +   ' postgap="0"'
                 +   ' anchor="-1"'
                 +   ' minoffset="0"'
-                +   ' minposition="-1"'
                 +   ' maxoffset="0"'
-                +   ' maxposition="1"'
                 +   ' tickmin="-3"'
                 +   ' tickmax="3"'
                 +   ' highlightstyle="axis"'
                 +   ' linewidth="1"'
-                +   ' length="0.9+0"'
+                +   ' length="0.9"'
                 +   ' position="0,0"'
                 +   ' base="-1,1"'
+                +   ' minposition="-1"'
+                +   ' maxposition="1"'
                 +    '>'
                 +  '<labels'
                 +     ' format="%1d"'

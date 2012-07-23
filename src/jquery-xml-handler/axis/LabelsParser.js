@@ -43,10 +43,10 @@ if (!window.multigraph.Axis) {
 
             attributeStrings = ns.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
             if (this.anchor() !== undefined) {
-                attributeStrings.push('anchor="' + this.anchor().serialize() + '"')
+                attributeStrings.push('anchor="' + this.anchor().serialize() + '"');
             }
             if (this.position() !== undefined) {
-                attributeStrings.push('position="' + this.position().serialize() + '"')
+                attributeStrings.push('position="' + this.position().serialize() + '"');
             }
             output += attributeStrings.join(' ');
 
