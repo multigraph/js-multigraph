@@ -69,9 +69,7 @@ if (!window.multigraph) {
         this.hasAn("id").which.validatesWith(function (id) {
             return typeof(id) === "string";
         });
-        this.hasA("type").which.validatesWith(function (type) {
-            return typeof(type) === "string" && (type.toLowerCase() === "number" || type.toLowerCase() === "datetime");
-        });
+        this.hasA("type").which.isOneOf(ns.DataValue.types());
         this.hasA("length").which.validatesWith(function (length) {
             return length instanceof ns.math.Displacement;
         });
@@ -84,18 +82,53 @@ if (!window.multigraph) {
         this.hasA("base").which.validatesWith(function (base) {
             return base instanceof ns.math.Point;
         });
-        this.hasA("min").which.isA("number"); // TODO: Also datetime
-                                              //       also 'auto'         
+
+
+
+        // The "min" attribute stores the "min" value from the mugl file, if there was one -- as a string!!!
+        this.hasA("min").which.isA("string");
+
+        // The "dataMin" attribute is the current min DataValue for the axis
+        this.hasA("dataMin").which.validatesWith(function(x) {
+            return ns.DataValue.isInstance(x);
+        });
+        // Convenience method for checking to see if dataMin has been set or not
+        this.respondsTo("hasDataMin", function() {
+            return this.dataMin() !== undefined;
+        });
+
+                                             
         this.hasA("minoffset").which.isA("number");
         this.hasA("minposition").which.validatesWith(function (minposition) {
             return minposition instanceof ns.math.Displacement;
         });
-        this.hasA("max").which.isA("number"); // TODO: Also datetime
-                                              //       also 'auto'         
+
+
+
+
+        // The "max" attribute stores the "max" value from the mugl file, if there was one -- as a string!!!
+        this.hasA("max").which.isA("string");
+
+        // The "dataMax" attribute is the current max DataValue for the axis
+        this.hasA("dataMax").which.validatesWith(function(x) {
+            return ns.DataValue.isInstance(x);
+        });
+        // Convenience method for checking to see if dataMax has been set or not
+        this.respondsTo("hasDataMax", function() {
+            return this.dataMax() !== undefined;
+        });
+
+
+
         this.hasA("maxoffset").which.isA("number");
         this.hasA("maxposition").which.validatesWith(function (maxposition) {
             return maxposition instanceof ns.math.Displacement;
         });
+
+
+
+
+
         this.hasA("positionbase").which.validatesWith(function (positionbase) {
             //deprecated
             return typeof(positionbase) === "string";
@@ -118,6 +151,8 @@ if (!window.multigraph) {
         this.hasA("parallelOffset").which.isA("number");
         this.hasA("perpOffset").which.isA("number");
 
+        this.hasA("axisToDataRatio").which.isA("number");
+
         this.respondsTo("initializeGeometry", function(graph) {
             if (this.orientation() === Axis.HORIZONTAL) {
                 this.pixelLength(this.length().calculateLength( graph.plotBox().width() ));
@@ -130,6 +165,9 @@ if (!window.multigraph) {
             }
             this.minoffset(this.minposition().calculateCoordinate(this.pixelLength()));
             this.maxoffset(this.pixelLength() - this.maxposition().calculateCoordinate(this.pixelLength()));
+            if (this.hasDataMin() && this.hasDataMax()) {
+                this.computeAxisToDataRatio();
+            }
 /*
             if (_orientation == AxisOrientation.HORIZONTAL) {
                 _pixelLength = _length.calculateLength( _graph.plotBox.width );
@@ -149,11 +187,22 @@ if (!window.multigraph) {
 */
         });
 
+        this.respondsTo("computeAxisToDataRatio", function() {
+            if (this.hasDataMin() && this.hasDataMax()) {
 /*
-        this.respondsTo("dataValueToAxisValue", function(v) {
-            return this.axisToDataRatio() * ( v - this.dataMin() ) + this.minOffset() + this.parallelOffset();
-        });
+console.log('pixelLength: ' + this.pixelLength());
+console.log('maxoffset: ' + this.maxoffset());
+console.log('minoffset: ' + this.minoffset());
+console.log('dataMax: ' + this.dataMax().getRealValue());
+console.log('dataMin: ' + this.dataMin().getRealValue());
 */
+                this.axisToDataRatio((this.pixelLength() - this.maxoffset() - this.minoffset()) / (this.dataMax().getRealValue() - this.dataMin().getRealValue()));
+            }
+        });
+
+        this.respondsTo("dataValueToAxisValue", function(v) {
+            return this.axisToDataRatio() * ( v.getRealValue() - this.dataMin().getRealValue() ) + this.minoffset() + this.parallelOffset();
+        });
 
         ns.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis, attributes);
     });

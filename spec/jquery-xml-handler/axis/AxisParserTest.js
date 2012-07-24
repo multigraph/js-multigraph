@@ -62,7 +62,7 @@ describe("Axis parsing", function () {
     });
 
     it("should be able to parse an axis from XML and read its 'min' attribute", function () {
-        expect(axis.min()).toBe(0);
+        expect(axis.min()).toBe("0");
     });
 
     it("should be able to parse an axis from XML and read its 'minoffset' attribute", function () {
@@ -75,7 +75,7 @@ describe("Axis parsing", function () {
     });
 
     it("should be able to parse an axis from XML and read its 'max' attribute", function () {
-        expect(axis.max()).toBe(10);
+        expect(axis.max()).toBe("10");
     });
 
     it("should be able to parse an axis from XML and read its 'maxoffset' attribute", function () {
@@ -112,7 +112,7 @@ describe("Axis parsing", function () {
     });
 
     it("should be able to parse an axis from XML, then serialize it, and get the same XML as the original", function () {
-        var xmlString2 = '<verticalaxis id="y" type="datetime" max="10"/>';
+        var xmlString2 = '<verticalaxis color="0x000000" id="y" type="datetime" max="10"/>';
 //        b = Axis.parseXML($(xmlString2), 'vertical');
         expect(axis.serialize()).toBe(xmlString);
 //        expect(b.serialize() === xmlString2).toBe(true);
@@ -121,7 +121,7 @@ describe("Axis parsing", function () {
     describe("Title parsing", function () {
 
         beforeEach(function () {
-            xmlString = '<verticalaxis id="y2" type="number" pregap="0" postgap="0" anchor="-1" minoffset="0" maxoffset="0" tickmin="-3" tickmax="3" highlightstyle="axis" linewidth="1" length="0.9" position="0,0" base="-1,1" minposition="-1" maxposition="1"><title position="-1 1" anchor="1 1" angle="70">A Title</title></verticalaxis>';
+            xmlString = '<verticalaxis color="0x000000" id="y2" type="number" pregap="0" postgap="0" anchor="-1" min="auto" minoffset="0" max="auto" maxoffset="0" tickmin="-3" tickmax="3" highlightstyle="axis" linewidth="1" length="0.9" position="0,0" base="-1,1" minposition="-1" maxposition="1"><title position="-1 1" anchor="1 1" angle="70">A Title</title></verticalaxis>';
             $xml = $(xmlString);
         });
 
@@ -144,12 +144,15 @@ describe("Axis parsing", function () {
 
         beforeEach(function () {
             xmlString = '<verticalaxis'
+                +   ' color="0x000000"'
                 +   ' id="y1"'
                 +   ' type="number"'
                 +   ' pregap="0"'
                 +   ' postgap="0"'
                 +   ' anchor="-1"'
+                +   ' min="auto"'
                 +   ' minoffset="0"'
+                +   ' max="auto"'
                 +   ' maxoffset="0"'
                 +   ' tickmin="-3"'
                 +   ' tickmax="3"'
@@ -184,13 +187,16 @@ describe("Axis parsing", function () {
 
         it("should be able to parse a axis with a complex Labels child from XML", function () {
             xmlString = '<verticalaxis'
+                +   ' color="0x000000"'
                 +   ' id="y3"'
                 +   ' type="number"'
                 +   ' pregap="0"'
                 +   ' postgap="0"'
                 +   ' anchor="-1"'
                 +   ' minoffset="0"'
+                +   ' min="auto"'
                 +   ' minposition="-1"'
+                +   ' max="auto"'
                 +   ' maxoffset="0"'
                 +   ' maxposition="1"'
                 +   ' tickmin="-3"'
@@ -235,12 +241,15 @@ describe("Axis parsing", function () {
 
         it("should be able to parse a axis with a complex Labels child from XML, serialize it and get thesame XML as the original", function () {
             xmlString = '<verticalaxis'
+                +   ' color="0x000000"'
                 +   ' id="y2"'
                 +   ' type="number"'
                 +   ' pregap="0"'
                 +   ' postgap="0"'
                 +   ' anchor="-1"'
+                +   ' min="auto"'
                 +   ' minoffset="0"'
+                +   ' max="auto"'
                 +   ' maxoffset="0"'
                 +   ' tickmin="-3"'
                 +   ' tickmax="3"'
@@ -281,7 +290,7 @@ describe("Axis parsing", function () {
     describe("Grid parsing", function () {
 
         beforeEach(function () {
-            xmlString = '<verticalaxis id="y2" type="number" pregap="0" postgap="0" anchor="-1" minoffset="0" maxoffset="0" tickmin="-3" tickmax="3" highlightstyle="axis" linewidth="1" length="0.9" position="0,0" base="-1,1" minposition="1" maxposition="1"><grid color="0x984545" visible="false"/></verticalaxis>';
+            xmlString = '<verticalaxis color="0x000000" id="y2" type="number" pregap="0" postgap="0" anchor="-1" min="auto" minoffset="0" max="auto" maxoffset="0" tickmin="-3" tickmax="3" highlightstyle="axis" linewidth="1" length="0.9" position="0,0" base="-1,1" minposition="1" maxposition="1"><grid color="0x984545" visible="false"/></verticalaxis>';
             $xml = $(xmlString);
         });
 
@@ -303,7 +312,7 @@ describe("Axis parsing", function () {
     describe("Pan parsing", function () {
 
         beforeEach(function () {
-            xmlString = '<verticalaxis id="y2" type="number" pregap="0" postgap="0" anchor="-1" minoffset="0" maxoffset="0" tickmin="-3" tickmax="3" highlightstyle="axis" linewidth="1" length="0.9" position="0,0" base="-1,1" minposition="1" maxposition="1"><pan allowed="yes" min="0" max="5"/></verticalaxis>';
+            xmlString = '<verticalaxis color="0x000000" id="y2" type="number" pregap="0" postgap="0" anchor="-1" min="auto" minoffset="0" max="auto" maxoffset="0" tickmin="-3" tickmax="3" highlightstyle="axis" linewidth="1" length="0.9" position="0,0" base="-1,1" minposition="1" maxposition="1"><pan allowed="yes" min="0" max="5"/></verticalaxis>';
             $xml = $(xmlString);
         });
 
@@ -325,7 +334,7 @@ describe("Axis parsing", function () {
     describe("Zoom parsing", function () {
 
         beforeEach(function () {
-            xmlString = '<verticalaxis id="y2" type="number" pregap="0" postgap="0" anchor="-1" minoffset="0" maxoffset="0" tickmin="-3" tickmax="3" highlightstyle="axis" linewidth="1" length="0.9" position="0,0" base="-1,1" minposition="1" maxposition="1"><zoom allowed="yes" min="0" max="80" anchor="1 1"/></verticalaxis>';
+            xmlString = '<verticalaxis color="0x000000" id="y2" type="number" pregap="0" postgap="0" anchor="-1" min="auto" minoffset="0" max="auto" maxoffset="0" tickmin="-3" tickmax="3" highlightstyle="axis" linewidth="1" length="0.9" position="0,0" base="-1,1" minposition="1" maxposition="1"><zoom allowed="yes" min="0" max="80" anchor="1 1"/></verticalaxis>';
             $xml = $(xmlString);
         });
 
@@ -347,7 +356,7 @@ describe("Axis parsing", function () {
     describe("Binding parsing", function () {
 
         beforeEach(function () {
-            xmlString = '<verticalaxis id="y2" type="number" pregap="0" postgap="0" anchor="-1" minoffset="0" maxoffset="0" tickmin="-3" tickmax="3" highlightstyle="axis" linewidth="1" length="0.9" position="0,0" base="-1,1" minposition="1" maxposition="1"><binding id="y" min="-10" max="50"/></verticalaxis>';
+            xmlString = '<verticalaxis color="0x000000" id="y2" type="number" pregap="0" postgap="0" anchor="-1" min="auto" minoffset="0" max="auto" maxoffset="0" tickmin="-3" tickmax="3" highlightstyle="axis" linewidth="1" length="0.9" position="0,0" base="-1,1" minposition="1" maxposition="1"><binding id="y" min="-10" max="50"/></verticalaxis>';
             $xml = $(xmlString);
         });
 
@@ -369,7 +378,7 @@ describe("Axis parsing", function () {
     describe("AxisControls parsing", function () {
 
         beforeEach(function () {
-            xmlString = '<verticalaxis id="y2" type="number" pregap="0" postgap="0" anchor="-1" minoffset="0" maxoffset="0" tickmin="-3" tickmax="3" highlightstyle="axis" linewidth="1" length="0.9" position="0,0" base="-1,1" minposition="1" maxposition="1"><axiscontrols visible="false"/></verticalaxis>';
+            xmlString = '<verticalaxis color="0x000000" id="y2" type="number" pregap="0" postgap="0" anchor="-1" min="auto" minoffset="0" max="auto" maxoffset="0" tickmin="-3" tickmax="3" highlightstyle="axis" linewidth="1" length="0.9" position="0,0" base="-1,1" minposition="1" maxposition="1"><axiscontrols visible="false"/></verticalaxis>';
             $xml = $(xmlString);
         });
 
@@ -391,7 +400,7 @@ describe("Axis parsing", function () {
     xdescribe("with multiple children", function () {
 
         beforeEach(function () {
-            xmlString = '<verticalaxis id="y2" type="number" pregap="0" postgap="0" anchor="-1" minoffset="0" maxoffset="0" tickmin="-3" tickmax="3" highlightstyle="axis" linewidth="1" length="0.9" position="0,0" base="-1,1" minposition="1" maxposition="1"><title position="-1 1" anchor="1 1" angle="70">A Title</title><labels format="%1d" start="10" angle="9" position="1 1" anchor="0 0" densityfactor=".5" function="fun"><label spacing="200 100 50 10"/><label format="%2d" spacing="5 2 1 .5"/></labels><grid color="0x984545" visible="false"/><pan allowed="yes" min="0" max="5"/><zoom allowed="yes" min="0" max="80" anchor="1 1"/><binding id="y" min="-10" max="50"/><axiscontrols visible="false"/></verticalaxis>';
+            xmlString = '<verticalaxis color="0x000000" id="y2" type="number" pregap="0" postgap="0" anchor="-1" min="auto" minoffset="0" max="auto" maxoffset="0" tickmin="-3" tickmax="3" highlightstyle="axis" linewidth="1" length="0.9" position="0,0" base="-1,1" minposition="1" maxposition="1"><title position="-1 1" anchor="1 1" angle="70">A Title</title><labels format="%1d" start="10" angle="9" position="1 1" anchor="0 0" densityfactor=".5" function="fun"><label spacing="200 100 50 10"/><label format="%2d" spacing="5 2 1 .5"/></labels><grid color="0x984545" visible="false"/><pan allowed="yes" min="0" max="5"/><zoom allowed="yes" min="0" max="80" anchor="1 1"/><binding id="y" min="-10" max="50"/><axiscontrols visible="false"/></verticalaxis>';
             $xml = $(xmlString);
         });
 
@@ -416,5 +425,28 @@ describe("Axis parsing", function () {
         });
 
     });
+
+    describe("dataMin/dataMax handling", function () {
+
+        it("axis with min=\"auto\" should return false for hasDataMin()", function() {
+            var axis = Axis.parseXML($('<verticalaxis min="auto"/>'));
+            expect(axis.hasDataMin()).toBe(false);
+        });
+        it("axis with min=\"0\" should return true for hasDataMin()", function() {
+            var axis = Axis.parseXML($('<verticalaxis min="0"/>'));
+            expect(axis.hasDataMin()).toBe(true);
+        });
+        it("axis with max=\"auto\" should return false for hasDataMax()", function() {
+            var axis = Axis.parseXML($('<verticalaxis max="auto"/>'));
+            expect(axis.hasDataMax()).toBe(false);
+        });
+        it("axis with max=\"1\" should return true for hasDataMax()", function() {
+            var axis = Axis.parseXML($('<verticalaxis max="1"/>'));
+            expect(axis.hasDataMax()).toBe(true);
+        });
+
+    });
+
+
 
 });

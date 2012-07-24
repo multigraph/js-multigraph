@@ -11,9 +11,10 @@
 -->
   <path id="path.multigraph-core-js">
     <fileset dir="src/utility-functions" includes="**/*.js" />
+    <filelist dir="src/multigraph" files="DataValue.js" />
     <fileset dir="src/multigraph/math" includes="**/*.js" />
     <fileset dir="src/data" includes="**/*.js" />
-    <fileset dir="src/multigraph" includes="**/*.js" excludes="src/multigraph/math/**/*.js"/>
+    <fileset dir="src/multigraph" includes="**/*.js" excludes="src/multigraph/math/**/*.js src/multigraph/DataValue.js"/>
   </path>
   <path id="path.jquery-xml-handler-js">
     <filelist dir="src/jquery-xml-handler" files="JQueryXMLMixin.js"/>

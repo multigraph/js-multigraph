@@ -109,6 +109,7 @@ describe("Graph parsing", function () {
         +        ' maxposition="1"'
         +    '/>'
         +    '<horizontalaxis'
+        +        ' color="0x000000"'
         +        ' id="x2"'
         +        ' type="number"'
         +        ' pregap="2"'

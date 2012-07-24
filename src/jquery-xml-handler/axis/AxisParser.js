@@ -24,7 +24,9 @@ if (!window.multigraph) {
                 }
 
                 axis.id(xml.attr("id"));
-                axis.type(xml.attr("type"));
+                if (xml.attr("type")) {
+                    axis.type(ns.DataValue.parseType(xml.attr("type")));
+                }
                 axis.length(ns.math.Displacement.parse(xml.attr("length")));
                 if (xml.attr("position")) {
                     axis.position(ns.math.Point.parse(xml.attr("position")));
@@ -39,9 +41,15 @@ if (!window.multigraph) {
                 }
                 axis.minposition(ns.math.Displacement.parse(xml.attr("minposition")));
                 axis.maxposition(ns.math.Displacement.parse(xml.attr("maxposition")));
-                axis.min(ns.utilityFunctions.parseDoubleOrUndefined(xml.attr("min")));
+                axis.min(xml.attr("min"));
+                if (axis.min() !== "auto") {
+                    axis.dataMin(ns.DataValue.parse(axis.type(), axis.min()));
+                }
                 axis.minoffset(ns.utilityFunctions.parseDoubleOrUndefined(xml.attr("minoffset")));
-                axis.max(ns.utilityFunctions.parseDoubleOrUndefined(xml.attr("max")));
+                axis.max(xml.attr("max"));
+                if (axis.max() !== "auto") {
+                    axis.dataMax(ns.DataValue.parse(axis.type(), axis.max()));
+                }
                 axis.maxoffset(ns.utilityFunctions.parseDoubleOrUndefined(xml.attr("maxoffset")));
                 axis.positionbase(xml.attr("positionbase"));
                 axis.color(ns.math.RGBColor.parse(xml.attr("color")));
