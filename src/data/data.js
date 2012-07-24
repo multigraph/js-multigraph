@@ -15,7 +15,7 @@ if (!window.multigraph.TEMP) {
             i;
             
         //TODO: check columns to make sure it's an array of strings
-        
+      
         for (i = 0; i < columns.length; ++i) {
             columnLabels[columns[i]] = i;
         }

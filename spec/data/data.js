@@ -50,11 +50,11 @@ describe("data", function () {
     });
 
     describe("getColumnsId method", function () {
-
+        
     });
 
     describe("getColumns method", function () {
-
+        
     });
 
     describe("getIterator method", function () {
@@ -62,7 +62,9 @@ describe("data", function () {
     });
 
     describe("onReady method", function () {
+        xit("should throw an error if the parameter is not a function", function () {
 
+        });
     });
 
 });
