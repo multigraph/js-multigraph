@@ -114,9 +114,9 @@
 
   <style type="text/css">
     #mygraph {
-      width:  100%;
-      height: 100%;
-      border: 1px solid #000;
+      width:  800px;
+      height: 500px;
+      border: 0px;
     }
   </style>
 
@@ -129,19 +129,15 @@ $(document).ready(function() {
   var multigraphPromise = Multigraph.createRaphaelGraph("mygraph", "./mymugl.xml");
 
   multigraphPromise.done(function(multigraph) {
-    console.log('got a multigraph now');
+//    console.log('got a multigraph now');
   });
 
   multigraphPromise.done(function(multigraph) {
-    console.log('   its size is ' + multigraph.width() + ' X ' + multigraph.height());
+//    console.log('   its size is ' + multigraph.width() + ' X ' + multigraph.height());
   });
 
   multigraphPromise.done(function(multigraph) {
     multigraph.init();
-  });
-
-  multigraphPromise.done(function(multigraph) {
-    console.log('   and the size is now ' + multigraph.width() + ' X ' + multigraph.height());
   });
 
 });

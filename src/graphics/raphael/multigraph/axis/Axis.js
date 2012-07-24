@@ -5,29 +5,23 @@ if (!window.multigraph) {
 (function (ns) {
     "use strict";
 
-    ns.raphaelMixin.add(function(ns) {
+    ns.raphaelMixin.add(function (ns) {
 
-        ns.Axis.respondsTo("render", function(graph) {
+        ns.Axis.respondsTo("render", function (graph, paper, set) {
+
             // NOTE: axes are drawn relative to the graph's plot area (plotBox); the coordinates
             //   below are relative to the coordinate system of that box.
             if (this.orientation() === ns.Axis.HORIZONTAL) {
-                //moveTo(this.parallelOffset(), this.perpOffset());
-                //lineTo(this.parallelOffset() + this.pixelLength(), this.perpOffset());
-                console.log("drawing horizontal axis from (" +
-                            this.parallelOffset() + ", " + this.perpOffset() +
-                            ")  to  (" +
-                            (this.parallelOffset() + this.pixelLength()) + ", " + this.perpOffset() + ")");
-                //moveTo(this.parallelOffset(), this.perpOffset());
-                //lineTo(this.parallelOffset() + this.pixelLength(), this.perpOffset());
-
+                set.push( paper.path("M " + this.parallelOffset() + ", " + this.perpOffset() + 
+                                     " l " + this.pixelLength() + ", 0")
+                          .attr({"stroke":this.color().getHexString("#")}));
+                
             } else {
-                console.log("drawing vertical axis from (" +
-                            this.perpOffset() + ", " + this.parallelOffset() +
-                            ")  to  (" +
-                            this.perpOffset() + ", " + (this.parallelOffset() + this.pixelLength()) + ")");
-                //moveTo(this.perpOffset(), this.parallelOffset());
-                //lineTo(this.perpOffset(), this.parallelOffset() + this.pixelLength());
+                set.push( paper.path("M " + this.perpOffset() + ", " + this.parallelOffset() +
+                                     " l 0, " + this.pixelLength() )
+                          .attr({"stroke":this.color().getHexString("#")}));
             }
+
         });
 
     });
