@@ -33,11 +33,15 @@ describe("data", function () {
             numberValueData.push(numValueRow);
         }
 
-        testArrayData = new ArrayData(numberValueData);
+        testArrayData = new ArrayData("", numberValueData);
     });
 
     describe("constructor", function () {
-        xit("should throw an error if the parameter is not an array of arrays of NumberValue objects", function () {
+        xit("should throw an error if the first parameter is not a list of DataVariable objects", function () {
+
+        });
+
+        xit("should throw an error if the second parameter is not an array of arrays of NumberValue objects", function () {
 
         });
     });

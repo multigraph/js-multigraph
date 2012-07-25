@@ -9,9 +9,10 @@ if (!window.multigraph.TEMP) {
 (function (ns) {
     "use strict";
 
-    var ArrayData = function (d) {
-        var actualData = d;
-
+    var ArrayData = function (m, d) {
+        var actualData = d,
+            metaData = m;
+        
 
         this.getIterator = function (columnIds, min, max, buffer) {
             var iter = {},
