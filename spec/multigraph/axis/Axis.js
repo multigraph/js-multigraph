@@ -7,7 +7,7 @@ describe("Axis", function () {
         Point = window.multigraph.math.Point,
         Title = window.multigraph.Axis.Title,
         Labels = window.multigraph.Axis.Labels,
-        Label = window.multigraph.Axis.Labels.Label,
+        Labeler = window.multigraph.Axis.Labeler,
         Grid = window.multigraph.Axis.Grid,
         Pan = window.multigraph.Axis.Pan,
         Zoom = window.multigraph.Axis.Zoom,
@@ -288,34 +288,36 @@ describe("Axis", function () {
         });
 
         it("should be able to add a Labels with attributes and children to a Axis", function () {
-            var label = new Label('10 1 .2'),
-                label2 = new Label('100 50 25');
+            var labeler = new Labeler(a),
+                labeler2 = new Labeler(a);
             labels.position(new Point(1,1));
-            label2.anchor(new Point(0,0));
-            labels.label().add(label);
-            labels.label().add(label2);
+            labeler2.anchor(new Point(0,0));
+            a.labelers().add(labeler);
+            a.labelers().add(labeler2);
             a.labels(labels);
             expect(a.labels().position().x()).toEqual(1);
             expect(a.labels().position().y()).toEqual(1);
-            expect(a.labels().label().at(0)).toBe(label);
-            expect(a.labels().label().at(1)).toBe(label2);
+            expect(a.labelers().at(0)).toBe(labeler);
+            expect(a.labelers().at(1)).toBe(labeler2);
         });
 
         it("should be able to set/get attributes of labels added to a Axis", function () {
-            var label = new Label('20 10 2 1'),
-                label2 = new Label('200 100');
-            labels.label().add(label);
-            labels.label().add(label2);
+            var labeler = new Labeler(a),
+                labeler2 = new Labeler(a);
+            labeler.spacing("20");
+            labeler2.spacing("202");
+            a.labelers().add(labeler);
+            a.labelers().add(labeler2);
             a.labels(labels);
             a.labels().position(new Point(1,1)).angle(40);
-            a.labels().label().at(1).anchor(new Point(0,1)).angle(14);
+            a.labelers().at(1).anchor(new Point(0,1)).angle(14);
             expect(a.labels().position().x()).toEqual(1);
             expect(a.labels().position().y()).toEqual(1);
             expect(a.labels().angle()).toBe(40);
-            expect(a.labels().label().at(0).spacing() === '20 10 2 1').toBe(true);
-            expect(a.labels().label().at(1).spacing() === '200 100').toBe(true);
-            expect(a.labels().label().at(1).anchor().serialize()).toEqual("0,1");
-            expect(a.labels().label().at(1).angle()).toBe(14);
+            expect(a.labelers().at(0).spacing()).toBe("20");
+            expect(a.labelers().at(1).spacing()).toBe("202");
+            expect(a.labelers().at(1).anchor().serialize()).toEqual("0,1");
+            expect(a.labelers().at(1).angle()).toBe(14);
         });
 
     });

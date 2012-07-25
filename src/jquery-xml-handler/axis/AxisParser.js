@@ -17,11 +17,6 @@ if (!window.multigraph) {
                 i;
 
             if (xml) {
-                for (i = 0; i < children.length; i++) {
-                    if (xml.find(children[i]).length > 0) {
-                        axis[children[i]](ns.Axis[childModelNames[i]][parse](xml.find(children[i])));
-                    }
-                }
 
                 axis.id(xml.attr("id"));
                 if (xml.attr("type")) {
@@ -57,6 +52,15 @@ if (!window.multigraph) {
                 axis.tickmax(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr("tickmax")));
                 axis.highlightstyle(xml.attr("highlightstyle"));
                 axis.linewidth(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr("linewidth")));
+
+                for (i = 0; i < children.length; i++) {
+                    if (xml.find(children[i]).length > 0 && children[i] !== "labels") {
+                        axis[children[i]](ns.Axis[childModelNames[i]][parse](xml.find(children[i])));
+                    }
+                }
+
+                axis.labels(ns.Axis.Labels[parse](xml.find(">labels"), axis))
+
             }
             return axis;
         };

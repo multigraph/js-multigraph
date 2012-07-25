@@ -8,7 +8,7 @@ if (!window.multigraph) {
     var Axis,
         Title,
         Labels,
-        Label,
+        Labeler,
         Grid,
         Pan,
         Zoom,
@@ -24,8 +24,8 @@ if (!window.multigraph) {
         if (ns.Axis.Labels) {
             Labels = ns.Axis.Labels;
         }
-        if (ns.Axis.Label) {
-            Label = ns.Axis.Label;
+        if (ns.Axis.Labeler) {
+            Labeler = ns.Axis.Labeler;
         }
         if (ns.Axis.Grid) {
             Grid = ns.Axis.Grid;
@@ -50,6 +50,9 @@ if (!window.multigraph) {
         });
         this.hasA("labels").which.validatesWith(function (labels) {
             return labels instanceof ns.Axis.Labels;
+        });
+        this.hasMany("labelers").which.validatesWith(function (labelers) {
+            return labelers instanceof ns.Axis.Labeler;
         });
         this.hasA("grid").which.validatesWith(function (grid) {
             return grid instanceof ns.Axis.Grid;
@@ -217,8 +220,8 @@ console.log('dataMin: ' + this.dataMin().getRealValue());
     if (Labels) {
         ns.Axis.Labels = Labels;
     }
-    if (Label) {
-        ns.Axis.Label = Label;
+    if (Labeler) {
+        ns.Axis.Labeler = Labeler;
     }
     if (Grid) {
         ns.Axis.Grid = Grid;

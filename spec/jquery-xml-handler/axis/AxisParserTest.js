@@ -7,13 +7,43 @@ describe("Axis parsing", function () {
     var Axis = window.multigraph.Axis,
         Title = window.multigraph.Axis.Title,
         Labels = window.multigraph.Axis.Labels,
-        Label = window.multigraph.Axis.Labels.Label,
+        Labeler = window.multigraph.Axis.Labeler,
         Grid = window.multigraph.Axis.Grid,
         Pan = window.multigraph.Axis.Pan,
         Zoom = window.multigraph.Axis.Zoom,
         Binding = window.multigraph.Axis.Binding,
         AxisControls = window.multigraph.Axis.AxisControls,
-        xmlString = '<horizontalaxis color="0x123456" id="x" type="number" pregap="2" postgap="4" anchor="1" min="0" minoffset="19" max="10" maxoffset="2" positionbase="0 0" tickmin="-3" tickmax="3" highlightstyle="bold" linewidth="1" length="1" position="1,1" base="1,-1" minposition="-1" maxposition="1"/>',
+        xmlString = '<horizontalaxis'
++     ' color="0x123456"'
++     ' id="x"'
++     ' type="number"'
++     ' pregap="2"'
++     ' postgap="4"'
++     ' anchor="1"'
++     ' min="0"'
++     ' minoffset="19"'
++     ' max="10"'
++     ' maxoffset="2"'
++     ' positionbase="0 0"'
++     ' tickmin="-3"'
++     ' tickmax="3"'
++     ' highlightstyle="bold"'
++     ' linewidth="1"'
++     ' length="1"'
++     ' position="1,1"'
++     ' base="1,-1"'
++     ' minposition="-1"'
++     ' maxposition="1"'
++     '>'
++   '<labels'
++       ' start="0"'
++       ' angle="0"'
++       ' format="%1d"'
++       ' anchor="0,0"'
++       ' position="0,0"'
++       ' spacing="10000 5000 2000 1000 500 200 100 50 20 10 5 2 1 0.1 0.01 0.001"'
++       '/>'
++ '</horizontalaxis>',
         $xml,
         axis;
 
@@ -121,7 +151,43 @@ describe("Axis parsing", function () {
     describe("Title parsing", function () {
 
         beforeEach(function () {
-            xmlString = '<verticalaxis color="0x000000" id="y2" type="number" pregap="0" postgap="0" anchor="-1" min="auto" minoffset="0" max="auto" maxoffset="0" tickmin="-3" tickmax="3" highlightstyle="axis" linewidth="1" length="0.9" position="0,0" base="-1,1" minposition="-1" maxposition="1"><title position="-1 1" anchor="1 1" angle="70">A Title</title></verticalaxis>';
+            xmlString = '<verticalaxis'
+                +    ' color="0x000000"'
+                +    ' id="y2"'
+                +    ' type="number"'
+                +    ' pregap="0"'
+                +    ' postgap="0"'
+                +    ' anchor="-1"'
+                +    ' min="auto"'
+                +    ' minoffset="0"'
+                +    ' max="auto"'
+                +    ' maxoffset="0"'
+                +    ' tickmin="-3"'
+                +    ' tickmax="3"'
+                +    ' highlightstyle="axis"'
+                +    ' linewidth="1"'
+                +    ' length="0.9"'
+                +    ' position="0,0"'
+                +    ' base="-1,1"'
+                +    ' minposition="-1"'
+                +    ' maxposition="1"'
+                +    '>'
+                +   '<title'
+                +      ' position="-1 1"'
+                +      ' anchor="1 1"'
+                +      ' angle="70"'
+                +       '>'
+                +     'A Title'
+                +   '</title>'
+                +   '<labels'
+                +      ' start="0"'
+                +      ' angle="0"'
+                +      ' format="%1d"'
+                +      ' anchor="0,0"'
+                +      ' position="0,0"'
+                +      ' spacing="10000 5000 2000 1000 500 200 100 50 20 10 5 2 1 0.1 0.01 0.001"'
+                +      '/>'
+                + '</verticalaxis>';
             $xml = $(xmlString);
         });
 
@@ -165,10 +231,10 @@ describe("Axis parsing", function () {
                 +   ' maxposition="1"'
                 +    '>'
                 +  '<labels'
-                +     ' format="%1d"'
                 +     ' start="10"'
                 +     ' angle="9"'
                 +     ' densityfactor="0.5"'
+                +     ' format="%1d"'
                 +     ' anchor="0,0"'
                 +     ' position="1,1"'
                 +     ' spacing="100 75 50 25 10 5 2 1 0.5 0.1"'
@@ -208,10 +274,10 @@ describe("Axis parsing", function () {
                 +   ' base="-1,1"'
                 +    '>'
                 +  '<labels'
-                +     ' format="%1d"'
                 +     ' start="10"'
                 +     ' angle="9"'
                 +     ' densityfactor="0.5"'
+                +     ' format="%1d"'
                 +     ' anchor="0,0"'
                 +     ' position="1,1"'
                 +      '>'
@@ -229,8 +295,8 @@ describe("Axis parsing", function () {
             expect(axis).not.toBeUndefined();
             expect(axis instanceof Axis).toBe(true);
             expect(axis.labels() instanceof Labels).toBe(true);
-            expect(axis.labels().label().at(0) instanceof Label).toBe(true);
-            expect(axis.labels().label().at(1) instanceof Label).toBe(true);
+            expect(axis.labelers().at(0) instanceof Labeler).toBe(true);
+            expect(axis.labelers().at(1) instanceof Labeler).toBe(true);
         });
 
 
@@ -262,19 +328,84 @@ describe("Axis parsing", function () {
                 +   ' maxposition="1"'
                 +    '>'
                 +  '<labels'
-                +     ' format="%1d"'
                 +     ' start="10"'
                 +     ' angle="9"'
                 +     ' densityfactor="0.5"'
+                +     ' format="%1d"'
                 +     ' anchor="0,0"'
                 +     ' position="1,1"'
                 +      '>'
                 +    '<label'
-                +       ' spacing="200 100 50 10"'
+                +       ' start="10"'
+                +       ' angle="9"'
+                +       ' densityfactor="0.5"'
+                +       ' spacing="200"'
+                +       ' format="%1d"'
+                +       ' anchor="0,0"'
+                +       ' position="1,1"'
                 +        '/>'
                 +    '<label'
+                +       ' start="10"'
+                +       ' angle="9"'
+                +       ' densityfactor="0.5"'
+                +       ' spacing="100"'
+                +       ' format="%1d"'
+                +       ' anchor="0,0"'
+                +       ' position="1,1"'
+                +        '/>'
+                +    '<label'
+                +       ' start="10"'
+                +       ' angle="9"'
+                +       ' densityfactor="0.5"'
+                +       ' spacing="50"'
+                +       ' format="%1d"'
+                +       ' anchor="0,0"'
+                +       ' position="1,1"'
+                +        '/>'
+                +    '<label'
+                +       ' start="10"'
+                +       ' angle="9"'
+                +       ' densityfactor="0.5"'
+                +       ' spacing="10"'
+                +       ' format="%1d"'
+                +       ' anchor="0,0"'
+                +       ' position="1,1"'
+                +        '/>'
+                +    '<label'
+                +       ' start="10"'
+                +       ' angle="9"'
+                +       ' densityfactor="0.5"'
+                +       ' spacing="5"'
                 +       ' format="%2d"'
-                +       ' spacing="5 2 1 .5"'
+                +       ' anchor="0,0"'
+                +       ' position="1,1"'
+                +        '/>'
+                +    '<label'
+                +       ' start="10"'
+                +       ' angle="9"'
+                +       ' densityfactor="0.5"'
+                +       ' spacing="2"'
+                +       ' format="%2d"'
+                +       ' anchor="0,0"'
+                +       ' position="1,1"'
+                +        '/>'
+                +    '<label'
+                +       ' start="10"'
+                +       ' angle="9"'
+                +       ' densityfactor="0.5"'
+                +       ' spacing="1"'
+                +       ' format="%2d"'
+                +       ' anchor="0,0"'
+                +       ' position="1,1"'
+                +        '/>'
+                +    '<label'
+                +       ' start="10"'
+                +       ' angle="9"'
+                +       ' densityfactor="0.5"'
+                +       ' spacing=".5"'
+                +       ' format="%2d"'
+                +       ' anchor="0,0"'
+                +       ' position="1,1"'
                 +        '/>'
                 +  '</labels>'
                 + '</verticalaxis>';
@@ -290,7 +421,7 @@ describe("Axis parsing", function () {
     describe("Grid parsing", function () {
 
         beforeEach(function () {
-            xmlString = '<verticalaxis color="0x000000" id="y2" type="number" pregap="0" postgap="0" anchor="-1" min="auto" minoffset="0" max="auto" maxoffset="0" tickmin="-3" tickmax="3" highlightstyle="axis" linewidth="1" length="0.9" position="0,0" base="-1,1" minposition="1" maxposition="1"><grid color="0x984545" visible="false"/></verticalaxis>';
+            xmlString = '<verticalaxis color="0x000000" id="y2" type="number" pregap="0" postgap="0" anchor="-1" min="auto" minoffset="0" max="auto" maxoffset="0" tickmin="-3" tickmax="3" highlightstyle="axis" linewidth="1" length="0.9" position="0,0" base="-1,1" minposition="1" maxposition="1"><labels start="0" angle="0" format="%1d" anchor="0,0" position="0,0" spacing="10000 5000 2000 1000 500 200 100 50 20 10 5 2 1 0.1 0.01 0.001"/><grid color="0x984545" visible="false"/></verticalaxis>';
             $xml = $(xmlString);
         });
 
@@ -312,7 +443,7 @@ describe("Axis parsing", function () {
     describe("Pan parsing", function () {
 
         beforeEach(function () {
-            xmlString = '<verticalaxis color="0x000000" id="y2" type="number" pregap="0" postgap="0" anchor="-1" min="auto" minoffset="0" max="auto" maxoffset="0" tickmin="-3" tickmax="3" highlightstyle="axis" linewidth="1" length="0.9" position="0,0" base="-1,1" minposition="1" maxposition="1"><pan allowed="yes" min="0" max="5"/></verticalaxis>';
+            xmlString = '<verticalaxis color="0x000000" id="y2" type="number" pregap="0" postgap="0" anchor="-1" min="auto" minoffset="0" max="auto" maxoffset="0" tickmin="-3" tickmax="3" highlightstyle="axis" linewidth="1" length="0.9" position="0,0" base="-1,1" minposition="1" maxposition="1"><labels start="0" angle="0" format="%1d" anchor="0,0" position="0,0" spacing="10000 5000 2000 1000 500 200 100 50 20 10 5 2 1 0.1 0.01 0.001"/><pan allowed="yes" min="0" max="5"/></verticalaxis>';
             $xml = $(xmlString);
         });
 
@@ -334,7 +465,7 @@ describe("Axis parsing", function () {
     describe("Zoom parsing", function () {
 
         beforeEach(function () {
-            xmlString = '<verticalaxis color="0x000000" id="y2" type="number" pregap="0" postgap="0" anchor="-1" min="auto" minoffset="0" max="auto" maxoffset="0" tickmin="-3" tickmax="3" highlightstyle="axis" linewidth="1" length="0.9" position="0,0" base="-1,1" minposition="1" maxposition="1"><zoom allowed="yes" min="0" max="80" anchor="1 1"/></verticalaxis>';
+            xmlString = '<verticalaxis color="0x000000" id="y2" type="number" pregap="0" postgap="0" anchor="-1" min="auto" minoffset="0" max="auto" maxoffset="0" tickmin="-3" tickmax="3" highlightstyle="axis" linewidth="1" length="0.9" position="0,0" base="-1,1" minposition="1" maxposition="1"><labels start="0" angle="0" format="%1d" anchor="0,0" position="0,0" spacing="10000 5000 2000 1000 500 200 100 50 20 10 5 2 1 0.1 0.01 0.001"/><zoom allowed="yes" min="0" max="80" anchor="1 1"/></verticalaxis>';
             $xml = $(xmlString);
         });
 
@@ -356,7 +487,7 @@ describe("Axis parsing", function () {
     describe("Binding parsing", function () {
 
         beforeEach(function () {
-            xmlString = '<verticalaxis color="0x000000" id="y2" type="number" pregap="0" postgap="0" anchor="-1" min="auto" minoffset="0" max="auto" maxoffset="0" tickmin="-3" tickmax="3" highlightstyle="axis" linewidth="1" length="0.9" position="0,0" base="-1,1" minposition="1" maxposition="1"><binding id="y" min="-10" max="50"/></verticalaxis>';
+            xmlString = '<verticalaxis color="0x000000" id="y2" type="number" pregap="0" postgap="0" anchor="-1" min="auto" minoffset="0" max="auto" maxoffset="0" tickmin="-3" tickmax="3" highlightstyle="axis" linewidth="1" length="0.9" position="0,0" base="-1,1" minposition="1" maxposition="1"><labels start="0" angle="0" format="%1d" anchor="0,0" position="0,0" spacing="10000 5000 2000 1000 500 200 100 50 20 10 5 2 1 0.1 0.01 0.001"/><binding id="y" min="-10" max="50"/></verticalaxis>';
             $xml = $(xmlString);
         });
 
@@ -378,7 +509,7 @@ describe("Axis parsing", function () {
     describe("AxisControls parsing", function () {
 
         beforeEach(function () {
-            xmlString = '<verticalaxis color="0x000000" id="y2" type="number" pregap="0" postgap="0" anchor="-1" min="auto" minoffset="0" max="auto" maxoffset="0" tickmin="-3" tickmax="3" highlightstyle="axis" linewidth="1" length="0.9" position="0,0" base="-1,1" minposition="1" maxposition="1"><axiscontrols visible="false"/></verticalaxis>';
+            xmlString = '<verticalaxis color="0x000000" id="y2" type="number" pregap="0" postgap="0" anchor="-1" min="auto" minoffset="0" max="auto" maxoffset="0" tickmin="-3" tickmax="3" highlightstyle="axis" linewidth="1" length="0.9" position="0,0" base="-1,1" minposition="1" maxposition="1"><labels start="0" angle="0" format="%1d" anchor="0,0" position="0,0" spacing="10000 5000 2000 1000 500 200 100 50 20 10 5 2 1 0.1 0.01 0.001"/><axiscontrols visible="false"/></verticalaxis>';
             $xml = $(xmlString);
         });
 

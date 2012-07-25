@@ -9,14 +9,19 @@ if (!window.multigraph.Axis) {
 (function (ns) {
     "use strict";
 
-    var scalarAttributes = ["format", "start", "angle", "densityfactor"];
+    var scalarAttributes = ["start", "angle", "densityfactor"];
 
     ns.jQueryXMLMixin.add(function (nsObj, parse, serialize) {
 
-        nsObj.Axis.Labels[parse] = function (xml) {
-            var labels = new nsObj.Axis.Labels();
+        nsObj.Axis.Labels[parse] = function (xml, axis) {
+            var labels = new nsObj.Axis.Labels(),
+                labeler,
+                spacing,
+                spacingArray,
+                i;
             if (xml) {
-                labels.format(xml.attr("format"));
+                labels.axis(axis)
+                labels.formatter(xml.attr("format"));
                 labels.start(xml.attr("start"));
                 labels.angle(nsObj.utilityFunctions.parseDoubleOrUndefined(xml.attr("angle")));
                 if (xml.attr("anchor") !== undefined) {
@@ -25,11 +30,24 @@ if (!window.multigraph.Axis) {
                 if (xml.attr("position") !== undefined) {
                     labels.position(nsObj.math.Point.parse(xml.attr("position")));
                 }
-                labels.spacing(xml.attr("spacing"));
                 labels.densityfactor(nsObj.utilityFunctions.parseDoubleOrUndefined(xml.attr("densityfactor")));
-                if (xml.find(">label").length > 0) {
+                if (xml.attr("spacing") !== undefined) {
+                    spacing = xml.attr("spacing");
+                    labels.spacing(spacing);
+                    spacingArray = spacing.split(/\s*/);
+                    for (i = 0; i < spacingArray.length; i++) {
+                        labeler = nsObj.Axis.Labeler[parse](xml, axis, labels);
+                        labeler.spacing(spacingArray[i]);
+                        axis.labelers().add( labeler );
+                    }                    
+                } else if (xml.find(">label").length > 0) {
                     $.each(xml.find(">label"), function (i,e) {
-                        labels.label().add( nsObj.Axis.Labels.Label[parse]($(e)) );
+                        spacingArray = $(e).attr("spacing").split(/\s+/);
+                        for (i = 0; i < spacingArray.length; i++) {
+                            labeler = nsObj.Axis.Labeler[parse]($(e), axis, labels);
+                            labeler.spacing(spacingArray[i]);
+                            axis.labelers().add( labeler );
+                        }
                     });
                 }
             }
@@ -42,6 +60,9 @@ if (!window.multigraph.Axis) {
                 i;
 
             attributeStrings = ns.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
+            if (this.formatter() !== undefined) {
+                attributeStrings.push('format="' + this.formatter() + '"');
+            }
             if (this.anchor() !== undefined) {
                 attributeStrings.push('anchor="' + this.anchor().serialize() + '"');
             }
@@ -50,14 +71,14 @@ if (!window.multigraph.Axis) {
             }
             output += attributeStrings.join(' ');
 
-            if (this.label().size() > 0) {
+            if (this.spacing() !== undefined) {
+                output += ' spacing="' + this.spacing() + '"/>';
+            } else if (this.axis().labelers().size() > 0) {
                 output += '>';
-                for (i = 0; i < this.label().size(); i++) {
-                    output += this.label().at(i)[serialize]();
+                for (i = 0; i < this.axis().labelers().size(); i++) {
+                    output += this.axis().labelers().at(i)[serialize]();
                 }
                 output += '</labels>';
-            } else if (this.spacing() !== undefined) {
-                output += ' spacing="' + this.spacing() + '"/>';
             } else {
                 output += '/>';
             }

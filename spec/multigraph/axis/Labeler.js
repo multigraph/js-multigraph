@@ -1,74 +1,75 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
 
-describe("Axis Labels", function () {
+describe("Axis Labeler", function () {
     "use strict";
 
-    var Labels = window.multigraph.Axis.Labels,
+    var Labeler = window.multigraph.Axis.Labeler,
         Point = window.multigraph.math.Point,
-        l;
+        Axis = window.multigraph.Axis,
+        labeler;
 
     beforeEach(function () {
-        l = new Labels();
-    }); 
-
-    it("should be able to create a Labels", function () {
-        expect(l instanceof Labels).toBe(true);
+        labeler = new Labeler(new Axis("horizontal"));
     });
 
-    describe("format attribute", function () {
+    it("should be able to create a Labeler", function () {
+        expect(labeler instanceof Labeler).toBe(true);
+    });
+
+    describe("formatter attribute", function () {
         it("should be able to set/get the formatter attribute", function () {
-            l.formatter("%3d");
-            expect(l.formatter()).toBe("%3d");
+            labeler.formatter("%2d");
+            expect(labeler.formatter()).toBe("%2d");
         });
 
     });
 
     describe("start attribute", function () {
         it("should be able to set/get the start attribute", function () {
-            l.start("7");
-            expect(l.start()).toBe("7");
+            labeler.start("7");
+            expect(labeler.start()).toBe("7");
         });
 
     });
 
     describe("angle attribute", function () {
         it("should be able to set/get the angle attribute", function () {
-            l.angle(5);
-            expect(l.angle()).toBe(5);
+            labeler.angle(5);
+            expect(labeler.angle()).toBe(5);
         });
 
     });
 
     describe("position attribute", function () {
         it("should be able to set/get the position attribute", function () {
-            l.position(new Point(0,1));
-            expect(l.position().x()).toEqual(0);
-            expect(l.position().y()).toEqual(1);
+            labeler.position(new Point(0,1));
+            expect(labeler.position().x()).toEqual(0);
+            expect(labeler.position().y()).toEqual(1);
         });
 
     });
 
     describe("anchor attribute", function () {
         it("should be able to set/get the anchor attribute", function () {
-            l.anchor(new Point(-1,1));
-            expect(l.anchor().x()).toEqual(-1);
-            expect(l.anchor().y()).toEqual(1);
+            labeler.anchor(new Point(-1,1));
+            expect(labeler.anchor().x()).toEqual(-1);
+            expect(labeler.anchor().y()).toEqual(1);
         });
 
     });
 
     describe("spacing attribute", function () {
         it("should be able to set/get the spacing attribute", function () {
-            l.spacing("10 5 3 2 1 .1 .01");
-            expect(l.spacing()).toBe("10 5 3 2 1 .1 .01");
+            labeler.spacing("10");
+            expect(labeler.spacing()).toBe("10");
         });
 
     });
 
     describe("densityfactor attribute", function () {
         it("should be able to set/get the densityfactor attribute", function () {
-            l.densityfactor(5);
-            expect(l.densityfactor()).toEqual(5);
+            labeler.densityfactor(5);
+            expect(labeler.densityfactor()).toEqual(5);
         });
 
     });

@@ -9,22 +9,18 @@ if (!window.multigraph.Axis) {
 (function (ns) {
     "use strict";
 
-    var Label,
-        Labels,
+    var Labels,
         defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = ns.utilityFunctions.getKeys(defaultValues.horizontalaxis.labels);
 
-    if (ns.Axis.Labels && ns.Axis.Labels.Label) {
-        Label = ns.Axis.Labels.Label;
-    }
-
     Labels = new ns.ModelTool.Model( "Labels", function () {
-        this.hasMany("label").which.validatesWith(function (label) {
-            return label instanceof ns.Axis.Labels.Label;
+        this.hasA("axis").which.validatesWith(function (axis) {
+            return axis instanceof ns.Axis;
         });
-        this.hasA("format").which.validatesWith(function (format) {
+
+        this.hasA("formatter").which.validatesWith(function (format) {
             return typeof(format) === "string";
-        });
+        }).defaultsTo("%1d");
         this.hasA("start").which.validatesWith(function (start) {
             //TODO: DataValue
             return typeof(start) === "string";
@@ -46,9 +42,5 @@ if (!window.multigraph.Axis) {
     });
 
     ns.Axis.Labels = Labels;
-
-    if (Label) {
-        ns.Axis.Labels.Label = Label;
-    }
 
 }(window.multigraph));

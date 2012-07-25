@@ -6,10 +6,6 @@ if (!window.multigraph.Axis) {
     window.multigraph.Axis = {};
 }
 
-if (!window.multigraph.Axis.Labels) {
-    window.multigraph.Axis.Labels = {};
-}
-
 (function (ns) {
     "use strict";
 
@@ -18,15 +14,16 @@ if (!window.multigraph.Axis.Labels) {
         Labeler = new ns.ModelTool.Model( "Labeler", function () {
 
             this.hasA("axis").which.validatesWith(function (axis) {
-                return axis instanceof Axis;
+                return axis instanceof ns.Axis;
             });
 
-            this.hasA("formater").which.validatesWith(function (formatter) {
+            this.hasA("formatter").which.validatesWith(function (formatter) {
                 return true;
                 //return formatter instanceof DataFormatter;
             });
             this.hasA("start").which.validatesWith(function (start) {
-                return DataValue.isInstance(start);
+//                return DataValue.isInstance(start);
+                return true;
             });
             this.hasA("angle").which.isA("number");
             this.hasA("position").which.validatesWith(function (position) {
@@ -41,9 +38,10 @@ if (!window.multigraph.Axis.Labels) {
             });
             this.hasA("densityfactor").which.isA("number");
 
+            this.isBuiltWith("axis")
             //ns.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis.labels.label, attributes);
         });
 
-    ns.Axis.Labels.Labeler = Labeler;
+    ns.Axis.Labeler = Labeler;
 
 }(window.multigraph));
