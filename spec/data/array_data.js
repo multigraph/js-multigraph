@@ -1,18 +1,27 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
 
-describe("data", function () {
+describe("ArrayData", function () {
     "use strict";
 
     var ArrayData = window.multigraph.TEMP.ArrayData,
         NumberValue = window.multigraph.NumberValue,
+        DataVariable = window.multigraph.TEMP.DataVariable,
+        DataValue = window.multigraph.DataValue,
         testArrayData,
         numberValueData,
         rawData,
+        dataVariables,
         numValueRow, numValueCol,
         row, col;
 
     beforeEach(function () {
         numberValueData = [];
+
+        dataVariables = [new DataVariable("column1", 1, DataValue.NUMBER),
+                         new DataVariable("column2", 2, DataValue.NUMBER),
+                         new DataVariable("column3", 3, DataValue.NUMBER),
+                         new DataVariable("column4", 4, DataValue.NUMBER)
+                        ];
 
         rawData = [[1900,-0.710738,-0.501011,-0.291284],
                    [1901,-0.709837,-0.488806,-0.267776],
@@ -33,7 +42,7 @@ describe("data", function () {
             numberValueData.push(numValueRow);
         }
 
-        testArrayData = new ArrayData("", numberValueData);
+        testArrayData = new ArrayData(dataVariables, numberValueData);
     });
 
     describe("constructor", function () {
@@ -132,31 +141,65 @@ describe("data", function () {
        });
     });
 
-
     describe("columnIdToColumnNumber method", function () {
+        it("should throw an error if the parameter is not a string", function () {
+            expect(function () {
+                testArrayData.columnIdToColumnNumber(1);
+            }).toThrow("Data: columnIdToColumnNumber expects parameter to be a string");
+        });
 
+        it("should throw an error if the column id doesn't exist", function () {
+            expect(function () {
+                testArrayData.columnIdToColumnNumber("column100");
+            }).toThrow("Data: no column with the label column100");
+        });
+
+        it("should return the column number associated with the string id", function () {
+            expect(testArrayData.columnIdToColumnNumber("column1")).toBe(1);
+        });
     });
 
     describe("columnIdToDataVariable method", function () {
+        it("should throw an error if the parameter is not a string", function () {
+            expect(function () {
+                testArrayData.columnIdToDataVariable(1);
+            }).toThrow("Data: columnIdToDataVariable requires a string parameter");
+        });
 
+        it("should throw an error if the column id doesn't exist", function () {
+            expect(function () {
+                testArrayData.columnIdToDataVariable("column100");
+            }).toThrow("Data: no column with the label column100");
+        });
+
+        it("should return a DataValue associated with the column id", function () {
+            var result = testArrayData.columnIdToDataVariable("column2");
+            expect(result instanceof DataVariable).toBe(true);
+            expect(result.id()).toBe("column2");
+        });
     });
 
-    describe("getBounds method", function () {
-        
-    });
+    describe("getColumnId method", function () {
+        it("should throw an error if the parameter is not an integer", function () {
+            expect(function () {
+                testArrayData.getColumnId("hello");
+            }).toThrow("Data: getColumnId method expects an integer");
+        });
 
-    describe("getColumnsId method", function () {
-        
+        it("should throw an error if the column does not exist", function () {
+            expect(function () {
+                testArrayData.getColumnId(100);
+            }).toThrow("Data: column 100 does not exist");
+        });
+
+        it("should return the ID associated with the column number", function () {
+            expect(testArrayData.getColumnId(3)).toBe("column3");
+        });
     });
 
     describe("getColumns method", function () {
-        
+        it("should return the metadata", function () {
+            expect(testArrayData.getColumns()).toBe(dataVariables);
+        });
     });
-
-
-
-    describe("onReady method", function () {
-
-    });
-    
 });

@@ -17,12 +17,13 @@ if (!window.multigraph) {
 
     DataValue.NUMBER = "number";
     DataValue.DATETIME = "datetime";
+    DataValue.UNKNOWN = "unknown";
 
     /*
      * Return a list of the type constants above
      */
     DataValue.types = function() {
-        return [ DataValue.NUMBER, DataValue.DATETIME ];
+        return [ DataValue.NUMBER, DataValue.DATETIME, DataValue.UNKNOWN ];
     };
 
     /*

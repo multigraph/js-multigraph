@@ -9,9 +9,29 @@ if (!window.multigraph.TEMP) {
 (function (ns) {
     "use strict";
 
-    var ArrayData = function (m, d) {
-        var actualData = d,
-            metaData = m;
+    var Data = window.multigraph.TEMP.Data,
+        ArrayData;
+
+    ArrayData = function (m, d) {
+        var that = this,
+            actualData = d,
+            metaData = new Data(m),
+            prop, 
+            delegate;
+
+        delegate = function (obj, func) {
+            return function () { return obj[func].apply(that, arguments); };
+        };
+
+        for (prop in metaData) {
+            if (metaData.hasOwnProperty(prop)) {
+                this[prop] = delegate(metaData, prop);
+            }
+        }
+
+
+
+
         
 
         this.getIterator = function (columnIds, min, max, buffer) {
