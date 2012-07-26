@@ -2,10 +2,6 @@ if (!window.multigraph) {
     window.multigraph = {};
 }
 
-if (!window.multigraph.TEMP) {
-    window.multigraph.TEMP = {};
-}
-
 (function (ns) {
     "use strict";
 
@@ -14,4 +10,4 @@ if (!window.multigraph.TEMP) {
     };
 
     ns.CSVData = CSVData;
-}(window.multigraph.TEMP));
+}(window.multigraph));

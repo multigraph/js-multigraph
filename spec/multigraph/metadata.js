@@ -3,8 +3,7 @@
 describe("MetaData", function () {
     "use strict";
 
-    var MetaData = window.multigraph.TEMP.MetaData,
-        //DataVariable = window.multigraph.TEMP.DataVariable,
+    var MetaData = window.multigraph.MetaData,
         DataVariable = window.multigraph.Data.Variables.DataVariable,
         DataValue = window.multigraph.DataValue,
         dataVariables,

@@ -3,9 +3,8 @@
 describe("ArrayData", function () {
     "use strict";
 
-    var ArrayData = window.multigraph.TEMP.ArrayData,
+    var ArrayData = window.multigraph.ArrayData,
         NumberValue = window.multigraph.NumberValue,
-        //DataVariable = window.multigraph.TEMP.DataVariable,
         DataVariable = window.multigraph.Data.Variables.DataVariable,
         DataValue = window.multigraph.DataValue,
         testArrayData,

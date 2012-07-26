@@ -2,14 +2,9 @@ if (!window.multigraph) {
     window.multigraph = {};
 }
 
-if (!window.multigraph.TEMP) {
-    window.multigraph.TEMP = {};
-}
-
 (function (ns) {
     "use strict";
 
-    //DataVariable = window.multigraph.TEMP.DataVariable,
     var DataVariable = window.multigraph.Data.Variables.DataVariable,
         MetaData,
         i;
@@ -104,4 +99,4 @@ if (!window.multigraph.TEMP) {
     };
     
     ns.MetaData = MetaData;
-}(window.multigraph.TEMP));
+}(window.multigraph));
