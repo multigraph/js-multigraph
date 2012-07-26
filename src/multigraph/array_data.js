@@ -9,14 +9,14 @@ if (!window.multigraph.TEMP) {
 (function (ns) {
     "use strict";
 
-    var Data = window.multigraph.TEMP.Data,
+    var MetaData = window.multigraph.TEMP.MetaData,
         ArrayData;
 
     ArrayData = function (m, d) {
 
         var that = this,
             actualData = d,
-            metaData = new Data(m),
+            metaData = new MetaData(m),
             prop, 
             delegate;
 

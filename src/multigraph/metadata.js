@@ -11,10 +11,10 @@ if (!window.multigraph.TEMP) {
 
     //DataVariable = window.multigraph.TEMP.DataVariable,
     var DataVariable = window.multigraph.Data.Variables.DataVariable,
-        Data,
+        MetaData,
         i;
 
-    Data = function (c) {
+    MetaData = function (c) {
         var columns,
             find;
 
@@ -24,7 +24,7 @@ if (!window.multigraph.TEMP) {
 
         for (i = 0; i < columns.length; ++i) {
             if (!(columns[i] instanceof DataVariable)) {
-                throw new Error("Data: constructor parameter should be an array of DataVariable objects");
+                throw new Error("MetaData: constructor parameter should be an array of DataVariable objects");
             }
         }
 
@@ -42,13 +42,13 @@ if (!window.multigraph.TEMP) {
             var column;
 
             if (typeof(id) !== "string") {
-                throw new Error("Data: columnIdToColumnNumber expects parameter to be a string");
+                throw new Error("MetaData: columnIdToColumnNumber expects parameter to be a string");
             }
 
             column = find("id", id) !== -1?columns[find("id", id)]:undefined;
 
             if (column === undefined) {
-                throw new Error("Data: no column with the label " + id);
+                throw new Error("MetaData: no column with the label " + id);
             }
 
             return column.column();
@@ -58,13 +58,13 @@ if (!window.multigraph.TEMP) {
             var dv;
 
             if (typeof(id) !== "string") {
-                throw new Error("Data: columnIdToDataVariable requires a string parameter");
+                throw new Error("MetaData: columnIdToDataVariable requires a string parameter");
             }
 
             dv = find("id", id) !== -1?columns[find("id", id)]:undefined;
 
             if (dv === undefined) {
-                throw new Error("Data: no column with the label " + id);
+                throw new Error("MetaData: no column with the label " + id);
             }
 
             return dv;
@@ -74,13 +74,13 @@ if (!window.multigraph.TEMP) {
             var result;
 
             if (typeof(column) !== "number") {
-                throw new Error("Data: getColumnId method expects an integer");
+                throw new Error("MetaData: getColumnId method expects an integer");
             }
 
             result = find("column", column);
 
             if (result === -1) {
-                throw new Error("Data: column " + column + " does not exist");
+                throw new Error("MetaData: column " + column + " does not exist");
             }
             
             return columns[result].id();
@@ -103,5 +103,5 @@ if (!window.multigraph.TEMP) {
         };
     };
     
-    ns.Data = Data;
+    ns.MetaData = MetaData;
 }(window.multigraph.TEMP));
