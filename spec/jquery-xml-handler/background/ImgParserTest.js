@@ -1,10 +1,17 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
+/*jshint laxbreak:true */
 
 describe("Background Img parsing", function () {
     "use strict";
 
     var Img = window.multigraph.Background.Img,
-        xmlString = '<img src="http://www.example.com/rad_ferret.gif" anchor="1 1" base="0 0" position="-1 1" frame="plot"/>',
+        xmlString = '<img'
+        +   ' src="http://www.example.com/rad_ferret.gif"'
+        +   ' frame="plot"'
+        +   ' anchor="1,1"'
+        +   ' base="0,0"'
+        +   ' position="-1,1"'
+        +    '/>',
         $xml,
         image;
 
@@ -19,30 +26,37 @@ describe("Background Img parsing", function () {
     });
 
     it("should be able to parse a img from XML and read its 'src' attribute", function () {
-        expect(image.src() === 'http://www.example.com/rad_ferret.gif').toBe(true);
+        expect(image.src()).toBe("http://www.example.com/rad_ferret.gif");
     });
 
     it("should be able to parse a img from XML and read its 'anchor' attribute", function () {
-        expect(image.anchor() === '1 1').toBe(true);
+        expect(image.anchor().serialize()).toBe("1,1");
     });
 
     it("should be able to parse a img from XML and read its 'base' attribute", function () {
-        expect(image.base() === '0 0').toBe(true);
+        expect(image.base().serialize()).toBe("0,0");
     });
 
     it("should be able to parse a img from XML and read its 'position' attribute", function () {
-        expect(image.position() === '-1 1').toBe(true);
+        expect(image.position().serialize()).toBe("-1,1");
     });
 
     it("should be able to parse a img from XML and read its 'frame' attribute", function () {
-        expect(image.frame() === 'plot').toBe(true);
+        expect(image.frame()).toBe("plot");
     });
 
     it("should be able to parse a img from XML, serialize it and get the same XML as the original", function () {
-        var xmlString2 = '<img src="http://www.example.com/sleepy_puppy.gif" base="1 0" position="1 -1"/>';
-        expect(image.serialize() === xmlString).toBe(true);
+        var xmlString2 = '<img'
+            +   ' src="http://www.example.com/another_img.gif"'
+            +   ' frame="padding"'
+            +   ' anchor="-1,1"'
+            +   ' base="0,1"'
+            +   ' position="0,0.5"'
+            +    '/>';
+
+        expect(image.serialize()).toBe(xmlString);
         image = Img.parseXML($(xmlString2));
-//        expect(image.serialize() === xmlString2).toBe(true);
+        expect(image.serialize()).toBe(xmlString2);
     });
 
 });

@@ -16,13 +16,13 @@ if(!window.multigraph.Background) {
                 return typeof(src) === "string";
             });
             this.hasA("anchor").which.validatesWith(function (anchor) {
-                return ns.utilityFunctions.validateCoordinatePair(anchor);
+                return anchor instanceof ns.math.Point;
             });
             this.hasA("base").which.validatesWith(function (base) {
-                return ns.utilityFunctions.validateCoordinatePair(base);
+                return base instanceof ns.math.Point;
             });
             this.hasA("position").which.validatesWith(function (position) {
-                return ns.utilityFunctions.validateCoordinatePair(position);
+                return position instanceof ns.math.Point;
             });
             this.hasA("frame").which.validatesWith(function (frame) {
                 return frame === "padding" || frame === "plot";

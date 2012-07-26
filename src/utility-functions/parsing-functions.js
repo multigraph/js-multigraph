@@ -93,9 +93,9 @@ if (!window.multigraph.utilityFunctions) {
             "background": {
                 "img": {
                     "src": undefined,
-                    "anchor": "-1 -1",
-                    "base": "-1 -1",
-                    "position": "0 0",
+                    "anchor": function () { return new ns.math.Point(-1,-1); },
+                    "base": function () { return new ns.math.Point(-1,-1); },
+                    "position": function () { return new ns.math.Point(0,0); },
                     "frame": "padding"
                 },
                 "color": "0xffffff"

@@ -23,11 +23,9 @@ if (!window.multigraph) {
             paper.rect(windowMarginLeft,windowMarginLeft,width-2*windowMarginLeft,height-2*windowMarginLeft)
                 .attr({"fill" : this.window().bordercolor().getHexString("#")})
                 .transform("S 1, -1, 0, " + (height/2));
-            
-            paper.rect(mb,mb,width-2*mb,height-2*mb)
-                .attr({"fill" : this.background().color().getHexString("#")})
-                .transform("S 1, -1, 0, " + (height/2));
-            
+
+            this.background().render(paper, width, height, mb, this);
+
             paper.rect(paddingBox + this.plotarea().margin().left(),
                        paddingBox + this.plotarea().margin().right(),
                        plotBoxWidth,

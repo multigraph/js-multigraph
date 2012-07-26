@@ -34,26 +34,26 @@ describe("Background", function () {
 
         it("should be able to add an Img with attributes to a Background", function () {
             image.src("http://example.com/lazy_cat.gif");
-            image.base("0 1");
+            image.base(window.multigraph.math.Point.parse("0 1"));
             b.img(image);
-            expect(b.img() === image).toBe(true);
+            expect(b.img()).toBe(image);
         });
 
         it("should be able to set/get attributes of an Img added to a Background", function () {
             b.img(image);
             b.img().src("http://example.com/lazy_cat.gif");
-            b.img().base("0 1");
-            expect(b.img().src() === "http://example.com/lazy_cat.gif").toBe(true);
-            expect(b.img().base() === "0 1").toBe(true);
+            b.img().base(window.multigraph.math.Point.parse("1 0.5"));
+            expect(b.img().src()).toBe("http://example.com/lazy_cat.gif");
+            expect(b.img().base().serialize()).toBe("1,0.5");
         });
 
         it("should not keep old data around when an Img is replaced", function () {
             var image2 = new Img('http://example.com/cool_dog.gif');
             b.img(image);
             b.img().src("http://example.com/lazy_cat.gif");
-            b.img().base("0 1");
+            b.img().base(window.multigraph.math.Point.parse("0 1"));
             b.img(image2);
-            expect(b.img().src() === "http://example.com/cool_dog.gif").toBe(true);
+            expect(b.img().src()).toBe("http://example.com/cool_dog.gif");
         });
 
     });
