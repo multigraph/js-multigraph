@@ -4,6 +4,7 @@ describe("Data Variables", function () {
     "use strict";
 
     var Variables = window.multigraph.Data.Variables,
+        NumberValue = window.multigraph.NumberValue,
         variables;
 
     beforeEach(function () {
@@ -17,7 +18,7 @@ describe("Data Variables", function () {
     describe("missingvalue attribute", function () {
         it("should be able to set/get the missingvalue attribute", function () {
             variables.missingvalue('5000');
-            expect(variables.missingvalue() === '5000').toBe(true);
+            expect(variables.missingvalue()).toEqual('5000');
         });
 
     });
@@ -55,7 +56,7 @@ describe("Data Variables", function () {
         });
 
         it("should be able to add a Variable with attributes to a Variables", function () {
-            variable.id('x').column('2').type('datetime');
+            variable.id('x').column(2).type('datetime');
             variables.variable().add(variable);
             expect(variables.variable().at(0) === variable).toBe(true);
         });
@@ -63,9 +64,9 @@ describe("Data Variables", function () {
         it("should be able to add many Variable tags with attributes to a Variables tag", function () {
             var variable2 = new Variable('y'),
                 variable3 = new Variable('y2');
-            variable.id("x").column("1").type("number");
-            variable2.id("y").type("number").column("2").missingvalue('-2000');
-            variable3.id("y1").column("3").type("datetime");
+            variable.id("x").column(1).type("number");
+            variable2.id("y").type("number").column(2).missingvalue(new NumberValue(-2000));
+            variable3.id("y1").column(3).type("datetime");
             variables.variable().add(variable);
             variables.variable().add(variable2);
             variables.variable().add(variable3);
@@ -77,9 +78,9 @@ describe("Data Variables", function () {
         it("should be able to set/get attributes of an Variable added to a Variables", function () {
             var variable2 = new Variable('y'),
                 variable3 = new Variable('y1');
-            variable.id("x").column("1").type("number");
-            variable2.id("y").type("number").column("2");
-            variable3.id("y1").column("3").type("datetime");
+            variable.id("x").column(1).type("number");
+            variable2.id("y").type("number").column(2);
+            variable3.id("y1").column(3).type("datetime");
             variables.variable().add(variable);
             variables.variable().add(variable2);
             variables.variable().add(variable3);

@@ -4,6 +4,8 @@ describe("Data", function () {
     "use strict";
 
     var Data = window.multigraph.Data,
+        DataValue = window.multigraph.DataValue,
+        NumberValue = window.multigraph.NumberValue,
         CSV = window.multigraph.Data.CSV,
         Service = window.multigraph.Data.Service,
         Values = window.multigraph.Data.Values,
@@ -116,8 +118,8 @@ describe("Data", function () {
             var variable = new Variable('x'),
                 variable2 = new Variable('y');
             variables.missingvalue('11');
-            variable.column('1').missingop('eq');
-            variable2.column('2').missingvalue('12');
+            variable.column(1).missingop(DataValue.EQ);
+            variable2.column(2).missingvalue(new NumberValue(12));
             variables.variable().add(variable);
             variables.variable().add(variable2);
             d.variables(variables);
@@ -134,8 +136,8 @@ describe("Data", function () {
             d.variables(variables);
 
             d.variables().missingvalue('5000');
-            d.variables().variable().at(0).id("x").column("1").type("number");
-            d.variables().variable().at(1).id("y").type("number").column("2");
+            d.variables().variable().at(0).id("x").column(1).type("number");
+            d.variables().variable().at(1).id("y").type("number").column(2);
 
             expect(d.variables().missingvalue() === '5000').toBe(true);
             expect(d.variables().variable().at(0).id() === "x").toBe(true);

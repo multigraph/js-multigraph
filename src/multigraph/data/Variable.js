@@ -15,22 +15,13 @@ if (!window.multigraph.Data.Variables) {
 
     var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = ns.utilityFunctions.getKeys(defaultValues.data.variables.variable),
+        DataValue = ns.DataValue,
         Variable = new ns.ModelTool.Model( "Variable", function () {
-            this.hasA("id").which.validatesWith(function (id) {
-                return typeof(id) === "string";
-            });
-            this.hasA("column").which.validatesWith(function (column) {
-                return typeof(column) === "string";
-            });
-            this.hasA("type").which.validatesWith(function (type) {
-                return typeof(type) === "string" && (type.toLowerCase() === "number" || type.toLowerCase() === "datetime");
-            });
-            this.hasA("missingvalue").which.validatesWith(function (missingvalue) {
-                return typeof(missingvalue) === "string";
-            });
-            this.hasA("missingop").which.validatesWith(function (missingop) {
-                return typeof(missingop) === "string";
-            });
+            this.hasA("id").which.isA("string");
+            this.hasA("column").which.isA("integer");
+            this.hasA("type").which.isOneOf(DataValue.types());
+            this.hasA("missingvalue").which.validatesWith(DataValue.isInstance);
+            this.hasA("missingop").which.isOneOf(DataValue.comparators());
             this.isBuiltWith("id");
 
             ns.utilityFunctions.insertDefaults(this, defaultValues.data.variables.variable, attributes);

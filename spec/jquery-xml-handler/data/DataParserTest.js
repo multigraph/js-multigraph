@@ -110,7 +110,7 @@ describe("Data parsing", function () {
         });
 
         it("should be able to parse a data with a complex Variables child from XML", function () {
-            xmlString = '<data><variables missingop="gt"><variable id="x" column="7" type="datetime" missingvalue="1990" missingop="eq"/><variable id="y" column="2" type="number" missingvalue="19" missingop="gt"/><variable id="y1" column="2" type="datetime"/></variables></data>';
+            xmlString = '<data><variables missingop="gt"><variable id="x" column="7" type="number" missingvalue="1990" missingop="eq"/><variable id="y" column="2" type="number" missingvalue="19" missingop="gt"/><variable id="y1" column="2" type="number"/></variables></data>';
             $xml = $(xmlString);
             data = Data.parseXML($xml);
             expect(data).not.toBeUndefined();
@@ -128,7 +128,7 @@ describe("Data parsing", function () {
         });
 
         it("should be able to parse a data with a complex Variables child from XML, serialize it and get thesame XML as the original", function () {
-            xmlString = '<data><variables missingop="gt"><variable id="x" column="7" type="datetime" missingvalue="1990" missingop="eq"/><variable id="y" column="2" type="number" missingvalue="19" missingop="gt"/><variable id="y1" column="2" type="datetime"/></variables></data>';
+            xmlString = '<data><variables missingop="gt"><variable id="x" column="7" type="number" missingvalue="1990" missingop="eq"/><variable id="y" column="2" type="number" missingvalue="19" missingop="gt"/><variable id="y1" column="2" type="number"/></variables></data>';
             $xml = $(xmlString);
             data = Data.parseXML($xml);
 //            expect(data.serialize() === xmlString).toBe(true);
@@ -145,9 +145,9 @@ describe("Data parsing", function () {
             $xml3;
 
         beforeEach(function () {
-            xmlString = '<data><variables missingop="gt"><variable id="x" column="7" type="datetime" missingvalue="1990" missingop="eq"/><variable id="y" column="2" type="number" missingvalue="19" missingop="gt"/><variable id="y1" column="2" type="datetime"/></variables><values>1,2,3,4</values></data>';
-            xmlString2 = '<data><variables missingop="gt"><variable id="x" column="7" type="datetime" missingvalue="1990" missingop="eq"/><variable id="y" column="2" type="number" missingvalue="19" missingop="gt"/><variable id="y1" column="2" type="datetime"/></variables><service location="http://example.com/CoolCats/1990/2000"/></data>';
-            xmlString3 = '<data><variables missingop="gt"><variable id="x" column="7" type="datetime" missingvalue="1990" missingop="eq"/><variable id="y" column="2" type="number" missingvalue="19" missingop="gt"/><variable id="y1" column="2" type="datetime"/></variables><csv location="http://example.com/CoolCats.csv"/></data>';
+            xmlString = '<data><variables missingop="gt"><variable id="x" column="7" type="number" missingvalue="1990" missingop="eq"/><variable id="y" column="2" type="number" missingvalue="19" missingop="gt"/><variable id="y1" column="2" type="number"/></variables><values>1,2,3,4</values></data>';
+            xmlString2 = '<data><variables missingop="gt"><variable id="x" column="7" type="number" missingvalue="1990" missingop="eq"/><variable id="y" column="2" type="number" missingvalue="19" missingop="gt"/><variable id="y1" column="2" type="number"/></variables><service location="http://example.com/CoolCats/1990/2000"/></data>';
+            xmlString3 = '<data><variables missingop="gt"><variable id="x" column="7" type="number" missingvalue="1990" missingop="eq"/><variable id="y" column="2" type="number" missingvalue="19" missingop="gt"/><variable id="y1" column="2" type="number"/></variables><csv location="http://example.com/CoolCats.csv"/></data>';
             $xml = $(xmlString);
             $xml2 = $(xmlString2);
             $xml3 = $(xmlString3);

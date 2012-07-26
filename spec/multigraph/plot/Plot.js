@@ -71,8 +71,8 @@ describe("Plot", function () {
         beforeEach(function () {
             v = new DataVariable('x');
             v2 = new DataVariable('y');
-            v.id('x').column('2');
-            v2.id('y').column('1');
+            v.id('x').column(2);
+            v2.id('y').column(1);
         });
 
         it("should be able to add a variable to a Plot", function () {

@@ -36,7 +36,7 @@ if (!window.multigraph) {
         return new NumberValue(parseFloat(s));
     };
 
-    ns.mixinComparators(NumberValue.prototype);
+    ns.DataValue.mixinComparators(NumberValue.prototype);
 
     ns.NumberValue = NumberValue;
 

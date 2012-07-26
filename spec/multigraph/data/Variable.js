@@ -4,6 +4,7 @@ describe("Data Variable", function () {
     "use strict";
 
     var Variable = window.multigraph.Data.Variables.Variable,
+        NumberValue = window.multigraph.NumberValue,
         variable;
 
     beforeEach(function () {
@@ -25,8 +26,8 @@ describe("Data Variable", function () {
     describe("column attribute", function () {
         it("should be able to set/get the column attribute", function () {
             expect(variable.column() === undefined).toBe(true);
-            variable.column('7');
-            expect(variable.column() === '7').toBe(true);
+            variable.column(7);
+            expect(variable.column()).toEqual(7);
         });
 
     });
@@ -44,8 +45,8 @@ describe("Data Variable", function () {
     describe("missingvalue attribute", function () {
         it("should be able to set/get the missingvalue attribute", function () {
             expect(variable.missingvalue() === undefined).toBe(true);
-            variable.missingvalue('-9000');
-            expect(variable.missingvalue() === '-9000').toBe(true);
+            variable.missingvalue(new NumberValue(-9000));
+            expect(variable.missingvalue().getRealValue()).toEqual(-9000);
         });
 
     });

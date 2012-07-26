@@ -5,16 +5,36 @@ if (!window.multigraph) {
 (function (ns) {
     "use strict";
 
+    var DataVariable = window.multigraph.TEMP.DataVariable;
+
     var children = ["variables", "values", "csv", "service"];
 
-    ns.jQueryXMLMixin.add(function(nsObj, parse, serialize) {
+    ns.jQueryXMLMixin.add(function(ns, parse, serialize) {
         
-        nsObj.Data[parse] = function (xml, orient) {
-            var data = new nsObj.Data(),
+        ns.Data[parse] = function (xml) {
+            var data = new ns.Data(),
                 childModelNames = ["Variables", "Values", "CSV", "Service"],
                 i;
 
             if (xml) {
+                
+                var variables = $(xml.find(">variables")[0]);
+                if (variables) {
+                    var variable_array = variables.find(">variable");
+                    for (i=0; i<variable_array.length; ++i) {
+                        var variable     = $(variable_array[i]);
+                        var id           = variable.attr("id");
+                        var column       = parseInt(variable.attr("column"), 10);
+                        var type         = variable.attr("type");
+                        var missingvalue = variable.attr("missingvalue");
+                        var missingop    = variable.attr("missingop");
+                        var dataVariable = new DataVariable(id, column, type);
+                    }
+                }
+
+
+
+
                 for (i = 0; i < children.length; i++) {
                     if (xml.find(children[i]).length > 0) {
                         data[children[i]](ns.Data[childModelNames[i]][parse](xml.find(children[i])));
@@ -25,7 +45,7 @@ if (!window.multigraph) {
             return data;
         };
         
-        nsObj.Data.prototype[serialize] = function () {
+        ns.Data.prototype[serialize] = function () {
             var childStrings = [],
                 output = '<data',
                 i;

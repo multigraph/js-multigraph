@@ -9,7 +9,7 @@ if (!window.multigraph.Data) {
 (function (ns) {
     "use strict";
 
-    var scalarAttributes = ["id", "column", "type", "missingvalue", "missingop"];
+    var DataValue = ns.DataValue;
 
     ns.jQueryXMLMixin.add(function (nsObj, parse, serialize) {
         
@@ -17,21 +17,32 @@ if (!window.multigraph.Data) {
             var variable;
             if (xml && xml.attr("id")) {
                 variable = new nsObj.Data.Variables.Variable(xml.attr("id"));
-                variable.column(xml.attr("column"));
-                variable.type(xml.attr("type"));
-                variable.missingvalue(xml.attr("missingvalue"));
-                variable.missingop(xml.attr("missingop"));
+                if (xml.attr("column")) {
+                    variable.column(parseInt(xml.attr("column"), 10));
+                }
+                if (xml.attr("type")) {
+                    variable.type(DataValue.parseType(xml.attr("type")));
+                }
+                if (xml.attr("missingvalue")) {
+                    var dv = DataValue.parse(variable.type(), xml.attr("missingvalue"));
+                    variable.missingvalue(dv);
+                }
+                if (xml.attr("missingop")) {
+                    variable.missingop(DataValue.parseComparator(xml.attr("missingop")));
+                }
             }
             return variable;
         };
         
         nsObj.Data.Variables.Variable.prototype[serialize] = function () {
-            var attributeStrings = [],
-                output = '<variable ';
+            var output = "<variable";
 
-            attributeStrings = ns.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
-
-            output += attributeStrings.join(' ') + '/>';
+            output += ' id="' + this.id() + '"';
+            output += ' column="' + this.column() + '"';
+            output += ' type="' + DataValue.serializeType(this.type()) + '"';
+            output += ' missingvalue="' + this.missingvalue().toString() + '"';
+            output += ' missingop="' + this.missingop() + '"';
+            output += '/>';
 
             return output;
         };

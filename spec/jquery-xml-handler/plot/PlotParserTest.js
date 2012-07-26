@@ -79,9 +79,9 @@ describe("Plot parsing", function () {
             variable2 = new Variable('y');
             variable3 = new Variable('y1');
             variables = new window.multigraph.Data.Variables();
-            variable1.id('x').column('1');
-            variable2.id('y').column('2');
-            variable3.id('y1').column('3');
+            variable1.id('x').column(1);
+            variable2.id('y').column(2);
+            variable3.id('y1').column(3);
             variables.variable().add(variable1);
             variables.variable().add(variable2);
             variables.variable().add(variable3);
