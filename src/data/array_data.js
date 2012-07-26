@@ -29,25 +29,48 @@ if (!window.multigraph.TEMP) {
             }
         }
 
-
-
-
-        
-
         this.getIterator = function (columnIds, min, max, buffer) {
             var iter = {},
                 arraySlice = [],
                 curr = 0,
-                i;
+                i, j,
+                projection;
+
 
             buffer = buffer || 0;
+
+            //first argument should be an array of strings
+            if(Object.prototype.toString.apply(columnIds) !== "[object Array]") {
+                throw new Error("ArrayData: getIterator method requires that the first parameter be an array of strings");
+            } else {
+                for (i = 0; i < columnIds.length; ++i) {
+                    if (typeof(columnIds[i]) !== "string") {
+                        throw new Error("ArrayData: getIterator method requires that the first parameter be an array of strings");
+                    }
+                }
+            }
+
+            //second argument should be number value
+            /*if (!(min instanceof NumberValue)) {
+                throw new Error("ArrayData: getIterator method requires the second and third argument to be number values");
+;
+            }*/
+
+            //buffer argument should be an integer
+            if (typeof(buffer) !== "number") {
+                throw new Error("ArrayData: getIterator method requires last argument to be an integer");
+            }
 
             for (i = buffer; i < actualData.length-buffer; ++i) {
                 if (actualData[i+buffer][0].ge(min) && actualData[i+buffer][0].le(max) ||
                     actualData[i-buffer][0].ge(min) && actualData[i-buffer][0].le(max)) {
+                    projection = [];
                     //build the projection
+                    for (j = 0;j < columnIds.length; ++j) {
+                        projection.push(actualData[i][this.columnIdToColumnNumber(columnIds[j])]);
+                    }
                     //push projected data
-                    arraySlice.push(actualData[i]);
+                    arraySlice.push(projection);
                 }
             }
 
@@ -63,9 +86,6 @@ if (!window.multigraph.TEMP) {
             
         };
     };
-
-
-    
 
 
     ns.ArrayData = ArrayData;

@@ -17,10 +17,10 @@ describe("ArrayData", function () {
     beforeEach(function () {
         numberValueData = [];
 
-        dataVariables = [new DataVariable("column1", 1, DataValue.NUMBER),
-                         new DataVariable("column2", 2, DataValue.NUMBER),
-                         new DataVariable("column3", 3, DataValue.NUMBER),
-                         new DataVariable("column4", 4, DataValue.NUMBER)
+        dataVariables = [new DataVariable("column1", 0, DataValue.NUMBER),
+                         new DataVariable("column2", 1, DataValue.NUMBER),
+                         new DataVariable("column3", 2, DataValue.NUMBER),
+                         new DataVariable("column4", 3, DataValue.NUMBER)
                         ];
 
         rawData = [[1900,-0.710738,-0.501011,-0.291284],
@@ -63,25 +63,34 @@ describe("ArrayData", function () {
             row;
 
         beforeEach(function () {
-            iterator0 = testArrayData.getIterator("?",new NumberValue(1903), new NumberValue(1905));
-            iterator1 = testArrayData.getIterator("?",new NumberValue(1903), new NumberValue(1905), 0);
-            iterator2 = testArrayData.getIterator("?",new NumberValue(1903), new NumberValue(1905), 1);
+            iterator0 = testArrayData.getIterator(['column1', 'column2', 'column3', 'column4'],new NumberValue(1903), new NumberValue(1905));
+            iterator1 = testArrayData.getIterator(['column1', 'column2', 'column3', 'column4'],new NumberValue(1903), new NumberValue(1905), 0);
+            iterator2 = testArrayData.getIterator(['column1', 'column2', 'column3', 'column4'],new NumberValue(1903), new NumberValue(1905), 1);
         });
 
-        xit("should throw an error if the first parameter is not a string", function () {
- 
+        it("should throw an error if the first parameter is not a string", function () {
+            expect(function () {
+                iterator0 = testArrayData.getIterator("?",new NumberValue(1903), new NumberValue(1905));
+            }).toThrow("ArrayData: getIterator method requires that the first parameter be an array of strings");
         });
 
+
+        /***** CANNOT WRITE THESE TWO TESTS UNTIL DEPENDENCIES GET RESOLVED *******/
         xit("should throw an error if the second parameter is not a number value", function () {
-
+            expect(function () {
+                iterator0 = testArrayData.getIterator(['column1','column2','column3','column4'], 1903, new NumberValue(1905));
+            }).toThrow("ArrayData: getIterator method requires the second and third argument to be number values");
         });
 
         xit("should throw an error if the third parameter is not a number value", function () {
 
         });
+        /***** CANNOT WRITE THESE TWO TESTS UNTIL DEPENDENCIES GET RESOLVED *******/
 
-        xit("should throw an error if the last parameter is not an integer", function () {
-
+        it("should throw an error if the last parameter is not an integer", function () {
+            expect(function () {
+                iterator1 = testArrayData.getIterator(['column1', 'column2', 'column3', 'column4'],new NumberValue(1903), new NumberValue(1905), "hello");
+            }).toThrow("ArrayData: getIterator method requires last argument to be an integer");
         });
 
 
@@ -139,6 +148,15 @@ describe("ArrayData", function () {
             expect(row[0].getRealValue()).toBe(1906);
             expect(iterator2.hasNext()).toBe(false);
        });
+
+        it("should project onto the specified column values", function () {
+            iterator1 = testArrayData.getIterator(['column1', 'column4'],new NumberValue(1903), new NumberValue(1905));
+            expect(iterator1.hasNext()).toBe(true);
+            row = iterator1.next();
+            expect(row.length).toBe(2);
+        });
+
+
     });
 
     describe("columnIdToColumnNumber method", function () {
@@ -155,7 +173,7 @@ describe("ArrayData", function () {
         });
 
         it("should return the column number associated with the string id", function () {
-            expect(testArrayData.columnIdToColumnNumber("column1")).toBe(1);
+            expect(testArrayData.columnIdToColumnNumber("column1")).toBe(0);
         });
     });
 
@@ -193,7 +211,7 @@ describe("ArrayData", function () {
         });
 
         it("should return the ID associated with the column number", function () {
-            expect(testArrayData.getColumnId(3)).toBe("column3");
+            expect(testArrayData.getColumnId(3)).toBe("column4");
         });
     });
 
