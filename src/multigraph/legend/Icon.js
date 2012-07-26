@@ -11,7 +11,7 @@ if(!window.multigraph.Legend) {
 
     var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = ns.utilityFunctions.getKeys(defaultValues.legend.icon),
-        Icon = new ns.ModelTool.Model( "Icon", function () {
+        Icon = new window.jermaine.Model( "Icon", function () {
             this.hasA("height").which.isA("integer");
             this.hasA("width").which.isA("integer");
             this.hasA("border").which.isA("integer");

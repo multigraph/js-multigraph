@@ -11,7 +11,7 @@ if (!window.multigraph.Axis) {
 
     var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = ns.utilityFunctions.getKeys(defaultValues.horizontalaxis.labels.label),
-        Labeler = new ns.ModelTool.Model( "Labeler", function () {
+        Labeler = new window.jermaine.Model( "Labeler", function () {
 
             this.hasA("axis").which.validatesWith(function (axis) {
                 return axis instanceof ns.Axis;

@@ -16,7 +16,7 @@ if (!window.multigraph.Data.Variables) {
     var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = ns.utilityFunctions.getKeys(defaultValues.data.variables.variable),
         DataValue = ns.DataValue,
-        DataVariable = new ns.ModelTool.Model( "DataVariable", function () {
+        DataVariable = new window.jermaine.Model( "DataVariable", function () {
             this.hasA("id").which.isA("string");
             this.hasA("column").which.isA("integer");
             this.hasA("type").which.isOneOf(DataValue.types());

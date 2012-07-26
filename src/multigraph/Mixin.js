@@ -5,7 +5,7 @@ if (!window.multigraph) {
 (function (ns) {
     "use strict";
 
-    var Mixin = new ns.ModelTool.Model( "Mixin", function () {
+    var Mixin = new window.jermaine.Model( "Mixin", function () {
         //var mixinfuncs = [];
 
         this.hasMany("mixinfuncs");

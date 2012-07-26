@@ -48,7 +48,7 @@ if (!window.multigraph.math) {
      *             |<------------------  L  -------------------->|
      *
      */
-    var Displacement = new ns.ModelTool.Model( "Displacement", function () {
+    var Displacement = new window.jermaine.Model( "Displacement", function () {
         
         this.hasA("a").which.validatesWith(function (a) {
             return ns.utilityFunctions.validateNumberRange(a, -1.0, 1.0);

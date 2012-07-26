@@ -11,7 +11,7 @@ if (!window.multigraph.Axis) {
 
     var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = ns.utilityFunctions.getKeys(defaultValues.horizontalaxis.axiscontrols),
-        AxisControls = new ns.ModelTool.Model( "AxisControls", function () {
+        AxisControls = new window.jermaine.Model( "AxisControls", function () {
             this.hasA("visible").which.validatesWith(function (visible) {
                 return typeof(visible) === "string";
             });

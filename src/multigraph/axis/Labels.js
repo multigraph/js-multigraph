@@ -13,7 +13,7 @@ if (!window.multigraph.Axis) {
         defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = ns.utilityFunctions.getKeys(defaultValues.horizontalaxis.labels);
 
-    Labels = new ns.ModelTool.Model( "Labels", function () {
+    Labels = new window.jermaine.Model( "Labels", function () {
         this.hasA("axis").which.validatesWith(function (axis) {
             return axis instanceof ns.Axis;
         });

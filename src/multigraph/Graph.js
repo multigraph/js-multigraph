@@ -9,7 +9,7 @@ if (!window.multigraph) {
 
     var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = ns.utilityFunctions.getKeys(defaultValues),
-        Graph = new ns.ModelTool.Model( "Graph", function () {
+        Graph = new window.jermaine.Model( "Graph", function () {
             this.hasA("window").which.validatesWith(function (w) {
                 return w instanceof window.multigraph.Window;
             });

@@ -7,7 +7,7 @@ if (!window.multigraph) {
 
     var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = ns.utilityFunctions.getKeys(defaultValues["debugger"]),
-        Debugger = new ns.ModelTool.Model( "Debugger", function () {
+        Debugger = new window.jermaine.Model( "Debugger", function () {
             this.hasA("visible").which.validatesWith(function (visible) {
                 return typeof(visible) === "string";
             });

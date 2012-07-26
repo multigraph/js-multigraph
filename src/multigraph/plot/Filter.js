@@ -18,7 +18,7 @@ if (!window.multigraph.Plot) {
         Option = ns.Plot.Filter.Option;
     }
 
-    Filter = new ns.ModelTool.Model( "Filter", function () {
+    Filter = new window.jermaine.Model( "Filter", function () {
         this.hasMany("options").which.validatesWith(function (option) {
             return option instanceof ns.Plot.Filter.Option;
         });

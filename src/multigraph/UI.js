@@ -7,7 +7,7 @@ if (!window.multigraph) {
 
     var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = ns.utilityFunctions.getKeys(defaultValues.ui),
-        UI = new ns.ModelTool.Model( "UI", function () {
+        UI = new window.jermaine.Model( "UI", function () {
             this.hasA("eventhandler").which.validatesWith(function (eventhandler) {
                 return typeof(eventhandler) === "string";
             });

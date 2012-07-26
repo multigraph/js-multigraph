@@ -8,7 +8,7 @@ if (!window.multigraph.math) {
 (function (ns) {
     "use strict";
 
-    var Insets = new ns.ModelTool.Model( "Insets", function () {
+    var Insets = new window.jermaine.Model( "Insets", function () {
         
         this.hasA("top").which.isA("number");
         this.hasA("left").which.isA("number");

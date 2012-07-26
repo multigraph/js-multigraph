@@ -7,7 +7,7 @@ if (!window.multigraph) {
 
     var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = ns.utilityFunctions.getKeys(defaultValues.window),
-        Window = new ns.ModelTool.Model( "Window", function () {
+        Window = new window.jermaine.Model( "Window", function () {
 
             this.hasA("width").which.validatesWith(function (width) {
                 return ns.utilityFunctions.validateInteger(width);

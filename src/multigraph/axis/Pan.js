@@ -11,7 +11,7 @@ if (!window.multigraph.Axis) {
 
     var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = ns.utilityFunctions.getKeys(defaultValues.horizontalaxis.pan),
-        Pan = new ns.ModelTool.Model( "Pan", function () {
+        Pan = new window.jermaine.Model( "Pan", function () {
         this.hasA("allowed").which.validatesWith(function (allowed) {
             return allowed === "yes" || allowed === "no";
         });

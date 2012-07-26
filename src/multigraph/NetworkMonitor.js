@@ -7,7 +7,7 @@ if (!window.multigraph) {
 
     var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = ns.utilityFunctions.getKeys(defaultValues.networkmonitor),
-        NetworkMonitor = new ns.ModelTool.Model( "NetworkMonitor", function () {
+        NetworkMonitor = new window.jermaine.Model( "NetworkMonitor", function () {
             this.hasA("visible").which.validatesWith(function (visible) {
                 return typeof(visible) === "string";
             });

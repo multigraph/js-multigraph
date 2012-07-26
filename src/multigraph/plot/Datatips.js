@@ -19,7 +19,7 @@ if (!window.multigraph.Plot) {
         DatatipsVariable = ns.Plot.Datatips.Variable;
     }
 
-    Datatips = new ns.ModelTool.Model( "Datatips", function () {
+    Datatips = new window.jermaine.Model( "Datatips", function () {
         this.hasMany("variables").which.validatesWith(function (variable) {
             return variable instanceof ns.Plot.Datatips.Variable;
         });

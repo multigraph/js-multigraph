@@ -14,7 +14,7 @@ if (!window.multigraph) {
         Icon = ns.Legend.Icon;
     }
 
-    Legend = new ns.ModelTool.Model( "Legend", function () {
+    Legend = new window.jermaine.Model( "Legend", function () {
         this.hasA("visible").which.validatesWith(function (visible) {
             return visible === "true" || visible === "false";
         });

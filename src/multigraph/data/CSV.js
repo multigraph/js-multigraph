@@ -11,7 +11,7 @@ if (!window.multigraph.Data) {
 
     var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = ns.utilityFunctions.getKeys(defaultValues.data.csv),
-        CSV = new ns.ModelTool.Model( "CSV", function () {
+        CSV = new window.jermaine.Model( "CSV", function () {
             this.hasA("location").which.validatesWith(function (location) {
                 return typeof(location) === "string";
             });

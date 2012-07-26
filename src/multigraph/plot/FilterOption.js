@@ -15,7 +15,7 @@ if (!window.multigraph.Plot.Filter) {
 
     var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = ns.utilityFunctions.getKeys(defaultValues.plot.filter.option),
-        Option = new ns.ModelTool.Model( "FilterOption", function () {
+        Option = new window.jermaine.Model( "FilterOption", function () {
         this.hasA("name").which.validatesWith(function (name) {
             return typeof(name) === "string";
         });

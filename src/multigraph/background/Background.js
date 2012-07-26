@@ -14,7 +14,7 @@ if (!window.multigraph) {
         Img = ns.Background.Img;
     }
 
-    Background = new ns.ModelTool.Model( "Background", function () {
+    Background = new window.jermaine.Model( "Background", function () {
         this.hasA("color").which.validatesWith(function (color) {
             return color instanceof ns.math.RGBColor;
         }).defaultsTo(ns.math.RGBColor.parse(defaultValues.background.color));

@@ -28,7 +28,7 @@ if (!window.multigraph) {
         }
     }
 
-    Plot = new ns.ModelTool.Model( "Plot", function () {
+    Plot = new window.jermaine.Model( "Plot", function () {
         this.hasA("legend").which.validatesWith(function (legend) {
             return legend instanceof window.multigraph.Plot.Legend;
         });

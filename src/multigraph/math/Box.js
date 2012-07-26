@@ -8,7 +8,7 @@ if (!window.multigraph.math) {
 (function (ns) {
     "use strict";
 
-    var Box = new ns.ModelTool.Model( "Box", function () {
+    var Box = new window.jermaine.Model( "Box", function () {
         
         this.hasA("width").which.isA("number");
         this.hasA("height").which.isA("number");

@@ -11,7 +11,7 @@ if(!window.multigraph.Background) {
 
     var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = ns.utilityFunctions.getKeys(defaultValues.background.img),
-        Img = new ns.ModelTool.Model( "Img", function () {
+        Img = new window.jermaine.Model( "Img", function () {
             this.hasA("src").which.validatesWith(function (src) {
                 return typeof(src) === "string";
             });

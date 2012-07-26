@@ -11,7 +11,7 @@ if (!window.multigraph.Data) {
 
     var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = ns.utilityFunctions.getKeys(defaultValues.data.values),
-        Values = new ns.ModelTool.Model( "Values", function () {
+        Values = new window.jermaine.Model( "Values", function () {
             this.hasA("content").which.validatesWith(function (content) {
                 return typeof(content) === "string";
             });

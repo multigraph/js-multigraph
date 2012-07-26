@@ -12,7 +12,7 @@ if (!window.multigraph.valuetype) {
 (function (ns) {
     "use strict";
 
-    var MTNumberValueType = new ns.ModelTool.Model("MTNumberValueType", function() {
+    var MTNumberValueType = new window.jermaine.Model("MTNumberValueType", function() {
 
         this.hasA("value").which.isA('number');
         //this.hasA("value");

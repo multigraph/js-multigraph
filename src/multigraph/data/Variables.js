@@ -18,7 +18,7 @@ if (!window.multigraph.Data) {
         DataVariable = ns.Data.Variables.DataVariable;
     }
 
-    Variables = new ns.ModelTool.Model( "Variables", function () {
+    Variables = new window.jermaine.Model( "Variables", function () {
         this.hasMany("variable").which.validatesWith(function (variable) {
             return variable instanceof ns.Data.Variables.DataVariable;
         });

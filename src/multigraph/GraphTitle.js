@@ -7,7 +7,7 @@ if (!window.multigraph) {
 
     var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = ns.utilityFunctions.getKeys(defaultValues.title),
-        Title = new ns.ModelTool.Model( "GraphTitle", function () {
+        Title = new window.jermaine.Model( "GraphTitle", function () {
             this.hasA("content").which.isA("string");
             this.hasA("border").which.validatesWith(function (border) {
                 return typeof(border) === "string";

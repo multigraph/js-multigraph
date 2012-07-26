@@ -11,7 +11,7 @@ if (!window.multigraph.Axis) {
 
     var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = ns.utilityFunctions.getKeys(defaultValues.horizontalaxis.grid),
-        Grid = new ns.ModelTool.Model( "Grid", function () {
+        Grid = new window.jermaine.Model( "Grid", function () {
             this.hasA("color").which.validatesWith(function (color) {
                 return color instanceof ns.math.RGBColor;
             });

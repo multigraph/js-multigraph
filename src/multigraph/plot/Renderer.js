@@ -18,7 +18,7 @@ if (!window.multigraph.Plot) {
         Option = ns.Plot.Renderer.Option;
     }
 
-    Renderer = new ns.ModelTool.Model( "Renderer", function () {
+    Renderer = new window.jermaine.Model( "Renderer", function () {
         this.hasA("type").which.validatesWith(function (type) {
             return type === "line" || type === "bar" ||
                    type === "fill" || type === "point" ||

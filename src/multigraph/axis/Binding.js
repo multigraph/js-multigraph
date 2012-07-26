@@ -11,7 +11,7 @@ if (!window.multigraph.Axis) {
 
     var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = ns.utilityFunctions.getKeys(defaultValues.horizontalaxis.binding),
-        Binding = new ns.ModelTool.Model( "Binding", function () {
+        Binding = new window.jermaine.Model( "Binding", function () {
             this.hasA("id").which.validatesWith(function (id) {
                 return typeof(id) === "string";
             });

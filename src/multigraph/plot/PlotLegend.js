@@ -11,7 +11,7 @@ if (!window.multigraph.Plot) {
 
     var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = ns.utilityFunctions.getKeys(defaultValues.plot.legend),
-        Legend = new ns.ModelTool.Model( "PlotLegend", function () {
+        Legend = new window.jermaine.Model( "PlotLegend", function () {
             this.hasA("visible").which.validatesWith(function (visible) {
                 return visible === "true" || visible === "false";
             });

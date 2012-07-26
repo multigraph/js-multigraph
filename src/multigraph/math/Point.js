@@ -8,7 +8,7 @@ if (!window.multigraph.math) {
 (function (ns) {
     "use strict";
 
-    var Point = new ns.ModelTool.Model( "Point", function () {
+    var Point = new window.jermaine.Model( "Point", function () {
         this.hasA("x").which.isA("number");
         this.hasA("y").which.isA("number");
         this.isBuiltWith("x", "y");

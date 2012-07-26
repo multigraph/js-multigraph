@@ -11,7 +11,7 @@ if (!window.multigraph.Axis) {
 
     var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = ns.utilityFunctions.getKeys(defaultValues.horizontalaxis.zoom),
-        Zoom = new ns.ModelTool.Model( "Zoom", function () {
+        Zoom = new window.jermaine.Model( "Zoom", function () {
         this.hasA("allowed").which.validatesWith(function (allowed) {
             return allowed === "yes" || allowed === "no";
         });
