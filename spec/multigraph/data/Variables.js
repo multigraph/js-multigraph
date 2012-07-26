@@ -31,22 +31,22 @@ describe("Data Variables", function () {
 
     });
 
-    describe("Variable", function () {
-        var Variable = window.multigraph.Data.Variables.Variable,
+    describe("DataVariable", function () {
+        var DataVariable = window.multigraph.Data.Variables.DataVariable,
             variable;
 
         beforeEach(function () {
-            variable = new Variable('x');
+            variable = new DataVariable('x');
         });
 
-        it("should be able to add a Variable to a Variables", function () {
+        it("should be able to add a DataVariable to a Variables", function () {
             variables.variable().add(variable);
             expect(variables.variable().at(0) === variable).toBe(true);
         });
 
-        it("should be able to add many Variable tags to a Variables tag", function () {
-            var variable2 = new Variable('y'),
-                variable3 = new Variable('y2');
+        it("should be able to add many DataVariable tags to a Variables tag", function () {
+            var variable2 = new DataVariable('y'),
+                variable3 = new DataVariable('y2');
             variables.variable().add(variable);
             variables.variable().add(variable2);
             variables.variable().add(variable3);
@@ -55,15 +55,15 @@ describe("Data Variables", function () {
             expect(variables.variable().at(2) === variable3).toBe(true);
         });
 
-        it("should be able to add a Variable with attributes to a Variables", function () {
+        it("should be able to add a DataVariable with attributes to a Variables", function () {
             variable.id('x').column(2).type('datetime');
             variables.variable().add(variable);
             expect(variables.variable().at(0) === variable).toBe(true);
         });
 
-        it("should be able to add many Variable tags with attributes to a Variables tag", function () {
-            var variable2 = new Variable('y'),
-                variable3 = new Variable('y2');
+        it("should be able to add many DataVariable tags with attributes to a Variables tag", function () {
+            var variable2 = new DataVariable('y'),
+                variable3 = new DataVariable('y2');
             variable.id("x").column(1).type("number");
             variable2.id("y").type("number").column(2).missingvalue(new NumberValue(-2000));
             variable3.id("y1").column(3).type("datetime");
@@ -75,9 +75,9 @@ describe("Data Variables", function () {
             expect(variables.variable().at(2) === variable3).toBe(true);
         });
 
-        it("should be able to set/get attributes of an Variable added to a Variables", function () {
-            var variable2 = new Variable('y'),
-                variable3 = new Variable('y1');
+        it("should be able to set/get attributes of an DataVariable added to a Variables", function () {
+            var variable2 = new DataVariable('y'),
+                variable3 = new DataVariable('y1');
             variable.id("x").column(1).type("number");
             variable2.id("y").type("number").column(2);
             variable3.id("y1").column(3).type("datetime");

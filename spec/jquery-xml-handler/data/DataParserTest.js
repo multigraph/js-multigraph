@@ -6,7 +6,7 @@ describe("Data parsing", function () {
     var Data = window.multigraph.Data,
         Values = window.multigraph.Data.Values,
         Variables = window.multigraph.Data.Variables,
-        Variable = window.multigraph.Data.Variables.Variable,
+        DataVariable = window.multigraph.Data.Variables.DataVariable,
         Service = window.multigraph.Data.Service,
         CSV = window.multigraph.Data.CSV,
         xmlString = '<data/>',
@@ -116,9 +116,9 @@ describe("Data parsing", function () {
             expect(data).not.toBeUndefined();
             expect(data instanceof Data).toBe(true);
             expect(data.variables() instanceof Variables).toBe(true);
-            expect(data.variables().variable().at(0) instanceof Variable);
-            expect(data.variables().variable().at(1) instanceof Variable);
-            expect(data.variables().variable().at(2) instanceof Variable);
+            expect(data.variables().variable().at(0) instanceof DataVariable);
+            expect(data.variables().variable().at(1) instanceof DataVariable);
+            expect(data.variables().variable().at(2) instanceof DataVariable);
         });
 
 
@@ -161,25 +161,25 @@ describe("Data parsing", function () {
             expect(data).not.toBeUndefined();
             expect(data instanceof Data).toBe(true);
             expect(data.variables() instanceof Variables).toBe(true);
-            expect(data.variables().variable().at(0) instanceof Variable).toBe(true);
-            expect(data.variables().variable().at(1) instanceof Variable).toBe(true);
-            expect(data.variables().variable().at(2) instanceof Variable).toBe(true);
+            expect(data.variables().variable().at(0) instanceof DataVariable).toBe(true);
+            expect(data.variables().variable().at(1) instanceof DataVariable).toBe(true);
+            expect(data.variables().variable().at(2) instanceof DataVariable).toBe(true);
             expect(data.values() instanceof Values).toBe(true);
 
             expect(data2).not.toBeUndefined();
             expect(data2 instanceof Data).toBe(true);
             expect(data2.variables() instanceof Variables).toBe(true);
-            expect(data2.variables().variable().at(0) instanceof Variable).toBe(true);
-            expect(data2.variables().variable().at(1) instanceof Variable).toBe(true);
-            expect(data2.variables().variable().at(2) instanceof Variable).toBe(true);
+            expect(data2.variables().variable().at(0) instanceof DataVariable).toBe(true);
+            expect(data2.variables().variable().at(1) instanceof DataVariable).toBe(true);
+            expect(data2.variables().variable().at(2) instanceof DataVariable).toBe(true);
             expect(data2.service() instanceof Service).toBe(true);
 
             expect(data3).not.toBeUndefined();
             expect(data3 instanceof Data).toBe(true);
             expect(data3.variables() instanceof Variables).toBe(true);
-            expect(data3.variables().variable().at(0) instanceof Variable).toBe(true);
-            expect(data3.variables().variable().at(1) instanceof Variable).toBe(true);
-            expect(data3.variables().variable().at(2) instanceof Variable).toBe(true);
+            expect(data3.variables().variable().at(0) instanceof DataVariable).toBe(true);
+            expect(data3.variables().variable().at(1) instanceof DataVariable).toBe(true);
+            expect(data3.variables().variable().at(2) instanceof DataVariable).toBe(true);
             expect(data3.csv() instanceof CSV).toBe(true);
         });
 

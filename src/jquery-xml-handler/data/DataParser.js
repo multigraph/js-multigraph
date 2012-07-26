@@ -28,7 +28,7 @@ if (!window.multigraph) {
                         var type         = variable.attr("type");
                         var missingvalue = variable.attr("missingvalue");
                         var missingop    = variable.attr("missingop");
-                        var dataVariable = new DataVariable(id, column, type);
+                        var dataDataVariable = new DataVariable(id, column, type);
                     }
                 }
 

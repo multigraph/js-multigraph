@@ -12,7 +12,7 @@ describe("Plot", function () {
         RendererOption = window.multigraph.Plot.Renderer.Option,
         Datatips = window.multigraph.Plot.Datatips,
         DatatipsVariable = window.multigraph.Plot.Datatips.Variable,
-        DataVariable = window.multigraph.Data.Variables.Variable,
+        DataVariable = window.multigraph.Data.Variables.DataVariable,
         p;
 
     beforeEach(function () {
@@ -64,7 +64,7 @@ describe("Plot", function () {
 
     });
 
-    describe("Data Variable's", function () {
+    describe("Data DataVariable's", function () {
         var v,
             v2;
 

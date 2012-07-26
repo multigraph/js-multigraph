@@ -10,7 +10,7 @@ describe("Data", function () {
         Service = window.multigraph.Data.Service,
         Values = window.multigraph.Data.Values,
         Variables = window.multigraph.Data.Variables,
-        Variable = window.multigraph.Data.Variables.Variable,
+        DataVariable = window.multigraph.Data.Variables.DataVariable,
         d;
 
     beforeEach(function () {
@@ -115,8 +115,8 @@ describe("Data", function () {
         });
 
         it("should be able to add a Variables with attributes and children to a Data", function () {
-            var variable = new Variable('x'),
-                variable2 = new Variable('y');
+            var variable = new DataVariable('x'),
+                variable2 = new DataVariable('y');
             variables.missingvalue('11');
             variable.column(1).missingop(DataValue.EQ);
             variable2.column(2).missingvalue(new NumberValue(12));
@@ -129,8 +129,8 @@ describe("Data", function () {
         });
 
         it("should be able to set/get attributes of variables added to a Data", function () {
-            var variable = new Variable('x'),
-                variable2 = new Variable('y');
+            var variable = new DataVariable('x'),
+                variable2 = new DataVariable('y');
             variables.variable().add(variable);
             variables.variable().add(variable2);
             d.variables(variables);

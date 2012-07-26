@@ -6,7 +6,7 @@ describe("Plot parsing", function () {
     var Plot = window.multigraph.Plot,
         Graph = window.multigraph.Graph,
         Axis = window.multigraph.Axis,
-        Variable = window.multigraph.Data.Variables.Variable,
+        DataVariable = window.multigraph.Data.Variables.DataVariable,
         xmlString = '<plot></plot>',
         plot,
         graph,
@@ -64,7 +64,7 @@ describe("Plot parsing", function () {
         });
     });
 
-    describe("Variable parsing", function () {
+    describe("DataVariable parsing", function () {
         var variables;
 
         beforeEach(function () {
@@ -75,9 +75,9 @@ describe("Plot parsing", function () {
             haxis.id('x');
             vaxis = new Axis('vertical');
             vaxis.id('y');
-            variable1 = new Variable('x');
-            variable2 = new Variable('y');
-            variable3 = new Variable('y1');
+            variable1 = new DataVariable('x');
+            variable2 = new DataVariable('y');
+            variable3 = new DataVariable('y1');
             variables = new window.multigraph.Data.Variables();
             variable1.id('x').column(1);
             variable2.id('y').column(2);
@@ -97,9 +97,9 @@ describe("Plot parsing", function () {
             expect(plot instanceof Plot).toBe(true);
 //            expect(plot.horizontalaxis() instanceof Axis).toBe(true);            
 //            expect(plot.verticalaxis() instanceof Axis).toBe(true);            
-            expect(plot.variable().at(0) instanceof Variable).toBe(true);
-            expect(plot.variable().at(1) instanceof Variable).toBe(true);
-            expect(plot.variable().at(2) instanceof Variable).toBe(true);
+            expect(plot.variable().at(0) instanceof DataVariable).toBe(true);
+            expect(plot.variable().at(1) instanceof DataVariable).toBe(true);
+            expect(plot.variable().at(2) instanceof DataVariable).toBe(true);
         });
 
         it("should throw an error if a variable with the ref's id is not in the graph", function () {

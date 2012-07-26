@@ -33,8 +33,8 @@ describe("Data Variables parsing", function () {
 //        expect(variables.serialize() === xmlString2).toBe(true);
     });
 
-    describe("Variable parsing", function () {
-        var Variable = window.multigraph.Data.Variables.Variable;
+    describe("DataVariable parsing", function () {
+        var DataVariable = window.multigraph.Data.Variables.DataVariable;
 
         beforeEach(function () {
             xmlString = '<variables missingop="gt"><variable id="x" column="7" type="datetime" missingvalue="1990" missingop="eq"/><variable id="y" column="2" type="number" missingvalue="19" missingop="gt"/><variable id="y1" column="2" type="datetime"/></variables>';
@@ -49,9 +49,9 @@ describe("Data Variables parsing", function () {
         });
 
         it("children should be instances of the 'variable' tag", function () {
-            expect(variables.variable().at(0) instanceof Variable).toBe(true);
-            expect(variables.variable().at(1) instanceof Variable).toBe(true);
-            expect(variables.variable().at(2) instanceof Variable).toBe(true);
+            expect(variables.variable().at(0) instanceof DataVariable).toBe(true);
+            expect(variables.variable().at(1) instanceof DataVariable).toBe(true);
+            expect(variables.variable().at(2) instanceof DataVariable).toBe(true);
         });
 
         xit("should be able to parse a variables with children from XML, serialize it and get the same XML as the original", function () {

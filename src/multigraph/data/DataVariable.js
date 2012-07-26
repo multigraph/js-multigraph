@@ -16,7 +16,7 @@ if (!window.multigraph.Data.Variables) {
     var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = ns.utilityFunctions.getKeys(defaultValues.data.variables.variable),
         DataValue = ns.DataValue,
-        Variable = new ns.ModelTool.Model( "Variable", function () {
+        DataVariable = new ns.ModelTool.Model( "DataVariable", function () {
             this.hasA("id").which.isA("string");
             this.hasA("column").which.isA("integer");
             this.hasA("type").which.isOneOf(DataValue.types());
@@ -27,6 +27,6 @@ if (!window.multigraph.Data.Variables) {
             ns.utilityFunctions.insertDefaults(this, defaultValues.data.variables.variable, attributes);
         });
 
-    ns.Data.Variables.Variable = Variable;
+    ns.Data.Variables.DataVariable = DataVariable;
 
 }(window.multigraph));

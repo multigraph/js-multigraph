@@ -9,18 +9,18 @@ if (!window.multigraph.Data) {
 (function (ns) {
     "use strict";
 
-    var Variable,
+    var DataVariable,
         Variables,
         defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = ns.utilityFunctions.getKeys(defaultValues.data.variables);
 
-    if (ns.Data.Variables && ns.Data.Variables.Variable) {
-        Variable = ns.Data.Variables.Variable;
+    if (ns.Data.Variables && ns.Data.Variables.DataVariable) {
+        DataVariable = ns.Data.Variables.DataVariable;
     }
 
     Variables = new ns.ModelTool.Model( "Variables", function () {
         this.hasMany("variable").which.validatesWith(function (variable) {
-            return variable instanceof ns.Data.Variables.Variable;
+            return variable instanceof ns.Data.Variables.DataVariable;
         });
         this.hasA("missingvalue").which.validatesWith(function (missingvalue) {
             return typeof(missingvalue) === "string";
@@ -34,8 +34,8 @@ if (!window.multigraph.Data) {
 
     ns.Data.Variables = Variables;
 
-    if (Variable) {
-        ns.Data.Variables.Variable = Variable;
+    if (DataVariable) {
+        ns.Data.Variables.DataVariable = DataVariable;
     }
 
 }(window.multigraph));

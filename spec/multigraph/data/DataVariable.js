@@ -1,18 +1,18 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
 
-describe("Data Variable", function () {
+describe("Data DataVariable", function () {
     "use strict";
 
-    var Variable = window.multigraph.Data.Variables.Variable,
+    var DataVariable = window.multigraph.Data.Variables.DataVariable,
         NumberValue = window.multigraph.NumberValue,
         variable;
 
     beforeEach(function () {
-        variable = new Variable('x');
+        variable = new DataVariable('x');
     });
 
-    it("should be able to create a Variable", function () {
-        expect(variable instanceof Variable).toBe(true);
+    it("should be able to create a DataVariable", function () {
+        expect(variable instanceof DataVariable).toBe(true);
     });
 
     describe("id attribute", function () {

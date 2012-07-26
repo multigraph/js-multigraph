@@ -1,9 +1,9 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
 
-describe("Data Variable parsing", function () {
+describe("Data DataVariable parsing", function () {
     "use strict";
 
-    var Variable = window.multigraph.Data.Variables.Variable,
+    var DataVariable = window.multigraph.Data.Variables.DataVariable,
         xmlString = '<variable id="x" column="7" type="number" missingvalue="1990" missingop="eq"/>',
         $xml,
         variable;
@@ -11,12 +11,12 @@ describe("Data Variable parsing", function () {
     beforeEach(function () {
         window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
         $xml = $(xmlString);
-        variable = Variable.parseXML($xml);
+        variable = DataVariable.parseXML($xml);
     });
 
-    xit("should be able to parse a Variable from XML", function () {
+    xit("should be able to parse a DataVariable from XML", function () {
         expect(variable).not.toBeUndefined();
-        expect(variable instanceof Variable).toBe(true);
+        expect(variable instanceof DataVariable).toBe(true);
     });
 
     xit("should be able to parse a variable from XML and read its 'id' attribute", function () {
@@ -42,7 +42,7 @@ describe("Data Variable parsing", function () {
     xit("should be able to parse a variable from XML, serialize it and get the same XML as the original", function () {
         var xmlString2 = '<variable id="y" column="10" type="number" missingvalue="lt" missingop="gt"/>';
         expect(variable.serialize() === xmlString).toBe(true);
-        variable = Variable.parseXML($(xmlString2));
+        variable = DataVariable.parseXML($(xmlString2));
         expect(variable.serialize()).toEqual(xmlString2);
     });
 

@@ -20,7 +20,7 @@ if (!window.multigraph.Data) {
                 variables.missingop(xml.attr("missingop"));
                 if (xml.find(">variable").length > 0) {
                     $.each(xml.find(">variable"), function (i,e) {
-                        variables.variable().add( nsObj.Data.Variables.Variable[parse]($(e)) );
+                        variables.variable().add( nsObj.Data.Variables.DataVariable[parse]($(e)) );
                     });
                 }
             }
