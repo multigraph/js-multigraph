@@ -6,6 +6,8 @@ if (!window.multigraph) {
     "use strict";
 
     var DataVariable = window.multigraph.Data.Variables.DataVariable;
+    var NumberValue  = window.multigraph.NumberValue;
+    var ArrayData  = window.multigraph.ArrayData;
 
     var children = ["variables", "values", "csv", "service"];
 
@@ -17,29 +19,51 @@ if (!window.multigraph) {
                 i;
 
             if (xml) {
-                
-                var variables = $(xml.find(">variables")[0]);
-                if (variables) {
-                    var variable_array = variables.find(">variable");
-                    for (i=0; i<variable_array.length; ++i) {
-                        var variable     = $(variable_array[i]);
-                        var id           = variable.attr("id");
-                        var column       = parseInt(variable.attr("column"), 10);
-                        var type         = variable.attr("type");
-                        var missingvalue = variable.attr("missingvalue");
-                        var missingop    = variable.attr("missingop");
-                        var dataDataVariable = new DataVariable(id, column, type);
-                    }
-                }
-
-
-
 
                 for (i = 0; i < children.length; i++) {
                     if (xml.find(children[i]).length > 0) {
                         data[children[i]](ns.Data[childModelNames[i]][parse](xml.find(children[i])));
                     }
                 }
+
+                /**
+                 ** !!! TEMPORARY HACK !!!
+                 **
+                 ** Until we completely merge ArrayData, if this <data> section includes a <values> tag,
+                 ** and if it includes a <variables> tag, use the temporary "arraydata" attribute to store
+                 ** a reference to an ArrayData object.
+                 **/
+
+                var values = $(xml.find(">values"));
+                if (values.length > 0 && data.variables()) {
+                    values = values[0];
+
+                    var dataVariables = [];
+                    for (i=0; i<data.variables().variable().size(); ++i) {
+                        dataVariables.push(data.variables().variable().at(i));
+                    }
+
+                    var dataValues = [];
+                    var lines = $(values).text().split("\n");
+                    for (i=0; i<lines.length; ++i) {
+                        var valuesThisRow = lines[i].split(/\s*,\s*/);
+                        var dataValuesThisRow = [];
+                        var j;
+                        for (j=0; j<valuesThisRow.length; ++j) {
+                            dataValuesThisRow.push( NumberValue.parse(valuesThisRow[j]) );
+                        }
+                        dataValues.push( dataValuesThisRow );
+                    }
+
+                    var ad = new ArrayData(dataVariables, dataValues);
+                    data.arraydata(ad);
+
+                /**
+                 ** END OF TEMPORARY HACK
+                 **/
+
+                }
+
 
             }
             return data;
