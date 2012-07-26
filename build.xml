@@ -13,9 +13,8 @@
     <fileset dir="src/utility-functions" includes="**/*.js" />
     <filelist dir="src/multigraph" files="DataValue.js" />
     <fileset dir="src/multigraph/math" includes="**/*.js" />
-    <filelist dir="src/data" files="data_variable.js data.js" />
-    <fileset dir="src/data" excludes="data_variable.js data.js" includes="**/*.js" />
-    <fileset dir="src/multigraph" includes="**/*.js" excludes="src/multigraph/math/**/*.js src/multigraph/DataValue.js"/>
+    <filelist dir="src/multigraph" files="data_variable.js data.js" />
+    <fileset dir="src/multigraph" includes="**/*.js" excludes="src/multigraph/math/**/*.js src/multigraph/DataValue.js data_variable.js data.js" />
   </path>
   <path id="path.jquery-xml-handler-js">
     <filelist dir="src/jquery-xml-handler" files="JQueryXMLMixin.js"/>
