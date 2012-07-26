@@ -13,6 +13,7 @@ if (!window.multigraph.TEMP) {
         ArrayData;
 
     ArrayData = function (m, d) {
+
         var that = this,
             actualData = d,
             metaData = new Data(m),

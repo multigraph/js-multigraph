@@ -5,7 +5,8 @@ describe("ArrayData", function () {
 
     var ArrayData = window.multigraph.TEMP.ArrayData,
         NumberValue = window.multigraph.NumberValue,
-        DataVariable = window.multigraph.TEMP.DataVariable,
+        //DataVariable = window.multigraph.TEMP.DataVariable,
+        DataVariable = window.multigraph.Data.Variables.DataVariable,
         DataValue = window.multigraph.DataValue,
         testArrayData,
         numberValueData,

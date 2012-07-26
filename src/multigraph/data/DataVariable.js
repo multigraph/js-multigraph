@@ -23,7 +23,7 @@ if (!window.multigraph.Data.Variables) {
             this.hasA("missingvalue").which.validatesWith(DataValue.isInstance);
 
             this.hasA("missingop").which.isOneOf(DataValue.comparators());
-            this.isBuiltWith("id");
+            this.isBuiltWith("id", "%column", "%type"); //NOTE: remove optional '%' soon!
 
             ns.utilityFunctions.insertDefaults(this, defaultValues.data.variables.variable, attributes);
         });

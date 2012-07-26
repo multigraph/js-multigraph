@@ -5,7 +5,7 @@ if (!window.multigraph) {
 (function (ns) {
     "use strict";
 
-    var DataVariable = window.multigraph.TEMP.DataVariable;
+    var DataVariable = window.multigraph.Data.Variables.DataVariable;
 
     var children = ["variables", "values", "csv", "service"];
 

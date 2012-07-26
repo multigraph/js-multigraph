@@ -4,7 +4,8 @@ describe("Data", function () {
     "use strict";
 
     var Data = window.multigraph.TEMP.Data,
-        DataVariable = window.multigraph.TEMP.DataVariable,
+        //DataVariable = window.multigraph.TEMP.DataVariable,
+        DataVariable = window.multigraph.Data.Variables.DataVariable,
         DataValue = window.multigraph.DataValue,
         dataVariables,
         testData;

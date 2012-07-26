@@ -9,7 +9,8 @@ if (!window.multigraph.TEMP) {
 (function (ns) {
     "use strict";
 
-    var DataVariable = window.multigraph.TEMP.DataVariable,
+    //DataVariable = window.multigraph.TEMP.DataVariable,
+    var DataVariable = window.multigraph.Data.Variables.DataVariable,
         Data,
         i;
 
