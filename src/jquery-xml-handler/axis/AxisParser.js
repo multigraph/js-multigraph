@@ -59,7 +59,7 @@ if (!window.multigraph) {
                     }
                 }
 
-                axis.labels(ns.Axis.Labels[parse](xml.find(">labels"), axis))
+                axis.labels(ns.Axis.Labels[parse](xml.find(">labels"), axis));
 
             }
             return axis;

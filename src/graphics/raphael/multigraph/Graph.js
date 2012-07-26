@@ -12,8 +12,11 @@ if (!window.multigraph) {
             var windowMarginLeft = this.window().margin().left(),
                 windowBorder = this.window().border(),
                 mb = windowMarginLeft + windowBorder,
-                x0 = windowMarginLeft  + windowBorder + this.window().padding().left() + this.plotarea().margin().left(),
-                y0 = this.window().margin().bottom() + windowBorder + this.window().padding().bottom() + this.plotarea().margin().bottom(),
+                paddingBox = mb + this.window().padding().left(),
+                plotBoxWidth = this.paddingBox().width() - this.plotarea().margin().right() - this.plotarea().margin().left(),
+                plotBoxHeight = this.paddingBox().height() - this.plotarea().margin().top() - this.plotarea().margin().bottom(),
+                x0 = paddingBox + this.plotarea().margin().left() + this.plotarea().border(),
+                y0 = this.window().margin().bottom() + windowBorder + this.window().padding().bottom() + this.plotarea().margin().bottom() + this.plotarea().border(),
                 axesSet = paper.set(),
                 i;
 
@@ -23,6 +26,16 @@ if (!window.multigraph) {
             
             paper.rect(mb,mb,width-2*mb,height-2*mb)
                 .attr({"fill" : this.background().color().getHexString("#")})
+                .transform("S 1, -1, 0, " + (height/2));
+            
+            paper.rect(paddingBox + this.plotarea().margin().left(),
+                       paddingBox + this.plotarea().margin().right(),
+                       plotBoxWidth,
+                       plotBoxHeight)
+                .attr({"fill-opacity" : 0,
+                       "stroke-opacity" : 1,
+                       "stroke" : this.plotarea().bordercolor().getHexString("#"),
+                       "stroke-width": this.plotarea().border()})
                 .transform("S 1, -1, 0, " + (height/2));
             
             for (i=0; i<this.axes().size(); ++i) {

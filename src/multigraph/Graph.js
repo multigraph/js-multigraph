@@ -79,11 +79,11 @@ if (!window.multigraph) {
                                         )
                                );
                 this.plotBox( new Box(( this.paddingBox().width() -
-                                        ( this.plotarea().margin().left() + this.plotarea().margin().right())
+                                        ( this.plotarea().margin().left() + this.plotarea().margin().right() + (2 * this.plotarea().border()))
                                       ),
                                       (
                                           this.paddingBox().height() -
-                                              ( this.plotarea().margin().top() + this.plotarea().margin().bottom())
+                                              ( this.plotarea().margin().top() + this.plotarea().margin().bottom() + (2 * this.plotarea().border()))
                                       )
                                      )
                             );

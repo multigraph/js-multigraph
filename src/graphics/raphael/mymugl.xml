@@ -1,7 +1,7 @@
 <mugl>
   <background color="0xcccccc"/>
   <window margin="0" padding="5" border="5" bordercolor="0x000000"/>
-  <plotarea margintop="10" marginleft="38" marginbottom="35" marginright="35"/>
+  <plotarea margintop="10" marginleft="38" marginbottom="35" marginright="35" border="3" bordercolor="0x00ff0f"/>
   <horizontalaxis id="x" min="0" max="10" length="1-40" base="0,0" anchor="0" color="0xff0000"/>
   <horizontalaxis id="x" min="0" max="10" base="-1,-1"/>
   <verticalaxis   id="y"  min="0" max="10" length="1-20"/>

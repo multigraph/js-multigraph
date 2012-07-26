@@ -38,7 +38,7 @@ if (!window.multigraph.Axis) {
             });
             this.hasA("densityfactor").which.isA("number");
 
-            this.isBuiltWith("axis")
+            this.isBuiltWith("axis");
             //ns.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis.labels.label, attributes);
         });
 

@@ -528,10 +528,10 @@ describe("Axis parsing", function () {
 
     });
 
-    xdescribe("with multiple children", function () {
+    describe("with multiple children", function () {
 
         beforeEach(function () {
-            xmlString = '<verticalaxis color="0x000000" id="y2" type="number" pregap="0" postgap="0" anchor="-1" min="auto" minoffset="0" max="auto" maxoffset="0" tickmin="-3" tickmax="3" highlightstyle="axis" linewidth="1" length="0.9" position="0,0" base="-1,1" minposition="1" maxposition="1"><title position="-1 1" anchor="1 1" angle="70">A Title</title><labels format="%1d" start="10" angle="9" position="1 1" anchor="0 0" densityfactor=".5" function="fun"><label spacing="200 100 50 10"/><label format="%2d" spacing="5 2 1 .5"/></labels><grid color="0x984545" visible="false"/><pan allowed="yes" min="0" max="5"/><zoom allowed="yes" min="0" max="80" anchor="1 1"/><binding id="y" min="-10" max="50"/><axiscontrols visible="false"/></verticalaxis>';
+            xmlString = '<verticalaxis color="0x000000" id="y2" type="number" pregap="0" postgap="0" anchor="-1" min="auto" minoffset="0" max="auto" maxoffset="0" tickmin="-3" tickmax="3" highlightstyle="axis" linewidth="1" length="0.9" position="0,0" base="-1,1" minposition="1" maxposition="1"><title position="-1 1" anchor="1 1" angle="70">A Title</title><labels start="10" angle="9" densityfactor="0.5" format="%1d" anchor="0,0" position="1,1"><label start="10" angle="9" densityfactor="0.5" spacing="200" format="%1d" anchor="0,0" position="1,1"/><label start="10" angle="9" densityfactor="0.5" spacing="100" format="%1d" anchor="0,0" position="1,1"/><label start="10" angle="9" densityfactor="0.5" spacing="50" format="%1d" anchor="0,0" position="1,1"/><label start="10" angle="9" densityfactor="0.5" spacing="10" format="%1d" anchor="0,0" position="1,1"/><label start="10" angle="9" densityfactor="0.5" spacing="5" format="%2d" anchor="0,0" position="1,1"/><label start="10" angle="9" densityfactor="0.5" spacing="2" format="%2d" anchor="0,0" position="1,1"/><label start="10" angle="9" densityfactor="0.5" spacing="1" format="%2d" anchor="0,0" position="1,1"/><label start="10" angle="9" densityfactor="0.5" spacing=".5" format="%2d" anchor="0,0" position="1,1"/></labels><grid color="0x984545" visible="false"/><pan allowed="yes" min="0" max="5"/><zoom allowed="yes" min="0" max="80" anchor="1 1"/><binding id="y" min="-10" max="50"/><axiscontrols visible="false"/></verticalaxis>';
             $xml = $(xmlString);
         });
 
@@ -541,8 +541,8 @@ describe("Axis parsing", function () {
             expect(axis instanceof Axis).toBe(true);
             expect(axis.title() instanceof Title).toBe(true);
             expect(axis.labels() instanceof Labels).toBe(true);
-            expect(axis.labels().label().at(0) instanceof Label).toBe(true);
-            expect(axis.labels().label().at(1) instanceof Label).toBe(true);
+            expect(axis.labelers().at(0) instanceof Labeler).toBe(true);
+            expect(axis.labelers().at(1) instanceof Labeler).toBe(true);
             expect(axis.grid() instanceof Grid).toBe(true);
             expect(axis.pan() instanceof Pan).toBe(true);
             expect(axis.zoom() instanceof Zoom).toBe(true);

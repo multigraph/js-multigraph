@@ -36,12 +36,12 @@ if (!window.multigraph.Axis) {
                 if (xml.attr("position") !== undefined) { 
                     labeler.position(nsObj.math.Point.parse(xml.attr("position")));
                 } else if (labels !== undefined) {
-                    labeler.position(labels.position())
+                    labeler.position(labels.position());
                 }
                 if (xml.attr("anchor") !== undefined) {
                     labeler.anchor(nsObj.math.Point.parse(xml.attr("anchor")));
                 } else if (labels !== undefined) {
-                    labeler.anchor(labels.anchor())
+                    labeler.anchor(labels.anchor());
                 }
                 if (xml.attr("densityfactor") !== undefined) {
                     labeler.densityfactor(nsObj.utilityFunctions.parseDoubleOrUndefined(xml.attr("densityfactor")));
