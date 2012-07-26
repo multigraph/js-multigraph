@@ -33,9 +33,8 @@ describe("Axis", function () {
         it("should throw an error if the parameter is not a string", function () {
             expect(function () {
                 a.id(5);
-            }).toThrow(new Error("invalid setter call for id"));
+            }).toThrow(new Error("validator failed with parameter 5"));
         });
-
     });
 
     describe("type attribute", function () {
@@ -77,7 +76,7 @@ describe("Axis", function () {
         it("should throw an error if the parameter is not a point", function () {
             expect(function () {
                 a.position(true);
-            }).toThrow(new Error("invalid setter call for position"));
+            }).toThrow(new Error("validator failed with parameter true"));
         });
 
     });
@@ -122,7 +121,7 @@ describe("Axis", function () {
         it("should throw an error if the parameter is not a string", function () {
             expect(function () {
                 a.base(true);
-            }).toThrow(new Error("invalid setter call for base"));
+            }).toThrow(new Error("validator failed with parameter true"));
         });
 
     });
@@ -238,10 +237,10 @@ describe("Axis", function () {
         it("should throw an error if the setter parameter is not 'horizontal' or 'vertical'", function () {
             expect(function () {
                 a.orientation(true);
-            }).toThrow(new Error("invalid setter call for orientation"));
+            }).toThrow(new Error("validator failed with parameter true"));
             expect(function () {
                 a.orientation('blahblahblah');
-            }).toThrow(new Error("invalid setter call for orientation"));
+            }).toThrow(new Error("validator failed with parameter blahblahblah"));
         });
 
     });

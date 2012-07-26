@@ -33,22 +33,22 @@ describe("RGBColor", function () {
         it("should throw an error if the 'r' attribute is less than 0", function () {
             expect(function () {
                 rgb.r(-0.2);
-            }).toThrow(new Error("invalid setter call for r"));
+            }).toThrow(new Error("validator failed with parameter -0.2"));
         });
         it("should throw an error if the 'r' attribute is greater than 1", function () {
             expect(function () {
                 rgb.r(2);
-            }).toThrow(new Error("invalid setter call for r"));
+            }).toThrow(new Error("validator failed with parameter 2"));
         });
         it("should throw an error if the 'r' attribute is a string", function () {
             expect(function () {
                 rgb.r("larry");
-            }).toThrow(new Error("invalid setter call for r"));
+            }).toThrow(new Error("validator failed with parameter larry"));
         });
         it("should throw an error if the 'r' attribute is NaN", function () {
             expect(function () {
                 rgb.r(NaN);
-            }).toThrow(new Error("invalid setter call for r"));
+            }).toThrow(new Error("validator failed with parameter NaN"));
         });
 
     });
@@ -73,22 +73,22 @@ describe("RGBColor", function () {
         it("should throw an error if the 'g' attribute is less than 0", function () {
             expect(function () {
                 rgb.g(-12);
-            }).toThrow(new Error("invalid setter call for g"));
+            }).toThrow(new Error("validator failed with parameter -12"));
         });
         it("should throw an error if the 'g' attribute is greater than 1", function () {
             expect(function () {
                 rgb.g(1.2);
-            }).toThrow(new Error("invalid setter call for g"));
+            }).toThrow(new Error("validator failed with parameter 1.2"));
         });
         it("should throw an error if the 'g' attribute is a string", function () {
             expect(function () {
                 rgb.g("curly");
-            }).toThrow(new Error("invalid setter call for g"));
+            }).toThrow(new Error("validator failed with parameter curly"));
         });
         it("should throw an error if the 'g' attribute is NaN", function () {
             expect(function () {
                 rgb.g(NaN);
-            }).toThrow(new Error("invalid setter call for g"));
+            }).toThrow(new Error("validator failed with parameter NaN"));
         });
 
     });
@@ -113,22 +113,22 @@ describe("RGBColor", function () {
         it("should throw an error if the 'b' attribute is less than 0", function () {
             expect(function () {
                 rgb.b(-87);
-            }).toThrow(new Error("invalid setter call for b"));
+            }).toThrow(new Error("validator failed with parameter -87"));
         });
         it("should throw an error if the 'b' attribute is greater than 1", function () {
             expect(function () {
                 rgb.b(200);
-            }).toThrow(new Error("invalid setter call for b"));
+            }).toThrow(new Error("validator failed with parameter 200"));
         });
         it("should throw an error if the 'b' attribute is a string", function () {
             expect(function () {
                 rgb.b("moe");
-            }).toThrow(new Error("invalid setter call for b"));
+            }).toThrow(new Error("validator failed with parameter moe"));
         });
         it("should throw an error if the 'b' attribute is NaN", function () {
             expect(function () {
                 rgb.b(NaN);
-            }).toThrow(new Error("invalid setter call for b"));
+            }).toThrow(new Error("validator failed with parameter NaN"));
         });
 
     });

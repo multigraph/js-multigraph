@@ -23,10 +23,10 @@ describe("Axis Pan", function () {
         it("should be throw an error if the setter value is not 'yes' or 'no'", function () {
             expect(function () {
                 pan.allowed('yes');
-            }).not.toThrow(new Error('invalid setter call for allowed'));
+            }).not.toThrow();
             expect(function () {
                 pan.allowed('nope');
-            }).toThrow(new Error('invalid setter call for allowed'));
+            }).toThrow(new Error('validator failed with parameter nope'));
         });
 
     });

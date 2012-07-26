@@ -24,10 +24,10 @@ describe("Renderer", function () {
         it("should throw an error if types value is not one of the predefined values", function () {
             expect(function () {
                 r.type("barerror");
-            }).not.toThrow("invalid setter call for type");
+            }).not.toThrow();
             expect(function () {
                 r.type("barerrors");
-            }).toThrow("invalid setter call for type");
+            }).toThrow("validator failed with parameter barerrors");
         });
     });
 

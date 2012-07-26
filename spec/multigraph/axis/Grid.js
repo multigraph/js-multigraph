@@ -31,10 +31,10 @@ describe("Axis Grid", function () {
         it("should be throw an error if the setter value is not 'true' or 'false'", function () {
             expect(function () {
                 grid.visible('false');
-            }).not.toThrow(new Error('invalid setter call for visible'));
+            }).not.toThrow();
             expect(function () {
                 grid.visible('falsey');
-            }).toThrow(new Error('invalid setter call for visible'));
+            }).toThrow(new Error('validator failed with parameter falsey'));
         });
 
     });

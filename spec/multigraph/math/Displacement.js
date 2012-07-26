@@ -26,13 +26,13 @@ describe("Displacement", function () {
         it("should throw an error if a attribute is less than -1", function () {
             expect(function () {
                 d.a(-2);
-            }).toThrow(new Error("invalid setter call for a"));
+            }).toThrow(new Error("validator failed with parameter -2"));
         });
 
         it("should throw an error if a attribute is greater than 1", function () {
             expect(function () {
                 d.a(2);
-            }).toThrow(new Error("invalid setter call for a"));
+            }).toThrow(new Error("validator failed with parameter 2"));
         });
     });
 

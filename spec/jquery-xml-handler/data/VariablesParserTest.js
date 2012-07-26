@@ -37,7 +37,7 @@ describe("Data Variables parsing", function () {
         var DataVariable = window.multigraph.Data.Variables.DataVariable;
 
         beforeEach(function () {
-            xmlString = '<variables missingop="gt"><variable id="x" column="7" type="datetime" missingvalue="1990" missingop="eq"/><variable id="y" column="2" type="number" missingvalue="19" missingop="gt"/><variable id="y1" column="2" type="datetime"/></variables>';
+            xmlString = '<variables missingop="gt"><variable id="x" column="7" type="number" missingvalue="1990" missingop="eq"/><variable id="y" column="2" type="number" missingvalue="19" missingop="gt"/><variable id="y1" column="2" type="number"/></variables>';
             window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
             $xml = $(xmlString);
             variables = Variables.parseXML($xml);

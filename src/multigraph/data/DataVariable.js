@@ -21,6 +21,7 @@ if (!window.multigraph.Data.Variables) {
             this.hasA("column").which.isA("integer");
             this.hasA("type").which.isOneOf(DataValue.types());
             this.hasA("missingvalue").which.validatesWith(DataValue.isInstance);
+
             this.hasA("missingop").which.isOneOf(DataValue.comparators());
             this.isBuiltWith("id");
 
