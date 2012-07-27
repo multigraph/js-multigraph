@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title>Jasmine Spec Runner</title>
+
+
+  <link rel="shortcut icon" type="image/png" href="../lib/jasmine/jasmine-1.2.0.rc3/jasmine_favicon.png">
+  <link rel="stylesheet" type="text/css" href="../lib/jasmine/jasmine-1.2.0.rc3/jasmine.css">
+  <script type="text/javascript" src="../lib/jasmine/jasmine-1.2.0.rc3/jasmine.js"></script>
+  <script type="text/javascript" src="../lib/jasmine/jasmine-1.2.0.rc3/jasmine-html.js"></script>
+
+  <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'
+	    type='text/javascript'></script>
+
+  <script type="text/javascript" src="../lib/jermaine/jermaine.js"></script>
+
+  <script type="text/javascript" src="../build/multigraph-min.js"></script>
+
+  <script type="text/javascript" src="data/array_data.js"></script>
+  <script type="text/javascript" src="data/data.js"></script>
+  <script type="text/javascript" src="data/data_variable.js"></script>
+  <script type="text/javascript" src="jquery-xml-handler/DebuggerParserTest.js"></script>
+  <script type="text/javascript" src="jquery-xml-handler/GraphParserTest.js"></script>
+  <script type="text/javascript" src="jquery-xml-handler/GraphTitleParserTest.js"></script>
+  <script type="text/javascript" src="jquery-xml-handler/MultigraphParserTest.js"></script>
+  <script type="text/javascript" src="jquery-xml-handler/NetworkMonitorParserTest.js"></script>
+  <script type="text/javascript" src="jquery-xml-handler/PlotareaParserTest.js"></script>
+  <script type="text/javascript" src="jquery-xml-handler/UIParserTest.js"></script>
+  <script type="text/javascript" src="jquery-xml-handler/WindowParserTest.js"></script>
+  <script type="text/javascript" src="jquery-xml-handler/axis/AxisControlsParserTest.js"></script>
+  <script type="text/javascript" src="jquery-xml-handler/axis/AxisParserTest.js"></script>
+  <script type="text/javascript" src="jquery-xml-handler/axis/BindingParserTest.js"></script>
+  <script type="text/javascript" src="jquery-xml-handler/axis/GridParserTest.js"></script>
+  <script type="text/javascript" src="jquery-xml-handler/axis/LabelerParserTest.js"></script>
+  <script type="text/javascript" src="jquery-xml-handler/axis/LabelsParserTest.js"></script>
+  <script type="text/javascript" src="jquery-xml-handler/axis/PanParserTest.js"></script>
+  <script type="text/javascript" src="jquery-xml-handler/axis/TitleParserTest.js"></script>
+  <script type="text/javascript" src="jquery-xml-handler/axis/ZoomParserTest.js"></script>
+  <script type="text/javascript" src="jquery-xml-handler/background/BackgroundParserTest.js"></script>
+  <script type="text/javascript" src="jquery-xml-handler/background/ImgParserTest.js"></script>
+  <script type="text/javascript" src="jquery-xml-handler/data/CSVParserTest.js"></script>
+  <script type="text/javascript" src="jquery-xml-handler/data/DataParserTest.js"></script>
+  <script type="text/javascript" src="jquery-xml-handler/data/ServiceParserTest.js"></script>
+  <script type="text/javascript" src="jquery-xml-handler/data/ValuesParserTest.js"></script>
+  <script type="text/javascript" src="jquery-xml-handler/data/VariableParserTest.js"></script>
+  <script type="text/javascript" src="jquery-xml-handler/data/VariablesParserTest.js"></script>
+  <script type="text/javascript" src="jquery-xml-handler/legend/IconParserTest.js"></script>
+  <script type="text/javascript" src="jquery-xml-handler/legend/LegendParserTest.js"></script>
+  <script type="text/javascript" src="jquery-xml-handler/plot/DatatipsParserTest.js"></script>
+  <script type="text/javascript" src="jquery-xml-handler/plot/DatatipsVariableParserTest.js"></script>
+  <script type="text/javascript" src="jquery-xml-handler/plot/FilterOptionParserTest.js"></script>
+  <script type="text/javascript" src="jquery-xml-handler/plot/FilterParserTest.js"></script>
+  <script type="text/javascript" src="jquery-xml-handler/plot/PlotLegendParserTest.js"></script>
+  <script type="text/javascript" src="jquery-xml-handler/plot/PlotParserTest.js"></script>
+  <script type="text/javascript" src="jquery-xml-handler/plot/RendererOptionParserTest.js"></script>
+  <script type="text/javascript" src="jquery-xml-handler/plot/RendererParserTest.js"></script>
+  <script type="text/javascript" src="multigraph/DataValue.js"></script>
+  <script type="text/javascript" src="multigraph/Debugger.js"></script>
+  <script type="text/javascript" src="multigraph/Graph.js"></script>
+  <script type="text/javascript" src="multigraph/GraphTitle.js"></script>
+  <script type="text/javascript" src="multigraph/Multigraph.js"></script>
+  <script type="text/javascript" src="multigraph/NetworkMonitor.js"></script>
+  <script type="text/javascript" src="multigraph/NumberMeasure.js"></script>
+  <script type="text/javascript" src="multigraph/NumberValue.js"></script>
+  <script type="text/javascript" src="multigraph/Plotarea.js"></script>
+  <script type="text/javascript" src="multigraph/UI.js"></script>
+  <script type="text/javascript" src="multigraph/Window.js"></script>
+  <script type="text/javascript" src="multigraph/axis/Axis.js"></script>
+  <script type="text/javascript" src="multigraph/axis/AxisControls.js"></script>
+  <script type="text/javascript" src="multigraph/axis/Binding.js"></script>
+  <script type="text/javascript" src="multigraph/axis/Grid.js"></script>
+  <script type="text/javascript" src="multigraph/axis/Labeler.js"></script>
+  <script type="text/javascript" src="multigraph/axis/Labels.js"></script>
+  <script type="text/javascript" src="multigraph/axis/Pan.js"></script>
+  <script type="text/javascript" src="multigraph/axis/Title.js"></script>
+  <script type="text/javascript" src="multigraph/axis/Zoom.js"></script>
+  <script type="text/javascript" src="multigraph/background/Background.js"></script>
+  <script type="text/javascript" src="multigraph/background/Img.js"></script>
+  <script type="text/javascript" src="multigraph/data/CSV.js"></script>
+  <script type="text/javascript" src="multigraph/data/Data.js"></script>
+  <script type="text/javascript" src="multigraph/data/DataVariable.js"></script>
+  <script type="text/javascript" src="multigraph/data/Service.js"></script>
+  <script type="text/javascript" src="multigraph/data/Values.js"></script>
+  <script type="text/javascript" src="multigraph/data/Variables.js"></script>
+  <script type="text/javascript" src="multigraph/legend/Icon.js"></script>
+  <script type="text/javascript" src="multigraph/legend/Legend.js"></script>
+  <script type="text/javascript" src="multigraph/math/Box.js"></script>
+  <script type="text/javascript" src="multigraph/math/Displacement.js"></script>
+  <script type="text/javascript" src="multigraph/math/Insets.js"></script>
+  <script type="text/javascript" src="multigraph/math/Point.js"></script>
+  <script type="text/javascript" src="multigraph/math/RGBColor.js"></script>
+  <script type="text/javascript" src="multigraph/plot/Datatips.js"></script>
+  <script type="text/javascript" src="multigraph/plot/DatatipsVariable.js"></script>
+  <script type="text/javascript" src="multigraph/plot/Filter.js"></script>
+  <script type="text/javascript" src="multigraph/plot/FilterOption.js"></script>
+  <script type="text/javascript" src="multigraph/plot/Plot.js"></script>
+  <script type="text/javascript" src="multigraph/plot/PlotLegend.js"></script>
+  <script type="text/javascript" src="multigraph/plot/Renderer.js"></script>
+  <script type="text/javascript" src="multigraph/plot/RendererOption.js"></script>
+  
+  <script type="text/javascript">
+    (function() {
+      var jasmineEnv = jasmine.getEnv();
+      jasmineEnv.updateInterval = 1000;
+
+      var htmlReporter = new jasmine.HtmlReporter();
+
+      jasmineEnv.addReporter(htmlReporter);
+
+      jasmineEnv.specFilter = function(spec) {
+        return htmlReporter.specFilter(spec);
+      };
+
+      var currentWindowOnload = window.onload;
+
+      window.onload = function() {
+        if (currentWindowOnload) {
+          currentWindowOnload();
+        }
+        execJasmine();
+      };
+
+      function execJasmine() {
+        jasmineEnv.execute();
+      }
+
+    })();
+  </script>
+
+</head>
+
+<body>
+</body>
+</html>
