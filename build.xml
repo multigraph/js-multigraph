@@ -17,8 +17,8 @@
     <fileset dir="src/core" includes="**/*.js" excludes="src/core/DataValue.js DataVariable.js metadata.js" />
   </path>
   <path id="path.parser-jquery-js">
-    <filelist dir="src/parser/jquery" files="JQueryXMLMixin.js"/>
-    <fileset dir="src/parser/jquery" includes="**/*.js" excludes="JQueryXMLMixin.js" />
+    <filelist dir="src/parser/jquery" files="jquery_mixin.js"/>
+    <fileset dir="src/parser/jquery" includes="**/*.js" excludes="jquery_mixin.js" />
   </path>
   <path id="path.graphics-raphael-js">
     <filelist dir="src/graphics/raphael" files="raphael.js"/>
