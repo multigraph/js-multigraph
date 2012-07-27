@@ -16,9 +16,9 @@
     <filelist dir="src/core" files="data/DataVariable.js metadata.js" />
     <fileset dir="src/core" includes="**/*.js" excludes="src/core/DataValue.js data/DataVariable.js metadata.js" />
   </path>
-  <path id="path.jquery-xml-handler-js">
-    <filelist dir="src/jquery-xml-handler" files="JQueryXMLMixin.js"/>
-    <fileset dir="src/jquery-xml-handler" includes="**/*.js" excludes="JQueryXMLMixin.js" />
+  <path id="path.parser-jquery-js">
+    <filelist dir="src/parser/jquery" files="JQueryXMLMixin.js"/>
+    <fileset dir="src/parser/jquery" includes="**/*.js" excludes="JQueryXMLMixin.js" />
   </path>
   <path id="path.graphics-raphael-js">
     <filelist dir="src/graphics/raphael" files="raphael.js"/>
@@ -47,7 +47,7 @@
   <target name="jasmine-index-html">
     <pathconvert property="scripttags.jasmine-src" pathsep="${line.separator}">
       <path refid="path.multigraph-core-js"/>
-      <path refid="path.jquery-xml-handler-js"/>
+      <path refid="path.parser-jquery-js"/>
       <path refid="path.graphics-raphael-js"/>
       <path refid="path.graphics-canvas-js"/>
       <mapper type="regexp" from="^${basedir}/(.*)$" to='&lt;script type="text/javascript" src="../\1"&gt;&lt;/script&gt;'/>
@@ -78,7 +78,7 @@
   <target name="raphael-html">
     <pathconvert property="scripttags.mg-jq" pathsep="${line.separator}">
       <path refid="path.multigraph-core-js"/>
-      <path refid="path.jquery-xml-handler-js"/>
+      <path refid="path.parser-jquery-js"/>
       <mapper type="regexp" from="^${basedir}/(.*)$" to='&lt;script type="text/javascript" src="../../../\1"&gt;&lt;/script&gt;'/>
     </pathconvert>
     <pathconvert property="scripttags.raphael" pathsep="${line.separator}">
@@ -95,7 +95,7 @@
   <target name="canvas-html">
     <pathconvert property="scripttags.mg-jq" pathsep="${line.separator}">
       <path refid="path.multigraph-core-js"/>
-      <path refid="path.jquery-xml-handler-js"/>
+      <path refid="path.parser-jquery-js"/>
       <mapper type="regexp" from="^${basedir}/(.*)$" to='&lt;script type="text/javascript" src="../../../\1"&gt;&lt;/script&gt;'/>
     </pathconvert>
     <pathconvert property="scripttags.canvas" pathsep="${line.separator}">
@@ -113,7 +113,7 @@
     <concat destfile="${build.dir}/multigraph.js" fixlastline="yes" eol="lf">
       <filelist dir="${lib.dir}" files="${lib.dependencies}" />
       <path refid="path.multigraph-core-js"/>
-      <path refid="path.jquery-xml-handler-js"/>
+      <path refid="path.parser-jquery-js"/>
       <path refid="path.graphics-raphael-js"/>
       <path refid="path.graphics-canvas-js"/>
     </concat>
