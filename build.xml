@@ -13,8 +13,8 @@
     <fileset dir="src/utility-functions" includes="**/*.js" />
     <filelist dir="src/core" files="DataValue.js" />
     <fileset dir="src/math" includes="**/*.js" />
-    <filelist dir="src/core" files="data/DataVariable.js metadata.js" />
-    <fileset dir="src/core" includes="**/*.js" excludes="src/core/DataValue.js data/DataVariable.js metadata.js" />
+    <filelist dir="src/core" files="DataVariable.js metadata.js" />
+    <fileset dir="src/core" includes="**/*.js" excludes="src/core/DataValue.js DataVariable.js metadata.js" />
   </path>
   <path id="path.parser-jquery-js">
     <filelist dir="src/parser/jquery" files="JQueryXMLMixin.js"/>
