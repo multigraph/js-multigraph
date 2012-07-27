@@ -3,13 +3,13 @@
 describe("Window parsing", function () {
     "use strict";
 
-    var Window = window.multigraph.Window,
+    var Window = window.multigraph.core.Window,
         xmlString = '<window margin="1" padding="10" bordercolor="0x111223" width="2" height="97" border="0"/>',
         $xml,
         w;
 
     beforeEach(function () {
-        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
 	$xml = $(xmlString);
         w = Window.parseXML($xml);
     });

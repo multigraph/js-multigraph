@@ -3,7 +3,7 @@
 describe("Network Monitor", function () {
     "use strict";
 
-    var NetworkMonitor = window.multigraph.NetworkMonitor,
+    var NetworkMonitor = window.multigraph.core.NetworkMonitor,
         nm;
 
     beforeEach(function () {

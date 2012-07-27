@@ -1,31 +1,23 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-if (!window.multigraph.Data) {
-    window.multigraph.Data = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
     "use strict";
 
     var scalarAttributes = ["location"];
 
-    ns.jQueryXMLMixin.add(function (nsObj, parse, serialize) {
+    ns.mixin.add(function (ns, parse, serialize) {
         
-        nsObj.Data.CSV[parse] = function (xml) {
-            var csv = new nsObj.Data.CSV();
+        ns.core.CSV[parse] = function (xml) {
+            var csv = new ns.core.CSV();
             if (xml) {
                 csv.location(xml.attr("location"));
             }
             return csv;
         };
         
-        nsObj.Data.CSV.prototype[serialize] = function () {
+        ns.core.CSV.prototype[serialize] = function () {
             var attributeStrings = [],
                 output = '<csv ';
 
-            attributeStrings = ns.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
+            attributeStrings = window.multigraph.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
 
             output += attributeStrings.join(' ') + '/>';
 
@@ -33,4 +25,4 @@ if (!window.multigraph.Data) {
         };
 
     });
-}(window.multigraph));
+});

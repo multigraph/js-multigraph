@@ -1,24 +1,20 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
     "use strict";
 
-    ns.jQueryXMLMixin.add(function (nsObj, parse, serialize) {
+    ns.mixin.add(function (ns, parse, serialize) {
 
-        nsObj.Background[parse] = function (xml) {
-            var background = new nsObj.Background();
+        ns.core.Background[parse] = function (xml) {
+            var background = new ns.core.Background();
             if (xml) {
-                background.color(nsObj.math.RGBColor.parse(xml.attr("color")));
+                background.color(ns.math.RGBColor.parse(xml.attr("color")));
                 if (xml.find("img").length > 0) {
-                    background.img(nsObj.Background.Img[parse](xml.find("img")));
+                    background.img(ns.core.Img[parse](xml.find("img")));
                 }
             }
             return background;
         };
 
-        nsObj.Background.prototype[serialize] = function () {
+        ns.core.Background.prototype[serialize] = function () {
             var attributeStrings = [],
                 output = '<background ';
 
@@ -36,4 +32,4 @@ if (!window.multigraph) {
         };
 
     });
-}(window.multigraph));
+});

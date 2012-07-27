@@ -3,13 +3,13 @@
 describe("Axis Binding parsing", function () {
     "use strict";
 
-    var Binding = window.multigraph.Axis.Binding,
+    var Binding = window.multigraph.core.Binding,
         xmlString = '<binding id="y" min="-10" max="50"/>',
         $xml,
         binding;
 
     beforeEach(function () {
-        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
         $xml = $(xmlString);
         binding = Binding.parseXML($xml);
     });

@@ -1,16 +1,8 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-if (!window.multigraph.Axis) {
-    window.multigraph.Axis = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
-    var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
-        attributes = ns.utilityFunctions.getKeys(defaultValues.horizontalaxis.binding),
+    var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.horizontalaxis.binding),
         Binding = new window.jermaine.Model( "Binding", function () {
             this.hasA("id").which.validatesWith(function (id) {
                 return typeof(id) === "string";
@@ -23,9 +15,9 @@ if (!window.multigraph.Axis) {
             });
             this.isBuiltWith("id", "min", "max");
 
-            ns.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis.binding, attributes);
+            window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis.binding, attributes);
         });
 
-    ns.Axis.Binding = Binding;
+    ns.Binding = Binding;
 
-}(window.multigraph));
+});

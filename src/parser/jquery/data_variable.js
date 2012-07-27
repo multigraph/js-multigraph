@@ -1,22 +1,14 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-if (!window.multigraph.Data) {
-    window.multigraph.Data = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
     "use strict";
 
-    var DataValue = ns.DataValue;
+    var DataValue = window.multigraph.core.DataValue;
 
-    ns.jQueryXMLMixin.add(function (nsObj, parse, serialize) {
+    ns.mixin.add(function (ns, parse, serialize) {
         
-        nsObj.Data.Variables.DataVariable[parse] = function (xml) {
+        ns.core.DataVariable[parse] = function (xml) {
             var variable;
             if (xml && xml.attr("id")) {
-                variable = new nsObj.Data.Variables.DataVariable(xml.attr("id"));
+                variable = new ns.core.DataVariable(xml.attr("id"));
                 if (xml.attr("column")) {
                     variable.column(parseInt(xml.attr("column"), 10));
                 }
@@ -34,7 +26,7 @@ if (!window.multigraph.Data) {
             return variable;
         };
         
-        nsObj.Data.Variables.DataVariable.prototype[serialize] = function () {
+        ns.core.DataVariable.prototype[serialize] = function () {
             var output = "<variable";
 
             output += ' id="' + this.id() + '"';
@@ -48,4 +40,4 @@ if (!window.multigraph.Data) {
         };
 
     });
-}(window.multigraph));
+});

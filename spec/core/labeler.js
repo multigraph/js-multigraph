@@ -3,9 +3,9 @@
 describe("Axis Labeler", function () {
     "use strict";
 
-    var Labeler = window.multigraph.Axis.Labeler,
+    var Labeler = window.multigraph.core.Labeler,
         Point = window.multigraph.math.Point,
-        Axis = window.multigraph.Axis,
+        Axis = window.multigraph.core.Axis,
         labeler;
 
     beforeEach(function () {

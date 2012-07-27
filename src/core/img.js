@@ -1,38 +1,28 @@
-if(!window.multigraph) {
-    window.multigraph = {};
-}
-
-if(!window.multigraph.Background) {
-    window.multigraph.Background = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
-    var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
-        attributes = ns.utilityFunctions.getKeys(defaultValues.background.img),
+    var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.background.img),
         Img = new window.jermaine.Model( "Img", function () {
             this.hasA("src").which.validatesWith(function (src) {
                 return typeof(src) === "string";
             });
             this.hasA("anchor").which.validatesWith(function (anchor) {
-                return anchor instanceof ns.math.Point;
+                return anchor instanceof window.multigraph.math.Point;
             });
             this.hasA("base").which.validatesWith(function (base) {
-                return base instanceof ns.math.Point;
+                return base instanceof window.multigraph.math.Point;
             });
             this.hasA("position").which.validatesWith(function (position) {
-                return position instanceof ns.math.Point;
+                return position instanceof window.multigraph.math.Point;
             });
             this.hasA("frame").which.validatesWith(function (frame) {
                 return frame === "padding" || frame === "plot";
             });
             this.isBuiltWith("src");
 
-            ns.utilityFunctions.insertDefaults(this, defaultValues.background.img, attributes);
+            window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.background.img, attributes);
         });
 
-    ns.Background.Img = Img;
-
-
-}(window.multigraph));
+    ns.Img = Img;
+});

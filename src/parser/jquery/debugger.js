@@ -1,15 +1,11 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
     "use strict";
 
     var scalarAttributes = ["visible", "fixed"];
-    ns.jQueryXMLMixin.add(function(nsObj, parse, serialize) {
+    ns.mixin.add(function(ns, parse, serialize) {
         
-        nsObj.Debugger[parse] = function (xml) {
-            var debug = new nsObj.Debugger();
+        ns.core.Debugger[parse] = function (xml) {
+            var debug = new ns.core.Debugger();
             if (xml) {
                 debug.visible(xml.attr("visible"));
                 debug.fixed(xml.attr("fixed"));
@@ -17,11 +13,11 @@ if (!window.multigraph) {
             return debug;
         };
         
-        nsObj.Debugger.prototype[serialize] = function () {
+        ns.core.Debugger.prototype[serialize] = function () {
             var attributeStrings = [],
                 output = '<debugger ';
 
-            attributeStrings = ns.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
+            attributeStrings = window.multigraph.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
 
             output += attributeStrings.join(' ') + '/>';
 
@@ -29,4 +25,4 @@ if (!window.multigraph) {
         };
 
     });
-}(window.multigraph));
+});

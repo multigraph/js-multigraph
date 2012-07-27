@@ -3,13 +3,13 @@
 describe("Axis Grid parsing", function () {
     "use strict";
 
-    var Grid = window.multigraph.Axis.Grid,
+    var Grid = window.multigraph.core.Grid,
         xmlString = '<grid color="0x984545" visible="false"/>',
         $xml,
         grid;
 
     beforeEach(function () {
-        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
         $xml = $(xmlString);
         grid = Grid.parseXML($xml);
     });

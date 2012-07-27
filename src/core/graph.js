@@ -1,50 +1,46 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
     var Box = window.multigraph.math.Box;
 
-    var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
-        attributes = ns.utilityFunctions.getKeys(defaultValues),
+    var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = window.multigraph.utilityFunctions.getKeys(defaultValues),
         Graph = new window.jermaine.Model( "Graph", function () {
             this.hasA("window").which.validatesWith(function (w) {
-                return w instanceof window.multigraph.Window;
+                return w instanceof ns.Window;
             });
             this.hasA("plotarea").which.validatesWith(function (plotarea) {
-                return plotarea instanceof window.multigraph.Plotarea;
+                return plotarea instanceof ns.Plotarea;
             });
 
 
             this.hasA("ui").which.validatesWith(function (ui) {
-                return ui instanceof window.multigraph.UI;
+                return ui instanceof ns.UI;
             });
             this.hasA("networkmonitor").which.validatesWith(function (networkmonitor) {
-                return networkmonitor instanceof window.multigraph.NetworkMonitor;
+                return networkmonitor instanceof ns.NetworkMonitor;
             });
             this.hasA("Debugger").which.validatesWith(function (debug) {
-                return debug instanceof window.multigraph.Debugger;
+                return debug instanceof ns.Debugger;
             });
             this.hasA("legend").which.validatesWith(function (legend) {
-                return legend instanceof window.multigraph.Legend;
+                return legend instanceof ns.Legend;
             });
             this.hasA("background").which.validatesWith(function (background) {
-                return background instanceof window.multigraph.Background;
+                return background instanceof ns.Background;
             });
 
             this.hasA("title").which.validatesWith(function (title) {
-                return title instanceof window.multigraph.Title;
+                return title instanceof ns.Title;
             });
             this.hasMany("axes").which.validatesWith(function (axis) {
-                return axis instanceof window.multigraph.Axis;
+                return axis instanceof ns.Axis;
             });
             this.hasMany("plots").which.validatesWith(function (plot) {
-                return plot instanceof window.multigraph.Plot;
+                return plot instanceof ns.Plot;
             });
             this.hasMany("data").which.validatesWith(function (data) {
-                return data instanceof window.multigraph.Data;
+                return data instanceof ns.Data;
             });
 
             this.hasA("windowBox").which.validatesWith(function(val) {
@@ -58,8 +54,8 @@ if (!window.multigraph) {
             });
             
             this.isBuiltWith(function() {
-                this.window( new window.multigraph.Window() );
-                this.plotarea( new window.multigraph.Plotarea() );
+                this.window( new ns.Window() );
+                this.plotarea( new ns.Plotarea() );
             });
 
             this.respondsTo("postParse", function() {
@@ -92,7 +88,7 @@ if (!window.multigraph) {
                 }
             });
 
-            ns.utilityFunctions.insertDefaults(this, defaultValues, attributes);
+            window.multigraph.utilityFunctions.insertDefaults(this, defaultValues, attributes);
         });
 
     Graph.prototype.axisById = function (id) {
@@ -124,4 +120,4 @@ if (!window.multigraph) {
 
     ns.Graph = Graph;
 
-}(window.multigraph));
+});

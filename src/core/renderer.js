@@ -1,22 +1,10 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-if (!window.multigraph.Plot) {
-    window.multigraph.Plot = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
     var Renderer,
-        Option,
-        defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
-        attributes = ns.utilityFunctions.getKeys(defaultValues.plot.renderer);
-
-    if (ns.Plot.Renderer && ns.Plot.Renderer.Option) {
-        Option = ns.Plot.Renderer.Option;
-    }
+        RendererOption,
+        defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.plot.renderer);
 
     Renderer = new window.jermaine.Model( "Renderer", function () {
         this.hasA("type").which.validatesWith(function (type) {
@@ -26,17 +14,12 @@ if (!window.multigraph.Plot) {
                    type === "pointline";
         });
         this.hasMany("options").which.validatesWith(function (option) {
-            return option instanceof ns.Plot.Renderer.Option;
+            return option instanceof ns.RendererOption;
         });
         this.isBuiltWith("type");
 
-        ns.utilityFunctions.insertDefaults(this, defaultValues.plot.renderer, attributes);
+        window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.plot.renderer, attributes);
     });
 
-    ns.Plot.Renderer = Renderer;
-
-    if (Option) {
-        ns.Plot.Renderer.Option = Option;
-    }
-
-}(window.multigraph));
+    ns.Renderer = Renderer;
+});

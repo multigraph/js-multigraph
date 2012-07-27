@@ -3,15 +3,15 @@
 describe("Plot Filter Option parsing", function () {
     "use strict";
 
-    var Option = window.multigraph.Plot.Filter.Option,
+    var FilterOption = window.multigraph.core.FilterOption,
         xmlString = '<option name="dotsize" value="12"/>',
         $xml,
         option;
 
     beforeEach(function () {
-        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
 	$xml = $(xmlString);
-        option = Option.parseXML($xml);
+        option = FilterOption.parseXML($xml);
     });
 
     it("should be able to parse an option from XML", function () {
@@ -29,7 +29,7 @@ describe("Plot Filter Option parsing", function () {
     it("should be able to parse a option from XML, serialize it and get the same XML as the original", function () {
         var xmlString2 = '<option name="linewidth"/>';
         expect(option.serialize() === xmlString).toBe(true);
-	option = Option.parseXML($(xmlString2));
+	option = FilterOption.parseXML($(xmlString2));
         expect(option.serialize() === xmlString2).toBe(true);
     });
 

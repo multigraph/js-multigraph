@@ -1,11 +1,7 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
-    var MetaData = window.multigraph.MetaData,
+    var MetaData = ns.MetaData,
         ArrayData;
 
     ArrayData = function (m, d) {
@@ -86,4 +82,4 @@ if (!window.multigraph) {
 
 
     ns.ArrayData = ArrayData;
-}(window.multigraph));
+});

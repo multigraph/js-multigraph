@@ -3,7 +3,7 @@
 describe("Axis Zoom", function () {
     "use strict";
 
-    var Zoom = window.multigraph.Axis.Zoom,
+    var Zoom = window.multigraph.core.Zoom,
         zoom;
 
     beforeEach(function () {

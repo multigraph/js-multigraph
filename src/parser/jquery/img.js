@@ -1,37 +1,33 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
     "use strict";
 
     var scalarAttributes = ["src", "frame"];
 
-    ns.jQueryXMLMixin.add(function (nsObj, parse, serialize) {
+    ns.mixin.add(function (ns, parse, serialize) {
         
-        nsObj.Background.Img[parse] = function (xml) {
+        ns.core.Img[parse] = function (xml) {
             var img;
             if (xml && xml.attr("src") !== undefined) {
-                img = new nsObj.Background.Img(xml.attr("src"));
+                img = new ns.core.Img(xml.attr("src"));
                 if (xml.attr("anchor") !== undefined) {
-                    img.anchor(ns.math.Point.parse(xml.attr("anchor")));
+                    img.anchor(window.multigraph.math.Point.parse(xml.attr("anchor")));
                 }
                 if (xml.attr("base") !== undefined) {
-                    img.base(ns.math.Point.parse(xml.attr("base")));
+                    img.base(window.multigraph.math.Point.parse(xml.attr("base")));
                 }
                 if (xml.attr("position") !== undefined) {
-                    img.position(ns.math.Point.parse(xml.attr("position")));
+                    img.position(window.multigraph.math.Point.parse(xml.attr("position")));
                 }
                 img.frame(xml.attr("frame"));
             }
             return img;
         };
         
-        nsObj.Background.Img.prototype[serialize] = function () {
+        ns.core.Img.prototype[serialize] = function () {
             var attributeStrings = [],
                 output = '<img ';
 
-            attributeStrings = ns.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
+            attributeStrings = window.multigraph.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
             attributeStrings.push('anchor="' + this.anchor().serialize() + '"');
             attributeStrings.push('base="' + this.base().serialize() + '"');
             attributeStrings.push('position="' + this.position().serialize() + '"');
@@ -41,4 +37,4 @@ if (!window.multigraph) {
         };
 
     });
-}(window.multigraph));
+});

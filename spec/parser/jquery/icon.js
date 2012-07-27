@@ -3,13 +3,13 @@
 describe("Legend Icon parsing", function () {
     "use strict";
 
-    var Icon = window.multigraph.Legend.Icon,
+    var Icon = window.multigraph.core.Icon,
         xmlString = '<icon height="12" width="59" border="7"/>',
         $xml,
         icon;
 
     beforeEach(function () {
-        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
 	$xml = $(xmlString);
         icon = Icon.parseXML($xml);
     });

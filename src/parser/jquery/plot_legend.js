@@ -1,16 +1,12 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
     "use strict";
 
     var scalarAttributes = ["visible", "label"];
 
-    ns.jQueryXMLMixin.add(function (nsObj, parse, serialize) {
+    ns.mixin.add(function (ns, parse, serialize) {
         
-        nsObj.Plot.Legend[parse] = function (xml) {
-            var legend = new nsObj.Plot.Legend();
+        ns.core.PlotLegend[parse] = function (xml) {
+            var legend = new ns.core.PlotLegend();
             if (xml) {
                 legend.visible(xml.attr("visible"));
                 legend.label(xml.attr("label"));
@@ -18,12 +14,12 @@ if (!window.multigraph) {
             return legend;
         };
         
-        nsObj.Plot.Legend.prototype[serialize] = function () {
+        ns.core.PlotLegend.prototype[serialize] = function () {
             var attributeStrings = [],
                 output = '<legend ',
                 i;
 
-            attributeStrings = ns.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
+            attributeStrings = window.multigraph.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
 
             output += attributeStrings.join(' ') + '/>';
 
@@ -31,4 +27,4 @@ if (!window.multigraph) {
         };
 
     });
-}(window.multigraph));
+});

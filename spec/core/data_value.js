@@ -3,8 +3,8 @@
 describe("DataValue", function () {
     "use strict";
 
-    var DataValue = window.multigraph.DataValue,
-        NumberValue = window.multigraph.NumberValue;
+    var DataValue = window.multigraph.core.DataValue,
+        NumberValue = window.multigraph.core.NumberValue;
 
 
     it("should have a DataValue.NUMBER attribute", function () {

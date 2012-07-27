@@ -1,8 +1,4 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
     var CSVData = function (filename) {
@@ -10,4 +6,4 @@ if (!window.multigraph) {
     };
 
     ns.CSVData = CSVData;
-}(window.multigraph));
+});

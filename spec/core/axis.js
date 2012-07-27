@@ -3,17 +3,17 @@
 describe("Axis", function () {
     "use strict";
 
-    var Axis = window.multigraph.Axis,
+    var Axis = window.multigraph.core.Axis,
         Point = window.multigraph.math.Point,
-        Title = window.multigraph.Axis.Title,
-        Labels = window.multigraph.Axis.Labels,
-        Labeler = window.multigraph.Axis.Labeler,
-        Grid = window.multigraph.Axis.Grid,
-        Pan = window.multigraph.Axis.Pan,
-        Zoom = window.multigraph.Axis.Zoom,
-        Binding = window.multigraph.Axis.Binding,
-        AxisControls = window.multigraph.Axis.AxisControls,
-        NumberValue = window.multigraph.NumberValue,
+        AxisTitle = window.multigraph.core.AxisTitle,
+        Labels = window.multigraph.core.Labels,
+        Labeler = window.multigraph.core.Labeler,
+        Grid = window.multigraph.core.Grid,
+        Pan = window.multigraph.core.Pan,
+        Zoom = window.multigraph.core.Zoom,
+        Binding = window.multigraph.core.Binding,
+        AxisControls = window.multigraph.core.AxisControls,
+        NumberValue = window.multigraph.core.NumberValue,
         a;
 
     beforeEach(function () {
@@ -245,19 +245,19 @@ describe("Axis", function () {
 
     });
 
-    describe("Title", function () {
+    describe("AxisTitle", function () {
         var title;
 
         beforeEach(function () {
-            title = new Title();
+            title = new AxisTitle();
         });
 
-        it("should be able to add a Title to a Axis", function () {
+        it("should be able to add a AxisTitle to a Axis", function () {
             a.title(title);
             expect(a.title() === title).toBe(true);
         });
 
-        it("should be able to add a Title with attributes to a Axis", function () {
+        it("should be able to add a AxisTitle with attributes to a Axis", function () {
             title.position("0 0");
             title.content("time");
             a.title(title);
@@ -471,7 +471,7 @@ describe("Axis", function () {
 
     describe("initializeGeometry", function() {
 
-        var Graph = window.multigraph.Graph,
+        var Graph = window.multigraph.core.Graph,
             Insets = window.multigraph.math.Insets,
             a,
             g;

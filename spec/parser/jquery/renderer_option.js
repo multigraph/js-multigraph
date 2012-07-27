@@ -1,15 +1,15 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
 
-describe("Renderer Option parsing", function () {
+describe("Renderer.RendererOption parsing", function () {
     "use strict";
 
-    var Option = window.multigraph.Plot.Renderer.Option,
+    var Option = window.multigraph.core.RendererOption,
         xmlString = '<option name="dotcolor" value="0x222222" min="10" max="15"/>',
         $xml,
         option;
 
     beforeEach(function () {
-        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
 	$xml = $(xmlString);
         option = Option.parseXML($xml);
     });

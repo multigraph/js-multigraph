@@ -3,13 +3,13 @@
 describe("Data CSV parsing", function () {
     "use strict";
 
-    var CSV = window.multigraph.Data.CSV,
+    var CSV = window.multigraph.core.CSV,
         xmlString = '<csv location="http://example.com/CoolnessOfCats.csv"/>',
         $xml,
         csv;
 
     beforeEach(function () {
-        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
         $xml = $(xmlString);
         csv = CSV.parseXML($xml);
     });

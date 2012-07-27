@@ -3,8 +3,8 @@
 describe("Graph", function () {
     "use strict";
 
-    var Graph = window.multigraph.Graph,
-        Axis = window.multigraph.Axis,
+    var Graph = window.multigraph.core.Graph,
+        Axis = window.multigraph.core.Axis,
         g,
         defaults = window.multigraph.utilityFunctions.getDefaultValuesFromXSD();
 
@@ -17,15 +17,15 @@ describe("Graph", function () {
     });
 
     describe("Children", function () {
-        var Plot = window.multigraph.Plot,
-            Window = window.multigraph.Window,
-            UI = window.multigraph.UI,
-            NetworkMonitor = window.multigraph.NetworkMonitor,
-            Debugger = window.multigraph.Debugger,
-            Legend = window.multigraph.Legend,
-            Background = window.multigraph.Background,
-            Plotarea = window.multigraph.Plotarea,
-            Data = window.multigraph.Data,
+        var Plot = window.multigraph.core.Plot,
+            Window = window.multigraph.core.Window,
+            UI = window.multigraph.core.UI,
+            NetworkMonitor = window.multigraph.core.NetworkMonitor,
+            Debugger = window.multigraph.core.Debugger,
+            Legend = window.multigraph.core.Legend,
+            Background = window.multigraph.core.Background,
+            Plotarea = window.multigraph.core.Plotarea,
+            Data = window.multigraph.core.Data,
             h,
             v,
             w,

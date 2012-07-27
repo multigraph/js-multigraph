@@ -1,14 +1,10 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
-    var Multigraph = new window.jermaine.Model( "Graph", function () {
+    var Multigraph = new window.jermaine.Model( "Multigraph", function () {
 
         this.hasMany("graphs").which.validatesWith(function (graph) {
-            return graph instanceof window.multigraph.Graph;
+            return graph instanceof ns.Graph;
         });
 
         this.hasA("divid").which.isA("string");
@@ -24,4 +20,4 @@ if (!window.multigraph) {
 
     ns.Multigraph = Multigraph;
 
-}(window.multigraph));
+});

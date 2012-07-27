@@ -1,18 +1,14 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
     "use strict";
 
-    ns.jQueryXMLMixin.add(function(nsObj, parse, serialize) {
+    ns.mixin.add(function(ns, parse, serialize) {
 
-        nsObj.Plot[parse] = function(xml, graph) {
-            var Plot = window.multigraph.Plot,
-                Legend = nsObj.Plot.Legend,
-                Filter = nsObj.Plot.Filter,
-                Renderer = nsObj.Plot.Renderer,
-                Datatips = nsObj.Plot.Datatips,
+        ns.core.Plot[parse] = function(xml, graph) {
+            var Plot = window.multigraph.core.Plot,
+                PlotLegend = ns.core.PlotLegend,
+                Filter = ns.core.Filter,
+                Renderer = ns.core.Renderer,
+                Datatips = ns.core.Datatips,
                 plot = new Plot(),
                 axis,
                 variable;
@@ -55,7 +51,7 @@ if (!window.multigraph) {
                 }
 
                 if (xml.find("legend").length > 0) {
-                    plot.legend(Legend[parse](xml.find("legend")));
+                    plot.legend(PlotLegend[parse](xml.find("legend")));
                 }
                 if (xml.find("renderer").length > 0) {
                     plot.renderer(Renderer[parse](xml.find("renderer")));
@@ -71,7 +67,7 @@ if (!window.multigraph) {
             return plot;
         };
 
-        nsObj.Plot.prototype[serialize] = function() {
+        ns.core.Plot.prototype[serialize] = function() {
             var output = '<plot>',
                 i;
 
@@ -122,4 +118,4 @@ if (!window.multigraph) {
         };
 
     });
-}(window.multigraph));
+});

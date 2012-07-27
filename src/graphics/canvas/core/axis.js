@@ -1,11 +1,7 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (ns) {
     "use strict";
 
-    ns.canvasMixin.add(function(ns) {
+    ns.mixin.add(function(ns) {
 
         ns.Axis.respondsTo("render", function(graph, context) {
 
@@ -30,4 +26,4 @@ if (!window.multigraph) {
 
     });
 
-}(window.multigraph));
+});

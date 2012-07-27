@@ -3,15 +3,15 @@
 describe("Axis Title", function () {
     "use strict";
 
-    var Title = window.multigraph.Axis.Title,
+    var AxisTitle = window.multigraph.core.AxisTitle,
         title;
 
     beforeEach(function () {
-        title = new Title();
+        title = new AxisTitle();
     });
 
-    it("should be able to create a Title", function () {
-        expect(title instanceof Title).toBe(true);
+    it("should be able to create a AxisTitle", function () {
+        expect(title instanceof AxisTitle).toBe(true);
     });
 
     describe("content attribute", function () {

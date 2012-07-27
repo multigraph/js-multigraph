@@ -3,7 +3,7 @@
 describe("Axis Pan", function () {
     "use strict";
 
-    var Pan = window.multigraph.Axis.Pan,
+    var Pan = window.multigraph.core.Pan,
         pan;
 
     beforeEach(function () {

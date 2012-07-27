@@ -1,8 +1,4 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
     var Mixin = new window.jermaine.Model( "Mixin", function () {
@@ -25,4 +21,4 @@ if (!window.multigraph) {
 
     ns.Mixin = Mixin;
 
-}(window.multigraph));
+});

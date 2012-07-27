@@ -3,7 +3,7 @@
 describe("Debugger", function () {
     "use strict";
 
-    var Debugger = window.multigraph.Debugger,
+    var Debugger = window.multigraph.core.Debugger,
         debug;
 
     beforeEach(function () {

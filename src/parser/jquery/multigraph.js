@@ -1,27 +1,23 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
     "use strict";
 
-    ns.jQueryXMLMixin.add(function(ns, parse, serialize) {
+    ns.mixin.add(function(ns, parse, serialize) {
 
-        ns.Multigraph[parse] = function(xml) {
-            var Multigraph = new ns.Multigraph();
+        ns.core.Multigraph[parse] = function(xml) {
+            var multigraph = new ns.core.Multigraph();
             if (xml) {
                 if (xml.find(">graph").length > 0) {
                     $.each(xml.find(">graph"), function (i,e) {
-                        Multigraph.graphs().add( ns.Graph[parse]($(e)) );
+                        multigraph.graphs().add( ns.core.Graph[parse]($(e)) );
                     });
                 } else if (xml.find(">graph").length === 0 && xml.children().length > 0) {
-                    Multigraph.graphs().add( ns.Graph[parse](xml) );
+                    multigraph.graphs().add( ns.core.Graph[parse](xml) );
                 }
             }
-            return Multigraph;
+            return multigraph;
         };
 
-        ns.Multigraph.prototype[serialize] = function () {
+        ns.core.Multigraph.prototype[serialize] = function () {
             var output = '<mugl>',
                 i;
 
@@ -41,5 +37,5 @@ if (!window.multigraph) {
 
     });
 
-}(window.multigraph));
+});
 

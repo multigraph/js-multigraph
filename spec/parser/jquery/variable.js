@@ -3,13 +3,13 @@
 describe("Data DataVariable parsing", function () {
     "use strict";
 
-    var DataVariable = window.multigraph.Data.Variables.DataVariable,
+    var DataVariable = window.multigraph.core.DataVariable,
         xmlString = '<variable id="x" column="7" type="number" missingvalue="1990" missingop="eq"/>',
         $xml,
         variable;
 
     beforeEach(function () {
-        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
         $xml = $(xmlString);
         variable = DataVariable.parseXML($xml);
     });

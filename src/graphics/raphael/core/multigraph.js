@@ -1,13 +1,9 @@
 /*global Raphael */
 
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.graphics.raphael", function (ns) {
     "use strict";
 
-    ns.raphaelMixin.add(function (ns) {
+    ns.mixin.add(function (ns) {
 
         ns.Multigraph.hasA("paper"); // Raphael paper object
 
@@ -37,10 +33,10 @@ if (!window.multigraph) {
 
     });
 
-    ns.Multigraph.createRaphaelGraph = function (divid, muglurl) {
+    window.multigraph.core.Multigraph.createRaphaelGraph = function (divid, muglurl) {
 
-        ns.jQueryXMLMixin.apply(ns, 'parseXML', 'serialize');
-        ns.raphaelMixin.apply(ns);
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
+        ns.mixin.apply(window.multigraph.core);
 
         var muglPromise = $.ajax({
             "url"      : muglurl,
@@ -50,7 +46,7 @@ if (!window.multigraph) {
             deferred = $.Deferred();
 
         muglPromise.done(function (data) {
-            var multigraph = ns.Multigraph.parseXML( $(data) );
+            var multigraph = window.multigraph.core.Multigraph.parseXML( $(data) );
             multigraph.divid(divid);
             multigraph.init();
             deferred.resolve(multigraph);
@@ -62,4 +58,4 @@ if (!window.multigraph) {
 
 
 
-}(window.multigraph));
+});

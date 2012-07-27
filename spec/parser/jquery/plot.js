@@ -3,10 +3,10 @@
 describe("Plot parsing", function () {
     "use strict";
 
-    var Plot = window.multigraph.Plot,
-        Graph = window.multigraph.Graph,
-        Axis = window.multigraph.Axis,
-        DataVariable = window.multigraph.Data.Variables.DataVariable,
+    var Plot = window.multigraph.core.Plot,
+        Graph = window.multigraph.core.Graph,
+        Axis = window.multigraph.core.Axis,
+        DataVariable = window.multigraph.core.DataVariable,
         xmlString = '<plot></plot>',
         plot,
         graph,
@@ -18,7 +18,7 @@ describe("Plot parsing", function () {
         $xml;
 
     beforeEach(function () {
-        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
 	$xml = $(xmlString);
         
     });
@@ -78,7 +78,7 @@ describe("Plot parsing", function () {
             variable1 = new DataVariable('x');
             variable2 = new DataVariable('y');
             variable3 = new DataVariable('y1');
-            variables = new window.multigraph.Data.Variables();
+            variables = new window.multigraph.core.Variables();
             variable1.id('x').column(1);
             variable2.id('y').column(2);
             variable3.id('y1').column(3);
@@ -87,7 +87,7 @@ describe("Plot parsing", function () {
             variables.variable().add(variable3);
             graph.axes().add(haxis);
             graph.axes().add(vaxis);
-            graph.data().add(new window.multigraph.Data());
+            graph.data().add(new window.multigraph.core.Data());
             graph.data().at(0).variables(variables);
         });
 
@@ -116,46 +116,46 @@ describe("Plot parsing", function () {
         });
     });
 
-    describe("Legend parsing", function () {
-        var Legend = window.multigraph.Plot.Legend;
+    describe("PlotLegend parsing", function () {
+        var PlotLegend = window.multigraph.core.PlotLegend;
 
         beforeEach(function () {
             xmlString = '<plot><legend visible="true" label="curly"/></plot>';
             $xml = $(xmlString);
         });
 
-        it("should be able to parse a plot with a Legend child from XML", function () {
+        it("should be able to parse a plot with a PlotLegend child from XML", function () {
             plot = Plot.parseXML($xml);
             expect(plot).not.toBeUndefined();
             expect(plot instanceof Plot).toBe(true);
-            expect(plot.legend() instanceof Legend).toBe(true);
+            expect(plot.legend() instanceof PlotLegend).toBe(true);
             
         });
 
-        it("should be able to parse a plot with a Legend child from XML, serialize it and get the same XML as the original", function () {
+        it("should be able to parse a plot with a PlotLegend child from XML, serialize it and get the same XML as the original", function () {
             plot = Plot.parseXML($xml);
             expect(plot.serialize() === xmlString).toBe(true);
             
         });
     });
 
-    describe("Legend parsing", function () {
-        var Legend = window.multigraph.Plot.Legend;
+    describe("PlotLegend parsing", function () {
+        var PlotLegend = window.multigraph.core.PlotLegend;
 
         beforeEach(function () {
             xmlString = '<plot><legend visible="true" label="curly"/></plot>';
             $xml = $(xmlString);
         });
 
-        it("should be able to parse a plot with a Legend child from XML", function () {
+        it("should be able to parse a plot with a PlotLegend child from XML", function () {
             plot = Plot.parseXML($xml);
             expect(plot).not.toBeUndefined();
             expect(plot instanceof Plot).toBe(true);
-            expect(plot.legend() instanceof Legend).toBe(true);
+            expect(plot.legend() instanceof PlotLegend).toBe(true);
             
         });
 
-        it("should be able to parse a plot with a Legend child from XML, serialize it and get the same XML as the original", function () {
+        it("should be able to parse a plot with a PlotLegend child from XML, serialize it and get the same XML as the original", function () {
             plot = Plot.parseXML($xml);
             expect(plot.serialize() === xmlString).toBe(true);
             
@@ -163,8 +163,8 @@ describe("Plot parsing", function () {
     });
 
     describe("Renderer parsing", function () {
-        var Renderer = window.multigraph.Plot.Renderer,
-            RendererOption = window.multigraph.Plot.Renderer.Option;
+        var Renderer = window.multigraph.core.Renderer,
+            RendererOption = window.multigraph.core.RendererOption;
 
         beforeEach(function () {
             xmlString = '<plot><renderer type="line"/></plot>';
@@ -205,8 +205,8 @@ describe("Plot parsing", function () {
     });
 
     describe("Filter parsing", function () {
-        var Filter = window.multigraph.Plot.Filter,
-            FilterOption = window.multigraph.Plot.Filter.Option;
+        var Filter = window.multigraph.core.Filter,
+            FilterOption = window.multigraph.core.FilterOption;
 
         beforeEach(function () {
             xmlString = '<plot><filter type="line"/></plot>';
@@ -247,8 +247,8 @@ describe("Plot parsing", function () {
     });
 
     describe("Datatips parsing", function () {
-        var Datatips = window.multigraph.Plot.Datatips,
-            DatatipsVariable = window.multigraph.Plot.Datatips.Variable;
+        var Datatips = window.multigraph.core.Datatips,
+            DatatipsVariable = window.multigraph.core.DatatipsVariable;
 
         beforeEach(function () {
             xmlString = '<plot><datatips bgcolor="0x123456" bordercolor="0xfffbbb" format="number" bgalpha="1" border="2" pad="1"/></plot>';
@@ -289,12 +289,12 @@ describe("Plot parsing", function () {
     });
 
     describe("with multiple children", function () {
-        var Datatips = window.multigraph.Plot.Datatips,
-            DatatipsVariable = window.multigraph.Plot.Datatips.Variable,
-            Renderer = window.multigraph.Plot.Renderer,
-            RendererOption = window.multigraph.Plot.Renderer.Option,
-            Filter = window.multigraph.Plot.Filter,
-            FilterOption = window.multigraph.Plot.Filter.Option;
+        var Datatips = window.multigraph.core.Datatips,
+            DatatipsVariable = window.multigraph.core.DatatipsVariable,
+            Renderer = window.multigraph.core.Renderer,
+            RendererOption = window.multigraph.core.RendererOption,
+            Filter = window.multigraph.core.Filter,
+            FilterOption = window.multigraph.core.FilterOption;
 
         beforeEach(function () {
             xmlString = '<plot><renderer type="point"><option name="size" value="3"/><option name="shape" value="circle"/><option name="linewidth" value="7"/></renderer><filter type="point"><option name="size" value="3"/><option name="shape" value="circle"/><option name="linewidth" value="7"/></filter><datatips bgcolor="0x12fff6" bordercolor="0xfffbbb" format="number" bgalpha="1" border="2" pad="1"/></plot>';

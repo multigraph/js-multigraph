@@ -1,22 +1,14 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-if (!window.multigraph.Axis) {
-    window.multigraph.Axis = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
     "use strict";
 
     var scalarAttributes = ["start", "angle", "densityfactor", "spacing"];
 
-    ns.jQueryXMLMixin.add(function (nsObj, parse, serialize) {
+    ns.mixin.add(function (ns, parse, serialize) {
         
-        nsObj.Axis.Labeler[parse] = function (xml, axis, labels) {
+        ns.core.Labeler[parse] = function (xml, axis, labels) {
             var labeler;
             if (xml && xml.attr("spacing") !== undefined) {
-                labeler = new nsObj.Axis.Labeler(axis);
+                labeler = new ns.core.Labeler(axis);
                 labeler.spacing(xml.attr("spacing"));
                 if (xml.attr("format") !== undefined) {
                     labeler.formatter(xml.attr("format"));
@@ -29,22 +21,22 @@ if (!window.multigraph.Axis) {
                     labeler.start(labels.start());
                 }
                 if (xml.attr("angle") !== undefined) {
-                    labeler.angle(nsObj.utilityFunctions.parseDoubleOrUndefined(xml.attr("angle")));
+                    labeler.angle(ns.utilityFunctions.parseDoubleOrUndefined(xml.attr("angle")));
                 } else if (labels !== undefined) {
                     labeler.angle(labels.angle());
                 }
                 if (xml.attr("position") !== undefined) { 
-                    labeler.position(nsObj.math.Point.parse(xml.attr("position")));
+                    labeler.position(ns.math.Point.parse(xml.attr("position")));
                 } else if (labels !== undefined) {
                     labeler.position(labels.position());
                 }
                 if (xml.attr("anchor") !== undefined) {
-                    labeler.anchor(nsObj.math.Point.parse(xml.attr("anchor")));
+                    labeler.anchor(ns.math.Point.parse(xml.attr("anchor")));
                 } else if (labels !== undefined) {
                     labeler.anchor(labels.anchor());
                 }
                 if (xml.attr("densityfactor") !== undefined) {
-                    labeler.densityfactor(nsObj.utilityFunctions.parseDoubleOrUndefined(xml.attr("densityfactor")));
+                    labeler.densityfactor(ns.utilityFunctions.parseDoubleOrUndefined(xml.attr("densityfactor")));
                 } else if (labels !== undefined) {
                     labeler.densityfactor(labels.densityfactor());
                 }
@@ -52,11 +44,11 @@ if (!window.multigraph.Axis) {
             return labeler;
         };
         
-        nsObj.Axis.Labeler.prototype[serialize] = function () {
+        ns.core.Labeler.prototype[serialize] = function () {
             var attributeStrings = [],
                 output = '<label ';
 
-            attributeStrings = ns.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
+            attributeStrings = window.multigraph.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
             if (this.formatter()) {
                 attributeStrings.push('format="' + this.formatter() + '"');
             }
@@ -72,4 +64,4 @@ if (!window.multigraph.Axis) {
         };
 
     });
-}(window.multigraph));
+});

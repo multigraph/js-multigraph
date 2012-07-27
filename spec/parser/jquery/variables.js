@@ -3,13 +3,13 @@
 describe("Data Variables parsing", function () {
     "use strict";
 
-    var Variables = window.multigraph.Data.Variables,
+    var Variables = window.multigraph.core.Variables,
         xmlString = '<variables missingvalue="-9000" missingop="lt"/>',
         $xml,
         variables;
 
     beforeEach(function () {
-        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
         $xml = $(xmlString);
         variables = Variables.parseXML($xml);
     });
@@ -34,11 +34,11 @@ describe("Data Variables parsing", function () {
     });
 
     describe("DataVariable parsing", function () {
-        var DataVariable = window.multigraph.Data.Variables.DataVariable;
+        var DataVariable = window.multigraph.core.DataVariable;
 
         beforeEach(function () {
             xmlString = '<variables missingop="gt"><variable id="x" column="7" type="number" missingvalue="1990" missingop="eq"/><variable id="y" column="2" type="number" missingvalue="19" missingop="gt"/><variable id="y1" column="2" type="number"/></variables>';
-            window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
+            window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
             $xml = $(xmlString);
             variables = Variables.parseXML($xml);
         });

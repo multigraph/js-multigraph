@@ -3,9 +3,9 @@
 describe("MetaData", function () {
     "use strict";
 
-    var MetaData = window.multigraph.MetaData,
-        DataVariable = window.multigraph.Data.Variables.DataVariable,
-        DataValue = window.multigraph.DataValue,
+    var MetaData = window.multigraph.core.MetaData,
+        DataVariable = window.multigraph.core.DataVariable,
+        DataValue = window.multigraph.core.DataValue,
         dataVariables,
         testMetaData;
 

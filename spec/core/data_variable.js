@@ -3,8 +3,8 @@
 describe("Data DataVariable", function () {
     "use strict";
 
-    var DataVariable = window.multigraph.Data.Variables.DataVariable,
-        NumberValue = window.multigraph.NumberValue,
+    var DataVariable = window.multigraph.core.DataVariable,
+        NumberValue = window.multigraph.core.NumberValue,
         variable;
 
     beforeEach(function () {

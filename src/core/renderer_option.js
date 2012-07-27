@@ -1,21 +1,9 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-if (!window.multigraph.Plot) {
-    window.multigraph.Plot = {};
-}
-
-if (!window.multigraph.Plot.Renderer) {
-    window.multigraph.Plot.Renderer = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
-    var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
-        attributes = ns.utilityFunctions.getKeys(defaultValues.plot.renderer.option),
-        Option = new window.jermaine.Model( "RendererOption", function () {
+    var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.plot.renderer.option),
+        RendererOption = new window.jermaine.Model( "RendererOption", function () {
             this.hasA("name").which.validatesWith(function (name) {
                 return typeof(name) === "string";
             });
@@ -30,9 +18,9 @@ if (!window.multigraph.Plot.Renderer) {
             });
             this.isBuiltWith("name", "value");
 
-            ns.utilityFunctions.insertDefaults(this, defaultValues.plot.renderer.option, attributes);
+            window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.plot.renderer.option, attributes);
         });
 
-    ns.Plot.Renderer.Option = Option;
+    ns.RendererOption = RendererOption;
 
-}(window.multigraph));
+});

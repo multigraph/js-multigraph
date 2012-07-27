@@ -3,7 +3,7 @@
 describe("Axis Grid", function () {
     "use strict";
 
-    var Grid = window.multigraph.Axis.Grid,
+    var Grid = window.multigraph.core.Grid,
         grid;
 
     beforeEach(function () {

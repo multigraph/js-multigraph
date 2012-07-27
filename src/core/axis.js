@@ -1,89 +1,50 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
     var Axis,
-        Title,
-        Labels,
-        Labeler,
-        Grid,
-        Pan,
-        Zoom,
-        Binding,
-        AxisControls,
-        defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
-        attributes = ns.utilityFunctions.getKeys(defaultValues.horizontalaxis);
-
-    if (ns.Axis) {
-        if (ns.Axis.Title) {
-            Title = ns.Axis.Title;
-        }
-        if (ns.Axis.Labels) {
-            Labels = ns.Axis.Labels;
-        }
-        if (ns.Axis.Labeler) {
-            Labeler = ns.Axis.Labeler;
-        }
-        if (ns.Axis.Grid) {
-            Grid = ns.Axis.Grid;
-        }
-        if (ns.Axis.Pan) {
-            Pan = ns.Axis.Pan;
-        }
-        if (ns.Axis.Zoom) {
-            Zoom = ns.Axis.Zoom;
-        }
-        if (ns.Axis.Binding) {
-            Binding = ns.Axis.Binding;
-        }
-        if (ns.Axis.AxisControls) {
-            AxisControls = ns.Axis.AxisControls;
-        }
-    }
+        defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.horizontalaxis);
 
     Axis = new window.jermaine.Model( "Axis", function () {
         this.hasA("title").which.validatesWith(function (title) {
-            return title instanceof ns.Axis.Title;
+            return title instanceof ns.AxisTitle;
         });
         this.hasA("labels").which.validatesWith(function (labels) {
-            return labels instanceof ns.Axis.Labels;
+            return labels instanceof ns.Labels;
         });
         this.hasMany("labelers").which.validatesWith(function (labelers) {
-            return labelers instanceof ns.Axis.Labeler;
+            return labelers instanceof ns.Labeler;
         });
         this.hasA("grid").which.validatesWith(function (grid) {
-            return grid instanceof ns.Axis.Grid;
+            return grid instanceof ns.Grid;
         });
         this.hasA("pan").which.validatesWith(function (pan) {
-            return pan instanceof ns.Axis.Pan;
+            return pan instanceof ns.Pan;
         });
         this.hasA("zoom").which.validatesWith(function (zoom) {
-            return zoom instanceof ns.Axis.Zoom;
+            return zoom instanceof ns.Zoom;
         });
         this.hasA("binding").which.validatesWith(function (binding) {
-            return binding instanceof ns.Axis.Binding;
+            return binding instanceof ns.Binding;
         });
         this.hasA("axiscontrols").which.validatesWith(function (axiscontrols) {
-            return axiscontrols instanceof ns.Axis.AxisControls;
+            return axiscontrols instanceof ns.AxisControls;
         });
         this.hasAn("id").which.validatesWith(function (id) {
             return typeof(id) === "string";
         });
         this.hasA("type").which.isOneOf(ns.DataValue.types());
         this.hasA("length").which.validatesWith(function (length) {
-            return length instanceof ns.math.Displacement;
+            return length instanceof window.multigraph.math.Displacement;
         });
         this.hasA("position").which.validatesWith(function (position) {
-            return position instanceof ns.math.Point;
+            return position instanceof window.multigraph.math.Point;
         });
         this.hasA("pregap").which.isA("number");
         this.hasA("postgap").which.isA("number");
         this.hasAn("anchor").which.isA("number");
         this.hasA("base").which.validatesWith(function (base) {
-            return base instanceof ns.math.Point;
+            return base instanceof window.multigraph.math.Point;
         });
 
 
@@ -103,7 +64,7 @@ if (!window.multigraph) {
                                              
         this.hasA("minoffset").which.isA("number");
         this.hasA("minposition").which.validatesWith(function (minposition) {
-            return minposition instanceof ns.math.Displacement;
+            return minposition instanceof window.multigraph.math.Displacement;
         });
 
 
@@ -125,7 +86,7 @@ if (!window.multigraph) {
 
         this.hasA("maxoffset").which.isA("number");
         this.hasA("maxposition").which.validatesWith(function (maxposition) {
-            return maxposition instanceof ns.math.Displacement;
+            return maxposition instanceof window.multigraph.math.Displacement;
         });
 
 
@@ -137,7 +98,7 @@ if (!window.multigraph) {
             return typeof(positionbase) === "string";
         });
         this.hasA("color").which.validatesWith(function (color) {
-            return color instanceof ns.math.RGBColor;
+            return color instanceof window.multigraph.math.RGBColor;
         });
         this.hasA("tickmin").which.isA("integer");
         this.hasA("tickmax").which.isA("integer");
@@ -207,36 +168,12 @@ console.log('dataMin: ' + this.dataMin().getRealValue());
             return this.axisToDataRatio() * ( v.getRealValue() - this.dataMin().getRealValue() ) + this.minoffset() + this.parallelOffset();
         });
 
-        ns.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis, attributes);
+        window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis, attributes);
     });
 
     Axis.HORIZONTAL = "horizontal";
     Axis.VERTICAL   = "vertical";
 
     ns.Axis = Axis;
-    if (Title) {
-        ns.Axis.Title = Title;
-    }
-    if (Labels) {
-        ns.Axis.Labels = Labels;
-    }
-    if (Labeler) {
-        ns.Axis.Labeler = Labeler;
-    }
-    if (Grid) {
-        ns.Axis.Grid = Grid;
-    }
-    if (Pan) {
-        ns.Axis.Pan = Pan;
-    }
-    if (Zoom) {
-        ns.Axis.Zoom = Zoom;
-    }
-    if (Binding) {
-        ns.Axis.Binding = Binding;
-    }
-    if (AxisControls) {
-        ns.Axis.AxisControls = AxisControls;
-    }
 
-}(window.multigraph));
+});

@@ -1,62 +1,58 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
     "use strict";
 
-    ns.jQueryXMLMixin.add(function(nsObj, parse, serialize) {
+    ns.mixin.add(function(ns, parse, serialize) {
 
-        nsObj.Graph[parse] = function(xml) {
-            var graph = new nsObj.Graph();
+        ns.core.Graph[parse] = function(xml) {
+            var graph = new ns.core.Graph();
             if (xml) {
                 // NOTE: 'OBJ.find(">TAG")' returns a list of JQuery objects corresponding to the immediate
                 // (1st generation) child nodes of OBJ corresponding to xml tag TAG
                 if (xml.find(">window").length > 0) {
-                    graph.window( nsObj.Window[parse](xml.find(">window")) );
+                    graph.window( ns.core.Window[parse](xml.find(">window")) );
                 } else {
-                    graph.window( nsObj.Window[parse]() );
+                    graph.window( ns.core.Window[parse]() );
                 }
 
                 if (xml.find(">ui").length > 0) {
-                    graph.ui( nsObj.UI[parse](xml.find(">ui")) );
+                    graph.ui( ns.core.UI[parse](xml.find(">ui")) );
                 }
                 if (xml.find(">networkmonitor").length > 0) {
-                    graph.networkmonitor( nsObj.NetworkMonitor[parse](xml.find(">networkmonitor")) );
+                    graph.networkmonitor( ns.core.NetworkMonitor[parse](xml.find(">networkmonitor")) );
                 }
                 if (xml.find(">debugger").length > 0) {
-                    graph.Debugger( nsObj.Debugger[parse](xml.find(">debugger")) );
+                    graph.Debugger( ns.core.Debugger[parse](xml.find(">debugger")) );
                 }
                 if (xml.find(">legend").length > 0) {
-                    graph.legend( nsObj.Legend[parse](xml.find(">legend")) );
+                    graph.legend( ns.core.Legend[parse](xml.find(">legend")) );
                 }
                 if (xml.find(">background").length > 0) {
-                    graph.background( nsObj.Background[parse](xml.find(">background")) );
+                    graph.background( ns.core.Background[parse](xml.find(">background")) );
                 }
                 if (xml.find(">plotarea").length > 0) {
-                    graph.plotarea( nsObj.Plotarea[parse](xml.find(">plotarea")) );
+                    graph.plotarea( ns.core.Plotarea[parse](xml.find(">plotarea")) );
                 }
                 if (xml.find(">title").length > 0) {
-                    graph.title( nsObj.Title[parse](xml.find(">title")) );
+                    graph.title( ns.core.Title[parse](xml.find(">title")) );
                 }
                 $.each(xml.find(">horizontalaxis"), function (i,e) {
-                    graph.axes().add( nsObj.Axis[parse]($(e)) );
+                    graph.axes().add( ns.core.Axis[parse]($(e)) );
                 });
                 $.each(xml.find(">verticalaxis"), function (i,e) {
-                    graph.axes().add( nsObj.Axis[parse]($(e)) );
+                    graph.axes().add( ns.core.Axis[parse]($(e)) );
                 });
                 $.each(xml.find(">data"), function (i,e) {
-                    graph.data().add( nsObj.Data[parse]($(e)) );
+                    graph.data().add( ns.core.Data[parse]($(e)) );
                 });
                 $.each(xml.find(">plot"), function (i,e) {
-                    graph.plots().add( nsObj.Plot[parse]($(e), graph) );
+                    graph.plots().add( ns.core.Plot[parse]($(e), graph) );
                 });
                 graph.postParse();
             }
             return graph;
         };
 
-        nsObj.Graph.prototype[serialize] = function () {
+        ns.core.Graph.prototype[serialize] = function () {
             var xmlstring = '<graph>',
                 i;
             if (this.window()) {
@@ -99,5 +95,5 @@ if (!window.multigraph) {
 
     });
 
-}(window.multigraph));
+});
 

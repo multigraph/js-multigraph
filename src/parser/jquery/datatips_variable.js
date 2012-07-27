@@ -1,27 +1,23 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
     "use strict";
 
     var scalarAttributes = ["format"];
 
-    ns.jQueryXMLMixin.add(function (nsObj, parse, serialize) {
+    ns.mixin.add(function (ns, parse, serialize) {
         
-        nsObj.Plot.Datatips.Variable[parse] = function (xml) {
-            var variable = new nsObj.Plot.Datatips.Variable();
+        ns.core.DatatipsVariable[parse] = function (xml) {
+            var variable = new ns.core.DatatipsVariable();
             if (xml) {
                 variable.format(xml.attr("format"));
             }
             return variable;
         };
         
-        nsObj.Plot.Datatips.Variable.prototype[serialize] = function () {
+        ns.core.DatatipsVariable.prototype[serialize] = function () {
             var attributeStrings = [],
                 output = '<variable ';
 
-            attributeStrings = ns.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
+            attributeStrings = window.multigraph.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
 
             output += attributeStrings.join(' ') + '/>';
 
@@ -29,4 +25,4 @@ if (!window.multigraph) {
         };
 
     });
-}(window.multigraph));
+});

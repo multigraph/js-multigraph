@@ -3,7 +3,7 @@
 describe("Data Service", function () {
     "use strict";
 
-    var Service = window.multigraph.Data.Service,
+    var Service = window.multigraph.core.Service,
         service;
 
     beforeEach(function () {

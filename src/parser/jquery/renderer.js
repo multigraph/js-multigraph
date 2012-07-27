@@ -1,33 +1,29 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
     "use strict";
 
     var scalarAttributes = ["type"];
 
-    ns.jQueryXMLMixin.add(function (nsObj, parse, serialize) {
+    ns.mixin.add(function (ns, parse, serialize) {
 
-        nsObj.Plot.Renderer[parse] = function (xml) {
+        ns.core.Renderer[parse] = function (xml) {
             var renderer;
             if (xml && xml.attr("type") !== undefined) {
-                renderer = new nsObj.Plot.Renderer(xml.attr("type"));
+                renderer = new ns.core.Renderer(xml.attr("type"));
                 if (xml.find("option").length > 0) {
                     $.each(xml.find(">option"), function (i, e) {
-                        renderer.options().add( nsObj.Plot.Renderer.Option[parse]($(e)) );
+                        renderer.options().add( ns.core.RendererOption[parse]($(e)) );
                     });
                 }
             }
             return renderer;
         };
 
-        nsObj.Plot.Renderer.prototype[serialize] = function () {
+        ns.core.Renderer.prototype[serialize] = function () {
             var attributeStrings = [],
                 output = '<renderer ',
                 i;
 
-            attributeStrings = ns.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
+            attributeStrings = window.multigraph.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
 
             output += attributeStrings.join(' ');
 
@@ -44,4 +40,4 @@ if (!window.multigraph) {
         };
 
     });
-}(window.multigraph));
+});

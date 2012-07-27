@@ -1,17 +1,9 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-if (!window.multigraph.Plot) {
-    window.multigraph.Plot = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
-    var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
-        attributes = ns.utilityFunctions.getKeys(defaultValues.plot.legend),
-        Legend = new window.jermaine.Model( "PlotLegend", function () {
+    var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.plot.legend),
+        PlotLegend = new window.jermaine.Model( "PlotLegend", function () {
             this.hasA("visible").which.validatesWith(function (visible) {
                 return visible === "true" || visible === "false";
             });
@@ -19,9 +11,9 @@ if (!window.multigraph.Plot) {
                 return typeof(label) === "string";
             });
 
-            ns.utilityFunctions.insertDefaults(this, defaultValues.plot.legend, attributes);
+            window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.plot.legend, attributes);
         });
 
-    ns.Plot.Legend = Legend;
+    ns.PlotLegend = PlotLegend;
 
-}(window.multigraph));
+});

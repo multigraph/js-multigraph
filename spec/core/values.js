@@ -3,7 +3,7 @@
 describe("Data Values", function () {
     "use strict";
 
-    var Values = window.multigraph.Data.Values,
+    var Values = window.multigraph.core.Values,
         values;
 
     beforeEach(function () {

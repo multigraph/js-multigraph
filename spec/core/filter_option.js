@@ -3,15 +3,15 @@
 describe("Plot Filter Option", function () {
     "use strict";
 
-    var Option = window.multigraph.Plot.Filter.Option,
+    var FilterOption = window.multigraph.core.FilterOption,
         option;
 
     beforeEach(function () {
-        option = new Option();
+        option = new FilterOption();
     });
 
-    it("should be able to create a Option", function () {
-        expect(option instanceof Option).toBe(true);
+    it("should be able to create a FilterOption", function () {
+        expect(option instanceof FilterOption).toBe(true);
     });
 
     describe("name attribute", function () {

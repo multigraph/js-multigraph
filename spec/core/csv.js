@@ -3,7 +3,7 @@
 describe("Data CSV", function () {
     "use strict";
 
-    var CSV = window.multigraph.Data.CSV,
+    var CSV = window.multigraph.core.CSV,
         csv;
 
     beforeEach(function () {

@@ -3,7 +3,7 @@
 describe("Legend Icon", function () {
     "use strict";
 
-    var Icon = window.multigraph.Legend.Icon,
+    var Icon = window.multigraph.core.Icon,
         icon;
 
     beforeEach(function () {

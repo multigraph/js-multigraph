@@ -3,7 +3,7 @@
 describe("Background Img", function () {
     "use strict";
 
-    var Img = window.multigraph.Background.Img,
+    var Img = window.multigraph.core.Img,
         image;
 
     beforeEach(function () {

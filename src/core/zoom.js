@@ -1,16 +1,8 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-if (!window.multigraph.Axis) {
-    window.multigraph.Axis = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
-    var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
-        attributes = ns.utilityFunctions.getKeys(defaultValues.horizontalaxis.zoom),
+    var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.horizontalaxis.zoom),
         Zoom = new window.jermaine.Model( "Zoom", function () {
         this.hasA("allowed").which.validatesWith(function (allowed) {
             return allowed === "yes" || allowed === "no";
@@ -25,9 +17,9 @@ if (!window.multigraph.Axis) {
             return typeof(anchor) === "string";
         });
 
-        ns.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis.zoom, attributes);
+        window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis.zoom, attributes);
     });
 
-    ns.Axis.Zoom = Zoom;
+    ns.Zoom = Zoom;
 
-}(window.multigraph));
+});

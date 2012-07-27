@@ -1,22 +1,18 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
     "use strict";
 
     var scalarAttributes = ["border", "opacity", "padding", "cornerradius", "base", "position", "anchor"];
 
-    ns.jQueryXMLMixin.add(function (nsObj, parse, serialize) {
+    ns.mixin.add(function (ns, parse, serialize) {
         
-        nsObj.Title[parse] = function (xml) {
-            var title = new nsObj.Title();
+        ns.core.Title[parse] = function (xml) {
+            var title = new ns.core.Title();
             if (xml) {
                 title.content(xml.text());
                 title.border(xml.attr("border"));
                 title.color(window.multigraph.math.RGBColor.parse(xml.attr("color")));
                 title.bordercolor(window.multigraph.math.RGBColor.parse(xml.attr("bordercolor")));
-                title.opacity(nsObj.utilityFunctions.parseDoubleOrUndefined(xml.attr("opacity")));
+                title.opacity(ns.utilityFunctions.parseDoubleOrUndefined(xml.attr("opacity")));
                 title.padding(xml.attr("padding"));
                 title.cornerradius(xml.attr("cornerradius"));
                 title.base(xml.attr("base"));
@@ -26,7 +22,7 @@ if (!window.multigraph) {
             return title;
         };
 
-        nsObj.Title.prototype[serialize] = function () {
+        ns.core.Title.prototype[serialize] = function () {
             var attributeStrings = [],
                 output = '<title ';
 
@@ -38,7 +34,7 @@ if (!window.multigraph) {
                 attributeStrings.push('bordercolor="' + this.bordercolor().getHexString() + '"');
             }
 
-            attributeStrings = ns.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
+            attributeStrings = window.multigraph.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
 
             output += attributeStrings.join(' ');
 
@@ -52,4 +48,4 @@ if (!window.multigraph) {
         };
 
     });
-}(window.multigraph));
+});

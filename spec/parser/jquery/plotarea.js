@@ -3,13 +3,13 @@
 describe("Plotarea parsing", function () {
     "use strict";
 
-    var Plotarea = window.multigraph.Plotarea,
+    var Plotarea = window.multigraph.core.Plotarea,
         xmlString = '<plotarea margintop="5" marginleft="10" marginbottom="19" marginright="5" bordercolor="0x111223" border="0"/>',
         $xml,
         p;
 
     beforeEach(function () {
-        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
 	$xml = $(xmlString);
         p = Plotarea.parseXML($xml);
     });

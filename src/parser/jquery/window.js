@@ -1,34 +1,32 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
     "use strict";
 
     var scalarAttributes = ["width", "height", "border"];
-    ns.jQueryXMLMixin.add(function(nsObj, parse, serialize) {
+    ns.mixin.add(function(ns, parse, serialize) {
         
-        nsObj.Window[parse] = function (xml) {
-            var window = new nsObj.Window();
+        ns.core.Window[parse] = function (xml) {
+            //WARNING: do not declare a local var named "window" here; it masks the global 'window' object,
+            //  which screws up the references to window.multigraph.* below!
+            var w = new ns.core.Window();
             if (xml) {
-                window.width(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr("width")));
-                window.height(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr("height")));
-                window.border(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr("border")));
+                w.width(window.multigraph.utilityFunctions.parseIntegerOrUndefined(xml.attr("width")));
+                w.height(window.multigraph.utilityFunctions.parseIntegerOrUndefined(xml.attr("height")));
+                w.border(window.multigraph.utilityFunctions.parseIntegerOrUndefined(xml.attr("border")));
 
                 (function (m) {
-                    window.margin().set(m,m,m,m);
-                }(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr("margin"))));
+                    w.margin().set(m,m,m,m);
+                }(window.multigraph.utilityFunctions.parseIntegerOrUndefined(xml.attr("margin"))));
 
                 (function (m) {
-                    window.padding().set(m,m,m,m);
-                }(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr("padding"))));
+                    w.padding().set(m,m,m,m);
+                }(window.multigraph.utilityFunctions.parseIntegerOrUndefined(xml.attr("padding"))));
 
-                window.bordercolor(nsObj.math.RGBColor.parse(xml.attr("bordercolor")));
+                w.bordercolor(ns.math.RGBColor.parse(xml.attr("bordercolor")));
             }
-            return window;
+            return w;
         };
         
-        nsObj.Window.prototype[serialize] = function () {
+        ns.core.Window.prototype[serialize] = function () {
             var attributeStrings = [],
                 output = '<window ';
 
@@ -38,7 +36,7 @@ if (!window.multigraph) {
                 attributeStrings.push('bordercolor="' + this.bordercolor().getHexString() + '"');
             }
 
-            attributeStrings = ns.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
+            attributeStrings = window.multigraph.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
 
             output += attributeStrings.join(' ') + '/>';
 
@@ -46,4 +44,4 @@ if (!window.multigraph) {
         };
 
     });
-}(window.multigraph));
+});

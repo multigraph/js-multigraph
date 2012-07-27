@@ -3,7 +3,7 @@
 describe("AxisControls", function () {
     "use strict";
 
-    var AxisControls = window.multigraph.Axis.AxisControls,
+    var AxisControls = window.multigraph.core.AxisControls,
         axiscontrols;
 
     beforeEach(function () {

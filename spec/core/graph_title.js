@@ -3,7 +3,7 @@
 describe("Graph Title", function () {
     "use strict";
 
-    var Title = window.multigraph.Title,
+    var Title = window.multigraph.core.Title,
         title;
 
     beforeEach(function () {

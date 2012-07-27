@@ -3,7 +3,7 @@
 describe("Axis Labels", function () {
     "use strict";
 
-    var Labels = window.multigraph.Axis.Labels,
+    var Labels = window.multigraph.core.Labels,
         Point = window.multigraph.math.Point,
         l;
 

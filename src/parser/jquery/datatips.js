@@ -1,35 +1,31 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
     "use strict";
 
     var scalarAttributes = ["format", "bgalpha", "border", "pad"],
-        Variable = ns.Plot.Datatips.Variable;
+        Variable = window.multigraph.core.DatatipsVariable;
 
-    ns.jQueryXMLMixin.add(function (nsObj, parse, serialize) {
+    ns.mixin.add(function (ns, parse, serialize) {
 
-        nsObj.Plot.Datatips[parse] = function (xml) {
-            var datatips = new nsObj.Plot.Datatips();
+        ns.core.Datatips[parse] = function (xml) {
+            var datatips = new ns.core.Datatips();
             if (xml) {
                 if (xml.find("variable").length > 0) {
                     $.each(xml.find("variable"), function(i,e) {
-                        datatips.variables().add( nsObj.Plot.Datatips.Variable[parse]($(e)) );
+                        datatips.variables().add( ns.core.DatatipsVariable[parse]($(e)) );
                     });
                 }
                 datatips.format(xml.attr("format"));
-                datatips.bgcolor(ns.math.RGBColor.parse(xml.attr("bgcolor")));
+                datatips.bgcolor(window.multigraph.math.RGBColor.parse(xml.attr("bgcolor")));
                 datatips.bgalpha(xml.attr("bgalpha"));
-                datatips.border(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr("border")));
-                datatips.bordercolor(ns.math.RGBColor.parse(xml.attr("bordercolor")));
-                datatips.pad(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr("pad")));
+                datatips.border(window.multigraph.utilityFunctions.parseIntegerOrUndefined(xml.attr("border")));
+                datatips.bordercolor(window.multigraph.math.RGBColor.parse(xml.attr("bordercolor")));
+                datatips.pad(window.multigraph.utilityFunctions.parseIntegerOrUndefined(xml.attr("pad")));
 
             }
             return datatips;
         };
 
-        nsObj.Plot.Datatips.prototype[serialize] = function () {
+        ns.core.Datatips.prototype[serialize] = function () {
             var attributeStrings = [],
                 output = '<datatips ',
                 i;
@@ -42,7 +38,7 @@ if (!window.multigraph) {
                 attributeStrings.push('bordercolor="' + this.bordercolor().getHexString() + '"');
             }
 
-            attributeStrings = ns.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
+            attributeStrings = window.multigraph.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
 
             output += attributeStrings.join(' ');
 
@@ -59,4 +55,4 @@ if (!window.multigraph) {
         };
 
     });
-}(window.multigraph));
+});

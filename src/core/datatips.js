@@ -1,52 +1,34 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-if (!window.multigraph.Plot) {
-    window.multigraph.Plot = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
     var Datatips,
-        DatatipsVariable,
-        defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
-        attributes = ns.utilityFunctions.getKeys(defaultValues.plot.datatips);
-
-
-    if (ns.Plot.Datatips && ns.Plot.Datatips.Variable) {
-        DatatipsVariable = ns.Plot.Datatips.Variable;
-    }
+        defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.plot.datatips);
 
     Datatips = new window.jermaine.Model( "Datatips", function () {
         this.hasMany("variables").which.validatesWith(function (variable) {
-            return variable instanceof ns.Plot.Datatips.Variable;
+            return variable instanceof ns.DatatipsVariable;
         });
         this.hasA("format").which.validatesWith(function (format) {
             return typeof(format) === "string";
         });
         this.hasA("bgcolor").which.validatesWith(function (bgcolor) {
-            return bgcolor instanceof ns.math.RGBColor;
+            return bgcolor instanceof window.multigraph.math.RGBColor;
         });
         this.hasA("bgalpha").which.validatesWith(function (bgalpha) {
             return typeof(bgalpha) === "string";
         });
         this.hasA("border").which.validatesWith(function (border) {
-            return ns.utilityFunctions.validateInteger(border);
+            return window.multigraph.utilityFunctions.validateInteger(border);
         });
         this.hasA("bordercolor").which.validatesWith(function (bordercolor) {
-            return bordercolor instanceof ns.math.RGBColor;
+            return bordercolor instanceof window.multigraph.math.RGBColor;
         });
         this.hasA("pad").which.isA("integer");
 
-        ns.utilityFunctions.insertDefaults(this, defaultValues.plot.datatips, attributes);
+        window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.plot.datatips, attributes);
     });
 
-    ns.Plot.Datatips = Datatips;
+    ns.Datatips = Datatips;
 
-    if (DatatipsVariable) {
-        ns.Plot.Datatips.Variable = DatatipsVariable;
-    }
-
-}(window.multigraph));
+});

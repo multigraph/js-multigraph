@@ -1,23 +1,16 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-if (!window.multigraph.math) {
-    window.multigraph.math = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.math", function (ns) {
     "use strict";
 
-    var RGBColor = new window.jermaine.Model( "RGBColor", function () {
+    ns.RGBColor = new window.jermaine.Model( "RGBColor", function () {
         
         this.hasA("r").which.validatesWith(function (r) {
-            return ns.utilityFunctions.validateNumberRange(r, 0, 1.0);
+            return window.multigraph.utilityFunctions.validateNumberRange(r, 0, 1.0);
         });
         this.hasA("g").which.validatesWith(function (g) {
-            return ns.utilityFunctions.validateNumberRange(g, 0, 1.0);
+            return window.multigraph.utilityFunctions.validateNumberRange(g, 0, 1.0);
         });
         this.hasA("b").which.validatesWith(function (b) {
-            return ns.utilityFunctions.validateNumberRange(b, 0, 1.0);
+            return window.multigraph.utilityFunctions.validateNumberRange(b, 0, 1.0);
         });
 
         var numberToHex = function (number) {
@@ -38,7 +31,7 @@ if (!window.multigraph.math) {
 
     });
 
-    RGBColor.parse = function (string) {
+    ns.RGBColor.parse = function (string) {
         var red,
             green,
             blue,
@@ -104,12 +97,9 @@ if (!window.multigraph.math) {
                 blue = parseInt(string.substring(4,6), 16) / 255;
                 break;
             }
-            colorObj = new RGBColor(red, green, blue);
+            colorObj = new ns.RGBColor(red, green, blue);
             return colorObj;
         }
         return undefined;
     };
-    
-    ns.math.RGBColor = RGBColor;
-    
-}(window.multigraph));
+});

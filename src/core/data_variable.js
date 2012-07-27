@@ -1,20 +1,8 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-if (!window.multigraph.Data) {
-    window.multigraph.Data = {};
-}
-
-if (!window.multigraph.Data.Variables) {
-    window.multigraph.Data.Variables = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
-    var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
-        attributes = ns.utilityFunctions.getKeys(defaultValues.data.variables.variable),
+    var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.data.variables.variable),
         DataValue = ns.DataValue,
         DataVariable = new window.jermaine.Model( "DataVariable", function () {
             this.hasA("id").which.isA("string");
@@ -25,9 +13,9 @@ if (!window.multigraph.Data.Variables) {
             this.hasA("missingop").which.isOneOf(DataValue.comparators());
             this.isBuiltWith("id", "%column", "%type"); //NOTE: remove optional '%' soon!
 
-            ns.utilityFunctions.insertDefaults(this, defaultValues.data.variables.variable, attributes);
+            window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.data.variables.variable, attributes);
         });
 
-    ns.Data.Variables.DataVariable = DataVariable;
+    ns.DataVariable = DataVariable;
 
-}(window.multigraph));
+});

@@ -23,6 +23,7 @@
 <script type="text/javascript" src="../../../src/utility-functions/parsing-functions.js"></script>
 <script type="text/javascript" src="../../../src/utility-functions/serializing-functions.js"></script>
 <script type="text/javascript" src="../../../src/utility-functions/validation-functions.js"></script>
+<script type="text/javascript" src="../../../src/ns.js"></script>
 <script type="text/javascript" src="../../../src/core/data_value.js"></script>
 <script type="text/javascript" src="../../../src/math/box.js"></script>
 <script type="text/javascript" src="../../../src/math/displacement.js"></script>
@@ -35,6 +36,7 @@
 <script type="text/javascript" src="../../../src/core/array_data.js"></script>
 <script type="text/javascript" src="../../../src/core/axis.js"></script>
 <script type="text/javascript" src="../../../src/core/axis_controls.js"></script>
+<script type="text/javascript" src="../../../src/core/axis_title.js"></script>
 <script type="text/javascript" src="../../../src/core/background.js"></script>
 <script type="text/javascript" src="../../../src/core/binding.js"></script>
 <script type="text/javascript" src="../../../src/core/csv.js"></script>
@@ -65,7 +67,6 @@
 <script type="text/javascript" src="../../../src/core/renderer.js"></script>
 <script type="text/javascript" src="../../../src/core/renderer_option.js"></script>
 <script type="text/javascript" src="../../../src/core/service.js"></script>
-<script type="text/javascript" src="../../../src/core/title.js"></script>
 <script type="text/javascript" src="../../../src/core/ui.js"></script>
 <script type="text/javascript" src="../../../src/core/values.js"></script>
 <script type="text/javascript" src="../../../src/core/variables.js"></script>
@@ -74,6 +75,7 @@
 <script type="text/javascript" src="../../../src/parser/jquery/jquery_mixin.js"></script>
 <script type="text/javascript" src="../../../src/parser/jquery/axis.js"></script>
 <script type="text/javascript" src="../../../src/parser/jquery/axis_controls.js"></script>
+<script type="text/javascript" src="../../../src/parser/jquery/axis_title.js"></script>
 <script type="text/javascript" src="../../../src/parser/jquery/background.js"></script>
 <script type="text/javascript" src="../../../src/parser/jquery/binding.js"></script>
 <script type="text/javascript" src="../../../src/parser/jquery/csv.js"></script>
@@ -101,7 +103,6 @@
 <script type="text/javascript" src="../../../src/parser/jquery/renderer.js"></script>
 <script type="text/javascript" src="../../../src/parser/jquery/renderer_option.js"></script>
 <script type="text/javascript" src="../../../src/parser/jquery/service.js"></script>
-<script type="text/javascript" src="../../../src/parser/jquery/title.js"></script>
 <script type="text/javascript" src="../../../src/parser/jquery/ui.js"></script>
 <script type="text/javascript" src="../../../src/parser/jquery/values.js"></script>
 <script type="text/javascript" src="../../../src/parser/jquery/variables.js"></script>
@@ -127,7 +128,7 @@
 
 $(document).ready(function() {
 
-  var Multigraph = window.multigraph.Multigraph;
+  var Multigraph = window.multigraph.core.Multigraph;
 
   var multigraphPromise = Multigraph.createCanvasGraph("mygraph", "./mymugl.xml");
 

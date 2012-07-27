@@ -1,0 +1,78 @@
+* add ".core" to ns name in src/core/THING.js
+  - check for other refs to ns. in same file
+* globally replace ".multigraph.THING" with ".multigraph.core.THING"
+* globally replace "ns.THING" with "ns.core.THING": EXCEPT not in src/core/THING.js
+* globally replace "nsObj.THING" with "nsObj.core.THING"
+
+
+DONE:
+
+multigraph.Multigraph                          => multigraph.core.Multigraph
+multigraph.Graph                               => multigraph.core.Graph
+multigraph.Window                              => multigraph.core.Window
+multigraph.Plotarea                            => multigraph.core.Plotarea
+multigraph.GraphTitle                          => multigraph.core.Title
+multigraph.Axis                                => multigraph.core.Axis
+
+multigraph.axis.AxisTitle                      => multigraph.core.AxisTitle    
+multigraph.axis.Labels                         => multigraph.core.Labels       
+multigraph.axis.Grid                           => multigraph.core.Grid         
+multigraph.axis.Pan                            => multigraph.core.Pan          
+multigraph.axis.Zoom                           => multigraph.core.Zoom         
+multigraph.axis.Binding                        => multigraph.core.Binding      
+multigraph.axis.AxisControls                   => multigraph.core.AxisControls 
+multigraph.axis.Labeler                        => multigraph.core.Labeler      
+
+
+multigraph.Data
+multigraph.data.CSV
+multigraph.data.Service
+multigraph.data.Values
+multigraph.data.Variables
+multigraph.core.Variables.DataVariable
+multigraph.DataValue
+
+multigraph.Metadata
+multigraph.ArrayData
+multigraph.CSVData
+
+multigraph.NumberMeasure
+multigraph.NumberValue
+
+multigraph.Mixin
+
+multigraph.JQueryXMLMixin
+
+multigraph.CanvasMixin
+multigraph.RaphaelMixin
+
+multigraph.Background.Img
+multigraph.Background
+
+multigraph.Debugger
+multigraph.Legend
+multigraph.NetworkMonitor
+
+multigraph.legend.Icon
+
+multigraph.UI
+
+multigraph.Plot.Datatips.DatatipsVariable
+multigraph.Plot.Filter.FilterOption
+multigraph.Plot.Renderer.RendererOption
+
+multigraph.Plot
+multigraph.plot.Datatips
+multigraph.Plot.Filter
+multigraph.Plot.PlotLegend
+multigraph.Plot.Renderer
+
+TODO:
+
+multigraph.math.Box
+multigraph.math.Displacement
+multigraph.math.Insets
+multigraph.math.Point
+multigraph.math.RGBColor
+
+clean up unneeded ns ifs

@@ -1,15 +1,15 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
 
-describe("Plot Datatips Variable parsing", function () {
+describe(.core.DatatipsVariable parsing", function () {
     "use strict";
 
-    var Variable = window.multigraph.Plot.Datatips.Variable,
+    var Variable = window.multigraph.core.DatatipsVariable,
         xmlString = '<variable format="number"/>',
         $xml,
         variable;
 
     beforeEach(function () {
-        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
 	$xml = $(xmlString);
         variable = Variable.parseXML($xml);
     });

@@ -1,14 +1,7 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-if (!window.multigraph.math) {
-    window.multigraph.math = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.math", function (ns) {
     "use strict";
 
-    var Point = new window.jermaine.Model( "Point", function () {
+    ns.Point = new window.jermaine.Model( "Point", function () {
         this.hasA("x").which.isA("number");
         this.hasA("y").which.isA("number");
         this.isBuiltWith("x", "y");
@@ -17,10 +10,10 @@ if (!window.multigraph.math) {
         });
     });
 
-    Point.regExp = /^\s*([0-9\-\+\.eE]+)(,|\s+|\s*,\s+|\s+,\s*)([0-9\-\+\.eE]+)\s*$/;
+    ns.Point.regExp = /^\s*([0-9\-\+\.eE]+)(,|\s+|\s*,\s+|\s+,\s*)([0-9\-\+\.eE]+)\s*$/;
 
-    Point.parse = function(string) {
-        var ar = Point.regExp.exec(string),
+    ns.Point.parse = function(string) {
+        var ar = ns.Point.regExp.exec(string),
             p;
         // ar[1] is x value
         // ar[2] is separator between x and y
@@ -29,9 +22,6 @@ if (!window.multigraph.math) {
         if (!ar || (ar.length !== 4)) {
             throw new Error("cannot parse string '"+string+"' as a Point");
         }
-        return new Point(parseFloat(ar[1]), parseFloat(ar[3]));
+        return new ns.Point(parseFloat(ar[1]), parseFloat(ar[3]));
     };
-
-    ns.math.Point = Point;
-    
-}(window.multigraph));
+});

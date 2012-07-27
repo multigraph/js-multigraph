@@ -3,13 +3,13 @@
 describe("Plot Datatips parsing", function () {
     "use strict";
 
-    var Datatips = window.multigraph.Plot.Datatips,
+    var Datatips = window.multigraph.core.Datatips,
         xmlString = '<datatips bgcolor="0x123456" bordercolor="0xfffbbb" format="number" bgalpha="1" border="2" pad="1"/>',
         $xml,
         d;
 
     beforeEach(function () {
-        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
 	$xml = $(xmlString);
         d = Datatips.parseXML($xml);
     });
@@ -51,11 +51,11 @@ describe("Plot Datatips parsing", function () {
     });
 
     describe("Variable parsing", function () {
-        var Variable = window.multigraph.Plot.Datatips.Variable;
+        var Variable = window.multigraph.core.DatatipsVariable;
 
         beforeEach(function () {
             xmlString = '<datatips bgcolor="0x123456" bordercolor="0xba789b" format="datetime" bgalpha="5" border="7" pad="2"><variable format="number"/></datatips>';
-            window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
+            window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
             $xml = $(xmlString);
             d = Datatips.parseXML($xml);
         });

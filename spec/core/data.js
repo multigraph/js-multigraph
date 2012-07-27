@@ -3,14 +3,14 @@
 describe("Data", function () {
     "use strict";
 
-    var Data = window.multigraph.Data,
-        DataValue = window.multigraph.DataValue,
-        NumberValue = window.multigraph.NumberValue,
-        CSV = window.multigraph.Data.CSV,
-        Service = window.multigraph.Data.Service,
-        Values = window.multigraph.Data.Values,
-        Variables = window.multigraph.Data.Variables,
-        DataVariable = window.multigraph.Data.Variables.DataVariable,
+    var Data = window.multigraph.core.Data,
+        DataValue = window.multigraph.core.DataValue,
+        NumberValue = window.multigraph.core.NumberValue,
+        CSV = window.multigraph.core.CSV,
+        Service = window.multigraph.core.Service,
+        Values = window.multigraph.core.Values,
+        Variables = window.multigraph.core.Variables,
+        DataVariable = window.multigraph.core.DataVariable,
         d;
 
     beforeEach(function () {

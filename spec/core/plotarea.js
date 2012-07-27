@@ -3,7 +3,7 @@
 describe("Plotarea", function () {
     "use strict";
 
-    var Plotarea = window.multigraph.Plotarea,
+    var Plotarea = window.multigraph.core.Plotarea,
         p,
         defaultValues;
 
@@ -17,7 +17,7 @@ describe("Plotarea", function () {
     });
 
     it("should do that w thang", function() {
-        var w = new window.multigraph.Plotarea();
+        var w = new window.multigraph.core.Plotarea();
         expect(w.margin().right() === defaultValues.plotarea.margin().right()).toBe(true);
     });
 

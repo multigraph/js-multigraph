@@ -1,28 +1,16 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-if (!window.multigraph.Plot) {
-    window.multigraph.Plot = {};
-}
-
-if (!window.multigraph.Plot.Datatips) {
-    window.multigraph.Plot.Datatips = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
-    var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
-        attributes = ns.utilityFunctions.getKeys(defaultValues.plot.datatips.variable),
+    var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.plot.datatips.variable),
         DatatipsVariable = new window.jermaine.Model( "DatatipsVariable", function () {
             this.hasA("format").which.validatesWith(function (format) {
                 return typeof(format) === "string";
             });
 
-            ns.utilityFunctions.insertDefaults(this, defaultValues.plot.datatips.variable, attributes);
+            window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.plot.datatips.variable, attributes);
         });
 
-    ns.Plot.Datatips.Variable = DatatipsVariable;
+    ns.DatatipsVariable = DatatipsVariable;
 
-}(window.multigraph));
+});

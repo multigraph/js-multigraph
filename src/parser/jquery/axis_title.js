@@ -1,34 +1,26 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-if (!window.multigraph.Axis) {
-    window.multigraph.Axis = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
     "use strict";
 
     var scalarAttributes = ["position", "anchor", "angle"];
 
-    ns.jQueryXMLMixin.add(function (nsObj, parse, serialize) {
+    ns.mixin.add(function (ns, parse, serialize) {
         
-        nsObj.Axis.Title[parse] = function (xml) {
-            var title = new nsObj.Axis.Title();
+        ns.core.AxisTitle[parse] = function (xml) {
+            var title = new ns.core.AxisTitle();
             if (xml) {
                 title.content(xml.text());
                 title.position(xml.attr("position"));
                 title.anchor(xml.attr("anchor"));
-                title.angle(ns.utilityFunctions.parseDoubleOrUndefined(xml.attr("angle")));
+                title.angle(window.multigraph.utilityFunctions.parseDoubleOrUndefined(xml.attr("angle")));
             }
             return title;
         };
         
-        nsObj.Axis.Title.prototype[serialize] = function () {
+        ns.core.AxisTitle.prototype[serialize] = function () {
             var attributeStrings = [],
                 output = '<title ';
 
-            attributeStrings = ns.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
+            attributeStrings = window.multigraph.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
 
             output += attributeStrings.join(' ');
 
@@ -42,4 +34,4 @@ if (!window.multigraph.Axis) {
         };
 
     });
-}(window.multigraph));
+});

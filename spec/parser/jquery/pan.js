@@ -3,13 +3,13 @@
 describe("Axis Pan parsing", function () {
     "use strict";
 
-    var Pan = window.multigraph.Axis.Pan,
+    var Pan = window.multigraph.core.Pan,
         xmlString = '<pan allowed="yes" min="0" max="5"/>',
         $xml,
         pan;
 
     beforeEach(function () {
-        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
         $xml = $(xmlString);
         pan = Pan.parseXML($xml);
     });

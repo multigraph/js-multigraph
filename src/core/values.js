@@ -1,24 +1,16 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-if (!window.multigraph.Data) {
-    window.multigraph.Data = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
-    var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
-        attributes = ns.utilityFunctions.getKeys(defaultValues.data.values),
+    var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.data.values),
         Values = new window.jermaine.Model( "Values", function () {
             this.hasA("content").which.validatesWith(function (content) {
                 return typeof(content) === "string";
             });
 
-            ns.utilityFunctions.insertDefaults(this, defaultValues.data.values, attributes);
+            window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.data.values, attributes);
         });
 
-    ns.Data.Values = Values;
+    ns.Values = Values;
 
-}(window.multigraph));
+});

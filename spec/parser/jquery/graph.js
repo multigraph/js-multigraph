@@ -4,17 +4,17 @@
 describe("Graph parsing", function () {
     "use strict";
 
-    var Axis = window.multigraph.Axis,
-    Plot = window.multigraph.Plot,
-    Window = window.multigraph.Window,
-    UI = window.multigraph.UI,
-    NetworkMonitor = window.multigraph.NetworkMonitor,
-    Debugger = window.multigraph.Debugger,
-    Legend = window.multigraph.Legend,
-    Background = window.multigraph.Background,
-    Plotarea = window.multigraph.Plotarea,
-    Data = window.multigraph.Data,
-    Graph = window.multigraph.Graph,
+    var Axis = window.multigraph.core.Axis,
+    Plot = window.multigraph.core.Plot,
+    Window = window.multigraph.core.Window,
+    UI = window.multigraph.core.UI,
+    NetworkMonitor = window.multigraph.core.NetworkMonitor,
+    Debugger = window.multigraph.core.Debugger,
+    Legend = window.multigraph.core.Legend,
+    Background = window.multigraph.core.Background,
+    Plotarea = window.multigraph.core.Plotarea,
+    Data = window.multigraph.core.Data,
+    Graph = window.multigraph.core.Graph,
     g,
     h,
     v,
@@ -425,7 +425,7 @@ describe("Graph parsing", function () {
     $xml;
 
     beforeEach(function () {
-        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
 	$xml = $(xmlString);
         g = Graph.parseXML($xml);
     });

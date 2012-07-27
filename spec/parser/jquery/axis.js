@@ -4,15 +4,15 @@
 describe("Axis parsing", function () {
     "use strict";
 
-    var Axis = window.multigraph.Axis,
-        Title = window.multigraph.Axis.Title,
-        Labels = window.multigraph.Axis.Labels,
-        Labeler = window.multigraph.Axis.Labeler,
-        Grid = window.multigraph.Axis.Grid,
-        Pan = window.multigraph.Axis.Pan,
-        Zoom = window.multigraph.Axis.Zoom,
-        Binding = window.multigraph.Axis.Binding,
-        AxisControls = window.multigraph.Axis.AxisControls,
+    var Axis = window.multigraph.core.Axis,
+        AxisTitle = window.multigraph.core.AxisTitle,
+        Labels = window.multigraph.core.Labels,
+        Labeler = window.multigraph.core.Labeler,
+        Grid = window.multigraph.core.Grid,
+        Pan = window.multigraph.core.Pan,
+        Zoom = window.multigraph.core.Zoom,
+        Binding = window.multigraph.core.Binding,
+        AxisControls = window.multigraph.core.AxisControls,
         xmlString = '<horizontalaxis'
 +     ' color="0x123456"'
 +     ' id="x"'
@@ -48,7 +48,7 @@ describe("Axis parsing", function () {
         axis;
 
     beforeEach(function () {
-        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
 	$xml = $(xmlString);
         axis = Axis.parseXML($xml);
     });
@@ -148,7 +148,7 @@ describe("Axis parsing", function () {
 //        expect(b.serialize() === xmlString2).toBe(true);
     });
 
-    describe("Title parsing", function () {
+    describe("AxisTitle parsing", function () {
 
         beforeEach(function () {
             xmlString = '<verticalaxis'
@@ -191,15 +191,15 @@ describe("Axis parsing", function () {
             $xml = $(xmlString);
         });
 
-        it("should be able to parse a axis with a Title child from XML", function () {
+        it("should be able to parse a axis with a AxisTitle child from XML", function () {
             axis = Axis.parseXML($xml);
             expect(axis).not.toBeUndefined();
             expect(axis instanceof Axis).toBe(true);
-            expect(axis.title() instanceof Title).toBe(true);
+            expect(axis.title() instanceof AxisTitle).toBe(true);
 
         });
 
-        it("should be able to parse a axis with a Title child from XML, serialize it and get the same XML as the original", function () {
+        it("should be able to parse a axis with a AxisTitle child from XML, serialize it and get the same XML as the original", function () {
             axis = Axis.parseXML($xml);
             expect(axis.serialize()).toBe(xmlString);
         });
@@ -539,7 +539,7 @@ describe("Axis parsing", function () {
             axis = Axis.parseXML($xml);
             expect(axis).not.toBeUndefined();
             expect(axis instanceof Axis).toBe(true);
-            expect(axis.title() instanceof Title).toBe(true);
+            expect(axis.title() instanceof AxisTitle).toBe(true);
             expect(axis.labels() instanceof Labels).toBe(true);
             expect(axis.labelers().at(0) instanceof Labeler).toBe(true);
             expect(axis.labelers().at(1) instanceof Labeler).toBe(true);

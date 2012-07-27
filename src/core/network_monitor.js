@@ -1,12 +1,8 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
-    var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
-        attributes = ns.utilityFunctions.getKeys(defaultValues.networkmonitor),
+    var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.networkmonitor),
         NetworkMonitor = new window.jermaine.Model( "NetworkMonitor", function () {
             this.hasA("visible").which.validatesWith(function (visible) {
                 return typeof(visible) === "string";
@@ -15,10 +11,10 @@ if (!window.multigraph) {
                 return typeof(fixed) === "string";
             });
 
-            ns.utilityFunctions.insertDefaults(this, defaultValues.networkmonitor, attributes);
+            window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.networkmonitor, attributes);
 
         });
 
     ns.NetworkMonitor = NetworkMonitor;
 
-}(window.multigraph));
+});

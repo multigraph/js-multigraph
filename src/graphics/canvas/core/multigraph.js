@@ -1,11 +1,7 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (ns) {
     "use strict";
 
-    ns.canvasMixin.add(function(ns) {
+    ns.mixin.add(function(ns) {
 
         ns.Multigraph.hasA("$div");    // jQuery object for the Multigraph div
         ns.Multigraph.hasA("canvas");  // canvas object itself (the '<canvas>' tag itself)
@@ -40,10 +36,10 @@ if (!window.multigraph) {
 
     });
 
-    ns.Multigraph.createCanvasGraph = function(divid, muglurl) {
+    window.multigraph.core.Multigraph.createCanvasGraph = function(divid, muglurl) {
 
-        ns.jQueryXMLMixin.apply(ns, 'parseXML', 'serialize');
-        ns.canvasMixin.apply(ns);
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
+        ns.mixin.apply(window.multigraph.core);
 
         var muglPromise = $.ajax({
             "url"      : muglurl,
@@ -53,7 +49,7 @@ if (!window.multigraph) {
         var deferred = $.Deferred();
 
         muglPromise.done(function(data) {
-            var multigraph = ns.Multigraph.parseXML( $(data) );
+            var multigraph = window.multigraph.core.Multigraph.parseXML( $(data) );
             multigraph.divid(divid);
             multigraph.init();
             deferred.resolve(multigraph);
@@ -65,4 +61,4 @@ if (!window.multigraph) {
 
 
 
-}(window.multigraph));
+});

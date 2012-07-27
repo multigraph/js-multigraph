@@ -3,8 +3,8 @@
 describe("NumberValue", function () {
     "use strict";
 
-    var NumberValue = window.multigraph.NumberValue,
-        NumberMeasure = window.multigraph.NumberMeasure;
+    var NumberValue = window.multigraph.core.NumberValue,
+        NumberMeasure = window.multigraph.core.NumberMeasure;
 
     it("should be able to create a NumberValue", function () {
         var x = new NumberValue(1.234);

@@ -3,8 +3,8 @@
 describe("Data Variables", function () {
     "use strict";
 
-    var Variables = window.multigraph.Data.Variables,
-        NumberValue = window.multigraph.NumberValue,
+    var Variables = window.multigraph.core.Variables,
+        NumberValue = window.multigraph.core.NumberValue,
         variables;
 
     beforeEach(function () {
@@ -32,7 +32,7 @@ describe("Data Variables", function () {
     });
 
     describe("DataVariable", function () {
-        var DataVariable = window.multigraph.Data.Variables.DataVariable,
+        var DataVariable = window.multigraph.core.DataVariable,
             variable;
 
         beforeEach(function () {

@@ -1,71 +1,67 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
     "use strict";
 
     var scalarAttributes = ["id", "type", "pregap", "postgap", "anchor", "min", "minoffset", "max", "maxoffset", "positionbase", "tickmin", "tickmax", "highlightstyle", "linewidth"],
         children = ["title", "labels", "grid", "pan", "zoom", "binding", "axiscontrols"];
 
-    ns.jQueryXMLMixin.add(function(ns, parse, serialize) {
+    ns.mixin.add(function(ns, parse, serialize) {
         
-        ns.Axis[parse] = function(xml) {
+        ns.core.Axis[parse] = function(xml) {
             var orientation = $(xml).prop("tagName").toLowerCase().replace("axis", ""),
-                axis = new ns.Axis(orientation),
-                childModelNames = ["Title", "Labels", "Grid", "Pan", "Zoom", "Binding", "AxisControls"],
+                axis = new ns.core.Axis(orientation),
+                childModelNames = ["AxisTitle", "Labels", "Grid", "Pan", "Zoom", "Binding", "AxisControls"],
                 i;
 
             if (xml) {
 
                 axis.id(xml.attr("id"));
                 if (xml.attr("type")) {
-                    axis.type(ns.DataValue.parseType(xml.attr("type")));
+                    axis.type(ns.core.DataValue.parseType(xml.attr("type")));
                 }
-                axis.length(ns.math.Displacement.parse(xml.attr("length")));
+                axis.length(window.multigraph.math.Displacement.parse(xml.attr("length")));
                 if (xml.attr("position")) {
-                    axis.position(ns.math.Point.parse(xml.attr("position")));
+                    axis.position(window.multigraph.math.Point.parse(xml.attr("position")));
                 }
-                axis.pregap(ns.utilityFunctions.parseDoubleOrUndefined(xml.attr("pregap")));
-                axis.postgap(ns.utilityFunctions.parseDoubleOrUndefined(xml.attr("postgap")));
+                axis.pregap(window.multigraph.utilityFunctions.parseDoubleOrUndefined(xml.attr("pregap")));
+                axis.postgap(window.multigraph.utilityFunctions.parseDoubleOrUndefined(xml.attr("postgap")));
                 if (xml.attr("anchor")) {
                     axis.anchor(parseFloat(xml.attr("anchor")));
                 }
                 if (xml.attr("base")) {
-                    axis.base(ns.math.Point.parse(xml.attr("base")));
+                    axis.base(window.multigraph.math.Point.parse(xml.attr("base")));
                 }
-                axis.minposition(ns.math.Displacement.parse(xml.attr("minposition")));
-                axis.maxposition(ns.math.Displacement.parse(xml.attr("maxposition")));
+                axis.minposition(window.multigraph.math.Displacement.parse(xml.attr("minposition")));
+                axis.maxposition(window.multigraph.math.Displacement.parse(xml.attr("maxposition")));
                 axis.min(xml.attr("min"));
                 if (axis.min() !== "auto") {
-                    axis.dataMin(ns.DataValue.parse(axis.type(), axis.min()));
+                    axis.dataMin(ns.core.DataValue.parse(axis.type(), axis.min()));
                 }
-                axis.minoffset(ns.utilityFunctions.parseDoubleOrUndefined(xml.attr("minoffset")));
+                axis.minoffset(window.multigraph.utilityFunctions.parseDoubleOrUndefined(xml.attr("minoffset")));
                 axis.max(xml.attr("max"));
                 if (axis.max() !== "auto") {
-                    axis.dataMax(ns.DataValue.parse(axis.type(), axis.max()));
+                    axis.dataMax(ns.core.DataValue.parse(axis.type(), axis.max()));
                 }
-                axis.maxoffset(ns.utilityFunctions.parseDoubleOrUndefined(xml.attr("maxoffset")));
+                axis.maxoffset(window.multigraph.utilityFunctions.parseDoubleOrUndefined(xml.attr("maxoffset")));
                 axis.positionbase(xml.attr("positionbase"));
-                axis.color(ns.math.RGBColor.parse(xml.attr("color")));
-                axis.tickmin(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr("tickmin")));
-                axis.tickmax(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr("tickmax")));
+                axis.color(window.multigraph.math.RGBColor.parse(xml.attr("color")));
+                axis.tickmin(window.multigraph.utilityFunctions.parseIntegerOrUndefined(xml.attr("tickmin")));
+                axis.tickmax(window.multigraph.utilityFunctions.parseIntegerOrUndefined(xml.attr("tickmax")));
                 axis.highlightstyle(xml.attr("highlightstyle"));
-                axis.linewidth(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr("linewidth")));
+                axis.linewidth(window.multigraph.utilityFunctions.parseIntegerOrUndefined(xml.attr("linewidth")));
 
                 for (i = 0; i < children.length; i++) {
                     if (xml.find(children[i]).length > 0 && children[i] !== "labels") {
-                        axis[children[i]](ns.Axis[childModelNames[i]][parse](xml.find(children[i])));
+                        axis[children[i]](ns.core[childModelNames[i]][parse](xml.find(children[i])));
                     }
                 }
 
-                axis.labels(ns.Axis.Labels[parse](xml.find(">labels"), axis));
+                axis.labels(ns.core.Labels[parse](xml.find(">labels"), axis));
 
             }
             return axis;
         };
         
-        ns.Axis.prototype[serialize] = function() {
+        ns.core.Axis.prototype[serialize] = function() {
             var attributeStrings = [],
                 childStrings = [],
                 output = '<' + this.orientation() + 'axis ';
@@ -74,14 +70,14 @@ if (!window.multigraph) {
                 attributeStrings.push('color="' + this.color().getHexString() + '"');
             }
 
-            attributeStrings = ns.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
+            attributeStrings = window.multigraph.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
             attributeStrings.push('length="' + this.length().serialize() + '"');
             attributeStrings.push('position="' + this.position().serialize() + '"');
             attributeStrings.push('base="' + this.base().serialize() + '"');
             attributeStrings.push('minposition="' + this.minposition().serialize() + '"');
             attributeStrings.push('maxposition="' + this.maxposition().serialize() + '"');
 
-            childStrings = ns.utilityFunctions.serializeChildModels(this, children, childStrings, serialize);
+            childStrings = window.multigraph.utilityFunctions.serializeChildModels(this, children, childStrings, serialize);
 
             output += attributeStrings.join(' ');
 
@@ -95,4 +91,4 @@ if (!window.multigraph) {
         };
 
     });
-}(window.multigraph));
+});

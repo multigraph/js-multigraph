@@ -3,10 +3,10 @@
 describe("ArrayData", function () {
     "use strict";
 
-    var ArrayData = window.multigraph.ArrayData,
-        NumberValue = window.multigraph.NumberValue,
-        DataVariable = window.multigraph.Data.Variables.DataVariable,
-        DataValue = window.multigraph.DataValue,
+    var ArrayData = window.multigraph.core.ArrayData,
+        NumberValue = window.multigraph.core.NumberValue,
+        DataVariable = window.multigraph.core.DataVariable,
+        DataValue = window.multigraph.core.DataValue,
         testArrayData,
         numberValueData,
         rawData,

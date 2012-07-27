@@ -1,20 +1,12 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-if (!window.multigraph.Axis) {
-    window.multigraph.Axis = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
     "use strict";
 
     var scalarAttributes = ["allowed", "min", "max", "anchor"];
 
-    ns.jQueryXMLMixin.add(function (nsObj, parse, serialize) {
+    ns.mixin.add(function (ns, parse, serialize) {
         
-        nsObj.Axis.Zoom[parse] = function (xml) {
-            var zoom = new nsObj.Axis.Zoom();
+        ns.core.Zoom[parse] = function (xml) {
+            var zoom = new ns.core.Zoom();
             if (xml) {
                 zoom.allowed(xml.attr("allowed"));
                 zoom.min(xml.attr("min"));
@@ -24,11 +16,11 @@ if (!window.multigraph.Axis) {
             return zoom;
         };
         
-        nsObj.Axis.Zoom.prototype[serialize] = function () {
+        ns.core.Zoom.prototype[serialize] = function () {
             var attributeStrings = [],
                 output = '<zoom ';
 
-            attributeStrings = ns.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
+            attributeStrings = window.multigraph.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
 
             output += attributeStrings.join(' ') + '/>';
 
@@ -36,4 +28,4 @@ if (!window.multigraph.Axis) {
         };
 
     });
-}(window.multigraph));
+});

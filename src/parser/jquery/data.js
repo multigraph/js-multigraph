@@ -1,20 +1,16 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
     "use strict";
 
-    var DataVariable = window.multigraph.Data.Variables.DataVariable;
-    var NumberValue  = window.multigraph.NumberValue;
-    var ArrayData  = window.multigraph.ArrayData;
+    var DataVariable = window.multigraph.core.DataVariable;
+    var NumberValue  = window.multigraph.core.NumberValue;
+    var ArrayData  = window.multigraph.core.ArrayData;
 
     var children = ["variables", "values", "csv", "service"];
 
-    ns.jQueryXMLMixin.add(function(ns, parse, serialize) {
+    ns.mixin.add(function(ns, parse, serialize) {
         
-        ns.Data[parse] = function (xml) {
-            var data = new ns.Data(),
+        ns.core.Data[parse] = function (xml) {
+            var data = new ns.core.Data(),
                 childModelNames = ["Variables", "Values", "CSV", "Service"],
                 i;
 
@@ -22,7 +18,7 @@ if (!window.multigraph) {
 
                 for (i = 0; i < children.length; i++) {
                     if (xml.find(children[i]).length > 0) {
-                        data[children[i]](ns.Data[childModelNames[i]][parse](xml.find(children[i])));
+                        data[children[i]](ns.core[childModelNames[i]][parse](xml.find(children[i])));
                     }
                 }
 
@@ -69,12 +65,12 @@ if (!window.multigraph) {
             return data;
         };
         
-        ns.Data.prototype[serialize] = function () {
+        ns.core.Data.prototype[serialize] = function () {
             var childStrings = [],
                 output = '<data',
                 i;
 
-            childStrings = ns.utilityFunctions.serializeChildModels(this, children, childStrings, serialize);
+            childStrings = window.multigraph.utilityFunctions.serializeChildModels(this, children, childStrings, serialize);
 /*
             for (i = 0; i < children.length; i++) {
                 if (this[children[i]]()) {
@@ -93,4 +89,4 @@ if (!window.multigraph) {
         };
 
     });
-}(window.multigraph));
+});

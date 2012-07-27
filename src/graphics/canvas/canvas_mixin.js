@@ -1,10 +1,6 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (ns) {
     "use strict";
 
-    ns.canvasMixin = new ns.Mixin();
+    ns.mixin = new window.multigraph.core.Mixin();
 
-}(window.multigraph));
+});

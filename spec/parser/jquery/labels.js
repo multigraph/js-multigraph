@@ -4,7 +4,7 @@
 describe("Axis Labels parsing", function () {
     "use strict";
 
-    var Labels = window.multigraph.Axis.Labels,
+    var Labels = window.multigraph.core.Labels,
         xmlString = '<labels'
         +    ' start="10"'
         +    ' angle="9"'
@@ -18,9 +18,9 @@ describe("Axis Labels parsing", function () {
         labels;
 
     beforeEach(function () {
-        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
         $xml = $(xmlString);
-        labels = Labels.parseXML($xml, new window.multigraph.Axis("horizontal"));
+        labels = Labels.parseXML($xml, new window.multigraph.core.Axis("horizontal"));
     });
 
     it("should be able to parse a labels from XML", function () {
@@ -66,12 +66,12 @@ describe("Axis Labels parsing", function () {
             +    ' spacing="100 75 50 25 10 5 2 1 0.5 0.1"'
             +    '/>';
         expect(labels.serialize()).toEqual(xmlString);
-        labels = Labels.parseXML($(xmlString2), new window.multigraph.Axis("vertical"));
+        labels = Labels.parseXML($(xmlString2), new window.multigraph.core.Axis("vertical"));
         expect(labels.serialize()).toEqual(xmlString2);
     });
 
     describe("Label parsing", function () {
-        var Labeler = window.multigraph.Axis.Labeler;
+        var Labeler = window.multigraph.core.Labeler;
 
         beforeEach(function () {
             xmlString = '<labels'
@@ -146,9 +146,9 @@ describe("Axis Labels parsing", function () {
                 +     ' position="1,1"'
                 +     '/>'
                 + '</labels>';
-            window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
+            window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
             $xml = $(xmlString);
-            labels = Labels.parseXML($xml, new window.multigraph.Axis("horizontal"));
+            labels = Labels.parseXML($xml, new window.multigraph.core.Axis("horizontal"));
         });
 
         it("should be able to parse a labels with children from XML", function () {

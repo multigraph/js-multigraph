@@ -3,16 +3,16 @@
 describe("Plot", function () {
     "use strict";
 
-    var Axis = window.multigraph.Axis,
-        Plot = window.multigraph.Plot,
-        Legend = window.multigraph.Plot.Legend,
-        Filter = window.multigraph.Plot.Filter,
-        FilterOption = window.multigraph.Plot.Filter.Option,
-        Renderer = window.multigraph.Plot.Renderer,
-        RendererOption = window.multigraph.Plot.Renderer.Option,
-        Datatips = window.multigraph.Plot.Datatips,
-        DatatipsVariable = window.multigraph.Plot.Datatips.Variable,
-        DataVariable = window.multigraph.Data.Variables.DataVariable,
+    var Axis = window.multigraph.core.Axis,
+        Plot = window.multigraph.core.Plot,
+        PlotLegend = window.multigraph.core.PlotLegend,
+        Filter = window.multigraph.core.Filter,
+        FilterOption = window.multigraph.core.FilterOption,
+        Renderer = window.multigraph.core.Renderer,
+        RendererOption = window.multigraph.core.RendererOption,
+        Datatips = window.multigraph.core.Datatips,
+        DatatipsVariable = window.multigraph.core.DatatipsVariable,
+        DataVariable = window.multigraph.core.DataVariable,
         p;
 
     beforeEach(function () {
@@ -89,19 +89,19 @@ describe("Plot", function () {
 
     });
 
-    describe("Legend", function () {
+    describe("PlotLegend", function () {
         var legend;
 
         beforeEach(function () {
-            legend = new Legend();
+            legend = new PlotLegend();
         });
 
-        it("should be able to add a Legend to a Plot", function () {
+        it("should be able to add a PlotLegend to a Plot", function () {
             p.legend(legend);
             expect(p.legend() === legend).toBe(true);
         });
 
-        it("should be able to add a Legend with attributes to a Plot", function () {
+        it("should be able to add a PlotLegend with attributes to a Plot", function () {
             legend.visible("false");
             p.legend(legend);
             expect(p.legend() === legend).toBe(true);

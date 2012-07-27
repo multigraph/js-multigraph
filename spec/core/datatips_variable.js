@@ -1,9 +1,9 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
 
-describe("Plot Datatips Variable", function () {
+describe(.core.DatatipsVariable", function () {
     "use strict";
 
-    var Variable = window.multigraph.Plot.Datatips.Variable,
+    var Variable = window.multigraph.core.DatatipsVariable,
         variable;
 
     beforeEach(function () {

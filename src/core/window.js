@@ -1,37 +1,33 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
-    var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
-        attributes = ns.utilityFunctions.getKeys(defaultValues.window),
+    var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.window),
         Window = new window.jermaine.Model( "Window", function () {
 
             this.hasA("width").which.validatesWith(function (width) {
-                return ns.utilityFunctions.validateInteger(width);
+                return window.multigraph.utilityFunctions.validateInteger(width);
             });
 
             this.hasA("height").which.validatesWith(function (height) {
-                return ns.utilityFunctions.validateInteger(height);
+                return window.multigraph.utilityFunctions.validateInteger(height);
             });
 
             this.hasA("border").which.validatesWith(function (border) {
-                return ns.utilityFunctions.validateInteger(border);
+                return window.multigraph.utilityFunctions.validateInteger(border);
             }).defaultsTo(defaultValues.window.border);
 
             this.hasA("margin").which.validatesWith(function (margin) {
-                return margin instanceof ns.math.Insets;
+                return margin instanceof window.multigraph.math.Insets;
             }); // defaultTo temporarily handled in isBuiltWith below
 
             this.hasA("padding").which.validatesWith(function (padding) {
-                return padding instanceof ns.math.Insets;
+                return padding instanceof window.multigraph.math.Insets;
             }); // defaultTo temporarily handled in isBuiltWith below
 
             this.hasA("bordercolor").which.validatesWith(function (bordercolor) {
-                return bordercolor instanceof ns.math.RGBColor;
-            }).defaultsTo(ns.math.RGBColor.parse(defaultValues.window.bordercolor));
+                return bordercolor instanceof window.multigraph.math.RGBColor;
+            }).defaultsTo(window.multigraph.math.RGBColor.parse(defaultValues.window.bordercolor));
 
             this.isBuiltWith(function() {
                 // temporary workaround until we can pass a function to be evaled to defaultsTo():
@@ -42,5 +38,4 @@ if (!window.multigraph) {
         });
 
     ns.Window = Window;
-
-}(window.multigraph));
+});

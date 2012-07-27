@@ -3,7 +3,7 @@
 describe("Plot Datatips", function () {
     "use strict";
 
-    var Datatips = window.multigraph.Plot.Datatips,
+    var Datatips = window.multigraph.core.Datatips,
         datatips;
 
     beforeEach(function () {
@@ -45,7 +45,7 @@ describe("Plot Datatips", function () {
     });
 
     describe("Datatips Variable", function () {
-        var Variable = window.multigraph.Plot.Datatips.Variable,
+        var Variable = window.multigraph.core.DatatipsVariable,
             variable;
 
         beforeEach(function () {

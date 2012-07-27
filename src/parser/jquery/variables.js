@@ -1,38 +1,30 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-if (!window.multigraph.Data) {
-    window.multigraph.Data = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
     "use strict";
 
     var scalarAttributes = ["missingvalue", "missingop"];
 
-    ns.jQueryXMLMixin.add(function (nsObj, parse, serialize) {
+    ns.mixin.add(function (ns, parse, serialize) {
 
-        nsObj.Data.Variables[parse] = function (xml) {
-            var variables = new nsObj.Data.Variables();
+        ns.core.Variables[parse] = function (xml) {
+            var variables = new ns.core.Variables();
             if (xml) {
                 variables.missingvalue(xml.attr("missingvalue"));
                 variables.missingop(xml.attr("missingop"));
                 if (xml.find(">variable").length > 0) {
                     $.each(xml.find(">variable"), function (i,e) {
-                        variables.variable().add( nsObj.Data.Variables.DataVariable[parse]($(e)) );
+                        variables.variable().add( ns.core.DataVariable[parse]($(e)) );
                     });
                 }
             }
             return variables;
         };
 
-        nsObj.Data.Variables.prototype[serialize] = function () {
+        ns.core.Variables.prototype[serialize] = function () {
             var attributeStrings = [],
                 output = '<variables ',
                 i;
 
-            attributeStrings = ns.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
+            attributeStrings = window.multigraph.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
 
             output += attributeStrings.join(' ');
 
@@ -50,4 +42,4 @@ if (!window.multigraph.Data) {
         };
 
     });
-}(window.multigraph));
+});

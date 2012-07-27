@@ -1,11 +1,4 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-if (!window.multigraph.math) {
-    window.multigraph.math = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.math", function (ns) {
     "use strict";
 
     /**
@@ -48,10 +41,10 @@ if (!window.multigraph.math) {
      *             |<------------------  L  -------------------->|
      *
      */
-    var Displacement = new window.jermaine.Model( "Displacement", function () {
+    ns.Displacement = new window.jermaine.Model( "Displacement", function () {
         
         this.hasA("a").which.validatesWith(function (a) {
-            return ns.utilityFunctions.validateNumberRange(a, -1.0, 1.0);
+            return window.multigraph.utilityFunctions.validateNumberRange(a, -1.0, 1.0);
         });
         this.hasA("b").which.isA("integer").and.defaultsTo(0);
         this.isBuiltWith("a", "%b");
@@ -77,9 +70,9 @@ if (!window.multigraph.math) {
 
     });
 
-    Displacement.regExp = /^([\+\-]?[0-9\.]+)([+\-])([0-9\.+\-]+)$/;
+    ns.Displacement.regExp = /^([\+\-]?[0-9\.]+)([+\-])([0-9\.+\-]+)$/;
 
-    Displacement.parse = function (string) {
+    ns.Displacement.parse = function (string) {
         /**
          * parse a string into a Displacement.  The string should be of one of the following forms:
          *     "A+B"  ==>  a=A  b=B
@@ -88,13 +81,13 @@ if (!window.multigraph.math) {
          *     "+A"   ==>  a=A  b=0
          *     "-A"   ==>  a=-A b=0
          **/
-        var ar = Displacement.regExp.exec(string),
+        var ar = ns.Displacement.regExp.exec(string),
             d,
             a,
             b,
             sign;
         if (string === undefined) {
-            d = new Displacement(1);
+            d = new ns.Displacement(1);
         } else if (ar !== null) {
             a = parseFloat(ar[1]);
             b = parseFloat(ar[3]);
@@ -114,7 +107,7 @@ if (!window.multigraph.math) {
               throw new ParseError('parse error');
               }
             */
-            d = new Displacement(a, sign * b);
+            d = new ns.Displacement(a, sign * b);
         } else {
             a = parseFloat(string);
             /*n
@@ -122,11 +115,8 @@ if (!window.multigraph.math) {
               throw new ParseError('parse error');
               }
             */
-            d = new Displacement(a);
+            d = new ns.Displacement(a);
         }
         return d;
     };
-    
-    ns.math.Displacement = Displacement;
-    
-}(window.multigraph));
+});

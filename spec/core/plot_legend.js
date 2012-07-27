@@ -3,15 +3,15 @@
 describe("Plot Legend", function () {
     "use strict";
 
-    var Legend = window.multigraph.Plot.Legend,
+    var PlotLegend = window.multigraph.core.PlotLegend,
         legend;
 
     beforeEach(function () {
-        legend = new Legend();
+        legend = new PlotLegend();
     });
 
-    it("should be able to create a Legend", function () {
-        expect(legend instanceof Legend).toBe(true);
+    it("should be able to create a PlotLegend", function () {
+        expect(legend instanceof PlotLegend).toBe(true);
     });
 
     describe("visible attribute", function () {

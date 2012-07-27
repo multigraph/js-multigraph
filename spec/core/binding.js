@@ -3,7 +3,7 @@
 describe("Axis Binding", function () {
     "use strict";
 
-    var Binding = window.multigraph.Axis.Binding,
+    var Binding = window.multigraph.core.Binding,
         binding;
 
     beforeEach(function () {

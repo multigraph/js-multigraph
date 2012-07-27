@@ -3,18 +3,18 @@
 describe("Data parsing", function () {
     "use strict";
 
-    var Data = window.multigraph.Data,
-        Values = window.multigraph.Data.Values,
-        Variables = window.multigraph.Data.Variables,
-        DataVariable = window.multigraph.Data.Variables.DataVariable,
-        Service = window.multigraph.Data.Service,
-        CSV = window.multigraph.Data.CSV,
+    var Data = window.multigraph.core.Data,
+        Values = window.multigraph.core.Values,
+        Variables = window.multigraph.core.Variables,
+        DataVariable = window.multigraph.core.DataVariable,
+        Service = window.multigraph.core.Service,
+        CSV = window.multigraph.core.CSV,
         xmlString = '<data/>',
         $xml,
         data;
 
     beforeEach(function () {
-        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
 	$xml = $(xmlString);
         data = Data.parseXML($xml);
     });

@@ -1,20 +1,12 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-if (!window.multigraph.Axis) {
-    window.multigraph.Axis = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
     "use strict";
 
     var scalarAttributes = ["start", "angle", "densityfactor"];
 
-    ns.jQueryXMLMixin.add(function (nsObj, parse, serialize) {
+    ns.mixin.add(function (ns, parse, serialize) {
 
-        nsObj.Axis.Labels[parse] = function (xml, axis) {
-            var labels = new nsObj.Axis.Labels(),
+        ns.core.Labels[parse] = function (xml, axis) {
+            var labels = new ns.core.Labels(),
                 labeler,
                 spacing,
                 spacingArray,
@@ -23,20 +15,20 @@ if (!window.multigraph.Axis) {
                 labels.axis(axis);
                 labels.formatter(xml.attr("format"));
                 labels.start(xml.attr("start"));
-                labels.angle(nsObj.utilityFunctions.parseDoubleOrUndefined(xml.attr("angle")));
+                labels.angle(ns.utilityFunctions.parseDoubleOrUndefined(xml.attr("angle")));
                 if (xml.attr("anchor") !== undefined) {
-                    labels.anchor(nsObj.math.Point.parse(xml.attr("anchor")));
+                    labels.anchor(ns.math.Point.parse(xml.attr("anchor")));
                 }
                 if (xml.attr("position") !== undefined) {
-                    labels.position(nsObj.math.Point.parse(xml.attr("position")));
+                    labels.position(ns.math.Point.parse(xml.attr("position")));
                 }
-                labels.densityfactor(nsObj.utilityFunctions.parseDoubleOrUndefined(xml.attr("densityfactor")));
+                labels.densityfactor(ns.utilityFunctions.parseDoubleOrUndefined(xml.attr("densityfactor")));
                 if (xml.attr("spacing") !== undefined) {
                     spacing = xml.attr("spacing");
                     labels.spacing(spacing);
                     spacingArray = spacing.split(/\s*/);
                     for (i = 0; i < spacingArray.length; i++) {
-                        labeler = nsObj.Axis.Labeler[parse](xml, axis, labels);
+                        labeler = ns.core.Labeler[parse](xml, axis, labels);
                         labeler.spacing(spacingArray[i]);
                         axis.labelers().add( labeler );
                     }                    
@@ -44,7 +36,7 @@ if (!window.multigraph.Axis) {
                     $.each(xml.find(">label"), function (i,e) {
                         spacingArray = $(e).attr("spacing").split(/\s+/);
                         for (i = 0; i < spacingArray.length; i++) {
-                            labeler = nsObj.Axis.Labeler[parse]($(e), axis, labels);
+                            labeler = ns.core.Labeler[parse]($(e), axis, labels);
                             labeler.spacing(spacingArray[i]);
                             axis.labelers().add( labeler );
                         }
@@ -54,12 +46,12 @@ if (!window.multigraph.Axis) {
             return labels;
         };
 
-        nsObj.Axis.Labels.prototype[serialize] = function () {
+        ns.core.Labels.prototype[serialize] = function () {
             var attributeStrings = [],
                 output = '<labels ',
                 i;
 
-            attributeStrings = ns.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
+            attributeStrings = window.multigraph.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
             if (this.formatter() !== undefined) {
                 attributeStrings.push('format="' + this.formatter() + '"');
             }
@@ -87,4 +79,4 @@ if (!window.multigraph.Axis) {
         };
 
     });
-}(window.multigraph));
+});

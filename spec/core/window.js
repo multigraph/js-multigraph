@@ -3,7 +3,7 @@
 describe("Window", function () {
     "use strict";
 
-    var Window = window.multigraph.Window,
+    var Window = window.multigraph.core.Window,
         w,
         defaultValues;
 

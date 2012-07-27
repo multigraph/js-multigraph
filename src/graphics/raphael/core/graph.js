@@ -1,11 +1,7 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.graphics.raphael", function (ns) {
     "use strict";
 
-    ns.raphaelMixin.add(function (ns) {
+    ns.mixin.add(function (ns) {
         var Graph = ns.Graph;
 
         Graph.respondsTo("render", function (paper, width, height) {
@@ -44,4 +40,4 @@ if (!window.multigraph) {
 
     });
 
-}(window.multigraph));
+});

@@ -1,27 +1,19 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-if (!window.multigraph.Axis) {
-    window.multigraph.Axis = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
-    var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
-        attributes = ns.utilityFunctions.getKeys(defaultValues.horizontalaxis.grid),
+    var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.horizontalaxis.grid),
         Grid = new window.jermaine.Model( "Grid", function () {
             this.hasA("color").which.validatesWith(function (color) {
-                return color instanceof ns.math.RGBColor;
+                return color instanceof window.multigraph.math.RGBColor;
             });
             this.hasA("visible").which.validatesWith(function (visible) {
                 return visible === "true" || visible === "false";
             });
 
-            ns.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis.grid, attributes);
+            window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis.grid, attributes);
         });
 
-    ns.Axis.Grid = Grid;
+    ns.Grid = Grid;
 
-}(window.multigraph));
+});

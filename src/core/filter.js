@@ -1,38 +1,20 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-if (!window.multigraph.Plot) {
-    window.multigraph.Plot = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
     var Filter,
-        Option,
-        defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
-        attributes = ns.utilityFunctions.getKeys(defaultValues.plot.filter);
-
-    if (ns.Plot.Filter && ns.Plot.Filter.Option) {
-        Option = ns.Plot.Filter.Option;
-    }
+        defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.plot.filter);
 
     Filter = new window.jermaine.Model( "Filter", function () {
         this.hasMany("options").which.validatesWith(function (option) {
-            return option instanceof ns.Plot.Filter.Option;
+            return option instanceof ns.FilterOption;
         });
         this.hasA("type").which.validatesWith(function (type) {
             return typeof(type) === "string";
         });
 
-        ns.utilityFunctions.insertDefaults(this, defaultValues.plot.filter, attributes);
+        window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.plot.filter, attributes);
     });
 
-    ns.Plot.Filter = Filter;
-
-    if (Option) {
-        ns.Plot.Filter.Option = Option;
-    }
-
-}(window.multigraph));
+    ns.Filter = Filter;
+});

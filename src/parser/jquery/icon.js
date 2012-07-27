@@ -1,29 +1,25 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
     "use strict";
 
     var scalarAttributes = ["height", "width", "border"];
 
-    ns.jQueryXMLMixin.add(function (nsObj, parse, serialize) {
+    ns.mixin.add(function (ns, parse, serialize) {
         
-        nsObj.Legend.Icon[parse] = function (xml) {
-            var icon = new nsObj.Legend.Icon();
+        ns.core.Icon[parse] = function (xml) {
+            var icon = new ns.core.Icon();
             if (xml) {
-                icon.height(nsObj.utilityFunctions.parseIntegerOrUndefined(xml.attr("height")));
-                icon.width(nsObj.utilityFunctions.parseIntegerOrUndefined(xml.attr("width")));
-                icon.border(nsObj.utilityFunctions.parseIntegerOrUndefined(xml.attr("border")));
+                icon.height(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr("height")));
+                icon.width(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr("width")));
+                icon.border(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr("border")));
             }
             return icon;
         };
         
-        nsObj.Legend.Icon.prototype[serialize] = function () {
+        ns.core.Icon.prototype[serialize] = function () {
             var attributeStrings = [],
                 output = '<icon ';
 
-            attributeStrings = ns.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
+            attributeStrings = window.multigraph.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
 
             output += attributeStrings.join(' ') + '/>';
 
@@ -31,4 +27,4 @@ if (!window.multigraph) {
         };
 
     });
-}(window.multigraph));
+});

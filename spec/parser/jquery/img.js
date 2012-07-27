@@ -4,7 +4,7 @@
 describe("Background Img parsing", function () {
     "use strict";
 
-    var Img = window.multigraph.Background.Img,
+    var Img = window.multigraph.core.Img,
         xmlString = '<img'
         +   ' src="http://www.example.com/rad_ferret.gif"'
         +   ' frame="plot"'
@@ -16,7 +16,7 @@ describe("Background Img parsing", function () {
         image;
 
     beforeEach(function () {
-        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
         $xml = $(xmlString);
         image = Img.parseXML($xml);
     });

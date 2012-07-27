@@ -1,20 +1,12 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-if (!window.multigraph.Axis) {
-    window.multigraph.Axis = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
     "use strict";
 
     var scalarAttributes = ["allowed", "min", "max"];
 
-    ns.jQueryXMLMixin.add(function (nsObj, parse, serialize) {
+    ns.mixin.add(function (ns, parse, serialize) {
         
-        nsObj.Axis.Pan[parse] = function (xml) {
-            var pan = new nsObj.Axis.Pan();
+        ns.core.Pan[parse] = function (xml) {
+            var pan = new ns.core.Pan();
             if (xml) {
                 pan.allowed(xml.attr("allowed"));
                 pan.min(xml.attr("min"));
@@ -23,11 +15,11 @@ if (!window.multigraph.Axis) {
             return pan;
         };
         
-        nsObj.Axis.Pan.prototype[serialize] = function () {
+        ns.core.Pan.prototype[serialize] = function () {
             var attributeStrings = [],
                 output = '<pan ';
 
-            attributeStrings = ns.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
+            attributeStrings = window.multigraph.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
 
             output += attributeStrings.join(' ') + '/>';
 
@@ -35,4 +27,4 @@ if (!window.multigraph.Axis) {
         };
 
     });
-}(window.multigraph));
+});

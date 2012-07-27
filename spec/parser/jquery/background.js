@@ -3,13 +3,13 @@
 describe("Background parsing", function () {
     "use strict";
 
-    var Background = window.multigraph.Background,
+    var Background = window.multigraph.core.Background,
         xmlString = '<background color="0x123456"/>',
         $xml,
         b;
 
     beforeEach(function () {
-        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
         $xml = $(xmlString);
         b = Background.parseXML($xml);
     });
@@ -23,11 +23,11 @@ describe("Background parsing", function () {
     });
 
     describe("Img parsing", function () {
-        var Img = window.multigraph.Background.Img;
+        var Img = window.multigraph.core.Img;
 
         beforeEach(function () {
             xmlString = '<background color="0x123456"><img src="http://www.example.com/corgi_pool.gif"/></background>';
-            window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
+            window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
             $xml = $(xmlString);
             b = Background.parseXML($xml);
         });

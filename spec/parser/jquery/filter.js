@@ -3,13 +3,13 @@
 describe("Plot Filter parsing", function () {
     "use strict";
 
-    var Filter = window.multigraph.Plot.Filter,
+    var Filter = window.multigraph.core.Filter,
         xmlString = '<filter type="number"/>',
         $xml,
         f;
 
     beforeEach(function () {
-        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
 	$xml = $(xmlString);
         f = Filter.parseXML($xml);
     });
@@ -30,11 +30,11 @@ describe("Plot Filter parsing", function () {
     });
 
     describe("Option parsing", function () {
-        var Option = window.multigraph.Plot.Filter.Option;
+        var FilterOption = window.multigraph.core.FilterOption;
 
         beforeEach(function () {
             xmlString = '<filter type="number"><option name="fred" value="jim"/></filter>';
-            window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
+            window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
             $xml = $(xmlString);
             f = Filter.parseXML($xml);
         });
@@ -42,7 +42,7 @@ describe("Plot Filter parsing", function () {
         it("should be able to parse a filter with a child from XML", function () {
             expect(f).not.toBeUndefined();
             expect(f instanceof Filter).toBe(true);
-            expect(f.options().at(0) instanceof Option).toBe(true);
+            expect(f.options().at(0) instanceof FilterOption).toBe(true);
         });
 
         it("should be able to parse a filter with multiple children from XML", function () {

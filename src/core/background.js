@@ -1,33 +1,19 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
-    var Img,
-        Background,
-        defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
-        attributes = ns.utilityFunctions.getKeys(defaultValues.background);
-
-    if (ns.Background && ns.Background.Img) {
-        Img = ns.Background.Img;
-    }
+    var Background,
+        defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.background);
 
     Background = new window.jermaine.Model( "Background", function () {
         this.hasA("color").which.validatesWith(function (color) {
-            return color instanceof ns.math.RGBColor;
-        }).defaultsTo(ns.math.RGBColor.parse(defaultValues.background.color));
-//        this.hasAn("img").which.isA(ns.Background.Img);
+            return color instanceof window.multigraph.math.RGBColor;
+        }).defaultsTo(window.multigraph.math.RGBColor.parse(defaultValues.background.color));
         this.hasA("img").which.validatesWith(function (img) {
-            return img instanceof ns.Background.Img;
+            return img instanceof ns.Img;
         });
     });
 
     ns.Background = Background;
 
-    if (Img) {
-        ns.Background.Img = Img;
-    }
-
-}(window.multigraph));
+});

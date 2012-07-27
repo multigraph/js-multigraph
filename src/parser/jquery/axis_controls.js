@@ -1,30 +1,22 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-if (!window.multigraph.Axis) {
-    window.multigraph.Axis = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
     "use strict";
 
     var scalarAttributes = ["visible"];
-    ns.jQueryXMLMixin.add(function (nsObj, parse, serialize) {
+    ns.mixin.add(function (ns, parse, serialize) {
         
-        nsObj.Axis.AxisControls[parse] = function (xml) {
-            var axiscontrols = new nsObj.Axis.AxisControls();
+        ns.core.AxisControls[parse] = function (xml) {
+            var axiscontrols = new ns.core.AxisControls();
             if (xml) {
                 axiscontrols.visible(xml.attr("visible"));
             }
             return axiscontrols;
         };
         
-        nsObj.Axis.AxisControls.prototype[serialize] = function () {
+        ns.core.AxisControls.prototype[serialize] = function () {
             var attributeStrings = [],
                 output = '<axiscontrols ';
 
-            attributeStrings = ns.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
+            attributeStrings = window.multigraph.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
 
             output += attributeStrings.join(' ') + '/>';
 
@@ -32,4 +24,4 @@ if (!window.multigraph.Axis) {
         };
 
     });
-}(window.multigraph));
+});

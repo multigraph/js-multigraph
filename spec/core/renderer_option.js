@@ -1,17 +1,17 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
 
-describe("Plot Renderer Option", function () {
+describe("core.RendererOption", function () {
     "use strict";
 
-    var Option = window.multigraph.Plot.Renderer.Option,
+    var RendererOption = window.multigraph.core.RendererOption,
         option;
 
     beforeEach(function () {
-        option = new Option('barwidth', '2');
+        option = new RendererOption('barwidth', '2');
     });
 
-    it("should be able to create a Renderer Option", function () {
-        expect(option instanceof Option).toBe(true);
+    it("should be able to create a Renderer.RendererOption", function () {
+        expect(option instanceof RendererOption).toBe(true);
     });
 
     describe("name attribute", function () {

@@ -3,13 +3,13 @@
 describe("Graph Title parsing", function () {
     "use strict";
 
-    var Title = window.multigraph.Title,
+    var Title = window.multigraph.core.Title,
         xmlString = '<title color="0xfffaab" bordercolor="0x127752" border="2" opacity="0" padding="4" cornerradius="10" base="0 0" position="-1 1" anchor="1 1">Cool Cats</title>',
         $xml,
         title;
 
     beforeEach(function () {
-        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
         $xml = $(xmlString);
         title = Title.parseXML($xml);
     });

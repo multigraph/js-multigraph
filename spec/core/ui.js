@@ -3,7 +3,7 @@
 describe("UI", function () {
     "use strict";
 
-    var UI = window.multigraph.UI,
+    var UI = window.multigraph.core.UI,
         ui;
 
     beforeEach(function () {

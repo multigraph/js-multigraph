@@ -1,27 +1,23 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
     "use strict";
 
     var scalarAttributes = ["border"];
-    ns.jQueryXMLMixin.add(function(nsObj, parse, serialize) {
+    ns.mixin.add(function(ns, parse, serialize) {
         
-        nsObj.Plotarea[parse] = function (xml) {
-            var plotarea = new nsObj.Plotarea();
+        ns.core.Plotarea[parse] = function (xml) {
+            var plotarea = new ns.core.Plotarea();
             if (xml) {
-                plotarea.margin().bottom(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr("marginbottom")));
-                plotarea.margin().left(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr("marginleft")));
-                plotarea.margin().top(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr("margintop")));
-                plotarea.margin().right(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr("marginright")));
-                plotarea.border(ns.utilityFunctions.parseIntegerOrUndefined(xml.attr("border")));
-                plotarea.bordercolor(nsObj.math.RGBColor.parse(xml.attr("bordercolor")));
+                plotarea.margin().bottom(window.multigraph.utilityFunctions.parseIntegerOrUndefined(xml.attr("marginbottom")));
+                plotarea.margin().left(window.multigraph.utilityFunctions.parseIntegerOrUndefined(xml.attr("marginleft")));
+                plotarea.margin().top(window.multigraph.utilityFunctions.parseIntegerOrUndefined(xml.attr("margintop")));
+                plotarea.margin().right(window.multigraph.utilityFunctions.parseIntegerOrUndefined(xml.attr("marginright")));
+                plotarea.border(window.multigraph.utilityFunctions.parseIntegerOrUndefined(xml.attr("border")));
+                plotarea.bordercolor(ns.math.RGBColor.parse(xml.attr("bordercolor")));
             }
             return plotarea;
         };
         
-        nsObj.Plotarea.prototype[serialize] = function () {
+        ns.core.Plotarea.prototype[serialize] = function () {
             var attributeStrings = [],
                 output = '<plotarea ';
 
@@ -34,7 +30,7 @@ if (!window.multigraph) {
                 attributeStrings.push('bordercolor="' + this.bordercolor().getHexString() + '"');
             }
 
-            attributeStrings = ns.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
+            attributeStrings = window.multigraph.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
 
             output += attributeStrings.join(' ') + '/>';
 
@@ -42,4 +38,4 @@ if (!window.multigraph) {
         };
 
     });
-}(window.multigraph));
+});

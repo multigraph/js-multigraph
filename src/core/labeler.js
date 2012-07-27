@@ -1,16 +1,8 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-if (!window.multigraph.Axis) {
-    window.multigraph.Axis = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
-    var defaultValues = ns.utilityFunctions.getDefaultValuesFromXSD(),
-        attributes = ns.utilityFunctions.getKeys(defaultValues.horizontalaxis.labels.label),
+    var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.horizontalaxis.labels.label),
         Labeler = new window.jermaine.Model( "Labeler", function () {
 
             this.hasA("axis").which.validatesWith(function (axis) {
@@ -27,10 +19,10 @@ if (!window.multigraph.Axis) {
             });
             this.hasA("angle").which.isA("number");
             this.hasA("position").which.validatesWith(function (position) {
-                return position instanceof ns.math.Point;
+                return position instanceof window.multigraph.math.Point;
             });
             this.hasA("anchor").which.validatesWith(function (anchor) {
-                return anchor instanceof ns.math.Point;
+                return anchor instanceof window.multigraph.math.Point;
             });
             this.hasA("spacing").which.validatesWith(function (spacing) {
                 //return DataValue.isInstance(start);
@@ -39,9 +31,9 @@ if (!window.multigraph.Axis) {
             this.hasA("densityfactor").which.isA("number");
 
             this.isBuiltWith("axis");
-            //ns.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis.labels.label, attributes);
+            //window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis.labels.label, attributes);
         });
 
-    ns.Axis.Labeler = Labeler;
+    ns.Labeler = Labeler;
 
-}(window.multigraph));
+});

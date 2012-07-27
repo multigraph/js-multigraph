@@ -3,13 +3,13 @@
 describe("Data Service parsing", function () {
     "use strict";
 
-    var Service = window.multigraph.Data.Service,
+    var Service = window.multigraph.core.Service,
         xmlString = '<service location="http://example.com/CoolnessOfCats/1990/2000"/>',
         $xml,
         service;
 
     beforeEach(function () {
-        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
         $xml = $(xmlString);
         service = Service.parseXML($xml);
     });

@@ -5,7 +5,7 @@ describe("Multigraph parsing", function () {
     "use strict";
 
     var Graph = window.multigraph.Graph,
-        Multigraph = window.multigraph.Multigraph,
+        Multigraph = window.multigraph.core.Multigraph,
         mg,
         xmlString = '<mugl>'
         +     '<window'
@@ -626,7 +626,7 @@ describe("Multigraph parsing", function () {
         $xml;
 
     beforeEach(function () {
-        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
 	$xml = $(xmlString);
         mg = Multigraph.parseXML($xml);
     });

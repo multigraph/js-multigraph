@@ -3,7 +3,7 @@
 describe("Legend", function () {
     "use strict";
 
-    var Legend = window.multigraph.Legend,
+    var Legend = window.multigraph.core.Legend,
         l;
 
     beforeEach(function () {
@@ -80,7 +80,7 @@ describe("Legend", function () {
     });
 
     describe("Icon", function () {
-        var Icon = window.multigraph.Legend.Icon,
+        var Icon = window.multigraph.core.Icon,
             icon;
 
         beforeEach(function () {

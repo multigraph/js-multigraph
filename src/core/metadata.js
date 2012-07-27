@@ -1,11 +1,7 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
-    var DataVariable = window.multigraph.Data.Variables.DataVariable,
+    var DataVariable = ns.DataVariable,
         MetaData,
         i;
 
@@ -99,4 +95,4 @@ if (!window.multigraph) {
     };
     
     ns.MetaData = MetaData;
-}(window.multigraph));
+});

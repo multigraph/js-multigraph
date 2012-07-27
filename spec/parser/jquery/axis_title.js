@@ -3,18 +3,18 @@
 describe("Axis Title parsing", function () {
     "use strict";
 
-    var Title = window.multigraph.Axis.Title,
+    var AxisTitle = window.multigraph.core.AxisTitle,
         xmlString = '<title position="-1 1" anchor="1 1" angle="70">A Title</title>',
         $xml,
         title;
 
     beforeEach(function () {
-        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
         $xml = $(xmlString);
-        title = Title.parseXML($xml);
+        title = AxisTitle.parseXML($xml);
     });
 
-    it("should be able to parse a Title from XML", function () {
+    it("should be able to parse a AxisTitle from XML", function () {
         expect(title).not.toBeUndefined();
     });
 
@@ -37,7 +37,7 @@ describe("Axis Title parsing", function () {
     it("should be able to parse a title from XML, serialize it and get the same XML as the original", function () {
         var xmlString2 = '<title position="1 -1" angle="-15"/>';
         expect(title.serialize() === xmlString).toBe(true);
-        title = Title.parseXML($(xmlString2));
+        title = AxisTitle.parseXML($(xmlString2));
 //        expect(title.serialize() === xmlString2).toBe(true);
     });
 

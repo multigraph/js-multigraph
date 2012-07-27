@@ -1,8 +1,4 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
     /*
@@ -119,4 +115,4 @@ if (!window.multigraph) {
 
     ns.DataValue = DataValue;
 
-}(window.multigraph));
+});

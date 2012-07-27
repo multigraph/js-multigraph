@@ -4,7 +4,7 @@
 describe("Axis Label parsing", function () {
     "use strict";
 
-    var Labeler = window.multigraph.Axis.Labeler,
+    var Labeler = window.multigraph.core.Labeler,
         xmlString = '<label'
         +    ' start="7"'
         +    ' angle="45"'
@@ -18,7 +18,7 @@ describe("Axis Label parsing", function () {
         labeler;
 
     beforeEach(function () {
-        window.multigraph.jQueryXMLMixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
         $xml = $(xmlString);
         labeler = Labeler.parseXML($xml);
     });
