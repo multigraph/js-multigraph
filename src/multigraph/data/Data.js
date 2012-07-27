@@ -30,7 +30,7 @@ if(!window.multigraph) {
 
     Data = new window.jermaine.Model( "Data", function () {
 
-        this.hasA("arraydata") // which is a temporary hack until we completely merge in ArrayData...
+        this.hasA("arraydata"); // which is a temporary hack until we completely merge in ArrayData...
 
         this.hasA("variables").which.validatesWith(function (variables) {
             return variables instanceof ns.Data.Variables;
