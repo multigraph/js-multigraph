@@ -1,15 +1,8 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-if (!window.multigraph.valuetype) {
-    window.multigraph.valuetype = {};
-}
-
 // This file defines a plain Javascript object called MTNumberValueType that has a single
 // number type property called 'value', a getRealValue() method that returns that value,
 // and a compareTo() method for comparing two MTNumberValueType instances.
 
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.valuetype", function (ns) {
     "use strict";
 
     var MTNumberValueType = new window.jermaine.Model("MTNumberValueType", function() {
@@ -35,8 +28,8 @@ if (!window.multigraph.valuetype) {
 
     });
 
-    ns.valuetype.mixinComparators(MTNumberValueType.prototype);
+    ns.mixinComparators(MTNumberValueType.prototype);
 
-    ns.valuetype.MTNumberValueType = MTNumberValueType;
+    ns.MTNumberValueType = MTNumberValueType;
 
-}(window.multigraph));
+});
