@@ -1,15 +1,7 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-if (!window.multigraph.utilityFunctions) {
-    window.multigraph.utilityFunctions = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.utilityFunctions", function (ns) {
     "use strict";
 
-    ns.utilityFunctions.getKeys = function (obj) {
+    ns.getKeys = function (obj) {
         var keys = [],
             key;
         for (key in obj) {
@@ -20,7 +12,7 @@ if (!window.multigraph.utilityFunctions) {
         return keys;
     };
 
-    ns.utilityFunctions.insertDefaults = function (elem, defaults, attributes) {
+    ns.insertDefaults = function (elem, defaults, attributes) {
         var i;
         for (i = 0; i < attributes.length; i++) {
             if (defaults[attributes[i]] !== undefined && typeof(defaults[attributes[i]]) !== "object") {
@@ -30,33 +22,33 @@ if (!window.multigraph.utilityFunctions) {
         return elem;
     };
 
-    ns.utilityFunctions.parseInteger = function (number) {
+    ns.parseInteger = function (number) {
         return parseInt(number, 10);
     };
 
-    ns.utilityFunctions.parseIntegerOrUndefined = function (number) {
+    ns.parseIntegerOrUndefined = function (number) {
         number = parseInt(number, 10);
         return isNaN(number) === true ? undefined : number;
     };
 
-    ns.utilityFunctions.parseDouble = function (number) {
+    ns.parseDouble = function (number) {
         return Number(number);
     };
 
-    ns.utilityFunctions.parseDoubleOrUndefined = function (number) {
+    ns.parseDoubleOrUndefined = function (number) {
         number = parseFloat(number);
         return isNaN(number) === true ? undefined : number;
     };
 
-    ns.utilityFunctions.getDefaultValuesFromXSD = function () {
+    ns.getDefaultValuesFromXSD = function () {
         
         return {
             "window": {
 //              "width": undefined,
 //              "height": undefined,
                 "border": 2,
-                "margin" : function() { return new ns.math.Insets(/*top*/2, /*left*/2, /*bottom*/2, /*right*/2); },
-                "padding": function() { return new ns.math.Insets(/*top*/5, /*left*/5, /*bottom*/5, /*right*/5); },
+                "margin" : function() { return new window.multigraph.math.Insets(/*top*/2, /*left*/2, /*bottom*/2, /*right*/2); },
+                "padding": function() { return new window.multigraph.math.Insets(/*top*/5, /*left*/5, /*bottom*/5, /*right*/5); },
                 "bordercolor": "0x000000"
             },
             "ui": {
@@ -93,15 +85,15 @@ if (!window.multigraph.utilityFunctions) {
             "background": {
                 "img": {
                     "src": undefined,
-                    "anchor": function () { return new ns.math.Point(-1,-1); },
-                    "base": function () { return new ns.math.Point(-1,-1); },
-                    "position": function () { return new ns.math.Point(0,0); },
+                    "anchor": function () { return new window.multigraph.math.Point(-1,-1); },
+                    "base": function () { return new window.multigraph.math.Point(-1,-1); },
+                    "position": function () { return new window.multigraph.math.Point(0,0); },
                     "frame": "padding"
                 },
                 "color": "0xffffff"
             },
             "plotarea": {
-                "margin" : function() { return new ns.math.Insets(/*top*/10 , /*left*/38, /*bottom*/35, /*right*/35); },
+                "margin" : function() { return new window.multigraph.math.Insets(/*top*/10 , /*left*/38, /*bottom*/35, /*right*/35); },
                 "border": 0,
                 "bordercolor": "0xeeeeee"
             },
@@ -147,8 +139,8 @@ if (!window.multigraph.utilityFunctions) {
 //                    "visible": "true",
                     "start": "0",
                     "angle": 0.0,
-                    "position": function () { return new ns.math.Point(0,0); },
-                    "anchor": function () { return new ns.math.Point(0,0); },
+                    "position": function () { return new window.multigraph.math.Point(0,0); },
+                    "anchor": function () { return new window.multigraph.math.Point(0,0); },
 //                    "spacing": "10000 5000 2000 1000 500 200 100 50 20 10 5 2 1 0.1 0.01 0.001",
 //                    "defaultDatetimeSpacing": "1000Y 500Y 200Y 100Y 50Y 20Y 10Y 5Y 2Y 1Y 6M 3M 2M 1M 7D 3D 2D 1D 12H 6H 3H 2H 1H",
                     "function": undefined,
@@ -180,23 +172,23 @@ if (!window.multigraph.utilityFunctions) {
                 "id": undefined,
                 "type": "number",
 //                "length": 1.0,
-                "length" : function() { return new ns.math.Displacement(1,0); },
-                "position": function() { return new ns.math.Point(0,0); },
+                "length" : function() { return new window.multigraph.math.Displacement(1,0); },
+                "position": function() { return new window.multigraph.math.Point(0,0); },
                 "pregap": 0,
                 "postgap": 0,
                 "anchor": -1,
-                "base": function() { return new ns.math.Point(-1,-1); },
+                "base": function() { return new window.multigraph.math.Point(-1,-1); },
                 "min": "auto",
                 "minoffset": 0,
                 //"minposition": -1,
-                "minposition": function() { return new ns.math.Displacement(-1,0); },
+                "minposition": function() { return new window.multigraph.math.Displacement(-1,0); },
                 "max": "auto",
                 "maxoffset": 0,
                 //"maxposition": 1,
-                "maxposition": function() { return new ns.math.Displacement(1,0); },
+                "maxposition": function() { return new window.multigraph.math.Displacement(1,0); },
                 "positionbase": undefined,
 //                "color": "0x000000",
-                "color": function() { return new ns.math.RGBColor(0,0,0); },
+                "color": function() { return new window.multigraph.math.RGBColor(0,0,0); },
                 "tickmin": -3,
                 "tickmax": 3,
                 "highlightstyle": "axis",
@@ -364,5 +356,4 @@ if (!window.multigraph.utilityFunctions) {
         };
         
     };
-
-}(window.multigraph));
+});

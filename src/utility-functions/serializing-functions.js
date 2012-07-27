@@ -1,15 +1,7 @@
-if (!window.multigraph) {
-    window.multigraph = {};
-}
-
-if (!window.multigraph.utilityFunctions) {
-    window.multigraph.utilityFunctions = {};
-}
-
-(function (ns) {
+window.multigraph.util.namespace("window.multigraph.utilityFunctions", function (ns) {
     "use strict";
 
-    ns.utilityFunctions.serializeScalarAttributes = function (elem, scalarAttributes, attributeStrings) {
+    ns.serializeScalarAttributes = function (elem, scalarAttributes, attributeStrings) {
         var i;
 
         for (i = 0; i < scalarAttributes.length; i++) {
@@ -21,7 +13,7 @@ if (!window.multigraph.utilityFunctions) {
         return attributeStrings;
     };
 
-    ns.utilityFunctions.serializeChildModels = function (elem, children, childStrings, serialize) {
+    ns.serializeChildModels = function (elem, children, childStrings, serialize) {
         var i;
 
         for (i = 0; i < children.length; i++) {
@@ -32,5 +24,4 @@ if (!window.multigraph.utilityFunctions) {
 
         return childStrings;
     };
-
-}(window.multigraph));
+});

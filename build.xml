@@ -99,6 +99,7 @@
 
   <target name="concatenate">
     <concat destfile="${build.dir}/multigraph.js" fixlastline="yes" eol="lf">
+      <filelist dir="${lib.dir}" files="${lib.dependencies}" />
       <path refid="path.multigraph-core-js"/>
       <path refid="path.jquery-xml-handler-js"/>
       <path refid="path.graphics-raphael-js"/>
