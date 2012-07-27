@@ -11,10 +11,10 @@
 -->
   <path id="path.multigraph-core-js">
     <fileset dir="src/utility-functions" includes="**/*.js" />
-    <filelist dir="src/core" files="DataValue.js" />
+    <filelist dir="src/core" files="data_value.js" />
     <fileset dir="src/math" includes="**/*.js" />
-    <filelist dir="src/core" files="DataVariable.js metadata.js" />
-    <fileset dir="src/core" includes="**/*.js" excludes="src/core/DataValue.js DataVariable.js metadata.js" />
+    <filelist dir="src/core" files="data_variable.js metadata.js" />
+    <fileset dir="src/core" includes="**/*.js" excludes="src/core/data_value.js data_variable.js metadata.js" />
   </path>
   <path id="path.parser-jquery-js">
     <filelist dir="src/parser/jquery" files="jquery_mixin.js"/>
@@ -22,12 +22,12 @@
   </path>
   <path id="path.graphics-raphael-js">
     <filelist dir="src/graphics/raphael" files="raphael.js"/>
-    <filelist dir="src/graphics/raphael" files="RaphaelMixin.js"/>
-    <fileset dir="src/graphics/raphael" includes="**/*.js" excludes="raphael.js RaphaelMixin.js" />
+    <filelist dir="src/graphics/raphael" files="raphael_mixin.js"/>
+    <fileset dir="src/graphics/raphael" includes="**/*.js" excludes="raphael.js raphael_mixin.js" />
   </path>
   <path id="path.graphics-canvas-js">
-    <filelist dir="src/graphics/canvas" files="CanvasMixin.js"/>
-    <fileset dir="src/graphics/canvas" includes="**/*.js" excludes="CanvasMixin.js" />
+    <filelist dir="src/graphics/canvas" files="canvas_mixin.js"/>
+    <fileset dir="src/graphics/canvas" includes="**/*.js" excludes="canvas_mixin.js" />
   </path>
   <path id="path.spec-js">
     <fileset dir="spec" includes="**/*.js" />
