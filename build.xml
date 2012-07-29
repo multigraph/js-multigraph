@@ -11,7 +11,6 @@
 -->
   <path id="path.multigraph-core-js">
     <fileset dir="src/utility-functions" includes="**/*.js" />
-    <filelist dir="src" files="ns.js" />
     <filelist dir="src/core" files="data_value.js" />
     <fileset dir="src/math" includes="**/*.js" />
     <filelist dir="src/core" files="data_variable.js metadata.js" />
