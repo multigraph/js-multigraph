@@ -1,6 +1,6 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
 
-describe(.core.DatatipsVariable parsing", function () {
+describe("DatatipsVariable parsing", function () {
     "use strict";
 
     var Variable = window.multigraph.core.DatatipsVariable,
