@@ -6,10 +6,10 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         ns.PointlineRenderer.hasA("first");
         ns.PointlineRenderer.hasA("context");
 
-        ns.PointlineRenderer.respondsTo("begin", function() {
+        ns.PointlineRenderer.respondsTo("begin", function(context) {
+            this.context(context);
             this.first(true);
-            this.context(window.multigraph.graphics.canvas.globalCanvasContext);
-            this.context().beginPath();
+            context.beginPath();
         });
         ns.PointlineRenderer.respondsTo("dataPoint", function(datap) {
             var p = this.transformPoint(datap);

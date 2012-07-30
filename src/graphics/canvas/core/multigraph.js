@@ -19,8 +19,6 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                 this.canvas($("<canvas id=\""+canvasid+"\" width=\""+this.width()+"\" height=\""+this.height()+"\"/>").appendTo(this.$div().empty())[0]);
                 // get the canvas context; store ref to it in this.context()
                 this.context(this.canvas().getContext('2d'));
-                //NOTE:!!!!!
-                window.multigraph.graphics.canvas.globalCanvasContext = this.context();
             }
             this.render();
         });
