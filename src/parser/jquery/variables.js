@@ -5,14 +5,14 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
 
     ns.mixin.add(function (ns, parse, serialize) {
 
-        ns.core.Variables[parse] = function (xml) {
+        ns.core.Variables[parse] = function (xml, data) {
             var variables = new ns.core.Variables();
             if (xml) {
                 variables.missingvalue(xml.attr("missingvalue"));
                 variables.missingop(xml.attr("missingop"));
                 if (xml.find(">variable").length > 0) {
                     $.each(xml.find(">variable"), function (i,e) {
-                        variables.variable().add( ns.core.DataVariable[parse]($(e)) );
+                        variables.variable().add( ns.core.DataVariable[parse]($(e), data) );
                     });
                 }
             }

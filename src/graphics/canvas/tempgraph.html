@@ -9,7 +9,6 @@
 
   <script type="text/javascript" src="../../../lib/jermaine/jermaine.js"></script>
   <script type="text/javascript" src="../../../lib/util/util.js"></script>
-
 <!-- 
   The lines between BEGIN_ANT_LINES and END_ANT_LINES below are inserted/maintained automatically
   by ant.  Do NOT edit them by hand; if you do, your edits will be lost next time ant is run.
@@ -130,7 +129,7 @@ $(document).ready(function() {
 
   var Multigraph = window.multigraph.core.Multigraph;
 
-  var multigraphPromise = Multigraph.createCanvasGraph("mygraph", "./mymugl.xml");
+  var multigraphPromise = Multigraph.createCanvasGraph("mygraph", "./tempgraph.xml");
 
   multigraphPromise.done(function(multigraph) {
     console.log('got a multigraph now');

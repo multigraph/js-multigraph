@@ -105,7 +105,7 @@
     <replaceregexp flags="s">
       <regexp pattern="&lt;!--BEGIN_ANT_LINES--&gt;.*&lt;!--END_ANT_LINES--&gt;"/>
       <substitution expression="&lt;!--BEGIN_ANT_LINES--&gt;${line.separator}${scripttags.mg-jq}${line.separator}${line.separator}${scripttags.canvas}${line.separator}&lt;!--END_ANT_LINES--&gt;"/>
-      <filelist dir="src/graphics/canvas" files="index.html"/>
+      <fileset dir="src/graphics/canvas" includes="**/*.html"/>
     </replaceregexp>
   </target>
 

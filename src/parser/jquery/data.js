@@ -18,7 +18,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
 
                 for (i = 0; i < children.length; i++) {
                     if (xml.find(children[i]).length > 0) {
-                        data[children[i]](ns.core[childModelNames[i]][parse](xml.find(children[i])));
+                        data[children[i]](ns.core[childModelNames[i]][parse](xml.find(children[i]), data));
                     }
                 }
 
@@ -42,13 +42,15 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     var dataValues = [];
                     var lines = $(values).text().split("\n");
                     for (i=0; i<lines.length; ++i) {
-                        var valuesThisRow = lines[i].split(/\s*,\s*/);
-                        var dataValuesThisRow = [];
-                        var j;
-                        for (j=0; j<valuesThisRow.length; ++j) {
-                            dataValuesThisRow.push( NumberValue.parse(valuesThisRow[j]) );
-                        }
-                        dataValues.push( dataValuesThisRow );
+			if (/\d/.test(lines[i])) { // skip line unless it contains a digit
+                            var valuesThisRow = lines[i].split(/\s*,\s*/);
+                            var dataValuesThisRow = [];
+                            var j;
+                            for (j=0; j<valuesThisRow.length; ++j) {
+				dataValuesThisRow.push( NumberValue.parse(valuesThisRow[j]) );
+                            }
+                            dataValues.push( dataValuesThisRow );
+			}
                     }
 
                     var ad = new ArrayData(dataVariables, dataValues);

@@ -18,8 +18,6 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             context.closePath();
 */
 
-            console.log(this.background());
-
             context.fillStyle = this.window().bordercolor().getHexString("#");
             var m = this.window().margin().left();
             context.fillRect(m,m,width-2*m,height-2*m);
@@ -36,6 +34,10 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 
             for (i=0; i<this.axes().size(); ++i) {
                 this.axes().at(i).render(this, context);
+            }
+
+            for (i=0; i<this.plots().size(); ++i) {
+                this.plots().at(i).render(this, context);
             }
         });
 

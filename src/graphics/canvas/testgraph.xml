@@ -1,0 +1,26 @@
+<mugl>
+  <background color="0xcccccc"/>
+    <horizontalaxis id="x"  min="0" max="6" />
+    <verticalaxis   id="y"  min="0" max="7" />
+    <plot>
+      <horizontalaxis ref="x">
+        <variable ref="x"/>
+      </horizontalaxis>
+      <verticalaxis ref="y">
+        <variable ref="y"/>
+      </verticalaxis>
+      <renderer type="line">
+      </renderer>
+    </plot>
+    <data>
+      <variables>
+        <variable column="0" id="x"/>
+        <variable column="1" id="y"/>
+      </variables>
+      <values>
+        1,2
+        3,4
+        5,1
+      </values>
+    </data>
+</mugl>
