@@ -3,7 +3,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
     ns.mixin.add(function (ns) {
 
-        window.multigraph.core.Img.respondsTo("render", function (graph, paper) {
+        window.multigraph.core.Img.respondsTo("render", function (graph, paper, set) {
             var that = this,
                 image = new Image(),
                 paddingLeft,
@@ -33,7 +33,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 }
                 x = bx + that.position().x() - ax;
                 y = by + that.position().y() - ay;
-                paper.image(that.src(), x, y, image.width, image.height);
+                paper.image(that.src(), x, y, image.width, image.height)
+                    .insertBefore(set);
             };
 
             image.src = this.src();

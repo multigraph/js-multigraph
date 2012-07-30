@@ -20,7 +20,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 .attr({"fill" : this.window().bordercolor().getHexString("#")})
                 .transform("S 1, -1, 0, " + (height/2));
 
-            this.background().render(paper, width, height, mb, this);
+            this.background().render(paper, width, height, mb, this, axesSet);
 
             paper.rect(paddingBox + this.plotarea().margin().left(),
                        paddingBox + this.plotarea().margin().right(),
