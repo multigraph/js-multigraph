@@ -167,7 +167,7 @@ describe("Plot parsing", function () {
             RendererOption = window.multigraph.core.RendererOption;
 
         beforeEach(function () {
-            xmlString = '<plot><renderer type="line"/></plot>';
+            xmlString = '<plot><renderer type="pointline"/></plot>';
             $xml = $(xmlString);
         });
 
@@ -180,7 +180,7 @@ describe("Plot parsing", function () {
         });
 
         it("should be able to parse a plot with a complex Renderer child from XML", function () {
-            xmlString = '<plot><renderer type="point"><option name="size" value="3"/><option name="shape" value="circle"/><option name="linewidth" value="7"/></renderer></plot>';
+            xmlString = '<plot><renderer type="pointline"><option name="size" value="3"/><option name="shape" value="circle"/><option name="linewidth" value="7"/></renderer></plot>';
             $xml = $(xmlString);
             plot = Plot.parseXML($xml);
             expect(plot).not.toBeUndefined();
@@ -197,7 +197,7 @@ describe("Plot parsing", function () {
         });
 
         it("should be able to parse a plot with a complex Renderer child from XML, serialize it and get the same XML as the original", function () {
-            xmlString = '<plot><renderer type="point"><option name="size" value="3"/><option name="shape" value="circle"/><option name="linewidth" value="7"/></renderer></plot>';
+            xmlString = '<plot><renderer type="pointline"><option name="size" value="3"/><option name="shape" value="circle"/><option name="linewidth" value="7"/></renderer></plot>';
             $xml = $(xmlString);
             plot = Plot.parseXML($xml);
             expect(plot.serialize()).toBe(xmlString);
@@ -209,7 +209,7 @@ describe("Plot parsing", function () {
             FilterOption = window.multigraph.core.FilterOption;
 
         beforeEach(function () {
-            xmlString = '<plot><filter type="line"/></plot>';
+            xmlString = '<plot><filter type="pointline"/></plot>';
             $xml = $(xmlString);
         });
 
@@ -222,7 +222,7 @@ describe("Plot parsing", function () {
         });
 
         it("should be able to parse a plot with a complex Filter child from XML", function () {
-            xmlString = '<plot><filter type="point"><option name="size" value="3"/><option name="shape" value="circle"/><option name="linewidth" value="7"/></filter></plot>';
+            xmlString = '<plot><filter type="pointline"><option name="size" value="3"/><option name="shape" value="circle"/><option name="linewidth" value="7"/></filter></plot>';
             $xml = $(xmlString);
             plot = Plot.parseXML($xml);
             expect(plot).not.toBeUndefined();
@@ -239,7 +239,7 @@ describe("Plot parsing", function () {
         });
 
         it("should be able to parse a plot with a complex Filter child from XML, serialize it and get the same XML as the original", function () {
-            xmlString = '<plot><filter type="point"><option name="size" value="3"/><option name="shape" value="circle"/><option name="linewidth" value="7"/></filter></plot>';
+            xmlString = '<plot><filter type="pointline"><option name="size" value="3"/><option name="shape" value="circle"/><option name="linewidth" value="7"/></filter></plot>';
             $xml = $(xmlString);
             plot = Plot.parseXML($xml);
             expect(plot.serialize() === xmlString).toBe(true);
@@ -297,7 +297,7 @@ describe("Plot parsing", function () {
             FilterOption = window.multigraph.core.FilterOption;
 
         beforeEach(function () {
-            xmlString = '<plot><renderer type="point"><option name="size" value="3"/><option name="shape" value="circle"/><option name="linewidth" value="7"/></renderer><filter type="point"><option name="size" value="3"/><option name="shape" value="circle"/><option name="linewidth" value="7"/></filter><datatips bgcolor="0x12fff6" bordercolor="0xfffbbb" format="number" bgalpha="1" border="2" pad="1"/></plot>';
+            xmlString = '<plot><renderer type="pointline"><option name="size" value="3"/><option name="shape" value="circle"/><option name="linewidth" value="7"/></renderer><filter type="pointline"><option name="size" value="3"/><option name="shape" value="circle"/><option name="linewidth" value="7"/></filter><datatips bgcolor="0x12fff6" bordercolor="0xfffbbb" format="number" bgalpha="1" border="2" pad="1"/></plot>';
             $xml = $(xmlString);
         });
 

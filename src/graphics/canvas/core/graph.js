@@ -37,7 +37,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             }
 
             for (i=0; i<this.plots().size(); ++i) {
-                this.plots().at(i).render(this, context);
+                this.plots().at(i).render(this);
             }
         });
 

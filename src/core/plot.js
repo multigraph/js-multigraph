@@ -32,6 +32,34 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
 
         window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.plot, attributes);
+
+        this.respondsTo("render", function(graph) {
+
+	    var data = this.data().arraydata();
+	    if (! data) { return; }
+
+	    var haxis = this.horizontalaxis();
+	    var vaxis = this.verticalaxis();
+
+            var variableIds = [];
+            var i;
+            for (i=0; i<this.variable().size(); ++i) {
+                variableIds.push( this.variable().at(i).id() );
+            }
+
+	    var iter = data.getIterator(variableIds, haxis.dataMin(), haxis.dataMax(), 0);
+
+            var renderer = this.renderer();
+            renderer.begin();
+	    while (iter.hasNext()) {
+		var datap = iter.next();
+                renderer.dataPoint(datap);
+	    }
+            renderer.end();
+
+        });
+
+
     });
 
     ns.Plot = Plot;

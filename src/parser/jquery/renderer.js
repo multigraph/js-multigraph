@@ -5,10 +5,17 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
 
     ns.mixin.add(function (ns, parse, serialize) {
 
-        ns.core.Renderer[parse] = function (xml) {
+        ns.core.Renderer[parse] = function (xml, plot) {
             var renderer;
             if (xml && xml.attr("type") !== undefined) {
-                renderer = new ns.core.Renderer(xml.attr("type"));
+                //TODO: change this later to create appropriate renderer subclass based on render type:
+                renderer = new ns.core.PointlineRenderer();
+                renderer.type(xml.attr("type"));
+                if (plot) {
+                    //TODO: horiz and vert axis should be required??  Currently, without the above 'if', some tests fail.
+                    renderer.horizontalaxis( plot.horizontalaxis() );
+                    renderer.verticalaxis( plot.verticalaxis() );
+                }
                 if (xml.find("option").length > 0) {
                     $.each(xml.find(">option"), function (i, e) {
                         renderer.options().add( ns.core.RendererOption[parse]($(e)) );

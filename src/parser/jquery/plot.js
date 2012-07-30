@@ -55,7 +55,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     plot.legend(PlotLegend[parse](xml.find("legend")));
                 }
                 if (xml.find("renderer").length > 0) {
-                    plot.renderer(Renderer[parse](xml.find("renderer")));
+                    plot.renderer(Renderer[parse](xml.find("renderer"), plot));
                 }
                 if (xml.find("filter").length > 0) {
                     plot.filter(Filter[parse](xml.find("filter")));
