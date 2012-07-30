@@ -30,16 +30,10 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 if (xml.attr("base")) {
                     axis.base(window.multigraph.math.Point.parse(xml.attr("base")));
                 }
-		if (xml.attr("minposition")) {
-                    // WTF???!!!  axis.minposition() setter isn't supposed to modify the attr if the value
-                    //   passed in is undefined, but somehow it does in this case.  Without the 
-                    //   'if (xml.attr("minposition"))' test here, the following call modifies the axis's
-                    //   minposition from -1+0 (the default) to 1+0, in the case where the MUGL doesn't
-                    //   specify a minposition!!!
+		if (xml.attr("minposition") !== undefined) {
                     axis.minposition(window.multigraph.math.Displacement.parse(xml.attr("minposition")));
 		}
-		if (xml.attr("maxposition")) {
-                    // same comment applies here...
+		if (xml.attr("maxposition") !== undefined) {
                     axis.maxposition(window.multigraph.math.Displacement.parse(xml.attr("maxposition")));
 		}
                 axis.min(xml.attr("min"));
