@@ -14,6 +14,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 x0 = paddingBox + this.plotarea().margin().left() + this.plotarea().border(),
                 y0 = this.window().margin().bottom() + windowBorder + this.window().padding().bottom() + this.plotarea().margin().bottom() + this.plotarea().border(),
                 axesSet = paper.set(),
+                plotsSet = paper.set(),
                 i;
 
             paper.rect(windowMarginLeft,windowMarginLeft,width-2*windowMarginLeft,height-2*windowMarginLeft)
@@ -36,6 +37,12 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 this.axes().at(i).render(this, paper, axesSet);
             }
             axesSet.transform("S 1, -1, 0, " + (height/2) + " t " + x0 + ", " + y0);
+
+            for (i = 0; i < this.plots().size(); ++i) {
+                this.plots().at(i).render(this, {"paper": paper,
+                                                 "set": plotsSet});
+            }
+            plotsSet.transform("S 1, -1, 0, " + (height/2) + " t " + x0 + ", " + y0);
         });
 
     });

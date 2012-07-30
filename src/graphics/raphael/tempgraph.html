@@ -9,7 +9,6 @@
 
   <script type="text/javascript" src="../../../lib/jermaine/jermaine.js"></script>
   <script type="text/javascript" src="../../../lib/util/util.js"></script>
-
 <!-- 
   The lines between BEGIN_ANT_LINES and END_ANT_LINES below are inserted/maintained automatically
   by ant.  Do NOT edit them by hand; if you do, your edits will be lost next time ant is run.
@@ -117,12 +116,14 @@
 <script type="text/javascript" src="core/img.js"></script>
 <script type="text/javascript" src="core/multigraph.js"></script>
 <script type="text/javascript" src="core/plot.js"></script>
+<script type="text/javascript" src="core/pointline_renderer.js"></script>
 <!--END_ANT_LINES-->
 
   <style type="text/css">
     #mygraph {
       width:  800px;
       height: 500px;
+      /*border: 1px solid #000;*/
       border: 0px;
     }
   </style>
@@ -133,19 +134,30 @@ $(document).ready(function() {
 
   var Multigraph = window.multigraph.core.Multigraph;
 
-  var multigraphPromise = Multigraph.createRaphaelGraph("mygraph", "./mymugl.xml");
+  var multigraphPromise = Multigraph.createRaphaelGraph("mygraph", "./tempgraph.xml");
 
   multigraphPromise.done(function(multigraph) {
-//    console.log('got a multigraph now');
+    console.log('got a multigraph now');
   });
 
   multigraphPromise.done(function(multigraph) {
-//    console.log('   its size is ' + multigraph.width() + ' X ' + multigraph.height());
+    console.log('   its size is ' + multigraph.width() + ' X ' + multigraph.height());
   });
 
+/*
   multigraphPromise.done(function(multigraph) {
-    multigraph.init();
+    var g = multigraph.graphs().at(0);
+    var i;
+    for (i=0; i<g.axes().size(); ++i) {
+      var a = g.axes().at(i);
+      console.log('axis #' + i + ':');
+      console.log('     type: ' + a.type());
+      console.log('  dataMin: ' + a.dataMin());
+      console.log('  dataMax: ' + a.dataMax());
+      console.log('    ratio: ' + a.axisToDataRatio());
+    }
   });
+*/
 
 });
 
