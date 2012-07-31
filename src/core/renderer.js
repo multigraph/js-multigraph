@@ -43,6 +43,56 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return output;
         });
 
+
+        this.respondsTo("setOptionFromString", function(name, stringValue, stringMin, stringMax) {
+            //if (typeof (this.newOptions()[name]) !== "function") {
+            if (!this.optionsMetadata[name]) {
+                // If this renderer has no option named "name", bail out immediately.  This should eventually
+                // throw an error, but for now we just quietly ignore it, to eliminate error conditions coming
+                // from unimplemented options.
+                console.log("WARNING: renderer has no option named '" + name + "'");
+                return;
+            }
+            var rendererOpt = new (this.optionsMetadata[name].type)();
+            rendererOpt.parseValue(stringValue);
+            if (this.verticalaxis()) {
+                if (stringMin !== undefined) {
+                    rendererOpt.min( ns.DataValue.parse( this.verticalaxis().type(), stringMin ));
+                }
+                if (stringMax !== undefined) {
+                    rendererOpt.max( ns.DataValue.parse( this.verticalaxis().type(), stringMax ));
+                }
+            }
+            this.newOptions()[name]().add(rendererOpt);
+
+        });
+
+	this.respondsTo("getOptionValue", function (optionName, /*optional:*/value) {
+	    var i,
+	        newOptions,
+    	        optionList;
+
+	    newOptions = this.newOptions();
+	    if (typeof(newOptions[optionName]) !== "function") {
+		throw new Error('unknown option "'+optionName+'"');
+	    }
+	    optionList = newOptions[optionName]();
+	    if (!optionList) {
+		throw new Error('unknown option "'+optionName+'"');
+	    }
+            //NOTE: options are stored in reverse order; default one is always in the '0' position.
+            //  Search through them starting at the END of the list, going backwards!
+	    for (i=optionList.size()-1; i>=0; --i) {
+		var option = optionList.at(i);
+		if (((option.min()===undefined) || (value===undefined) || option.min().le(value))
+		    &&
+		    ((option.max()===undefined) || (value===undefined) || option.max().gt(value))) {
+		    return option.value();
+		}
+	    }
+		
+	});
+
         // method must be overridden by subclass:
         this.respondsTo("begin", function() {
         });
@@ -86,6 +136,77 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 	    }
 	}
     };
+
+    Renderer.declareOptions = function (renderer, OptionsModelName, options) {
+	var i,
+	    OptionsModel,
+            optionsMetadata;
+
+	OptionsModel    = window.jermaine.Model(OptionsModelName, function() {});
+        optionsMetadata = {};
+	for (i=0; i<options.length; ++i) {
+            //NOTE: need closure to capture value of options[i].type as optionType, for use in
+            //  validation function
+            (function (optionType) { 
+	        OptionsModel.hasMany(options[i].name).eachOfWhich.validatesWith(function (v) {
+		    return v instanceof optionType;
+	        });
+            })(options[i].type);
+            optionsMetadata[options[i].name] = {
+                'type'    : options[i]['type'],
+                'default' :  options[i]['default']
+            };
+	}
+	renderer.hasA("newOptions").isImmutable().defaultsTo(function() { return new OptionsModel(); })
+        renderer.prototype.optionsMetadata = optionsMetadata;
+
+        renderer.isBuiltWith(function() {
+            // populate newOptions with default values stored in options metadata (which was populated by declareOptions):
+            var opt, ropt;
+            for (opt in this.optionsMetadata) {
+                ropt = new (this.optionsMetadata[opt].type)(this.optionsMetadata[opt]['default']);
+                this.newOptions()[opt]().add( ropt );
+            }
+        });
+
+    };
+
+
+    Renderer.Option = new window.jermaine.Model( "Renderer.Option", function() {
+	this.hasA("min").which.validatesWith(ns.DataValue.isInstance);
+	this.hasA("max").which.validatesWith(ns.DataValue.isInstance);
+    });
+
+
+    Renderer.RGBColorOption = new window.jermaine.Model( "Renderer.RGBColorOption", function() {
+        this.isA(Renderer.Option);
+	this.hasA("value").which.validatesWith(function (v) {
+	    return v instanceof window.multigraph.math.RGBColor;
+	});
+        this.isBuiltWith("value");
+	this.respondsTo("serializeValue", function() {
+	    return this.value().getHexString();
+	});
+	this.respondsTo("parseValue", function(string) {
+	    this.value( window.multigraph.math.RGBColor.parse(string) );
+	});
+
+    });
+
+    Renderer.NumberOption = new window.jermaine.Model( "Renderer.NumberOption", function() {
+        this.isA(Renderer.Option);
+	this.hasA("value").which.isA("number");
+        this.isBuiltWith("value");
+	this.respondsTo("serializeValue", function() {
+	    return this.value().toString();
+	});
+	this.respondsTo("parseValue", function(string) {
+	    this.value( parseInt(string, 10) );
+	});
+
+    });
+
+
 
     ns.Renderer = Renderer;
 });

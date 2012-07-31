@@ -21,7 +21,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             }
         });
         ns.PointlineRenderer.respondsTo("end", function() {
-            this.context().strokeStyle = "#0000ff";
+            var color = this.getOptionValue("linecolor");
+            this.context().strokeStyle = color.getHexString('#');
             this.context().stroke();
             this.context().closePath();
         });

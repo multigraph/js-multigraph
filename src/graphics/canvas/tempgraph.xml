@@ -11,7 +11,8 @@
       <verticalaxis ref="y">
         <variable ref="y"/>
       </verticalaxis>
-      <renderer type="line">
+      <renderer type="pointline">
+        <option name="linecolor" value="0xff00ff"/>
       </renderer>
     </plot>
     <data>

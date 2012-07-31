@@ -83,4 +83,217 @@ describe("Renderer", function () {
 
     });
 
+    describe("concrete Renderer subclass implementation", function() {
+
+        var TestRenderer;
+
+        beforeEach(function() {
+            TestRenderer = new window.jermaine.Model("TestRenderer", function() {
+                this.isA(Renderer);
+            });
+        });
+
+        var declareOptions = function() {
+            Renderer.declareOptions(TestRenderer, "TestRendererOptions", [
+	        {
+		    'name'          : 'linecolor',
+		    'type'          : Renderer.RGBColorOption,
+		    'default'       : new window.multigraph.math.RGBColor(0,0,1)
+	        },
+	        {
+		    'name'          : 'linewidth',
+		    'type'          : Renderer.NumberOption,
+		    'default'       : 1.23
+	        }
+            ]);
+        };
+
+        it("should be able to create an instance of a subclass of Renderer", function() {
+            var renderer = new TestRenderer();
+            expect(renderer instanceof TestRenderer).toBe(true);
+        });
+
+        it("instance of subclass of Renderer should also be an instance of Renderer", function() {
+            var renderer = new TestRenderer();
+            expect(renderer instanceof Renderer).toBe(true);
+        });
+
+        it("declareOptions should not throw an error", function () {
+            var renderer = new TestRenderer();
+            expect(function() {
+                declareOptions();
+            }).not.toThrow();
+        });
+
+        it("declareOptions should add a 'newOptions' attribute to TestRenderer", function() {
+            declareOptions();
+            var renderer = new TestRenderer();
+            expect(typeof(renderer.newOptions)).toEqual("function");
+        });
+
+        it("value of TestRenderer's newOptions attribute should be a model with 'linecolor' and 'linewidth' attributes", function () {
+            declareOptions();
+            var renderer = new TestRenderer();
+            expect(typeof(renderer.newOptions().linecolor)).toEqual("function");
+            expect(typeof(renderer.newOptions().linewidth)).toEqual("function");
+        });
+
+        it("should be able to add a Renderer.RGBColorOption instance to newOptions's 'linecolor'", function() {
+            declareOptions();
+            var renderer = new TestRenderer();
+            var color = new window.multigraph.math.RGBColor(0,1,0);
+            renderer.newOptions().linecolor().add( new Renderer.RGBColorOption(color) );
+            expect(renderer.newOptions().linecolor().at(1).value()).toEqual(color);
+        });
+
+        it("attempt to add anything other than a Renderer.RGBColorOption instance to newOptions's 'linecolor' should throw an error", function() {
+            declareOptions();
+            var renderer = new TestRenderer();
+            var color = new window.multigraph.math.RGBColor(0,1,0);
+            expect(function() {
+                renderer.newOptions().linecolor().add(new Renderer.NumberOption(4));
+            }).toThrow();
+            expect(function() {
+                renderer.newOptions().linecolor().add("NotAnOption");
+            }).toThrow();
+        });
+
+        it("should be able to add a Renderer.NumberOption instance to newOptions's 'linewidth'", function() {
+            declareOptions();
+            var renderer = new TestRenderer();
+            var width = 12.2;
+            renderer.newOptions().linewidth().add( new Renderer.NumberOption(width) );
+            expect(renderer.newOptions().linewidth().at(1).value()).toEqual(width);
+        });
+
+        it("attempt to add anything other than a Renderer.NumberOption instance to newOptions's 'linewidth' should throw an error", function() {
+            declareOptions();
+            var renderer = new TestRenderer();
+            var width = 12.2;
+            expect(function() {
+                renderer.newOptions().linewidth().add(new Renderer.RGBColorOption(new window.multigraph.math.RGBColor(1,0,0)));
+            }).toThrow();
+            expect(function() {
+                renderer.newOptions().linewidth().add("NotAnOption");
+            }).toThrow();
+        });
+
+        describe("TestRenderer instance's optionsMetadata object", function() {
+            var renderer;
+            beforeEach(function() {
+                declareOptions();
+                renderer = new TestRenderer();
+            });
+            it("should be an object", function() {
+                expect(typeof(renderer.optionsMetadata)).toEqual("object");
+            });
+            it("should have a linecolor attribute which is an object", function() {
+                expect(typeof(renderer.optionsMetadata.linecolor)).toEqual("object");
+            });
+            it("should have a linecolor attribute which is an object with a 'type' attribute whose value is correct", function() {
+                expect(renderer.optionsMetadata.linecolor.type).toEqual(Renderer.RGBColorOption);
+            });
+            it("should have a linewidth attribute which is an object", function() {
+                expect(typeof(renderer.optionsMetadata.linewidth)).toEqual("object");
+            });
+            it("should have a linewidth attribute which is an object with a 'type' attribute whose value is correct", function() {
+                expect(renderer.optionsMetadata.linewidth.type).toEqual(Renderer.NumberOption);
+            });
+            it("should have a linewidth attribute which is an object with a 'default' attribute whose value is correct", function() {
+                expect(renderer.optionsMetadata.linewidth.default).toEqual(1.23);
+            });
+        });
+
+
+        describe("TestRenderer's setOptionFromString method", function() {
+            var renderer;
+            beforeEach(function() {
+                declareOptions();
+                renderer = new TestRenderer();
+            });
+            it("should exist and be a function", function() {
+                expect(typeof(renderer.setOptionFromString)).toEqual("function");
+            });
+            it("should be able to set a linecolor value with no min or max setting", function() {
+                expect(function() {
+                    renderer.setOptionFromString("linecolor", "0xffff00");
+                }).not.toThrow();
+                expect(renderer.newOptions().linecolor().size()).toEqual(2);
+                expect(renderer.newOptions().linecolor().at(1) instanceof Renderer.RGBColorOption).toBe(true);
+                expect(renderer.newOptions().linecolor().at(1).serializeValue()).toEqual("0xffff00");
+            });
+            it("should be able to set a linecolor value with both a min and max setting", function() {
+                // NOTE: renderer needs a vertical axis with a defined "type" for this, so that it knows how to parse min/max values from strings!
+                var Axis = window.multigraph.core.Axis;
+                var DataValue = window.multigraph.core.DataValue;
+                var NumberValue = window.multigraph.core.NumberValue;
+                var vaxis = new Axis(Axis.VERTICAL);
+                vaxis.type(DataValue.NUMBER);
+                renderer.verticalaxis(vaxis);
+
+                expect(function() {
+                    renderer.setOptionFromString("linecolor", "0xffff00", new NumberValue(-1), new NumberValue(1));
+                }).not.toThrow();
+                expect(renderer.newOptions().linecolor().size()).toEqual(2);
+                expect(renderer.newOptions().linecolor().at(1) instanceof Renderer.RGBColorOption).toBe(true);
+                expect(renderer.newOptions().linecolor().at(1).serializeValue()).toEqual("0xffff00");
+                expect(renderer.newOptions().linecolor().at(1).min().getRealValue()).toEqual(-1);
+                expect(renderer.newOptions().linecolor().at(1).max().getRealValue()).toEqual(1);
+
+            });
+            it("should be able to set a couple linecolors with different min/max vals, and correctly fetch results using getOptionValue", function() {
+                // NOTE: renderer needs a vertical axis with a defined "type" for this, so that it knows how to parse min/max values from strings!
+                var Axis = window.multigraph.core.Axis;
+                var DataValue = window.multigraph.core.DataValue;
+                var NumberValue = window.multigraph.core.NumberValue;
+                var vaxis = new Axis(Axis.VERTICAL);
+                vaxis.type(DataValue.NUMBER);
+                renderer.verticalaxis(vaxis);
+
+                expect(function() {
+                    renderer.setOptionFromString("linecolor", "0xff0000", new NumberValue(0), new NumberValue(10));
+                    renderer.setOptionFromString("linecolor", "0x00ff00", new NumberValue(10), new NumberValue(20));
+                }).not.toThrow();
+                expect(renderer.newOptions().linecolor().size()).toEqual(3);
+
+                expect(renderer.getOptionValue("linecolor", new NumberValue(5)).getHexString()).toEqual("0xff0000");
+                expect(renderer.getOptionValue("linecolor", new NumberValue(15)).getHexString()).toEqual("0x00ff00");
+                expect(renderer.getOptionValue("linecolor", new NumberValue(25)).getHexString()).toEqual("0x0000ff");
+            });
+
+
+            it("defaults", function() {
+                // NOTE: renderer needs a vertical axis with a defined "type" for this, so that it knows how to parse min/max values from strings!
+                var Axis = window.multigraph.core.Axis;
+                var DataValue = window.multigraph.core.DataValue;
+                var NumberValue = window.multigraph.core.NumberValue;
+                var vaxis = new Axis(Axis.VERTICAL);
+                vaxis.type(DataValue.NUMBER);
+                renderer.verticalaxis(vaxis);
+
+                expect(renderer.newOptions().linecolor().size()).toEqual(1);
+                expect(renderer.newOptions().linewidth().size()).toEqual(1);
+
+                expect(renderer.getOptionValue("linecolor").getHexString()).toEqual("0x0000ff");
+                expect(renderer.getOptionValue("linewidth")).toEqual(1.23);
+
+/*
+                expect(function() {
+                    renderer.setOptionFromString("linecolor", "0xff0000", new NumberValue(0), new NumberValue(10));
+                    renderer.setOptionFromString("linecolor", "0x00ff00", new NumberValue(10), new NumberValue(20));
+                }).not.toThrow();
+
+                expect(renderer.getOptionValue("linecolor", new NumberValue(5)).getHexString()).toEqual("0xff0000");
+                expect(renderer.getOptionValue("linecolor", new NumberValue(15)).getHexString()).toEqual("0x00ff00");
+                // default value:
+                expect(renderer.getOptionValue("linecolor", new NumberValue(25)).getHexString()).toEqual("0x0000ff");
+*/
+
+            });
+
+
+        });
+
+    });
+
 });

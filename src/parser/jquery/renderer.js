@@ -7,7 +7,8 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
 
         ns.core.Renderer[parse] = function (xml, plot) {
             var rendererType,
-	        renderer;
+	        renderer,
+                opt;
             if (xml && xml.attr("type") !== undefined) {
 		rendererType = xml.attr("type");
                 renderer = ns.core.Renderer.create(rendererType);
@@ -21,7 +22,22 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 }
                 if (xml.find("option").length > 0) {
                     $.each(xml.find(">option"), function (i, e) {
-                        renderer.options().add( ns.core.RendererOption[parse]($(e)) );
+			var opt = ns.core.RendererOption[parse]($(e));
+                        renderer.options().add( opt );
+
+                        if (plot && plot.verticalaxis()) {
+                            renderer.setOptionFromString(opt.name(),
+                                                         opt.value(),
+                                                         opt.min(),
+                                                         opt.max());
+                        }
+/*
+			var ropt = new ns.core.RGBColorRendererOption();
+			ropt.value( ns.math.RGBColor.parse(opt.value()) );
+			ropt.min( ns.core.NumberValue.parse(opt.min()) );
+			ropt.max( ns.core.NumberValue.parse(opt.max()) );
+			renderer.newOptions()[opt.name()].add(ropt);
+*/
                     });
                 }
             }
