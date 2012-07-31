@@ -9,11 +9,11 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
         ns.Multigraph.hasA("$div");  // jQuery object for the Raphael paper's div
 
-        ns.Multigraph.hasA("width").which.isA('number');
-        ns.Multigraph.hasA("height").which.isA('number');
+        ns.Multigraph.hasA("width").which.isA("number");
+        ns.Multigraph.hasA("height").which.isA("number");
 
         ns.Multigraph.respondsTo("init", function() {
-            this.$div($('#'+this.divid()));
+            this.$div($("#"+this.divid()));
             this.width(this.$div().width());
             this.height(this.$div().height());
             if (this.paper()) {
@@ -35,7 +35,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
     window.multigraph.core.Multigraph.createRaphaelGraph = function (divid, muglurl) {
 
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
         ns.mixin.apply(window.multigraph.core);
 
         var muglPromise = $.ajax({

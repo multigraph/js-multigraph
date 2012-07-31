@@ -5,44 +5,48 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         var Graph = ns.Graph;
 
         Graph.respondsTo("render", function (paper, width, height) {
-            var windowMarginLeft = this.window().margin().left(),
-                windowBorder = this.window().border(),
-                mb = windowMarginLeft + windowBorder,
-                paddingBox = mb + this.window().padding().left(),
-                plotBoxWidth = this.paddingBox().width() - this.plotarea().margin().right() - this.plotarea().margin().left(),
-                plotBoxHeight = this.paddingBox().height() - this.plotarea().margin().top() - this.plotarea().margin().bottom(),
-                x0 = paddingBox + this.plotarea().margin().left() + this.plotarea().border(),
+            var windowBorder = this.window().border(),
+                x0 = this.window().margin().left() + windowBorder + this.window().padding().left() + this.plotarea().margin().left() + this.plotarea().border(),
                 y0 = this.window().margin().bottom() + windowBorder + this.window().padding().bottom() + this.plotarea().margin().bottom() + this.plotarea().border(),
+                backgroundSet = paper.set(),
                 axesSet = paper.set(),
                 plotsSet = paper.set(),
                 i;
 
-            paper.rect(windowMarginLeft,windowMarginLeft,width-2*windowMarginLeft,height-2*windowMarginLeft)
-                .attr({"fill" : this.window().bordercolor().getHexString("#")})
-                .transform("S 1, -1, 0, " + (height/2));
+            this.window().render(this, paper, backgroundSet, width, height);
 
-            this.background().render(paper, width, height, mb, this, axesSet);
+            this.background().render(this, paper, backgroundSet, width, height);
 
-            paper.rect(paddingBox + this.plotarea().margin().left(),
-                       paddingBox + this.plotarea().margin().right(),
-                       plotBoxWidth,
-                       plotBoxHeight)
-                .attr({"fill-opacity" : 0,
-                       "stroke-opacity" : 1,
-                       "stroke" : this.plotarea().bordercolor().getHexString("#"),
-                       "stroke-width": this.plotarea().border()})
-                .transform("S 1, -1, 0, " + (height/2));
-            
-            for (i=0; i<this.axes().size(); ++i) {
+            this.plotarea().render(this, paper, backgroundSet);
+
+            for (i = 0; i < this.axes().size(); ++i) {
                 this.axes().at(i).render(this, paper, axesSet);
             }
-            axesSet.transform("S 1, -1, 0, " + (height/2) + " t " + x0 + ", " + y0);
 
             for (i = 0; i < this.plots().size(); ++i) {
                 this.plots().at(i).render(this, {"paper": paper,
                                                  "set": plotsSet});
             }
+
+            this.transformSets(height, x0, y0, backgroundSet, axesSet, plotsSet);
+            this.fixLayers(backgroundSet, axesSet, plotsSet);
+        });
+
+        Graph.respondsTo("transformSets", function (height, x0, y0, backgroundSet, axesSet, plotsSet) {
+            var i;
+            for (i = 0; i < backgroundSet.length; i++) {
+                if (backgroundSet[i].type !== "image") {
+                    backgroundSet[i].transform("S 1, -1, 0, " + (height/2));
+                }
+            }
+            axesSet.transform("S 1, -1, 0, " + (height/2) + " t " + x0 + ", " + y0);
             plotsSet.transform("S 1, -1, 0, " + (height/2) + " t " + x0 + ", " + y0);
+        });
+
+        Graph.respondsTo("fixLayers", function (backgroundSet, axesSet, plotsSet) {
+            backgroundSet.insertAfter(axesSet);
+            axesSet.insertAfter(plotsSet);
+            plotsSet.toFront();
         });
 
     });
