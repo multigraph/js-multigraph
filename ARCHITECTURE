@@ -1,3 +1,47 @@
+diagram from code review meeting of 7/30/12:
+
+core                                  parser                       graphics/canvas
+----                                  ------                       ---------------
+     
+Multigraph                            Multigraph                   Multigraph
+|                                     |-parse(...)                 |
+|                                     |                            |-hasA("context")
+|                                     |                            |-createCanvasGraph(...) {
+|                                     |                            |   this.context(...)
+|                                     |                            | }
+|                                     |                            |-render() {
+|                                     |                            |   graph.render(this.context(), width, height)
+|                                     |                            | }
+|                                     |                            |
+|-Graph                               |-Graph                      |-Graph
+  |                                     |-parse(...)               | render(context, width, height) {
+  |                                     |                            |   axis.render(this, context)
+  |                                     |                            |   plot.render(this, context)
+  |                                     |                            | }
+  |                                     |                            |
+  |-Axis                                |-Axis                       |-Axis
+  |                                     | |-parse(...)               | |-render(graph, context) {...}
+  |                                     |                            |
+  |-Plot                                |-Plot                       |-Plot
+    |-render(graph,gContext) {          |-parse(...)                 |
+    |   renderer.begin(gContext)        |                            |
+    |   renderer.dataPoint()            |                            |
+    |   renderer.end()                  |                            |
+    | }                                 |                            |
+    |                                   |                            |
+    |-Renderer                          |-Renderer                   |-Renderer
+    |                                   | |-parse(...)               |
+    |                                   |                            |
+    |-PointlineRenderer                 |-PointlineRenderer          |-PointlineRenderer
+                                                                       |-begin(context)
+                                                                       |-dataPoint(p) {...}
+                                                                       |-end() {...}
+
+
+
+========================================================================
+
+
 This file describes the overall architecture of the Multigraph source
 code, at a very general level.  This documentation is under
 construction and is currently incomplete (and possibly inaccurate) in
