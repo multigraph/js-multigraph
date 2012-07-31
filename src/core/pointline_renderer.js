@@ -13,5 +13,10 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     });
 
+    ns.Renderer.addType({'type'  : "pointline",
+			 'model' : PointlineRenderer});
+    ns.Renderer.addType({'type'  : "line",
+			 'model' : PointlineRenderer});
+
     ns.PointlineRenderer = PointlineRenderer;
 });
