@@ -9,7 +9,7 @@ describe("Plot Filter parsing", function () {
         f;
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
 	$xml = $(xmlString);
         f = Filter.parseXML($xml);
     });
@@ -19,14 +19,14 @@ describe("Plot Filter parsing", function () {
     });
 
     it("should be able to parse a filter from XML and read its 'type' attribute", function () {
-        expect(f.type() === 'number').toBe(true);
+        expect(f.type() === "number").toBe(true);
     });
 
     it("should be able to parse a filter from XML, serialize it and get the same XML as the original", function () {
         var xmlString2 = '<filter type="datetime"/>';
-        expect(f.serialize() === xmlString).toBe(true);
+        expect(f.serialize()).toBe(xmlString);
 	f = Filter.parseXML($(xmlString2));
-        expect(f.serialize() === xmlString2).toBe(true);
+        expect(f.serialize()).toBe(xmlString2);
     });
 
     describe("Option parsing", function () {
@@ -34,7 +34,7 @@ describe("Plot Filter parsing", function () {
 
         beforeEach(function () {
             xmlString = '<filter type="number"><option name="fred" value="jim"/></filter>';
-            window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
+            window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
             $xml = $(xmlString);
             f = Filter.parseXML($xml);
         });
@@ -54,9 +54,9 @@ describe("Plot Filter parsing", function () {
 
         it("should be able to parse a filter with children from XML, serialize it and get the same XML as the original", function () {
             var xmlString2 = '<filter type="datetime"><option name="fred"/><option name="larry" value="curly"/><option name="moe" value="jim"/></filter>';
-            expect(f.serialize() === xmlString).toBe(true);
+            expect(f.serialize()).toBe(xmlString);
             f = Filter.parseXML($(xmlString2));
-            expect(f.serialize() === xmlString2).toBe(true);
+            expect(f.serialize()).toBe(xmlString2);
         });
 
     });

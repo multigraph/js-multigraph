@@ -16,8 +16,8 @@ describe("AxisControls", function () {
 
     describe("visible attribute", function () {
         it("should be able to set/get the visible attribute", function () {
-            axiscontrols.visible('false');
-            expect(axiscontrols.visible() === 'false').toBe(true);
+            axiscontrols.visible("false");
+            expect(axiscontrols.visible()).toBe("false");
         });
 
     });

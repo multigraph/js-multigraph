@@ -16,41 +16,41 @@ describe("Axis Zoom", function () {
 
     describe("allowed attribute", function () {
         it("should be able to set/get the allowed attribute", function () {
-            zoom.allowed('no');
-            expect(zoom.allowed() === 'no').toBe(true);
+            zoom.allowed("no");
+            expect(zoom.allowed()).toBe("no");
         });
 
         it("should be throw an error if the setter value is not 'yes' or 'no'", function () {
             expect(function () {
-                zoom.allowed('yes');
+                zoom.allowed("yes");
             }).not.toThrow();
             expect(function () {
-                zoom.allowed('nope');
-            }).toThrow(new Error('validator failed with parameter nope'));
+                zoom.allowed("nope");
+            }).toThrow(new Error("validator failed with parameter nope"));
         });
 
     });
 
     describe("min attribute", function () {
         it("should be able to set/get the min attribute", function () {
-            zoom.min('70');
-            expect(zoom.min() === '70').toBe(true);
+            zoom.min("70");
+            expect(zoom.min()).toBe("70");
         });
 
     });
 
     describe("max attribute", function () {
         it("should be able to set/get the max attribute", function () {
-            zoom.max('5');
-            expect(zoom.max() === '5').toBe(true);
+            zoom.max("5");
+            expect(zoom.max()).toBe("5");
         });
 
     });
 
     describe("anchor attribute", function () {
         it("should be able to set/get the anchor attribute", function () {
-            zoom.anchor('none');
-            expect(zoom.anchor() === 'none').toBe(true);
+            zoom.anchor("none");
+            expect(zoom.anchor()).toBe("none");
         });
 
     });

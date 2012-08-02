@@ -1,3 +1,5 @@
+/*global sprintf */
+
 window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
     var NumberFormatter = function (format) {
@@ -6,7 +8,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             throw new Error("format must be a string");
         }
         this.formatString = format;
-        testString = sprintf(format, 0)
+        testString = sprintf(format, 0);
         this.length = testString.length;
     };
 
@@ -15,7 +17,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     };
 
     NumberFormatter.prototype.getMaxLength = function () {
-        return this.length();
+        return this.length;
     };
 
     ns.NumberFormatter = NumberFormatter;

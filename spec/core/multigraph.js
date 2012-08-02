@@ -40,8 +40,8 @@ describe("Multigraph", function () {
 
         beforeEach(function () {
             g = new Graph(),
-            h = new Axis('horizontal'),
-            v = new Axis('vertical'),
+            h = new Axis("horizontal"),
+            v = new Axis("vertical"),
             w = new Window(),
             ui = new UI(),
             debug = new Debugger(),
@@ -53,7 +53,7 @@ describe("Multigraph", function () {
         });
 
         it("should be able to add a Graph to the Multigraph", function () {
-            var h2 = new Axis('horizontal');
+            var h2 = new Axis("horizontal");
             g.axes().add(h);
             g.axes().add(h2);
             g.axes().add(v);
@@ -67,15 +67,15 @@ describe("Multigraph", function () {
             g.plotarea(plotarea);
 
 
-            expect(mg.graphs().size() === 0).toBe(true);
+            expect(mg.graphs().size()).toBe(0);
             mg.graphs().add(g);
-            expect(mg.graphs().at(0) === g).toBe(true);
-            expect(mg.graphs().size() === 1).toBe(true);
+            expect(mg.graphs().at(0)).toBe(g);
+            expect(mg.graphs().size()).toBe(1);
         });
 
         it("should be able to add many Graphs to the Multigraph", function () {
             var g2 = new Graph(),
-                h2 = new Axis('horizontal');
+                h2 = new Axis("horizontal");
 
             g.axes().add(h);
             g.axes().add(h2);
@@ -101,9 +101,9 @@ describe("Multigraph", function () {
             mg.graphs().add(g2);
             mg.graphs().add(g);
 
-            expect(mg.graphs().size() === 2).toBe(true);
-            expect(mg.graphs().at(0) === g2).toBe(true);
-            expect(mg.graphs().at(1) === g).toBe(true);
+            expect(mg.graphs().size()).toBe(2);
+            expect(mg.graphs().at(0)).toBe(g2);
+            expect(mg.graphs().at(1)).toBe(g);
         });
 
     });

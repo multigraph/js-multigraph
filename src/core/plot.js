@@ -39,11 +39,11 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             // It can be any objectded by the driver -- usually some kind of graphics
             // context object.  It can also be omitted if a driver does not need it.
 
-	    var data = this.data().arraydata();
-	    if (! data) { return; }
+            var data = this.data().arraydata();
+            if (! data) { return; }
 
-	    var haxis = this.horizontalaxis();
-	    var vaxis = this.verticalaxis();
+            var haxis = this.horizontalaxis();
+            var vaxis = this.verticalaxis();
 
             var variableIds = [];
             var i;
@@ -51,14 +51,14 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 variableIds.push( this.variable().at(i).id() );
             }
 
-	    var iter = data.getIterator(variableIds, haxis.dataMin(), haxis.dataMax(), 0);
+            var iter = data.getIterator(variableIds, haxis.dataMin(), haxis.dataMax(), 0);
 
             var renderer = this.renderer();
             renderer.begin(graphicsContext);
-	    while (iter.hasNext()) {
+            while (iter.hasNext()) {
 		var datap = iter.next();
                 renderer.dataPoint(datap);
-	    }
+            }
             renderer.end();
 
         });

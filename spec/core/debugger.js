@@ -16,16 +16,16 @@ describe("Debugger", function () {
 
     describe("visible attribute", function () {
         it("should be able to set/get the visible attribute", function () {
-            debug.visible('yes');
-            expect(debug.visible() === 'yes').toBe(true);
+            debug.visible("yes");
+            expect(debug.visible()).toBe("yes");
         });
 
     });
 
     describe("fixed attribute", function () {
         it("should be able to set/get the fixed attribute", function () {
-            debug.fixed('no');
-            expect(debug.fixed() === 'no').toBe(true);
+            debug.fixed("no");
+            expect(debug.fixed()).toBe("no");
         });
 
     });

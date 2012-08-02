@@ -9,7 +9,7 @@ describe("Renderer.RendererOption parsing", function () {
         option;
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
 	$xml = $(xmlString);
         option = Option.parseXML($xml);
     });
@@ -19,26 +19,26 @@ describe("Renderer.RendererOption parsing", function () {
     });
 
     it("should be able to parse a option from XML and read its 'name' attribute", function () {
-        expect(option.name() === 'dotcolor').toBe(true);
+        expect(option.name()).toBe("dotcolor");
     });
 
     it("should be able to parse a option from XML and read its 'value' attribute", function () {
-        expect(option.value() === '0x222222').toBe(true);
+        expect(option.value()).toBe("0x222222");
     });
 
     it("should be able to parse a option from XML and read its 'min' attribute", function () {
-        expect(option.min()).toBe('10');
+        expect(option.min()).toBe("10");
     });
 
     it("should be able to parse a option from XML and read its 'max' attribute", function () {
-        expect(option.max()).toBe('15');
+        expect(option.max()).toBe("15");
     });
 
     it("should be able to parse a option from XML, serialize it and get the same XML as the original", function () {
         var xmlString2 = '<option name="linewidth" value="1" max="2"/>';
-        expect(option.serialize() === xmlString).toBe(true);
+        expect(option.serialize()).toBe(xmlString);
 	option = Option.parseXML($(xmlString2));
-        expect(option.serialize() === xmlString2).toBe(true);
+        expect(option.serialize()).toBe(xmlString2);
     });
 
 });

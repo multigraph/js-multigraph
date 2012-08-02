@@ -17,42 +17,42 @@ describe("Plotarea", function () {
     });
 
     it("should do that w thang", function() {
-        var w = new window.multigraph.core.Plotarea();
-        expect(w.margin().right() === defaultValues.plotarea.margin().right()).toBe(true);
+        var w = new Plotarea();
+        expect(w.margin().right()).toBe(defaultValues.plotarea.margin().right());
     });
 
     describe("margin attribute", function () {
         it("should be initilized to the correct default value", function() {
-            expect(p.margin().top() === defaultValues.plotarea.margin().top()).toBe(true);
-            expect(p.margin().left() === defaultValues.plotarea.margin().left()).toBe(true);
-            expect(p.margin().bottom() === defaultValues.plotarea.margin().bottom()).toBe(true);
-            expect(p.margin().right() === defaultValues.plotarea.margin().right()).toBe(true);
+            expect(p.margin().top()).toBe(defaultValues.plotarea.margin().top());
+            expect(p.margin().left()).toBe(defaultValues.plotarea.margin().left());
+            expect(p.margin().bottom()).toBe(defaultValues.plotarea.margin().bottom());
+            expect(p.margin().right()).toBe(defaultValues.plotarea.margin().right());
         });
         it("should be able to set/get the bottom attribute", function () {
             p.margin().bottom(5);
-            expect(p.margin().bottom() === 5).toBe(true);
+            expect(p.margin().bottom()).toBe(5);
         });
         it("should be able to set/get the left attribute", function () {
             p.margin().left(5);
-            expect(p.margin().left() === 5).toBe(true);
+            expect(p.margin().left()).toBe(5);
         });
         it("should be able to set/get the top attribute", function () {
             p.margin().top(5);
-            expect(p.margin().top() === 5).toBe(true);
+            expect(p.margin().top()).toBe(5);
         });
         it("should be able to set/get the right attribute", function () {
             p.margin().right(5);
-            expect(p.margin().right() === 5).toBe(true);
+            expect(p.margin().right()).toBe(5);
         });
     });
 
     describe("border attribute", function () {
         it("should be initilized to the correct default value", function() {
-            expect(p.border() === defaultValues.plotarea.border).toBe(true);
+            expect(p.border()).toBe(defaultValues.plotarea.border);
         });
         it("should be able to set/get the border attribute", function () {
             p.border(3);
-            expect(p.border() === 3).toBe(true);
+            expect(p.border()).toBe(3);
         });
 
     });

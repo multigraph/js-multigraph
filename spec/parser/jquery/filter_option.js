@@ -9,7 +9,7 @@ describe("Plot Filter Option parsing", function () {
         option;
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
 	$xml = $(xmlString);
         option = FilterOption.parseXML($xml);
     });
@@ -19,18 +19,18 @@ describe("Plot Filter Option parsing", function () {
     });
 
     it("should be able to parse a option from XML and read its 'name' attribute", function () {
-        expect(option.name() === 'dotsize').toBe(true);
+        expect(option.name()).toBe("dotsize");
     });
 
     it("should be able to parse a option from XML and read its 'value' attribute", function () {
-        expect(option.value() === '12').toBe(true);
+        expect(option.value()).toBe("12");
     });
 
     it("should be able to parse a option from XML, serialize it and get the same XML as the original", function () {
         var xmlString2 = '<option name="linewidth"/>';
-        expect(option.serialize() === xmlString).toBe(true);
+        expect(option.serialize()).toBe(xmlString);
 	option = FilterOption.parseXML($(xmlString2));
-        expect(option.serialize() === xmlString2).toBe(true);
+        expect(option.serialize()).toBe(xmlString2);
     });
 
 });

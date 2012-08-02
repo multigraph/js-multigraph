@@ -9,7 +9,7 @@ describe("Graph Title parsing", function () {
         title;
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
         $xml = $(xmlString);
         title = Title.parseXML($xml);
     });
@@ -20,7 +20,7 @@ describe("Graph Title parsing", function () {
     });
 
     it("should be able to parse a title from XML and read its 'border' attribute", function () {
-        expect(title.border() === '2').toBe(true);
+        expect(title.border()).toBe("2");
     });
 
     it("should be able to parse a title from XML and read its 'color' attribute", function () {
@@ -36,27 +36,27 @@ describe("Graph Title parsing", function () {
     });
 
     it("should be able to parse a title from XML and read its 'padding' attribute", function () {
-        expect(title.padding() === '4').toBe(true);
+        expect(title.padding()).toBe("4");
     });
 
     it("should be able to parse a title from XML and read its 'cornerradius' attribute", function () {
-        expect(title.cornerradius() === '10').toBe(true);
+        expect(title.cornerradius()).toBe("10");
     });
 
     it("should be able to parse a title from XML and read its 'base' attribute", function () {
-        expect(title.base() === '0 0').toBe(true);
+        expect(title.base()).toBe("0 0");
     });
 
     it("should be able to parse a title from XML and read its 'position' attribute", function () {
-        expect(title.position() === '-1 1').toBe(true);
+        expect(title.position()).toBe("-1 1");
     });
 
     it("should be able to parse a title from XML and read its 'anchor' attribute", function () {
-        expect(title.anchor() === '1 1').toBe(true);
+        expect(title.anchor()).toBe("1 1");
     });
 
     it("should be able to parse a title from XML and read its 'content'", function () {
-        expect(title.content() === 'Cool Cats').toBe(true);
+        expect(title.content()).toBe("Cool Cats");
     });
 
     it("should be able to parse a title from XML, serialize it and get the same XML as the original", function () {

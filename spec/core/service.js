@@ -16,9 +16,9 @@ describe("Data Service", function () {
 
     describe("location attribute", function () {
         it("should be able to set/get the location attribute", function () {
-            expect(service.location() === undefined).toBe(true);
-            service.location('http://example.com/CoolnessOfCats/1990/1995/');
-            expect(service.location() === 'http://example.com/CoolnessOfCats/1990/1995/').toBe(true);
+            expect(service.location()).toBe(undefined);
+            service.location("http://example.com/CoolnessOfCats/1990/1995/");
+            expect(service.location()).toBe("http://example.com/CoolnessOfCats/1990/1995/");
         });
 
     });

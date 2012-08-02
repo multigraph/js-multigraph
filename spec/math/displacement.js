@@ -17,11 +17,11 @@ describe("Displacement", function () {
     describe("a attribute", function () {
         it("should be able to set/get the a attribute with a value of 0.5", function () {
             d.a(0.5);
-            expect(d.a() === 0.5).toBe(true);
+            expect(d.a()).toBe(0.5);
         });
         it("should be able to set/get the a attribute with a value of 0.0", function () {
             d.a(0.0);
-            expect(d.a() === 0.0).toBe(true);
+            expect(d.a()).toBe(0.0);
         });
         it("should throw an error if a attribute is less than -1", function () {
             expect(function () {
@@ -39,11 +39,11 @@ describe("Displacement", function () {
     describe("b attribute", function () {
         it("should be able to set/get the b attribute with a value of 20", function () {
             d.b(20);
-            expect(d.b() === 20).toBe(true);
+            expect(d.b()).toBe(20);
         });
         it("should be able to set/get the b attribute with a value of 0", function () {
             d.b(0);
-            expect(d.b() === 0).toBe(true);
+            expect(d.b()).toBe(0);
         });
         it("should throw an error if b attribute is a floating point number", function () {
             expect(function () {
@@ -54,7 +54,7 @@ describe("Displacement", function () {
 
         it("should throw an error if b attribute is a string", function () {
             expect(function () {
-                d.b('fooya');
+                d.b("fooya");
             }).toThrow(new Error("fooya should be an integer"));
         });
 
@@ -64,7 +64,7 @@ describe("Displacement", function () {
         it("should return the correctly calculated value", function () {
             d.a(1.0);
             d.b(-20);
-            expect(d.calculateLength(100) === 80).toBe(true);
+            expect(d.calculateLength(100)).toBe(80);
         });
     });
 
@@ -72,45 +72,45 @@ describe("Displacement", function () {
         it("should return the correctly calculated value", function () {
             d.a(1.0);
             d.b(-20);
-            expect(d.calculateCoordinate(100) === 80).toBe(true);
+            expect(d.calculateCoordinate(100)).toBe(80);
         });
     });
 
     describe("parse method", function () {
         it("should parse '1+20' correctly", function () {
             var d2 = Displacement.parse("1+20");
-            expect(d2.a() === 1).toBe(true);
-            expect(d2.b() === 20).toBe(true);
+            expect(d2.a()).toBe(1);
+            expect(d2.b()).toBe(20);
         });
         it("should parse '0.5-10' correctly", function () {
             var d2 = Displacement.parse("0.5-10");
-            expect(d2.a() === 0.5).toBe(true);
-            expect(d2.b() === -10).toBe(true);
+            expect(d2.a()).toBe(0.5);
+            expect(d2.b()).toBe(-10);
         });
         it("should parse '1' correctly", function () {
             var d2 = Displacement.parse("1");
-            expect(d2.a() === 1).toBe(true);
-            expect(d2.b() === 0).toBe(true);
+            expect(d2.a()).toBe(1);
+            expect(d2.b()).toBe(0);
         });
         it("should parse '1.0' correctly", function () {
             var d2 = Displacement.parse("1.0");
-            expect(d2.a() === 1.0).toBe(true);
-            expect(d2.b() === 0).toBe(true);
+            expect(d2.a()).toBe(1.0);
+            expect(d2.b()).toBe(0);
         });
         it("should parse '0' correctly", function () {
             var d2 = Displacement.parse("0");
-            expect(d2.a() === 0).toBe(true);
-            expect(d2.b() === 0).toBe(true);
+            expect(d2.a()).toBe(0);
+            expect(d2.b()).toBe(0);
         });
         it("should parse '0.0' correctly", function () {
             var d2 = Displacement.parse("0.0");
-            expect(d2.a() === 0.0).toBe(true);
-            expect(d2.b() === 0).toBe(true);
+            expect(d2.a()).toBe(0.0);
+            expect(d2.b()).toBe(0);
         });
         it("should parse '-1' correctly", function () {
             var d2 = Displacement.parse("-1");
-            expect(d2.a() === -1).toBe(true);
-            expect(d2.b() === 0).toBe(true);
+            expect(d2.a()).toBe(-1);
+            expect(d2.b()).toBe(0);
         });
     });
 

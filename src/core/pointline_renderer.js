@@ -63,16 +63,16 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     };
 
     ns.Renderer.declareOptions(PointlineRenderer, "PointlineRendererOptions", [
-	    {
-		'name'          : 'linecolor',
-		'type'          : ns.Renderer.RGBColorOption,
-		'default'       : new window.multigraph.math.RGBColor(0,0,0)
-	    },
-	    {
-		'name'          : 'linewidth',
-		'type'          : ns.Renderer.NumberOption,
-		'default'       : 1
-	    }
+        {
+            'name'          : 'linecolor',
+            'type'          : ns.Renderer.RGBColorOption,
+            'default'       : new window.multigraph.math.RGBColor(0,0,0)
+        },
+        {
+            'name'          : 'linewidth',
+            'type'          : ns.Renderer.NumberOption,
+            'default'       : 1
+        }
     ]);
 
 
@@ -144,71 +144,71 @@ BarRendererOptions
         {
             'name'     : 'color',
             'type'     : RGBColorRendererOption,
-	    'defaults' : new RGBColor(0,0,0)
+            'defaults' : new RGBColor(0,0,0)
         },
         {
             'name'    : 'barwidth',
             'type'    : NumberRendererOption,
-	    'default' : 1
+            'default' : 1
 
         },
 
 
 
     ns.Renderer.declareOptions(PointlineRenderer, [
-	    {
-		'name'          : 'linecolor',
-		'type'          : ns.Renderer.optionTypes.RGBColor,
-		'defaultsTo'    : function () { return new RGBColor(0,0,0); }
-	    },
-	    {
-		'name'          : 'linewidth',
-		'defaultsTo'    : function () { return 1; },
-		'type'          : ns.Renderer.optionTypes.number
-	    },
-	    {
-		'name'          : 'pointsize',
-		'defaultsTo'    : function () { return 0; },
-		'type'          : ns.Renderer.optionTypes.number
-	    },
-	    {
-		'name'           : 'pointshape',
-		'defaultsTo'     : function () { return PointlineRenderer.CIRCLE; },
-                'type'           {
-		    'validatesWith'  : PointlineRenderer.isShape,
-		    'parsersWith'    : PointlineRenderer.parseShape,
-		    'serializesWith' : PointlineRenderer.parseShape
-                }
-	    },
-	    {
-		'name'          : 'pointcolor',
-		'type'          : ns.Renderer.optionTypes.RGBColor,
-		'defaultsTo'    : function () { return new RGBColor(0,0,0); },
-	    },
-	    {
-		'name'          : 'pointopacity',
-		'defaultsTo'    : function () { return 1.0; },
-		'type'          : ns.Renderer.optionTypes.number
-	    },
-	    {
-		'name'          : 'pointoutlinewidth',
-		'defaultsTo'    : function () { return 0; },
-		'type'          : ns.Renderer.optionTypes.number
-	    },
-	    {
-		'name'          : 'pointoutlinecolor',
-		'type'          : ns.Renderer.optionTypes.RGBColor,
-		'defaultsTo'    : function () { return new RGBColor(0,0,0); },
-	    },
-	]);
+        {
+            'name'          : 'linecolor',
+            'type'          : ns.Renderer.optionTypes.RGBColor,
+            'defaultsTo'    : function () { return new RGBColor(0,0,0); }
+        },
+        {
+            'name'          : 'linewidth',
+            'defaultsTo'    : function () { return 1; },
+            'type'          : ns.Renderer.optionTypes.number
+        },
+        {
+            'name'          : 'pointsize',
+            'defaultsTo'    : function () { return 0; },
+            'type'          : ns.Renderer.optionTypes.number
+        },
+        {
+            'name'           : 'pointshape',
+            'defaultsTo'     : function () { return PointlineRenderer.CIRCLE; },
+            'type'           {
+                'validatesWith'  : PointlineRenderer.isShape,
+                'parsersWith'    : PointlineRenderer.parseShape,
+                'serializesWith' : PointlineRenderer.parseShape
+            }
+        },
+        {
+            'name'          : 'pointcolor',
+            'type'          : ns.Renderer.optionTypes.RGBColor,
+            'defaultsTo'    : function () { return new RGBColor(0,0,0); },
+        },
+        {
+            'name'          : 'pointopacity',
+            'defaultsTo'    : function () { return 1.0; },
+            'type'          : ns.Renderer.optionTypes.number
+        },
+        {
+            'name'          : 'pointoutlinewidth',
+            'defaultsTo'    : function () { return 0; },
+            'type'          : ns.Renderer.optionTypes.number
+        },
+        {
+            'name'          : 'pointoutlinecolor',
+            'type'          : ns.Renderer.optionTypes.RGBColor,
+            'defaultsTo'    : function () { return new RGBColor(0,0,0); },
+        },
+    ]);
 
 
 */
 
     ns.Renderer.addType({'type'  : "pointline",
-			 'model' : PointlineRenderer});
+                         'model' : PointlineRenderer});
     ns.Renderer.addType({'type'  : "line",
-			 'model' : PointlineRenderer});
+                         'model' : PointlineRenderer});
 
     ns.PointlineRenderer = PointlineRenderer;
 });

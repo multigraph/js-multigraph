@@ -16,8 +16,8 @@ describe("Data CSV", function () {
 
     describe("location attribute", function () {
         it("should be able to set/get the location attribute", function () {
-            csv.location('http://example.com/CoolnessOfCats.csv');
-            expect(csv.location() === 'http://example.com/CoolnessOfCats.csv').toBe(true);
+            csv.location("http://example.com/CoolnessOfCats.csv");
+            expect(csv.location()).toBe("http://example.com/CoolnessOfCats.csv");
         });
 
     });

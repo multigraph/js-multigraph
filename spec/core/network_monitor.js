@@ -16,16 +16,16 @@ describe("Network Monitor", function () {
 
     describe("visible attribute", function () {
         it("should be able to set/get the visible attribute", function () {
-            nm.visible('yes');
-            expect(nm.visible() === 'yes').toBe(true);
+            nm.visible("yes");
+            expect(nm.visible()).toBe("yes");
         });
 
     });
 
     describe("fixed attribute", function () {
         it("should be able to set/get the fixed attribute", function () {
-            nm.fixed('no');
-            expect(nm.fixed() === 'no').toBe(true);
+            nm.fixed("no");
+            expect(nm.fixed()).toBe("no");
         });
 
     });

@@ -9,7 +9,7 @@ describe("NetworkMonitor parsing", function () {
         nm;
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
 	$xml = $(xmlString);
         nm = NetworkMonitor.parseXML($xml);
     });
@@ -19,18 +19,18 @@ describe("NetworkMonitor parsing", function () {
     });
 
     it("should be able to parse a networkmonitor from XML and read its 'visible' attribute", function () {
-        expect(nm.visible() === 'yes').toBe(true);
+        expect(nm.visible()).toBe("yes");
     });
 
     it("should be able to parse a networkmonitor from XML and read its 'fixed' attribute", function () {
-        expect(nm.fixed() === 'no').toBe(true);
+        expect(nm.fixed()).toBe("no");
     });
 
     it("should be able to parse a networkmonitor from XML, serialize it and get the same XML as the original", function () {
         var xmlString2 = '<networkmonitor visible="no"/>';
-        expect(nm.serialize() === xmlString).toBe(true);
+        expect(nm.serialize()).toBe(xmlString);
 	nm = NetworkMonitor.parseXML($(xmlString2));
-        expect(nm.serialize() === xmlString2).toBe(true);
+        expect(nm.serialize()).toBe(xmlString2);
     });
 
 });

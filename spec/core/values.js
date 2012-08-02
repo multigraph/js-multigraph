@@ -16,9 +16,9 @@ describe("Data Values", function () {
 
     describe("content attribute", function () {
         it("should be able to set/get the content attribute", function () {
-            expect(values.content() === undefined).toBe(true);
-            values.content('1,2,3\r\n4,5,6\r\n8,9,10');
-            expect(values.content() === '1,2,3\r\n4,5,6\r\n8,9,10').toBe(true);
+            expect(values.content()).toBe(undefined);
+            values.content("1,2,3\r\n4,5,6\r\n8,9,10");
+            expect(values.content()).toBe("1,2,3\r\n4,5,6\r\n8,9,10");
         });
 
     });

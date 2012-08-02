@@ -9,29 +9,29 @@ describe("Plotarea parsing", function () {
         p;
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
 	$xml = $(xmlString);
         p = Plotarea.parseXML($xml);
     });
 
     it("should be able to parse a plotarea from XML and read its 'margin().bottom' attribute", function () {
-        expect(p.margin().bottom() === 19).toBe(true);
+        expect(p.margin().bottom()).toBe(19);
     });
 
     it("should be able to parse a plotarea from XML and read its 'margin().left' attribute", function () {
-        expect(p.margin().left() === 10).toBe(true);
+        expect(p.margin().left()).toBe(10);
     });
 
     it("should be able to parse a plotarea from XML and read its 'margin().top' attribute", function () {
-        expect(p.margin().top() === 5).toBe(true);
+        expect(p.margin().top()).toBe(5);
     });
 
     it("should be able to parse a plotarea from XML and read its 'margin().right' attribute", function () {
-        expect(p.margin().right() === 5).toBe(true);
+        expect(p.margin().right()).toBe(5);
     });
 
     it("should be able to parse a plotarea from XML and read its 'border' attribute", function () {
-        expect(p.border() === 0).toBe(true);
+        expect(p.border()).toBe(0);
     });
 
     it("should be able to parse a plotarea from XML and read its 'bordercolor' attribute", function () {

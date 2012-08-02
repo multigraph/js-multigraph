@@ -9,7 +9,7 @@ describe("Axis Pan parsing", function () {
         pan;
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
         $xml = $(xmlString);
         pan = Pan.parseXML($xml);
     });
@@ -20,22 +20,22 @@ describe("Axis Pan parsing", function () {
     });
 
     it("should be able to parse a pan from XML and read its 'allowed' attribute", function () {
-        expect(pan.allowed() === 'yes').toBe(true);
+        expect(pan.allowed()).toBe("yes");
     });
 
     it("should be able to parse a pan from XML and read its 'min' attribute", function () {
-        expect(pan.min() === '0').toBe(true);
+        expect(pan.min()).toBe("0");
     });
 
     it("should be able to parse a pan from XML and read its 'max' attribute", function () {
-        expect(pan.max() === '5').toBe(true);
+        expect(pan.max()).toBe("5");
     });
 
     it("should be able to parse a pan from XML, serialize it and get the same XML as the original", function () {
         var xmlString2 = '<pan allowed="no"/>';
-        expect(pan.serialize() === xmlString).toBe(true);
+        expect(pan.serialize()).toBe(xmlString);
         pan = Pan.parseXML($(xmlString2));
-        expect(pan.serialize() === xmlString2).toBe(true);
+        expect(pan.serialize()).toBe(xmlString2);
     });
 
 });

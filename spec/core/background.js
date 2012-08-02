@@ -24,12 +24,12 @@ describe("Background", function () {
         var image;
 
         beforeEach(function () {
-            image = new Img('http://example.com/cool_dog.gif');
+            image = new Img("http://example.com/cool_dog.gif");
         });
 
         it("should be able to add a Img to a Background", function () {
             b.img(image);
-            expect(b.img() === image).toBe(true);
+            expect(b.img()).toBe(image);
         });
 
         it("should be able to add an Img with attributes to a Background", function () {
@@ -48,7 +48,7 @@ describe("Background", function () {
         });
 
         it("should not keep old data around when an Img is replaced", function () {
-            var image2 = new Img('http://example.com/cool_dog.gif');
+            var image2 = new Img("http://example.com/cool_dog.gif");
             b.img(image);
             b.img().src("http://example.com/lazy_cat.gif");
             b.img().base(window.multigraph.math.Point.parse("0 1"));

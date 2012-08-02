@@ -8,7 +8,7 @@ describe("Data DataVariable", function () {
         variable;
 
     beforeEach(function () {
-        variable = new DataVariable('x');
+        variable = new DataVariable("x");
     });
 
     it("should be able to create a DataVariable", function () {
@@ -17,15 +17,15 @@ describe("Data DataVariable", function () {
 
     describe("id attribute", function () {
         it("should be able to set/get the id attribute", function () {
-            variable.id('x');
-            expect(variable.id() === 'x').toBe(true);
+            variable.id("x");
+            expect(variable.id()).toBe("x");
         });
 
     });
 
     describe("column attribute", function () {
         it("should be able to set/get the column attribute", function () {
-            expect(variable.column() === undefined).toBe(true);
+            expect(variable.column()).toBe(undefined);
             variable.column(7);
             expect(variable.column()).toEqual(7);
         });
@@ -34,17 +34,17 @@ describe("Data DataVariable", function () {
 
     describe("type attribute", function () {
         it("should be able to set/get the type attribute", function () {
-            variable.type('number');
-            expect(variable.type() === 'number').toBe(true);
-            variable.type('datetime');
-            expect(variable.type() === 'datetime').toBe(true);
+            variable.type("number");
+            expect(variable.type()).toBe("number");
+            variable.type("datetime");
+            expect(variable.type()).toBe("datetime");
         });
 
     });
 
     describe("missingvalue attribute", function () {
         it("should be able to set/get the missingvalue attribute", function () {
-            expect(variable.missingvalue() === undefined).toBe(true);
+            expect(variable.missingvalue()).toBe(undefined);
             variable.missingvalue(new NumberValue(-9000));
             expect(variable.missingvalue().getRealValue()).toEqual(-9000);
         });
@@ -53,9 +53,9 @@ describe("Data DataVariable", function () {
 
     describe("missingop attribute", function () {
         it("should be able to set/get the missingop attribute", function () {
-            expect(variable.missingop() === undefined).toBe(true);
-            variable.missingop('eq');
-            expect(variable.missingop() === 'eq').toBe(true);
+            expect(variable.missingop()).toBe(undefined);
+            variable.missingop("eq");
+            expect(variable.missingop()).toBe("eq");
         });
 
     });

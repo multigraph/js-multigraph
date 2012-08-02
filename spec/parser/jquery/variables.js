@@ -4,12 +4,13 @@ describe("Data Variables parsing", function () {
     "use strict";
 
     var Variables = window.multigraph.core.Variables,
+        DataVariable = window.multigraph.core.DataVariable,
         xmlString = '<variables missingvalue="-9000" missingop="lt"/>',
         $xml,
         variables;
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
         $xml = $(xmlString);
         variables = Variables.parseXML($xml);
     });
@@ -19,26 +20,25 @@ describe("Data Variables parsing", function () {
     });
 
     it("should be able to parse a variables from XML and read its 'missingvalue' attribute", function () {
-        expect(variables.missingvalue() === '-9000').toBe(true);
+        expect(variables.missingvalue()).toBe("-9000");
     });
 
     it("should be able to parse a variables from XML and read its 'missingop' attribute", function () {
-        expect(variables.missingop() === 'lt').toBe(true);
+        expect(variables.missingop()).toBe("lt");
     });
 
     it("should be able to parse a variables from XML, serialize it and get the same XML as the original", function () {
         var xmlString2 = '<variables missingop="gt"/>';
-        expect(variables.serialize() === xmlString).toBe(true);
+        expect(variables.serialize()).toBe(xmlString);
         variables = Variables.parseXML($(xmlString2));
 //        expect(variables.serialize() === xmlString2).toBe(true);
     });
 
     describe("DataVariable parsing", function () {
-        var DataVariable = window.multigraph.core.DataVariable;
 
         beforeEach(function () {
             xmlString = '<variables missingop="gt"><variable id="x" column="7" type="number" missingvalue="1990" missingop="eq"/><variable id="y" column="2" type="number" missingvalue="19" missingop="gt"/><variable id="y1" column="2" type="number"/></variables>';
-            window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
+            window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
             $xml = $(xmlString);
             variables = Variables.parseXML($xml);
         });
@@ -55,7 +55,7 @@ describe("Data Variables parsing", function () {
         });
 
         xit("should be able to parse a variables with children from XML, serialize it and get the same XML as the original", function () {
-            expect(variables.serialize() === xmlString).toBe(true);
+            expect(variables.serialize()).toBe(xmlString);
         });
 
     });

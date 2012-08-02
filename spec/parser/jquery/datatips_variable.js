@@ -9,7 +9,7 @@ describe("DatatipsVariable parsing", function () {
         variable;
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
 	$xml = $(xmlString);
         variable = Variable.parseXML($xml);
     });
@@ -19,14 +19,14 @@ describe("DatatipsVariable parsing", function () {
     });
 
     it("should be able to parse a variable from XML and read its 'format' attribute", function () {
-        expect(variable.format() === 'number').toBe(true);
+        expect(variable.format()).toBe("number");
     });
 
     it("should be able to parse a variable from XML, serialize it and get the same XML as the original", function () {
         var xmlString2 = '<variable format="datetime"/>';
-        expect(variable.serialize() === xmlString).toBe(true);
+        expect(variable.serialize()).toBe(xmlString);
 	variable = Variable.parseXML($(xmlString2));
-        expect(variable.serialize() === xmlString2).toBe(true);
+        expect(variable.serialize()).toBe(xmlString2);
     });
 
 });

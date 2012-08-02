@@ -17,10 +17,10 @@ describe("Box", function () {
     describe("attributes", function () {
 
         it("should read the correct width attribute value", function () {
-            expect(b.width() === 100).toBe(true);
+            expect(b.width()).toBe(100);
         });
         it("should read the correct height attribute value", function () {
-            expect(b.height() === 200).toBe(true);
+            expect(b.height()).toBe(200);
         });
 
     });

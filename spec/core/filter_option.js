@@ -16,16 +16,16 @@ describe("Plot Filter Option", function () {
 
     describe("name attribute", function () {
         it("should be able to set/get the name attribute", function () {
-            option.name('line');
-            expect(option.name() === 'line').toBe(true);
+            option.name("line");
+            expect(option.name()).toBe("line");
         });
 
     });
 
     describe("value attribute", function () {
         it("should be able to set/get the value attribute", function () {
-            option.value('70');
-            expect(option.value() === '70').toBe(true);
+            option.value("70");
+            expect(option.value()).toBe("70");
         });
 
     });

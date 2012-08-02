@@ -56,27 +56,27 @@ describe("Legend", function () {
 
     it("should be able to set/get the border attribute", function () {
         l.border(2);
-        expect(l.border() === 2).toBe(true);
+        expect(l.border()).toBe(2);
     });
 
     it("should be able to set/get the rows attribute", function () {
         l.rows(6);
-        expect(l.rows() === 6).toBe(true);
+        expect(l.rows()).toBe(6);
     });
 
     it("should be able to set/get the columns attribute", function () {
         l.columns(13);
-        expect(l.columns() === 13).toBe(true);
+        expect(l.columns()).toBe(13);
     });
 
     it("should be able to set/get the cornerradius attribute", function () {
         l.cornerradius(25);
-        expect(l.cornerradius() === 25).toBe(true);
+        expect(l.cornerradius()).toBe(25);
     });
 
     it("should be able to set/get the padding attribute", function () {
         l.padding(3);
-        expect(l.padding() === 3).toBe(true);
+        expect(l.padding()).toBe(3);
     });
 
     describe("Icon", function () {
@@ -89,14 +89,14 @@ describe("Legend", function () {
 
         it("should be able to add a Icon to a Legend", function () {
             l.icon(icon);
-            expect(l.icon() === icon).toBe(true);
+            expect(l.icon()).toBe(icon);
         });
 
         it("should be able to add an Icon with attributes to a Legend", function () {
             icon.height(26);
             icon.width(10);
             l.icon(icon);
-            expect(l.icon() === icon).toBe(true);
+            expect(l.icon()).toBe(icon);
         });
 
         it("should be able to set/get attributes of an Icon added to a Legend", function () {
@@ -114,7 +114,7 @@ describe("Legend", function () {
             l.icon().height(4);
             l.icon().width(28);
             l.icon(icon2);
-            expect(l.icon().border() === 5).toBe(true);
+            expect(l.icon().border()).toBe(5);
             expect(l.icon().height()).not.toBe(4);
         });
 

@@ -18,7 +18,7 @@ describe("Axis Label parsing", function () {
         labeler;
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
         $xml = $(xmlString);
         labeler = Labeler.parseXML($xml);
     });

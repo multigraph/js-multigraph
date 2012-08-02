@@ -38,8 +38,8 @@ describe("Graph", function () {
             p;
 
         beforeEach(function () {
-            h = new Axis('horizontal'),
-            v = new Axis('vertical'),
+            h = new Axis("horizontal"),
+            v = new Axis("vertical"),
             w = new Window(),
             ui = new UI(),
             debug = new Debugger(),
@@ -51,7 +51,7 @@ describe("Graph", function () {
         });
 
         it("should be able to add multiple tags to a Graph", function () {
-            var h2 = new Axis('horizontal');
+            var h2 = new Axis("horizontal");
             g.axes().add(h);
             g.axes().add(h2);
             g.axes().add(v);
@@ -63,17 +63,17 @@ describe("Graph", function () {
             g.legend(legend);
             g.background(background);
             g.plotarea(plotarea);
-            expect(g.axes().at(0) === h).toBe(true);
-            expect(g.axes().at(1) === h2).toBe(true);
-            expect(g.axes().at(2) === v).toBe(true);
-            expect(g.plots().at(0) === p).toBe(true);
-            expect(g.data().at(0) === data).toBe(true);
-            expect(g.window() === w).toBe(true);
-            expect(g.ui() === ui).toBe(true);
-            expect(g.Debugger() === debug).toBe(true);
-            expect(g.legend() === legend).toBe(true);
-            expect(g.background() === background).toBe(true);
-            expect(g.plotarea() === plotarea).toBe(true);
+            expect(g.axes().at(0)).toBe(h);
+            expect(g.axes().at(1)).toBe(h2);
+            expect(g.axes().at(2)).toBe(v);
+            expect(g.plots().at(0)).toBe(p);
+            expect(g.data().at(0)).toBe(data);
+            expect(g.window()).toBe(w);
+            expect(g.ui()).toBe(ui);
+            expect(g.Debugger()).toBe(debug);
+            expect(g.legend()).toBe(legend);
+            expect(g.background()).toBe(background);
+            expect(g.plotarea()).toBe(plotarea);
         });
 
         it("should be able to add multiple tags with attr's to a Graph", function () {
@@ -83,9 +83,9 @@ describe("Graph", function () {
             g.axes().add(h);
             g.axes().add(v);
             g.plots().add(p);
-            expect(g.axes().at(0) === h).toBe(true);
-            expect(g.axes().at(1) === v).toBe(true);
-            expect(g.plots().at(0) === p).toBe(true);
+            expect(g.axes().at(0)).toBe(h);
+            expect(g.axes().at(1)).toBe(v);
+            expect(g.plots().at(0)).toBe(p);
         });
 
         it("should be able to set/get attributes of tags added to a Graph", function () {
@@ -93,43 +93,43 @@ describe("Graph", function () {
             v.max("200").orientation("vertical").id("curly");
             g.axes().add(h);
             g.axes().add(v);
-            expect(g.axes().at(0).id() === "larry").toBe(true);
+            expect(g.axes().at(0).id()).toBe("larry");
             expect(g.axes().at(1).max()).toBe("200");
             g.axes().at(0).id("moe");
-            expect(g.axes().at(0).id() === "moe").toBe(true);
+            expect(g.axes().at(0).id()).toBe("moe");
         });
 
     });
 
     it("should be able to create a Graph with an axis and then fetch that axis", function() {
         var g = new Graph();
-        var a = new Axis('horizontal');
-        a.id('x');
+        var a = new Axis("horizontal");
+        a.id("x");
         g.axes().add(a);
-        expect(g.axes().get(0) === a).toBe(true);
+        expect(g.axes().get(0)).toBe(a);
     });
 
     it("should be able to create two graphs, each with an axis, and keep the axes distinct", function() {
         var g1 = new Graph();
-        var a1 = new Axis('vertical');
-        a1.id('a1');
+        var a1 = new Axis("vertical");
+        a1.id("a1");
         g1.axes().add(a1);
 
         var g2 = new Graph();
-        var a2 = new Axis('vertical');
-        a2.id('a2');
+        var a2 = new Axis("vertical");
+        a2.id("a2");
         g2.axes().add(a2);
 
-        expect(g1.axes().get(0).id() === 'a1').toBe(true);
-        expect(g2.axes().get(0).id() === 'a2').toBe(true);
+        expect(g1.axes().get(0).id()).toBe("a1");
+        expect(g2.axes().get(0).id()).toBe("a2");
     });
 
     it("should be able to create a Graph with an axis having a given id, and then fetch that axis's id from the graph", function() {
         var g = new Graph();
         var a = new Axis();
-        a.id('myaxis');
+        a.id("myaxis");
         g.axes().add(a);
-        expect(g.axes().get(0).id() === 'myaxis').toBe(true);
+        expect(g.axes().get(0).id()).toBe("myaxis");
     });
 
     describe("initializeGeometry", function() {
@@ -142,8 +142,8 @@ describe("Graph", function () {
 
         it("should set the correct window width and height", function() {
             g.initializeGeometry(300, 200);
-            expect(g.windowBox().width() === 300).toBe(true);
-            expect(g.windowBox().height() === 200).toBe(true);
+            expect(g.windowBox().width()).toBe(300);
+            expect(g.windowBox().height()).toBe(200);
         });
 
         it("should compute the correct paddingBox dimensions", function() {

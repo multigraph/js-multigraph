@@ -9,7 +9,7 @@ describe("Axis Zoom parsing", function () {
         zoom;
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
         $xml = $(xmlString);
         zoom = Zoom.parseXML($xml);
     });
@@ -20,26 +20,26 @@ describe("Axis Zoom parsing", function () {
     });
 
     it("should be able to parse a zoom from XML and read its 'allowed' attribute", function () {
-        expect(zoom.allowed() === 'yes').toBe(true);
+        expect(zoom.allowed()).toBe("yes");
     });
 
     it("should be able to parse a zoom from XML and read its 'min' attribute", function () {
-        expect(zoom.min() === '0').toBe(true);
+        expect(zoom.min()).toBe("0");
     });
 
     it("should be able to parse a zoom from XML and read its 'max' attribute", function () {
-        expect(zoom.max() === '80').toBe(true);
+        expect(zoom.max()).toBe("80");
     });
 
     it("should be able to parse a zoom from XML and read its 'anchor' attribute", function () {
-        expect(zoom.anchor() === '1 1').toBe(true);
+        expect(zoom.anchor()).toBe("1 1");
     });
 
     it("should be able to parse a zoom from XML, serialize it and get the same XML as the original", function () {
         var xmlString2 = '<zoom allowed="no" anchor="0 -1"/>';
-        expect(zoom.serialize() === xmlString).toBe(true);
+        expect(zoom.serialize()).toBe(xmlString);
         zoom = Zoom.parseXML($(xmlString2));
-        expect(zoom.serialize() === xmlString2).toBe(true);
+        expect(zoom.serialize()).toBe(xmlString2);
     });
 
 });

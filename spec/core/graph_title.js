@@ -16,16 +16,16 @@ describe("Graph Title", function () {
 
     describe("content attribute", function () {
         it("should be able to set/get the content attribute", function () {
-            title.content('This graph plots cats');
-            expect(title.content() === 'This graph plots cats').toBe(true);
+            title.content("This graph plots cats");
+            expect(title.content()).toBe("This graph plots cats");
         });
 
     });
 
     describe("border attribute", function () {
         it("should be able to set/get the border attribute", function () {
-            title.border('2');
-            expect(title.border() === '2').toBe(true);
+            title.border("2");
+            expect(title.border()).toBe("2");
         });
 
     });
@@ -56,40 +56,40 @@ describe("Graph Title", function () {
 
     describe("padding attribute", function () {
         it("should be able to set/get the padding attribute", function () {
-            title.padding('4');
-            expect(title.padding() === '4').toBe(true);
+            title.padding("4");
+            expect(title.padding()).toBe("4");
         });
 
     });
 
     describe("cornerradius attribute", function () {
         it("should be able to set/get the cornerradius attribute", function () {
-            title.cornerradius('5');
-            expect(title.cornerradius() === '5').toBe(true);
+            title.cornerradius("5");
+            expect(title.cornerradius()).toBe("5");
         });
 
     });
 
     describe("base attribute", function () {
         it("should be able to set/get the base attribute", function () {
-            title.base('1 1');
-            expect(title.base() === '1 1').toBe(true);
+            title.base("1 1");
+            expect(title.base()).toBe("1 1");
         });
 
     });
 
     describe("position attribute", function () {
         it("should be able to set/get the position attribute", function () {
-            title.position('0 1');
-            expect(title.position() === '0 1').toBe(true);
+            title.position("0 1");
+            expect(title.position()).toBe("0 1");
         });
 
     });
 
     describe("anchor attribute", function () {
         it("should be able to set/get the anchor attribute", function () {
-            title.anchor('-1 1');
-            expect(title.anchor() === '-1 1').toBe(true);
+            title.anchor("-1 1");
+            expect(title.anchor()).toBe("-1 1");
         });
 
     });

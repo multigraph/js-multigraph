@@ -9,7 +9,7 @@ describe("Debugger parsing", function () {
         debug;
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
 	$xml = $(xmlString);
         debug = Debugger.parseXML($xml);
     });
@@ -19,18 +19,18 @@ describe("Debugger parsing", function () {
     });
 
     it("should be able to parse a debugger from XML and read its 'visible' attribute", function () {
-        expect(debug.visible() === 'yes').toBe(true);
+        expect(debug.visible()).toBe("yes");
     });
 
     it("should be able to parse a debugger from XML and read its 'fixed' attribute", function () {
-        expect(debug.fixed() === 'no').toBe(true);
+        expect(debug.fixed()).toBe("no");
     });
 
     it("should be able to parse a debugger from XML, serialize it and get the same XML as the original", function () {
         var xmlString2 = '<debugger visible="no"/>';
-        expect(debug.serialize() === xmlString).toBe(true);
+        expect(debug.serialize()).toBe(xmlString);
 	debug = Debugger.parseXML($(xmlString2));
-        expect(debug.serialize() === xmlString2).toBe(true);
+        expect(debug.serialize()).toBe(xmlString2);
     });
 
 });

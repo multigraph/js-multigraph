@@ -16,16 +16,16 @@ describe("Plot Legend", function () {
 
     describe("visible attribute", function () {
         it("should be able to set/get the visible attribute", function () {
-            legend.visible('true');
-            expect(legend.visible() === 'true').toBe(true);
+            legend.visible("true");
+            expect(legend.visible()).toBe("true");
         });
 
     });
 
     describe("label attribute", function () {
         it("should be able to set/get the label attribute", function () {
-            legend.label('fred');
-            expect(legend.label() === 'fred').toBe(true);
+            legend.label("fred");
+            expect(legend.label()).toBe("fred");
         });
 
     });

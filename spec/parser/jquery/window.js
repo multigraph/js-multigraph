@@ -9,7 +9,7 @@ describe("Window parsing", function () {
         w;
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
 	$xml = $(xmlString);
         w = Window.parseXML($xml);
     });
@@ -19,23 +19,23 @@ describe("Window parsing", function () {
     });
 
     it("should be able to parse a window from XML and read its 'width' attribute", function () {
-        expect(w.width() === 2).toBe(true);
+        expect(w.width()).toBe(2);
     });
 
     it("should be able to parse a window from XML and read its 'height' attribute", function () {
-        expect(w.height() === 97).toBe(true);
+        expect(w.height()).toBe(97);
     });
 
     it("should be able to parse a window from XML and read its 'border' attribute", function () {
-        expect(w.border() === 0).toBe(true);
+        expect(w.border()).toBe(0);
     });
 
     it("should be able to parse a window from XML and read its 'margin' attribute", function () {
-        expect(w.margin().top() === 1).toBe(true);
+        expect(w.margin().top()).toBe(1);
     });
 
     it("should be able to parse a window from XML and read its 'padding' attribute", function () {
-        expect(w.padding().top() === 10).toBe(true);
+        expect(w.padding().top()).toBe(10);
     });
 
     it("should be able to parse a window from XML and read its 'bordercolor' attribute", function () {

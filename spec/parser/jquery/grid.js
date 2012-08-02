@@ -9,7 +9,7 @@ describe("Axis Grid parsing", function () {
         grid;
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
         $xml = $(xmlString);
         grid = Grid.parseXML($xml);
     });
@@ -24,12 +24,12 @@ describe("Axis Grid parsing", function () {
     });
 
     it("should be able to parse a grid from XML and read its 'visible' attribute", function () {
-        expect(grid.visible() === 'false').toBe(true);
+        expect(grid.visible()).toBe("false");
     });
 
     it("should be able to parse a grid from XML, serialize it and get the same XML as the original", function () {
         var xmlString2 = '<grid visible="true"/>';
-        expect(grid.serialize() === xmlString).toBe(true);
+        expect(grid.serialize()).toBe(xmlString);
         grid = Grid.parseXML($(xmlString2));
 //        expect(grid.serialize() === xmlString2).toBe(true);
     });

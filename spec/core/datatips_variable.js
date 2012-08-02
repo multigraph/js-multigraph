@@ -16,8 +16,8 @@ describe("DatatipsVariable", function () {
 
     describe("format attribute", function () {
         it("should be able to set/get the format attribute", function () {
-            variable.format('large');
-            expect(variable.format() === 'large').toBe(true);
+            variable.format("large");
+            expect(variable.format()).toBe("large");
         });
 
     });

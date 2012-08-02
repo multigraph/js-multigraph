@@ -4,12 +4,13 @@ describe("Plot Renderer parsing", function () {
     "use strict";
 
     var Renderer = window.multigraph.core.Renderer,
+        Option = window.multigraph.core.RendererOption,
         xmlString = '<renderer type="pointline"/>',
         $xml,
         r;
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
 	$xml = $(xmlString);
         r = Renderer.parseXML($xml);
     });
@@ -20,22 +21,21 @@ describe("Plot Renderer parsing", function () {
     });
 
     it("should be able to parse a renderer from XML and read its 'type' attribute", function () {
-        expect(r.type() === 'pointline').toBe(true);
+        expect(r.type()).toBe("pointline");
     });
 
     it("should be able to parse a renderer from XML, serialize it and get the same XML as the original", function () {
         var xmlString2 = '<renderer type="pointline"/>';
-        expect(r.serialize() === xmlString).toBe(true);
+        expect(r.serialize()).toBe(xmlString);
 	r = Renderer.parseXML($(xmlString2));
-        expect(r.serialize() === xmlString2).toBe(true);
+        expect(r.serialize()).toBe(xmlString2);
     });
 
     describe("Option parsing", function () {
-        var Option = window.multigraph.core.RendererOption;
 
         beforeEach(function () {
             xmlString = '<renderer type="pointline"><option name="barwidth" value="3"/></renderer>';
-            window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
+            window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
             $xml = $(xmlString);
             r = Renderer.parseXML($xml);
         });
@@ -53,9 +53,9 @@ describe("Plot Renderer parsing", function () {
 
         it("should be able to parse a renderer with children from XML, serialize it and get the same XML as the original", function () {
             var xmlString2 = '<renderer type="pointline"><option name="size" value="3"/><option name="shape" value="circle"/><option name="linewidth" value="7"/></renderer>';
-            expect(r.serialize() === xmlString).toBe(true);
+            expect(r.serialize()).toBe(xmlString);
             r = Renderer.parseXML($(xmlString2));
-            expect(r.serialize() === xmlString2).toBe(true);
+            expect(r.serialize()).toBe(xmlString2);
         });
 
     });

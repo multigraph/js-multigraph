@@ -7,14 +7,14 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
 
         ns.core.Renderer[parse] = function (xml, plot) {
             var rendererType,
-	        renderer,
+                renderer,
                 opt;
             if (xml && xml.attr("type") !== undefined) {
-		rendererType = xml.attr("type");
+                rendererType = xml.attr("type");
                 renderer = ns.core.Renderer.create(rendererType);
-		if (!renderer) {
-		    throw new Error("unknown renderer type '"+rendererType+"'");
-		}
+                if (!renderer) {
+                    throw new Error("unknown renderer type '"+rendererType+"'");
+                }
                 if (plot) {
                     //TODO: horiz and vert axis should be required??  Currently, without the above 'if', some tests fail.
                     renderer.horizontalaxis( plot.horizontalaxis() );

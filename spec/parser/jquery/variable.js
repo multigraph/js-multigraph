@@ -9,7 +9,7 @@ describe("Data DataVariable parsing", function () {
         variable;
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
         $xml = $(xmlString);
         variable = DataVariable.parseXML($xml);
     });
@@ -20,7 +20,7 @@ describe("Data DataVariable parsing", function () {
     });
 
     xit("should be able to parse a variable from XML and read its 'id' attribute", function () {
-        expect(variable.id() === 'x').toBe(true);
+        expect(variable.id()).toBe("x");
     });
 
     xit("should be able to parse a variable from XML and read its 'column' attribute", function () {
@@ -28,7 +28,7 @@ describe("Data DataVariable parsing", function () {
     });
 
     xit("should be able to parse a variable from XML and read its 'type' attribute", function () {
-        expect(variable.type() === 'number').toBe(true);
+        expect(variable.type()).toBe("number");
     });
 
     it("should be able to parse a variable from XML and read its 'missingvalue' attribute", function () {
@@ -36,12 +36,12 @@ describe("Data DataVariable parsing", function () {
     });
 
     xit("should be able to parse a variable from XML and read its 'missingop' attribute", function () {
-        expect(variable.missingop() === 'eq').toBe(true);
+        expect(variable.missingop()).toBe("eq");
     });
 
     xit("should be able to parse a variable from XML, serialize it and get the same XML as the original", function () {
         var xmlString2 = '<variable id="y" column="10" type="number" missingvalue="lt" missingop="gt"/>';
-        expect(variable.serialize() === xmlString).toBe(true);
+        expect(variable.serialize()).toBe(xmlString);
         variable = DataVariable.parseXML($(xmlString2));
         expect(variable.serialize()).toEqual(xmlString2);
     });

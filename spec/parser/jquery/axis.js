@@ -48,7 +48,7 @@ describe("Axis parsing", function () {
         axis;
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
 	$xml = $(xmlString);
         axis = Axis.parseXML($xml);
     });
@@ -58,11 +58,11 @@ describe("Axis parsing", function () {
     });
 
     it("should be able to parse an axis from XML and read its 'id' attribute", function () {
-        expect(axis.id() === 'x').toBe(true);
+        expect(axis.id()).toBe("x");
     });
 
     it("should be able to parse an axis from XML and read its 'type' attribute", function () {
-        expect(axis.type() === 'number').toBe(true);
+        expect(axis.type()).toBe("number");
     });
 
     it("should be able to parse an axis from XML and read its 'length' attribute", function () {
@@ -118,7 +118,7 @@ describe("Axis parsing", function () {
     });
 
     it("should be able to parse an axis from XML and read its 'positionbase' attribute", function () {
-        expect(axis.positionbase() === '0 0').toBe(true);
+        expect(axis.positionbase()).toBe("0 0");
     });
 
     it("should be able to parse an axis from XML and read its 'color' attribute", function () {
@@ -134,7 +134,7 @@ describe("Axis parsing", function () {
     });
 
     it("should be able to parse an axis from XML and read its 'highlightstyle' attribute", function () {
-        expect(axis.highlightstyle() === 'bold').toBe(true);
+        expect(axis.highlightstyle()).toBe("bold");
     });
 
     it("should be able to parse an axis from XML and read its 'linewidth' attribute", function () {

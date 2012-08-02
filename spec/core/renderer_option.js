@@ -7,7 +7,7 @@ describe("core.RendererOption", function () {
         option;
 
     beforeEach(function () {
-        option = new RendererOption('barwidth', '2');
+        option = new RendererOption("barwidth", "2");
     });
 
     it("should be able to create a Renderer.RendererOption", function () {
@@ -16,16 +16,16 @@ describe("core.RendererOption", function () {
 
     describe("name attribute", function () {
         it("should be able to set/get the name attribute", function () {
-            option.name('linewidth');
-            expect(option.name() === 'linewidth').toBe(true);
+            option.name("linewidth");
+            expect(option.name()).toBe("linewidth");
         });
 
     });
 
     describe("value attribute", function () {
         it("should be able to set/get the value attribute", function () {
-            option.value('45');
-            expect(option.value() === '45').toBe(true);
+            option.value("45");
+            expect(option.value()).toBe("45");
         });
 
     });

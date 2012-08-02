@@ -17,7 +17,7 @@ describe("Axis Title", function () {
     describe("content attribute", function () {
         it("should be able to set/get the content attribute", function () {
             title.content("This axis plots cats");
-            expect(title.content() === "This axis plots cats").toBe(true);
+            expect(title.content()).toBe("This axis plots cats");
         });
 
     });
@@ -25,7 +25,7 @@ describe("Axis Title", function () {
     describe("position attribute", function () {
         it("should be able to set/get the position attribute", function () {
             title.position("0 1");
-            expect(title.position() === "0 1").toBe(true);
+            expect(title.position()).toBe("0 1");
         });
 
     });
@@ -33,7 +33,7 @@ describe("Axis Title", function () {
     describe("anchor attribute", function () {
         it("should be able to set/get the anchor attribute", function () {
             title.anchor("-1 1");
-            expect(title.anchor() === "-1 1").toBe(true);
+            expect(title.anchor()).toBe("-1 1");
         });
 
     });

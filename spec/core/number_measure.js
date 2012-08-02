@@ -11,23 +11,23 @@ describe("NumberMeasure", function () {
         expect(x instanceof NumberMeasure).toBe(true);
     });
 
-    it("getRealValue method should return the correct value", function() {
+    it("getRealValue method should return the correct value", function () {
         var x = new NumberMeasure(1.234);
         expect(x.getRealValue()).toEqual(1.234);
     });
 
-    it("NumberMeasure.parse() function should work correctly", function() {
+    it("NumberMeasure.parse() function should work correctly", function () {
         var x = NumberMeasure.parse("-5.678");
         expect(x instanceof NumberMeasure).toBe(true);
         expect(x.getRealValue()).toEqual(-5.678);
     });
 
-    it("firstSpacingLocationAtOrAfter() should work correctly", function() {
+    it("firstSpacingLocationAtOrAfter() should work correctly", function () {
 
 
-        var testit = function(v, s, a, r) {
+        var testit = function (v, s, a, r) {
             //expect((new NumberMeasure(s)).firstSpacingLocationAtOrAfter(new NumberValue(v), new NumberValue(a)).getRealValue()).toEqual(r);
-            expect((new NumberMeasure(s)).firstSpacingLocationAtOrAfter(new NumberValue(v), new NumberValue(a)).getRealValue() === r).toBe(true);
+            expect((new NumberMeasure(s)).firstSpacingLocationAtOrAfter(new NumberValue(v), new NumberValue(a)).getRealValue()).toBe(r);
         };
 
         testit(10.2, 1.0,  0, 11.0);

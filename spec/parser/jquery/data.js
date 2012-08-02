@@ -14,7 +14,7 @@ describe("Data parsing", function () {
         data;
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
 	$xml = $(xmlString);
         data = Data.parseXML($xml);
     });
@@ -25,7 +25,7 @@ describe("Data parsing", function () {
     });
 
     it("should be able to parse a data from XML, then serialize it, and get the same XML as the original", function () {
-        expect(data.serialize() === xmlString).toBe(true);
+        expect(data.serialize()).toBe(xmlString);
     });
 
     describe("Values parsing", function () {
@@ -45,7 +45,7 @@ describe("Data parsing", function () {
 
         it("should be able to parse a data with a Values child from XML, serialize it and get the same XML as the original", function () {
             data = Data.parseXML($xml);
-            expect(data.serialize() === xmlString).toBe(true);
+            expect(data.serialize()).toBe(xmlString);
         });
 
     });
@@ -67,7 +67,7 @@ describe("Data parsing", function () {
 
         it("should be able to parse a data with a Service child from XML, serialize it and get the same XML as the original", function () {
             data = Data.parseXML($xml);
-            expect(data.serialize() === xmlString).toBe(true);
+            expect(data.serialize()).toBe(xmlString);
         });
 
     });
@@ -89,7 +89,7 @@ describe("Data parsing", function () {
 
         it("should be able to parse a data with a CSV child from XML, serialize it and get the same XML as the original", function () {
             data = Data.parseXML($xml);
-            expect(data.serialize() === xmlString).toBe(true);
+            expect(data.serialize()).toBe(xmlString);
         });
 
     });
@@ -124,7 +124,7 @@ describe("Data parsing", function () {
 
         it("should be able to parse a data with a Variables child from XML, serialize it and get the same XML as the original", function () {
             data = Data.parseXML($xml);
-            expect(data.serialize() === xmlString).toBe(true);
+            expect(data.serialize()).toBe(xmlString);
         });
 
         it("should be able to parse a data with a complex Variables child from XML, serialize it and get thesame XML as the original", function () {
@@ -184,9 +184,9 @@ describe("Data parsing", function () {
         });
 
         xit("should be able to parse a data with multiple children from XML, serialize it and get the sameXML as the original", function () {
-            expect(data.serialize() === xmlString).toBe(true);
-            expect(data2.serialize() === xmlString2).toBe(true);
-            expect(data3.serialize() === xmlString3).toBe(true);
+            expect(data.serialize()).toBe(xmlString);
+            expect(data2.serialize()).toBe(xmlString2);
+            expect(data3.serialize()).toBe(xmlString3);
         });
 
     });

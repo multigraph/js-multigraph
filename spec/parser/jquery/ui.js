@@ -9,7 +9,7 @@ describe("UI parsing", function () {
         ui;
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
 	$xml = $(xmlString);
         ui = UI.parseXML($xml);
     });
@@ -19,11 +19,11 @@ describe("UI parsing", function () {
     });
 
     it("should be able to parse a ui from XML and read its 'eventhandler' attribute", function () {
-        expect(ui.eventhandler() === 'error').toBe(true);
+        expect(ui.eventhandler()).toBe("error");
     });
 
     it("should be able to parse a ui from XML, serialize it and get the same XML as the original", function () {
-        expect(ui.serialize() === xmlString).toBe(true);
+        expect(ui.serialize()).toBe(xmlString);
     });
 
 });

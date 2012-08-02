@@ -17,16 +17,16 @@ describe("Insets", function () {
     describe("attributes", function () {
 
         it("should read the correct top attribute value", function () {
-            expect(i.top() === 10).toBe(true);
+            expect(i.top()).toBe(10);
         });
         it("should read the correct left attribute value", function () {
-            expect(i.left() === 20).toBe(true);
+            expect(i.left()).toBe(20);
         });
         it("should read the correct bottom attribute value", function () {
-            expect(i.bottom() === 30).toBe(true);
+            expect(i.bottom()).toBe(30);
         });
         it("should read the correct right attribute value", function () {
-            expect(i.right() === 40).toBe(true);
+            expect(i.right()).toBe(40);
         });
 
     });

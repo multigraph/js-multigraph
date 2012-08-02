@@ -626,7 +626,7 @@ describe("Multigraph parsing", function () {
         $xml;
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
 	$xml = $(xmlString);
         mg = Multigraph.parseXML($xml);
     });

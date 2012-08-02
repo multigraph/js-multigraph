@@ -9,7 +9,7 @@ describe("Data Service parsing", function () {
         service;
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
         $xml = $(xmlString);
         service = Service.parseXML($xml);
     });
@@ -20,14 +20,14 @@ describe("Data Service parsing", function () {
     });
 
     it("should be able to parse a service from XML and read its 'location' attribute", function () {
-        expect(service.location() === 'http://example.com/CoolnessOfCats/1990/2000').toBe(true);
+        expect(service.location()).toBe("http://example.com/CoolnessOfCats/1990/2000");
     });
 
     it("should be able to parse a service from XML, serialize it and get the same XML as the original", function () {
         var xmlString2 = '<service location="http://example.com/CoolnessOfFerrets/2000/2005"/>';
-        expect(service.serialize() === xmlString).toBe(true);
+        expect(service.serialize()).toBe(xmlString);
         service = Service.parseXML($(xmlString2));
-        expect(service.serialize() === xmlString2).toBe(true);
+        expect(service.serialize()).toBe(xmlString2);
     });
 
 });

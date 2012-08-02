@@ -16,8 +16,8 @@ describe("UI", function () {
 
     describe("eventhandler attribute", function () {
         it("should be able to set/get the eventhandler attribute", function () {
-            ui.eventhandler('error');
-            expect(ui.eventhandler() === 'error').toBe(true);
+            ui.eventhandler("error");
+            expect(ui.eventhandler()).toBe("error");
         });
 
     });
