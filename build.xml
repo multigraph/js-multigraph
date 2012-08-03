@@ -84,12 +84,12 @@
     </pathconvert>
     <pathconvert property="scripttags.raphael" pathsep="${line.separator}">
       <path refid="path.graphics-raphael-js"/>
-      <mapper type="regexp" from="^${basedir}/src/graphics/raphael/(.*)$" to='&lt;script type="text/javascript" src="\1"&gt;&lt;/script&gt;'/>
+      <mapper type="regexp" from="^${basedir}/(.*)$" to='&lt;script type="text/javascript" src="../../../\1"&gt;&lt;/script&gt;'/>
     </pathconvert>
     <replaceregexp flags="s">
       <regexp pattern="&lt;!--BEGIN_ANT_LINES--&gt;.*&lt;!--END_ANT_LINES--&gt;"/>
       <substitution expression="&lt;!--BEGIN_ANT_LINES--&gt;${line.separator}${scripttags.mg-jq}${line.separator}${line.separator}${scripttags.raphael}${line.separator}&lt;!--END_ANT_LINES--&gt;"/>
-      <filelist dir="src/graphics/raphael" files="index.html"/>
+      <fileset dir="spec/graphics/raphael" includes="**/*.html"/>
     </replaceregexp>
   </target>
 
@@ -101,12 +101,12 @@
     </pathconvert>
     <pathconvert property="scripttags.canvas" pathsep="${line.separator}">
       <path refid="path.graphics-canvas-js"/>
-      <mapper type="regexp" from="^${basedir}/src/graphics/canvas/(.*)$" to='&lt;script type="text/javascript" src="\1"&gt;&lt;/script&gt;'/>
+      <mapper type="regexp" from="^${basedir}/(.*)$" to='&lt;script type="text/javascript" src="../../../\1"&gt;&lt;/script&gt;'/>
     </pathconvert>
     <replaceregexp flags="s">
       <regexp pattern="&lt;!--BEGIN_ANT_LINES--&gt;.*&lt;!--END_ANT_LINES--&gt;"/>
       <substitution expression="&lt;!--BEGIN_ANT_LINES--&gt;${line.separator}${scripttags.mg-jq}${line.separator}${line.separator}${scripttags.canvas}${line.separator}&lt;!--END_ANT_LINES--&gt;"/>
-      <fileset dir="src/graphics/canvas" includes="**/*.html"/>
+      <fileset dir="spec/graphics/canvas" includes="**/*.html"/>
     </replaceregexp>
   </target>
 
