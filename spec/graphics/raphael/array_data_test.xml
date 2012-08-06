@@ -12,6 +12,7 @@
         <variable ref="y"/>
       </verticalaxis>
       <renderer type="line">
+        <option name="linecolor" value="0xff00ff"/>
       </renderer>
     </plot>
     <data>

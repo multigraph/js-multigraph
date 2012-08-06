@@ -43,25 +43,25 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 return data instanceof ns.Data;
             });
 
-            this.hasA("windowBox").which.validatesWith(function(val) {
+            this.hasA("windowBox").which.validatesWith(function (val) {
                 return val instanceof Box;
             });
-            this.hasA("paddingBox").which.validatesWith(function(val) {
+            this.hasA("paddingBox").which.validatesWith(function (val) {
                 return val instanceof Box;
             });
-            this.hasA("plotBox").which.validatesWith(function(val) {
+            this.hasA("plotBox").which.validatesWith(function (val) {
                 return val instanceof Box;
             });
             
-            this.isBuiltWith(function() {
+            this.isBuiltWith(function () {
                 this.window( new ns.Window() );
                 this.plotarea( new ns.Plotarea() );
             });
 
-            this.respondsTo("postParse", function() {
+            this.respondsTo("postParse", function () {
             });
 
-            this.respondsTo("initializeGeometry", function(width, height) {
+            this.respondsTo("initializeGeometry", function (width, height) {
                 var i;
                 this.windowBox( new Box(width, height) );
                 this.paddingBox( new Box(( width -

@@ -1,19 +1,19 @@
 window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
-    var NumberValue = function(value) {
+    var NumberValue = function (value) {
         this.value = value;
     };
 
-    NumberValue.prototype.getRealValue = function() {
+    NumberValue.prototype.getRealValue = function () {
         return this.value;
     };
 
-    NumberValue.prototype.toString = function() {
+    NumberValue.prototype.toString = function () {
         return this.value.toString();
     };
 
-    NumberValue.prototype.compareTo = function(x) {
+    NumberValue.prototype.compareTo = function (x) {
         if (this.value < x.value) {
             return -1;
         } else if (this.value > x.value) {
@@ -22,13 +22,13 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         return 0;
     };
 
-    NumberValue.prototype.add = function(/*DataMeasure*/ measure) {
+    NumberValue.prototype.add = function (/*DataMeasure*/ measure) {
         // NOTE: delibarately accessing the 'measure' property of a NumberMeasure here, rather
         // than calling its getRealValue() method, for convenience and efficiency:
         return new NumberValue(this.value + measure.measure);
     };
 
-    NumberValue.parse = function(s) {
+    NumberValue.parse = function (s) {
         return new NumberValue(parseFloat(s));
     };
 

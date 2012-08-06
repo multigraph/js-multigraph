@@ -31,4 +31,16 @@ describe("Insets", function () {
 
     });
 
+    describe("set method", function () {
+
+        it("should be able to set and read the attribute values", function () {
+            i.set(15, 0, 12.2, 40);
+            expect(i.top()).toBe(15);
+            expect(i.left()).toBe(0);
+            expect(i.bottom()).toBe(12.2);
+            expect(i.right()).toBe(40);
+        });
+
+    });
+
 });

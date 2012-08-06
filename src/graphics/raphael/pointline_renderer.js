@@ -23,8 +23,9 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             }
         });
         ns.PointlineRenderer.respondsTo("end", function () {
+            var linecolor = this.getOptionValue("linecolor");
             this.set().push( this.paper().path(this.path())
-                             .attr({"stroke":"#0000ff"}));
+                             .attr({"stroke":linecolor.getHexString("#")}));
         });
 
     });

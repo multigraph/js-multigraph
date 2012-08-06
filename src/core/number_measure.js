@@ -4,19 +4,19 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     // Fudge factor for floating point comparisons:
     var epsilon = 1E-12;
 
-    var NumberMeasure = function(measure) {
+    var NumberMeasure = function (measure) {
         this.measure = measure;
     };
 
-    NumberMeasure.prototype.getRealValue = function() {
+    NumberMeasure.prototype.getRealValue = function () {
         return this.measure;
     };
 
-    NumberMeasure.prototype.toString = function() {
+    NumberMeasure.prototype.toString = function () {
         return this.measure.toString();
     };
 
-    NumberMeasure.prototype.firstSpacingLocationAtOrAfter = function(value, alignment)  {
+    NumberMeasure.prototype.firstSpacingLocationAtOrAfter = function (value, alignment)  {
         var f,
             n,
             m,
@@ -37,7 +37,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     };
 
-    NumberMeasure.parse = function(s) {
+    NumberMeasure.parse = function (s) {
         return new NumberMeasure(parseFloat(s));
     };
 

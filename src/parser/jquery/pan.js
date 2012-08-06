@@ -8,7 +8,9 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
         ns.core.Pan[parse] = function (xml) {
             var pan = new ns.core.Pan();
             if (xml) {
-                pan.allowed(xml.attr("allowed"));
+                if (xml.attr("allowed") !== undefined) {
+                    pan.allowed(xml.attr("allowed").toLowerCase());
+                }
                 pan.min(xml.attr("min"));
                 pan.max(xml.attr("max"));
             }

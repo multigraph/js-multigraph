@@ -53,11 +53,11 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasA("min").which.isA("string");
 
         // The "dataMin" attribute is the current min DataValue for the axis
-        this.hasA("dataMin").which.validatesWith(function(x) {
+        this.hasA("dataMin").which.validatesWith(function (x) {
             return ns.DataValue.isInstance(x);
         });
         // Convenience method for checking to see if dataMin has been set or not
-        this.respondsTo("hasDataMin", function() {
+        this.respondsTo("hasDataMin", function () {
             return this.dataMin() !== undefined;
         });
 
@@ -74,11 +74,11 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasA("max").which.isA("string");
 
         // The "dataMax" attribute is the current max DataValue for the axis
-        this.hasA("dataMax").which.validatesWith(function(x) {
+        this.hasA("dataMax").which.validatesWith(function (x) {
             return ns.DataValue.isInstance(x);
         });
         // Convenience method for checking to see if dataMax has been set or not
-        this.respondsTo("hasDataMax", function() {
+        this.respondsTo("hasDataMax", function () {
             return this.dataMax() !== undefined;
         });
 
@@ -117,7 +117,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
         this.hasA("axisToDataRatio").which.isA("number");
 
-        this.respondsTo("initializeGeometry", function(graph) {
+        this.respondsTo("initializeGeometry", function (graph) {
             if (this.orientation() === Axis.HORIZONTAL) {
                 this.pixelLength(this.length().calculateLength( graph.plotBox().width() ));
                 this.parallelOffset( this.position().x() + (this.base().x() + 1) * graph.plotBox().width()/2 - (this.anchor() + 1) * this.pixelLength() / 2 );
@@ -151,7 +151,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 */
         });
 
-        this.respondsTo("computeAxisToDataRatio", function() {
+        this.respondsTo("computeAxisToDataRatio", function () {
             if (this.hasDataMin() && this.hasDataMax()) {
 /*
 console.log('pixelLength: ' + this.pixelLength());
@@ -164,7 +164,7 @@ console.log('dataMin: ' + this.dataMin().getRealValue());
             }
         });
 
-        this.respondsTo("dataValueToAxisValue", function(v) {
+        this.respondsTo("dataValueToAxisValue", function (v) {
             return this.axisToDataRatio() * ( v.getRealValue() - this.dataMin().getRealValue() ) + this.minoffset() + this.parallelOffset();
         });
 

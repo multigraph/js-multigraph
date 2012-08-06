@@ -18,14 +18,14 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     /*
      * Return a list of the type constants above
      */
-    DataValue.types = function() {
+    DataValue.types = function () {
         return [ DataValue.NUMBER, DataValue.DATETIME, DataValue.UNKNOWN ];
     };
 
     /*
      * Create a new DataValue subtype of a given type by parsing a string
      */
-    DataValue.parseType = function(string) {
+    DataValue.parseType = function (string) {
         if (string.toLowerCase() === DataValue.NUMBER) { return DataValue.NUMBER; }
         if (string.toLowerCase() === DataValue.DATETIME) { return DataValue.DATETIME; }
         throw new Error("unknown DataValue type: " + string);
@@ -42,14 +42,14 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     /*
      * Return true or false depending on whether obj is an instance of a DataValue type
      */
-    DataValue.isInstance = function(obj) {
+    DataValue.isInstance = function (obj) {
         return (obj && (typeof(obj.getRealValue) === "function") && (typeof(obj.compareTo) === "function"));
     };
 
     /*
      * Create a new DataValue subtype of a given type by parsing a string
      */
-    DataValue.parse = function(type, string) {
+    DataValue.parse = function (type, string) {
         if (type === DataValue.NUMBER) {
             return ns.NumberValue.parse(string);
         } else if (type === DataValue.DATETIME) {
@@ -71,17 +71,17 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     DataValue.GT = "gt";
 
     var comparatorFuncs = {};
-    comparatorFuncs[DataValue.LT] = function(x) { return this.compareTo(x)   < 0; };
-    comparatorFuncs[DataValue.LT] = function(x) { return this.compareTo(x)   < 0; };
-    comparatorFuncs[DataValue.LE] = function(x) { return this.compareTo(x)  <= 0; };
-    comparatorFuncs[DataValue.EQ] = function(x) { return this.compareTo(x) === 0; };
-    comparatorFuncs[DataValue.GE] = function(x) { return this.compareTo(x)  >= 0; };
-    comparatorFuncs[DataValue.GT] = function(x) { return this.compareTo(x)   > 0; };
+    comparatorFuncs[DataValue.LT] = function (x) { return this.compareTo(x)   < 0; };
+    comparatorFuncs[DataValue.LT] = function (x) { return this.compareTo(x)   < 0; };
+    comparatorFuncs[DataValue.LE] = function (x) { return this.compareTo(x)  <= 0; };
+    comparatorFuncs[DataValue.EQ] = function (x) { return this.compareTo(x) === 0; };
+    comparatorFuncs[DataValue.GE] = function (x) { return this.compareTo(x)  >= 0; };
+    comparatorFuncs[DataValue.GT] = function (x) { return this.compareTo(x)   > 0; };
 
     /*
      * Mix the 5 comparator function into another object:
      */
-    DataValue.mixinComparators = function(obj) {
+    DataValue.mixinComparators = function (obj) {
         obj[DataValue.LT] = comparatorFuncs[DataValue.LT];
         obj[DataValue.LE] = comparatorFuncs[DataValue.LE];
         obj[DataValue.EQ] = comparatorFuncs[DataValue.EQ];
@@ -93,7 +93,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * The comparators function returns a list of the 5 comparator
      * functions, to be used like an enum type.
      */
-    DataValue.comparators = function() {
+    DataValue.comparators = function () {
         return [ DataValue.LT, DataValue.LE, DataValue.EQ, DataValue.GE, DataValue.GT ];
     };
 

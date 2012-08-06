@@ -5,7 +5,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.horizontalaxis.pan),
         Pan = new window.jermaine.Model( "Pan", function () {
         this.hasA("allowed").which.validatesWith(function (allowed) {
-            return allowed === "yes" || allowed === "no";
+            return allowed === Pan.YES || allowed === Pan.NO;
         });
         this.hasA("min").which.validatesWith(function (min) {
             return typeof(min) === "string";
@@ -16,6 +16,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
         window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis.pan, attributes);
     });
+
+    Pan.YES = "yes";
+    Pan.NO  = "no";
 
     ns.Pan = Pan;
 

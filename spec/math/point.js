@@ -27,8 +27,8 @@ describe("Point", function () {
 
     describe("parse", function () {
 
-        var dotest = function(string,x,y) {
-            it("should correctly parse the string '"+string+"'", function() {
+        var dotest = function (string, x, y) {
+            it("should correctly parse the string '" + string + "'", function () {
                 var p = Point.parse(string);
                 expect(p.x()).toEqual(x);
                 expect(p.y()).toEqual(y);
@@ -50,6 +50,24 @@ describe("Point", function () {
         dotest(" 1.2  -3.4", 1.2, -3.4);
         dotest(" 1.2  -3.4 ", 1.2, -3.4);
         dotest(" 1.2E-4  -3.4 ", 1.2E-4, -3.4);
+
+    });
+
+    describe("serialize", function () {
+
+        var dotest = function (input, output) {
+            it("should correctly serialize the string '" + input + "'", function () {
+                var p = Point.parse(input);
+                expect(p.serialize()).toEqual(output);
+            });
+        };
+
+        dotest("1.2,3.4", "1.2,3.4");
+        dotest("1.2,-3.4", "1.2,-3.4");
+        dotest("1.2, -3.4", "1.2,-3.4");
+        dotest(" 1.2, -3.4", "1.2,-3.4");
+        dotest(" 1.2, -3.4 ", "1.2,-3.4");
+        dotest(" 1.2E-4, -3.4 ", "0.00012,-3.4");
 
     });
 

@@ -25,16 +25,16 @@ describe("DataValue", function () {
         expect(x.getRealValue()).toEqual(13.2);
     });
 
-    describe("DataValue.isInstance", function() {
-        it("should return true for a NumberValue instance", function() {
+    describe("DataValue.isInstance", function () {
+        it("should return true for a NumberValue instance", function () {
             var x = new NumberValue(13.2);
             expect(DataValue.isInstance(x)).toBe(true);
         });
-        it("should return false for a number", function() {
+        it("should return false for a number", function () {
             var x = 13.2;
             expect(DataValue.isInstance(x)).toBe(false);
         });
-        it("should return false for a string", function() {
+        it("should return false for a string", function () {
             var x = "13.2";
             expect(DataValue.isInstance(x)).toBe(false);
         });

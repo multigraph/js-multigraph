@@ -456,33 +456,33 @@ describe("Axis", function () {
 
     });
 
-    describe("dataMin/dataMax attributes", function() {
-        it("dataMin should initially be undefined", function() {
+    describe("dataMin/dataMax attributes", function () {
+        it("dataMin should initially be undefined", function () {
             expect(a.dataMin()).toBeUndefined();
         });
-        it("dataMax should initially be undefined", function() {
+        it("dataMax should initially be undefined", function () {
             expect(a.dataMax()).toBeUndefined();
         });
-        it("dataMin should not be undefined after being set", function() {
+        it("dataMin should not be undefined after being set", function () {
             a.dataMin(new NumberValue(0.0));
             expect(a.dataMin()).not.toBeUndefined();
         });
     });
 
-    describe("initializeGeometry", function() {
+    describe("initializeGeometry", function () {
 
         var Graph = window.multigraph.core.Graph,
             Insets = window.multigraph.math.Insets,
             a,
             g;
 
-        beforeEach(function() {
+        beforeEach(function () {
             g = new Graph();
             a = new Axis("horizontal");
             g.axes().add(a);
         });
 
-        it("should do something good", function() {
+        it("should do something good", function () {
 
             g.window().margin(new Insets(5,5,5,5));
             g.window().border(3);

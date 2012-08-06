@@ -18,7 +18,9 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 if (xml.attr("position") !== undefined) {
                     img.position(window.multigraph.math.Point.parse(xml.attr("position")));
                 }
-                img.frame(xml.attr("frame"));
+                if (xml.attr("frame") !== undefined) {
+                    img.frame(xml.attr("frame").toLowerCase());
+                }
             }
             return img;
         };

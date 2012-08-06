@@ -9,9 +9,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
         this.hasA("divid").which.isA("string");
 
-        this.respondsTo("initializeGeometry", function(width, height) {
+        this.respondsTo("initializeGeometry", function (width, height) {
             var i;
-            for (i=0; i<this.graphs().size(); ++i) {
+            for (i=0; i < this.graphs().size(); ++i) {
                 this.graphs().at(i).initializeGeometry(width, height);
             }
         });

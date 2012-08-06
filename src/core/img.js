@@ -17,12 +17,15 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 return position instanceof window.multigraph.math.Point;
             });
             this.hasA("frame").which.validatesWith(function (frame) {
-                return frame === "padding" || frame === "plot";
+                return frame === Img.PADDING || frame === Img.PLOT;
             });
             this.isBuiltWith("src");
 
             window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.background.img, attributes);
         });
+
+    Img.PADDING = "padding";
+    Img.PLOT    = "plot";
 
     ns.Img = Img;
 });
