@@ -31,19 +31,20 @@ window.multigraph.util.namespace("window.multigraph.math", function (ns) {
 
     });
 
-    ns.RGBColor.parse = function (string) {
+    ns.RGBColor.parse = function (input) {
         var red,
             green,
             blue,
             grey,
+            parsedInput,
             colorObj;
 
-        if (string === undefined) {
+        if (input === undefined) {
             return undefined;
-        } else if (typeof(string) === 'string') {
-            string = string.toLowerCase();
+        } else if (typeof(input) === "string") {
+            parsedInput = input.toLowerCase();
 
-            switch (string) {
+            switch (parsedInput) {
             case "black":
                 red = 0;
                 green = 0;
@@ -91,15 +92,27 @@ window.multigraph.util.namespace("window.multigraph.math", function (ns) {
                 blue = grey;
                 break;
             default:
-                string = string.replace(/(0(x|X)|#)/, "");
-                red = parseInt(string.substring(0,2), 16) / 255;
-                green = parseInt(string.substring(2,4), 16) / 255;
-                blue = parseInt(string.substring(4,6), 16) / 255;
+                parsedInput = parsedInput.replace(/(0(x|X)|#)/, "");
+                if (parsedInput.search(new RegExp(/([^0-9a-f])/)) !== -1) {
+                    throw new Error("'" + input + "' is not a valid color");
+                }
+
+                if (parsedInput.length === 6) {
+                    red = parseInt(parsedInput.substring(0,2), 16) / 255;
+                    green = parseInt(parsedInput.substring(2,4), 16) / 255;
+                    blue = parseInt(parsedInput.substring(4,6), 16) / 255;
+                } else if (parsedInput.length === 3) {
+                    red = parseInt(parsedInput.charAt(0), 16) / 15;
+                    green = parseInt(parsedInput.charAt(1), 16) / 15;
+                    blue = parseInt(parsedInput.charAt(2), 16) / 15;
+                } else {
+                    throw new Error("'" + input + "' is not a valid color");
+                }
                 break;
             }
             colorObj = new ns.RGBColor(red, green, blue);
             return colorObj;
         }
-        return undefined;
+        throw new Error("'" + input + "' is not a valid color");
     };
 });

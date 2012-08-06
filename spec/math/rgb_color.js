@@ -134,143 +134,216 @@ describe("RGBColor", function () {
     });
 
     describe("parse method", function () {
-        it("should parse '0x123456' correctly", function () {
-            var rgb2 = RGBColor.parse("0x123456");
-            expect(rgb2.r()).toBe(parseInt("12", 16) / 255);
-            expect(rgb2.g()).toBe(parseInt("34", 16) / 255);
-            expect(rgb2.b()).toBe(parseInt("56", 16) / 255);
+        var rgb2;
+        describe("long hex strings", function () {
+            it("should parse '0x123456' correctly", function () {
+                rgb2 = RGBColor.parse("0x123456");
+                expect(rgb2.r()).toBe(parseInt("12", 16) / 255);
+                expect(rgb2.g()).toBe(parseInt("34", 16) / 255);
+                expect(rgb2.b()).toBe(parseInt("56", 16) / 255);
+            });
+            it("should parse '#8dab89' correctly", function () {
+                rgb2 = RGBColor.parse("#8dab89");
+                expect(rgb2.r()).toBe(parseInt("8d", 16) / 255);
+                expect(rgb2.g()).toBe(parseInt("ab", 16) / 255);
+                expect(rgb2.b()).toBe(parseInt("89", 16) / 255);
+            });
+            it("should parse '#8DAB89' correctly", function () {
+                rgb2 = RGBColor.parse("#8DAB89");
+                expect(rgb2.r()).toBe(parseInt("8D", 16) / 255);
+                expect(rgb2.g()).toBe(parseInt("AB", 16) / 255);
+                expect(rgb2.b()).toBe(parseInt("89", 16) / 255);
+            });
+            it("should parse '0X020202' correctly", function () {
+                rgb2 = RGBColor.parse("0X020202");
+                expect(rgb2.r()).toBe(parseInt("02", 16) / 255);
+                expect(rgb2.g()).toBe(parseInt("02", 16) / 255);
+                expect(rgb2.b()).toBe(parseInt("02", 16) / 255);
+            });
         });
-        it("should parse '#8dab89' correctly", function () {
-            var rgb2 = RGBColor.parse("#8dab89");
-            expect(rgb2.r()).toBe(parseInt("8d", 16) / 255);
-            expect(rgb2.g()).toBe(parseInt("ab", 16) / 255);
-            expect(rgb2.b()).toBe(parseInt("89", 16) / 255);
+        describe("shorthand hex strings", function () {
+            it("should parse '0x000' correctly", function () {
+                rgb2 = RGBColor.parse("0x000");
+                expect(rgb2.r()).toBe(parseInt("00", 16) / 255);
+                expect(rgb2.g()).toBe(parseInt("00", 16) / 255);
+                expect(rgb2.b()).toBe(parseInt("00", 16) / 255);
+            });
+            it("should parse '#efb' correctly", function () {
+                rgb2 = RGBColor.parse("#efb");
+                expect(rgb2.r()).toBe(parseInt("ee", 16) / 255);
+                expect(rgb2.g()).toBe(parseInt("ff", 16) / 255);
+                expect(rgb2.b()).toBe(parseInt("bb", 16) / 255);
+            });
+            it("should parse '#8Fb' correctly", function () {
+                rgb2 = RGBColor.parse("#8Fb");
+                expect(rgb2.r()).toBe(parseInt("88", 16) / 255);
+                expect(rgb2.g()).toBe(parseInt("ff", 16) / 255);
+                expect(rgb2.b()).toBe(parseInt("bb", 16) / 255);
+            });
+            it("should parse '0X123' correctly", function () {
+                rgb2 = RGBColor.parse("0X123");
+                expect(rgb2.r()).toBe(parseInt("11", 16) / 255);
+                expect(rgb2.g()).toBe(parseInt("22", 16) / 255);
+                expect(rgb2.b()).toBe(parseInt("33", 16) / 255);
+            });
+
         });
-        it("should parse '#8DAB89' correctly", function () {
-            var rgb2 = RGBColor.parse("#8DAB89");
-            expect(rgb2.r()).toBe(parseInt("8D", 16) / 255);
-            expect(rgb2.g()).toBe(parseInt("AB", 16) / 255);
-            expect(rgb2.b()).toBe(parseInt("89", 16) / 255);
+
+        describe("named color strings", function () {
+            it("should parse 'black' correctly", function () {
+                rgb2 = RGBColor.parse("black");
+                expect(rgb2.r()).toBe(0);
+                expect(rgb2.g()).toBe(0);
+                expect(rgb2.b()).toBe(0);
+            });
+            it("should parse 'red' correctly", function () {
+                rgb2 = RGBColor.parse("red");
+                expect(rgb2.r()).toBe(1);
+                expect(rgb2.g()).toBe(0);
+                expect(rgb2.b()).toBe(0);
+            });
+            it("should parse 'green' correctly", function () {
+                rgb2 = RGBColor.parse("green");
+                expect(rgb2.r()).toBe(0);
+                expect(rgb2.g()).toBe(1);
+                expect(rgb2.b()).toBe(0);
+            });
+            it("should parse 'blue' correctly", function () {
+                rgb2 = RGBColor.parse("blue");
+                expect(rgb2.r()).toBe(0);
+                expect(rgb2.g()).toBe(0);
+                expect(rgb2.b()).toBe(1);
+            });
+            it("should parse 'yellow' correctly", function () {
+                rgb2 = RGBColor.parse("yellow");
+                expect(rgb2.r()).toBe(1);
+                expect(rgb2.g()).toBe(1);
+                expect(rgb2.b()).toBe(0);
+            });
+            it("should parse 'magenta' correctly", function () {
+                rgb2 = RGBColor.parse("magenta");
+                expect(rgb2.r()).toBe(1);
+                expect(rgb2.g()).toBe(0);
+                expect(rgb2.b()).toBe(1);
+            });
+            it("should parse 'cyan' correctly", function () {
+                rgb2 = RGBColor.parse("cyan");
+                expect(rgb2.r()).toBe(0);
+                expect(rgb2.g()).toBe(1);
+                expect(rgb2.b()).toBe(1);
+            });
+            it("should parse 'white' correctly", function () {
+                rgb2 = RGBColor.parse("white");
+                expect(rgb2.r()).toBe(1);
+                expect(rgb2.g()).toBe(1);
+                expect(rgb2.b()).toBe(1);
+            });
+            it("should parse 'grey' correctly", function () {
+                rgb2 = RGBColor.parse("grey");
+                expect(rgb2.r()).toBe(parseInt("ee", 16) / 255);
+                expect(rgb2.g()).toBe(parseInt("ee", 16) / 255);
+                expect(rgb2.b()).toBe(parseInt("ee", 16) / 255);
+            });
+            it("should parse 'BlAck' correctly", function () {
+                rgb2 = RGBColor.parse("BlAck");
+                expect(rgb2.r()).toBe(0);
+                expect(rgb2.g()).toBe(0);
+                expect(rgb2.b()).toBe(0);
+            });
         });
-        it("should parse '0X020202' correctly", function () {
-            var rgb2 = RGBColor.parse("0X020202");
-            expect(rgb2.r()).toBe(parseInt("02", 16) / 255);
-            expect(rgb2.g()).toBe(parseInt("02", 16) / 255);
-            expect(rgb2.b()).toBe(parseInt("02", 16) / 255);
-        });
-        it("should parse 'black' correctly", function () {
-            var rgb2 = RGBColor.parse("black");
-            expect(rgb2.r()).toBe(0);
-            expect(rgb2.g()).toBe(0);
-            expect(rgb2.b()).toBe(0);
-        });
-        it("should parse 'red' correctly", function () {
-            var rgb2 = RGBColor.parse("red");
-            expect(rgb2.r()).toBe(1);
-            expect(rgb2.g()).toBe(0);
-            expect(rgb2.b()).toBe(0);
-        });
-        it("should parse 'green' correctly", function () {
-            var rgb2 = RGBColor.parse("green");
-            expect(rgb2.r()).toBe(0);
-            expect(rgb2.g()).toBe(1);
-            expect(rgb2.b()).toBe(0);
-        });
-        it("should parse 'blue' correctly", function () {
-            var rgb2 = RGBColor.parse("blue");
-            expect(rgb2.r()).toBe(0);
-            expect(rgb2.g()).toBe(0);
-            expect(rgb2.b()).toBe(1);
-        });
-        it("should parse 'yellow' correctly", function () {
-            var rgb2 = RGBColor.parse("yellow");
-            expect(rgb2.r()).toBe(1);
-            expect(rgb2.g()).toBe(1);
-            expect(rgb2.b()).toBe(0);
-        });
-        it("should parse 'magenta' correctly", function () {
-            var rgb2 = RGBColor.parse("magenta");
-            expect(rgb2.r()).toBe(1);
-            expect(rgb2.g()).toBe(0);
-            expect(rgb2.b()).toBe(1);
-        });
-        it("should parse 'cyan' correctly", function () {
-            var rgb2 = RGBColor.parse("cyan");
-            expect(rgb2.r()).toBe(0);
-            expect(rgb2.g()).toBe(1);
-            expect(rgb2.b()).toBe(1);
-        });
-        it("should parse 'white' correctly", function () {
-            var rgb2 = RGBColor.parse("white");
-            expect(rgb2.r()).toBe(1);
-            expect(rgb2.g()).toBe(1);
-            expect(rgb2.b()).toBe(1);
-        });
-        it("should parse 'grey' correctly", function () {
-            var rgb2 = RGBColor.parse("grey");
-            expect(rgb2.r()).toBe(parseInt("ee", 16) / 255);
-            expect(rgb2.g()).toBe(parseInt("ee", 16) / 255);
-            expect(rgb2.b()).toBe(parseInt("ee", 16) / 255);
-        });
-        it("should parse 'BlAck' correctly", function () {
-            var rgb2 = RGBColor.parse("BlAck");
-            expect(rgb2.r()).toBe(0);
-            expect(rgb2.g()).toBe(0);
-            expect(rgb2.b()).toBe(0);
+
+        describe("incorrect input", function () {
+            it("should throw an error if a hex string is not 3 or 6 characters long", function () {
+                expect(function () {
+                    rgb2 = RGBColor.parse("0x11");
+                }).toThrow("'0x11' is not a valid color");
+                expect(function () {
+                    rgb2 = RGBColor.parse("0x1111");
+                }).toThrow("'0x1111' is not a valid color");
+                expect(function () {
+                    rgb2 = RGBColor.parse("0xab34343");
+                }).toThrow("'0xab34343' is not a valid color");
+                expect(function () {
+                    rgb2 = RGBColor.parse("0x343434");
+                }).not.toThrow("'0x343434' is not a valid color");
+            });
+            it("should throw an error if a hex string contains a character other than [0-9] or [a-f|A-F]", function () {
+                expect(function () {
+                    rgb2 = RGBColor.parse("0x1222Tg");
+                }).toThrow("'0x1222Tg' is not a valid color");
+                expect(function () {
+                    rgb2 = RGBColor.parse("0xX2X2X2");
+                }).toThrow("'0xX2X2X2' is not a valid color");
+                expect(function () {
+                    rgb2 = RGBColor.parse("0xF0`");
+                }).toThrow("'0xF0`' is not a valid color");
+            });
+            it("should throw an error if a named string is not one of the specified names", function () {
+                expect(function () {
+                    rgb2 = RGBColor.parse("red~ish");
+                }).toThrow("'red~ish' is not a valid color");
+                expect(function () {
+                    rgb2 = RGBColor.parse("pink");
+                }).toThrow("'pink' is not a valid color");
+                expect(function () {
+                    rgb2 = RGBColor.parse("teal");
+                }).toThrow("'teal' is not a valid color");
+            });
         });
     });
 
     describe("getHexString method", function () {
+        var rgb2;
         it("should serialize '0x123456' correctly", function () {
-            var rgb2 = RGBColor.parse("0x123456");
+            rgb2 = RGBColor.parse("0x123456");
             expect(rgb2.getHexString()).toBe("0x123456");
         });
         it("should serialize '#878FF9' correctly", function () {
-            var rgb2 = RGBColor.parse("#878FF9");
+            rgb2 = RGBColor.parse("#878FF9");
             expect(rgb2.getHexString()).toBe("0x878ff9");
         });
         it("should serialize '0X3434aa' correctly", function () {
-            var rgb2 = RGBColor.parse("0X3434aa");
+            rgb2 = RGBColor.parse("0X3434aa");
             expect(rgb2.getHexString()).toBe("0x3434aa");
         });
         it("should serialize 'black' correctly", function () {
-            var rgb2 = RGBColor.parse("black");
+            rgb2 = RGBColor.parse("black");
             expect(rgb2.getHexString()).toBe("0x000000");
         });
         it("should serialize 'red' correctly", function () {
-            var rgb2 = RGBColor.parse("red");
+            rgb2 = RGBColor.parse("red");
             expect(rgb2.getHexString()).toBe("0xff0000");
         });
         it("should serialize 'green' correctly", function () {
-            var rgb2 = RGBColor.parse("green");
+            rgb2 = RGBColor.parse("green");
             expect(rgb2.getHexString()).toBe("0x00ff00");
         });
         it("should serialize 'blue' correctly", function () {
-            var rgb2 = RGBColor.parse("blue");
+            rgb2 = RGBColor.parse("blue");
             expect(rgb2.getHexString()).toBe("0x0000ff");
         });
         it("should serialize 'yellow' correctly", function () {
-            var rgb2 = RGBColor.parse("yellow");
+            rgb2 = RGBColor.parse("yellow");
             expect(rgb2.getHexString()).toBe("0xffff00");
         });
         it("should serialize 'magenta' correctly", function () {
-            var rgb2 = RGBColor.parse("magenta");
+            rgb2 = RGBColor.parse("magenta");
             expect(rgb2.getHexString()).toBe("0xff00ff");
         });
         it("should serialize 'cyan' correctly", function () {
-            var rgb2 = RGBColor.parse("cyan");
+            rgb2 = RGBColor.parse("cyan");
             expect(rgb2.getHexString()).toBe("0x00ffff");
         });
         it("should serialize 'white' correctly", function () {
-            var rgb2 = RGBColor.parse("white");
+            rgb2 = RGBColor.parse("white");
             expect(rgb2.getHexString()).toBe("0xffffff");
         });
         it("should serialize 'grey' correctly", function () {
-            var rgb2 = RGBColor.parse("grey");
+            rgb2 = RGBColor.parse("grey");
             expect(rgb2.getHexString()).toBe("0xeeeeee");
         });
         it("should serialize 'BlAck' correctly", function () {
-            var rgb2 = RGBColor.parse("BlAck");
+            rgb2 = RGBColor.parse("BlAck");
             expect(rgb2.getHexString()).toBe("0x000000");
         });
     });
