@@ -1,55 +1,64 @@
-// The Pointline renderer is a 1-variable renderer which draws a shape at
-// each non-missing data point, and connects consecutive non-missing data
-// points with line segments.  The drawing of both the points, and the
-// lines, is optional, so this renderer can be used to draw just points,
-// just line segments, or both.
+// The Pointline renderer is a 1-variable renderer which draws a shape
+// at each non-missing data point, and connects consecutive
+// non-missing data points with line segments.  The drawing of both
+// the points, and the lines, is optional, so this renderer can be
+// used to draw just points, just line segments, or both.
 // 
 // When both points and line segments are drawn, the points should
-// occlude the line segments.
+// be drawn on "top of" the line segments.
 // 
 // This renderer accepts the following options:
 // 
 //     OPTION NAME:          linewidth
-//     DESCRIPTION:          Width, in pixels, of line segments.  A
-//                           value of 0 means do not draw line segments.
 //     DATA TYPE:            number
 //     DEFAULT VALUE:        1
+//     DESCRIPTION:          Width, in pixels, of line segments.  A
+//                           value of 0 means do not draw line segments.
 // 
 //     OPTION NAME:          linecolor
-//     DESCRIPTION:          Color used for line segments
 //     DATA TYPE:            RGBColor
 //     DEFAULT VALUE:        0x000000 (black)
+//     DESCRIPTION:          Color used for line segments
 // 
 //     OPTION NAME:          pointsize
+//     DATA TYPE:            number
+//     DEFAULT VALUE:        0
 //     DESCRIPTION:          The diameter of drawn points.  A value
 //                           of 0 means do not draw points.
-//     DATA TYPE:            number
-//     DEFAULT VALUE:        0
 // 
 //     OPTION NAME:          pointcolor
-//     DESCRIPTION:          ...
 //     DATA TYPE:            RGBColor
 //     DEFAULT VALUE:        0x000000 (black)
+//     DESCRIPTION:          Color used for drawing points
 // 
 //     OPTION NAME:          pointshape
-//     DESCRIPTION:          
-//     DATA TYPE:            PointlineRenderer.***
+//     DATA TYPE:            One of the constants PointlineRenderer.CIRCLE,
+//                           PointlineRenderer.SQUARE, PointlineRenderer.TRIANGLE,
+//                           PointlineRenderer.DIAMOND, PointlineRenderer.STAR,
+//                           PointlineRenderer.PLUS, or PointlineRenderer.X.  These
+//                           correspond to the strings "circle", "square", "triangle",
+//                           "diamond", "star", "plus", and "x" in MUGL files.
 //     DEFAULT VALUE:        PointlineRenderer.CIRCLE
+//     DESCRIPTION:          The shape to use for drawing points.
 // 
 //     OPTION NAME:          pointopacity
-//     DESCRIPTION:          
 //     DATA TYPE:            number
 //     DEFAULT VALUE:        1.0
+//     DESCRIPTION:          The opactiy of the drawn points, in the range 0-1.
+//                           A value of 1 means completely opaque; a value of 0
+//                           means completely invisible.
 // 
 //     OPTION NAME:          pointoutlinewidth
-//     DESCRIPTION:          
 //     DATA TYPE:            number
 //     DEFAULT VALUE:        0
+//     DESCRIPTION:          The width, in pixels, of the outline to be drawn
+//                           around each point.  A value of 0 means draw no
+//                           outline.
 // 
 //     OPTION NAME:          pointoutlinecolor
-//     DESCRIPTION:          
 //     DATA TYPE:            RGBColor
 //     DEFAULT VALUE:        0x000000 (black)
+//     DESCRIPTION:          The color to use for the outline around each point.
 //
 window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
