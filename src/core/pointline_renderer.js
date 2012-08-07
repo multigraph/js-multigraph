@@ -1,3 +1,56 @@
+// The Pointline renderer is a 1-variable renderer which draws a shape at
+// each non-missing data point, and connects consecutive non-missing data
+// points with line segments.  The drawing of both the points, and the
+// lines, is optional, so this renderer can be used to draw just points,
+// just line segments, or both.
+// 
+// When both points and line segments are drawn, the points should
+// occlude the line segments.
+// 
+// This renderer accepts the following options:
+// 
+//     OPTION NAME:          linewidth
+//     DESCRIPTION:          Width, in pixels, of line segments.  A
+//                           value of 0 means do not draw line segments.
+//     DATA TYPE:            number
+//     DEFAULT VALUE:        1
+// 
+//     OPTION NAME:          linecolor
+//     DESCRIPTION:          Color used for line segments
+//     DATA TYPE:            RGBColor
+//     DEFAULT VALUE:        0x000000 (black)
+// 
+//     OPTION NAME:          pointsize
+//     DESCRIPTION:          The diameter of drawn points.  A value
+//                           of 0 means do not draw points.
+//     DATA TYPE:            number
+//     DEFAULT VALUE:        0
+// 
+//     OPTION NAME:          pointcolor
+//     DESCRIPTION:          ...
+//     DATA TYPE:            RGBColor
+//     DEFAULT VALUE:        0x000000 (black)
+// 
+//     OPTION NAME:          pointshape
+//     DESCRIPTION:          
+//     DATA TYPE:            PointlineRenderer.***
+//     DEFAULT VALUE:        PointlineRenderer.CIRCLE
+// 
+//     OPTION NAME:          pointopacity
+//     DESCRIPTION:          
+//     DATA TYPE:            number
+//     DEFAULT VALUE:        1.0
+// 
+//     OPTION NAME:          pointoutlinewidth
+//     DESCRIPTION:          
+//     DATA TYPE:            number
+//     DEFAULT VALUE:        0
+// 
+//     OPTION NAME:          pointoutlinecolor
+//     DESCRIPTION:          
+//     DATA TYPE:            RGBColor
+//     DEFAULT VALUE:        0x000000 (black)
+//
 window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
@@ -62,6 +115,19 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         return shape;
     };
 
+    PointlineRenderer.ShapeOption = new window.jermaine.Model( "PointlineRenderer.ShapeOption", function () {
+        this.isA(ns.Renderer.Option);
+        this.hasA("value").which.validatesWith(PointlineRenderer.isShape);
+        this.isBuiltWith("value");
+        this.respondsTo("serializeValue", function () {
+            return PointlineRenderer.serializeShape(this.value());
+        });
+        this.respondsTo("parseValue", function (string) {
+            this.value( PointlineRenderer.parseShape(string) );
+        });
+    });
+
+
     ns.Renderer.declareOptions(PointlineRenderer, "PointlineRendererOptions", [
         {
             'name'          : 'linecolor',
@@ -72,138 +138,38 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             'name'          : 'linewidth',
             'type'          : ns.Renderer.NumberOption,
             'default'       : 1
-        }
-    ]);
-
-
-
-/*
-
-<plot>
-  <renderer type="bar">
-    <option name="color" value="red"   min="0" />
-    <option name="color" value="blue"  max="0"/>
-  ...
-
-
-BarRenderer
-  hasAn("options").which.isA(BarRendererOptions)
-
-BarRendererOptions
-  hasMany("color").which.isA(ColorOption)
-  hasMany("barwidth").which.isA(BarWidthOption)
-
-RootOption
-  hasA("min")
-  hasA("max")
-
-RGBColorOption
-  isA(RootOption)
-  hasA("value").which.isA(RGBColor)
-  respondsTo("serialize", ...)
-RGBColorOption.parse = function() { ... }
-
-NumberOption
-  isA(RootOption)
-  hasA("value").which.isA("number")
-
-this.options().color().at(0).value()
-this.options().color().at(1).value()
-
-
-
-
-Renderer
-  options = {
-    'color' : [
-       { 'value' : 'red',  'min' : 0, 'max' : undefined },
-       { 'value' : 'blue', 'min' : undefined, 'max' : 0 }
-    ],
-
-    'barwidth' : [
-    ],
-
-
-  }  
-
-Renderer.respondsTo("getOptionValue", function (name, val) {
-});
-
-
-
-
-
-BarRenderer
-  hasAn("options").which.isA(BarRendererOptions)
-
-BarRendererOptions
-  hasMany("color").which.isA(ColorOption)
-  hasMany("barwidth").which.isA(BarWidthOption)
-
-    ns.Renderer.declareOptions(PointlineRenderer, [
-        {
-            'name'     : 'color',
-            'type'     : RGBColorRendererOption,
-            'defaults' : new RGBColor(0,0,0)
         },
         {
-            'name'    : 'barwidth',
-            'type'    : NumberRendererOption,
-            'default' : 1
-
-        },
-
-
-
-    ns.Renderer.declareOptions(PointlineRenderer, [
-        {
-            'name'          : 'linecolor',
-            'type'          : ns.Renderer.optionTypes.RGBColor,
-            'defaultsTo'    : function () { return new RGBColor(0,0,0); }
-        },
-        {
-            'name'          : 'linewidth',
-            'defaultsTo'    : function () { return 1; },
-            'type'          : ns.Renderer.optionTypes.number
+            'name'          : 'pointshape',
+            'type'          : PointlineRenderer.ShapeOption,
+            'default'       : PointlineRenderer.CIRCLE
         },
         {
             'name'          : 'pointsize',
-            'defaultsTo'    : function () { return 0; },
-            'type'          : ns.Renderer.optionTypes.number
-        },
-        {
-            'name'           : 'pointshape',
-            'defaultsTo'     : function () { return PointlineRenderer.CIRCLE; },
-            'type'           {
-                'validatesWith'  : PointlineRenderer.isShape,
-                'parsersWith'    : PointlineRenderer.parseShape,
-                'serializesWith' : PointlineRenderer.parseShape
-            }
+            'type'          : ns.Renderer.NumberOption,
+            'default'       : 0
         },
         {
             'name'          : 'pointcolor',
-            'type'          : ns.Renderer.optionTypes.RGBColor,
-            'defaultsTo'    : function () { return new RGBColor(0,0,0); },
+            'type'          : ns.Renderer.RGBColorOption,
+            'default'       : new window.multigraph.math.RGBColor(0,0,0)
         },
         {
             'name'          : 'pointopacity',
-            'defaultsTo'    : function () { return 1.0; },
-            'type'          : ns.Renderer.optionTypes.number
+            'type'          : ns.Renderer.NumberOption,
+            'default'       : 1.0
         },
         {
             'name'          : 'pointoutlinewidth',
-            'defaultsTo'    : function () { return 0; },
-            'type'          : ns.Renderer.optionTypes.number
+            'type'          : ns.Renderer.NumberOption,
+            'default'       : 0
         },
         {
             'name'          : 'pointoutlinecolor',
-            'type'          : ns.Renderer.optionTypes.RGBColor,
-            'defaultsTo'    : function () { return new RGBColor(0,0,0); },
-        },
+            'type'          : ns.Renderer.RGBColorOption,
+            'default'       : new window.multigraph.math.RGBColor(0,0,0)
+        }
     ]);
-
-
-*/
 
     ns.Renderer.addType({'type'  : "pointline",
                          'model' : PointlineRenderer});

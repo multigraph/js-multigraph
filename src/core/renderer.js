@@ -43,9 +43,59 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return output;
         });
 
+        var equalOrUndefined = function(a,b) {
+            return ((a===b) || ((a===undefined) && (b===undefined)));
+        };
+
+        this.respondsTo("setOption", function(name, value, min, max) {
+            var rendererOpt,
+                rendererOpts,
+                i;
+            if (!this.optionsMetadata[name]) {
+                throw new Error("attempt to set unknown renderer option '"+name+"'");
+            }
+            rendererOpts = this.newOptions()[name]();
+            for (i=0; i<rendererOpts.size(); ++i) {
+                if (equalOrUndefined(rendererOpts.at(i).min(), min) &&
+                    equalOrUndefined(rendererOpts.at(i).max(), max)) {
+                    rendererOpts.at(i).value(value);
+                    return;
+                }
+            }
+            // If we get this far, it means we didn't find an existing option in the list with matching min/max
+            // settings, so we create a new one and append it to the end of the list:
+            rendererOpt = new (this.optionsMetadata[name].type)();
+            rendererOpt.value(value);
+            rendererOpt.min(min);
+            rendererOpt.max(max);
+            rendererOpts.add(rendererOpt);
+        });
 
         this.respondsTo("setOptionFromString", function (name, stringValue, stringMin, stringMax) {
-            //if (typeof (this.newOptions()[name]) !== "function") {
+            var rendererOpt;
+            if (!this.optionsMetadata[name]) {
+                // If this renderer has no option named "name", bail out immediately.  This should eventually
+                // throw an error, but for now we just quietly ignore it, to eliminate error conditions coming
+                // from unimplemented options.
+                console.log("WARNING: renderer has no option named '" + name + "'");
+                return;
+            }
+            rendererOpt = new (this.optionsMetadata[name].type)();
+            rendererOpt.parseValue(stringValue);
+            if (this.verticalaxis()) {
+                if (stringMin !== undefined) {
+                    rendererOpt.min( ns.DataValue.parse( this.verticalaxis().type(), stringMin ));
+                }
+                if (stringMax !== undefined) {
+                    rendererOpt.max( ns.DataValue.parse( this.verticalaxis().type(), stringMax ));
+                }
+            }
+            this.setOption(name, rendererOpt.value(), rendererOpt.min(), rendererOpt.max());
+        });
+
+
+/*
+        this.respondsTo("setOptionFromString", function (name, stringValue, stringMin, stringMax) {
             if (!this.optionsMetadata[name]) {
                 // If this renderer has no option named "name", bail out immediately.  This should eventually
                 // throw an error, but for now we just quietly ignore it, to eliminate error conditions coming
@@ -66,7 +116,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             this.newOptions()[name]().add(rendererOpt);
 
         });
-
+*/
 	this.respondsTo("getOptionValue", function (optionName, /*optional:*/value) {
             var i,
                 newOptions,

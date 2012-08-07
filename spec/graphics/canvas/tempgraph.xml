@@ -13,6 +13,7 @@
       </verticalaxis>
       <renderer type="pointline">
         <option name="linecolor" value="0xff00ff"/>
+        <option name="linewidth" value="3"/>
       </renderer>
     </plot>
     <data>

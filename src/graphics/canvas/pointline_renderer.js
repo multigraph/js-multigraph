@@ -22,7 +22,9 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         });
         ns.PointlineRenderer.respondsTo("end", function() {
             var color = this.getOptionValue("linecolor");
+            var linewidth = this.getOptionValue("linewidth");
             this.context().strokeStyle = color.getHexString('#');
+            this.context().lineWidth = linewidth;
             this.context().stroke();
             this.context().closePath();
         });

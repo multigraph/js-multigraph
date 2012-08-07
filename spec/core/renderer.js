@@ -218,9 +218,9 @@ describe("Renderer", function () {
                 expect(function () {
                     renderer.setOptionFromString("linecolor", "0xffff00");
                 }).not.toThrow();
-                expect(renderer.newOptions().linecolor().size()).toEqual(2);
-                expect(renderer.newOptions().linecolor().at(1) instanceof Renderer.RGBColorOption).toBe(true);
-                expect(renderer.newOptions().linecolor().at(1).serializeValue()).toEqual("0xffff00");
+                expect(renderer.newOptions().linecolor().size()).toEqual(1);
+                expect(renderer.newOptions().linecolor().at(0) instanceof Renderer.RGBColorOption).toBe(true);
+                expect(renderer.newOptions().linecolor().at(0).serializeValue()).toEqual("0xffff00");
             });
             it("should be able to set a linecolor value with both a min and max setting", function () {
                 // NOTE: renderer needs a vertical axis with a defined "type" for this, so that it knows how to parse min/max values from strings!
