@@ -9,47 +9,23 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     Renderer = new window.jermaine.Model( "Renderer", function () {
         this.hasA("type").which.validatesWith(function (type) {
-            return type === "line" || type === "bar" ||
-                   type === "fill" || type === "point" ||
-                   type === "barerror" || type === "lineerror" ||
-                   type === "pointline";
+            return type === "line" ||
+                   type === "bar" ||
+                   type === "fill" ||
+                   type === "point" ||
+                   type === "barerror" ||
+                   type === "lineerror" ||
+                   type === "pointline" ||
+                   type === "band" ||
+                   type === "rangebar";
         });
         this.hasMany("options").which.validatesWith(function (option) {
             return option instanceof ns.RendererOption;
         });
 
-/*
-        this.hasA("horizontalaxis").which.validatesWith(function (a) {
-            return a instanceof ns.Axis;
-        });
-        this.hasA("verticalaxis").which.validatesWith(function (a) {
-            return a instanceof ns.Axis;
-        });
-*/
-
         this.hasA("plot").which.validatesWith(function (plot) {
             return plot instanceof ns.Plot;
         });
-
-        this.respondsTo("horizontalaxis", function (a) {
-            // placeholder for deprecated setter/getter; delete this method
-            // once we're sure it's not called any more
-            if (a !== undefined) {
-                throw new Error("renderer horizontalaxis() setter no longer supported; use plot() setter instead!");
-            }
-            console.log("Warning: deprecated renderer.horizontalaxis() getter called; use renderer.plot().horizontalaxis() instead.");
-            return this.plot().horizontalaxis();
-        });
-        this.respondsTo("verticalaxis", function (a) {
-            // placeholder for deprecated setter/getter; delete this method
-            // once we're sure it's not called any more
-            if (a !== undefined) {
-                throw new Error("renderer verticalaxis() setter no longer supported; use plot() setter instead!");
-            }
-            console.log("Warning: deprecated renderer.verticalaxis() getter called; use renderer.plot().verticalaxis() instead.");
-            return this.plot().verticalaxis();
-        });
-
 
         this.respondsTo("setUpMissing", function() {
             // A call to this method results in the addition (or replacement) of a method called "isMissing()"
@@ -103,11 +79,11 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return output;
         });
 
-        var equalOrUndefined = function(a,b) {
+        var equalOrUndefined = function (a, b) {
             return ((a===b) || ((a===undefined) && (b===undefined)));
         };
 
-        this.respondsTo("setOption", function(name, value, min, max) {
+        this.respondsTo("setOption", function (name, value, min, max) {
             var rendererOpt,
                 rendererOpts,
                 i;
@@ -141,7 +117,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 return;
             }
             rendererOpt = new (this.optionsMetadata[name].type)();
-            rendererOpt.parseValue(stringValue);
+            rendererOpt.parseValue(stringValue, this);
             if (this.plot() && this.plot().verticalaxis()) {
                 if (stringMin !== undefined) {
                     rendererOpt.min( ns.DataValue.parse( this.plot().verticalaxis().type(), stringMin ));
@@ -263,8 +239,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 });
             }(options[i].type));
             optionsMetadata[options[i].name] = {
-                'type'    : options[i]['type'],
-                'default' :  options[i]['default']
+                "type"    : options[i]["type"],
+                "default" :  options[i]["default"]
             };
         }
         renderer.hasA("newOptions").isImmutable().defaultsTo(function () { return new OptionsModel(); });
@@ -274,7 +250,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             // populate newOptions with default values stored in options metadata (which was populated by declareOptions):
             var opt, ropt;
             for (opt in this.optionsMetadata) {
-                ropt = new (this.optionsMetadata[opt].type)(this.optionsMetadata[opt]['default']);
+                ropt = new (this.optionsMetadata[opt].type)(this.optionsMetadata[opt]["default"]);
                 this.newOptions()[opt]().add( ropt );
             }
         });
@@ -291,7 +267,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     Renderer.RGBColorOption = new window.jermaine.Model( "Renderer.RGBColorOption", function () {
         this.isA(Renderer.Option);
         this.hasA("value").which.validatesWith(function (v) {
-            return v instanceof window.multigraph.math.RGBColor;
+            return v instanceof window.multigraph.math.RGBColor || v === null;
         });
         this.isBuiltWith("value");
         this.respondsTo("serializeValue", function () {
@@ -316,7 +292,93 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     });
 
+/*
+    var DataValueOption = new window.jermaine.Model( "Renderer.DataValueOption", function (orientation) {
+        this.isA(Renderer.Option);
+        this.hasA("value").which.validatesWith(function (value) {
+            return value instanceof ns.DataValue;
+        });
+        this.isBuiltWith("value");
+        this.respondsTo("serializeValue", function () {
+            return this.value().toString();
+        });
+        this.respondsTo("parseValue", function (string, renderer) {
+            if (orientation === ns.Axis.VERTICAL) {
+                this.value( ns.DataValue.parse(string, renderer.verticalaxis().type()) );
+            } else if (orientation === ns.Axis.HORIZONTAL) {
+                this.value( ns.DataValue.parse(string, renderer.horizontalaxis().type()) );
+            }
+        });
+        
+    });
 
+    Renderer.DataValueOptionTypeGenerator = function (orientation) {
+        return DataValueOption(orientation)
+    };
+*/
+    Renderer.DataValueOption = new window.jermaine.Model( "Renderer.DataValueOption", function () {
+        this.isA(Renderer.Option);
+        this.hasA("value").which.validatesWith(function (value) {
+            return ns.DataValue.isInstance(value) || value === null;
+        });
+        this.isBuiltWith("value");
+        this.respondsTo("serializeValue", function () {
+            return this.value().toString();
+        });
+        
+    });
+
+    Renderer.VerticalDataValueOption = new window.jermaine.Model( "Renderer.DataValueOption", function () {
+        this.isA(Renderer.DataValueOption);
+        this.isBuiltWith("value");
+        this.respondsTo("parseValue", function (string, renderer) {
+            this.value( ns.DataValue.parse(renderer.plot().verticalaxis().type(), string) );
+        });
+        
+    });
+
+    Renderer.HorizontalDataValueOption = new window.jermaine.Model( "Renderer.DataValueOption", function () {
+        this.isA(Renderer.DataValueOption);
+        this.isBuiltWith("value");
+        this.respondsTo("parseValue", function (string, renderer) {
+            this.value( ns.DataValue.parse(renderer.plot().horizontalaxis().type(), string) );
+        });
+        
+    });
+
+    Renderer.DataMeasureOption = new window.jermaine.Model( "Renderer.DataMeasureOption", function () {
+        this.isA(Renderer.Option);
+/*
+        this.hasA("value").which.validatesWith(function (value) {
+            return value instanceof ns.DataMeasure;
+        });
+*/
+        this.hasA("value").which.validatesWith(function (value) {
+            return ns.DataMeasure.isInstance(value) || value === null;
+        });
+        this.isBuiltWith("value");
+        this.respondsTo("serializeValue", function () {
+            return this.value().toString();
+        });
+        
+    });
+
+    Renderer.VerticalDataMeasureOption = new window.jermaine.Model( "Renderer.DataMeasureOption", function () {
+        this.isA(Renderer.DataMeasureOption);
+        this.respondsTo("parseValue", function (string, renderer) {
+            this.value( ns.DataMeasure.parse(renderer.plot().verticalaxis().type(), string) );
+        });
+        
+    });
+
+    Renderer.HorizontalDataMeasureOption = new window.jermaine.Model( "Renderer.DataMeasureOption", function () {
+        this.isA(Renderer.DataMeasureOption);
+        this.isBuiltWith("value");
+        this.respondsTo("parseValue", function (string, renderer) {
+            this.value( ns.DataMeasure.parse(renderer.plot().horizontalaxis().type(), string) );
+        });
+        
+    });
 
     ns.Renderer = Renderer;
 });

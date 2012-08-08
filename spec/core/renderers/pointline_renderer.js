@@ -16,7 +16,7 @@ describe("PointlineRenderer", function () {
             (new PointlineRenderer())
                 .plot((new Plot())
                       .verticalaxis( (new Axis(Axis.VERTICAL)).type(DataValue.NUMBER) )
-                      .verticalaxis( (new Axis(Axis.HORIZONTAL)).type(DataValue.NUMBER) )
+                      .horizontalaxis( (new Axis(Axis.HORIZONTAL)).type(DataValue.NUMBER) )
                      )
         );
     }); 
