@@ -22,6 +22,20 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return service instanceof ns.Service;
         });
 
+        this.respondsTo("isMissing", function(value, i) {
+            // This method should return true if the DataValue "value" meets the "missing" criteria of
+            // the i-th column for this data object
+            var ad = this.arraydata();
+            if (!ad) {
+                // this should eventually be removed, because the arraydata attribute is going away when this
+                // model is merged with ArrayData (or rather, ArrayData is made to be a subclass of it)
+                console.log("Warning: isMissing() called for data object having no arraydata ref");
+                return false;
+            }
+            return ad.isMissing(value,i);
+        });
+
+
         window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.data, attributes);
     });
     ns.Data = Data;

@@ -92,6 +92,22 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.onReady = function (readyHandler) {
             //no op
         };
+
+        this.isMissing = function(value, i) {
+            // This method should return true if the DataValue "value" meets the "missing" criteria of
+            // the i-th column
+            var column;
+            if (i < 0 || i >= columns.length) {
+                throw new Error("metadata.isMissing(): index out of range");
+            }
+            column = columns[i];
+            if (!column.missingvalue() || !column.missingop()) {
+                return false;
+            }
+            return value[column.missingop()](column.missingvalue());
+        };
+
+
     };
     
     ns.MetaData = MetaData;

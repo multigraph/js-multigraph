@@ -18,13 +18,73 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return option instanceof ns.RendererOption;
         });
 
+/*
         this.hasA("horizontalaxis").which.validatesWith(function (a) {
             return a instanceof ns.Axis;
         });
         this.hasA("verticalaxis").which.validatesWith(function (a) {
             return a instanceof ns.Axis;
         });
+*/
 
+        this.hasA("plot").which.validatesWith(function (plot) {
+            return plot instanceof ns.Plot;
+        });
+
+        this.respondsTo("horizontalaxis", function (a) {
+            // placeholder for deprecated setter/getter; delete this method
+            // once we're sure it's not called any more
+            if (a !== undefined) {
+                throw new Error("renderer horizontalaxis() setter no longer supported; use plot() setter instead!");
+            }
+            console.log("Warning: deprecated renderer.horizontalaxis() getter called; use renderer.plot().horizontalaxis() instead.");
+            return this.plot().horizontalaxis();
+        });
+        this.respondsTo("verticalaxis", function (a) {
+            // placeholder for deprecated setter/getter; delete this method
+            // once we're sure it's not called any more
+            if (a !== undefined) {
+                throw new Error("renderer verticalaxis() setter no longer supported; use plot() setter instead!");
+            }
+            console.log("Warning: deprecated renderer.verticalaxis() getter called; use renderer.plot().verticalaxis() instead.");
+            return this.plot().verticalaxis();
+        });
+
+
+        this.respondsTo("setUpMissing", function() {
+            // A call to this method results in the addition (or replacement) of a method called "isMissing()"
+            // that can be used to test whether a value meets the "missing" criteria of one of this renderer's
+            // plot's data columns.  The point of having this "setUpMissing()" method create the "isMissing()"
+            // method, rather than just coding the "isMissing()" method directly here, is so that we can capture
+            // a pointer to the plot's data object via a closure, for faster access, rather than coding
+            // this.plot().data() in "isMissing()", which adds the overhead of 2 getter calls to each invocation.
+            //
+            // NOTE: This is awkward.  What we really want is for this stuff to happen automatically when
+            // the renderer's "plot" attribute is set.  Can Jermaine be modified to allow us to write
+            // a custom setter, so that we can execute this code automatically when the render's "plot"
+            // attribute is set ???
+            var data;
+            if (!this.plot()) {
+                console.log("Warning: renderer.setUpMissing() called for renderer that has no plot ref");
+                // this should really eventually throw an error
+                return false;
+            }
+            if (!this.plot().data()) {
+                // this should eventually throw an error
+                console.log("Warning: renderer.setUpMissing() called for renderer whose plot has no data ref");
+                return false;
+            }
+            data = this.plot().data();
+            this.isMissing = function(p) {
+                var i;
+                for (i=1; i<p.length; ++i) {
+                    if (data.isMissing(p[i], i)) {
+                        return true;
+                    }
+                }
+                return false;
+            };
+        });
 
         this.isBuiltWith("type");
 
@@ -32,8 +92,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
         this.respondsTo("transformPoint", function (input) {
             var output = [],
-                haxis = this.horizontalaxis(),
-                vaxis = this.verticalaxis(),
+                haxis = this.plot().horizontalaxis(),
+                vaxis = this.plot().verticalaxis(),
                 i;
 
             output[0] = haxis.dataValueToAxisValue(input[0]);
@@ -82,12 +142,12 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             }
             rendererOpt = new (this.optionsMetadata[name].type)();
             rendererOpt.parseValue(stringValue);
-            if (this.verticalaxis()) {
+            if (this.plot() && this.plot().verticalaxis()) {
                 if (stringMin !== undefined) {
-                    rendererOpt.min( ns.DataValue.parse( this.verticalaxis().type(), stringMin ));
+                    rendererOpt.min( ns.DataValue.parse( this.plot().verticalaxis().type(), stringMin ));
                 }
                 if (stringMax !== undefined) {
-                    rendererOpt.max( ns.DataValue.parse( this.verticalaxis().type(), stringMax ));
+                    rendererOpt.max( ns.DataValue.parse( this.plot().verticalaxis().type(), stringMax ));
                 }
             }
             this.setOption(name, rendererOpt.value(), rendererOpt.min(), rendererOpt.max());

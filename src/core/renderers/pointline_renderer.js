@@ -23,7 +23,7 @@
 //     OPTION NAME:          pointsize
 //     DATA TYPE:            number
 //     DEFAULT VALUE:        0
-//     DESCRIPTION:          The diameter of drawn points.  A value
+//     DESCRIPTION:          The radius of drawn points.  A value
 //                           of 0 means do not draw points.
 // 
 //     OPTION NAME:          pointcolor

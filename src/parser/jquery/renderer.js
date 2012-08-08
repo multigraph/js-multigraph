@@ -15,29 +15,17 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 if (!renderer) {
                     throw new Error("unknown renderer type '"+rendererType+"'");
                 }
-                if (plot) {
-                    //TODO: horiz and vert axis should be required??  Currently, without the above 'if', some tests fail.
-                    renderer.horizontalaxis( plot.horizontalaxis() );
-                    renderer.verticalaxis( plot.verticalaxis() );
-                }
+                renderer.plot(plot);
                 if (xml.find("option").length > 0) {
                     $.each(xml.find(">option"), function (i, e) {
 			var opt = ns.core.RendererOption[parse]($(e));
                         renderer.options().add( opt );
-
                         if (plot && plot.verticalaxis()) {
                             renderer.setOptionFromString(opt.name(),
                                                          opt.value(),
                                                          opt.min(),
                                                          opt.max());
                         }
-/*
-			var ropt = new ns.core.RGBColorRendererOption();
-			ropt.value( ns.math.RGBColor.parse(opt.value()) );
-			ropt.min( ns.core.NumberValue.parse(opt.min()) );
-			ropt.max( ns.core.NumberValue.parse(opt.max()) );
-			renderer.newOptions()[opt.name()].add(ropt);
-*/
                     });
                 }
             }

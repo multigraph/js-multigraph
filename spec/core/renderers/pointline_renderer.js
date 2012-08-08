@@ -8,12 +8,17 @@ describe("PointlineRenderer", function () {
         Axis = window.multigraph.core.Axis,
         DataValue = window.multigraph.core.DataValue,
         NumberValue = window.multigraph.core.NumberValue,
+        Plot = window.multigraph.core.Plot,
         r;
 
     beforeEach(function () {
-        var vaxis;
-        r = new PointlineRenderer();
-        r.verticalaxis( (new Axis(Axis.VERTICAL)).type(DataValue.NUMBER) );
+        r = (
+            (new PointlineRenderer())
+                .plot((new Plot())
+                      .verticalaxis( (new Axis(Axis.VERTICAL)).type(DataValue.NUMBER) )
+                      .verticalaxis( (new Axis(Axis.HORIZONTAL)).type(DataValue.NUMBER) )
+                     )
+        );
     }); 
 
     it("should be able to create a PointlineRenderer", function () {

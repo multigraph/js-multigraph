@@ -132,7 +132,7 @@ $(document).ready(function() {
 
   var Multigraph = window.multigraph.core.Multigraph;
 
-  var multigraphPromise = Multigraph.createCanvasGraph("mygraph", "./testgraph.xml");
+  var multigraphPromise = Multigraph.createCanvasGraph("mygraph", "../../mugl/testgraph.xml");
 
   multigraphPromise.done(function(multigraph) {
     console.log('got a multigraph now');

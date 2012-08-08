@@ -27,8 +27,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasA("datatips").which.validatesWith(function (datatips) {
             return datatips instanceof ns.Datatips;
         });
-        this.hasA("data").which.validatesWith(function (datatips) {
-            return datatips instanceof ns.Data;
+        this.hasA("data").which.validatesWith(function (data) {
+            return data instanceof ns.Data;
         });
 
         window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.plot, attributes);
@@ -54,6 +54,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             var iter = data.getIterator(variableIds, haxis.dataMin(), haxis.dataMax(), 0);
 
             var renderer = this.renderer();
+            renderer.setUpMissing(); //TODO: this is awkward -- figure out a better way!
             renderer.begin(graphicsContext);
             while (iter.hasNext()) {
 		var datap = iter.next();

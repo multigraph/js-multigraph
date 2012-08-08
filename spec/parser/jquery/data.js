@@ -4,6 +4,7 @@ describe("Data parsing", function () {
     "use strict";
 
     var Data = window.multigraph.core.Data,
+        NumberValue = window.multigraph.core.NumberValue,
         Values = window.multigraph.core.Values,
         Variables = window.multigraph.core.Variables,
         DataVariable = window.multigraph.core.DataVariable,
@@ -190,5 +191,37 @@ describe("Data parsing", function () {
         });
 
     });
+
+
+    describe("isMissing stuff", function () {
+
+        beforeEach(function () {
+            xmlString = (''
+                         + '<data>'
+                         +   '<variables missingvalue="-9000" missingop="le">'
+                         +     '<variable missingvalue="-9000" missingop="le" id="x" column="0"/>'
+                         +     '<variable missingvalue="-9000" missingop="le" id="y" column="1"/>'
+                         +     '<variable missingvalue="-9000" missingop="le" id="z" column="2"/>'
+                         +   '</variables>'
+                         +   '<values>'
+                         +    ' 0,0\n'
+                         +    ' 1,-9000\n'
+                         +    ' 2,0\n'
+                         +   '</values>'
+                         + '</data>'
+                        );
+            $xml = $(xmlString);
+        });
+
+        it("should be able to parse a data with a Variables child from XML", function () {
+            data = Data.parseXML($xml);
+            expect(data).not.toBeUndefined();
+            expect(data instanceof Data).toBe(true);
+            expect(data.isMissing(new NumberValue(-9000),1)).toBe(true);
+            expect(data.isMissing(new NumberValue(-8999),2)).toBe(false);
+        });
+
+    });
+
 
 });

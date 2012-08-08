@@ -227,9 +227,13 @@ describe("Renderer", function () {
                 var Axis = window.multigraph.core.Axis;
                 var DataValue = window.multigraph.core.DataValue;
                 var NumberValue = window.multigraph.core.NumberValue;
-                var vaxis = new Axis(Axis.VERTICAL);
-                vaxis.type(DataValue.NUMBER);
-                renderer.verticalaxis(vaxis);
+                var Plot = window.multigraph.core.Plot;
+                var plot = (
+                    (new Plot())
+                        .verticalaxis((new Axis(Axis.VERTICAL)).type(DataValue.NUMBER))
+                        .horizontalaxis((new Axis(Axis.HORIZONTAL)).type(DataValue.NUMBER))
+                );
+                renderer.plot(plot);
 
                 expect(function () {
                     renderer.setOptionFromString("linecolor", "0xffff00", new NumberValue(-1), new NumberValue(1));
@@ -246,9 +250,13 @@ describe("Renderer", function () {
                 var Axis = window.multigraph.core.Axis;
                 var DataValue = window.multigraph.core.DataValue;
                 var NumberValue = window.multigraph.core.NumberValue;
-                var vaxis = new Axis(Axis.VERTICAL);
-                vaxis.type(DataValue.NUMBER);
-                renderer.verticalaxis(vaxis);
+                var Plot = window.multigraph.core.Plot;
+                var plot = (
+                    (new Plot())
+                        .verticalaxis((new Axis(Axis.VERTICAL)).type(DataValue.NUMBER))
+                        .horizontalaxis((new Axis(Axis.HORIZONTAL)).type(DataValue.NUMBER))
+                );
+                renderer.plot(plot);
 
                 expect(function () {
                     renderer.setOptionFromString("linecolor", "0xff0000", new NumberValue(0), new NumberValue(10));
@@ -267,9 +275,13 @@ describe("Renderer", function () {
                 var Axis = window.multigraph.core.Axis;
                 var DataValue = window.multigraph.core.DataValue;
                 var NumberValue = window.multigraph.core.NumberValue;
-                var vaxis = new Axis(Axis.VERTICAL);
-                vaxis.type(DataValue.NUMBER);
-                renderer.verticalaxis(vaxis);
+                var Plot = window.multigraph.core.Plot;
+                var plot = (
+                    (new Plot())
+                        .verticalaxis((new Axis(Axis.VERTICAL)).type(DataValue.NUMBER))
+                        .horizontalaxis((new Axis(Axis.HORIZONTAL)).type(DataValue.NUMBER))
+                );
+                renderer.plot(plot);
 
                 expect(renderer.newOptions().linecolor().size()).toEqual(1);
                 expect(renderer.newOptions().linewidth().size()).toEqual(1);
