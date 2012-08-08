@@ -287,7 +287,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return this.value().toString();
         });
         this.respondsTo("parseValue", function (string) {
-            this.value( parseInt(string, 10) );
+            this.value( parseFloat(string) );
         });
 
     });
