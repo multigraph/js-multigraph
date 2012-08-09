@@ -86,7 +86,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             if (!this.optionsMetadata[name]) {
                 throw new Error("attempt to set unknown renderer option '"+name+"'");
             }
-            rendererOpts = this.newOptions()[name]();
+            rendererOpts = this.options()[name]();
             for (i=0; i<rendererOpts.size(); ++i) {
                 if (equalOrUndefined(rendererOpts.at(i).min(), min) &&
                     equalOrUndefined(rendererOpts.at(i).max(), max)) {
@@ -128,14 +128,14 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
 	this.respondsTo("getOptionValue", function (optionName, /*optional:*/value) {
             var i,
-                newOptions,
+                options,
                 optionList;
 
-            newOptions = this.newOptions();
-            if (typeof(newOptions[optionName]) !== "function") {
+            options = this.options();
+            if (typeof(options[optionName]) !== "function") {
                 throw new Error('unknown option "'+optionName+'"');
             }
-            optionList = newOptions[optionName]();
+            optionList = options[optionName]();
             if (!optionList) {
                 throw new Error('unknown option "'+optionName+'"');
             }
@@ -216,15 +216,15 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 "default" :  options[i]["default"]
             };
         }
-        renderer.hasA("newOptions").isImmutable().defaultsTo(function () { return new OptionsModel(); });
+        renderer.hasA("options").isImmutable().defaultsTo(function () { return new OptionsModel(); });
         renderer.prototype.optionsMetadata = optionsMetadata;
 
         renderer.isBuiltWith(function () {
-            // populate newOptions with default values stored in options metadata (which was populated by declareOptions):
+            // populate options with default values stored in options metadata (which was populated by declareOptions):
             var opt, ropt;
             for (opt in this.optionsMetadata) {
                 ropt = new (this.optionsMetadata[opt].type)(this.optionsMetadata[opt]["default"]);
-                this.newOptions()[opt]().add( ropt );
+                this.options()[opt]().add( ropt );
             }
         });
 

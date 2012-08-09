@@ -41,7 +41,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
 	        optionString,
 	        optionStrings = [];
 	    for (opt in this.optionsMetadata) {
-		var ropts = this.newOptions()[opt]();
+		var ropts = this.options()[opt]();
 		for (i=0; i<ropts.size(); ++i) {
 /*
 		    console.log('option: ' + opt);
