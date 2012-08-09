@@ -276,6 +276,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.respondsTo("parseValue", function (string) {
             this.value( window.multigraph.math.RGBColor.parse(string) );
         });
+        this.respondsTo("valueEq", function (value) {
+	    return this.value().eq(value);
+        });
 
     });
 
@@ -289,33 +292,11 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.respondsTo("parseValue", function (string) {
             this.value( parseFloat(string) );
         });
-
+        this.respondsTo("valueEq", function (value) {
+	    return (this.value()===value);
+        });
     });
 
-/*
-    var DataValueOption = new window.jermaine.Model( "Renderer.DataValueOption", function (orientation) {
-        this.isA(Renderer.Option);
-        this.hasA("value").which.validatesWith(function (value) {
-            return value instanceof ns.DataValue;
-        });
-        this.isBuiltWith("value");
-        this.respondsTo("serializeValue", function () {
-            return this.value().toString();
-        });
-        this.respondsTo("parseValue", function (string, renderer) {
-            if (orientation === ns.Axis.VERTICAL) {
-                this.value( ns.DataValue.parse(string, renderer.verticalaxis().type()) );
-            } else if (orientation === ns.Axis.HORIZONTAL) {
-                this.value( ns.DataValue.parse(string, renderer.horizontalaxis().type()) );
-            }
-        });
-        
-    });
-
-    Renderer.DataValueOptionTypeGenerator = function (orientation) {
-        return DataValueOption(orientation)
-    };
-*/
     Renderer.DataValueOption = new window.jermaine.Model( "Renderer.DataValueOption", function () {
         this.isA(Renderer.Option);
         this.hasA("value").which.validatesWith(function (value) {
@@ -325,7 +306,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.respondsTo("serializeValue", function () {
             return this.value().toString();
         });
-        
+        this.respondsTo("valueEq", function (value) {
+	    return this.value().eq(value);
+        });
     });
 
     Renderer.VerticalDataValueOption = new window.jermaine.Model( "Renderer.DataValueOption", function () {
@@ -348,11 +331,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     Renderer.DataMeasureOption = new window.jermaine.Model( "Renderer.DataMeasureOption", function () {
         this.isA(Renderer.Option);
-/*
-        this.hasA("value").which.validatesWith(function (value) {
-            return value instanceof ns.DataMeasure;
-        });
-*/
         this.hasA("value").which.validatesWith(function (value) {
             return ns.DataMeasure.isInstance(value) || value === null;
         });
@@ -360,7 +338,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.respondsTo("serializeValue", function () {
             return this.value().toString();
         });
-        
+        this.respondsTo("valueEq", function (value) {
+	    return this.value().eq(value);
+        });
     });
 
     Renderer.VerticalDataMeasureOption = new window.jermaine.Model( "Renderer.DataMeasureOption", function () {

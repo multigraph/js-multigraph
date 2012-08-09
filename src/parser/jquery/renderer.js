@@ -41,10 +41,35 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
 
             output += attributeStrings.join(' ');
 
+	    var opt, optionStrings = [];
+	    for (opt in this.optionsMetadata) {
+		var ropts = this.newOptions()[opt]();
+		for (i=0; i<ropts.size(); ++i) {
+
+		    console.log('option: ' + opt);
+		    console.log('   min: ' + ropts.at(i).min());
+		    console.log('   max: ' + ropts.at(i).max());
+		    console.log('   val: ' + ropts.at(i).serializeValue());
+		    console.log('   dal: ' + (new (this.optionsMetadata[opt].type)(this.optionsMetadata[opt]["default"])).serializeValue());
+
+		    if ((ropts.at(i).min() !== undefined)
+			||
+			(ropts.at(i).max() !== undefined)
+			||
+			!(ropts.at(i).valueEq(this.optionsMetadata[opt]["default"]))
+		       ) {
+			console.log('name="'+opt+'" min="'+ropts.at(i).min()+'" max="'+ropts.at(i).max()+'" value="'+ropts.at(i).serializeValue()+'"');
+		    }
+		}
+	    }
+
+
             if (this.options().size() !== 0) {
                 output += '>';
                 for (i = 0; i < this.options().size(); i++) {
+		    //foo.yaya;
                     output += this.options().at(i)[serialize]();
+console.log(output);
                 }
                 output += '</renderer>';
             } else {

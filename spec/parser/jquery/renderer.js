@@ -45,7 +45,7 @@ describe("Plot Renderer parsing", function () {
         });
 
         it("should be able to parse a renderer with multiple children from XML", function () {
-            xmlString = '<renderer type="pointline"><option name="size" value="3"/><option name="shape" value="circle"/><option name="linewidth" value="7"/></renderer>';
+            xmlString = '<renderer type="pointline"><option name="pointsize" value="3"/><option name="shape" value="circle"/><option name="linewidth" value="7"/></renderer>';
             $xml = $(xmlString);
             r = Renderer.parseXML($xml);
             expect(r).not.toBeUndefined();
