@@ -44,9 +44,9 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         });
 
         Graph.respondsTo("fixLayers", function (backgroundSet, axesSet, plotsSet) {
-            backgroundSet.insertAfter(axesSet);
-            axesSet.insertAfter(plotsSet);
-            plotsSet.toFront();
+//            backgroundSet.insertAfter(axesSet);
+//            axesSet.insertAfter(plotsSet);
+//            plotsSet.toFront();
         });
 
     });
