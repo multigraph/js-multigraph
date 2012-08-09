@@ -19,10 +19,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                    type === "band" ||
                    type === "rangebar";
         });
-        this.hasMany("options").which.validatesWith(function (option) {
-            return option instanceof ns.RendererOption;
-        });
-
         this.hasA("plot").which.validatesWith(function (plot) {
             return plot instanceof ns.Plot;
         });
@@ -90,7 +86,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             if (!this.optionsMetadata[name]) {
                 throw new Error("attempt to set unknown renderer option '"+name+"'");
             }
-            rendererOpts = this.newOptions()[name]();
+            rendererOpts = this.options()[name]();
             for (i=0; i<rendererOpts.size(); ++i) {
                 if (equalOrUndefined(rendererOpts.at(i).min(), min) &&
                     equalOrUndefined(rendererOpts.at(i).max(), max)) {
@@ -130,39 +126,16 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
 
 
-/*
-        this.respondsTo("setOptionFromString", function (name, stringValue, stringMin, stringMax) {
-            if (!this.optionsMetadata[name]) {
-                // If this renderer has no option named "name", bail out immediately.  This should eventually
-                // throw an error, but for now we just quietly ignore it, to eliminate error conditions coming
-                // from unimplemented options.
-                console.log("WARNING: renderer has no option named '" + name + "'");
-                return;
-            }
-            var rendererOpt = new (this.optionsMetadata[name].type)();
-            rendererOpt.parseValue(stringValue);
-            if (this.verticalaxis()) {
-                if (stringMin !== undefined) {
-                    rendererOpt.min( ns.DataValue.parse( this.verticalaxis().type(), stringMin ));
-                }
-                if (stringMax !== undefined) {
-                    rendererOpt.max( ns.DataValue.parse( this.verticalaxis().type(), stringMax ));
-                }
-            }
-            this.newOptions()[name]().add(rendererOpt);
-
-        });
-*/
 	this.respondsTo("getOptionValue", function (optionName, /*optional:*/value) {
             var i,
-                newOptions,
+                options,
                 optionList;
 
-            newOptions = this.newOptions();
-            if (typeof(newOptions[optionName]) !== "function") {
+            options = this.options();
+            if (typeof(options[optionName]) !== "function") {
                 throw new Error('unknown option "'+optionName+'"');
             }
-            optionList = newOptions[optionName]();
+            optionList = options[optionName]();
             if (!optionList) {
                 throw new Error('unknown option "'+optionName+'"');
             }
@@ -243,15 +216,15 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 "default" :  options[i]["default"]
             };
         }
-        renderer.hasA("newOptions").isImmutable().defaultsTo(function () { return new OptionsModel(); });
+        renderer.hasA("options").isImmutable().defaultsTo(function () { return new OptionsModel(); });
         renderer.prototype.optionsMetadata = optionsMetadata;
 
         renderer.isBuiltWith(function () {
-            // populate newOptions with default values stored in options metadata (which was populated by declareOptions):
+            // populate options with default values stored in options metadata (which was populated by declareOptions):
             var opt, ropt;
             for (opt in this.optionsMetadata) {
                 ropt = new (this.optionsMetadata[opt].type)(this.optionsMetadata[opt]["default"]);
-                this.newOptions()[opt]().add( ropt );
+                this.options()[opt]().add( ropt );
             }
         });
 
@@ -276,6 +249,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.respondsTo("parseValue", function (string) {
             this.value( window.multigraph.math.RGBColor.parse(string) );
         });
+        this.respondsTo("valueEq", function (value) {
+	    return this.value().eq(value);
+        });
 
     });
 
@@ -289,33 +265,11 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.respondsTo("parseValue", function (string) {
             this.value( parseFloat(string) );
         });
-
+        this.respondsTo("valueEq", function (value) {
+	    return (this.value()===value);
+        });
     });
 
-/*
-    var DataValueOption = new window.jermaine.Model( "Renderer.DataValueOption", function (orientation) {
-        this.isA(Renderer.Option);
-        this.hasA("value").which.validatesWith(function (value) {
-            return value instanceof ns.DataValue;
-        });
-        this.isBuiltWith("value");
-        this.respondsTo("serializeValue", function () {
-            return this.value().toString();
-        });
-        this.respondsTo("parseValue", function (string, renderer) {
-            if (orientation === ns.Axis.VERTICAL) {
-                this.value( ns.DataValue.parse(string, renderer.verticalaxis().type()) );
-            } else if (orientation === ns.Axis.HORIZONTAL) {
-                this.value( ns.DataValue.parse(string, renderer.horizontalaxis().type()) );
-            }
-        });
-        
-    });
-
-    Renderer.DataValueOptionTypeGenerator = function (orientation) {
-        return DataValueOption(orientation)
-    };
-*/
     Renderer.DataValueOption = new window.jermaine.Model( "Renderer.DataValueOption", function () {
         this.isA(Renderer.Option);
         this.hasA("value").which.validatesWith(function (value) {
@@ -325,7 +279,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.respondsTo("serializeValue", function () {
             return this.value().toString();
         });
-        
+        this.respondsTo("valueEq", function (value) {
+	    return this.value().eq(value);
+        });
     });
 
     Renderer.VerticalDataValueOption = new window.jermaine.Model( "Renderer.DataValueOption", function () {
@@ -348,11 +304,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     Renderer.DataMeasureOption = new window.jermaine.Model( "Renderer.DataMeasureOption", function () {
         this.isA(Renderer.Option);
-/*
-        this.hasA("value").which.validatesWith(function (value) {
-            return value instanceof ns.DataMeasure;
-        });
-*/
         this.hasA("value").which.validatesWith(function (value) {
             return ns.DataMeasure.isInstance(value) || value === null;
         });
@@ -360,7 +311,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.respondsTo("serializeValue", function () {
             return this.value().toString();
         });
-        
+        this.respondsTo("valueEq", function (value) {
+	    return this.value().eq(value);
+        });
     });
 
     Renderer.VerticalDataMeasureOption = new window.jermaine.Model( "Renderer.DataMeasureOption", function () {
