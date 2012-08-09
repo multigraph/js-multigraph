@@ -23,7 +23,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return plot instanceof ns.Plot;
         });
 
-        this.respondsTo("setUpMissing", function() {
+        this.respondsTo("setUpMissing", function () {
             // A call to this method results in the addition (or replacement) of a method called "isMissing()"
             // that can be used to test whether a value meets the "missing" criteria of one of this renderer's
             // plot's data columns.  The point of having this "setUpMissing()" method create the "isMissing()"
@@ -47,7 +47,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 return false;
             }
             data = this.plot().data();
-            this.isMissing = function(p) {
+            this.isMissing = function (p) {
                 var i;
                 for (i=1; i<p.length; ++i) {
                     if (data.isMissing(p[i], i)) {
@@ -212,8 +212,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 });
             }(options[i].type));
             optionsMetadata[options[i].name] = {
-                "type"    : options[i]["type"],
-                "default" :  options[i]["default"]
+                "type"    : options[i].type,
+                "default" : options[i]["default"]
             };
         }
         renderer.hasA("options").isImmutable().defaultsTo(function () { return new OptionsModel(); });
@@ -250,7 +250,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             this.value( window.multigraph.math.RGBColor.parse(string) );
         });
         this.respondsTo("valueEq", function (value) {
-	    return this.value().eq(value);
+            return this.value().eq(value);
         });
 
     });
@@ -266,7 +266,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             this.value( parseFloat(string) );
         });
         this.respondsTo("valueEq", function (value) {
-	    return (this.value()===value);
+            return (this.value()===value);
         });
     });
 
@@ -280,7 +280,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return this.value().toString();
         });
         this.respondsTo("valueEq", function (value) {
-	    return this.value().eq(value);
+            return this.value().eq(value);
         });
     });
 
@@ -312,7 +312,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return this.value().toString();
         });
         this.respondsTo("valueEq", function (value) {
-	    return this.value().eq(value);
+            return this.value().eq(value);
         });
     });
 

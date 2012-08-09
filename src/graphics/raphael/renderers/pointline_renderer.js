@@ -49,10 +49,10 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             p = this.transformPoint(datap);
             if (settings.linewidth > 0) {
                 if (settings.first) {
-		    settings.path += "M" + p[0] + "," + p[1];
+                    settings.path += "M" + p[0] + "," + p[1];
                     settings.first = false;
                 } else {
-		    settings.path += "L" + p[0] + "," + p[1];
+                    settings.path += "L" + p[0] + "," + p[1];
                 }
             }
             if (settings.pointsize > 0) {
@@ -138,7 +138,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                     path += "M" + p[0] + "," + (p[1]+d);
                     path += "L" + (p[0]+a) + "," + (p[1]-b);
                     path += "L" + (p[0]-a) + "," + (p[1]-b);
-                    path += "Z"
+                    path += "Z";
                     break;
                 case ns.PointlineRenderer.DIAMOND:
                     d = 1.5 * size;
