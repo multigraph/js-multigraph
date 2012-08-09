@@ -134,6 +134,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.respondsTo("parseValue", function (string) {
             this.value( PointlineRenderer.parseShape(string) );
         });
+        this.respondsTo("valueEq", function (value) {
+	    return (this.value()===value);
+        });
     });
 
 

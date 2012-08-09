@@ -348,4 +348,27 @@ describe("RGBColor", function () {
         });
     });
 
+    describe("eq method", function() {
+	it("should return true when testing RGBColor(.2,.8,.1) and RGBColor(.2,.8,.1)", function() {
+	    var c1 = new RGBColor(.2,.8,.1);
+	    var c2 = new RGBColor(.2,.8,.1);
+	    expect(c1.eq(c2)).toBe(true);
+	});
+	it("should return false when testing RGBColor(.2,.8,.1) and RGBColor(.6,.8,.1)", function() {
+	    var c1 = new RGBColor(.2,.8,.1);
+	    var c2 = new RGBColor(.6,.8,.1);
+	    expect(c1.eq(c2)).toBe(false);
+	});
+	it("should return true when testing RGBColor(.2,.8,.1) and RGBColor(.2,.6,.1)", function() {
+	    var c1 = new RGBColor(.2,.8,.1);
+	    var c2 = new RGBColor(.2,.6,.1);
+	    expect(c1.eq(c2)).toBe(false);
+	});
+	it("should return true when testing RGBColor(.2,.8,.1) and RGBColor(.2,.8,.6)", function() {
+	    var c1 = new RGBColor(.2,.8,.1);
+	    var c2 = new RGBColor(.2,.8,.6);
+	    expect(c1.eq(c2)).toBe(false);
+	});
+    });
+
 });

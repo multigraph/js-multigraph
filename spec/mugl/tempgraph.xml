@@ -13,13 +13,13 @@
       </verticalaxis>
       <renderer type="pointline">
         <option name="linecolor" value="0xff00ff"/>
-        <option name="linewidth" value="1"/>
-        <option name="pointshape" value="square"/>
+        <option name="linewidth" value="3"/>
+        <option name="pointshape" value="circle"/>
         <option name="pointoutlinewidth" value="2"/>
         <option name="pointoutlinecolor" value="0x000000"/>
-        <option name="pointcolor" value="0x00ff00"/>
-        <option name="pointopacity" value="0.3"/>
-        <option name="pointsize" value="5"/>
+        <option name="pointcolor" value="0xffffff"/>
+        <option name="pointopacity" value="1.0"/>
+        <option name="pointsize" value="3"/>
       </renderer>
     </plot>
     <data>
