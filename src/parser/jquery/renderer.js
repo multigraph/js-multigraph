@@ -18,12 +18,10 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 renderer.plot(plot);
                 if (xml.find("option").length > 0) {
                     $.each(xml.find(">option"), function (i, e) {
-			var opt = ns.core.RendererOption[parse]($(e));
-                        //renderer.options().add( opt );
-                        renderer.setOptionFromString(opt.name(),
-                                                     opt.value(),
-                                                     opt.min(),
-                                                     opt.max());
+                        renderer.setOptionFromString($(e).attr("name"),
+                                                     $(e).attr("value"),
+                                                     $(e).attr("min"),
+                                                     $(e).attr("max"));
                     });
                 }
             }
