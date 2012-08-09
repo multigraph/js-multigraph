@@ -19,10 +19,11 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                    type === "band" ||
                    type === "rangebar";
         });
+/*
         this.hasMany("options").which.validatesWith(function (option) {
             return option instanceof ns.RendererOption;
         });
-
+*/
         this.hasA("plot").which.validatesWith(function (plot) {
             return plot instanceof ns.Plot;
         });
