@@ -19,11 +19,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                    type === "band" ||
                    type === "rangebar";
         });
-/*
-        this.hasMany("options").which.validatesWith(function (option) {
-            return option instanceof ns.RendererOption;
-        });
-*/
         this.hasA("plot").which.validatesWith(function (plot) {
             return plot instanceof ns.Plot;
         });
@@ -131,29 +126,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
 
 
-/*
-        this.respondsTo("setOptionFromString", function (name, stringValue, stringMin, stringMax) {
-            if (!this.optionsMetadata[name]) {
-                // If this renderer has no option named "name", bail out immediately.  This should eventually
-                // throw an error, but for now we just quietly ignore it, to eliminate error conditions coming
-                // from unimplemented options.
-                console.log("WARNING: renderer has no option named '" + name + "'");
-                return;
-            }
-            var rendererOpt = new (this.optionsMetadata[name].type)();
-            rendererOpt.parseValue(stringValue);
-            if (this.verticalaxis()) {
-                if (stringMin !== undefined) {
-                    rendererOpt.min( ns.DataValue.parse( this.verticalaxis().type(), stringMin ));
-                }
-                if (stringMax !== undefined) {
-                    rendererOpt.max( ns.DataValue.parse( this.verticalaxis().type(), stringMax ));
-                }
-            }
-            this.newOptions()[name]().add(rendererOpt);
-
-        });
-*/
 	this.respondsTo("getOptionValue", function (optionName, /*optional:*/value) {
             var i,
                 newOptions,

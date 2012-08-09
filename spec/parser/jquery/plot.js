@@ -190,7 +190,7 @@ describe("Plot parsing", function () {
             expect(plot instanceof Plot).toBe(true);
             expect(plot.renderer() instanceof Renderer).toBe(true);
 /*
-not any more!  change this to check for newOptions!!!
+TODO:  change to check for new style options!!!
             expect(plot.renderer().options().at(0) instanceof RendererOption);
             expect(plot.renderer().options().at(1) instanceof RendererOption);
             expect(plot.renderer().options().at(2) instanceof RendererOption);
@@ -304,7 +304,7 @@ not any more!  change this to check for newOptions!!!
             expect(plot.datatips() instanceof Datatips).toBe(true);
             expect(plot.renderer() instanceof Renderer).toBe(true);
 /*
-not any more!  change this to check newOptions...
+TODO: change to check new style options...
             expect(plot.renderer().options().at(0) instanceof RendererOption);
             expect(plot.renderer().options().at(1) instanceof RendererOption);
             expect(plot.renderer().options().at(2) instanceof RendererOption);

@@ -130,25 +130,25 @@ describe("Plot", function () {
         });
 
         it("should be able to add axes with attributes and children to a Plot", function () {
-/*TODO: change to check for newOptions
+/*TODO: change to check for new style options
             var option = new RendererOption("barwidth", "3"),
                 option2 = new RendererOption("linecolor", "0x345678");
 */
             renderer.type("bar");
-/*TODO: change to check for newOptions
+/*TODO: change to check for new style options
             renderer.options().add(option);
             renderer.options().add(option2);
 */
             p.renderer(renderer);
             expect(p.renderer().type()).toBe("bar");
-/*TODO: change to check for newOptions
+/*TODO: change to check for new style options
             expect(p.renderer().options().at(0)).toBe(option);
             expect(p.renderer().options().at(1)).toBe(option2);
 */
         });
 
         it("should be able to set/get attributes of renderers added to a Plot", function () {
-/*TODO: change to check for newOptions
+/*TODO: change to check for new style options
             var option = new RendererOption("barwidth", "3"),
                 option2 = new RendererOption("linecolor", "0x345678");
             renderer.options().add(option);
@@ -156,11 +156,11 @@ describe("Plot", function () {
 */
             p.renderer(renderer);
             p.renderer().type("line");
-/*TODO: change to check for newOptions
+/*TODO: change to check for new style options
             p.renderer().options().at(0).name("dotsize").value("2");
 */
             expect(p.renderer().type()).toBe("line");
-/*TODO: change to check for newOptions
+/*TODO: change to check for new style options
             expect(p.renderer().options().at(0).name()).toBe("dotsize");
             expect(p.renderer().options().at(0).value()).toBe("2");
             expect(p.renderer().options().at(1).name()).toBe("linecolor");
