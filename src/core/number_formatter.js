@@ -20,6 +20,10 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         return this.length;
     };
 
+    NumberFormatter.prototype.getFormatString = function () {
+        return this.formatString;
+    };
+
     ns.NumberFormatter = NumberFormatter;
 
 });

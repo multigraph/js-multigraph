@@ -9,9 +9,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasA("title").which.validatesWith(function (title) {
             return title instanceof ns.AxisTitle;
         });
-        this.hasA("labels").which.validatesWith(function (labels) {
-            return labels instanceof ns.Labels;
-        });
         this.hasMany("labelers").which.validatesWith(function (labelers) {
             return labelers instanceof ns.Labeler;
         });

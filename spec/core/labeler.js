@@ -6,10 +6,14 @@ describe("Axis Labeler", function () {
     var Labeler = window.multigraph.core.Labeler,
         Point = window.multigraph.math.Point,
         Axis = window.multigraph.core.Axis,
+        NumberFormatter = window.multigraph.core.NumberFormatter,
+        DataValue = window.multigraph.core.DataValue,
+        NumberValue = window.multigraph.core.NumberValue,
+        NumberMeasure = window.multigraph.core.NumberMeasure,
         labeler;
 
     beforeEach(function () {
-        labeler = new Labeler(new Axis("horizontal"));
+        labeler = new Labeler(new Axis(Axis.HORIZONTAL).type(DataValue.NUMBER));
     });
 
     it("should be able to create a Labeler", function () {
@@ -18,16 +22,16 @@ describe("Axis Labeler", function () {
 
     describe("formatter attribute", function () {
         it("should be able to set/get the formatter attribute", function () {
-            labeler.formatter("%2d");
-            expect(labeler.formatter()).toBe("%2d");
+            labeler.formatter(new NumberFormatter("%2d"));
+            expect(labeler.formatter() instanceof NumberFormatter).toBe(true);
         });
 
     });
 
     describe("start attribute", function () {
         it("should be able to set/get the start attribute", function () {
-            labeler.start("7");
-            expect(labeler.start()).toBe("7");
+            labeler.start(new NumberValue("7"));
+            expect(labeler.start().getRealValue()).toBe("7");
         });
 
     });
@@ -60,8 +64,8 @@ describe("Axis Labeler", function () {
 
     describe("spacing attribute", function () {
         it("should be able to set/get the spacing attribute", function () {
-            labeler.spacing("10");
-            expect(labeler.spacing()).toBe("10");
+            labeler.spacing(new NumberMeasure(10));
+            expect(labeler.spacing().getRealValue()).toBe(10);
         });
 
     });

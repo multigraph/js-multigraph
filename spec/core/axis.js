@@ -6,13 +6,13 @@ describe("Axis", function () {
     var Axis = window.multigraph.core.Axis,
         Point = window.multigraph.math.Point,
         AxisTitle = window.multigraph.core.AxisTitle,
-        Labels = window.multigraph.core.Labels,
         Labeler = window.multigraph.core.Labeler,
         Grid = window.multigraph.core.Grid,
         Pan = window.multigraph.core.Pan,
         Zoom = window.multigraph.core.Zoom,
         Binding = window.multigraph.core.Binding,
         AxisControls = window.multigraph.core.AxisControls,
+        DataValue = window.multigraph.core.DataValue,
         NumberValue = window.multigraph.core.NumberValue,
         a;
 
@@ -270,53 +270,6 @@ describe("Axis", function () {
             expect(a.title().content()).toBe("Time");
             a.title().content("money");
             expect(a.title().content()).toBe("money");
-        });
-
-    });
-
-    describe("Labels", function () {
-        var labels;
-
-        beforeEach(function () {
-            labels = new Labels();
-        });
-
-        it("should be able to add a labels to a Axis", function () {
-            a.labels(labels);
-            expect(a.labels()).toBe(labels);
-        });
-
-        it("should be able to add a Labels with attributes and children to a Axis", function () {
-            var labeler = new Labeler(a),
-                labeler2 = new Labeler(a);
-            labels.position(new Point(1,1));
-            labeler2.anchor(new Point(0,0));
-            a.labelers().add(labeler);
-            a.labelers().add(labeler2);
-            a.labels(labels);
-            expect(a.labels().position().x()).toEqual(1);
-            expect(a.labels().position().y()).toEqual(1);
-            expect(a.labelers().at(0)).toBe(labeler);
-            expect(a.labelers().at(1)).toBe(labeler2);
-        });
-
-        it("should be able to set/get attributes of labels added to a Axis", function () {
-            var labeler = new Labeler(a),
-                labeler2 = new Labeler(a);
-            labeler.spacing("20");
-            labeler2.spacing("202");
-            a.labelers().add(labeler);
-            a.labelers().add(labeler2);
-            a.labels(labels);
-            a.labels().position(new Point(1,1)).angle(40);
-            a.labelers().at(1).anchor(new Point(0,1)).angle(14);
-            expect(a.labels().position().x()).toEqual(1);
-            expect(a.labels().position().y()).toEqual(1);
-            expect(a.labels().angle()).toBe(40);
-            expect(a.labelers().at(0).spacing()).toBe("20");
-            expect(a.labelers().at(1).spacing()).toBe("202");
-            expect(a.labelers().at(1).anchor().serialize()).toEqual("0,1");
-            expect(a.labelers().at(1).angle()).toBe(14);
         });
 
     });

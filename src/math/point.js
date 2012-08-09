@@ -8,6 +8,9 @@ window.multigraph.util.namespace("window.multigraph.math", function (ns) {
         this.respondsTo("serialize", function() {
             return this.x() + "," + this.y();
         });
+        this.respondsTo("eq", function(p) {
+            return ((this.x()===p.x()) && (this.y()===p.y()));
+        });
     });
 
     ns.Point.regExp = /^\s*([0-9\-\+\.eE]+)(,|\s+|\s*,\s+|\s+,\s*)([0-9\-\+\.eE]+)\s*$/;

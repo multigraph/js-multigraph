@@ -8,15 +8,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             this.hasA("axis").which.validatesWith(function (axis) {
                 return axis instanceof ns.Axis;
             });
-
-            this.hasA("formatter").which.validatesWith(function (formatter) {
-                return true;
-                //return formatter instanceof DataFormatter;
-            });
-            this.hasA("start").which.validatesWith(function (start) {
-//                return DataValue.isInstance(start);
-                return true;
-            });
+            this.hasA("formatter").which.validatesWith(ns.DataFormatter.isInstance);
+            this.hasA("start").which.validatesWith(ns.DataValue.isInstance);
             this.hasA("angle").which.isA("number");
             this.hasA("position").which.validatesWith(function (position) {
                 return position instanceof window.multigraph.math.Point;
@@ -24,13 +17,31 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             this.hasA("anchor").which.validatesWith(function (anchor) {
                 return anchor instanceof window.multigraph.math.Point;
             });
-            this.hasA("spacing").which.validatesWith(function (spacing) {
-                //return DataValue.isInstance(start);
-                return true;
-            });
+            this.hasA("spacing").which.validatesWith(ns.DataMeasure.isInstance);
             this.hasA("densityfactor").which.isA("number");
 
             this.isBuiltWith("axis");
+
+            this.respondsTo("isEqualExceptForSpacing", function(labeler) {
+                // return true iff the given labeler and this labeler are equal in every way
+                // except for their spacing values
+                return ((this.axis()                         ===   labeler.axis()                            )
+                        &&
+                        (this.formatter().getFormatString()  ===   labeler.formatter().getFormatString()     )
+                        &&
+                        (this.start()                        .eq(  labeler.start()                         ) )
+                        &&
+                        (this.angle()                        ===   labeler.angle()                           )
+                        &&
+                        (this.position()                     .eq(  labeler.position()                      ) )
+                        &&
+                        (this.anchor()                       .eq(  labeler.anchor()                        ) )
+                        &&
+                        (this.densityfactor()                ===   labeler.densityfactor()                   )
+                       );
+            });
+
+
             //window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis.labels.label, attributes);
         });
 

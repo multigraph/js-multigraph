@@ -16,7 +16,9 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
         var i;
         for (i = 0; i < attributes.length; i++) {
             if (defaults[attributes[i]] !== undefined && typeof(defaults[attributes[i]]) !== "object") {
-                elem.attribute(attributes[i]).defaultsTo(defaults[attributes[i]]);
+                if (elem.attributes().indexOf(attributes[i]) > -1) {
+                    elem.attribute(attributes[i]).defaultsTo(defaults[attributes[i]]);
+                }
             }
         }
         return elem;
@@ -137,7 +139,8 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
 //                    "fontcolor": "0x000000",
 //                    "format": "%1d",
 //                    "visible": "true",
-                    "start": "0",
+                    "start-number": function() { return new window.multigraph.core.NumberValue(0); },
+//                  "start-datetime": { return new DatetimeValue(...); }
                     "angle": 0.0,
                     "position": function () { return new window.multigraph.math.Point(0,0); },
                     "anchor": function () { return new window.multigraph.math.Point(0,0); },
