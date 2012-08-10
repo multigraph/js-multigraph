@@ -38,7 +38,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             // graphics driver, and used by that driver's implementation of Renderer.begin().
             // It can be any objectded by the driver -- usually some kind of graphics
             // context object.  It can also be omitted if a driver does not need it.
-
             var data = this.data().arraydata();
             if (! data) { return; }
 

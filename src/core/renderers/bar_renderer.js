@@ -4,27 +4,46 @@
 // 
 // This renderer accepts the following options:
 // 
-//     OPTION NAME:          linewidth
-//     DESCRIPTION:          Width, in pixels, of line segments.  A
-//                           value of 0 means do not draw line segments.
+//     OPTION NAME:          barwidth
+//     DATA TYPE:            DataMeasure
+//     DEFAULT VALUE:        ???
+//     DESCRIPTION:          Width, in relative terms to the type of the
+//                           axis the plot is on, of the bars.
+//                           
+//     OPTION NAME:          baroffset
 //     DATA TYPE:            number
-//     DEFAULT VALUE:        1
-// 
+//     DEFAULT VALUE:        0
+//     DESCRIPTION:          The offset, in pixels, of the left edge of
+//                           each bar from the corresponding data value.
+//                           
+//     OPTION NAME:          barbase
+//     DATA TYPE:            DataValue
+//     DEFAULT VALUE:        null
+//     DESCRIPTION:          The location, relative to the plot's
+//                           vertical axis, of the bottom of the bar; if
+//                           no barbase is specified, the bars will
+//                           extend down to the bottom of the plot area.
+//                           
 //     OPTION NAME:          linecolor
-//     DESCRIPTION:          Color used for line segments
 //     DATA TYPE:            RGBColor
 //     DEFAULT VALUE:        0x000000 (black)
+//     DESCRIPTION:          The color to be used for the outline around
+//                           each bar.
 // 
 //     OPTION NAME:          fillcolor
-//     DESCRIPTION:          ...
 //     DATA TYPE:            RGBColor
-//     DEFAULT VALUE:        0x808080 (dark gray)
+//     DEFAULT VALUE:        0x000000 (black)
+//     DESCRIPTION:          The color to be used for the fill inside
+//                           each bar; if barbase is specified, this
+//                           color is used only for bars that extend
+//                           above the base.
 // 
-//     OPTION NAME:          fillopacity
-//     DESCRIPTION:          
+//     OPTION NAME:          hidelines
 //     DATA TYPE:            number
-//     DEFAULT VALUE:        1.0
-// 
+//     DEFAULT VALUE:        2
+//     DESCRIPTION:          Bars which are less wide, in pixels, than
+//                           this number do not render their outlines.
+//                           
 window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
@@ -35,8 +54,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     BarRenderer = new window.jermaine.Model( "BarRenderer", function () {
         this.isA(ns.Renderer);
     });
-
-    BarRenderer.GRAY = parseInt("80", 16) / 255;
 
     ns.Renderer.declareOptions(BarRenderer, "BarRendererOptions", [
         {

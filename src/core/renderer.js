@@ -277,7 +277,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
         this.isBuiltWith("value");
         this.respondsTo("serializeValue", function () {
-            return this.value().toString();
+            return this.value();
         });
         this.respondsTo("valueEq", function (value) {
             return this.value().eq(value);
