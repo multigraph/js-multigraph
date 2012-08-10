@@ -26,7 +26,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 "path"       : "",
                 "barwidth"   : this.getOptionValue("barwidth"),
                 "baroffset"  : this.getOptionValue("baroffset"),
-                "barbase"    : this.getOptionValue("barbase"),
+                "barbase"    : this.getOptionValue("barbase")?this.plot().verticalaxis().dataValueToAxisValue(this.getOptionValue("barbase")):0,
                 "fillcolor"  : this.getOptionValue("fillcolor"),
                 "linecolor"  : this.getOptionValue("linecolor"),
                 "hidelines"  : this.getOptionValue("hidelines")
@@ -43,7 +43,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             }
             p = this.transformPoint(datap);
 
-            settings.path += this.generateBar(p[0] + settings.baroffset, 0/* settings.barbase*/, 5/* settings.barwidth*/, p[1])
+            settings.path += this.generateBar(p[0] + settings.baroffset, settings.barbase, 5/* settings.barwidth*/, p[1] - settings.barbase);
         });
 
         ns.BarRenderer.respondsTo("end", function () {
@@ -75,6 +75,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             path    += "L" + x + "," + (y + height); 
             path    += "L" + (x + width) + "," + (y + height); 
             path    += "L" + (x + width) + "," + y; 
+            path    += "Z";
             return path; 
         });
 

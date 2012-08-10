@@ -17,6 +17,7 @@
         <option name="barwidth" value="1"/>
         <option name="baroffset" value="0"/>
         <option name="hidelines" value="2"/>
+        <option name="barbase" value="-.7"/>
       </renderer>
     </plot>
     <data>

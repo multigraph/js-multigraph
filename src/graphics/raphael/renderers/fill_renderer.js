@@ -32,7 +32,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 "fillcolor"          : this.getOptionValue("fillcolor"),
                 "downfillcolor"      : this.getOptionValue("downfillcolor"),
                 "fillopacity"        : this.getOptionValue("fillopacity"),
-                "fillbase"           : this.getOptionValue("fillbase"),
+                "fillbase"           : this.getOptionValue("fillbase")
             };
             this.settings(settings);
         });
