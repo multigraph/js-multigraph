@@ -43,7 +43,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * Return true or false depending on whether obj is an instance of a DataValue type
      */
     DataValue.isInstance = function (obj) {
-        return (obj && (typeof(obj.getRealValue) === "function") && (typeof(obj.compareTo) === "function"));
+        // Note: we also accept null values
+        return ((obj===null) || (obj && (typeof(obj.getRealValue) === "function") && (typeof(obj.compareTo) === "function")));
     };
 
     /*

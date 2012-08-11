@@ -42,6 +42,58 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             });
 
 
+            this.hasA("iteratorNextValue").which.validatesWith(ns.DataValue.isInstance).and.which.defaultsTo(null);
+            this.hasA("iteratorMinValue").which.validatesWith(ns.DataValue.isInstance);
+            this.hasA("iteratorMaxValue").which.validatesWith(ns.DataValue.isInstance);
+
+            this.respondsTo("prepare", function(minDataValue, maxDataValue) {
+                this.iteratorMinValue(minDataValue);
+                this.iteratorMaxValue(maxDataValue);
+                this.iteratorNextValue( this.spacing().firstSpacingLocationAtOrAfter(minDataValue, this.start()) );
+            });
+            this.respondsTo("hasNext", function() {
+                if (this.iteratorNextValue() === null || this.iteratorNextValue() === undefined) {
+                    return false;
+                }
+                return this.iteratorNextValue().le(this.iteratorMaxValue());
+            });
+            this.respondsTo("peekNext", function() {
+                var value = this.iteratorNextValue();
+                if (value === null || value === undefined) {
+                    return undefined;
+                }
+                if (this.iteratorMaxValue() !== undefined && value.gt(this.iteratorMaxValue())) {
+                    return undefined;
+                }
+                return value;
+            });
+            this.respondsTo("next", function() {
+                var value = this.iteratorNextValue();
+                if (value === null || value === undefined) {
+                    return undefined;
+                }
+                if (this.iteratorMaxValue() !== undefined && value.gt(this.iteratorMaxValue())) {
+                    return undefined;
+                }
+                this.iteratorNextValue( value.add( this.spacing() ) );
+                return value;
+            });
+
+
+            this.respondsTo("getLabelDensity", function() {
+                // Graphics drivers should replace this method with an actual implementation; this
+                // is just a placeholder
+                return 0.9;
+            });
+            this.respondsTo("renderLabel", function(value) {
+                // Graphics drivers should replace this method with an actual implementation; this
+                // is just a placeholder.  The implementation should draw the string for the given
+                // value, formatted by the labeler's DataFormatter, in the location along the axis
+                // determined by the value itself, and the labeler's position, anchor, and angle
+                // attributes.
+            });
+
+
             //window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis.labels.label, attributes);
         });
 

@@ -75,6 +75,131 @@ describe("Axis Labeler", function () {
             labeler.densityfactor(5);
             expect(labeler.densityfactor()).toEqual(5);
         });
+    });
+
+
+    describe("iteration", function () {
+
+        it("next() should return undefined if called before prepare() is called", function() {
+            expect(labeler.next()).toBeUndefined();
+        });
+        it("peekNext() should return undefined if called before prepare() is called", function() {
+            expect(labeler.peekNext()).toBeUndefined();
+        });
+        it("hasNext() should return false if called before prepare() is called", function() {
+            expect(labeler.hasNext()).toBe(false);
+        });
+
+
+        describe("iteration over NUMBER data values", function () {
+
+            it("should iterate over exactly the one value 0 for the range [0,0] with start=0 and spacing=1", function() {
+                labeler.spacing(new NumberMeasure(1));
+                labeler.start(new NumberValue(0));
+                labeler.prepare(new NumberValue(0), new NumberValue(0));
+                expect(labeler.hasNext()).toBe(true);
+                expect(labeler.peekNext().getRealValue()).toEqual(0);
+                expect(labeler.next().getRealValue()).toEqual(0);
+                expect(labeler.hasNext()).toBe(false);
+            });
+
+
+            it("should correctly iterate over the values 1,2,3 for the range [1,3] with start=0 and spacing=1", function () {
+                labeler.spacing(new NumberMeasure(1));
+                labeler.start(new NumberValue(0));
+                labeler.prepare(new NumberValue(1), new NumberValue(3));
+
+                expect(labeler.hasNext()).toBe(true);
+                expect(labeler.peekNext().getRealValue()).toEqual(1);
+                expect(labeler.next().getRealValue()).toEqual(1);
+
+                expect(labeler.hasNext()).toBe(true);
+                expect(labeler.peekNext().getRealValue()).toEqual(2);
+                expect(labeler.next().getRealValue()).toEqual(2);
+
+                expect(labeler.hasNext()).toBe(true);
+                expect(labeler.peekNext().getRealValue()).toEqual(3);
+                expect(labeler.next().getRealValue()).toEqual(3);
+
+                expect(labeler.hasNext()).toBe(false);
+            });
+
+            it("should correctly iterate over the values -1, -0.5, 0, 0.5, 1.0 for the range [-1,1] with start=0 and spacing=0.5", function () {
+                labeler.spacing(new NumberMeasure(0.5));
+                labeler.start(new NumberValue(0));
+                labeler.prepare(new NumberValue(-1), new NumberValue(1));
+
+                expect(labeler.hasNext()).toBe(true);
+                expect(labeler.peekNext().getRealValue()).toEqual(-1);
+                expect(labeler.next().getRealValue()).toEqual(-1);
+
+                expect(labeler.hasNext()).toBe(true);
+                expect(labeler.peekNext().getRealValue()).toEqual(-0.5);
+                expect(labeler.next().getRealValue()).toEqual(-0.5);
+
+                expect(labeler.hasNext()).toBe(true);
+                expect(labeler.peekNext().getRealValue()).toEqual(0.0);
+                expect(labeler.next().getRealValue()).toEqual(0.0);
+
+                expect(labeler.hasNext()).toBe(true);
+                expect(labeler.peekNext().getRealValue()).toEqual(0.5);
+                expect(labeler.next().getRealValue()).toEqual(0.5);
+
+                expect(labeler.hasNext()).toBe(true);
+                expect(labeler.peekNext().getRealValue()).toEqual(1.0);
+                expect(labeler.next().getRealValue()).toEqual(1.0);
+
+                expect(labeler.hasNext()).toBe(false);
+            });
+
+            it("should correctly iterate over the values 100, 100.25, 100.5, 100.75 for the range [100.0,100.9] with start=0.25 and spacing=0.25", function () {
+                labeler.spacing(new NumberMeasure(0.25));
+                labeler.start(new NumberValue(0.25));
+                labeler.prepare(new NumberValue(100), new NumberValue(100.9));
+
+                expect(labeler.hasNext()).toBe(true);
+                expect(labeler.peekNext().getRealValue()).toEqual(100.0);
+                expect(labeler.next().getRealValue()).toEqual(100.0);
+
+                expect(labeler.hasNext()).toBe(true);
+                expect(labeler.peekNext().getRealValue()).toEqual(100.25);
+                expect(labeler.next().getRealValue()).toEqual(100.25);
+
+                expect(labeler.hasNext()).toBe(true);
+                expect(labeler.peekNext().getRealValue()).toEqual(100.5);
+                expect(labeler.next().getRealValue()).toEqual(100.5);
+
+                expect(labeler.hasNext()).toBe(true);
+                expect(labeler.peekNext().getRealValue()).toEqual(100.75);
+                expect(labeler.next().getRealValue()).toEqual(100.75);
+
+                expect(labeler.hasNext()).toBe(false);
+            });
+
+            describe("behavior after iteration has completed", function() {
+                beforeEach(function() {
+                    labeler.spacing(new NumberMeasure(1));
+                    labeler.start(new NumberValue(0));
+                    labeler.prepare(new NumberValue(0), new NumberValue(0));
+                    expect(labeler.hasNext()).toBe(true);
+                    expect(labeler.peekNext().getRealValue()).toEqual(0);
+                    expect(labeler.next().getRealValue()).toEqual(0);
+                    expect(labeler.hasNext()).toBe(false);
+                });
+                it("hasNext() should return false", function() {
+                    expect(labeler.hasNext()).toBe(false);
+                });
+                it("next() should return undefined", function() {
+                    expect(labeler.next()).toBeUndefined();
+                });
+                it("peekNext() should return undefined", function() {
+                    expect(labeler.peekNext()).toBeUndefined();
+                });
+
+            });
+
+        });
+
 
     });
 
