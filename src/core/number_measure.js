@@ -23,7 +23,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             a = alignment.value,
             v = value.value,
             s = Math.abs(this.measure);
-
         f = (v - a) / s;
         n = Math.floor(f);
         m = n + 1;

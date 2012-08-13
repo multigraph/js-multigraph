@@ -33,12 +33,17 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             context.transform(1,0,0,1,x0,y0);
 
             for (i=0; i<this.axes().size(); ++i) {
-                this.axes().at(i).render(this, context);
+                this.axes().at(i).renderGrid(this, context);
             }
 
             for (i=0; i<this.plots().size(); ++i) {
                 this.plots().at(i).render(this, context);
             }
+
+            for (i=0; i<this.axes().size(); ++i) {
+                this.axes().at(i).render(this, context);
+            }
+
         });
 
     });

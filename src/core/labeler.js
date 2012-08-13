@@ -79,13 +79,26 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 return value;
             });
 
-
-            this.respondsTo("getLabelDensity", function() {
-                // Graphics drivers should replace this method with an actual implementation; this
-                // is just a placeholder
-                return 0.9;
+            this.respondsTo("getLabelDensity", function(graphicsContext) {
+                // convert the spacing measure to pixels:
+                var pixelSpacing = this.spacing().getRealValue() * this.axis().axisToDataRatio();
+                // length of the formatted axis min value, in pixels
+                var pixelFormattedValue = this.measureStringWidth(graphicsContext, this.formatter().format(this.axis().dataMin()));
+                // return the ratio -- the fraction of the spacing taken up by the formatted string
+                return pixelFormattedValue / pixelSpacing;
             });
-            this.respondsTo("renderLabel", function(value) {
+
+
+            this.respondsTo("measureStringWidth", function(graphicsContext, string) {
+                // Graphics drivers should replace this method with an actual implementation; this
+                // is just a placeholder.  The implementation should return the width, in pixels,
+                // of the given string.  Of course this is dependent on font choice, size, etc,
+                // but we gloss over that at the moment.  Just return the width of the string
+                // using some reasonable default font for now.  Later on, we'll modify this
+                // function to use font information.
+                return string.length*30;
+            });
+            this.respondsTo("renderLabel", function(graphicsContext, value) {
                 // Graphics drivers should replace this method with an actual implementation; this
                 // is just a placeholder.  The implementation should draw the string for the given
                 // value, formatted by the labeler's DataFormatter, in the location along the axis
@@ -94,7 +107,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             });
 
 
-            //window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis.labels.label, attributes);
+            window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis.labels.label, attributes);
         });
 
     ns.Labeler = Labeler;

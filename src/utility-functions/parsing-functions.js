@@ -127,7 +127,7 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
                         "start": undefined,
                         "angle": undefined,
                         "position": undefined,
-                        "anchor": undefined,
+                        "anchor": function () { return new window.multigraph.math.Point(-1,1); },
                         "spacing": undefined,
                         "densityfactor": undefined
 //                        "fontname": undefined,

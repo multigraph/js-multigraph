@@ -165,6 +165,44 @@ console.log('dataMin: ' + this.dataMin().getRealValue());
             return this.axisToDataRatio() * ( v.getRealValue() - this.dataMin().getRealValue() ) + this.minoffset() + this.parallelOffset();
         });
 
+        this.hasA("currentLabeler").which.validatesWith(function (labeler) {
+            return labeler===null || labeler instanceof ns.Labeler;
+        });
+        this.hasA("currentLabelDensity").which.isA("number");
+
+        this.respondsTo("prepareRender", function(graphicsContext) {
+            // Decide which labeler to use: take the one with the largest density <= 0.8.
+            // Unless all have density > 0.8, in which case we take the first one.  This assumes
+            // that the labelers list is ordered in increasing order of label density.
+            // This function sets the currentLabeler and currentLabelDensity attributes.
+            var currentLabeler,
+                currentLabelDensity = 0,
+                density = 0,
+                densityThreshold = 0.8,
+                i,
+                labelers = this.labelers(),
+                nlabelers = this.labelers().size();
+            if (nlabelers<=0) {
+                currentLabeler = null;
+            } else {
+                currentLabeler = labelers.at(0);
+                currentLabelDensity = currentLabeler.getLabelDensity(graphicsContext);
+                i = 1;
+                while (i<nlabelers) {
+                    density = labelers.at(i).getLabelDensity(graphicsContext);
+                    if (density > densityThreshold) {
+                        break;
+                    } else {
+                        currentLabeler = labelers.at(i);
+                        currentLabelDensity = density;
+                        ++i;
+                    }
+                }
+            }
+            this.currentLabeler(currentLabeler);
+            this.currentLabelDensity(currentLabelDensity);
+        });
+
         window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis, attributes);
     });
 
