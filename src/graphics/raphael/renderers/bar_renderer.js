@@ -21,16 +21,17 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
         ns.BarRenderer.respondsTo("begin", function (graphicsContext) {
             var settings = {
-                "paper"      : graphicsContext.paper,
-                "set"        : graphicsContext.set,
-                "path"       : "",
-                "barwidth"   : this.getOptionValue("barwidth"),
-                "baroffset"  : this.getOptionValue("baroffset"),
-                "barbase"    : this.getOptionValue("barbase")?this.plot().verticalaxis().dataValueToAxisValue(this.getOptionValue("barbase")):0,
-                "fillcolor"  : this.getOptionValue("fillcolor"),
-                "linecolor"  : this.getOptionValue("linecolor"),
-                "hidelines"  : this.getOptionValue("hidelines")
+                "paper"         : graphicsContext.paper,
+                "set"           : graphicsContext.set,
+                "path"          : "",
+                "barpixelwidth" : this.getOptionValue("barwidth") * this.plot().horizontalaxis().axisToDataRatio(),
+                "baroffset"     : this.getOptionValue("baroffset"),
+                "barpixelbase"  : this.getOptionValue("barbase")?this.plot().verticalaxis().dataValueToAxisValue(this.getOptionValue("barbase")):0,
+                "fillcolor"     : this.getOptionValue("fillcolor"),
+                "linecolor"     : this.getOptionValue("linecolor"),
+                "hidelines"     : this.getOptionValue("hidelines")
             };
+
             this.settings(settings);
         });
 
@@ -43,7 +44,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             }
             p = this.transformPoint(datap);
 
-            settings.path += this.generateBar(p[0] + settings.baroffset, settings.barbase, 5/* settings.barwidth*/, p[1] - settings.barbase);
+            settings.path += this.generateBar(p[0] + settings.baroffset, settings.barpixelbase, settings.barpixelwidth, p[1] - settings.barpixelbase);
         });
 
         ns.BarRenderer.respondsTo("end", function () {
@@ -52,23 +53,19 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                     "fill": settings.fillcolor.getHexString("#")
                 };
             
-/*
-            if (settings.barwidth > settings.hidelines) {
+            if (settings.barpixelwidth > settings.hidelines) {
                 raphaelAttrs["stroke-width"] = 1;
                 raphaelAttrs.stroke          = settings.linecolor.getHexString("#");
             } else {
                 raphaelAttrs["stroke-width"] = 0.00001; //stroke width of 0 still draws lines                
             }
-*/
-
-//temp fix until the above code works
-            raphaelAttrs["stroke-width"] = 1;
-            raphaelAttrs.stroke          = settings.linecolor.getHexString("#");
 
             settings.set.push( settings.paper.path(settings.path)
                                .attr(raphaelAttrs)
                              );
+
         });
+
 
         ns.BarRenderer.respondsTo("generateBar", function (x, y, width, height) {
             var path = "M" + x + "," + y;
