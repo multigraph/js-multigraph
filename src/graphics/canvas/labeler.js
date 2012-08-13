@@ -27,7 +27,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             //      into a single one for efficiency:
             context.transform(1,0,0,-1,0,2*base.y());
             context.transform(1,0,0,1,-ax+position.x(),ay-position.y());
-            context.transform(1,0,0,1,base.x(),-base.y());
+            context.transform(1,0,0,1,base.x(),base.y());
             context.rotate(-angle*Math.PI/180.0);
             context.fillText(text, 0, 0);
             context.restore();
@@ -39,7 +39,11 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         ns.Labeler.respondsTo("renderLabel", function(graphicsContext, value) {
             var formattedString = this.formatter().format(value),
                 a = this.axis().dataValueToAxisValue(value);
-            drawText(formattedString, graphicsContext, new window.multigraph.math.Point(a, 0), this.anchor(), this.position(), this.angle());
+            if (this.axis().orientation() === ns.Axis.HORIZONTAL) {
+                drawText(formattedString, graphicsContext, new window.multigraph.math.Point(a, 0), this.anchor(), this.position(), this.angle());
+            } else {
+                drawText(formattedString, graphicsContext, new window.multigraph.math.Point(0, a), this.anchor(), this.position(), this.angle());
+            }
         });
 
 
