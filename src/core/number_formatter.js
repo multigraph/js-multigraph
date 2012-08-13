@@ -13,7 +13,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     };
 
     NumberFormatter.prototype.format = function (value) {
-        return sprintf(this.formatString, value);
+        return sprintf(this.formatString, value.getRealValue());
     };
 
     NumberFormatter.prototype.getMaxLength = function () {

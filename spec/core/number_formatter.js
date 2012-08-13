@@ -26,24 +26,24 @@ describe("NumberFormatter", function () {
 
     it("format method should return the correct value", function () {
         var nf = new NumberFormatter("%2.1d");
-        expect(nf.format(0)).toBe(" 0");
-        expect(nf.format(3.5)).toBe(" 3");
-        expect(nf.format(123.5)).toBe("123");
+        expect(nf.format(new NumberValue(0))).toBe(" 0");
+        expect(nf.format(new NumberValue(3.5))).toBe(" 3");
+        expect(nf.format(new NumberValue(123.5))).toBe("123");
 
         nf = new NumberFormatter("%2.1f");
-        expect(nf.format(0)).toBe("0.0");
-        expect(nf.format(3.5)).toBe("3.5");
-        expect(nf.format(123.5)).toBe("123.5");
+        expect(nf.format(new NumberValue(0))).toBe("0.0");
+        expect(nf.format(new NumberValue(3.5))).toBe("3.5");
+        expect(nf.format(new NumberValue(123.5))).toBe("123.5");
 
         nf = new NumberFormatter("%2.1f%%");
-        expect(nf.format(0)).toBe("0.0%");
-        expect(nf.format(3.5)).toBe("3.5%");
-        expect(nf.format(123.5)).toBe("123.5%");
+        expect(nf.format(new NumberValue(0))).toBe("0.0%");
+        expect(nf.format(new NumberValue(3.5))).toBe("3.5%");
+        expect(nf.format(new NumberValue(123.5))).toBe("123.5%");
 
         nf = new NumberFormatter("foo %2.1f bar");
-        expect(nf.format(0)).toBe("foo 0.0 bar");
-        expect(nf.format(3.5)).toBe("foo 3.5 bar");
-        expect(nf.format(123.5)).toBe("foo 123.5 bar");
+        expect(nf.format(new NumberValue(0))).toBe("foo 0.0 bar");
+        expect(nf.format(new NumberValue(3.5))).toBe("foo 3.5 bar");
+        expect(nf.format(new NumberValue(123.5))).toBe("foo 123.5 bar");
     });
 
     it("getMaxLength method should return the correct value", function () {
