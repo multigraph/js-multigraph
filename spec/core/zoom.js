@@ -16,41 +16,41 @@ describe("Axis Zoom", function () {
 
     describe("allowed attribute", function () {
         it("should be able to set/get the allowed attribute", function () {
-            zoom.allowed("no");
-            expect(zoom.allowed()).toBe("no");
+            zoom.allowed(false);
+            expect(zoom.allowed()).toBe(false);
         });
 
-        it("should be throw an error if the setter value is not 'yes' or 'no'", function () {
+        it("should be throw an error if the setter value is not 'true' or 'false'", function () {
             expect(function () {
-                zoom.allowed("yes");
+                zoom.allowed(true);
             }).not.toThrow();
             expect(function () {
                 zoom.allowed("nope");
-            }).toThrow(new Error("validator failed with parameter nope"));
+            }).toThrow(new Error("nope should be a boolean"));
         });
 
     });
 
     describe("min attribute", function () {
         it("should be able to set/get the min attribute", function () {
-            zoom.min("70");
-            expect(zoom.min()).toBe("70");
+            zoom.min(window.multigraph.core.DataMeasure.parse("number", "70"));
+            expect(zoom.min().getRealValue()).toBe(70);
         });
 
     });
 
     describe("max attribute", function () {
         it("should be able to set/get the max attribute", function () {
-            zoom.max("5");
-            expect(zoom.max()).toBe("5");
+            zoom.max(window.multigraph.core.DataMeasure.parse("number", "5"));
+            expect(zoom.max().getRealValue()).toBe(5);
         });
 
     });
 
     describe("anchor attribute", function () {
         it("should be able to set/get the anchor attribute", function () {
-            zoom.anchor("none");
-            expect(zoom.anchor()).toBe("none");
+            zoom.anchor(null);
+            expect(zoom.anchor()).toBe(null);
         });
 
     });

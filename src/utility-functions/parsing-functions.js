@@ -154,15 +154,15 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
                     "visible": "false"
                 },
                 "pan": {
-                    "allowed": "yes",
+                    "allowed": true,
                     "min": undefined,
                     "max": undefined
                 },
                 "zoom": {
-                    "allowed": "yes",
+                    "allowed": true,
                     "min": undefined,
                     "max": undefined,
-                    "anchor": "none"
+                    "anchor": null
                 },
                 "binding": {
                     "id": undefined,

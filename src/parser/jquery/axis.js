@@ -87,8 +87,8 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
 
                 if (xml.find("title").length > 0)        { axis.title(ns.core.AxisTitle[parse](xml.find("title")));                  }
                 if (xml.find("grid").length > 0)         { axis.grid(ns.core.Grid[parse](xml.find("grid")));                         }
-                if (xml.find("pan").length > 0)          { axis.pan(ns.core.Pan[parse](xml.find("pan")));                            }
-                if (xml.find("zoom").length > 0)         { axis.zoom(ns.core.Zoom[parse](xml.find("zoom")));                         }
+                if (xml.find("pan").length > 0)          { axis.pan(ns.core.Pan[parse](xml.find("pan"), axis.type()));               }
+                if (xml.find("zoom").length > 0)         { axis.zoom(ns.core.Zoom[parse](xml.find("zoom"), axis.type()));            }
                 if (xml.find("binding").length > 0)      { axis.binding(ns.core.Binding[parse](xml.find("binding")));                }
                 if (xml.find("axiscontrols").length > 0) { axis.axiscontrols(ns.core.AxisControls[parse](xml.find("axiscontrols"))); }
                 if (xml.find("labels").length > 0)       { parseLabels(xml, axis);                                                   }

@@ -16,33 +16,33 @@ describe("Axis Pan", function () {
 
     describe("allowed attribute", function () {
         it("should be able to set/get the allowed attribute", function () {
-            pan.allowed("no");
-            expect(pan.allowed()).toBe("no");
+            pan.allowed(false);
+            expect(pan.allowed()).toBe(false);
         });
 
-        it("should be throw an error if the setter value is not 'yes' or 'no'", function () {
+        it("should be throw an error if the setter value is not 'true' or 'false'", function () {
             expect(function () {
-                pan.allowed("yes");
+                pan.allowed(true);
             }).not.toThrow();
             expect(function () {
                 pan.allowed("nope");
-            }).toThrow(new Error("validator failed with parameter nope"));
+            }).toThrow(new Error("nope should be a boolean"));
         });
 
     });
 
     describe("min attribute", function () {
         it("should be able to set/get the min attribute", function () {
-            pan.min("70");
-            expect(pan.min()).toBe("70");
+            pan.min(window.multigraph.core.DataValue.parse("number", "70"));
+            expect(pan.min().getRealValue()).toBe(70);
         });
 
     });
 
     describe("max attribute", function () {
         it("should be able to set/get the max attribute", function () {
-            pan.max("5");
-            expect(pan.max()).toBe("5");
+            pan.max(window.multigraph.core.DataValue.parse("number", "5"));
+            expect(pan.max().getRealValue()).toBe(5);
         });
 
     });

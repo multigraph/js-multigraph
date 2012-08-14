@@ -314,17 +314,19 @@ describe("Axis", function () {
         });
 
         it("should be able to add a Pan with attributes to a Axis", function () {
-            pan.allowed("yes").max("45");
+            pan.allowed(true).max(window.multigraph.core.DataValue.parse("number", "45"));
             a.pan(pan);
             expect(a.pan()).toBe(pan);
         });
 
         it("should be able to set/get attributes from a pan added to a Axis", function () {
             a.pan(pan);
-            a.pan().allowed("no").min("30").max("45");
-            expect(a.pan().allowed()).toBe("no");
-            expect(a.pan().min()).toBe("30");
-            expect(a.pan().max()).toBe("45");
+            a.pan().allowed(false)
+                .min(window.multigraph.core.DataValue.parse("number", "30"))
+                .max(window.multigraph.core.DataValue.parse("number", "45"));
+            expect(a.pan().allowed()).toBe(false);
+            expect(a.pan().min().getRealValue()).toBe(30);
+            expect(a.pan().max().getRealValue()).toBe(45);
         });
 
     });
@@ -342,17 +344,17 @@ describe("Axis", function () {
         });
 
         it("should be able to add a Zoom with attributes to a Axis", function () {
-            zoom.allowed("no");
+            zoom.allowed(false);
             a.zoom(zoom);
             expect(a.zoom()).toBe(zoom);
         });
 
         it("should be able to set/get attributes from a zoom added to a Axis", function () {
             a.zoom(zoom);
-            a.zoom().allowed("yes");
-            a.zoom().min("13");
-            expect(a.zoom().allowed()).toBe("yes");
-            expect(a.zoom().min()).toBe("13");
+            a.zoom().allowed(true);
+            a.zoom().min(window.multigraph.core.DataMeasure.parse("number", "13"));
+            expect(a.zoom().allowed()).toBe(true);
+            expect(a.zoom().min().getRealValue()).toBe(13);
         });
 
     });

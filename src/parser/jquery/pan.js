@@ -1,18 +1,35 @@
 window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
     "use strict";
 
-    var scalarAttributes = ["allowed", "min", "max"];
+    var scalarAttributes = ["min", "max"];
 
     ns.mixin.add(function (ns, parse, serialize) {
         
-        ns.core.Pan[parse] = function (xml) {
-            var pan = new ns.core.Pan();
+        ns.core.Pan[parse] = function (xml, type) {
+            var pan = new ns.core.Pan(),
+                allowed;
             if (xml) {
-                if (xml.attr("allowed") !== undefined) {
-                    pan.allowed(xml.attr("allowed").toLowerCase());
+                allowed = xml.attr("allowed");
+                if (allowed !== undefined) {
+                    switch (allowed.toLowerCase()) {
+                        case "yes":
+                            allowed = true;
+                            break;
+                        case "no":
+                            allowed = false;
+                            break;
+                        default:
+                            break;
+                    }
+
+                    pan.allowed(allowed);
                 }
-                pan.min(xml.attr("min"));
-                pan.max(xml.attr("max"));
+                if (xml.attr("min") !== undefined) {
+                    pan.min( window.multigraph.core.DataValue.parse(type, xml.attr("min")) );
+                }
+                if (xml.attr("max") !== undefined) {
+                    pan.max( window.multigraph.core.DataValue.parse(type, xml.attr("max")) );
+                }
             }
             return pan;
         };
@@ -21,6 +38,11 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
             var attributeStrings = [],
                 output = '<pan ';
 
+            if (this.allowed()) {
+                attributeStrings.push('allowed="yes"')
+            } else {
+                attributeStrings.push('allowed="no"')
+            }
             attributeStrings = window.multigraph.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
 
             output += attributeStrings.join(' ') + '/>';
