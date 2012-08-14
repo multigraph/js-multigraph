@@ -45,7 +45,7 @@
     <delete file="${build.file.min}" />
   </target>
 
-  <target name="mugl" depends="graph-div-html,graph-mugl-scripts">
+  <target name="mugl" depends="html,graph-div-html,graph-mugl-scripts">
   </target>
 
   <target name="graph-div-html">
