@@ -22,21 +22,10 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 	    var adx = dx / haxis.axisToDataRatio();
 	    var newMin, newMax;
 	    if (shiftKey) {
-		var dataBase = haxis.axisValueToDataValue(bx).getRealValue();
-		var factor = 10 * Math.abs(dx / (haxis.pixelLength() - haxis.maxoffset() - haxis.minoffset()));
-		if (dx <= 0) {
-		    newMin = new window.multigraph.core.NumberValue((haxis.dataMin().getRealValue() - dataBase) * ( 1 + factor ) + dataBase);
-		    newMax = new window.multigraph.core.NumberValue((haxis.dataMax().getRealValue() - dataBase) * ( 1 + factor ) + dataBase);
-		} else {
-		    newMin = new window.multigraph.core.NumberValue((haxis.dataMin().getRealValue() - dataBase) * ( 1 - factor ) + dataBase);
-		    newMax = new window.multigraph.core.NumberValue((haxis.dataMax().getRealValue() - dataBase) * ( 1 - factor ) + dataBase);
-		}
+		haxis.doZoom(bx, dx)
 	    } else {
-		newMin = new window.multigraph.core.NumberValue( haxis.dataMin().getRealValue() - adx );
-		newMax = new window.multigraph.core.NumberValue( haxis.dataMax().getRealValue() - adx );
+		haxis.doPan(bx, dx)
 	    }
-	    haxis.dataMin(newMin);
-	    haxis.dataMax(newMax);
 	    multigraph.redraw();
 	});
 

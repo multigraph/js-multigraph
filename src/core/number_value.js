@@ -23,7 +23,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     };
 
     NumberValue.prototype.add = function (/*DataMeasure*/ measure) {
-        // NOTE: delibarately accessing the 'measure' property of a NumberMeasure here, rather
+        // NOTE: deliberately accessing the 'measure' property of a NumberMeasure here, rather
         // than calling its getRealValue() method, for convenience and efficiency:
         return new NumberValue(this.value + measure.measure);
     };
