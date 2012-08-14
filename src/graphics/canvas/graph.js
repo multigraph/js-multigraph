@@ -4,10 +4,18 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
     ns.mixin.add(function(ns) {
         var Graph = ns.Graph;
 
+	Graph.hasA("x0").which.isA("number");
+	Graph.hasA("y0").which.isA("number");
+
         Graph.respondsTo("doDrag", function(multigraph,bx,by,dx,dy,shiftKey) {
 	    //console.log('doDrag: ' + dx + ',' + dy);
 
-	    // find the first horizontal axis
+	    // offset coordinates of base point by position of graph
+	    bx -= this.x0();
+	    by -= this.y0();
+
+	    // find the first horizontal axis -- for now, only implement mouse motion for
+	    //   first horiz axis:
 	    var i=0;
 	    while (i<this.axes().size()) {
 		if (this.axes().at(i).orientation()===window.multigraph.core.Axis.HORIZONTAL) {
@@ -19,30 +27,21 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 		return;
 	    }
 	    var haxis = this.axes().at(i);
-	    var adx = dx / haxis.axisToDataRatio();
-	    var newMin, newMax;
+
+	    // do the action
 	    if (shiftKey) {
 		haxis.doZoom(bx, dx)
 	    } else {
 		haxis.doPan(bx, dx)
 	    }
+
+	    // draw everything
 	    multigraph.redraw();
 	});
 
 
         Graph.respondsTo("render", function(context, width, height) {
             var i;
-
-/*
-            context.beginPath();
-            context.moveTo(0, 0);
-            context.lineTo(width, height);
-            context.moveTo(0, height);
-            context.lineTo(width, 0);
-            context.strokeStyle = "#000000";
-            context.stroke();
-            context.closePath();
-*/
 
             context.fillStyle = this.window().bordercolor().getHexString("#");
             var m = this.window().margin().left();
@@ -53,10 +52,10 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             context.fillStyle = this.background().color().getHexString("#");
             context.fillRect(mb,mb,width-2*mb,height-2*mb);
 
-            var x0 = this.window().margin().left()  + this.window().border() + this.window().padding().left() + this.plotarea().margin().left();
-            var y0 = this.window().margin().bottom() + this.window().border() + this.window().padding().bottom() + this.plotarea().margin().bottom();
+            this.x0( this.window().margin().left()  + this.window().border() + this.window().padding().left() + this.plotarea().margin().left() );
+            this.y0( this.window().margin().bottom() + this.window().border() + this.window().padding().bottom() + this.plotarea().margin().bottom() );
 
-            context.transform(1,0,0,1,x0,y0);
+            context.transform(1,0,0,1,this.x0(),this.y0());
 
             for (i=0; i<this.axes().size(); ++i) {
                 this.axes().at(i).renderGrid(this, context);

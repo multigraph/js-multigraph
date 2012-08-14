@@ -39,7 +39,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 
 	    $(multigraph.canvas()).mousedown(function(event) {
 		mouseLastX = baseX = event.offsetX;
-		mouseLastY = baseX = event.offsetY;
+		mouseLastY = baseY = event.offsetY;
 		mouseIsDown = true;
 	    });
 	    $(multigraph.canvas()).mouseup(function(event) {
