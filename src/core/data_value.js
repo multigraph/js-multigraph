@@ -48,6 +48,20 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     };
 
     /*
+     * Create a new DataValue subtype of a given type from a real value
+     */
+    DataValue.create = function (type, realValue) {
+        if (type === DataValue.NUMBER) {
+            return new ns.NumberValue.parse(realValue);
+        } else if (type === DataValue.DATETIME) {
+            //TODO: NYI
+            //return ns.DatetimeValue.parse(string);
+            return null;
+        }
+        throw new Error("attempt to parse an unknown DataValue type");
+    };
+
+    /*
      * Create a new DataValue subtype of a given type by parsing a string
      */
     DataValue.parse = function (type, string) {

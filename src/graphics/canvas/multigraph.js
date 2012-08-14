@@ -9,6 +9,13 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         ns.Multigraph.hasA("width").which.isA('number');
         ns.Multigraph.hasA("height").which.isA('number');
 
+        ns.Multigraph.respondsTo("redraw", function() {
+	    var that = this;
+            window.requestAnimationFrame(function() {
+		that.render();
+            });
+	});
+
         ns.Multigraph.respondsTo("init", function() {
             var canvasid = this.divid() + "-canvas";
             this.$div($('#'+this.divid()));
@@ -21,7 +28,44 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                 this.context(this.canvas().getContext('2d'));
             }
             this.render();
+	    registerEvents(this);
         });
+
+	var registerEvents = function(multigraph) {
+
+	    var baseX, baseY;
+	    var mouseLastX, mouseLastY;
+	    var mouseIsDown = false;
+
+	    $(multigraph.canvas()).mousedown(function(event) {
+		mouseLastX = baseX = event.offsetX;
+		mouseLastY = baseX = event.offsetY;
+		mouseIsDown = true;
+	    });
+	    $(multigraph.canvas()).mouseup(function(event) {
+		mouseIsDown = false;
+	    });
+	    $(multigraph.canvas()).mousemove(function(event) {
+		if (mouseIsDown) {
+		    var dx = event.offsetX - mouseLastX;
+		    var dy = event.offsetY - mouseLastY;
+		    if (multigraph.graphs().size() > 0) {
+			multigraph.graphs().at(0).doDrag(multigraph,baseX,baseY,dx,dy,event.shiftKey);
+		    }
+		}
+		mouseLastX = event.offsetX;
+		mouseLastY = event.offsetY;
+	    });
+	    $(multigraph.canvas()).mouseenter(function(event) {
+		mouseLastX = event.offsetX;
+		mouseLastY = event.offsetY;
+		mouseIsDown = false;
+	    });
+	    $(multigraph.canvas()).mouseleave(function(event) {
+		mouseIsDown = false;
+	    });
+	};
+
 
         ns.Multigraph.respondsTo("render", function() {
             var i;

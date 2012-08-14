@@ -165,6 +165,12 @@ console.log('dataMin: ' + this.dataMin().getRealValue());
             return this.axisToDataRatio() * ( v.getRealValue() - this.dataMin().getRealValue() ) + this.minoffset() + this.parallelOffset();
         });
 
+        this.respondsTo("axisValueToDataValue", function (a) {
+	    return ns.DataValue.create( this.type(),
+					( this.dataMin().getRealValue() +
+					  ( a - this.minoffset() - this.parallelOffset() ) / this.axisToDataRatio()) );
+        });
+
         this.hasA("currentLabeler").which.validatesWith(function (labeler) {
             return labeler===null || labeler instanceof ns.Labeler;
         });
