@@ -40,9 +40,9 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             var formattedString = this.formatter().format(value),
                 a = this.axis().dataValueToAxisValue(value);
             if (this.axis().orientation() === ns.Axis.HORIZONTAL) {
-                drawText(formattedString, graphicsContext, new window.multigraph.math.Point(a, 0), this.anchor(), this.position(), this.angle());
+                drawText(formattedString, graphicsContext, new window.multigraph.math.Point(a, this.axis().perpOffset()), this.anchor(), this.position(), this.angle());
             } else {
-                drawText(formattedString, graphicsContext, new window.multigraph.math.Point(0, a), this.anchor(), this.position(), this.angle());
+                drawText(formattedString, graphicsContext, new window.multigraph.math.Point(this.axis().perpOffset(), a), this.anchor(), this.position(), this.angle());
             }
         });
 
