@@ -46,9 +46,9 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 output = '<zoom ';
 
             if (this.allowed()) {
-                attributeStrings.push('allowed="yes"')
+                attributeStrings.push('allowed="yes"');
             } else {
-                attributeStrings.push('allowed="no"')
+                attributeStrings.push('allowed="no"');
             }
 
             attributeStrings = window.multigraph.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);

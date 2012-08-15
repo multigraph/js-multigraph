@@ -1,10 +1,10 @@
 window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
     "use strict";
 
-    ns.mixin.add(function(ns, parse, serialize) {
+    ns.mixin.add(function (ns, parse, serialize) {
 
 
-        var parseLabels = function(xml, axis) {
+        var parseLabels = function (xml, axis) {
             var spacingStrings = [],
                 labelers = axis.labelers(),
                 i,
@@ -24,8 +24,8 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 var defaults = ns.core.Labeler[parse](xml.find("labels"), axis, undefined, null);
                 // And loop over each <label> tag, creating labelers for each, splitting multiple
                 // spacings on the same <label> tag into multiple labelers:
-                $.each(xml.find("label"), function (j,e) {
-                    spacingStrings = []
+                $.each(xml.find("label"), function (j, e) {
+                    spacingStrings = [];
                     if ($.trim($(e).attr("spacing"))!=="") {
                         spacingStrings = $.trim($(e).attr("spacing")).split(/\s+/);
                     }
@@ -38,7 +38,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
         };
 
         
-        ns.core.Axis[parse] = function(xml) {
+        ns.core.Axis[parse] = function (xml) {
             var orientation = $(xml).prop("tagName").toLowerCase().replace("axis", ""),
                 axis = new ns.core.Axis(orientation),
                 i,
@@ -98,7 +98,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
             return axis;
         };
 
-        var serializeLabels = function(axis, serialize) {
+        var serializeLabels = function (axis, serialize) {
 
             var labelers = axis.labelers(),
                 nlabelers = axis.labelers().size();
@@ -116,7 +116,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 ++i;
             }
             if (singleLabels) {
-                return labelers.at(0)[serialize](spacings.join(" "), 'labels');
+                return labelers.at(0)[serialize](spacings.join(" "), "labels");
             }
             // otherwise, serialize each individual labeler as a <label> tag,
             // collapsing together consecutive ones that are equal except for
@@ -137,7 +137,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
             return "<labels>" + labeltags.join("") + "</labels>";
         };
         
-        ns.core.Axis.prototype[serialize] = function() {
+        ns.core.Axis.prototype[serialize] = function () {
             var attributeStrings = [],
                 childStrings,
                 output = '<' + this.orientation() + 'axis ';

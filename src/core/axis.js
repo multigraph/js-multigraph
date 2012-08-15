@@ -166,9 +166,9 @@ console.log('dataMin: ' + this.dataMin().getRealValue());
         });
 
         this.respondsTo("axisValueToDataValue", function (a) {
-	    return ns.DataValue.create( this.type(),
-					( this.dataMin().getRealValue() +
-					  ( a - this.minoffset() - this.parallelOffset() ) / this.axisToDataRatio()) );
+            return ns.DataValue.create( this.type(),
+                                        ( this.dataMin().getRealValue() +
+                                          ( a - this.minoffset() - this.parallelOffset() ) / this.axisToDataRatio()) );
         });
 
         this.hasA("currentLabeler").which.validatesWith(function (labeler) {
@@ -176,7 +176,7 @@ console.log('dataMin: ' + this.dataMin().getRealValue());
         });
         this.hasA("currentLabelDensity").which.isA("number");
 
-        this.respondsTo("prepareRender", function(graphicsContext) {
+        this.respondsTo("prepareRender", function (graphicsContext) {
             // Decide which labeler to use: take the one with the largest density <= 0.8.
             // Unless all have density > 0.8, in which case we take the first one.  This assumes
             // that the labelers list is ordered in increasing order of label density.
@@ -209,90 +209,90 @@ console.log('dataMin: ' + this.dataMin().getRealValue());
             this.currentLabelDensity(currentLabelDensity);
         });
 
-	this.respondsTo("doPan", function(pixelBase, pixelDisplacement) {
+        this.respondsTo("doPan", function (pixelBase, pixelDisplacement) {
             var offset,
                 newRealMin,
                 newRealMax;
 
-	    /*TODO: uncomment after zoom/pan modifications
+            /*TODO: uncomment after zoom/pan modifications
             if (!this.pan().allowed()) { return; }
-	    */
+            */
             offset = pixelDisplacement / this.axisToDataRatio();
             newRealMin = this.dataMin().getRealValue() - offset;
             newRealMax = this.dataMax().getRealValue() - offset;
-	    /*TODO: uncomment after zoom/pan modifications
+            /*TODO: uncomment after zoom/pan modifications
             if (pixelDisplacement < 0 && this.pan().min() && newRealMin < this.pan().min().getRealValue()) {
-        	newRealMax += (this.pan().min().getRealValue() - newRealMin);
-		newRealMin = this.pan().min().getRealValue();
+                newRealMax += (this.pan().min().getRealValue() - newRealMin);
+                newRealMin = this.pan().min().getRealValue();
             }
             if (pixelDisplacement > 0 && this.pan().max() && newMax > this.pan().max().getRealValue()) {
-        	newMin -= (newMax - this.pan().max().getRealValue());
-		newMax = this.pan().max();
+                newMin -= (newMax - this.pan().max().getRealValue());
+                newMax = this.pan().max();
             }
-	    */
-	    this.dataMin(ns.DataValue.create(this.type(), newRealMin));
-	    this.dataMax(ns.DataValue.create(this.type(), newRealMax));
-	});
+            */
+            this.dataMin(ns.DataValue.create(this.type(), newRealMin));
+            this.dataMax(ns.DataValue.create(this.type(), newRealMax));
+        });
 
-	this.respondsTo("doZoom", function(pixelBase, pixelDisplacement) {
-	    var baseRealValue,
-	        factor,
-	        newMin,
-	        newMax,
-	        d;
-	    /*TODO: uncomment after zoom/pan modifications
+        this.respondsTo("doZoom", function (pixelBase, pixelDisplacement) {
+            var baseRealValue,
+                factor,
+                newMin,
+                newMax,
+                d;
+            /*TODO: uncomment after zoom/pan modifications
             if (!this.zoom().allowed()) {
-		return;
-	    }
-	    */
+                return;
+            }
+            */
             baseRealValue = this.axisValueToDataValue(pixelBase).getRealValue();
-	    /*TODO: uncomment after zoom/pan modifications
+            /*TODO: uncomment after zoom/pan modifications
             if (this.zoom().anchor()) {
-		baseDataValue = this.zoom().anchor();
+            baseDataValue = this.zoom().anchor();
             }
-	    */
+            */
             factor = 10 * Math.abs(pixelDisplacement / (this.pixelLength() - this.maxoffset() - this.minoffset()));
-	    /*TODO: uncomment after this.reversed() has been implemented
+            /*TODO: uncomment after this.reversed() has been implemented
             if (this.reversed()) { factor = -factor; }
-	    */
+            */
             if (pixelDisplacement <= 0) {
-		newMin = ns.DataValue.create(this.type(),
-					     (this.dataMin().getRealValue() - baseRealValue) * ( 1 + factor ) + baseRealValue);
-		newMax = ns.DataValue.create(this.type(),
-					     (this.dataMax().getRealValue() - baseRealValue) * ( 1 + factor ) + baseRealValue);
+                newMin = ns.DataValue.create(this.type(),
+                                             (this.dataMin().getRealValue() - baseRealValue) * ( 1 + factor ) + baseRealValue);
+                newMax = ns.DataValue.create(this.type(),
+                                             (this.dataMax().getRealValue() - baseRealValue) * ( 1 + factor ) + baseRealValue);
             } else {
-		newMin = ns.DataValue.create(this.type(),
-					     (this.dataMin().getRealValue() - baseRealValue) * ( 1 - factor ) + baseRealValue);
-		newMax = ns.DataValue.create(this.type(),
-					     (this.dataMax().getRealValue() - baseRealValue) * ( 1 - factor ) + baseRealValue);
+                newMin = ns.DataValue.create(this.type(),
+                                             (this.dataMin().getRealValue() - baseRealValue) * ( 1 - factor ) + baseRealValue);
+                newMax = ns.DataValue.create(this.type(),
+                                             (this.dataMax().getRealValue() - baseRealValue) * ( 1 - factor ) + baseRealValue);
             }
-	    /*TODO: uncomment after zoom/pan modifications
+            /*TODO: uncomment after zoom/pan modifications
             if (this.pan().min() && newMin.lt(this.pan().min())) {
-		newMin = this.pan().min();
+                newMin = this.pan().min();
             }
             if (this.pan().max() && newMax.gt(this.pan().max())) {
-		newMax = this.pan().max();
+                newMax = this.pan().max();
             }
-	    */
+            */
 	
             if ((this.dataMin().le(this.dataMax()) && newMin.lt(newMax))
-		||
-		(this.dataMin().ge(this.dataMax()) && newMin.gt(newMax))) {
-		/*TODO: uncomment after zoom/pan modifications
-		if (this.zoom().max() && (newMax.gt(newMin.add(this.zoom().max())))) {
-		    d = (newMax.getRealValue() - newMin.getRealValue() - this.zoom().max().getRealValue()) / 2;
-		    newMax = newMax.addRealValue(-d);
-		    newMin = newMin.addRealValue(d);
-		} else if (this.zoom().min() && (newMax.lt(newMin.add(this.zoom().min()))) {
-		    d = (this.zoom().min().getRealValue() - (newMax.getRealValue() - newMin.getRealValue())) / 2;
-		    newMax = newMax.addRealValue(d);
-		    newMin = newMin.addRealValue(-d);
-		}
-		*/
-		this.dataMin(newMin);
-		this.dataMax(newMax);
+                ||
+                (this.dataMin().ge(this.dataMax()) && newMin.gt(newMax))) {
+                /*TODO: uncomment after zoom/pan modifications
+                    if (this.zoom().max() && (newMax.gt(newMin.add(this.zoom().max())))) {
+                        d = (newMax.getRealValue() - newMin.getRealValue() - this.zoom().max().getRealValue()) / 2;
+                        newMax = newMax.addRealValue(-d);
+                        newMin = newMin.addRealValue(d);
+                    } else if (this.zoom().min() && (newMax.lt(newMin.add(this.zoom().min()))) {
+                        d = (this.zoom().min().getRealValue() - (newMax.getRealValue() - newMin.getRealValue())) / 2;
+                        newMax = newMax.addRealValue(d);
+                        newMin = newMin.addRealValue(-d);
+                    }
+                */
+                this.dataMin(newMin);
+                this.dataMax(newMax);
             }
-	});
+        });
 
         window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis, attributes);
     });

@@ -1,22 +1,22 @@
 window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (ns) {
     "use strict";
 
-    ns.mixin.add(function(ns) {
+    ns.mixin.add(function (ns) {
 
-        var measureTextWidth = function(context, string) {
+        var measureTextWidth = function (context, string) {
             var metrics = context.measureText(string);
             return metrics.width;
-        }
+        };
 
-        var measureTextHeight = function(context, string) {
+        var measureTextHeight = function (context, string) {
             //NOTE: kludge: canvas cannot exactly measure text height, so we just return a value
             //      estimated by using the width of an "M" as a substitute.  Maybe improve this
             //      later by using a better workaround.
             var metrics = context.measureText("M");
             return metrics.width;
-        }
+        };
 
-        var drawText = function(text,context,base, anchor,position,angle) {
+        var drawText = function (text, context, base, anchor, position, angle) {
             var h = measureTextHeight(context, text);
             var w = measureTextWidth(context, text);
             var ax = 0.5 * w * (anchor.x() + 1);
@@ -33,10 +33,10 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             context.restore();
         };
 
-        ns.Labeler.respondsTo("measureStringWidth", function(graphicsContext, string) {
+        ns.Labeler.respondsTo("measureStringWidth", function (graphicsContext, string) {
             return measureTextWidth(graphicsContext, string);
         });
-        ns.Labeler.respondsTo("renderLabel", function(graphicsContext, value) {
+        ns.Labeler.respondsTo("renderLabel", function (graphicsContext, value) {
             var formattedString = this.formatter().format(value),
                 a = this.axis().dataValueToAxisValue(value);
             if (this.axis().orientation() === ns.Axis.HORIZONTAL) {

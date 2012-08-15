@@ -1,46 +1,46 @@
 window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (ns) {
     "use strict";
 
-    ns.mixin.add(function(ns) {
+    ns.mixin.add(function (ns) {
         var Graph = ns.Graph;
 
 	Graph.hasA("x0").which.isA("number");
 	Graph.hasA("y0").which.isA("number");
 
-        Graph.respondsTo("doDrag", function(multigraph,bx,by,dx,dy,shiftKey) {
-	    //console.log('doDrag: ' + dx + ',' + dy);
+        Graph.respondsTo("doDrag", function (multigraph, bx, by, dx, dy, shiftKey) {
+            var i = 0;
+            //console.log('doDrag: ' + dx + ',' + dy);
 
-	    // offset coordinates of base point by position of graph
-	    bx -= this.x0();
-	    by -= this.y0();
+            // offset coordinates of base point by position of graph
+            bx -= this.x0();
+            by -= this.y0();
 
-	    // find the first horizontal axis -- for now, only implement mouse motion for
-	    //   first horiz axis:
-	    var i=0;
-	    while (i<this.axes().size()) {
-		if (this.axes().at(i).orientation()===window.multigraph.core.Axis.HORIZONTAL) {
-		    break;
-		}
-	    }
-	    if (i>=this.axes().size()) {
-		console.log("ERROR: can't find horizontal axis for graph");
-		return;
-	    }
-	    var haxis = this.axes().at(i);
+            // find the first horizontal axis -- for now, only implement mouse motion for
+            //   first horiz axis:
+            while (i < this.axes().size()) {
+                if (this.axes().at(i).orientation() === window.multigraph.core.Axis.HORIZONTAL) {
+                    break;
+                }
+            }
+            if (i >= this.axes().size()) {
+                console.log("ERROR: can't find horizontal axis for graph");
+                return;
+            }
+            var haxis = this.axes().at(i);
 
-	    // do the action
-	    if (shiftKey) {
-		haxis.doZoom(bx, dx)
-	    } else {
-		haxis.doPan(bx, dx)
-	    }
+            // do the action
+            if (shiftKey) {
+                haxis.doZoom(bx, dx);
+            } else {
+                haxis.doPan(bx, dx);
+            }
 
-	    // draw everything
-	    multigraph.redraw();
-	});
+            // draw everything
+            multigraph.redraw();
+        });
 
 
-        Graph.respondsTo("render", function(context, width, height) {
+        Graph.respondsTo("render", function (context, width, height) {
             var i;
 
             context.fillStyle = this.window().bordercolor().getHexString("#");

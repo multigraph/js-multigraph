@@ -72,16 +72,16 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 }
             }
             if (i >= this.axes().size()) {
-	        console.log("ERROR: can't find horizontal axis for graph");
+                console.log("ERROR: can't find horizontal axis for graph");
                 return;
             }
             var haxis = this.axes().at(i);
 
             // do the action
             if (shiftKey) {
-                haxis.doZoom(bx, dx)
+                haxis.doZoom(bx, dx);
             } else {
-                haxis.doPan(bx, dx)
+                haxis.doPan(bx, dx);
             }
 
             // draw everything

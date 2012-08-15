@@ -48,7 +48,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                             context.lineTo(this.perpOffset()+this.tickmax(), a);
                         }
                         this.currentLabeler().renderLabel(context, v);
-		    }
+                    }
                     context.stroke();
                 }
             }

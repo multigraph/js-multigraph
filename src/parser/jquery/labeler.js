@@ -25,7 +25,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     //NOTE: spacing might still === undefined at this point
                     if (spacing !== undefined) {
                         labeler.spacing(ns.core.DataMeasure.parse(axis.type(), spacing));
-                    } else if (defaults != undefined) {
+                    } else if (defaults !== undefined) {
                         labeler.spacing(defaults.spacing());
                     }
                 }
@@ -129,7 +129,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
             if (this.angle() !== undefined)          { attributeStrings.push('angle="'           + this.angle()                       + '"'); }
             if (this.formatter() !== undefined)      { attributeStrings.push('format="'          + this.formatter().getFormatString() + '"'); }
             if (this.anchor() !== undefined)         { attributeStrings.push('anchor="'          + this.anchor().serialize()          + '"'); }
-            if (this.position() != undefined)        { attributeStrings.push('position="'        + this.position().serialize()        + '"'); }
+            if (this.position() !== undefined)        { attributeStrings.push('position="'        + this.position().serialize()        + '"'); }
             if (spacing !== undefined)               { attributeStrings.push('spacing="'         + spacing                            + '"'); }
             if (this.densityfactor() !== undefined)  { attributeStrings.push('densityfactor="'   + this.densityfactor()               + '"'); }
 
