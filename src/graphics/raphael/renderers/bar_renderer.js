@@ -26,7 +26,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 "path"          : "",
                 "barpixelwidth" : this.getOptionValue("barwidth") * this.plot().horizontalaxis().axisToDataRatio(),
                 "baroffset"     : this.getOptionValue("baroffset"),
-                "barpixelbase"  : this.getOptionValue("barbase")?this.plot().verticalaxis().dataValueToAxisValue(this.getOptionValue("barbase")):0,
+                "barpixelbase"  : (this.getOptionValue("barbase") !== null)?this.plot().verticalaxis().dataValueToAxisValue(this.getOptionValue("barbase")):0,
                 "fillcolor"     : this.getOptionValue("fillcolor"),
                 "linecolor"     : this.getOptionValue("linecolor"),
                 "hidelines"     : this.getOptionValue("hidelines")
