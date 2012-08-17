@@ -36,10 +36,10 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     graph.title( ns.core.Title[parse](xml.find(">title")) );
                 }
                 $.each(xml.find(">horizontalaxis"), function (i,e) {
-                    graph.axes().add( ns.core.Axis[parse]($(e)) );
+		    graph.axes().add( ns.core.Axis[parse]($(e), ns.core.Axis.HORIZONTAL) );
                 });
                 $.each(xml.find(">verticalaxis"), function (i,e) {
-                    graph.axes().add( ns.core.Axis[parse]($(e)) );
+		    graph.axes().add( ns.core.Axis[parse]($(e), ns.core.Axis.VERTICAL) );
                 });
                 $.each(xml.find(">data"), function (i,e) {
                     graph.data().add( ns.core.Data[parse]($(e)) );

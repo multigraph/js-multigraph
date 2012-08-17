@@ -13,45 +13,44 @@ describe("Axis parsing", function () {
         Zoom = window.multigraph.core.Zoom,
         Binding = window.multigraph.core.Binding,
         AxisControls = window.multigraph.core.AxisControls,
-        xmlString = ''
-	+     '<horizontalaxis'
-	+     ' color="0x123456"'
-	+     ' id="x"'
-	+     ' type="number"'
-	+     ' pregap="2"'
-	+     ' postgap="4"'
-	+     ' anchor="1"'
-	+     ' min="0"'
-	+     ' minoffset="19"'
-	+     ' max="10"'
-	+     ' maxoffset="2"'
-	+     ' positionbase="0 0"'
-	+     ' tickmin="-3"'
-	+     ' tickmax="3"'
-	+     ' highlightstyle="bold"'
-	+     ' linewidth="1"'
-	+     ' length="1"'
-	+     ' position="1,1"'
-	+     ' base="1,-1"'
-	+     ' minposition="-1"'
-	+     ' maxposition="1"'
-	+     '>'
-	+   '<labels'
-	+       ' start="0"'
-	+       ' angle="0"'
-	+       ' format="%1d"'
-	+       ' anchor="0,0"'
-	+       ' position="0,0"'
-	+       ' spacing="10000 5000 2000 1000 500 200 100 50 20 10 5 2 1 0.1 0.01 0.001"'
-	+       '/>'
-	+ '</horizontalaxis>',
+        xmlString = '<horizontalaxis'
++     ' color="0x123456"'
++     ' id="x"'
++     ' type="number"'
++     ' pregap="2"'
++     ' postgap="4"'
++     ' anchor="1"'
++     ' min="0"'
++     ' minoffset="19"'
++     ' max="10"'
++     ' maxoffset="2"'
++     ' positionbase="0 0"'
++     ' tickmin="-3"'
++     ' tickmax="3"'
++     ' highlightstyle="bold"'
++     ' linewidth="1"'
++     ' length="1"'
++     ' position="1,1"'
++     ' base="1,-1"'
++     ' minposition="-1"'
++     ' maxposition="1"'
++     '>'
++   '<labels'
++       ' start="0"'
++       ' angle="0"'
++       ' format="%1d"'
++       ' anchor="0,0"'
++       ' position="0,0"'
++       ' spacing="10000 5000 2000 1000 500 200 100 50 20 10 5 2 1 0.1 0.01 0.001"'
++       '/>'
++ '</horizontalaxis>',
         $xml,
         axis;
 
     beforeEach(function () {
         window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
 	$xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
-        axis = Axis.parseXML($xml);
+        axis = Axis.parseXML($xml, Axis.HORIZONTAL);
     });
 
     it("should be able to parse an axis from XML", function () {
@@ -193,7 +192,7 @@ describe("Axis parsing", function () {
         });
 
         it("should be able to parse a axis with a AxisTitle child from XML", function () {
-            axis = Axis.parseXML($xml);
+	    axis = Axis.parseXML($xml, Axis.VERTICAL);
             expect(axis).not.toBeUndefined();
             expect(axis instanceof Axis).toBe(true);
             expect(axis.title() instanceof AxisTitle).toBe(true);
@@ -201,7 +200,7 @@ describe("Axis parsing", function () {
         });
 
         it("should be able to parse a axis with a AxisTitle child from XML, serialize it and get the same XML as the original", function () {
-            axis = Axis.parseXML($xml);
+            axis = Axis.parseXML($xml, Axis.VERTICAL);
             expect(axis.serialize()).toBe(xmlString);
         });
 
@@ -245,7 +244,7 @@ describe("Axis parsing", function () {
         });
 
         it("should be able to parse a axis with a Labels child from XML", function () {
-            axis = Axis.parseXML($xml);
+            axis = Axis.parseXML($xml, Axis.VERTICAL);
             expect(axis).not.toBeUndefined();
             expect(axis instanceof Axis).toBe(true);
 
@@ -291,7 +290,7 @@ describe("Axis parsing", function () {
                 +  '</labels>'
                 + '</verticalaxis>';
             $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
-            axis = Axis.parseXML($xml);
+            axis = Axis.parseXML($xml, Axis.VERTICAL);
             expect(axis).not.toBeUndefined();
             expect(axis instanceof Axis).toBe(true);
             expect(axis.labelers().at(0) instanceof Labeler).toBe(true);
@@ -300,7 +299,7 @@ describe("Axis parsing", function () {
 
 
         it("should be able to parse a axis with a Labels child from XML, serialize it and get the same XML as the original", function () {
-            axis = Axis.parseXML($xml);
+	    axis = Axis.parseXML($xml, Axis.VERTICAL);
             expect(axis.serialize()).toEqual(xmlString);
         });
 
@@ -349,7 +348,7 @@ describe("Axis parsing", function () {
                 +  '</labels>'
                 + '</verticalaxis>';
             $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
-            axis = Axis.parseXML($xml);
+            axis = Axis.parseXML($xml, Axis.VERTICAL);
             expect(axis.serialize()).toEqual(xmlString);
         });
 
@@ -365,7 +364,7 @@ describe("Axis parsing", function () {
         });
 
         it("should be able to parse a axis with a Grid child from XML", function () {
-            axis = Axis.parseXML($xml);
+	    axis = Axis.parseXML($xml, Axis.VERTICAL);
             expect(axis).not.toBeUndefined();
             expect(axis instanceof Axis).toBe(true);
             expect(axis.grid() instanceof Grid).toBe(true);
@@ -373,7 +372,7 @@ describe("Axis parsing", function () {
         });
 
         it("should be able to parse a axis with a Grid child from XML, serialize it and get the same XML as the original", function () {
-            axis = Axis.parseXML($xml);
+            axis = Axis.parseXML($xml, Axis.VERTICAL);
             expect(axis.serialize()).toEqual(xmlString);
         });
 
@@ -387,7 +386,7 @@ describe("Axis parsing", function () {
         });
 
         it("should be able to parse a axis with a Pan child from XML", function () {
-            axis = Axis.parseXML($xml);
+            axis = Axis.parseXML($xml, Axis.VERTICAL);
             expect(axis).not.toBeUndefined();
             expect(axis instanceof Axis).toBe(true);
             expect(axis.pan() instanceof Pan).toBe(true);
@@ -395,7 +394,7 @@ describe("Axis parsing", function () {
         });
 
         it("should be able to parse a axis with a Pan child from XML, serialize it and get the same XML as the original", function () {
-            axis = Axis.parseXML($xml);
+            axis = Axis.parseXML($xml, Axis.VERTICAL);
             expect(axis.serialize()).toEqual(xmlString);
         });
 
@@ -409,7 +408,7 @@ describe("Axis parsing", function () {
         });
 
         it("should be able to parse a axis with a Zoom child from XML", function () {
-            axis = Axis.parseXML($xml);
+            axis = Axis.parseXML($xml, Axis.VERTICAL);
             expect(axis).not.toBeUndefined();
             expect(axis instanceof Axis).toBe(true);
             expect(axis.zoom() instanceof Zoom).toBe(true);
@@ -417,7 +416,7 @@ describe("Axis parsing", function () {
         });
 
         it("should be able to parse a axis with a Zoom child from XML, serialize it and get the same XML as the original", function () {
-            axis = Axis.parseXML($xml);
+            axis = Axis.parseXML($xml, Axis.VERTICAL);
             expect(axis.serialize()).toEqual(xmlString);
         });
 
@@ -431,7 +430,7 @@ describe("Axis parsing", function () {
         });
 
         it("should be able to parse a axis with a Binding child from XML", function () {
-            axis = Axis.parseXML($xml);
+            axis = Axis.parseXML($xml, Axis.VERTICAL);
             expect(axis).not.toBeUndefined();
             expect(axis instanceof Axis).toBe(true);
             expect(axis.binding() instanceof Binding).toBe(true);
@@ -439,7 +438,7 @@ describe("Axis parsing", function () {
         });
 
         it("should be able to parse a axis with a Binding child from XML, serialize it and get the same XML as the original", function () {
-            axis = Axis.parseXML($xml);
+            axis = Axis.parseXML($xml, Axis.VERTICAL);
             expect(axis.serialize()).toEqual(xmlString);
         });
 
@@ -453,7 +452,7 @@ describe("Axis parsing", function () {
         });
 
         it("should be able to parse a axis with a Axiscontrols child from XML", function () {
-            axis = Axis.parseXML($xml);
+            axis = Axis.parseXML($xml, Axis.VERTICAL);
             expect(axis).not.toBeUndefined();
             expect(axis instanceof Axis).toBe(true);
             expect(axis.axiscontrols() instanceof AxisControls).toBe(true);
@@ -461,7 +460,7 @@ describe("Axis parsing", function () {
         });
 
         it("should be able to parse a axis with a Axiscontrols child from XML, serialize it and get the same XML as the original", function () {
-            axis = Axis.parseXML($xml);
+            axis = Axis.parseXML($xml, Axis.VERTICAL);
             expect(axis.serialize()).toEqual(xmlString);
         });
 
@@ -540,7 +539,7 @@ describe("Axis parsing", function () {
         });
 
         it("should be able to parse a axis with multiple children from XML", function () {
-            axis = Axis.parseXML($xml);
+            axis = Axis.parseXML($xml, Axis.VERTICAL);
             expect(axis).not.toBeUndefined();
             expect(axis instanceof Axis).toBe(true);
             expect(axis.title() instanceof AxisTitle).toBe(true);
@@ -554,7 +553,7 @@ describe("Axis parsing", function () {
         });
 
         it("should be able to parse a axis with multiple children from XML, serialize it and get the same XML as the original", function () {
-            axis = Axis.parseXML($xml);
+            axis = Axis.parseXML($xml, Axis.VERTICAL);
             expect(axis.serialize()).toEqual(xmlString);
         });
 
@@ -563,19 +562,19 @@ describe("Axis parsing", function () {
     describe("dataMin/dataMax handling", function () {
 
         it("axis with min=\"auto\" should return false for hasDataMin()", function() {
-            var axis = Axis.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj('<verticalaxis min="auto"/>'));
+            var axis = Axis.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj('<verticalaxis min="auto"/>'), Axis.VERTICAL);
             expect(axis.hasDataMin()).toBe(false);
         });
         it("axis with min=\"0\" should return true for hasDataMin()", function() {
-            var axis = Axis.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj('<verticalaxis min="0"/>'));
+            var axis = Axis.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj('<verticalaxis min="0"/>'), Axis.VERTICAL);
             expect(axis.hasDataMin()).toBe(true);
         });
         it("axis with max=\"auto\" should return false for hasDataMax()", function() {
-            var axis = Axis.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj('<verticalaxis max="auto"/>'));
+            var axis = Axis.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj('<verticalaxis max="auto"/>'), Axis.VERTICAL);
             expect(axis.hasDataMax()).toBe(false);
         });
         it("axis with max=\"1\" should return true for hasDataMax()", function() {
-            var axis = Axis.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj('<verticalaxis max="1"/>'));
+            var axis = Axis.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj('<verticalaxis max="1"/>'), Axis.VERTICAL);
             expect(axis.hasDataMax()).toBe(true);
         });
 

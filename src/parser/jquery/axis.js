@@ -38,12 +38,10 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
         };
 
         
-        ns.core.Axis[parse] = function (xml) {
+        ns.core.Axis[parse] = function (xml, orientation) {
 
-	    var tagName = xml.prop("tagName"),
-	        orientation = tagName.toLowerCase().replace("axis", ""),
-                axis = new ns.core.Axis(orientation),
-                i,
+	    var axis = new ns.core.Axis(orientation),
+	        i,
                 j;
 
             if (xml) {
