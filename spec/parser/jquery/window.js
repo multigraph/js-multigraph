@@ -10,7 +10,7 @@ describe("Window parsing", function () {
 
     beforeEach(function () {
         window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
-	$xml = $(xmlString);
+	$xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
         w = Window.parseXML($xml);
     });
 
@@ -45,7 +45,7 @@ describe("Window parsing", function () {
     it("should be able to parse a window from XML, serialize it and get the same XML as the original", function () {
         var xmlString2 = '<window margin="1" padding="10" bordercolor="0x000000" width="100" height="127" border="3"/>';
         expect(w.serialize()).toBe(xmlString);
-	w = Window.parseXML($(xmlString2));
+	w = Window.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString2));
         expect(w.serialize()).toBe(xmlString2);
     });
 

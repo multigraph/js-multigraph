@@ -10,7 +10,7 @@ describe("Debugger parsing", function () {
 
     beforeEach(function () {
         window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
-	$xml = $(xmlString);
+	$xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
         debug = Debugger.parseXML($xml);
     });
 
@@ -29,7 +29,7 @@ describe("Debugger parsing", function () {
     it("should be able to parse a debugger from XML, serialize it and get the same XML as the original", function () {
         var xmlString2 = '<debugger visible="no"/>';
         expect(debug.serialize()).toBe(xmlString);
-	debug = Debugger.parseXML($(xmlString2));
+	debug = Debugger.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString2));
         expect(debug.serialize()).toBe(xmlString2);
     });
 

@@ -10,7 +10,7 @@ describe("Axis Zoom parsing", function () {
 
     beforeEach(function () {
         window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
-        $xml = $(xmlString);
+        $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
         zoom = Zoom.parseXML($xml, "number");
     });
 
@@ -38,7 +38,7 @@ describe("Axis Zoom parsing", function () {
     it("should be able to parse a zoom from XML, serialize it and get the same XML as the original", function () {
         var xmlString2 = '<zoom allowed="no" anchor="0"/>';
         expect(zoom.serialize()).toBe(xmlString);
-        zoom = Zoom.parseXML($(xmlString2), "number");
+        zoom = Zoom.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString2), "number");
         expect(zoom.serialize()).toBe(xmlString2);
     });
 

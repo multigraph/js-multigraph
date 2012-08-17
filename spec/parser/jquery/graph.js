@@ -426,7 +426,7 @@ describe("Graph parsing", function () {
 
     beforeEach(function () {
         window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
-	$xml = $(xmlString);
+	$xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
         g = Graph.parseXML($xml);
     });
 
@@ -437,7 +437,7 @@ describe("Graph parsing", function () {
 
     it("should be able to parse a graph from XML, then serialize it, and get the same XML as the original", function () {
         expect(g.serialize()).toBe(xmlString);
-	$xml = $(xmlString2);
+	$xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString2);
         g = Graph.parseXML($xml);
         expect(g.serialize()).toBe(xmlString2);
     });

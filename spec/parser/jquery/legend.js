@@ -12,7 +12,7 @@ describe("Legend parsing", function () {
 
     beforeEach(function () {
         window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
-        $xml = $(xmlString);
+        $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
         l = Legend.parseXML($xml);
     });
 
@@ -70,7 +70,7 @@ describe("Legend parsing", function () {
         beforeEach(function () {
             xmlString = '<legend visible="true" base="-1 -1" anchor="0 0" frame="padding" color="0x56839c" bordercolor="0x941394" opacity="1" border="10" rows="4" columns="3" cornerradius="5" padding="2"><icon height="35" width="50" border="2"/></legend>';
             window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
-            $xml = $(xmlString);
+            $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
             l = Legend.parseXML($xml);
         });
 
@@ -94,7 +94,7 @@ describe("Legend parsing", function () {
         xit("should be able to parse a legend with children from XML, serialize it and get the same XML as the original", function () {
             var xmlString2 = '<legend visible="false" base="-1 -1" frame="plot" color="0x56839c" opacity="0" border="10" columns="3" cornerradius="10" padding="3"><icon height="45" border="5"/></legend>';
             expect(l.serialize()).toBe(xmlString);
-            l = Legend.parseXML($(xmlString2));
+            l = Legend.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString2));
             expect(l.serialize()).toBe(xmlString2);
         });
 

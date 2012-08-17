@@ -10,7 +10,7 @@ describe("Plotarea parsing", function () {
 
     beforeEach(function () {
         window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
-	$xml = $(xmlString);
+	$xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
         p = Plotarea.parseXML($xml);
     });
 
@@ -41,7 +41,7 @@ describe("Plotarea parsing", function () {
     it("should be able to parse a plotarea from XML, serialize it and get the same XML as the original", function () {
         var xmlString2 = '<plotarea margintop="5" marginleft="10" marginbottom="19" marginright="5" bordercolor="0xeeeeee" border="0"/>';
         expect(p.serialize()).toBe(xmlString);
-	p = Plotarea.parseXML($(xmlString2));
+	p = Plotarea.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString2));
         expect(p.serialize()).toBe(xmlString2);
     });
 

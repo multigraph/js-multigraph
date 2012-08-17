@@ -10,7 +10,7 @@ describe("UI parsing", function () {
 
     beforeEach(function () {
         window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
-	$xml = $(xmlString);
+	$xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
         ui = UI.parseXML($xml);
     });
 

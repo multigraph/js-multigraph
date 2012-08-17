@@ -10,7 +10,7 @@ describe("Plot Datatips parsing", function () {
 
     beforeEach(function () {
         window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
-	$xml = $(xmlString);
+	$xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
         d = Datatips.parseXML($xml);
     });
 
@@ -45,7 +45,7 @@ describe("Plot Datatips parsing", function () {
     it("should be able to parse a datatips from XML, serialize it and get the same XML as the original", function () {
         var xmlString2 = '<datatips bgcolor="0x125621" format="datetime" border="5"/>';
         expect(d.serialize()).toBe(xmlString);
-	d = Datatips.parseXML($(xmlString2));
+	d = Datatips.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString2));
         //removed due to defaults
         //expect(d.serialize() === xmlString2).toBe(true);
     });
@@ -56,7 +56,7 @@ describe("Plot Datatips parsing", function () {
         beforeEach(function () {
             xmlString = '<datatips bgcolor="0x123456" bordercolor="0xba789b" format="datetime" bgalpha="5" border="7" pad="2"><variable format="number"/></datatips>';
             window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
-            $xml = $(xmlString);
+            $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
             d = Datatips.parseXML($xml);
         });
 
@@ -66,7 +66,7 @@ describe("Plot Datatips parsing", function () {
 
         it("should be able to parse a datatips with multiple children from XML", function () {
             xmlString = '<datatips bgcolor="0x123456" bordercolor="0xba789b" format="datetime" bgalpha="5" border="7" pad="2"><variable format="number"/><variable format="number"/><variable format="datetime"/></datatips>';
-            $xml = $(xmlString);
+            $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
             d = Datatips.parseXML($xml);
             expect(d).not.toBeUndefined();
         });
@@ -78,7 +78,7 @@ describe("Plot Datatips parsing", function () {
         it("should be able to parse a datatips with children from XML, serialize it and get the same XML as the original", function () {
             var xmlString2 = '<datatips bgcolor="0x777456" bordercolor="0xba999b" format="datetime" bgalpha="5" border="7" pad="2"><variable format="number"/><variable format="number"/><variable format="datetime"/></datatips>';
             expect(d.serialize()).toBe(xmlString);
-            d = Datatips.parseXML($(xmlString2));
+            d = Datatips.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString2));
             expect(d.serialize()).toBe(xmlString2);
         });
 

@@ -10,7 +10,7 @@ describe("Graph Title parsing", function () {
 
     beforeEach(function () {
         window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
-        $xml = $(xmlString);
+        $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
         title = Title.parseXML($xml);
     });
 
@@ -62,7 +62,7 @@ describe("Graph Title parsing", function () {
     it("should be able to parse a title from XML, serialize it and get the same XML as the original", function () {
         var xmlString2 = '<title border="3" opacity="1" padding="4" cornerradius="10" base="0 1" position="0 0" anchor="1 0"/>';
         expect(title.serialize()).toBe(xmlString);
-        title = Title.parseXML($(xmlString2));
+        title = Title.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString2));
         expect(title.serialize()).toBe(xmlString2);
     });
 

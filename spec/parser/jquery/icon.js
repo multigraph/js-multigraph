@@ -10,7 +10,7 @@ describe("Legend Icon parsing", function () {
 
     beforeEach(function () {
         window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
-	$xml = $(xmlString);
+	$xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
         icon = Icon.parseXML($xml);
     });
 
@@ -34,7 +34,7 @@ describe("Legend Icon parsing", function () {
     it("should be able to parse a icon from XML, serialize it and get the same XML as the original", function () {
         var xmlString2 = '<icon width="9" border="2"/>';
         expect(icon.serialize()).toBe(xmlString);
-	icon = Icon.parseXML($(xmlString2));
+	icon = Icon.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString2));
 //        expect(icon.serialize() === xmlString2).toBe(true);
     });
 

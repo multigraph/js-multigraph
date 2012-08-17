@@ -10,7 +10,7 @@ describe("NetworkMonitor parsing", function () {
 
     beforeEach(function () {
         window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
-	$xml = $(xmlString);
+	$xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
         nm = NetworkMonitor.parseXML($xml);
     });
 
@@ -29,7 +29,7 @@ describe("NetworkMonitor parsing", function () {
     it("should be able to parse a networkmonitor from XML, serialize it and get the same XML as the original", function () {
         var xmlString2 = '<networkmonitor visible="no"/>';
         expect(nm.serialize()).toBe(xmlString);
-	nm = NetworkMonitor.parseXML($(xmlString2));
+	nm = NetworkMonitor.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString2));
         expect(nm.serialize()).toBe(xmlString2);
     });
 

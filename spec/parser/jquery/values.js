@@ -10,7 +10,7 @@ describe("Data Values parsing", function () {
 
     beforeEach(function () {
         window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
-        $xml = $(xmlString);
+        $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
         values = Values.parseXML($xml);
     });
 
@@ -26,7 +26,7 @@ describe("Data Values parsing", function () {
     it("should be able to parse a values from XML, serialize it and get the same XML as the original", function () {
         var xmlString2 = '<values/>';
         expect(values.serialize()).toBe(xmlString);
-        values = Values.parseXML($(xmlString2));
+        values = Values.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString2));
         expect(values.serialize()).toBe(xmlString2);
     });
 

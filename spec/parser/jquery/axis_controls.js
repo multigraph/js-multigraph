@@ -10,7 +10,7 @@ describe("Axis AxisControls parsing", function () {
 
     beforeEach(function () {
         window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
-        $xml = $(xmlString);
+        $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
         axiscontrols = AxisControls.parseXML($xml);
     });
 
@@ -26,7 +26,7 @@ describe("Axis AxisControls parsing", function () {
     it("should be able to parse a axiscontrols from XML, serialize it and get the same XML as the original", function () {
         var xmlString2 = '<axiscontrols visible="true"/>';
         expect(axiscontrols.serialize() === xmlString).toBe(true);
-        axiscontrols = AxisControls.parseXML($(xmlString2));
+        axiscontrols = AxisControls.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString2));
         expect(axiscontrols.serialize() === xmlString2).toBe(true);
     });
 

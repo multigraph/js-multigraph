@@ -10,7 +10,7 @@ describe("DatatipsVariable parsing", function () {
 
     beforeEach(function () {
         window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
-	$xml = $(xmlString);
+	$xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
         variable = Variable.parseXML($xml);
     });
 
@@ -25,7 +25,7 @@ describe("DatatipsVariable parsing", function () {
     it("should be able to parse a variable from XML, serialize it and get the same XML as the original", function () {
         var xmlString2 = '<variable format="datetime"/>';
         expect(variable.serialize()).toBe(xmlString);
-	variable = Variable.parseXML($(xmlString2));
+	variable = Variable.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString2));
         expect(variable.serialize()).toBe(xmlString2);
     });
 

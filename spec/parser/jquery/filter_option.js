@@ -10,7 +10,7 @@ describe("Plot Filter Option parsing", function () {
 
     beforeEach(function () {
         window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
-	$xml = $(xmlString);
+	$xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
         option = FilterOption.parseXML($xml);
     });
 
@@ -29,7 +29,7 @@ describe("Plot Filter Option parsing", function () {
     it("should be able to parse a option from XML, serialize it and get the same XML as the original", function () {
         var xmlString2 = '<option name="linewidth"/>';
         expect(option.serialize()).toBe(xmlString);
-	option = FilterOption.parseXML($(xmlString2));
+	option = FilterOption.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString2));
         expect(option.serialize()).toBe(xmlString2);
     });
 

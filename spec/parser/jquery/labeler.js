@@ -21,7 +21,7 @@ describe("Axis Label parsing", function () {
 
     beforeEach(function () {
         window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
-        $xml = $(xmlString);
+        $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
         labeler = Labeler.parseXML($xml, (new Axis(Axis.HORIZONTAL)).type(DataValue.NUMBER));
     });
 
@@ -61,7 +61,7 @@ describe("Axis Label parsing", function () {
     it("should be able to parse a labeler from XML, serialize it and get the same XML as the original", function () {
         var xmlString2 = '<label start="10" angle="-30" anchor="1,1" spacing="10"/>';
         expect(labeler.serialize()).toBe(xmlString);
-        labeler = Labeler.parseXML($(xmlString2), new Axis(Axis.HORIZONTAL).type(DataValue.NUMBER));
+        labeler = Labeler.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString2), new Axis(Axis.HORIZONTAL).type(DataValue.NUMBER));
         expect(labeler.serialize()).toBe(xmlString2);
     });
 

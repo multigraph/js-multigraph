@@ -10,7 +10,7 @@ describe("Plot Filter parsing", function () {
 
     beforeEach(function () {
         window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
-	$xml = $(xmlString);
+	$xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
         f = Filter.parseXML($xml);
     });
 
@@ -25,7 +25,7 @@ describe("Plot Filter parsing", function () {
     it("should be able to parse a filter from XML, serialize it and get the same XML as the original", function () {
         var xmlString2 = '<filter type="datetime"/>';
         expect(f.serialize()).toBe(xmlString);
-	f = Filter.parseXML($(xmlString2));
+	f = Filter.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString2));
         expect(f.serialize()).toBe(xmlString2);
     });
 
@@ -35,7 +35,7 @@ describe("Plot Filter parsing", function () {
         beforeEach(function () {
             xmlString = '<filter type="number"><option name="fred" value="jim"/></filter>';
             window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
-            $xml = $(xmlString);
+            $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
             f = Filter.parseXML($xml);
         });
 
@@ -47,7 +47,7 @@ describe("Plot Filter parsing", function () {
 
         it("should be able to parse a filter with multiple children from XML", function () {
             xmlString = '<filter type="datetime"><option name="fred"/><option name="larry" value="curly"/><option name="moe" value="jim"/></filter>';
-            $xml = $(xmlString);
+            $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
             f = Filter.parseXML($xml);
             expect(f).not.toBeUndefined();
         });
@@ -55,7 +55,7 @@ describe("Plot Filter parsing", function () {
         it("should be able to parse a filter with children from XML, serialize it and get the same XML as the original", function () {
             var xmlString2 = '<filter type="datetime"><option name="fred"/><option name="larry" value="curly"/><option name="moe" value="jim"/></filter>';
             expect(f.serialize()).toBe(xmlString);
-            f = Filter.parseXML($(xmlString2));
+            f = Filter.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString2));
             expect(f.serialize()).toBe(xmlString2);
         });
 

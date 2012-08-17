@@ -10,7 +10,7 @@ describe("Axis Pan parsing", function () {
 
     beforeEach(function () {
         window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
-        $xml = $(xmlString);
+        $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
         pan = Pan.parseXML($xml, "number");
     });
 
@@ -34,7 +34,7 @@ describe("Axis Pan parsing", function () {
     it("should be able to parse a pan from XML, serialize it and get the same XML as the original", function () {
         var xmlString2 = '<pan allowed="no"/>';
         expect(pan.serialize()).toBe(xmlString);
-        pan = Pan.parseXML($(xmlString2), "number");
+        pan = Pan.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString2), "number");
         expect(pan.serialize()).toBe(xmlString2);
     });
 

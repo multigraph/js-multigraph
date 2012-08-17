@@ -93,7 +93,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         var deferred = $.Deferred();
 
         muglPromise.done(function (data) {
-            var multigraph = window.multigraph.core.Multigraph.parseXML( $(data) );
+	    var multigraph = window.multigraph.core.Multigraph.parseXML( window.multigraph.parser.jquery.stringToJQueryXMLObj(data) );
             multigraph.divid(divid);
             multigraph.init();
             deferred.resolve(multigraph);

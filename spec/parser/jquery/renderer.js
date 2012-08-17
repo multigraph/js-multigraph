@@ -11,7 +11,7 @@ describe("Plot Renderer parsing", function () {
 
     beforeEach(function () {
         window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
-	$xml = $(xmlString);
+	$xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
         r = Renderer.parseXML($xml);
     });
 
@@ -27,7 +27,7 @@ describe("Plot Renderer parsing", function () {
     it("should be able to parse a renderer from XML, serialize it and get the same XML as the original", function () {
         var xmlString2 = '<renderer type="pointline"/>';
         expect(r.serialize()).toBe(xmlString);
-	r = Renderer.parseXML($(xmlString2));
+	r = Renderer.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString2));
         expect(r.serialize()).toBe(xmlString2);
     });
 
@@ -36,7 +36,7 @@ describe("Plot Renderer parsing", function () {
         beforeEach(function () {
             xmlString = '<renderer type="pointline"><option name="pointsize" value="3"/></renderer>';
             window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
-            $xml = $(xmlString);
+            $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
             r = Renderer.parseXML($xml);
         });
 
@@ -46,7 +46,7 @@ describe("Plot Renderer parsing", function () {
 
         it("should be able to parse a renderer with multiple children from XML", function () {
             xmlString = '<renderer type="pointline"><option name="pointsize" value="3"/><option name="pointshape" value="circle"/><option name="linewidth" value="7"/></renderer>';
-            $xml = $(xmlString);
+            $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
             r = Renderer.parseXML($xml);
             expect(r).not.toBeUndefined();
         });
@@ -54,7 +54,7 @@ describe("Plot Renderer parsing", function () {
         it("should be able to parse a renderer with children from XML, serialize it and get the same XML as the original", function () {
             var xmlString2 = '<renderer type="pointline"><option name="linewidth" value="7"/><option name="pointshape" value="square"/><option name="pointsize" value="3"/></renderer>';
             expect(r.serialize()).toBe(xmlString);
-            r = Renderer.parseXML($(xmlString2));
+            r = Renderer.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString2));
             expect(r.serialize()).toBe(xmlString2);
         });
 
