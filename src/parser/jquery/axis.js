@@ -40,8 +40,8 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
         
         ns.core.Axis[parse] = function (xml, orientation) {
 
-	    var axis = new ns.core.Axis(orientation),
-	        i,
+            var axis = new ns.core.Axis(orientation),
+                i,
                 j;
 
             if (xml) {
@@ -62,12 +62,12 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 if (xml.attr("base")) {
                     axis.base(window.multigraph.math.Point.parse(xml.attr("base")));
                 }
-		if (xml.attr("minposition") !== undefined) {
+                if (xml.attr("minposition") !== undefined) {
                     axis.minposition(window.multigraph.math.Displacement.parse(xml.attr("minposition")));
-		}
-		if (xml.attr("maxposition") !== undefined) {
+                }
+                if (xml.attr("maxposition") !== undefined) {
                     axis.maxposition(window.multigraph.math.Displacement.parse(xml.attr("maxposition")));
-		}
+                }
                 axis.min(xml.attr("min"));
                 if (axis.min() !== "auto") {
                     axis.dataMin(ns.core.DataValue.parse(axis.type(), axis.min()));
@@ -108,7 +108,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
 
             // if all the Labelers are equal except for spacing, output a single <labels> tag
             var singleLabels = true;
-            var i=1;
+            var i = 1;
             var spacings = [ labelers.at(0).spacing() ];
             while (singleLabels && i<nlabelers) {
                 spacings.push(labelers.at(i).spacing());
@@ -123,10 +123,10 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
             // spacing:
             var labeltags = [];
             spacings = [];
-            for (i=0; i<nlabelers; ++i) {
+            for (i = 0; i < nlabelers; ++i) {
                 // save the current spacing into the spacings array
                 spacings.push(labelers.at(i).spacing().toString());
-                if ((i>=nlabelers-1) || !labelers.at(i).isEqualExceptForSpacing(labelers.at(i+1))) {
+                if ((i >= nlabelers-1) || !labelers.at(i).isEqualExceptForSpacing(labelers.at(i+1))) {
                     // if this labeler's spacing is not the same as the next one in the list,
                     // output this abeler, with the current set of spacings, and reset the
                     // spacings array

@@ -1,9 +1,9 @@
 window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
     "use strict";
 
-    ns.mixin.add(function(ns, parse, serialize) {
+    ns.mixin.add(function (ns, parse, serialize) {
 
-        ns.core.Graph[parse] = function(xml) {
+        ns.core.Graph[parse] = function (xml) {
             var graph = new ns.core.Graph();
             if (xml) {
                 // NOTE: 'OBJ.find(">TAG")' returns a list of JQuery objects corresponding to the immediate
@@ -36,10 +36,10 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     graph.title( ns.core.Title[parse](xml.find(">title")) );
                 }
                 $.each(xml.find(">horizontalaxis"), function (i,e) {
-		    graph.axes().add( ns.core.Axis[parse]($(e), ns.core.Axis.HORIZONTAL) );
+                    graph.axes().add( ns.core.Axis[parse]($(e), ns.core.Axis.HORIZONTAL) );
                 });
                 $.each(xml.find(">verticalaxis"), function (i,e) {
-		    graph.axes().add( ns.core.Axis[parse]($(e), ns.core.Axis.VERTICAL) );
+                    graph.axes().add( ns.core.Axis[parse]($(e), ns.core.Axis.VERTICAL) );
                 });
                 $.each(xml.find(">data"), function (i,e) {
                     graph.data().add( ns.core.Data[parse]($(e)) );

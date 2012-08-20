@@ -28,17 +28,17 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
         };
         
         ns.core.DataVariable.prototype[serialize] = function () {
-            var output = "<variable";
+            var output = '<variable';
 
             output += ' id="' + this.id() + '"';
             output += ' column="' + this.column() + '"';
             output += ' type="' + DataValue.serializeType(this.type()) + '"';
-	    if (this.missingvalue() !== null && this.missingvalue() !== undefined) {
-		output += ' missingvalue="' + this.missingvalue().toString() + '"';
-	    }
-	    if (this.missingop() !== null && this.missingop() !== undefined) {
-		output += ' missingop="' + this.missingop() + '"';
-	    }
+            if (this.missingvalue() !== null && this.missingvalue() !== undefined) {
+                output += ' missingvalue="' + this.missingvalue().toString() + '"';
+            }
+            if (this.missingop() !== null && this.missingop() !== undefined) {
+                output += ' missingop="' + this.missingop() + '"';
+            }
             output += '/>';
 
             return output;

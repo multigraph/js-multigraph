@@ -192,7 +192,7 @@ describe("Axis parsing", function () {
         });
 
         it("should be able to parse a axis with a AxisTitle child from XML", function () {
-	    axis = Axis.parseXML($xml, Axis.VERTICAL);
+            axis = Axis.parseXML($xml, Axis.VERTICAL);
             expect(axis).not.toBeUndefined();
             expect(axis instanceof Axis).toBe(true);
             expect(axis.title() instanceof AxisTitle).toBe(true);
@@ -299,7 +299,7 @@ describe("Axis parsing", function () {
 
 
         it("should be able to parse a axis with a Labels child from XML, serialize it and get the same XML as the original", function () {
-	    axis = Axis.parseXML($xml, Axis.VERTICAL);
+            axis = Axis.parseXML($xml, Axis.VERTICAL);
             expect(axis.serialize()).toEqual(xmlString);
         });
 
@@ -364,7 +364,7 @@ describe("Axis parsing", function () {
         });
 
         it("should be able to parse a axis with a Grid child from XML", function () {
-	    axis = Axis.parseXML($xml, Axis.VERTICAL);
+            axis = Axis.parseXML($xml, Axis.VERTICAL);
             expect(axis).not.toBeUndefined();
             expect(axis instanceof Axis).toBe(true);
             expect(axis.grid() instanceof Grid).toBe(true);
@@ -561,19 +561,19 @@ describe("Axis parsing", function () {
 
     describe("dataMin/dataMax handling", function () {
 
-        it("axis with min=\"auto\" should return false for hasDataMin()", function() {
+        it("axis with min=\"auto\" should return false for hasDataMin()", function () {
             var axis = Axis.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj('<verticalaxis min="auto"/>'), Axis.VERTICAL);
             expect(axis.hasDataMin()).toBe(false);
         });
-        it("axis with min=\"0\" should return true for hasDataMin()", function() {
+        it("axis with min=\"0\" should return true for hasDataMin()", function () {
             var axis = Axis.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj('<verticalaxis min="0"/>'), Axis.VERTICAL);
             expect(axis.hasDataMin()).toBe(true);
         });
-        it("axis with max=\"auto\" should return false for hasDataMax()", function() {
+        it("axis with max=\"auto\" should return false for hasDataMax()", function () {
             var axis = Axis.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj('<verticalaxis max="auto"/>'), Axis.VERTICAL);
             expect(axis.hasDataMax()).toBe(false);
         });
-        it("axis with max=\"1\" should return true for hasDataMax()", function() {
+        it("axis with max=\"1\" should return true for hasDataMax()", function () {
             var axis = Axis.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj('<verticalaxis max="1"/>'), Axis.VERTICAL);
             expect(axis.hasDataMax()).toBe(true);
         });
