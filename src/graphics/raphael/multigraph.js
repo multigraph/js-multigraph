@@ -29,15 +29,16 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             this.$div().on("mousedown", { "graph": this }, this.setupEvents);
             this.width(this.$div().width());
             this.height(this.$div().height());
+            if (this.paper()) {
+                this.paper().remove();
+            }
+            this.paper(new window.Raphael(this.divid(), this.width(), this.height()));
             this.render();
         });
 
         ns.Multigraph.respondsTo("render", function () {
             var i;
-            if (this.paper()) {
-                this.paper().remove();
-            }
-            this.paper(new window.Raphael(this.divid(), this.width(), this.height()));
+            this.paper().clear();
             this.initializeGeometry(this.width(), this.height());
             for (i=0; i<this.graphs().size(); ++i) {
                 this.graphs().at(i).render(this.paper(), this.width(), this.height());

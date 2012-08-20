@@ -5,6 +5,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         var Graph = ns.Graph;
 
         Graph.hasA("translateString");
+        Graph.hasA("transformString");
 
 	Graph.hasA("x0").which.isA("number");
 	Graph.hasA("y0").which.isA("number");
@@ -18,6 +19,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
             this.x0( this.window().margin().left() + windowBorder + this.window().padding().left() + this.plotarea().margin().left() + this.plotarea().border() );
             this.y0( this.window().margin().bottom() + windowBorder + this.window().padding().bottom() + this.plotarea().margin().bottom() + this.plotarea().border() );
+            this.transformString("S 1, -1, 0, " + (height/2) + " t " + this.x0() + ", " + this.y0());
 
             this.window().render(this, paper, backgroundSet, width, height);
 
@@ -26,7 +28,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             this.plotarea().render(this, paper, backgroundSet);
 
             for (i = 0; i < this.axes().size(); ++i) {
-                this.axes().at(i).render(this, paper, axesSet);
+                this.axes().at(i).render(this, paper, axesSet, this.transformString());
             }
 
             for (i = 0; i < this.plots().size(); ++i) {
@@ -46,8 +48,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                     backgroundSet[i].transform("S 1, -1, 0, " + (height/2));
                 }
             }
-            axesSet.transform("S 1, -1, 0, " + (height/2) + " t " + x0 + ", " + y0);
-            plotsSet.transform("S 1, -1, 0, " + (height/2) + " t " + x0 + ", " + y0);
+            axesSet.transform(this.transformString());
+            plotsSet.transform(this.transformString());
         });
 
         Graph.respondsTo("fixLayers", function (backgroundSet, axesSet, plotsSet) {
