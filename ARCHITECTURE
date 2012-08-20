@@ -1,3 +1,40 @@
+EVENT CATCHER
+  Registers listeners for basic events; the listeners call the event-to-action translator code below.
+
+EVENT-TO-ACTION TRANSLATOR
+  Translates basic events into the actions below.
+
+CORE ACTIONS
+  These are basic operations, implemented in core, that carry out the
+  work involved in making things happen in the graph, typically in
+  response to user interaction.  Things like panning or zooming along
+  an axis, having a data tip appear or disappear, turning a plot on or
+  off, etc.  They are expressed in terms of an API that the core
+  exposes to non-core code.  This API uses parameters that involve
+  "pure" quantities such as points, vectors, references to axes,
+  plots, etc --- no references to specific events like mouse down,
+  drag, etc.  This API could, in principle, be used in a scripting
+  language to drive a programmed animation of the graph that would
+  simulate user interaction, but is independent of specific events.
+
+  Examples of core actions:
+    doPan(axis, base, vector): causes the dataMin/dataMax values of an axis to be modified in a 'pan' motion
+    doZoom(axis, base, vector): causes the dataMin/dataMax values of an axis to be modified in a 'zoom' motion
+    doDataTip(plot, point): causes the given plot to update its display of data tips, if any, to show whatever
+      tip is appropriate for the given point, if any.  This might involve turning off a previously displayed
+      data tip, and may or may not actually involve displaying a data tip at all, depending on the location
+      of the given point. ????  Need to think about this.  As currently written, this seems too event specific,
+      not generic enough.  But I'm not sure how to fix that.
+
+
+
+use cases to think through:
+
+    {canvas,svg} rendering / {mouse,touch,gesture} interaction
+
+
+------------------------------------------------------------------------
+
 diagram from code review meeting of 7/30/12:
 
 core                                  parser                       graphics/canvas

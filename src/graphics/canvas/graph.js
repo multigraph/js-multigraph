@@ -20,6 +20,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             while (i < this.axes().size()) {
                 if (this.axes().at(i).orientation() === window.multigraph.core.Axis.HORIZONTAL) {
                     break;
+                } else {
+                    i++;
                 }
             }
             if (i >= this.axes().size()) {
