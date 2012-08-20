@@ -4,8 +4,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
     ns.mixin.add(function (ns) {
         var Graph = ns.Graph;
 
-	Graph.hasA("x0").which.isA("number");
-	Graph.hasA("y0").which.isA("number");
+        Graph.hasA("x0").which.isA("number");
+        Graph.hasA("y0").which.isA("number");
 
         Graph.respondsTo("doDrag", function (multigraph, bx, by, dx, dy, shiftKey) {
             var i = 0;

@@ -71,7 +71,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.isA(ns.Renderer);
 
         //
-	//this.isBuiltWith(...)  NO NO NO!!!
+        //this.isBuiltWith(...)  NO NO NO!!!
         //
         // DO NOT CALL isBuiltWith for a renderer subclass; Renderer.declareOptions calls isBuiltWith(), and it
         // will break if you also call it here!!!

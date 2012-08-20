@@ -126,7 +126,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
 
 
-	this.respondsTo("getOptionValue", function (optionName, /*optional:*/value) {
+        this.respondsTo("getOptionValue", function (optionName, /*optional:*/value) {
             var i,
                 options,
                 optionList;
@@ -148,7 +148,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                     return option.value();
                 }
             }
-		
+                
         });
 
         // method must be overridden by subclass:
@@ -177,14 +177,14 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      *    'model' : the renderer submodel
      */
     Renderer.addType = function (rendererObj) {
-	rendererList.push(rendererObj);
+        rendererList.push(rendererObj);
     };
 
     /*
      * Factory method: create an instance of a renderer submodel based on its type (a string).
      */
     Renderer.create = function (type) {
-	var i,
+        var i,
             renderer;
         for (i=0; i<rendererList.length; ++i) {
             if (rendererList[i].type === type) {
@@ -222,10 +222,10 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             // populate options with default values stored in options metadata (which was populated by declareOptions):
             var opt, ropt;
             for (opt in this.optionsMetadata) {
-		if (this.optionsMetadata.hasOwnProperty(opt)) {
+                if (this.optionsMetadata.hasOwnProperty(opt)) {
                     ropt = new (this.optionsMetadata[opt].type)(this.optionsMetadata[opt]["default"]);
                     this.options()[opt]().add( ropt );
-		}
+                }
             }
         });
 

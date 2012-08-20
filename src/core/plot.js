@@ -56,7 +56,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             renderer.setUpMissing(); //TODO: this is awkward -- figure out a better way!
             renderer.begin(graphicsContext);
             while (iter.hasNext()) {
-		var datap = iter.next();
+                var datap = iter.next();
                 renderer.dataPoint(datap);
             }
             renderer.end();

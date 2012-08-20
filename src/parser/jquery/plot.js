@@ -42,7 +42,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                         $.each(xml.find("variable"), function (i,e) {
                             variable = graph.variableById( $(e).attr("ref") );
                             if (variable !== undefined) {
-				plot.data( variable.data() );
+                                plot.data( variable.data() );
                                 plot.variable().add(variable);
                             } else {
                                 throw new Error("The graph does not contain a variable with an id of: " + $(e).attr("ref"));

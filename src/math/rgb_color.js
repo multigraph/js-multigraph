@@ -28,9 +28,9 @@ window.multigraph.util.namespace("window.multigraph.math", function (ns) {
             return prefix + numberToHex(this.r()) + numberToHex(this.g()) + numberToHex(this.b());
         });
 
-	this.respondsTo("eq", function (color) {
+        this.respondsTo("eq", function (color) {
             return ((this.r()===color.r()) && (this.g()===color.g()) && (this.b()===color.b()));
-	});
+        });
 
         this.isBuiltWith("r", "g", "b");
 

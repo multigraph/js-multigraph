@@ -9,7 +9,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
             var variable;
             if (xml && xml.attr("id")) {
                 variable = new ns.core.DataVariable(xml.attr("id"));
-		variable.data(data);
+                variable.data(data);
                 if (xml.attr("column")) {
                     variable.column(parseInt(xml.attr("column"), 10));
                 }

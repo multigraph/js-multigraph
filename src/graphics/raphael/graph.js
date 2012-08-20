@@ -7,8 +7,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         Graph.hasA("translateString");
         Graph.hasA("transformString");
 
-	Graph.hasA("x0").which.isA("number");
-	Graph.hasA("y0").which.isA("number");
+        Graph.hasA("x0").which.isA("number");
+        Graph.hasA("y0").which.isA("number");
 
         Graph.respondsTo("render", function (paper, width, height) {
             var windowBorder = this.window().border(),

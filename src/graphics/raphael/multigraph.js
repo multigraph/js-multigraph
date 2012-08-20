@@ -20,9 +20,9 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         ns.Multigraph.respondsTo("redraw", function () {
             var that = this;
             window.requestAnimationFrame(function () {
-		that.render();
+                that.render();
             });
-	});
+        });
 
         ns.Multigraph.respondsTo("init", function () {
             this.$div($("#"+this.divid()));

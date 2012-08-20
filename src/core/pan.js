@@ -12,13 +12,13 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return ns.DataValue.isInstance(max);
         });
 
-	//NOTE: the distinction between DataValue and DataMeasure for the zoom & pan model
-	//      attributes might seem confusing, so here's a table to clarify it:
-	//
+        //NOTE: the distinction between DataValue and DataMeasure for the zoom & pan model
+        //      attributes might seem confusing, so here's a table to clarify it:
+        //
         //              Boolean      DataValue      DataMeasure
-	//              -------      ---------      -----------
-	//  zoom:       allowed      anchor         min,max
-	//   pan:       allowed      min,max
+        //              -------      ---------      -----------
+        //  zoom:       allowed      anchor         min,max
+        //   pan:       allowed      min,max
 
         window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis.pan, attributes);
     });

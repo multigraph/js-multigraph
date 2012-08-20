@@ -42,15 +42,15 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     var dataValues = [];
                     var lines = $(values).text().split("\n");
                     for (i=0; i<lines.length; ++i) {
-			if (/\d/.test(lines[i])) { // skip line unless it contains a digit
+                        if (/\d/.test(lines[i])) { // skip line unless it contains a digit
                             var valuesThisRow = lines[i].split(/\s*,\s*/);
                             var dataValuesThisRow = [];
                             var j;
                             for (j=0; j<valuesThisRow.length; ++j) {
-				dataValuesThisRow.push( NumberValue.parse(valuesThisRow[j]) );
+                                dataValuesThisRow.push( NumberValue.parse(valuesThisRow[j]) );
                             }
                             dataValues.push( dataValuesThisRow );
-			}
+                        }
                     }
 
                     var ad = new ArrayData(dataVariables, dataValues);
