@@ -274,9 +274,8 @@ console.log('dataMin: ' + this.dataMin().getRealValue());
                 newMax = this.pan().max();
             }
             */
-	
-            if ((this.dataMin().le(this.dataMax()) && newMin.lt(newMax))
-                ||
+        
+            if ((this.dataMin().le(this.dataMax()) && newMin.lt(newMax)) ||
                 (this.dataMin().ge(this.dataMax()) && newMin.gt(newMax))) {
                 /*TODO: uncomment after zoom/pan modifications
                     if (this.zoom().max() && (newMax.gt(newMin.add(this.zoom().max())))) {

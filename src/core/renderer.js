@@ -143,8 +143,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             //  Search through them starting at the END of the list, going backwards!
             for (i=optionList.size()-1; i>=0; --i) {
                 var option = optionList.at(i);
-                if (((option.min()===undefined) || (value===undefined) || option.min().le(value))
-                    &&
+                if (((option.min()===undefined) || (value===undefined) || option.min().le(value)) &&
                     ((option.max()===undefined) || (value===undefined) || option.max().gt(value))) {
                     return option.value();
                 }
@@ -223,8 +222,10 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             // populate options with default values stored in options metadata (which was populated by declareOptions):
             var opt, ropt;
             for (opt in this.optionsMetadata) {
-                ropt = new (this.optionsMetadata[opt].type)(this.optionsMetadata[opt]["default"]);
-                this.options()[opt]().add( ropt );
+		if (this.optionsMetadata.hasOwnProperty(opt)) {
+                    ropt = new (this.optionsMetadata[opt].type)(this.optionsMetadata[opt]["default"]);
+                    this.options()[opt]().add( ropt );
+		}
             }
         });
 

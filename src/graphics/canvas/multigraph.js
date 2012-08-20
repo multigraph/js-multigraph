@@ -10,11 +10,11 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         ns.Multigraph.hasA("height").which.isA("number");
 
         ns.Multigraph.respondsTo("redraw", function () {
-	    var that = this;
+            var that = this;
             window.requestAnimationFrame(function () {
-		that.render();
+                that.render();
             });
-	});
+        });
 
         ns.Multigraph.respondsTo("init", function () {
             var canvasid = this.divid() + "-canvas";
@@ -48,7 +48,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             $(multigraph.canvas()).mousemove(function (event) {
                 if (mouseIsDown) {
                     var dx = event.offsetX - mouseLastX;
-	            var dy = event.offsetY - mouseLastY;
+                    var dy = event.offsetY - mouseLastY;
                     if (multigraph.graphs().size() > 0) {
                         multigraph.graphs().at(0).doDrag(multigraph,baseX,baseY,dx,dy,event.shiftKey);
                     }
@@ -93,7 +93,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         var deferred = $.Deferred();
 
         muglPromise.done(function (data) {
-	    var multigraph = window.multigraph.core.Multigraph.parseXML( window.multigraph.parser.jquery.stringToJQueryXMLObj(data) );
+            var multigraph = window.multigraph.core.Multigraph.parseXML( window.multigraph.parser.jquery.stringToJQueryXMLObj(data) );
             multigraph.divid(divid);
             multigraph.init();
             deferred.resolve(multigraph);

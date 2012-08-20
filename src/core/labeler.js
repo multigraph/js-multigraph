@@ -25,18 +25,12 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             this.respondsTo("isEqualExceptForSpacing", function(labeler) {
                 // return true iff the given labeler and this labeler are equal in every way
                 // except for their spacing values
-                return ((this.axis()                         ===   labeler.axis()                            )
-                        &&
-                        (this.formatter().getFormatString()  ===   labeler.formatter().getFormatString()     )
-                        &&
-                        (this.start()                        .eq(  labeler.start()                         ) )
-                        &&
-                        (this.angle()                        ===   labeler.angle()                           )
-                        &&
-                        (this.position()                     .eq(  labeler.position()                      ) )
-                        &&
-                        (this.anchor()                       .eq(  labeler.anchor()                        ) )
-                        &&
+                return ((this.axis()                         ===   labeler.axis()                            ) &&
+                        (this.formatter().getFormatString()  ===   labeler.formatter().getFormatString()     ) &&
+                        (this.start()                        .eq(  labeler.start()                         ) ) &&
+                        (this.angle()                        ===   labeler.angle()                           ) &&
+                        (this.position()                     .eq(  labeler.position()                      ) ) &&
+                        (this.anchor()                       .eq(  labeler.anchor()                        ) ) &&
                         (this.densityfactor()                ===   labeler.densityfactor()                   )
                        );
             });
