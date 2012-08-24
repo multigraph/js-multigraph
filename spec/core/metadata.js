@@ -85,8 +85,14 @@ describe("MetaData", function () {
     });
 
     describe("getColumns method", function () {
+        var i,
+            columns;
+
         it("should return the metadata", function () {
-            expect(testMetaData.getColumns()).toBe(dataVariables);
+            columns = testMetaData.getColumns();
+            for (i = 0; i < dataVariables.length; ++i) {
+                expect(columns.indexOf(dataVariables[i])).not.toBe(-1);
+            }
         });
     });
 
