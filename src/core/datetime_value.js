@@ -1,3 +1,5 @@
+/*global sprintf */
+
 window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
@@ -70,49 +72,16 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     DatetimeValue.prototype.toString = function () {
         var Y, M, D, H, m, s, ms;
 
-        Y = this.value.getUTCFullYear().toString();
-        if (Y.length === 1) {
-            Y = "000" + Y;
-        } else if (Y.length === 2) {
-            Y = "00" + Y;
-        } else if (Y.length === 3) {
-            Y = "0" + Y;
-        }
+        Y  = sprintf("%04s", this.value.getUTCFullYear().toString());
+        M  = sprintf("%02s", (this.value.getUTCMonth() + 1).toString());
+        D  = sprintf("%02s", this.value.getUTCDate().toString());
+        H  = sprintf("%02s", this.value.getUTCHours().toString());
+        m  = sprintf("%02s", this.value.getUTCMinutes().toString());
+        s  = sprintf("%02s", this.value.getUTCSeconds().toString());
+        ms = "." + sprintf("%03s", this.value.getUTCMilliseconds().toString());
 
-        M = (this.value.getUTCMonth() + 1).toString();
-        if (M.length === 1) {
-            M = "0" + M;
-        }
-
-        D = this.value.getUTCDate().toString();
-        if (D.length === 1) {
-            D = "0" + D;
-        }
-
-        H = this.value.getUTCHours().toString();
-        if (H.length === 1) {
-            H = "0" + H;
-        }
-
-        m = this.value.getUTCMinutes().toString();
-        if (m.length === 1) {
-            m = "0" + m;
-        }
-
-        s = this.value.getUTCSeconds().toString();
-        if (s.length === 1) {
-            s = "0" + s;
-        }
-
-        ms = this.value.getUTCMilliseconds().toString();
-        if (ms === "0") {
+        if (ms === ".000") {
             ms = "";
-        } else if (ms.length === 1) {
-            ms = ".00" + ms;
-        } else if (ms.length === 2) {
-            ms = ".0" + ms;
-        } else if (ms.length === 3) {
-            ms = "." + ms;
         }
         
         return Y + M + D + H + m + s + ms;

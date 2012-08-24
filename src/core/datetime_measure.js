@@ -65,7 +65,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         return new DatetimeMeasure(measure, unit);
     };
 
-    DatetimeMeasure.generateDatetimeValueFromMilliseconds = function (value, alignment, spacing) {
+    DatetimeMeasure.findTickmarkWithMillisecondSpacing = function (/*number(milliseconds)*/value, /*number(milliseconds)*/alignment, /*number(milliseconds)*/spacing) {
         var offset = value - alignment,
             d      = Math.floor( offset / spacing );
         if (offset % spacing !== 0) {
@@ -74,7 +74,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         return new ns.DatetimeValue(alignment + d * spacing);
     };
 
-    DatetimeMeasure.generateDatetimeValueFromMonths = function (value, alignment, monthSpacing) {
+    DatetimeMeasure.findTickmarkWithMonthSpacing = function (/*DatetimeValue*/value, /*DatetimeValue*/alignment, /*number(months)*/monthSpacing) {
         var valueD = value.value,
             alignD = alignment.value,
             monthOffset = 12 * (valueD.getUTCFullYear() - alignD.getUTCFullYear()) + (valueD.getUTCMonth() - alignD.getUTCMonth()),
@@ -97,11 +97,11 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             case DatetimeMeasure.HOUR:
             case DatetimeMeasure.DAY:
             case DatetimeMeasure.WEEK:
-                return DatetimeMeasure.generateDatetimeValueFromMilliseconds(value.getRealValue(), alignment.getRealValue(), this.getRealValue());
+                return DatetimeMeasure.findTickmarkWithMillisecondSpacing(value.getRealValue(), alignment.getRealValue(), this.getRealValue());
             case DatetimeMeasure.MONTH:
-                return DatetimeMeasure.generateDatetimeValueFromMonths(value, alignment, this.measure);
+                return DatetimeMeasure.findTickmarkWithMonthSpacing(value, alignment, this.measure);
             case DatetimeMeasure.YEAR:
-                return DatetimeMeasure.generateDatetimeValueFromMonths(value, alignment, this.measure * 12);
+                return DatetimeMeasure.findTickmarkWithMonthSpacing(value, alignment, this.measure * 12);
         }    
     };
 
