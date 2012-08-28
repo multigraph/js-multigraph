@@ -34,6 +34,13 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 "fillopacity"        : this.getOptionValue("fillopacity"),
                 "fillbase"           : this.getOptionValue("fillbase")
             };
+
+            if (settings.fillbase !== null) {
+                settings.fillbase = this.transformPoint([0, settings.fillbase.getRealValue()]);
+            } else {
+                settings.fillbase = 0;
+            }
+
             this.settings(settings);
         });
 
@@ -42,28 +49,26 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 p;
 
             if (this.isMissing(datap)) {
-                settings.first = true;
-                if (settings.previouspoint) {
-                    settings.fillpath += "L" + settings.previouspoint[0] + "," + "0"/*settings.fillbase || 0*/;
+                if (settings.previouspoint !== null) {
+                    settings.fillpath += "L" + settings.previouspoint[0] + "," + settings.fillbase;
                 }
+                settings.first = true;
+                settings.previouspoint = null;
                 return;
             }
 
             p = this.transformPoint(datap);
 
             if (settings.first) {
-                settings.fillpath += "M" + p[0] + "," + "0"/*fillbase || 0*/;
-                if (settings.linewidth <= 0) {
-                    settings.first = false;
-                }
-            }
-            settings.fillpath += "L" + p[0] + "," + p[1];
-
-            if (settings.linewidth > 0) {
-                if (settings.first) {
+                settings.first = false;
+                settings.fillpath += "M" + p[0] + "," + settings.fillbase;
+                settings.fillpath += "L" + p[0] + "," + p[1];
+                if (settings.linewidth > 0) {
                     settings.path += "M" + p[0] + "," + p[1];
-                    settings.first = false;
-                } else {
+                }
+            } else {
+                settings.fillpath += "L" + p[0] + "," + p[1];
+                if (settings.linewidth > 0) {
                     settings.path += "L" + p[0] + "," + p[1];
                 }
             }
@@ -74,8 +79,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         ns.FillRenderer.respondsTo("end", function () {
             var settings = this.settings();
             
-            if (settings.previouspoint) {
-                settings.fillpath += "L" + settings.previouspoint[0] + "," + "0"/*settings.fillbase || 0*/;
+            if (settings.previouspoint !== null) {
+                settings.fillpath += "L" + settings.previouspoint[0] + "," + settings.fillbase;
             }
             settings.set.push( settings.paper.path(settings.fillpath)
                                .attr({
