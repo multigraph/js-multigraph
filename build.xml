@@ -21,6 +21,10 @@
     <filelist dir="src/parser/jquery" files="jquery_mixin.js"/>
     <fileset dir="src/parser/jquery" includes="**/*.js" excludes="jquery_mixin.js" />
   </path>
+  <path id="path.events-jquery-mouse-js">
+    <filelist dir="src/events/jquery/mouse" files="mixin.js"/>
+    <fileset dir="src/events/jquery/mouse" includes="**/*.js" excludes="mixin.js" />
+  </path>
   <path id="path.graphics-raphael-js">
     <filelist dir="src/graphics/raphael" files="raphael.js"/>
     <filelist dir="src/graphics/raphael" files="raphael_mixin.js"/>
@@ -114,6 +118,7 @@
     </pathconvert>
     <pathconvert property="scripttags.raphael" pathsep="${line.separator}">
       <path refid="path.graphics-raphael-js"/>
+      <path refid="path.events-jquery-mouse-js"/>
       <mapper type="regexp" from="^${basedir}/(.*)$" to='&lt;script type="text/javascript" src="../../../\1"&gt;&lt;/script&gt;'/>
     </pathconvert>
     <replaceregexp flags="s">
@@ -131,6 +136,7 @@
     </pathconvert>
     <pathconvert property="scripttags.canvas" pathsep="${line.separator}">
       <path refid="path.graphics-canvas-js"/>
+      <path refid="path.events-jquery-mouse-js"/>
       <mapper type="regexp" from="^${basedir}/(.*)$" to='&lt;script type="text/javascript" src="../../../\1"&gt;&lt;/script&gt;'/>
     </pathconvert>
     <replaceregexp flags="s">
