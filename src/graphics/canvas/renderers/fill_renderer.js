@@ -62,7 +62,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                 return;
             } else {
                 // fill area
-                xFill = p[0] + 1 // increases width of each fill area by 1 to ensure contiguous fill
+                xFill = p[0] + 1; // increases width of each fill area by 1 to ensure contiguous fill
                 context.strokeStyle = settings.fillcolor.getHexString("#");
                 context.linewidth = 1;
                 context.beginPath();
