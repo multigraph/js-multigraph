@@ -32,7 +32,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                 "fillbase"           : this.getOptionValue("fillbase")
             };
             if (settings.fillbase !== null) {
-                settings.fillbase = this.transformPoint([0, settings.fillbase.getRealValue()]);
+                settings.fillbase = this.plot().verticalaxis().dataValueToAxisValue(settings.fillbase);
             } else {
                 settings.fillbase = 0;
             }
@@ -45,7 +45,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         ns.FillRenderer.respondsTo("dataPoint", function (datap) {
             var settings = this.settings(),
                 context = settings.context,
-                p;
+                p,
+                xFill;
 
             if (this.isMissing(datap)) {
                 settings.first = true;
@@ -61,12 +62,13 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                 return;
             } else {
                 // fill area
+                xFill = p[0] + 1 // increases width of each fill area by 1 to ensure contiguous fill
                 context.strokeStyle = settings.fillcolor.getHexString("#");
                 context.linewidth = 1;
                 context.beginPath();
                 context.moveTo(settings.previouspoint[0], settings.previouspoint[1]);
-                context.lineTo(p[0], p[1]);
-                context.lineTo(p[0], settings.fillbase);
+                context.lineTo(xFill, p[1]);
+                context.lineTo(xFill, settings.fillbase);
                 context.lineTo(settings.previouspoint[0], settings.fillbase);
                 context.fill();
                 context.closePath();

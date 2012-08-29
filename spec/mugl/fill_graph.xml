@@ -16,6 +16,7 @@
         <option name="linewidth" value="1"/>
         <option name="fillcolor" value="0x00ff00"/>
         <option name="fillopacity" value="1"/>
+        <option name="fillbase" value="-0.05"/>
       </renderer>
     </plot>
     <data>

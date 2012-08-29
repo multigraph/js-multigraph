@@ -36,7 +36,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             };
 
             if (settings.fillbase !== null) {
-                settings.fillbase = this.transformPoint([0, settings.fillbase.getRealValue()]);
+                settings.fillbase = this.plot().verticalaxis().dataValueToAxisValue(settings.fillbase);
             } else {
                 settings.fillbase = 0;
             }
