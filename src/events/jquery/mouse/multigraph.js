@@ -11,31 +11,37 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
             var mouseIsDown = false;
             var multigraph = this;
 
-            $(target).mousedown(function (event) {
-                mouseLastX = baseX = event.offsetX;
-                mouseLastY = baseY = event.offsetY;
+            var $target = $(target);
+
+            $target.mousedown(function (event) {
+                mouseLastX = baseX = (event.pageX - $target.offset().left);
+                mouseLastY = baseY = (event.pageY - $target.offset().top);
                 mouseIsDown = true;
             });
-            $(target).mouseup(function (event) {
+            $target.mouseup(function (event) {
                 mouseIsDown = false;
             });
-            $(target).mousemove(function (event) {
+            $target.mousemove(function (event) {
+                var eventX = event.pageX - $target.offset().left;
+                var eventY = event.pageY - $target.offset().top;
                 if (mouseIsDown) {
-                    var dx = event.offsetX - mouseLastX;
-                    var dy = event.offsetY - mouseLastY;
+                    var dx = eventX - mouseLastX;
+                    var dy = eventY - mouseLastY;
                     if (multigraph.graphs().size() > 0) {
                         multigraph.graphs().at(0).doDrag(multigraph,baseX,baseY,dx,dy,event.shiftKey);
                     }
                 }
-                mouseLastX = event.offsetX;
-                mouseLastY = event.offsetY;
+                mouseLastX = eventX;
+                mouseLastY = eventY;
             });
-            $(target).mouseenter(function (event) {
-                mouseLastX = event.offsetX;
-                mouseLastY = event.offsetY;
+            $target.mouseenter(function (event) {
+                var eventX = event.pageX - $target.offset().left;
+                var eventY = event.pageY - $target.offset().top;
+                mouseLastX = eventX;
+                mouseLastY = eventY;
                 mouseIsDown = false;
             });
-            $(target).mouseleave(function (event) {
+            $target.mouseleave(function (event) {
                 mouseIsDown = false;
             });
         });

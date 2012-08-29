@@ -9,6 +9,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         });
 
         ns.Axis.respondsTo("render", function(graph, context) {
+
+
             //NOTE: axes are drawn relative to the graph's plot area (plotBox); the coordinates
             //      below are relative to the coordinate system of that box.
 

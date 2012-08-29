@@ -129,6 +129,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             if (this.hasDataMin() && this.hasDataMax()) {
                 this.computeAxisToDataRatio();
             }
+
 /*
             if (_orientation == AxisOrientation.HORIZONTAL) {
                 _pixelLength = _length.calculateLength( _graph.plotBox.width );
@@ -150,13 +151,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
         this.respondsTo("computeAxisToDataRatio", function () {
             if (this.hasDataMin() && this.hasDataMax()) {
-/*
-console.log('pixelLength: ' + this.pixelLength());
-console.log('maxoffset: ' + this.maxoffset());
-console.log('minoffset: ' + this.minoffset());
-console.log('dataMax: ' + this.dataMax().getRealValue());
-console.log('dataMin: ' + this.dataMin().getRealValue());
-*/
                 this.axisToDataRatio((this.pixelLength() - this.maxoffset() - this.minoffset()) / (this.dataMax().getRealValue() - this.dataMin().getRealValue()));
             }
         });
