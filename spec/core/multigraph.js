@@ -40,8 +40,8 @@ describe("Multigraph", function () {
 
         beforeEach(function () {
             g = new Graph(),
-            h = new Axis("horizontal"),
-            v = new Axis("vertical"),
+            h = new Axis(Axis.HORIZONTAL),
+            v = new Axis(Axis.VERTICAL),
             w = new Window(),
             ui = new UI(),
             debug = new Debugger(),
@@ -53,7 +53,7 @@ describe("Multigraph", function () {
         });
 
         it("should be able to add a Graph to the Multigraph", function () {
-            var h2 = new Axis("horizontal");
+            var h2 = new Axis(Axis.HORIZONTAL);
             g.axes().add(h);
             g.axes().add(h2);
             g.axes().add(v);
@@ -75,7 +75,7 @@ describe("Multigraph", function () {
 
         it("should be able to add many Graphs to the Multigraph", function () {
             var g2 = new Graph(),
-                h2 = new Axis("horizontal");
+                h2 = new Axis(Axis.HORIZONTAL);
 
             g.axes().add(h);
             g.axes().add(h2);

@@ -3,7 +3,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     var Axis,
         defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
-        attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.horizontalaxis);
+        attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.horizontalaxis),
+        Orientation = new window.multigraph.math.Enum("AxisOrientation");
 
     Axis = new window.jermaine.Model( "Axis", function () {
         this.hasA("title").which.validatesWith(function (title) {
@@ -103,9 +104,12 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return typeof(highlightstyle) === "string";
         });
         this.hasA("linewidth").which.isA("integer");
+        this.hasA("orientation").which.validatesWith(Orientation.isInstance);
+/*
         this.hasA("orientation").which.validatesWith(function (orientation) {
             return (orientation === Axis.HORIZONTAL) || (orientation === Axis.VERTICAL);
         });
+*/
         this.isBuiltWith("orientation");
 
         this.hasA("pixelLength").which.isA("number");
@@ -289,8 +293,10 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
         window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis, attributes);
     });
-    Axis.HORIZONTAL = "horizontal";
-    Axis.VERTICAL   = "vertical";
+    Axis.HORIZONTAL = new Orientation("horizontal");
+    Axis.VERTICAL   = new Orientation("vertical");
+
+    Axis.Orientation = Orientation;
 
     ns.Axis = Axis;
 

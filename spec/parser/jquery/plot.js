@@ -28,7 +28,7 @@ describe("Plot parsing", function () {
 
     beforeEach(function () {
         window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
-	$xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+        $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
         
     });
 
@@ -43,9 +43,9 @@ describe("Plot parsing", function () {
             xmlString = '<plot><horizontalaxis ref="x"/><verticalaxis ref="y"/></plot>';
             $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
             graph = new Graph();
-            haxis = new Axis("horizontal");
+            haxis = new Axis(Axis.HORIZONTAL);
             haxis.id("x");
-            vaxis = new Axis("vertical");
+            vaxis = new Axis(Axis.VERTICAL);
             vaxis.id("y");
             graph.axes().add(haxis);
             graph.axes().add(vaxis);
@@ -80,9 +80,9 @@ describe("Plot parsing", function () {
             xmlString = '<plot><horizontalaxis><variable ref="x"/></horizontalaxis><verticalaxis><variable ref="y"/><variable ref="y1"/></verticalaxis></plot>';
             $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
             graph = new Graph();
-            haxis = new Axis("horizontal");
+            haxis = new Axis(Axis.HORIZONTAL);
             haxis.id("x");
-            vaxis = new Axis("vertical");
+            vaxis = new Axis(Axis.VERTICAL);
             vaxis.id("y");
             variable1 = new DataVariable("x");
             variable2 = new DataVariable("y");

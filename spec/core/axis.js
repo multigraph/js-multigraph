@@ -17,7 +17,7 @@ describe("Axis", function () {
         a;
 
     beforeEach(function () {
-        a = new Axis("horizontal");
+        a = new Axis(Axis.HORIZONTAL);
     });
 
     it("should be able to create an Axis", function () {
@@ -228,10 +228,10 @@ describe("Axis", function () {
 
     describe("orientation attribute", function () {
         it("should be able to set/get the orientation attribute", function () {
-            a.orientation("horizontal");
-            expect(a.orientation()).toBe("horizontal");
-            a.orientation("vertical");
-            expect(a.orientation()).toBe("vertical");
+            a.orientation(Axis.HORIZONTAL);
+            expect(a.orientation()).toBe(Axis.HORIZONTAL);
+            a.orientation(Axis.VERTICAL);
+            expect(a.orientation()).toBe(Axis.VERTICAL);
         });
 
         it("should throw an error if the setter parameter is not 'horizontal' or 'vertical'", function () {
@@ -433,7 +433,7 @@ describe("Axis", function () {
 
         beforeEach(function () {
             g = new Graph();
-            a = new Axis("horizontal");
+            a = new Axis(Axis.HORIZONTAL);
             g.axes().add(a);
         });
 

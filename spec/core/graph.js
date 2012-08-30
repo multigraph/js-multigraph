@@ -38,8 +38,8 @@ describe("Graph", function () {
             p;
 
         beforeEach(function () {
-            h = new Axis("horizontal"),
-            v = new Axis("vertical"),
+            h = new Axis(Axis.HORIZONTAL),
+            v = new Axis(Axis.VERTICAL),
             w = new Window(),
             ui = new UI(),
             debug = new Debugger(),
@@ -51,7 +51,7 @@ describe("Graph", function () {
         });
 
         it("should be able to add multiple tags to a Graph", function () {
-            var h2 = new Axis("horizontal");
+            var h2 = new Axis(Axis.HORIZONTAL);
             g.axes().add(h);
             g.axes().add(h2);
             g.axes().add(v);
@@ -78,7 +78,7 @@ describe("Graph", function () {
 
         it("should be able to add multiple tags with attr's to a Graph", function () {
             h.id("a id").min("10");
-            v.max("200").orientation("vertical").id("Another id");
+            v.max("200").orientation(Axis.VERTICAL).id("Another id");
             p.horizontalaxis(h);
             g.axes().add(h);
             g.axes().add(v);
@@ -90,7 +90,7 @@ describe("Graph", function () {
 
         it("should be able to set/get attributes of tags added to a Graph", function () {
             h.id("larry").min("10");
-            v.max("200").orientation("vertical").id("curly");
+            v.max("200").orientation(Axis.VERTICAL).id("curly");
             g.axes().add(h);
             g.axes().add(v);
             expect(g.axes().at(0).id()).toBe("larry");
@@ -103,7 +103,7 @@ describe("Graph", function () {
 
     it("should be able to create a Graph with an axis and then fetch that axis", function() {
         var g = new Graph();
-        var a = new Axis("horizontal");
+        var a = new Axis(Axis.HORIZONTAL);
         a.id("x");
         g.axes().add(a);
         expect(g.axes().get(0)).toBe(a);
@@ -111,12 +111,12 @@ describe("Graph", function () {
 
     it("should be able to create two graphs, each with an axis, and keep the axes distinct", function() {
         var g1 = new Graph();
-        var a1 = new Axis("vertical");
+        var a1 = new Axis(Axis.VERTICAL);
         a1.id("a1");
         g1.axes().add(a1);
 
         var g2 = new Graph();
-        var a2 = new Axis("vertical");
+        var a2 = new Axis(Axis.VERTICAL);
         a2.id("a2");
         g2.axes().add(a2);
 
