@@ -20,6 +20,17 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             }
         });
 
+        this.respondsTo("getIterator", function (columnIds, min, max, buffer) {
+            if (this.dataIsReady()) {
+                return ArrayData.getArrayDataIterator(this, columnIds, min, max, buffer);
+            } else {
+                return {
+                    'next'    : function() {},
+                    'hasNext' : function() { return false; }
+                };
+            }
+        });
+
         this.isBuiltWith("columns", "filename", function () {
             var that = this;
 
@@ -28,15 +39,25 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                     var i, j,
                         lines,
                         stringValues,
-                        dataValues = [];
+                        dataValues = [],
+                        dataValuesRow;
 
                     //parse the data
                     var lines = data.split("\n");
                     for (i = 0; i < lines.length; ++i) {
                         stringValues = lines[i].split(",");
-                        dataValues[i] = [];
-                        for (j = 0; j < stringValues.length; ++j) {
-                            //dataValues[i].push(DataValue.parse(that.columns().at(j).type(), stringValues[j]));
+                        if (stringValues.length === that.columns().size()) {
+                            dataValuesRow = [];
+                            for (j = 0; j < stringValues.length; ++j) {
+                                dataValuesRow.push(DataValue.parse(that.columns().at(j).type(), stringValues[j]));
+                            }
+                            dataValues.push(dataValuesRow);
+                        } else {
+                            // we get here if the number of comma-separated values on the current line
+                            // (lines[i]) is not the same as the number of columns in the metadata.  This
+                            // should probably throw an error, or something like that.  For now, though, we
+                            // just ignore it.
+                            //console.log('bad line: ' + lines[i]);
                         }
                     }
 
