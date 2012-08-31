@@ -1,28 +1,16 @@
 window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
-    var MetaData = ns.Data,
-        ArrayData;
+    var ArrayData,
+        Data = ns.Data;
 
-    ArrayData = function (m, d) {
 
-        var that = this,
-            actualData = d,
-            metaData = new MetaData(m),
-            prop, 
-            delegate;
+    ArrayData = window.jermaine.Model(function () {
+        this.isA(Data);
+        this.hasAn("array");
+        this.isBuiltWith("columns", "array");
 
-        delegate = function (obj, func) {
-            return function () { return obj[func].apply(that, arguments); };
-        };
-
-        for (prop in metaData) {
-            if (metaData.hasOwnProperty(prop)) {
-                this[prop] = delegate(metaData, prop);
-            }
-        }
-
-        this.getIterator = function (columnIds, min, max, buffer) {
+        this.respondsTo("getIterator", function (columnIds, min, max, buffer) {
             var iter = {},
                 arraySlice = [],
                 curr = 0,
@@ -54,13 +42,13 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 throw new Error("ArrayData: getIterator method requires last argument to be an integer");
             }
 
-            for (i = buffer; i < actualData.length-buffer; ++i) {
-                if (actualData[i+buffer][0].ge(min) && actualData[i+buffer][0].le(max) ||
-                    actualData[i-buffer][0].ge(min) && actualData[i-buffer][0].le(max)) {
+            for (i = buffer; i < this.array().length-buffer; ++i) {
+                if (this.array()[i+buffer][0].ge(min) && this.array()[i+buffer][0].le(max) ||
+                    this.array()[i-buffer][0].ge(min) && this.array()[i-buffer][0].le(max)) {
                     projection = [];
                     //build the projection
                     for (j = 0;j < columnIds.length; ++j) {
-                        projection.push(actualData[i][this.columnIdToColumnNumber(columnIds[j])]);
+                        projection.push(this.array()[i][this.columnIdToColumnNumber(columnIds[j])]);
                     }
                     //push projected data
                     arraySlice.push(projection);
@@ -77,9 +65,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
             return iter;
             
-        };
-    };
-
+        });
+    });
 
     ns.ArrayData = ArrayData;
 });
