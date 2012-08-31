@@ -28,7 +28,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return datatips instanceof ns.Datatips;
         });
         this.hasA("data").which.validatesWith(function (data) {
-            return data instanceof ns.Data;
+            return data instanceof ns.OldData;
         });
 
         window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.plot, attributes);
