@@ -78,7 +78,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                          i;
 
             for (i = 0; i < columns.size(); ++i) {
-                console.log(columns.at(i));
                 result.push(columns.at(i));
             }
 
