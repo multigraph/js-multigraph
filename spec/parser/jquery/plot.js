@@ -6,7 +6,7 @@ describe("Plot parsing", function () {
     var Plot = window.multigraph.core.Plot,
         Graph = window.multigraph.core.Graph,
         Axis = window.multigraph.core.Axis,
-        Data = window.multigraph.core.Data,
+        Data = window.multigraph.core.OldData,
         Datatips = window.multigraph.core.Datatips,
         DatatipsVariable = window.multigraph.core.DatatipsVariable,
         DataVariable = window.multigraph.core.DataVariable,

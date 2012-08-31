@@ -42,7 +42,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     graph.axes().add( ns.core.Axis[parse]($(e), ns.core.Axis.VERTICAL) );
                 });
                 $.each(xml.find(">data"), function (i,e) {
-                    graph.data().add( ns.core.Data[parse]($(e)) );
+                    graph.data().add( ns.core.OldData[parse]($(e)) );
                 });
                 $.each(xml.find(">plot"), function (i,e) {
                     graph.plots().add( ns.core.Plot[parse]($(e), graph) );

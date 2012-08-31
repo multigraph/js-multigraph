@@ -40,7 +40,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 return plot instanceof ns.Plot;
             });
             this.hasMany("data").which.validatesWith(function (data) {
-                return data instanceof ns.Data;
+                return data instanceof ns.OldData;
             });
 
             this.hasA("windowBox").which.validatesWith(function (val) {

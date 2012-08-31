@@ -38,6 +38,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
         window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.data, attributes);
     });
-    ns.Data = Data;
+    ns.OldData = Data;
 
 });

@@ -25,7 +25,7 @@ describe("Graph", function () {
             Legend = window.multigraph.core.Legend,
             Background = window.multigraph.core.Background,
             Plotarea = window.multigraph.core.Plotarea,
-            Data = window.multigraph.core.Data,
+            Data = window.multigraph.core.OldData,
             h,
             v,
             w,

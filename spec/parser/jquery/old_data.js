@@ -4,7 +4,7 @@
 describe("Data parsing", function () {
     "use strict";
 
-    var Data = window.multigraph.core.Data,
+    var Data = window.multigraph.core.OldData,
         NumberValue = window.multigraph.core.NumberValue,
         Values = window.multigraph.core.Values,
         Variables = window.multigraph.core.Variables,

@@ -4,13 +4,14 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
     var DataVariable = window.multigraph.core.DataVariable;
     var NumberValue  = window.multigraph.core.NumberValue;
     var ArrayData  = window.multigraph.core.ArrayData;
+    var Data = window.multigraph.core.OldData;
 
     var children = ["variables", "values", "csv", "service"];
 
     ns.mixin.add(function(ns, parse, serialize) {
         
-        ns.core.Data[parse] = function (xml) {
-            var data = new ns.core.Data(),
+        Data[parse] = function (xml) {
+            var data = new Data(),
                 childModelNames = ["Variables", "Values", "CSV", "Service"],
                 i;
 
@@ -67,7 +68,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
             return data;
         };
         
-        ns.core.Data.prototype[serialize] = function () {
+        Data.prototype[serialize] = function () {
             var childStrings = [],
                 output = '<data',
                 i;

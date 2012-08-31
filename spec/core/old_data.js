@@ -1,9 +1,9 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
 
-describe("Data", function () {
+describe("OldData", function () {
     "use strict";
 
-    var Data = window.multigraph.core.Data,
+    var Data = window.multigraph.core.OldData,
         DataValue = window.multigraph.core.DataValue,
         NumberValue = window.multigraph.core.NumberValue,
         CSV = window.multigraph.core.CSV,
