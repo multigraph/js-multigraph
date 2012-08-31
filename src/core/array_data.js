@@ -1,7 +1,7 @@
 window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
-    var MetaData = ns.MetaData,
+    var MetaData = ns.Data,
         ArrayData;
 
     ArrayData = function (m, d) {

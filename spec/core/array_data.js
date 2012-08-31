@@ -163,13 +163,13 @@ describe("ArrayData", function () {
         it("should throw an error if the parameter is not a string", function () {
             expect(function () {
                 testArrayData.columnIdToColumnNumber(1);
-            }).toThrow("MetaData: columnIdToColumnNumber expects parameter to be a string");
+            }).toThrow("Data: columnIdToColumnNumber expects parameter to be a string");
         });
 
         it("should throw an error if the column id doesn't exist", function () {
             expect(function () {
                 testArrayData.columnIdToColumnNumber("column100");
-            }).toThrow("MetaData: no column with the label column100");
+            }).toThrow("Data: no column with the label column100");
         });
 
         it("should return the column number associated with the string id", function () {
@@ -181,13 +181,13 @@ describe("ArrayData", function () {
         it("should throw an error if the parameter is not a string", function () {
             expect(function () {
                 testArrayData.columnIdToDataVariable(1);
-            }).toThrow("MetaData: columnIdToDataVariable requires a string parameter");
+            }).toThrow("Data: columnIdToDataVariable requires a string parameter");
         });
 
         it("should throw an error if the column id doesn't exist", function () {
             expect(function () {
                 testArrayData.columnIdToDataVariable("column100");
-            }).toThrow("MetaData: no column with the label column100");
+            }).toThrow("Data: no column with the label column100");
         });
 
         it("should return a DataValue associated with the column id", function () {
@@ -201,13 +201,13 @@ describe("ArrayData", function () {
         it("should throw an error if the parameter is not an integer", function () {
             expect(function () {
                 testArrayData.getColumnId("hello");
-            }).toThrow("MetaData: getColumnId method expects an integer");
+            }).toThrow("Data: getColumnId method expects an integer");
         });
 
         it("should throw an error if the column does not exist", function () {
             expect(function () {
                 testArrayData.getColumnId(100);
-            }).toThrow("MetaData: column 100 does not exist");
+            }).toThrow("Data: column 100 does not exist");
         });
 
         it("should return the ID associated with the column number", function () {

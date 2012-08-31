@@ -2,10 +2,10 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
     var DataVariable = ns.DataVariable,
-        MetaData,
+        Data,
         i;
 
-    MetaData = new window.jermaine.Model(function () {
+    Data = new window.jermaine.Model(function () {
         //private find function
         var find = function (idOrColumn, thing, columns) {
             var result = -1;
@@ -18,7 +18,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         };
 
         this.hasMany("columns").eachOfWhich.validateWith(function (column) {
-            this.message = "MetaData: constructor parameter should be an array of DataVariable objects";
+            this.message = "Data: constructor parameter should be an array of DataVariable objects";
             return column instanceof DataVariable;
         });
 
@@ -28,13 +28,13 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             var column;
 
             if (typeof(id) !== "string") {
-                throw new Error("MetaData: columnIdToColumnNumber expects parameter to be a string");
+                throw new Error("Data: columnIdToColumnNumber expects parameter to be a string");
             }
             
             column = find("id", id, this.columns()) !== -1?this.columns().at(find("id", id, this.columns())):undefined;
 
             if (column === undefined) {
-                throw new Error("MetaData: no column with the label " + id);
+                throw new Error("Data: no column with the label " + id);
             }
             
             return column.column();
@@ -44,13 +44,13 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             var dv;
             
             if (typeof(id) !== "string") {
-                throw new Error("MetaData: columnIdToDataVariable requires a string parameter");
+                throw new Error("Data: columnIdToDataVariable requires a string parameter");
             }
             
             dv = find("id", id, this.columns()) !== -1?this.columns().at(find("id", id, this.columns())):undefined;
 
             if (dv === undefined) {
-                throw new Error("MetaData: no column with the label " + id);
+                throw new Error("Data: no column with the label " + id);
             }
 
             return dv;
@@ -60,13 +60,13 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             var result;
 
             if (typeof(column) !== "number") {
-                throw new Error("MetaData: getColumnId method expects an integer");
+                throw new Error("Data: getColumnId method expects an integer");
             }
 
             result = find("column", column, this.columns());
 
             if (result === -1) {
-                throw new Error("MetaData: column " + column + " does not exist");
+                throw new Error("Data: column " + column + " does not exist");
             }
             
             return this.columns().at(result).id();
@@ -111,5 +111,5 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
     });
     
-    ns.MetaData = MetaData;
+    ns.Data = Data;
 });
