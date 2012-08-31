@@ -22,6 +22,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return column instanceof DataVariable;
         });
 
+        this.hasA("readyCallback").which.isA("function");
+
         this.isBuiltWith("columns");
 
         this.respondsTo("columnIdToColumnNumber", function (id) {

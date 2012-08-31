@@ -4,18 +4,23 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     var ArrayData,
         Data = ns.Data;
 
-
     ArrayData = window.jermaine.Model(function () {
         this.isA(Data);
         this.hasAn("array");
         this.isBuiltWith("columns", "array");
+
+        this.respondsTo("onReady", function (callback) {
+            this.readyCallback(callback);
+            callback(this.array()[0][0], this.array()[this.array().length-1][0]);
+        });
 
         this.respondsTo("getIterator", function (columnIds, min, max, buffer) {
             var iter = {},
                 arraySlice = [],
                 curr = 0,
                 i, j,
-                projection;
+                projection,
+                array = this.array();
 
 
             buffer = buffer || 0;
@@ -42,13 +47,13 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 throw new Error("ArrayData: getIterator method requires last argument to be an integer");
             }
 
-            for (i = buffer; i < this.array().length-buffer; ++i) {
-                if (this.array()[i+buffer][0].ge(min) && this.array()[i+buffer][0].le(max) ||
-                    this.array()[i-buffer][0].ge(min) && this.array()[i-buffer][0].le(max)) {
+            for (i = buffer; i < array.length-buffer; ++i) {
+                if (array[i+buffer][0].ge(min) && array[i+buffer][0].le(max) ||
+                    array[i-buffer][0].ge(min) && array[i-buffer][0].le(max)) {
                     projection = [];
                     //build the projection
                     for (j = 0;j < columnIds.length; ++j) {
-                        projection.push(this.array()[i][this.columnIdToColumnNumber(columnIds[j])]);
+                        projection.push(array[i][this.columnIdToColumnNumber(columnIds[j])]);
                     }
                     //push projected data
                     arraySlice.push(projection);

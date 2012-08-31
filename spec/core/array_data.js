@@ -226,4 +226,54 @@ describe("ArrayData", function () {
             }
         });
     });
+
+
+    describe("onReady method", function () {
+        var callback;
+
+        beforeEach(function () {
+            callback = jasmine.createSpy();
+            numberValueData = [];
+
+            dataVariables = [new DataVariable("column1", 0, DataValue.NUMBER),
+                             new DataVariable("column2", 1, DataValue.NUMBER),
+                             new DataVariable("column3", 2, DataValue.NUMBER),
+                             new DataVariable("column4", 3, DataValue.NUMBER)
+                            ];
+
+            rawData = [[1900,-0.710738,-0.501011,-0.291284],
+                       [1901,-0.709837,-0.488806,-0.267776],
+                       [1902,-0.738885,-0.505620,-0.272355],
+                       [1903,-0.822017,-0.591622,-0.361227],
+                       [1904,-0.828376,-0.562089,-0.295802],
+                       [1905,-0.748973,-0.544255,-0.339537],
+                       [1906,-0.670167,-0.523723,-0.377279],
+                       [1907,-0.717963,-0.510749,-0.303535],
+                       [1908,-0.757014,-0.477469,-0.197924]];
+
+
+            for (row = 0; row < rawData.length; ++row) {
+                numValueRow = [];
+                for (col = 0; col < rawData[row].length; ++col) {
+                    numValueRow.push(new NumberValue(rawData[row][col]));
+                }
+                numberValueData.push(numValueRow);
+            }
+            
+            testArrayData = new ArrayData(dataVariables, numberValueData);
+            testArrayData.onReady(callback);            
+        });
+
+        it("should set the readyCallback", function () {
+            expect(testArrayData.readyCallback()).toBe(callback);
+        });
+
+        it("should call the callback", function () {
+            expect(callback).toHaveBeenCalled();
+        });
+        
+        it("should call the callback with the correct arguments", function () {
+            expect(callback).toHaveBeenCalledWith(numberValueData[0][0], numberValueData[numberValueData.length-1][0]);
+        });
+    });
 });
