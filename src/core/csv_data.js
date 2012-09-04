@@ -60,6 +60,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                             //console.log('bad line: ' + lines[i]);
                         }
                     }
+                    that.array(dataValues);
 
                     //in the callback to the request, we need to call onReady
                     that.dataIsReady(true);

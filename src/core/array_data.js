@@ -12,7 +12,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             projection,
             array = arrayData.array();
 
-
         buffer = buffer || 0;
 
         //first argument should be an array of strings
