@@ -40,20 +40,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                         dataVariables.push(data.variables().variable().at(i));
                     }
 
-                    var dataValues = [];
-                    var lines = $(values).text().split("\n");
-                    for (i=0; i<lines.length; ++i) {
-                        if (/\d/.test(lines[i])) { // skip line unless it contains a digit
-                            var valuesThisRow = lines[i].split(/\s*,\s*/);
-                            var dataValuesThisRow = [];
-                            var j;
-                            for (j=0; j<valuesThisRow.length; ++j) {
-                                dataValuesThisRow.push( NumberValue.parse(valuesThisRow[j]) );
-                            }
-                            dataValues.push( dataValuesThisRow );
-                        }
-                    }
-
+                    var dataValues = ArrayData.textToDataValuesArray(dataVariables, $(values).text());
                     var ad = new ArrayData(dataVariables, dataValues);
                     data.arraydata(ad);
 

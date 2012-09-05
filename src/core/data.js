@@ -5,6 +5,13 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         Data,
         i;
 
+    var initializeColumns = function(data) {
+        var i;
+        for (i=0; i<data.columns().size(); ++i) {
+            data.columns().at(i).data(data);
+        }
+    };
+
     Data = new window.jermaine.Model(function () {
         //private find function
         var find = function (idOrColumn, thing, columns) {
@@ -24,7 +31,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
         this.hasA("readyCallback").which.isA("function");
 
-        this.isBuiltWith("columns");
+        this.isBuiltWith("columns", function() {
+            Data.initializeColumns(this);
+        });
 
         this.respondsTo("columnIdToColumnNumber", function (id) {
             var column;
@@ -112,6 +121,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return value[column.missingop()](column.missingvalue());
         });
     });
+
+    Data.initializeColumns = initializeColumns;
     
     ns.Data = Data;
 });

@@ -28,7 +28,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return datatips instanceof ns.Datatips;
         });
         this.hasA("data").which.validatesWith(function (data) {
-            return data instanceof ns.OldData;
+            return data instanceof ns.Data;
         });
 
         window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.plot, attributes);
@@ -38,7 +38,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             // graphics driver, and used by that driver's implementation of Renderer.begin().
             // It can be any objectded by the driver -- usually some kind of graphics
             // context object.  It can also be omitted if a driver does not need it.
-            var data = this.data().arraydata();
+            //var data = this.data().arraydata();
+            var data = this.data();
             if (! data) { return; }
 
             var haxis = this.horizontalaxis();

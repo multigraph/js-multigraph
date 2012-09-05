@@ -6,7 +6,8 @@ describe("Plot parsing", function () {
     var Plot = window.multigraph.core.Plot,
         Graph = window.multigraph.core.Graph,
         Axis = window.multigraph.core.Axis,
-        Data = window.multigraph.core.OldData,
+        Data = window.multigraph.core.Data,
+        ArrayData = window.multigraph.core.ArrayData,
         Datatips = window.multigraph.core.Datatips,
         DatatipsVariable = window.multigraph.core.DatatipsVariable,
         DataVariable = window.multigraph.core.DataVariable,
@@ -96,8 +97,8 @@ describe("Plot parsing", function () {
             variables.variable().add(variable3);
             graph.axes().add(haxis);
             graph.axes().add(vaxis);
-            graph.data().add(new Data());
-            graph.data().at(0).variables(variables);
+            graph.data().add(new ArrayData([variable1,variable2,variable3], []));
+            //graph.data().at(0).variables(variables);
         });
 
         it("should be able to parse a plot with variable children from XML", function () {

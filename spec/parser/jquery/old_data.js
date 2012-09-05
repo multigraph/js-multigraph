@@ -1,7 +1,7 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
 /*jshint  laxbreak:true */
 
-describe("Data parsing", function () {
+xdescribe("Data parsing", function () {
     "use strict";
 
     var Data = window.multigraph.core.OldData,
@@ -17,7 +17,7 @@ describe("Data parsing", function () {
 
     beforeEach(function () {
         window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
-	$xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+        $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
         data = Data.parseXML($xml);
     });
 

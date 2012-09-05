@@ -9,7 +9,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             this.hasA("column").which.isA("integer");
             this.hasA("type").which.isOneOf(DataValue.types());
             this.hasA("data").which.validatesWith(function (data) {
-                return data instanceof window.multigraph.core.OldData;
+                return data instanceof window.multigraph.core.Data;
             });
             this.hasA("missingvalue").which.validatesWith(DataValue.isInstance);
 

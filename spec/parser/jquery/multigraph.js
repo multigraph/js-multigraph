@@ -238,9 +238,15 @@ describe("Multigraph parsing", function () {
         +         '/>'
         +     '</plot>'
         +     '<data>'
-        +         '<values>'
-        +             '3,4,5,6'
-        +         '</values>'
+        +           '<variables>'
+        +             '<variable id="x" column="0" type="number" missingvalue="-9000" missingop="le"/>'
+        +             '<variable id="y" column="1" type="number" missingvalue="-9000" missingop="le"/>'
+        +           '</variables>'
+        +           '<values>'
+        +             '1,2\n'
+        +             '3,4\n'
+        +             '5,6'
+        +           '</values>'
         +     '</data>'
         + '</mugl>',
     xmlString2 = '<mugl>'
@@ -425,9 +431,15 @@ describe("Multigraph parsing", function () {
         +             '/>'
         +         '</verticalaxis>'
         +         '<data>'
-        +             '<values>'
-        +                 '3,4,5,6'
-        +             '</values>'
+        +           '<variables>'
+        +             '<variable id="x" column="0" type="number" missingvalue="-9000" missingop="le"/>'
+        +             '<variable id="y" column="1" type="number" missingvalue="-9000" missingop="le"/>'
+        +           '</variables>'
+        +           '<values>'
+        +             '1,2\n'
+        +             '3,4\n'
+        +             '5,6'
+        +           '</values>'
         +         '</data>'
         +     '</graph>'
         +     '<graph>'
@@ -611,7 +623,7 @@ describe("Multigraph parsing", function () {
         +             '/>'
         +         '</verticalaxis>'
         +         '<data>'
-        +           '<variables missingvalue="-9000" missingop="le">'
+        +           '<variables>'
         +             '<variable id="x" column="0" type="number" missingvalue="-9000" missingop="le"/>'
         +             '<variable id="y" column="1" type="number" missingvalue="-9000" missingop="le"/>'
         +           '</variables>'
@@ -627,7 +639,7 @@ describe("Multigraph parsing", function () {
 
     beforeEach(function () {
         window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
-	$xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+        $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
         mg = Multigraph.parseXML($xml);
     });
 
@@ -638,7 +650,7 @@ describe("Multigraph parsing", function () {
 
     it("should be able to parse a multigraph from XML, then serialize it, and get the same XML as the original", function () {
         expect(mg.serialize()).toBe(xmlString);
-	$xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString2);
+        $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString2);
         mg = Multigraph.parseXML($xml);
         expect(mg.serialize()).toBe(xmlString2);
     });

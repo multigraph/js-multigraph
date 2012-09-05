@@ -40,7 +40,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 return plot instanceof ns.Plot;
             });
             this.hasMany("data").which.validatesWith(function (data) {
-                return data instanceof ns.OldData;
+                return data instanceof ns.Data;
             });
 
             this.hasA("windowBox").which.validatesWith(function (val) {
@@ -109,9 +109,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             i,
             j;
         for (i = 0; i < data.size(); ++i) {
-            for (j = 0; j < data.at(i).variables().variable().size(); ++j) {
-                if (data.at(i).variables().variable().at(j).id() === id) {
-                    return data.at(i).variables().variable().at(j);
+            for (j = 0; j < data.at(i).columns().size(); ++j) {
+                if (data.at(i).columns().at(j).id() === id) {
+                    return data.at(i).columns().at(j);
                 }
             }
         }

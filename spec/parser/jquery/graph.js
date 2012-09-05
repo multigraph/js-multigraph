@@ -13,7 +13,7 @@ describe("Graph parsing", function () {
     Legend = window.multigraph.core.Legend,
     Background = window.multigraph.core.Background,
     Plotarea = window.multigraph.core.Plotarea,
-    Data = window.multigraph.core.OldData,
+    Data = window.multigraph.core.Data,
     Graph = window.multigraph.core.Graph,
     g,
     h,
@@ -227,9 +227,14 @@ describe("Graph parsing", function () {
         +        '/>'
         +    '</plot>'
         +    '<data>'
-        +        '<values>'
-        +            '3,4,5,6'
-        +        '</values>'
+        +         '<variables>'
+        +           '<variable id="x" column="0" type="number"/>'
+        +           '<variable id="y" column="1" type="number"/>'
+        +         '</variables>'
+        +         '<values>'
+        +             '3,4\n'
+        +             '5,6'
+        +         '</values>'
         +    '</data>'
         + '</graph>',
     xmlString2 = ''
@@ -417,8 +422,13 @@ describe("Graph parsing", function () {
         +         '/>'
         +     '</verticalaxis>'
         +     '<data>'
+        +         '<variables>'
+        +           '<variable id="x" column="0" type="number"/>'
+        +           '<variable id="y" column="1" type="number"/>'
+        +         '</variables>'
         +         '<values>'
-        +             '3,4,5,6'
+        +             '3,4\n'
+        +             '5,6'
         +         '</values>'
         +     '</data>'
         + '</graph>',
