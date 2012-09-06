@@ -2,43 +2,51 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
     "use strict";
 
     ns.mixin.add(function (ns) {
+        var Multigraph = ns.Multigraph;
 
-        ns.Multigraph.hasA("$div");
+        Multigraph.hasA("$div");
 
-        ns.Multigraph.hasA("width").which.isA("number");
-        ns.Multigraph.hasA("height").which.isA("number");
+        Multigraph.hasA("width").which.isA("number");
+        Multigraph.hasA("height").which.isA("number");
 
-        ns.Multigraph.hasA("baseX").which.isA("number");
-        ns.Multigraph.hasA("baseY").which.isA("number");
-        ns.Multigraph.hasA("mouseLastX").which.isA("number");
-        ns.Multigraph.hasA("mouseLastY").which.isA("number");
+        Multigraph.hasA("baseX").which.isA("number");
+        Multigraph.hasA("baseY").which.isA("number");
+        Multigraph.hasA("mouseLastX").which.isA("number");
+        Multigraph.hasA("mouseLastY").which.isA("number");
 
-        ns.Multigraph.respondsTo("redraw", function () {
+        Multigraph.hasA("logger");
+
+        Multigraph.respondsTo("redraw", function () {
             var that = this;
             window.requestAnimationFrame(function () {
                 that.render();
             });
         });
 
-        ns.Multigraph.respondsTo("init", function () {
+        Multigraph.respondsTo("init", function () {
             this.$div($("#"+this.divid()));
             this.width(this.$div().width());
             this.height(this.$div().height());
             this.render();
         });
 
-        ns.Multigraph.respondsTo("render", function () {
+        Multigraph.respondsTo("render", function () {
             var i;
-            var mg = {
-                "width"  : this.width(),
-                "height" : this.height(),
-                "graphs" : []
-            };
             this.initializeGeometry(this.width(), this.height());
-            for (i=0; i<this.graphs().size(); ++i) {
-                mg.graphs.push(this.graphs().at(i).render(this.width(), this.height()));
+            for (i = 0; i < this.graphs().size(); ++i) {
+                this.graphs().at(i).render(this.width(), this.height());
             }
-            return mg;
+        });
+
+        Multigraph.respondsTo("dumpLog", function () {
+            var output = "",
+                i;
+
+            for (i = 0; i < this.graphs().size(); ++i) {
+                output += this.graphs().at(i).dumpLog();
+            }
+
+            return output;
         });
 
     });

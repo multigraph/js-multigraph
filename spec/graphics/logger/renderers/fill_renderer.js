@@ -3,11 +3,53 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
 
     ns.mixin.add(function (ns) {
 
-        // cached settings object, for quick access during rendering, populated in begin() method:
-        ns.FillRenderer.hasA("settings");
-        ns.FillRenderer.hasA("obj");
+        var FillRenderer = ns.FillRenderer;
 
-        ns.FillRenderer.respondsTo("begin", function (graphicsContext) {
+        // cached settings object, for quick access during rendering, populated in begin() method:
+        FillRenderer.hasA("settings");
+        FillRenderer.hasA("logger");
+
+        FillRenderer.respondsTo("dumpLog", function () {
+            var logger = this.logger(),
+                output = "",
+                i,
+                j;
+
+            output += "setFillColor(" + logger.fillcolor.getHexString("#") + ");\n";
+            output += "setLineColor(" + logger.fillcolor.getHexString("#") + ");\n";
+
+            for (i = 0; i < logger.fill.length; ++i) {
+                if (!logger.fill[i].isMissing) {
+                    for (j = 0; j < logger.fill[i].length; j++) {
+                        output += logger.fill[i][j].command;
+                        output += "(";
+                        output += logger.fill[i][j].x;
+                        output += ",";                        
+                        output += logger.fill[i][j].y;
+                        output += ");\n";
+                    }
+                    output += "fillArea();\n";
+                }
+            }
+
+            if (logger.linewidth > 0) {
+                output += "setLineColor(" + logger.linecolor.getHexString("#") + ");\n";
+                for (i = 0; i < logger.line.length; ++i) {
+                    for (j = 0; j < logger.line[i].length; j++) {
+                        output += logger.line[i][j].command;
+                        output += "(";
+                        output += logger.line[i][j].x;
+                        output += ",";                        
+                        output += logger.line[i][j].y;
+                        output += ");\n";
+                    }
+                }
+            }
+            return output;
+
+        });
+
+        FillRenderer.respondsTo("begin", function (graphicsContext) {
             var that = this;
             var settings = {
                 "previouspoint"      : null,
@@ -26,7 +68,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
                 settings.fillbase = 0;
             }
 
-            this.obj({
+            this.logger({
                 "type"        : "fill",
                 "linecolor"   : settings.linecolor,
                 "linewidth"   : settings.linewidth,
@@ -37,58 +79,19 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
                 "fill"        : []
             });
 
-            this.obj().toString = function () {
-                var output = "",
-                    i,
-                    j;
-
-                output += "setFillColor(" + that.obj().fillcolor.getHexString("#") + ");\r\n";
-                output += "setLineColor(" + that.obj().fillcolor.getHexString("#") + ");\r\n";
-
-                for (i = 0; i < that.obj().fill.length; ++i) {
-                    if (!that.obj().fill[i].isMissing) {
-                        for (j = 0; j < that.obj().fill[i].length; j++) {
-                            output += that.obj().fill[i][j].command;
-                            output += "(";
-                            output += that.obj().fill[i][j].x;
-                            output += ",";                        
-                            output += that.obj().fill[i][j].y;
-                            output += ");\r\n";
-                        }
-                        output += "fillArea();\r\n";
-                    }
-                }
-
-                if (that.obj().linewidth > 0) {
-                    output += "setLineColor(" + that.obj().linecolor.getHexString("#") + ");\r\n";
-                    for (i = 0; i < that.obj().line.length; ++i) {
-                        for (j = 0; j < that.obj().line[i].length; j++) {
-                            output += that.obj().line[i][j].command;
-                            output += "(";
-                            output += that.obj().line[i][j].x;
-                            output += ",";                        
-                            output += that.obj().line[i][j].y;
-                            output += ");\r\n";
-                        }
-                    }
-                }
-                return output;
-
-            };
-
             this.settings(settings);
         });
 
-        ns.FillRenderer.respondsTo("dataPoint", function (datap) {
+        FillRenderer.respondsTo("dataPoint", function (datap) {
             var settings = this.settings(),
                 p;
 
             if (this.isMissing(datap)) {
-                this.obj().line.push({
+                this.logger().line.push({
                     "datap"     : datap,
                     "isMissing" : true
                 });
-                this.obj().fill.push({
+                this.logger().fill.push({
                     "datap"     : datap,
                     "isMissing" : true
                 });
@@ -103,7 +106,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
                 settings.previouspoint = p;
                 return;
             } else {
-                this.obj().fill.push([
+                this.logger().fill.push([
                     {
                         "command" : "moveTo",
                         "x"       : settings.previouspoint[0],
@@ -127,7 +130,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
                 ]);
 
                 if (settings.linewidth > 0) {
-                    this.obj().line.push([
+                    this.logger().line.push([
                         {
                             "command" : "moveTo",
                             "x"       : settings.previouspoint[0],
@@ -140,7 +143,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
                         }
                     ]);
                 } else {
-                    this.obj().line.push({
+                    this.logger().line.push({
                         "message" : "line is not being rendered due to linewidth",
                         "x"       : p[0],
                         "y"       : p[1]
@@ -153,8 +156,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
             return;
         });
 
-        ns.FillRenderer.respondsTo("end", function () {
-            return this.obj();
+        FillRenderer.respondsTo("end", function () {
+            //no-op
         });
 
     });

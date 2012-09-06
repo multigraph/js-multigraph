@@ -3,11 +3,57 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
 
     ns.mixin.add(function (ns) {
 
-        // cached settings object, for quick access during rendering, populated in begin() method:
-        ns.PointlineRenderer.hasA("settings");
-        ns.PointlineRenderer.hasA("obj");
+        var PointlineRenderer = ns.PointlineRenderer;
 
-        ns.PointlineRenderer.respondsTo("begin", function (graphicsContext) {
+        // cached settings object, for quick access during rendering, populated in begin() method:
+        PointlineRenderer.hasA("settings");
+        PointlineRenderer.hasA("logger");
+
+        PointlineRenderer.respondsTo("dumpLog", function () {
+            var logger = this.logger(),
+                output = "",
+                i,
+                j;
+
+            if (logger.linewidth > 0) {
+                output += "setLineColor(" + logger.linecolor.getHexString("#") + ");\n";
+                output += "setLineWidth(" + logger.linewidth + ");\n";
+                for (i = 0; i < logger.line.length; ++i) {
+                    if (logger.line[i].isMissing !== true) {
+                        output += logger.line[i].command;
+                        output += "(";
+                        output += logger.line[i].x;
+                        output += ",";                        
+                        output += logger.line[i].y;
+                        output += ");\n";
+                    }
+                }
+            }
+
+            if (logger.pointsize > 0) {
+                output += "setLineColor(" + logger.pointoutlinecolor.getHexString("#") + ");\n";
+                output += "setLineWidth(" + logger.pointoutlinewidth + ");\n";
+                output += "setFillColor(" + logger.pointcolor.getHexString("#") + ");\n";
+                for (i = 0; i < logger.points.length; ++i) {
+                    if (logger.points[i].isMissing !== true) {
+                        output += logger.points[i].type;
+                        output += "(";
+                        output += logger.points[i].x;
+                        output += ",";
+                        output += logger.points[i].y;
+                        output += ",";
+                        output += logger.points[i].radius;
+                        output += ");\n";
+                        output += "fillArea();\n";
+                    }
+                }
+            }
+
+            return output;
+
+        });
+
+        PointlineRenderer.respondsTo("begin", function (graphicsContext) {
             var that = this;
             var settings = {
                 "points"             : [],
@@ -22,7 +68,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
                 "linewidth"          : this.getOptionValue("linewidth")
             };
 
-            this.obj({
+            this.logger({
                 "pointshape"        : settings.pointshape,       
                 "pointcolor"        : settings.pointcolor,       
                 "pointopacity"      : settings.pointopacity,     
@@ -35,65 +81,22 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
                 "points"            : []
             });
 
-            this.obj().toString = function () {
-                var output = "",
-                    i,
-                    j;
-
-                if (that.obj().linewidth > 0) {
-                    output += "setLineColor(" + that.obj().linecolor.getHexString("#") + ");\r\n";
-                    output += "setLineWidth(" + that.obj().linewidth + ");\r\n";
-                    for (i = 0; i < that.obj().line.length; ++i) {
-                        if (that.obj().line[i].isMissing !== true) {
-                            output += that.obj().line[i].command;
-                            output += "(";
-                            output += that.obj().line[i].x;
-                            output += ",";                        
-                            output += that.obj().line[i].y;
-                            output += ");\r\n";
-                        }
-                    }
-                }
-
-                if (that.obj().pointsize > 0) {
-                    output += "setLineColor(" + that.obj().pointoutlinecolor.getHexString("#") + ");\r\n";
-                    output += "setLineWidth(" + that.obj().pointoutlinewidth + ");\r\n";
-                    output += "setFillColor(" + that.obj().pointcolor.getHexString("#") + ");\r\n";
-                    for (i = 0; i < that.obj().points.length; ++i) {
-                        if (that.obj().points[i].isMissing !== true) {
-                            output += that.obj().points[i].type;
-                            output += "(";
-                            output += that.obj().points[i].x;
-                            output += ",";
-                            output += that.obj().points[i].y;
-                            output += ",";
-                            output += that.obj().points[i].radius;
-                            output += ");\r\n";
-                            output += "fillArea();\r\n";
-                        }
-                    }
-                }
-
-                return output;
-
-            };
-
             this.settings(settings);
         });
 
-        ns.PointlineRenderer.respondsTo("dataPoint", function (datap) {
+        PointlineRenderer.respondsTo("dataPoint", function (datap) {
             var settings = this.settings(),
                 p;
 
             if (this.isMissing(datap)) {
                 if (settings.linewidth > 0) {
-                    this.obj().line.push({
+                    this.logger().line.push({
                         "datap"     : datap,
                         "isMissing" : true
                     });
                 }
                 if (settings.pointsize > 0) {
-                    this.obj().points.push({
+                    this.logger().points.push({
                         "datap"     : datap,
                         "isMissing" : true
                     });
@@ -104,14 +107,14 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
             p = this.transformPoint(datap);
             if (settings.linewidth > 0) {
                 if (settings.first) {
-                    this.obj().line.push({
+                    this.logger().line.push({
                         "command" : "moveTo",
                         "x"       : p[0],
                         "y"       : p[1]
                     });
                     settings.first = false;
                 } else {
-                    this.obj().line.push({
+                    this.logger().line.push({
                         "command" : "lineTo",
                         "x"       : p[0],
                         "y"       : p[1]
@@ -119,7 +122,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
                 }
             }
             if (settings.pointsize > 0) {
-                this.obj().points.push({
+                this.logger().points.push({
                     "type"   : settings.pointshape.toString(),
                     "x"      : p[0],
                     "y"      : p[1],
@@ -128,8 +131,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
             }
         });
 
-        ns.PointlineRenderer.respondsTo("end", function () {
-            return this.obj;
+        PointlineRenderer.respondsTo("end", function () {
+            //no-op
         });
 
     });

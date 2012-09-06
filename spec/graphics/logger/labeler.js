@@ -3,15 +3,20 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
 
     ns.mixin.add(function (ns) {
 
-        var measureTextWidth = function (graphicsContext, string) {
+        var Labeler = ns.Labeler,
+            measureTextWidth,
+            measureTextHeight,
+            drawText;
+
+        measureTextWidth = function (graphicsContext, string) {
             return string.length * 7;
         };
 
-        var measureTextHeight = function (graphicsContext, string) {
+        measureTextHeight = function (graphicsContext, string) {
             return 9;
         };
 
-        var drawText = function (text, graphicsContext, base, anchor, position, angle) {
+        drawText = function (text, graphicsContext, base, anchor, position, angle) {
             var h = measureTextHeight(graphicsContext.textElem, text),
                 w = measureTextWidth(graphicsContext.textElem, text),
                 ax = 0.5 * w * anchor.x(),
@@ -26,17 +31,31 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
                    };
         };
 
-        ns.Labeler.respondsTo("measureStringWidth", function (graphicsContext, string) {
+        Labeler.hasA("logger").which.defaultsTo([]);
+
+        Labeler.respondsTo("dumpLog", function () {
+            var logger = this.logger(),
+                output = "",
+                i;
+
+            for (i = 0; i < logger.length; ++i) {
+                output += "writeText(" + logger[i].text + "," + logger[i].x + "," + logger[i].y + "," + logger[i].angle + ");\n";
+            }
+
+            return output;
+        });
+
+        Labeler.respondsTo("measureStringWidth", function (graphicsContext, string) {
             return measureTextWidth(graphicsContext, string);
         });
 
-        ns.Labeler.respondsTo("renderLabel", function (graphicsContext, value) {
+        Labeler.respondsTo("renderLabel", function (graphicsContext, value) {
             var formattedString = this.formatter().format(value),
                 a = this.axis().dataValueToAxisValue(value);
             if (this.axis().orientation() === ns.Axis.HORIZONTAL) {
-                return drawText(formattedString, graphicsContext, new window.multigraph.math.Point(a, this.axis().perpOffset()), this.anchor(), this.position(), this.angle());
+                this.logger().push( drawText(formattedString, graphicsContext, new window.multigraph.math.Point(a, this.axis().perpOffset()), this.anchor(), this.position(), this.angle()) );
             } else {
-                return drawText(formattedString, graphicsContext, new window.multigraph.math.Point(this.axis().perpOffset(), a), this.anchor(), this.position(), this.angle());
+                this.logger().push( drawText(formattedString, graphicsContext, new window.multigraph.math.Point(this.axis().perpOffset(), a), this.anchor(), this.position(), this.angle()) );
             }
         });
 

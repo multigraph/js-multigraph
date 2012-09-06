@@ -6,34 +6,48 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
 
         Graph.hasA("x0").which.isA("number");
         Graph.hasA("y0").which.isA("number");
+        Graph.hasA("logger");
 
         Graph.respondsTo("render", function (width, height) {
             var windowBorder = this.window().border(),
-                i,
-                graph = {
-                    "axes"  : [],
-                    "plots" : []
-                };
-
+                i;
 
             this.x0( this.window().margin().left() + windowBorder + this.window().padding().left() + this.plotarea().margin().left() + this.plotarea().border() );
             this.y0( this.window().margin().bottom() + windowBorder + this.window().padding().bottom() + this.plotarea().margin().bottom() + this.plotarea().border() );
             
-            graph.window = this.window().render(this, width, height);
+            this.window().render(this, width, height);
 
-            graph.background = this.background().render(this, width, height);
+            this.background().render(this, width, height);
 
-            graph.plotarea = this.plotarea().render(this);
+            this.plotarea().render(this);
 
             for (i = 0; i < this.axes().size(); ++i) {
-                graph.axes.push(this.axes().at(i).render(this));
+                this.axes().at(i).render(this);
             }
 
             for (i = 0; i < this.plots().size(); ++i) {
-                graph.plots.push(this.plots().at(i).render(this, {}));
+                this.plots().at(i).render(this, {});
             }
 
-            return graph;
+        });
+
+        Graph.respondsTo("dumpLog", function () {
+            var output = "",
+                i;
+
+            output += this.window().dumpLog();
+            output += this.background().dumpLog();
+            output += this.plotarea().dumpLog();
+
+            for (i = 0; i < this.axes().size(); ++i) {
+                output += this.axes().at(i).dumpLog();
+            }
+
+            for (i = 0; i < this.plots().size(); ++i) {
+                output += this.plots().at(i).dumpLog();
+            }
+
+            return output;
         });
 
     });

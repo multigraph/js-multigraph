@@ -3,11 +3,48 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
 
     ns.mixin.add(function (ns) {
 
-        // cached settings object, for quick access during rendering, populated in begin() method:
-        ns.BarRenderer.hasA("settings");
-        ns.BarRenderer.hasA("obj");
+        var BarRenderer = ns.BarRenderer;
 
-        ns.BarRenderer.respondsTo("begin", function (graphicsContext) {
+        // cached settings object, for quick access during rendering, populated in begin() method:
+        BarRenderer.hasA("settings");
+        BarRenderer.hasA("logger");
+
+        BarRenderer.respondsTo("dumpLog", function () {
+            var logger = this.logger(),
+                output = "",
+                i;
+            
+            output += "setFillColor(" + logger.fillcolor.getHexString("#") + ");\n";
+            output += "setLineColor(" + logger.linecolor.getHexString("#") + ");\n";
+            for (i = 0; i < logger.bars.length; ++i) {
+                if (!logger.bars[i].isMissing) {
+                    output += "drawRect(";
+                    output += logger.bars[i].x;
+                    output += ",";
+                    output += logger.bars[i].y;
+                    output += ",";
+                    output += logger.bars[i].width;
+                    output += ",";
+                    output += logger.bars[i].height;
+                    output += ");\n";
+                }
+            }
+            if (logger.barwidth > logger.hidelines) {
+                for (i = 0; i < logger.outlines.length; ++i) {
+                    output += logger.outlines[i].command;
+                    output += "(";
+                    output += logger.outlines[i].x;
+                    output += ",";                        
+                    output += logger.outlines[i].y;
+                    output += ");\n";
+                }
+            }
+            return output;
+
+        });
+
+
+        BarRenderer.respondsTo("begin", function (graphicsContext) {
             var that = this;
             var settings = {
                 "barpixelwidth"      : this.getOptionValue("barwidth") * this.plot().horizontalaxis().axisToDataRatio(),
@@ -22,7 +59,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
                 "pixelEdgeTolerance" : 1
             };
 
-            this.obj({
+            this.logger({
                 "type"      : "bar",
                 "barwidth"  : settings.barpixelwidth,
                 "baroffset" : settings.baroffset,
@@ -31,52 +68,20 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
                 "linecolor" : settings.linecolor,
                 "hidelines" : settings.hidelines,
                 "bars"      : [],
-                "outlines"  : [],
+                "outlines"  : []
             });
 
-            this.obj().toString = function () {
-                var output = "";
-                var i;
-
-                output += "setFillColor(" + that.obj().fillcolor.getHexString("#") + ");\r\n";
-                output += "setLineColor(" + that.obj().linecolor.getHexString("#") + ");\r\n";
-                for (i = 0; i < that.obj().bars.length; ++i) {
-                    if (!that.obj().bars[i].isMissing) {
-                        output += "drawRect(";
-                        output += that.obj().bars[i].x;
-                        output += ",";
-                        output += that.obj().bars[i].y;
-                        output += ",";
-                        output += that.obj().bars[i].width;
-                        output += ",";
-                        output += that.obj().bars[i].height;
-                        output += ");\r\n";
-                    }
-                }
-                if (that.obj().barwidth > that.obj().hidelines) {
-                    for (i = 0; i < that.obj().outlines.length; ++i) {
-                        output += that.obj().outlines[i].command;
-                        output += "(";
-                        output += that.obj().outlines[i].x;
-                        output += ",";                        
-                        output += that.obj().outlines[i].y;
-                        output += ");\r\n";
-                    }
-                }
-                return output;
-
-            }
             this.settings(settings);
         });
 
-        ns.BarRenderer.respondsTo("dataPoint", function (datap) {
+        BarRenderer.respondsTo("dataPoint", function (datap) {
             var settings = this.settings(),
                 p,
                 x0,
                 x1;
 
             if (this.isMissing(datap)) {
-                this.obj().bars.push({
+                this.logger().bars.push({
                     "datap"     : datap,
                     "isMissing" : true
                 });
@@ -87,7 +92,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
             x0 = p[0] + settings.baroffset;
             x1 = p[0] + settings.baroffset + settings.barpixelwidth;
             
-            this.obj().bars.push({
+            this.logger().bars.push({
                 "p0" : p[0],
                 "p1" : p[1],
                 "x" : x0,
@@ -114,7 +119,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
             }
         });
 
-        ns.BarRenderer.respondsTo("end", function () {
+        BarRenderer.respondsTo("end", function () {
             var settings = this.settings(),
                 barGroup,
                 i,
@@ -142,24 +147,24 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
                 //
                 
                 //   horizontal line @ y from x(next) to x
-                this.obj().outlines.push({
+                this.logger().outlines.push({
                     "command" : "MoveTo",
                     "x"       : barGroup[1][0],
                     "y"       : barGroup[0][1]
                 });
-                this.obj().outlines.push({
+                this.logger().outlines.push({
                     "command" : "LineTo",
                     "x"       : barGroup[0][0],
                     "y"       : barGroup[0][1]
                 });
                 //   vertical line @ x from y to base
-                this.obj().outlines.push({
+                this.logger().outlines.push({
                     "command" : "LineTo",
                     "x"       : barGroup[0][0],
                     "y"       : settings.barpixelbase
                 });
                 //   horizontal line @ base from x to x(next)
-                this.obj().outlines.push({
+                this.logger().outlines.push({
                     "command" : "LineTo",
                     "x"       : barGroup[1][0],
                     "y"       : settings.barpixelbase
@@ -179,34 +184,34 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
                     //         x     x(next)
                     //
                     //   vertical line @ x from min to max of (y, y(next), base)
-                    this.obj().outlines.push({
+                    this.logger().outlines.push({
                         "command" : "MoveTo",
                         "x"       : barGroup[j][0],
                         "y"       : Math.min(barGroup[j-1][1], barGroup[j][1], settings.barpixelbase)
                     });
-                    this.obj().outlines.push({
+                    this.logger().outlines.push({
                         "command" : "LineTo",
                         "x"       : barGroup[j][0],
                         "y"       : Math.max(barGroup[j-1][1], barGroup[j][1], settings.barpixelbase)
                     });
                     //   horizontal line @ y(next) from x to x(next)
-                    this.obj().outlines.push({
+                    this.logger().outlines.push({
                         "command" : "MoveTo",
                         "x"       : barGroup[j][0],
                         "y"       : barGroup[j][1]
                     });
-                    this.obj().outlines.push({
+                    this.logger().outlines.push({
                         "command" : "LineTo",
                         "x"       : barGroup[j+1][0],
                         "y"       : barGroup[j][1]
                     });
                     //   horizontal line @ base from x to x(next)
-                    this.obj().outlines.push({
+                    this.logger().outlines.push({
                         "command" : "MoveTo",
                         "x"       : barGroup[j][0],
                         "y"       : settings.barpixelbase
                     });
-                    this.obj().outlines.push({
+                    this.logger().outlines.push({
                         "command" : "LineTo",
                         "x"       : barGroup[j+1][0],
                         "y"       : settings.barpixelbase
@@ -222,19 +227,17 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
                 //         x     x(next)
                 //
                 //   vertical line @ x from base to y
-                this.obj().outlines.push({
+                this.logger().outlines.push({
                     "command" : "MoveTo",
                     "x"       : barGroup[n-1][0],
                     "y"       : barGroup[n-1][1]
                 });
-                this.obj().outlines.push({
+                this.logger().outlines.push({
                     "command" : "LineTo",
                     "x"       : barGroup[n-1][0],
                     "y"       : settings.barpixelbase
                 });
             }
-
-            return this.obj();
 
         });
 

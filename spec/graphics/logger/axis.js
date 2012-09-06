@@ -3,26 +3,58 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
 
     ns.mixin.add(function (ns) {
 
-        ns.Axis.respondsTo("render", function (graph) {
-            var axis = {
+        var Axis = ns.Axis;
+
+        Axis.hasA("logger");
+
+        Axis.respondsTo("dumpLog", function () {
+            var logger = this.logger(),
+                output = "",
+                i,
+                j;
+
+            output += "setLineColor(" + logger.color + ");\n";
+            output += "moveTo(" + logger.x + "," + logger.y + ");\n";
+            if (logger.orientation === ns.Axis.HORIZONTAL.toString()) {
+                output += "lineTo(" + (logger.x + logger.length) + "," + logger.y + ");\n";
+            } else {
+                output += "lineTo(" + logger.x + "," + (logger.y + logger.length) + ");\n";
+            }
+
+            for (i = 0; i < logger.ticks.length; i++) {
+                for (j = 0; j < logger.ticks[i].length; j++) {
+                    output += logger.ticks[i][j].command;
+                    output += "(";
+                    output += logger.ticks[i][j].x;
+                    output += ",";
+                    output += logger.ticks[i][j].y;
+                    output += ");\n";
+                }
+            }
+
+            output += this.currentLabeler().dumpLog();
+
+            return output;
+        });
+
+        Axis.respondsTo("render", function (graph) {
+            this.logger({
                 "orientation" : this.orientation().toString(),
                 "length"      : this.pixelLength(),
                 "color"       : this.color().getHexString("#"),
-                "labeler"     : {
-                    "ticks"  : [],
-                    "labels" : []
-                }
-            };
+                "ticks"       : []
+            });
+
             this.prepareRender(undefined);
 
             // NOTE: axes are drawn relative to the graph's plot area (plotBox); the coordinates
             //   below are relative to the coordinate system of that box.
             if (this.orientation() === ns.Axis.HORIZONTAL) {
-                axis.x = this.parallelOffset();
-                axis.y = this.perpOffset();
+                this.logger().x = this.parallelOffset();
+                this.logger().y = this.perpOffset();
             } else {
-                axis.x = this.perpOffset();
-                axis.y = this.parallelOffset();
+                this.logger().x = this.perpOffset();
+                this.logger().y = this.parallelOffset();
             }
 
 
@@ -36,24 +68,36 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
                         var v = this.currentLabeler().next();
                         var a = this.dataValueToAxisValue(v);
                         if (this.orientation() === ns.Axis.HORIZONTAL) {
-                            axis.labeler.ticks.push({
-                                "x"      : a,
-                                "y"      : this.perpOffset() + this.tickmax(),
-                                "length" : this.tickmax() - this.tickmin()
-                            });
+                            this.logger().ticks.push([
+                                {
+                                    "command" : "moveTo",
+                                    "x"       : a,
+                                    "y"       : this.perpOffset() + this.tickmin()
+                                },
+                                {
+                                    "command" : "lineTo",
+                                    "x"       : a,
+                                    "y"       : this.perpOffset() + this.tickmax()
+                                }
+                            ]);
                         } else {
-                            axis.labeler.ticks.push({
-                                "x"      : this.perpOffset() + this.tickmax(),
-                                "y"      : a,
-                                "length" : this.tickmax() - this.tickmin()
-                            });
+                            this.logger().ticks.push([
+                                {
+                                    "command" : "moveTo",
+                                    "x"       : this.perpOffset() + this.tickmin(),
+                                    "y"       : a
+                                },
+                                {
+                                    "command" : "lineTo",
+                                    "x"       : this.perpOffset() + this.tickmax(),
+                                    "y"       : a
+                                }
+                            ]);
                         }
-                        axis.labeler.labels.push(this.currentLabeler().renderLabel({}, v));
+                        this.currentLabeler().renderLabel({}, v);
                     }
                 }
             }
-
-            return axis;
 
         });
 

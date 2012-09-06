@@ -2,11 +2,21 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
     "use strict";
 
     ns.mixin.add(function (ns) {
+        var Img = ns.Img;
 
-        window.multigraph.core.Img.hasA("image").which.defaultsTo(function () {return new Image();});
-        window.multigraph.core.Img.hasA("fetched").which.defaultsTo(false);
+        Img.hasA("logger");
 
-        window.multigraph.core.Img.respondsTo("render", function (graph, width, height) {
+        Img.respondsTo("dumpLogy", function () {
+            var logger = this.logger(),
+                output = "drawImage(" + logger.src + "," + logger.x + "," + logger.y + ");\n";
+
+            return output;
+        });
+
+        Img.hasA("image").which.defaultsTo(function () {return new Image();});
+        Img.hasA("fetched").which.defaultsTo(false);
+
+        Img.respondsTo("render", function (graph, width, height) {
             var that = this,
                 paddingLeft,
                 paddingTop,
@@ -17,8 +27,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
                 bx,
                 by,
                 x,
-                y,
-                img;
+                y;
 
             if (this.fetched()) {
                 ax = window.multigraph.math.util.interp(this.anchor().x(), -1, 1, 0, this.image().width);
@@ -37,12 +46,11 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
                 x = bx + this.position().x() - ax;
                 y = by + this.position().y() - ay;
 
-                img = {
+                this.logger({
                     "src" : this.src(),
                     "x"   : x,
                     "y"   : y
-                };
-                return img;
+                });
             } else {
                 this.image().onload = function () {
                     that.fetched(true);
