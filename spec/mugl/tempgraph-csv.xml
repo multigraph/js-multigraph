@@ -28,8 +28,8 @@
     </plot>
     <data>
       <variables>
-        <variable column="0" id="x"/>
-        <variable column="1" id="y" missingvalue="-9000" missingop="le"/>
+        <variable column="0" type="number" id="x"/>
+        <variable column="1" type="number" id="y" missingvalue="-9000" missingop="le"/>
       </variables>
       <csv location="../../mugl/tempdata.csv"/>
     </data>
