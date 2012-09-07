@@ -102,16 +102,16 @@ describe("Plot", function () {
         });
 
         it("should be able to add a PlotLegend with attributes to a Plot", function () {
-            legend.visible("false");
+            legend.visible(false);
             p.legend(legend);
             expect(p.legend()).toBe(legend);
         });
 
         it("should be able to set/get attributes a legend added to a Plot", function () {
             p.legend(legend);
-            p.legend().visible("true");
+            p.legend().visible(true);
             p.legend().label("tag");
-            expect(p.legend().visible()).toBe("true");
+            expect(p.legend().visible()).toBe(true);
             expect(p.legend().label()).toBe("tag");
         });
 
