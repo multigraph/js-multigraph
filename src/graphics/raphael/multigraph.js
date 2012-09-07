@@ -26,7 +26,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
         ns.Multigraph.respondsTo("init", function () {
             this.$div($("#"+this.divid()));
-            this.$div().on("mousedown", { "graph": this }, this.setupEvents);
+            this.$div().on("mousedown", { "mg": this }, this.setupEvents);
             this.width(this.$div().width());
             this.height(this.$div().height());
             if (this.paper()) {
@@ -46,38 +46,42 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         });
 
         ns.Multigraph.respondsTo("setupEvents", function (mouseDownEvent) {
-            var graph = mouseDownEvent.data.graph;
+            var mg = mouseDownEvent.data.mg;
 
-            graph.baseX(mouseDownEvent.offsetX);
-            graph.baseY(mouseDownEvent.offsetY);
-            graph.mouseLastX(mouseDownEvent.offsetX);
-            graph.mouseLastY(mouseDownEvent.offsetY);
+            mg.baseX(mouseDownEvent.pageX - mg.$div().offset().left);
+            mg.baseY(mg.$div().height() - (mouseDownEvent.pageY - mg.$div().offset().top));
+            mg.mouseLastX(mouseDownEvent.pageX - mg.$div().offset().left);
+            mg.mouseLastY(mg.$div().height() - (mouseDownEvent.pageY - mg.$div().offset().top));
 
-            graph.$div().on("mousemove", { "graph": graph }, graph.triggerEvents);
-            graph.$div().on("mouseup", { "graph": graph }, graph.unbindEvents);
-            graph.$div().on("mouseleave", { "graph": graph }, graph.unbindEvents);
+            mg.graphs().at(0).doDragReset();
+
+            mg.$div().on("mousemove", { "mg": mg }, mg.triggerEvents);
+            mg.$div().on("mouseup", { "mg": mg }, mg.unbindEvents);
+            mg.$div().on("mouseleave", { "mg": mg }, mg.unbindEvents);
         });
 
         ns.Multigraph.respondsTo("triggerEvents", function (mouseMoveEvent) {
-            var graph = mouseMoveEvent.data.graph,
-                dx = mouseMoveEvent.offsetX - graph.mouseLastX(),
-                dy = mouseMoveEvent.offsetY - graph.mouseLastY(),
+            var mg = mouseMoveEvent.data.mg,
+                eventX = mouseMoveEvent.pageX - mg.$div().offset().left,
+                eventY = mg.$div().height() - (mouseMoveEvent.pageY - mg.$div().offset().top),
+                dx = eventX - mg.mouseLastX(),
+                dy = eventY - mg.mouseLastY(),
                 i;
 
-            graph.mouseLastX(mouseMoveEvent.offsetX);
-            graph.mouseLastY(mouseMoveEvent.offsetY);
+            mg.mouseLastX(eventX);
+            mg.mouseLastY(eventY);
 
-            for (i = 0; i < graph.graphs().size(); ++i) {
-                graph.graphs().at(i).doDrag(graph, graph.baseX(), graph.baseY(), dx, dy, mouseMoveEvent.shiftKey);
+            for (i = 0; i < mg.graphs().size(); ++i) {
+                mg.graphs().at(i).doDrag(mg, mg.baseX(), mg.baseY(), dx, dy, mouseMoveEvent.shiftKey);
             }
 
         });
 
         ns.Multigraph.respondsTo("unbindEvents", function (e) {
-            var graph = e.data.graph;
-            graph.$div().off("mousemove", graph.triggerEvents);
-            graph.$div().off("mouseup", graph.unbindEvents);
-            graph.$div().off("mouseleave", graph.unbindEvents);
+            var mg = e.data.mg;
+            mg.$div().off("mousemove", mg.triggerEvents);
+            mg.$div().off("mouseup", mg.unbindEvents);
+            mg.$div().off("mouseleave", mg.unbindEvents);
         });
 
     });
@@ -86,6 +90,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
         window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
         ns.mixin.apply(window.multigraph.core);
+        window.multigraph.events.jquery.mouse.mixin.apply(window.multigraph);
 
         var muglPromise = $.ajax({
             "url"      : muglurl,
