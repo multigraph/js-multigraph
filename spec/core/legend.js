@@ -4,6 +4,7 @@ describe("Legend", function () {
     "use strict";
 
     var Legend = window.multigraph.core.Legend,
+        Point = window.multigraph.math.Point,
         l;
 
     beforeEach(function () {
@@ -15,23 +16,26 @@ describe("Legend", function () {
     });
 
     it("should be able to set/get the visible attribute", function () {
-        l.visible("true");
-        expect(l.visible()).toBe("true");
+        l.visible(true);
+        expect(l.visible()).toBe(true);
     });
 
     it("should be able to set/get the base attribute", function () {
-        l.base("1 1");
-        expect(l.base()).toBe("1 1");
+        l.base(new Point(1,1));
+        expect(l.base().x()).toEqual(1);
+        expect(l.base().y()).toEqual(1);
     });
 
     it("should be able to set/get the anchor attribute", function () {
-        l.anchor("-1 1");
-        expect(l.anchor()).toBe("-1 1");
+        l.anchor(new Point(-1,1));
+        expect(l.anchor().x()).toEqual(-1);
+        expect(l.anchor().y()).toEqual(1);
     });
 
     it("should be able to set/get the position attribute", function () {
-        l.position("1 -1");
-        expect(l.position()).toBe("1 -1");
+        l.position(new Point(1,-1));
+        expect(l.position().x()).toEqual(1);
+        expect(l.position().y()).toEqual(-1);
     });
 
     it("should be able to set/get the frame attribute", function () {

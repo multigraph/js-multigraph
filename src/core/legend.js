@@ -7,17 +7,15 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.legend);
 
     Legend = new window.jermaine.Model( "Legend", function () {
-        this.hasA("visible").which.validatesWith(function (visible) {
-            return visible === "true" || visible === "false";
-        });
+        this.hasA("visible").which.isA("boolean");
         this.hasA("base").which.validatesWith(function (base) {
-            return window.multigraph.utilityFunctions.validateCoordinatePair(base);
+            return base instanceof window.multigraph.math.Point;
         });
-        this.hasA("anchor").which.validatesWith(function (anchor) {
-            return window.multigraph.utilityFunctions.validateCoordinatePair(anchor);
+        this.hasAn("anchor").which.validatesWith(function (anchor) {
+            return anchor instanceof window.multigraph.math.Point;
         });
         this.hasA("position").which.validatesWith(function (position) {
-            return window.multigraph.utilityFunctions.validateCoordinatePair(position);
+            return position instanceof window.multigraph.math.Point;
         });
         this.hasA("frame").which.validatesWith(function (frame) {
             return frame === "plot" || frame === "padding";

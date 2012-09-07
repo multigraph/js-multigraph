@@ -71,9 +71,9 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
                     "border": 1
                 },
                 "visible": undefined,
-                "base": "1 1",
-                "anchor": "1 1",
-                "position": "0 0",
+                "base": function () { return new window.multigraph.math.Point(1,1); },
+                "anchor": function () { return new window.multigraph.math.Point(1,1); },
+                "position": function () { return new window.multigraph.math.Point(0,0); },
                 "frame": "plot",
 //                "color": "0xffffff",
 //                "bordercolor": "0x000000",
