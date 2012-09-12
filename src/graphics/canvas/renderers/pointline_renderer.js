@@ -3,19 +3,6 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 
     ns.mixin.add(function (ns) {
 
-        var toRGBA = function (color, alpha) {
-            if (!(color instanceof window.multigraph.math.RGBColor)) {
-                throw new Error("graphics.canvas.toRGBA: first argument must be an RGBColor instance");
-            }
-            if (alpha === undefined) {
-                alpha = 1.0;
-            }
-            if (typeof(alpha) !== "number") {
-                throw new Error("graphics.canvas.toRGBA: second argument, if present, must be a number");
-            }
-            return "rgba("+(255*color.r())+", "+(255*color.g())+", "+(255*color.b())+", "+alpha+")";
-        };
-
         // cached settings object, for quick access during rendering, populated in begin() method:
         ns.PointlineRenderer.hasA("settings");
 
@@ -86,7 +73,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                 context.beginPath();
             } else {
                 //context.fillStyle = settings.pointcolor.getHexString("#");
-                context.fillStyle = toRGBA(settings.pointcolor, settings.pointopacity);
+                context.fillStyle = settings.pointcolor.toRGBA(settings.pointopacity);
                 context.strokeStyle = settings.pointoutlinecolor.getHexString("#");
                 context.lineWidth = settings.pointoutlinewidth;
             }

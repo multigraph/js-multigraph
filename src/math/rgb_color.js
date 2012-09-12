@@ -28,6 +28,16 @@ window.multigraph.util.namespace("window.multigraph.math", function (ns) {
             return prefix + numberToHex(this.r()) + numberToHex(this.g()) + numberToHex(this.b());
         });
 
+        this.respondsTo("toRGBA", function (alpha) {
+            if (alpha === undefined) {
+                alpha = 1.0;
+            }
+            if (typeof(alpha) !== "number") {
+                throw new Error("RGBColor.toRGBA: The argument, if present, must be a number");
+            }
+            return "rgba(" + (255*this.r()) + ", " + (255*this.g()) + ", " + (255*this.b()) + ", " + alpha + ")";
+        });
+
         this.respondsTo("eq", function (color) {
             return ((this.r()===color.r()) && (this.g()===color.g()) && (this.b()===color.b()));
         });

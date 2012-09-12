@@ -3,19 +3,6 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
     ns.mixin.add(function (ns) {
 
-        var toRGBA = function (color, alpha) {
-            if (!(color instanceof window.multigraph.math.RGBColor)) {
-                throw new Error("graphics.raphael.toRGBA: first argument must be an RGBColor instance");
-            }
-            if (alpha === undefined) {
-                alpha = 1.0;
-            }
-            if (typeof(alpha) !== "number") {
-                throw new Error("graphics.raphael.toRGBA: second argument, if present, must be a number");
-            }
-            return "rgba(" + (255*color.r()) + ", " + (255*color.g()) + ", " + (255*color.b()) + ", " + alpha + ")";
-        };
-
         // cached settings object, for quick access during rendering, populated in begin() method:
         ns.PointlineRenderer.hasA("settings");
 
@@ -94,7 +81,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
             } else {
                 raphaelAttrs = {
-                    "fill": toRGBA(settings.pointcolor, settings.pointopacity),
+                    "fill": settings.pointcolor.toRGBA(settings.pointopacity),
                     "stroke": settings.pointoutlinecolor.getHexString("#"),
                     "stroke-width": settings.pointoutlinewidth
                 };
@@ -212,7 +199,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                     };
                 } else {
                     pointAttrs = {
-                        "fill": toRGBA(settings.pointcolor, settings.pointopacity),
+                        "fill": settings.pointcolor.toRGBA(settings.pointopacity),
                         "stroke": settings.pointoutlinecolor.getHexString("#"),
                         "stroke-width": settings.pointoutlinewidth
                     };
