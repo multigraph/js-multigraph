@@ -180,6 +180,50 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             return path;
 
         });
+
+        ns.PointlineRenderer.respondsTo("renderLegendIcon", function (graphicsContext, x, y, icon, opacity) {
+            var settings = this.settings(),
+                path = "",
+                pointAttrs;
+
+            // Draw icon background (with opacity)
+            graphicsContext.paper.rect(x, y, icon.width(), icon.height())
+                .attr({
+                    "stroke" : "#ffffff",
+                    "fill" : "#ffffff"
+                })
+                .transform(graphicsContext.transformString);
+
+            if (settings.linewidth > 0) {
+                path += "M" + x + "," + (y + icon.height()/2);
+                path += "L" + (x + icon.width()) + "," + (y + icon.height()/2);
+                graphicsContext.paper.path(path)
+                    .attr({
+                        "stroke" : settings.linecolor.getHexString("#"),
+                        "stroke-width" : settings.linewidth
+                    })
+                    .transform(graphicsContext.transformString);
+            }
+            if (settings.pointsize > 0) {
+                if ((settings.pointshape === ns.PointlineRenderer.PLUS) || (settings.pointshape === ns.PointlineRenderer.X)) {
+                    pointAttrs = {
+                        "stroke": settings.pointcolor.getHexString("#"),
+                        "stroke-width": settings.pointoutlinewidth
+                    };
+                } else {
+                    pointAttrs = {
+                        "fill": toRGBA(settings.pointcolor, settings.pointopacity),
+                        "stroke": settings.pointoutlinecolor.getHexString("#"),
+                        "stroke-width": settings.pointoutlinewidth
+                    };
+                }
+
+                graphicsContext.paper.path( this.drawPoint(settings.pointshape, settings.pointsize, [(x + icon.width()/2), (y + icon.height()/2)]) )
+                    .attr(pointAttrs)
+                    .transform(graphicsContext.transformString);
+            }
+
+        });
     });
 
 });

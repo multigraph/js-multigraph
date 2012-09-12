@@ -173,6 +173,58 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             return path; 
         });
 
+        ns.BarRenderer.respondsTo("renderLegendIcon", function (graphicsContext, x, y, icon, opacity) {
+            var settings = this.settings(),
+                iconAttrs,
+                barwidth;
+
+            // Draw icon background (with opacity)
+            graphicsContext.paper.rect(x, y, icon.width(), icon.height())
+                .attr({
+                    "stroke" : "#ffffff",
+                    "fill" : "#ffffff"
+                })
+                .transform(graphicsContext.transformString);
+
+            // TODO: need to get the fillcolor at y=0
+            iconAttrs = {
+                "stroke-width" : 1,
+                "fill" : settings.fillcolor.getHexString("#")
+            };
+
+            if (settings.barpixelwidth < settings.hidelines) {
+                iconAttrs.stroke = settings.fillcolor.getHexString("#");
+            } else {
+                iconAttrs.stroke = settings.linecolor.getHexString("#");
+            }
+
+            // Adjust the width of the icons bars based upon the width and height of the icon Ranges: {20, 10, 0}
+            if (icon.width() > 20 || icon.height() > 20) {
+                barwidth = icon.width() / 6;
+            } else if (icon.width() > 10 || icon.height() > 10) {
+                barwidth = icon.width() / 4;
+            } else {
+                barwidth = icon.width() / 4;
+            }
+
+        // If the icon is large enough draw extra bars
+            if (icon.width() > 20 && icon.height() > 20) {
+                graphicsContext.paper.rect((icon.width() / 4) - (barwidth / 2), 0, barwidth, icon.height() / 2)
+                    .attr(iconAttrs)
+                    .transform(graphicsContext.transformString + "t" + x + "," + y);
+
+                graphicsContext.paper.rect(icon.width() - (icon.width() / 4) - (barwidth / 2), 0, barwidth, icon.height() / 3)
+                    .attr(iconAttrs)
+                    .transform(graphicsContext.transformString + "t" + x + "," + y);
+            }
+
+            graphicsContext.paper.rect((icon.width() / 2) - (barwidth / 2), 0, barwidth, icon.height() - (icon.height() / 4))
+                .attr(iconAttrs)
+                .transform(graphicsContext.transformString + "t" + x + "," + y);
+
+
+        });
+
     });
 
 });
