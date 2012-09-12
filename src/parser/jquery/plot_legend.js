@@ -5,7 +5,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
 
     ns.mixin.add(function (ns, parse, serialize) {
         
-        ns.core.PlotLegend[parse] = function (xml) {
+        ns.core.PlotLegend[parse] = function (plot, xml) {
             var legend = new ns.core.PlotLegend();
             if (xml) {
                 if (xml.attr("visible") !== undefined) {
@@ -17,7 +17,12 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                         legend.visible(xml.attr("visible"));
                     }
                 }
-                legend.label(xml.attr("label"));
+                if (xml.attr("label") !== undefined) {
+                    legend.label(xml.attr("label"));
+                }
+            }
+            if (legend.label() === undefined) {
+                legend.label(plot.variable().at(1).id());
             }
             return legend;
         };

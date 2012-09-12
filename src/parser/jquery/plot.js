@@ -52,7 +52,9 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 }
 
                 if (xml.find("legend").length > 0) {
-                    plot.legend(PlotLegend[parse](xml.find("legend")));
+                    plot.legend(plot, PlotLegend[parse](xml.find("legend")));
+                } else {
+                    plot.legend(PlotLegend[parse](plot));
                 }
                 if (xml.find("renderer").length > 0) {
                     plot.renderer(Renderer[parse](xml.find("renderer"), plot));
