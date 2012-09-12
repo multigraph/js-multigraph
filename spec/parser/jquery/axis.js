@@ -12,7 +12,6 @@ describe("Axis parsing", function () {
         Pan = window.multigraph.core.Pan,
         Zoom = window.multigraph.core.Zoom,
         Binding = window.multigraph.core.Binding,
-        AxisControls = window.multigraph.core.AxisControls,
         xmlString = '<horizontalaxis'
 +     ' color="0x123456"'
 +     ' id="x"'
@@ -49,7 +48,7 @@ describe("Axis parsing", function () {
 
     beforeEach(function () {
         window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
-	$xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+        $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
         axis = Axis.parseXML($xml, Axis.HORIZONTAL);
     });
 
@@ -444,28 +443,6 @@ describe("Axis parsing", function () {
 
     });
 
-    describe("AxisControls parsing", function () {
-
-        beforeEach(function () {
-            xmlString = '<verticalaxis color="0x000000" id="y2" type="number" pregap="0" postgap="0" anchor="-1" min="auto" minoffset="0" max="auto" maxoffset="0" tickmin="-3" tickmax="3" highlightstyle="axis" linewidth="1" length="0.9" position="0,0" base="-1,1" minposition="1" maxposition="1"><labels start="0" angle="0" format="%1d" anchor="0,0" position="0,0" spacing="10000 5000 2000 1000 500 200 100 50 20 10 5 2 1 0.1 0.01 0.001"/><axiscontrols visible="false"/></verticalaxis>';
-            $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
-        });
-
-        it("should be able to parse a axis with a Axiscontrols child from XML", function () {
-            axis = Axis.parseXML($xml, Axis.VERTICAL);
-            expect(axis).not.toBeUndefined();
-            expect(axis instanceof Axis).toBe(true);
-            expect(axis.axiscontrols() instanceof AxisControls).toBe(true);
-
-        });
-
-        it("should be able to parse a axis with a Axiscontrols child from XML, serialize it and get the same XML as the original", function () {
-            axis = Axis.parseXML($xml, Axis.VERTICAL);
-            expect(axis.serialize()).toEqual(xmlString);
-        });
-
-    });
-
     describe("with multiple children", function () {
 
         beforeEach(function () {
@@ -531,8 +508,6 @@ describe("Axis parsing", function () {
                          +      ' id="y"'
                          +      ' min="-10"'
                          +      ' max="50"/>'
-                         +   '<axiscontrols'
-                         +      ' visible="false"/>'
                          + '</verticalaxis>'
                         );
             $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
@@ -549,7 +524,6 @@ describe("Axis parsing", function () {
             expect(axis.pan() instanceof Pan).toBe(true);
             expect(axis.zoom() instanceof Zoom).toBe(true);
             expect(axis.binding() instanceof Binding).toBe(true);
-            expect(axis.axiscontrols() instanceof AxisControls).toBe(true);
         });
 
         it("should be able to parse a axis with multiple children from XML, serialize it and get the same XML as the original", function () {

@@ -25,9 +25,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasA("binding").which.validatesWith(function (binding) {
             return binding instanceof ns.Binding;
         });
-        this.hasA("axiscontrols").which.validatesWith(function (axiscontrols) {
-            return axiscontrols instanceof ns.AxisControls;
-        });
         this.hasAn("id").which.validatesWith(function (id) {
             return typeof(id) === "string";
         });

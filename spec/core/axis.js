@@ -11,7 +11,6 @@ describe("Axis", function () {
         Pan = window.multigraph.core.Pan,
         Zoom = window.multigraph.core.Zoom,
         Binding = window.multigraph.core.Binding,
-        AxisControls = window.multigraph.core.AxisControls,
         DataValue = window.multigraph.core.DataValue,
         NumberValue = window.multigraph.core.NumberValue,
         a;
@@ -381,32 +380,6 @@ describe("Axis", function () {
             a.binding(binding);
             expect(a.binding().id()).toBe("x");
             expect(a.binding().max()).toBe("12");
-        });
-
-    });
-
-    describe("Axiscontrols", function () {
-        var axiscontrols;
-
-        beforeEach(function () {
-            axiscontrols = new AxisControls();
-        });
-
-        it("should be able to add a Axiscontrols to a Axis", function () {
-            a.axiscontrols(axiscontrols);
-            expect(a.axiscontrols()).toBe(axiscontrols);
-        });
-
-        it("should be able to add a Axiscontrols with attributes to a Axis", function () {
-            axiscontrols.visible("false");
-            a.axiscontrols(axiscontrols);
-            expect(a.axiscontrols()).toBe(axiscontrols);
-        });
-
-        it("should be able to set/get attributes from a axiscontrols added to a Axis", function () {
-            a.axiscontrols(axiscontrols);
-            a.axiscontrols().visible("true");
-            expect(a.axiscontrols().visible()).toBe("true");
         });
 
     });

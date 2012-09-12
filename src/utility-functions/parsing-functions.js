@@ -161,9 +161,6 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
                     "min": undefined,
                     "max": undefined
                 },
-                "axiscontrols": {
-                    "visible": undefined
-                },
                 "id": undefined,
                 "type": "number",
 //                "length": 1.0,
@@ -246,9 +243,6 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
                     "id": undefined,
                     "min": undefined,
                     "max": undefined
-                },
-                "axiscontrols": {
-                    "visible": undefined
                 },
                 "id": undefined,
                 "type": "number",

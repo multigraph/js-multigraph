@@ -90,7 +90,6 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 if (xml.find("pan").length > 0)          { axis.pan(ns.core.Pan[parse](xml.find("pan"), axis.type()));               }
                 if (xml.find("zoom").length > 0)         { axis.zoom(ns.core.Zoom[parse](xml.find("zoom"), axis.type()));            }
                 if (xml.find("binding").length > 0)      { axis.binding(ns.core.Binding[parse](xml.find("binding")));                }
-                if (xml.find("axiscontrols").length > 0) { axis.axiscontrols(ns.core.AxisControls[parse](xml.find("axiscontrols"))); }
                 if (xml.find("labels").length > 0)       { parseLabels(xml, axis);                                                   }
 
 
@@ -172,7 +171,6 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
             if (this.pan())               { childStrings.push(this.pan()[serialize]());          }
             if (this.zoom())              { childStrings.push(this.zoom()[serialize]());         }
             if (this.binding())           { childStrings.push(this.binding()[serialize]());      }
-            if (this.axiscontrols())      { childStrings.push(this.axiscontrols()[serialize]()); }
 
 
             if (childStrings.length > 0) {
