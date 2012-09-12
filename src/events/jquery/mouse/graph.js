@@ -55,7 +55,7 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
             multigraph.redraw();
         });
 
-        var axisDistanceToPoint = function(axis, x, y) {
+        var axisDistanceToPoint = function (axis, x, y) {
             var perpCoord     = (axis.orientation === Axis.HORIZONTAL) ? y : x;
             var parallelCoord = (axis.orientation === Axis.HORIZONTAL) ? x : y;
             if (parallelCoord < axis.parallelOffset) {
@@ -67,13 +67,13 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
             return Math.abs(perpCoord - axis.perpOffset);
         };
 
-        var l2dist = function(x1, y1, x2, y2) {
+        var l2dist = function (x1, y1, x2, y2) {
             var dx = x1 - x2;
             var dy = y1 - y2;
             return Math.sqrt(dx*dx + dy*dy);
         };
 
-        Graph.respondsTo("findNearestAxis", function (x,y, orientation) {
+        Graph.respondsTo("findNearestAxis", function (x, y, orientation) {
             var foundAxis = undefined,
                 mindist = 9999,
                 i,
@@ -81,9 +81,9 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
                 naxes = this.axes().size(),
                 axis,
                 d;
-            for (i=0; i<naxes; ++i) {
+            for (i = 0; i < naxes; ++i) {
                 axis = axes.at(i);
-                if (axis.orientation() == orientation) {
+                if (axis.orientation() === orientation) {
                     d = axisDistanceToPoint(axis, x, y);
                     if (foundAxis===undefined || d < mindist) {
                         foundAxis = axis;

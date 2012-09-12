@@ -27,7 +27,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 if (plot.variable().size() >= 2) { 
                     legend.label(plot.variable().at(1).id());
                 } else {
-                    legend.label("plot")
+                    legend.label("plot");
                 }
             }
             return legend;

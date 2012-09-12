@@ -1,4 +1,5 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
+/*jshint laxbreak:true */
 
 describe("Plot parsing", function () {
     "use strict";

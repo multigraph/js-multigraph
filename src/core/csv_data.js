@@ -26,8 +26,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 return ArrayData.getArrayDataIterator(this, columnIds, min, max, buffer);
             } else {
                 return {
-                    'next'    : function() {},
-                    'hasNext' : function() { return false; }
+                    "next"    : function () {},
+                    "hasNext" : function () { return false; }
                 };
             }
         });
@@ -56,7 +56,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                         that.readyCallback()();
                     }
                 }});
-            };
+            }
         });
     });
 

@@ -7,9 +7,9 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
         
         CSVData.prototype[serialize+'Contents'] = function () {
             var output = '<csv location="';
-	    output += this.filename();
-	    output += '"/>';
-	    return output;
+            output += this.filename();
+            output += '"/>';
+            return output;
         };
 
     });

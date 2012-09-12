@@ -95,9 +95,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
             // if only one of rows/cols is specified, compute the other
             if (this.columns() === undefined) {
-                this.columns(parseInt(this.plots().size() / this.rows() + ( (this.plots().size() % this.rows()) > 0 ? 1 : 0 )));
+                this.columns(parseInt(this.plots().size() / this.rows() + ( (this.plots().size() % this.rows()) > 0 ? 1 : 0 ), 10));
             } else if  (this.rows() === undefined) {
-                this.rows(parseInt(this.plots().size() / this.columns() + ( (this.plots().size() % this.columns()) > 0 ? 1 : 0 )));
+                this.rows(parseInt(this.plots().size() / this.columns() + ( (this.plots().size() % this.columns()) > 0 ? 1 : 0 ), 10));
             }
 
             for (i = 0; i < this.plots().size(); i++) {
