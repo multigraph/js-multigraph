@@ -59,12 +59,15 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasA("blockWidth");
         this.hasA("blockHeight");
 
+        this.hasA("maxLabelWidth");
+        this.hasA("maxLabelHeight");
+
         this.respondsTo("initializeGeometry", function (graph) {
-            var i;
             var widths = [],
                 heights = [],
-                maxLabelWidth,
-                maxLabelHeight;
+                i;
+//                maxLabelWidth,
+//                maxLabelHeight;
 
             if (this.visible() === false) {
                 return;
@@ -99,8 +102,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
             for (i = 0; i < this.plots().size(); i++) {
                 if (this.plots().at(i).legend().label() !== undefined) {
-                    widths.push(measureLabelWidth(this.plots().at(i).legend().label()));
-                    heights.push(measureLabelHeight(this.plots().at(i).legend().label()));
+                    widths.push(this.measureLabelWidth(this.plots().at(i).legend().label()));
+                    heights.push(this.measureLabelHeight(this.plots().at(i).legend().label()));
                 }
             }
 
@@ -110,11 +113,11 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             heights.sort(function (a, b) {
                 return b - a;
             });
-            maxLabelWidth = widths[0];
-            maxLabelHeight = Math.max(heights[0], this.icon().height());
+            this.maxLabelWidth(widths[0]);
+            this.maxLabelHeight(Math.max(heights[0], this.icon().height()));
 
-            this.blockWidth(this.iconOffset() + this.icon().width() + this.labelOffset + maxLabelWidth + this.labelEnding());
-            this.blockHeight(this.iconOffset() + maxLabelHeight);
+            this.blockWidth(this.iconOffset() + this.icon().width() + this.labelOffset() + this.maxLabelWidth() + this.labelEnding());
+            this.blockHeight(this.iconOffset() + this.maxLabelHeight());
 
             this.width((2 * this.border()) + (this.columns() * this.blockWidth()));
             this.height((2 * this.border()) + (this.rows() * this.blockHeight()) + this.iconOffset());
@@ -136,20 +139,22 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 plotCount = 0,
                 r, c;
 
-
             if (this.visible() === false) {
                 return;
             }
+
+            // preform any neccesary setup
+            this.begin(graphicsContext);
 
             // Draw the legend box
             this.renderLegend(graphicsContext);
 
             for (r = 0; r < this.rows(); r++) {
-                blocky = this.border() + ((this.rows - r - 1) * this.blockHeight());
+                blocky = this.border() + ((this.rows() - r - 1) * this.blockHeight());
                 icony  = blocky + this.iconOffset();
                 labely = icony;
                 for (c = 0; c < this.columns(); c++) {
-                    blockx = this.border + (c * this.blockWidth());
+                    blockx = this.border() + (c * this.blockWidth());
                     iconx  = blockx + this.iconOffset();
                     labelx = iconx + this.icon().width() + this.labelOffset();
 
@@ -162,11 +167,14 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                     }
                     
                     // Write the text
-                    this.renderLabel(this.plots().at(plotCount).legend().label(), graphicsContext, labelx, labely, this.opacity());
+                    this.renderLabel(this.plots().at(plotCount).legend().label(), graphicsContext, labelx, labely);
 
                     plotCount++;
                 }
             }
+
+            // preform any neccesary steps at the end of rendering
+            this.end(graphicsContext);
 
         });
 

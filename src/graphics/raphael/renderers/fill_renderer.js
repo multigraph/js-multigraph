@@ -98,6 +98,50 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
         });
 
+        ns.FillRenderer.respondsTo("renderLegendIcon", function (graphicsContext, x, y, icon, opacity) {
+            var settings = this.settings(),
+                iconBackgroundAttrs = {},
+                path = "";
+            
+            // Draw icon background (with opacity)
+            iconBackgroundAttrs.stroke = "#ffffff";
+            if (icon.width() < 10 || icon.height() < 10) {
+                iconBackgroundAttrs.fill = settings.fillcolor.getHexString("#");
+            } else {
+                iconBackgroundAttrs.fill = "#ffffff";
+            }
+
+            graphicsContext.paper.rect(x, y, icon.width(), icon.height())
+                .attr(iconBackgroundAttrs)
+                .transform(graphicsContext.transformString);
+
+            path += "M0,0";
+
+      // Draw the middle range icon or the large range icon if the width and height allow it
+            if (icon.width() > 10 || icon.height() > 10) {
+        // Draw a more complex icon if the icons width and height are large enough
+                if (icon.width() > 20 || icon.height() > 20) {
+                    path += "L" + (icon.width() / 6) + "," + (icon.height() / 2);
+                    path += "L" + (icon.width() / 3) + "," + (icon.height() / 4);
+                }
+                path += "L" + (icon.width() / 2) + "," + (icon.height() - icon.height() / 4);
+
+                if (icon.width() > 20 || icon.height() > 20) {
+                    path += "L" + (icon.width() - icon.width() / 3) + "," + (icon.height() / 4);
+                    path += "L" + (icon.width() - icon.width() / 6) + "," + (icon.height() / 2);
+                }
+            }
+
+            path += "L" + icon.width() + ",0";
+            graphicsContext.paper.path(path)
+                .attr({
+                    "stroke": settings.linecolor.getHexString("#"),
+                    "stroke-width": settings.linewidth,
+                    "fill": settings.fillcolor.getHexString("#")
+                })
+                .transform(graphicsContext.transformString + "t" + x + "," + y);
+        });
+
     });
 
 });

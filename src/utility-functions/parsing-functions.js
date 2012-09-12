@@ -75,12 +75,12 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
                 "anchor": function () { return new window.multigraph.math.Point(1,1); },
                 "position": function () { return new window.multigraph.math.Point(0,0); },
                 "frame": "plot",
-//                "color": "0xffffff",
-//                "bordercolor": "0x000000",
+                "color": function () { return new window.multigraph.math.RGBColor.parse("0xffffff"); },
+                "bordercolor": function () { return new window.multigraph.math.RGBColor.parse("0x000000"); },
                 "opacity": 1.0,
                 "border": 1,
                 "rows": undefined,
-                "columns": 1,
+                "columns": undefined,
                 "cornerradius": 0,
                 "padding": 0
             },
@@ -282,7 +282,7 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
             },
             "plot": {
                 "legend": {
-                    "visible": undefined,
+                    "visible": true,
                     "label": undefined
                 },
                 "horizontalaxis": {

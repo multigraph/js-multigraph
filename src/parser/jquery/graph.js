@@ -25,6 +25,8 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 }
                 if (xml.find(">legend").length > 0) {
                     graph.legend( ns.core.Legend[parse](xml.find(">legend")) );
+                } else {
+                    graph.legend( ns.core.Legend[parse]() );
                 }
                 if (xml.find(">background").length > 0) {
                     graph.background( ns.core.Background[parse](xml.find(">background")) );

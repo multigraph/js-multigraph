@@ -36,6 +36,9 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                                                  "set": plotsSet});
             }
 
+            this.legend().render({"paper": paper,
+                                  "transformString": this.transformString()});
+
             this.transformSets(height, this.x0(), this.y0(), backgroundSet, axesSet, plotsSet);
             this.fixLayers(backgroundSet, axesSet, plotsSet);
 
