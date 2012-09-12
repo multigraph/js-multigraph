@@ -69,6 +69,7 @@ describe("DatetimeValue", function () {
         testParse("20120812",           "YYYYMMDD",           1344729600000);
         testParse("201208",             "YYYYMM",             1343779200000);
         testParse("2012",               "YYYY",               1325376000000);
+        testParse("0",                  "0",                  0);
 
 
         //NOTE: the parse() method should remove all spaces, dashes, and colons from its input string before

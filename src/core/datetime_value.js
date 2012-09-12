@@ -59,6 +59,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 m  = parseInt(string.substring(10,12), 10);
                 s  = parseInt(string.substring(12,14), 10);
                 ms = parseInt(string.substring(14,17), 10);
+            } else if (string === "0") {
+                // handles the case of "0", which parser should convert to the Unix epoch
+                Y = 1970;
             } else {
                 throw new Error("Incorrect input format for Datetime Value's parse method");
             }
