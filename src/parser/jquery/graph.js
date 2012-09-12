@@ -17,9 +17,6 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 if (xml.find(">ui").length > 0) {
                     graph.ui( ns.core.UI[parse](xml.find(">ui")) );
                 }
-                if (xml.find(">networkmonitor").length > 0) {
-                    graph.networkmonitor( ns.core.NetworkMonitor[parse](xml.find(">networkmonitor")) );
-                }
                 if (xml.find(">legend").length > 0) {
                     graph.legend( ns.core.Legend[parse](xml.find(">legend")) );
                 } else {
@@ -59,9 +56,6 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
             }
             if (this.ui()) {
                 xmlstring += this.ui()[serialize]();
-            }
-            if (this.networkmonitor()) {
-                xmlstring += this.networkmonitor()[serialize]();
             }
             if (this.legend()) {
                 xmlstring += this.legend()[serialize]();

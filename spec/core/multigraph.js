@@ -20,7 +20,6 @@ describe("Multigraph", function () {
         var Plot = window.multigraph.core.Plot,
             Window = window.multigraph.core.Window,
             UI = window.multigraph.core.UI,
-            NetworkMonitor = window.multigraph.core.NetworkMonitor,
             Legend = window.multigraph.core.Legend,
             Background = window.multigraph.core.Background,
             Plotarea = window.multigraph.core.Plotarea,

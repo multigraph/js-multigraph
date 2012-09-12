@@ -56,10 +56,6 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
             "ui": {
                 "eventhandler": "saui"
             },
-            "networkmonitor": {
-                "visible" : undefined,
-                "fixed": undefined
-            },
             "legend": {
                 "icon" : {
                     "height": 30,

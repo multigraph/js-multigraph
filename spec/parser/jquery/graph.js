@@ -8,7 +8,6 @@ describe("Graph parsing", function () {
     Plot = window.multigraph.core.Plot,
     Window = window.multigraph.core.Window,
     UI = window.multigraph.core.UI,
-    NetworkMonitor = window.multigraph.core.NetworkMonitor,
     Legend = window.multigraph.core.Legend,
     Background = window.multigraph.core.Background,
     Plotarea = window.multigraph.core.Plotarea,
@@ -36,10 +35,6 @@ describe("Graph parsing", function () {
         +    '/>'
         +    '<ui'
         +        ' eventhandler="error"'
-        +    '/>'
-        +    '<networkmonitor'
-        +        ' visible="yes"'
-        +        ' fixed="no"'
         +    '/>'
         +    '<legend'
         +        ' color="0x56839c"'
@@ -273,10 +268,6 @@ describe("Graph parsing", function () {
         +     '/>'
         +     '<ui'
         +         ' eventhandler="error"'
-        +     '/>'
-        +     '<networkmonitor'
-        +         ' visible="yes"'
-        +         ' fixed="no"'
         +     '/>'
         +     '<legend'
         +         ' color="0x56839c"'
