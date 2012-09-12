@@ -21,7 +21,6 @@ describe("Graph", function () {
             Window = window.multigraph.core.Window,
             UI = window.multigraph.core.UI,
             NetworkMonitor = window.multigraph.core.NetworkMonitor,
-            Debugger = window.multigraph.core.Debugger,
             Legend = window.multigraph.core.Legend,
             Background = window.multigraph.core.Background,
             Plotarea = window.multigraph.core.Plotarea,
@@ -30,7 +29,6 @@ describe("Graph", function () {
             v,
             w,
             ui,
-            debug,
             legend,
             background,
             plotarea,
@@ -42,7 +40,6 @@ describe("Graph", function () {
             v = new Axis(Axis.VERTICAL),
             w = new Window(),
             ui = new UI(),
-            debug = new Debugger(),
             legend = new Legend(),
             background = new Background(),
             plotarea = new Plotarea(),
@@ -59,7 +56,6 @@ describe("Graph", function () {
             g.data().add(data);
             g.window(w);
             g.ui(ui);
-            g.Debugger(debug);
             g.legend(legend);
             g.background(background);
             g.plotarea(plotarea);
@@ -70,7 +66,6 @@ describe("Graph", function () {
             expect(g.data().at(0)).toBe(data);
             expect(g.window()).toBe(w);
             expect(g.ui()).toBe(ui);
-            expect(g.Debugger()).toBe(debug);
             expect(g.legend()).toBe(legend);
             expect(g.background()).toBe(background);
             expect(g.plotarea()).toBe(plotarea);

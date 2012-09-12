@@ -60,10 +60,6 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
                 "visible" : undefined,
                 "fixed": undefined
             },
-            "debugger": {
-                "visible" : undefined,
-                "fixed": undefined
-            },
             "legend": {
                 "icon" : {
                     "height": 30,

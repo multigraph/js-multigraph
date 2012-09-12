@@ -20,9 +20,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             this.hasA("networkmonitor").which.validatesWith(function (networkmonitor) {
                 return networkmonitor instanceof ns.NetworkMonitor;
             });
-            this.hasA("Debugger").which.validatesWith(function (debug) {
-                return debug instanceof ns.Debugger;
-            });
             this.hasA("legend").which.validatesWith(function (legend) {
                 return legend instanceof ns.Legend;
             });
