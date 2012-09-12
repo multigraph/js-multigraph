@@ -41,7 +41,7 @@ describe("Plot parsing", function () {
     describe("Axis parsing", function () {
 
         beforeEach(function () {
-            xmlString = '<plot><horizontalaxis ref="x"/><verticalaxis ref="y"/></plot>';
+            xmlString = '<plot><horizontalaxis ref="x"/><verticalaxis ref="y"/><legend visible="true" label="plot"/></plot>';
             $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
             graph = new Graph();
             haxis = new Axis(Axis.HORIZONTAL);
@@ -61,7 +61,7 @@ describe("Plot parsing", function () {
         });
 
         it("should throw an error if an axis with the ref's id is not in the graph", function () {
-            xmlString = '<plot><horizontalaxis ref="x2"/><verticalaxis ref="y"/></plot>';
+            xmlString = '<plot><horizontalaxis ref="x2"/><verticalaxis ref="y"/><legend visible="true" label="plot"/></plot>';
             $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
             expect( function () {
                 Plot.parseXML($xml, graph);
@@ -78,7 +78,26 @@ describe("Plot parsing", function () {
         var variables;
 
         beforeEach(function () {
-            xmlString = '<plot><horizontalaxis><variable ref="x"/></horizontalaxis><verticalaxis><variable ref="y"/><variable ref="y1"/></verticalaxis></plot>';
+            xmlString = ''
+                + '<plot>'
+                +     '<horizontalaxis>'
+                +         '<variable'
+                +             ' ref="x"'
+                +         '/>'
+                +     '</horizontalaxis>'
+                +     '<verticalaxis>'
+                +         '<variable'
+                +             ' ref="y"'
+                +         '/>'
+                +         '<variable'
+                +             ' ref="y1"'
+                +         '/>'
+                +     '</verticalaxis>'
+                +     '<legend'
+                +         ' visible="true"'
+                +         ' label="y"'
+                +         '/>'
+                + '</plot>';
             $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
             graph = new Graph();
             haxis = new Axis(Axis.HORIZONTAL);
@@ -171,7 +190,7 @@ describe("Plot parsing", function () {
     describe("Renderer parsing", function () {
 
         beforeEach(function () {
-            xmlString = '<plot><renderer type="pointline"/></plot>';
+            xmlString = '<plot><legend visible="true" label="plot"/><renderer type="pointline"/></plot>';
             $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
         });
 
@@ -200,11 +219,11 @@ TODO:  change to check for new style options!!!
 
         it("should be able to parse a plot with a Renderer child from XML, serialize it and get the same XML as the original", function () {
             plot = Plot.parseXML($xml);
-            expect(plot.serialize() === xmlString).toBe(true);
+            expect(plot.serialize()).toBe(xmlString);
         });
 
         it("should be able to parse a plot with a complex Renderer child from XML, serialize it and get the same XML as the original", function () {
-            xmlString = '<plot><renderer type="pointline"><option name="linewidth" value="7"/><option name="pointshape" value="diamond"/><option name="pointsize" value="3"/></renderer></plot>';
+            xmlString = '<plot><legend visible="true" label="plot"/><renderer type="pointline"><option name="linewidth" value="7"/><option name="pointshape" value="diamond"/><option name="pointsize" value="3"/></renderer></plot>';
             $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
             plot = Plot.parseXML($xml);
             expect(plot.serialize()).toBe(xmlString);
@@ -214,7 +233,7 @@ TODO:  change to check for new style options!!!
     describe("Filter parsing", function () {
 
         beforeEach(function () {
-            xmlString = '<plot><filter type="pointline"/></plot>';
+            xmlString = '<plot><legend visible="true" label="plot"/><filter type="pointline"/></plot>';
             $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
         });
 
@@ -244,7 +263,7 @@ TODO:  change to check for new style options!!!
         });
 
         it("should be able to parse a plot with a complex Filter child from XML, serialize it and get the same XML as the original", function () {
-            xmlString = '<plot><filter type="pointline"><option name="size" value="3"/><option name="shape" value="circle"/><option name="linewidth" value="7"/></filter></plot>';
+            xmlString = '<plot><legend visible="true" label="plot"/><filter type="pointline"><option name="size" value="3"/><option name="shape" value="circle"/><option name="linewidth" value="7"/></filter></plot>';
             $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
             plot = Plot.parseXML($xml);
             expect(plot.serialize()).toBe(xmlString);
@@ -254,7 +273,7 @@ TODO:  change to check for new style options!!!
     describe("Datatips parsing", function () {
 
         beforeEach(function () {
-            xmlString = '<plot><datatips bgcolor="0x123456" bordercolor="0xfffbbb" format="number" bgalpha="1" border="2" pad="1"/></plot>';
+            xmlString = '<plot><legend visible="true" label="plot"/><datatips bgcolor="0x123456" bordercolor="0xfffbbb" format="number" bgalpha="1" border="2" pad="1"/></plot>';
             $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
         });
 
@@ -284,7 +303,7 @@ TODO:  change to check for new style options!!!
         });
 
         it("should be able to parse a plot with a complex Datatips child from XML, serialize it and get the same XML as the original", function () {
-            xmlString = '<plot><datatips bgcolor="0x1234aa" bordercolor="0xddfaaa" format="number" bgalpha="1" border="2" pad="1"><variable format="number"/><variable format="number"/><variable format="datetime"/></datatips></plot>';
+            xmlString = '<plot><legend visible="true" label="plot"/><datatips bgcolor="0x1234aa" bordercolor="0xddfaaa" format="number" bgalpha="1" border="2" pad="1"><variable format="number"/><variable format="number"/><variable format="datetime"/></datatips></plot>';
             $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
             plot = Plot.parseXML($xml);
             expect(plot.serialize()).toBe(xmlString);
@@ -294,7 +313,7 @@ TODO:  change to check for new style options!!!
     describe("with multiple children", function () {
 
         beforeEach(function () {
-            xmlString = '<plot><renderer type="pointline"><option name="linewidth" value="7"/><option name="pointshape" value="triangle"/><option name="pointsize" value="3"/></renderer><filter type="pointline"><option name="size" value="3"/><option name="shape" value="circle"/><option name="linewidth" value="7"/></filter><datatips bgcolor="0x12fff6" bordercolor="0xfffbbb" format="number" bgalpha="1" border="2" pad="1"/></plot>';
+            xmlString = '<plot><legend visible="true" label="plot"/><renderer type="pointline"><option name="linewidth" value="7"/><option name="pointshape" value="triangle"/><option name="pointsize" value="3"/></renderer><filter type="pointline"><option name="size" value="3"/><option name="shape" value="circle"/><option name="linewidth" value="7"/></filter><datatips bgcolor="0x12fff6" bordercolor="0xfffbbb" format="number" bgalpha="1" border="2" pad="1"/></plot>';
             $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
         });
 

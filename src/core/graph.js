@@ -86,7 +86,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 for (i = 0; i < this.axes().size(); ++i) {
                     this.axes().at(i).initializeGeometry(this);
                 }
-                this.legend().initializeGeometry(this);
+                if (this.legend()) {
+                    this.legend().initializeGeometry(this);
+                }
             });
 
             window.multigraph.utilityFunctions.insertDefaults(this, defaultValues, attributes);

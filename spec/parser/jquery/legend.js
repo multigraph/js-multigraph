@@ -21,7 +21,13 @@ describe("Legend parsing", function () {
             +     ' columns="3"'
             +     ' cornerradius="5"'
             +     ' padding="4"'
-            + '/>',
+            +     '>'
+            +     '<icon'
+            +         ' height="30"'
+            +         ' width="40"'
+            +         ' border="1"'
+            +     '/>'
+            + '</legend>',
         $xml,
         l,
         b;
@@ -143,6 +149,7 @@ describe("Legend parsing", function () {
             var xmlString2 = ''
                 + '<legend'
                 +     ' color="0x56839c"'
+                +     ' bordercolor="0x000000"'
                 +     ' base="0,-1"'
                 +     ' anchor="-1,-1"'
                 +     ' position="1,1"'

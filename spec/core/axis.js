@@ -428,6 +428,7 @@ describe("Axis", function () {
 
         var Graph = window.multigraph.core.Graph,
             Insets = window.multigraph.math.Insets,
+            Legend = window.multigraph.core.Legend,
             a,
             g;
 
@@ -435,6 +436,7 @@ describe("Axis", function () {
             g = new Graph();
             a = new Axis(Axis.HORIZONTAL);
             g.axes().add(a);
+            g.legend(new Legend());
         });
 
         it("should do something good", function () {
