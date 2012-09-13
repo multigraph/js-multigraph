@@ -15,9 +15,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         if (type === ns.DataValue.NUMBER) {
             return new ns.NumberFormatter(format);
         } else if (type === ns.DataValue.DATETIME) {
-            //TODO: NYI
-            //return ns.DatetimeFormatter.parse(string);
-            return null;
+            return new ns.DatetimeFormatter(format);
         }
         throw new Error("attempt to create an unknown DataFormatter type");
     };

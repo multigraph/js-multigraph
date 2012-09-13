@@ -15,9 +15,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         if (type === ns.DataValue.NUMBER) {
             return ns.NumberMeasure.parse(string);
         } else if (type === ns.DataValue.DATETIME) {
-            //TODO: NYI
-            //return ns.DatetimeMeasure.parse(string);
-            return null;
+            return ns.DatetimeMeasure.parse(string);
         }
         throw new Error("attempt to parse an unknown DataMeasure type");
     };

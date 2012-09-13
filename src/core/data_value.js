@@ -52,10 +52,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      */
     DataValue.create = function (type, realValue) {
         if (type === DataValue.NUMBER) {
-            return new ns.NumberValue.parse(realValue);
+            return new ns.NumberValue(realValue);
         } else if (type === DataValue.DATETIME) {
-            //TODO: NYI
-            //return ns.DatetimeValue.parse(string);
+            return new ns.DatetimeValue(realValue);
             return null;
         }
         throw new Error("attempt to parse an unknown DataValue type");
@@ -68,9 +67,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         if (type === DataValue.NUMBER) {
             return ns.NumberValue.parse(string);
         } else if (type === DataValue.DATETIME) {
-            //TODO: NYI
-            //return ns.DatetimeValue.parse(string);
-            return null;
+            return ns.DatetimeValue.parse(string);
         }
         throw new Error("attempt to parse an unknown DataValue type");
     };

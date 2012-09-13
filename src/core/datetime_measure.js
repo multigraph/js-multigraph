@@ -75,16 +75,17 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     };
 
     DatetimeMeasure.findTickmarkWithMonthSpacing = function (/*DatetimeValue*/value, /*DatetimeValue*/alignment, /*number(months)*/monthSpacing) {
-        var valueD = value.value,
-            alignD = alignment.value,
+        var valueD = value.value,       //NOTE: ".value" property of DatetimeValue is a javascript Date object
+            alignD = alignment.value,   //NOTE: ".value" property of DatetimeValue is a javascript Date object
             monthOffset = 12 * (valueD.getUTCFullYear() - alignD.getUTCFullYear()) + (valueD.getUTCMonth() - alignD.getUTCMonth()),
             d = Math.floor( monthOffset / monthSpacing );
+
         if (monthOffset % monthSpacing !== 0) { ++d; }
         else if (valueD.getUTCDate() > alignD.getUTCDate()) { ++d; }
         else if (valueD.getUTCDate() === alignD.getUTCDate() && valueD.getUTCHours() > alignD.getUTCHours()) { ++d; }
         else if (valueD.getUTCDate() === alignD.getUTCDate() && valueD.getUTCHours() === alignD.getUTCHours() && valueD.getUTCMinutes() > alignD.getUTCMinutes()) { ++d; }
         else if (valueD.getUTCDate() === alignD.getUTCDate() && valueD.getUTCHours() === alignD.getUTCHours() && valueD.getUTCMinutes() === alignD.getUTCMinutes() && valueD.getUTCSeconds() > alignD.getUTCSeconds()) { ++d; }
-        else if (valueD.getUTCDate() === alignD.getUTCDate() && valueD.getUTCHours() === alignD.getUTCHours() && valueD.getUTCMinutes() === alignD.getUTCMinutes() && valueD.getUTCSeconds() === alignD.getUTCSeconds() && valueD.getUTCMillisecond() > alignD.getUTCMillisecond()) { ++d; }
+        else if (valueD.getUTCDate() === alignD.getUTCDate() && valueD.getUTCHours() === alignD.getUTCHours() && valueD.getUTCMinutes() === alignD.getUTCMinutes() && valueD.getUTCSeconds() === alignD.getUTCSeconds() && valueD.getUTCMilliseconds() > alignD.getUTCMilliseconds()) { ++d; }
 
         return alignment.add( DatetimeMeasure.parse((d * monthSpacing) + "M") );
     };
