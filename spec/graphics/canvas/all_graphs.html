@@ -71,7 +71,6 @@
 <script type="text/javascript" src="../../../src/core/renderers/fill_renderer.js"></script>
 <script type="text/javascript" src="../../../src/core/renderers/pointline_renderer.js"></script>
 <script type="text/javascript" src="../../../src/core/service.js"></script>
-<script type="text/javascript" src="../../../src/core/ui.js"></script>
 <script type="text/javascript" src="../../../src/core/values.js"></script>
 <script type="text/javascript" src="../../../src/core/variables.js"></script>
 <script type="text/javascript" src="../../../src/core/window.js"></script>
@@ -106,7 +105,6 @@
 <script type="text/javascript" src="../../../src/parser/jquery/plotarea.js"></script>
 <script type="text/javascript" src="../../../src/parser/jquery/renderer.js"></script>
 <script type="text/javascript" src="../../../src/parser/jquery/service.js"></script>
-<script type="text/javascript" src="../../../src/parser/jquery/ui.js"></script>
 <script type="text/javascript" src="../../../src/parser/jquery/values.js"></script>
 <script type="text/javascript" src="../../../src/parser/jquery/variables.js"></script>
 <script type="text/javascript" src="../../../src/parser/jquery/window.js"></script>
@@ -157,6 +155,7 @@ $(document).ready(function() {
   drawMultigraph("mymugl", "../../mugl/mymugl.xml");
   drawMultigraph("pointline_legend", "../../mugl/pointline_legend.xml");
   drawMultigraph("tempgraph-csv", "../../mugl/tempgraph-csv.xml");
+  drawMultigraph("tempgraph-datetime", "../../mugl/tempgraph-datetime.xml");
   drawMultigraph("tempgraph", "../../mugl/tempgraph.xml");
   drawMultigraph("testgraph", "../../mugl/testgraph.xml");
 //END_ANT_SCRIPT_LINES
@@ -190,6 +189,8 @@ $(document).ready(function() {
 <div id="pointline_legend" class="graph"></div>
 <p>tempgraph-csv</p>
 <div id="tempgraph-csv" class="graph"></div>
+<p>tempgraph-datetime</p>
+<div id="tempgraph-datetime" class="graph"></div>
 <p>tempgraph</p>
 <div id="tempgraph" class="graph"></div>
 <p>testgraph</p>

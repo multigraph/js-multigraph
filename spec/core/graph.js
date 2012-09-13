@@ -19,7 +19,6 @@ describe("Graph", function () {
     describe("Children", function () {
         var Plot = window.multigraph.core.Plot,
             Window = window.multigraph.core.Window,
-            UI = window.multigraph.core.UI,
             Legend = window.multigraph.core.Legend,
             Background = window.multigraph.core.Background,
             Plotarea = window.multigraph.core.Plotarea,
@@ -27,7 +26,6 @@ describe("Graph", function () {
             h,
             v,
             w,
-            ui,
             legend,
             background,
             plotarea,
@@ -38,7 +36,6 @@ describe("Graph", function () {
             h = new Axis(Axis.HORIZONTAL),
             v = new Axis(Axis.VERTICAL),
             w = new Window(),
-            ui = new UI(),
             legend = new Legend(),
             background = new Background(),
             plotarea = new Plotarea(),
@@ -54,7 +51,6 @@ describe("Graph", function () {
             g.plots().add(p);
             g.data().add(data);
             g.window(w);
-            g.ui(ui);
             g.legend(legend);
             g.background(background);
             g.plotarea(plotarea);
@@ -64,7 +60,6 @@ describe("Graph", function () {
             expect(g.plots().at(0)).toBe(p);
             expect(g.data().at(0)).toBe(data);
             expect(g.window()).toBe(w);
-            expect(g.ui()).toBe(ui);
             expect(g.legend()).toBe(legend);
             expect(g.background()).toBe(background);
             expect(g.plotarea()).toBe(plotarea);

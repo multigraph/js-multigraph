@@ -14,9 +14,6 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     graph.window( ns.core.Window[parse]() );
                 }
 
-                if (xml.find(">ui").length > 0) {
-                    graph.ui( ns.core.UI[parse](xml.find(">ui")) );
-                }
                 if (xml.find(">legend").length > 0) {
                     graph.legend( ns.core.Legend[parse](xml.find(">legend")) );
                 } else {
@@ -53,9 +50,6 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 i;
             if (this.window()) {
                 xmlstring += this.window()[serialize]();
-            }
-            if (this.ui()) {
-                xmlstring += this.ui()[serialize]();
             }
             if (this.legend()) {
                 xmlstring += this.legend()[serialize]();

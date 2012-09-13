@@ -7,7 +7,6 @@ describe("Graph parsing", function () {
     var Axis = window.multigraph.core.Axis,
     Plot = window.multigraph.core.Plot,
     Window = window.multigraph.core.Window,
-    UI = window.multigraph.core.UI,
     Legend = window.multigraph.core.Legend,
     Background = window.multigraph.core.Background,
     Plotarea = window.multigraph.core.Plotarea,
@@ -18,7 +17,6 @@ describe("Graph parsing", function () {
     v,
     w,
     p,
-    ui,
     legend,
     background,
     plotarea,
@@ -32,9 +30,6 @@ describe("Graph parsing", function () {
         +        ' width="2"'
         +        ' height="97"'
         +        ' border="0"'
-        +    '/>'
-        +    '<ui'
-        +        ' eventhandler="error"'
         +    '/>'
         +    '<legend'
         +        ' color="0x56839c"'
@@ -265,9 +260,6 @@ describe("Graph parsing", function () {
         +         ' width="2"'
         +         ' height="97"'
         +         ' border="0"'
-        +     '/>'
-        +     '<ui'
-        +         ' eventhandler="error"'
         +     '/>'
         +     '<legend'
         +         ' color="0x56839c"'

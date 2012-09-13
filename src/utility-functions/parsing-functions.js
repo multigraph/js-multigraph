@@ -53,9 +53,6 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
                 "padding": function() { return new window.multigraph.math.Insets(/*top*/5, /*left*/5, /*bottom*/5, /*right*/5); },
                 "bordercolor": "0x000000"
             },
-            "ui": {
-                "eventhandler": "saui"
-            },
             "legend": {
                 "icon" : {
                     "height": 30,
