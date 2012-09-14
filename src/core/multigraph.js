@@ -30,6 +30,18 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
    });
 
-    ns.Multigraph = Multigraph;
+   Multigraph.createGraph = function(obj) {
+       if (!obj.driver) {
+           obj.driver = "canvas";
+       }
+       if (obj.driver === "canvas") {
+           return Multigraph.createCanvasGraph(obj.div, obj.mugl);
+       } else if (obj.driver === "raphael") {
+           return Multigraph.createRaphaelGraph(obj.div, obj.mugl);
+       }
+       throw new Error("invalid graphic driver '" + obj.driver + "' specified to Multigraph.createGraph");
+   };
+
+   ns.Multigraph = Multigraph;
 
 });

@@ -214,4 +214,10 @@
       <arg path="${jasmine.script}" />
     </apply>
   </target>
+
+  <target name="graphicstests" depends="makegraphicstests,html">
+  </target>
+  <target name="makegraphicstests">
+    <exec executable="./makegraphicstests"/>
+  </target>
 </project>

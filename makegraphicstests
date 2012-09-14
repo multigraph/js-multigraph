@@ -1,0 +1,226 @@
+#! /usr/bin/perl
+
+### This script generates html files for graphics tests; it examines the
+### file spec/mugl/TESTS, and the contents of the spec/mugl directory, to
+### decide which files to generate.
+### 
+### Note that after running this script you should always run "ant html";
+### the html files that this script generates are not complete by
+### themselves.  Running "ant html" modifies them to include the necessary
+### <scrip> tags.
+### 
+### The ant target "graphicstests" does this automatically --- it runs
+### this script first, then runs the "ant html" target.  So in general,
+### you should always run "ant graphicstests" rather than running this
+### script directly.
+
+if (! -d "spec/mugl") {
+    die "makegraphicstests must be run from the project top-level directory\n";
+}
+
+my $instances = {};
+my $muglfile,$width,$height;
+
+###
+###  Figure out which mugl files to create tests for, and at what sizes
+###
+###     first read the spec/mugl/TESTS file...
+###
+if (-f "spec/mugl/TESTS") {
+    open(IN, "<spec/mugl/TESTS");
+    while (chomp(my $line = <IN>)) {
+        $line =~ s/#.*//;   # remove comments
+        $line =~ s/^\s+//;  # remove leading whitespace
+        $line =~ s/\s+$//;  # remove trailing whitespace
+        $line =~ s/,/ /g;   # replace commas with spaces; so now all values are only whitespace-separated
+        $line =~ s/\s+/,/g; # replace interior whitespace runs with commas; now all values are comma-separated
+        if ($line) {
+            ($mugl,$width,$height) = split(/,/, $line);
+            if (!$instances->{$mugl}) {
+                $instances->{$mugl} = [ { 'width' => $width, 'height' => $height } ];
+            } else {
+                push(@{$instances->{$mugl}}, { 'width' => $width, 'height' => $height });
+            }
+        }
+    }
+}
+close(IN);
+###
+###     now look at all the xml files in spec/mugl, and add any that weren't listed
+###     in the TESTS file, using the default graph size of 800x500
+###
+chdir("spec/mugl");
+foreach $mugl (<*.xml>) {
+    if (!$instances->{$mugl}) {
+        $instances->{$mugl} = [ { 'width' => 800, 'height' => 500 } ];
+    }
+}
+chdir("../..");
+
+###
+###  create the list of graphics drivers by looking at subdirs of spec/graphics,
+###  but for now at least, skip the "logger" driver
+###
+@drivers = ();
+chdir("spec/graphics");
+foreach $file (<*>) {
+    if (-d $file) {
+        if ($file ne "logger") {
+            push(@drivers, $file);
+        }
+    }
+}
+chdir("../..");
+
+
+###
+### build the html filenames and the next and prev pointers for use in navigation links
+###
+$last = "";
+foreach $mugl (sort keys(%{$instances})) {
+    $base = $mugl;
+    $base =~ s/\.xml$//;
+    foreach $size (@{$instances->{$mugl}}) {
+        $size->{'fname'} = sprintf("%s%s.html",
+                                   $base,
+                                   ( ($size->{'width'} || $size->{'height'})
+                                     ? sprintf("-%1dx%1d", $size->{'width'}, $size->{'height'})
+                                     : "" ));
+        if ($last) {
+            $last->{'next'} = $size->{'fname'};
+            $size->{'prev'} = $last->{'fname'};
+        }
+        $last = $size;
+    }
+}
+
+###
+### create the html file for each test, and the spec/graphics/index.html file
+###
+open(SPI, ">spec/graphics/index.html");
+print SPI <<EOF;
+<html>
+<head><title>Multigraph Graphics Tests</title></head>
+<body>
+<center>
+<h2>Multigraph Graphics Tests</h2>
+<p>
+<table border="1">
+<tr>
+EOF
+;
+foreach $driver (@drivers) {
+    print SPI "<td><b>$driver</b></td>";
+}
+print SPI "\n</tr>\n";
+foreach $mugl (sort keys(%{$instances})) {
+    foreach $size (@{$instances->{$mugl}}) {
+        $fname = $size->{'fname'};
+        print(SPI "<tr>\n");
+        foreach $driver (@drivers) {
+            $path = "spec/graphics/$driver/$fname";
+            printf("writing $path\n");
+            open(OUT, ">$path");
+            print OUT make_test_html($mugl, 
+                                     $size->{'width'}, $size->{'height'},
+                                     $driver,
+                                     $size->{'prev'}, $size->{'next'});
+            close(OUT);
+            $fbase = $fname;
+            $fbase =~ s/\.html$//;
+            printf(SPI '<td><a href="%s">%s</a></td>',
+                   "$driver/$fname", $fbase);
+        }
+        print(SPI "</tr>\n");
+    }
+}
+print SPI <<EOF
+</table>
+</center>
+</body>
+</html>
+EOF
+    ;
+close(SPI);
+
+sub make_test_html {
+    my $mugl = shift;
+    my $width = shift;
+    my $height = shift;
+    my $driver = shift;
+    my $prevlink = shift;
+    my $nextlink = shift;
+
+    my $prev = "";
+    my $next = "";
+    if ($prevlink) {
+        $prev = sprintf('Previous: <a href="%s">%s</a>', $prevlink, $prevlink);
+    }
+    if ($nextlink) {
+        $next = sprintf('Next: <a href="%s">%s</a>', $nextlink, $nextlink);
+    }
+
+    $up = '<a href="../index.html">All Graphics Tests</a>';
+
+    my $title = "$driver graphics test: $mugl";
+    if ($width || $height) {
+        $title .= " ($width X $height)";
+    }
+
+    my $style = "";
+    if ($width || $height) {
+        $style = <<EOF;
+<style type="text/css">
+#thegraph {
+  width:  ${width}px;
+  height: ${height}px;
+  border: 0px;
+}
+</style>
+EOF
+    }
+
+    return <<EOF;
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- 
+  DO NOT EDIT THIS FILE BY HAND.  It is generated automatically by the 'makegraphicstests' script.
+  If you edit this file, your edits will be lost the next time this script is run.
+-->
+<html>
+<head>
+  <title>$title</title>
+  <script type="text/javascript" src="../../../lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="../../../lib/jermaine/jermaine.js"></script>
+  <script type="text/javascript" src="../../../lib/util/util.js"></script>
+  <script type="text/javascript" src="../../../lib/sprintf/sprintf-0.7-beta1.js"></script>
+  <script type="text/javascript" src="../../../lib/requestanimationframe/requestanimationframe.js"></script>
+<!--BEGIN_ANT_LINES-->
+<!--END_ANT_LINES-->
+  $style
+  <script type="text/javascript">
+    \$(document).ready(function() {
+      var Multigraph = window.multigraph.core.Multigraph;
+      var multigraphPromise = Multigraph.createGraph({ 'div'    : "thegraph",
+                                                       'mugl'   : "../../mugl/$mugl",
+                                                       'driver' : "$driver"
+                                                     });
+    });
+  </script>
+</head>
+<body>
+<center>
+<h3>$title</h3>
+<table>
+<tr>
+<td width="40%" align="left">$prev</td>
+<td width="20%" align="center">$up</td>
+<td width="40%" align="right">$next</td>
+</tr>
+<tr><td colspan="3"><div id="thegraph"/></td></tr>
+</table>
+</center>
+</body>
+</html>
+EOF
+
+}

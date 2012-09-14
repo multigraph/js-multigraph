@@ -1,0 +1,15 @@
+###
+###  This file contains a list of mugl files from this directory, and
+###  sizes (width followed by height) that they should be displayed
+###  at.  The 'ant graphicstests' target will create a test html file
+###  for viewing each of these mugl files at the specified size(s).
+###
+###  'ant graphicstests' also scans this directory to see what
+###  mugl files are present in it, and creates a test html file at the
+###  default size of 800 x 500 for any mugl files not listed here.  If
+###  a mugl file is listed here, no default is created -- only the
+###  sizes mentioned here will be generated.
+###
+
+tempgraph.xml  800  500
+tempgraph.xml  800  300
