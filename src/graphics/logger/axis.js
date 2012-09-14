@@ -32,7 +32,9 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
                 }
             }
 
-            output += this.currentLabeler().dumpLog();
+            if (this.currentLabeler()) {
+                output += this.currentLabeler().dumpLog();
+            }
 
             return output;
         });

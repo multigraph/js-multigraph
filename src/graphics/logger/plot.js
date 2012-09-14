@@ -6,7 +6,9 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
         var Plot = ns.Plot;
 
         Plot.respondsTo("dumpLog", function () {
-            return this.renderer().dumpLog();
+            if (this.renderer()) {
+                return this.renderer().dumpLog();
+            }
         });
 
     });

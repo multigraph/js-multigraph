@@ -35,9 +35,15 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
             var output = "",
                 i;
 
-            output += this.window().dumpLog();
-            output += this.background().dumpLog();
-            output += this.plotarea().dumpLog();
+            if (this.window()) {
+                output += this.window().dumpLog();
+            }
+            if (this.background()) {
+                output += this.background().dumpLog();
+            }
+            if (this.plotarea()) {
+                output += this.plotarea().dumpLog();
+            }
 
             for (i = 0; i < this.axes().size(); ++i) {
                 output += this.axes().at(i).dumpLog();
