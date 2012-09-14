@@ -59,39 +59,39 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     ns.Renderer.declareOptions(FillRenderer, "FillRendererOptions", [
         {
-            'name'          : 'linecolor',
-            'type'          : ns.Renderer.RGBColorOption,
-            'default'       : new window.multigraph.math.RGBColor(0,0,0)
+            "name"          : "linecolor",
+            "type"          : ns.Renderer.RGBColorOption,
+            "default"       : new window.multigraph.math.RGBColor(0,0,0)
         },
         {
-            'name'          : 'linewidth',
-            'type'          : ns.Renderer.NumberOption,
-            'default'       : 1
+            "name"          : "linewidth",
+            "type"          : ns.Renderer.NumberOption,
+            "default"       : 1
         },
         {
-            'name'          : 'fillcolor',
-            'type'          : ns.Renderer.RGBColorOption,
-            'default'       : new window.multigraph.math.RGBColor(FillRenderer.GRAY,FillRenderer.GRAY,FillRenderer.GRAY)
+            "name"          : "fillcolor",
+            "type"          : ns.Renderer.RGBColorOption,
+            "default"       : new window.multigraph.math.RGBColor(FillRenderer.GRAY,FillRenderer.GRAY,FillRenderer.GRAY)
         },
         {
-            'name'          : 'downfillcolor',
-            'type'          : ns.Renderer.RGBColorOption,
-            'default'       : null
+            "name"          : "downfillcolor",
+            "type"          : ns.Renderer.RGBColorOption,
+            "default"       : null
         },
         {
-            'name'          : 'fillopacity',
-            'type'          : ns.Renderer.NumberOption,
-            'default'       : 1.0
+            "name"          : "fillopacity",
+            "type"          : ns.Renderer.NumberOption,
+            "default"       : 1.0
         },
         {
-            'name'          : 'fillbase',
-            'type'          : ns.Renderer.VerticalDataValueOption,
-            'default'       : null
+            "name"          : "fillbase",
+            "type"          : ns.Renderer.VerticalDataValueOption,
+            "default"       : null
         }
     ]);
 
-    ns.Renderer.addType({'type'  : "fill",
-                         'model' : FillRenderer});
+    ns.Renderer.addType({"type"  : ns.Renderer.Type.parse("fill"),
+                         "model" : FillRenderer});
 
     ns.FillRenderer = FillRenderer;
 });

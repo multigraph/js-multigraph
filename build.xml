@@ -12,8 +12,8 @@
   <path id="path.multigraph-core-js">
     <fileset dir="src/utility-functions" includes="**/*.js" />
     <filelist dir="src/core" files="data_value.js data_measure.js data_formatter.js" />
-    <filelist dir="src/core" files="renderer.js" />
     <fileset dir="src/math" includes="**/*.js" />
+    <filelist dir="src/core" files="renderer.js" />
     <filelist dir="src/core" files="data_variable.js data.js" />
     <fileset dir="src/core" includes="**/*.js"
 	     excludes="src/core/data_value.js src/core/data_measure.js src/core/data_formatter.js src/core/renderer.js src/core/data_variable.js src/core/data.js" />

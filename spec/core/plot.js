@@ -121,7 +121,7 @@ describe("Plot", function () {
         var renderer;
 
         beforeEach(function () {
-            renderer = new Renderer("line");
+            renderer = new Renderer(Renderer.LINE);
         });
 
         it("should be able to add a renderer to a Plot", function () {
@@ -134,13 +134,13 @@ describe("Plot", function () {
             var option = new RendererOption("barwidth", "3"),
                 option2 = new RendererOption("linecolor", "0x345678");
 */
-            renderer.type("bar");
+            renderer.type(Renderer.BAR);
 /*TODO: change to check for new style options
             renderer.options().add(option);
             renderer.options().add(option2);
 */
             p.renderer(renderer);
-            expect(p.renderer().type()).toBe("bar");
+            expect(p.renderer().type()).toBe(Renderer.BAR);
 /*TODO: change to check for new style options
             expect(p.renderer().options().at(0)).toBe(option);
             expect(p.renderer().options().at(1)).toBe(option2);
@@ -155,11 +155,11 @@ describe("Plot", function () {
             renderer.options().add(option2);
 */
             p.renderer(renderer);
-            p.renderer().type("line");
+            p.renderer().type(Renderer.LINE);
 /*TODO: change to check for new style options
             p.renderer().options().at(0).name("dotsize").value("2");
 */
-            expect(p.renderer().type()).toBe("line");
+            expect(p.renderer().type()).toBe(Renderer.LINE);
 /*TODO: change to check for new style options
             expect(p.renderer().options().at(0).name()).toBe("dotsize");
             expect(p.renderer().options().at(0).value()).toBe("2");

@@ -5,20 +5,11 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         Renderer,
         RendererOption,
         defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
-        attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.plot.renderer);
+        attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.plot.renderer),
+        Type = new window.multigraph.math.Enum("RendererType");
 
     Renderer = new window.jermaine.Model( "Renderer", function () {
-        this.hasA("type").which.validatesWith(function (type) {
-            return type === "line" ||
-                   type === "bar" ||
-                   type === "fill" ||
-                   type === "point" ||
-                   type === "barerror" ||
-                   type === "lineerror" ||
-                   type === "pointline" ||
-                   type === "band" ||
-                   type === "rangebar";
-        });
+        this.hasA("type").which.validatesWith(Type.isInstance);
         this.hasA("plot").which.validatesWith(function (plot) {
             return plot instanceof ns.Plot;
         });
@@ -333,6 +324,18 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
         
     });
+
+    Renderer.POINTLINE = new Type("pointline");
+    Renderer.POINT     = new Type("point");
+    Renderer.LINE      = new Type("line");
+    Renderer.BAR       = new Type("bar");
+    Renderer.FILL      = new Type("fill");
+    Renderer.BAND      = new Type("band");
+    Renderer.RANGEBAR  = new Type("rangebar");
+    Renderer.LINEERROR = new Type("lineerror");
+    Renderer.BARERROR  = new Type("barerror");
+
+    Renderer.Type = Type;
 
     ns.Renderer = Renderer;
 });

@@ -1,16 +1,15 @@
 window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
     "use strict";
 
-    var scalarAttributes = ["type"];
-
     ns.mixin.add(function (ns, parse, serialize) {
 
         ns.core.Renderer[parse] = function (xml, plot) {
             var rendererType,
                 renderer,
                 opt;
+
             if (xml && xml.attr("type") !== undefined) {
-                rendererType = xml.attr("type");
+                rendererType = ns.core.Renderer.Type.parse(xml.attr("type"));
                 renderer = ns.core.Renderer.create(rendererType);
                 if (!renderer) {
                     throw new Error("unknown renderer type '"+rendererType+"'");
@@ -33,7 +32,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 output = '<renderer ',
                 i;
 
-            attributeStrings = window.multigraph.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
+            attributeStrings.push('type="' + this.type().toString() + '"');
 
             output += attributeStrings.join(' ');
 

@@ -142,51 +142,51 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     ns.Renderer.declareOptions(PointlineRenderer, "PointlineRendererOptions", [
         {
-            'name'          : 'linecolor',
-            'type'          : ns.Renderer.RGBColorOption,
-            'default'       : new window.multigraph.math.RGBColor(0,0,0)
+            "name"          : "linecolor",
+            "type"          : ns.Renderer.RGBColorOption,
+            "default"       : new window.multigraph.math.RGBColor(0,0,0)
         },
         {
-            'name'          : 'linewidth',
-            'type'          : ns.Renderer.NumberOption,
-            'default'       : 1
+            "name"          : "linewidth",
+            "type"          : ns.Renderer.NumberOption,
+            "default"       : 1
         },
         {
-            'name'          : 'pointshape',
-            'type'          : PointlineRenderer.ShapeOption,
-            'default'       : PointlineRenderer.CIRCLE
+            "name"          : "pointshape",
+            "type"          : PointlineRenderer.ShapeOption,
+            "default"       : PointlineRenderer.CIRCLE
         },
         {
-            'name'          : 'pointsize',
-            'type'          : ns.Renderer.NumberOption,
-            'default'       : 0
+            "name"          : "pointsize",
+            "type"          : ns.Renderer.NumberOption,
+            "default"       : 0
         },
         {
-            'name'          : 'pointcolor',
-            'type'          : ns.Renderer.RGBColorOption,
-            'default'       : new window.multigraph.math.RGBColor(0,0,0)
+            "name"          : "pointcolor",
+            "type"          : ns.Renderer.RGBColorOption,
+            "default"       : new window.multigraph.math.RGBColor(0,0,0)
         },
         {
-            'name'          : 'pointopacity',
-            'type'          : ns.Renderer.NumberOption,
-            'default'       : 1.0
+            "name"          : "pointopacity",
+            "type"          : ns.Renderer.NumberOption,
+            "default"       : 1.0
         },
         {
-            'name'          : 'pointoutlinewidth',
-            'type'          : ns.Renderer.NumberOption,
-            'default'       : 0
+            "name"          : "pointoutlinewidth",
+            "type"          : ns.Renderer.NumberOption,
+            "default"       : 0
         },
         {
-            'name'          : 'pointoutlinecolor',
-            'type'          : ns.Renderer.RGBColorOption,
-            'default'       : new window.multigraph.math.RGBColor(0,0,0)
+            "name"          : "pointoutlinecolor",
+            "type"          : ns.Renderer.RGBColorOption,
+            "default"       : new window.multigraph.math.RGBColor(0,0,0)
         }
     ]);
 
-    ns.Renderer.addType({'type'  : "pointline",
-                         'model' : PointlineRenderer});
-    ns.Renderer.addType({'type'  : "line",
-                         'model' : PointlineRenderer});
+    ns.Renderer.addType({"type"  : ns.Renderer.Type.parse("pointline"),
+                         "model" : PointlineRenderer});
+    ns.Renderer.addType({"type"  : ns.Renderer.Type.parse("line"),
+                         "model" : PointlineRenderer});
 
     ns.PointlineRenderer = PointlineRenderer;
 });

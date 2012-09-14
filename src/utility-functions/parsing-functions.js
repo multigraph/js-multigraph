@@ -302,7 +302,7 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
                         "min": undefined,
                         "max": undefined
                     },
-                    "type": "line"
+                    "type": function () { return window.multigraph.core.Renderer.Type.parse("line"); }
                 },
                 "datatips":{
                     "variable": {

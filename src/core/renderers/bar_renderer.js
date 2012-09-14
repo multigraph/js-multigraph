@@ -88,7 +88,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         }
     ]);
 
-    ns.Renderer.addType({"type"  : "bar",
+    ns.Renderer.addType({"type"  : ns.Renderer.Type.parse("bar"),
                          "model" : BarRenderer});
 
     ns.BarRenderer = BarRenderer;

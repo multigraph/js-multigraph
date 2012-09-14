@@ -11,7 +11,7 @@ describe("Plot Renderer parsing", function () {
 
     beforeEach(function () {
         window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
-	$xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+        $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
         r = Renderer.parseXML($xml);
     });
 
@@ -21,13 +21,13 @@ describe("Plot Renderer parsing", function () {
     });
 
     it("should be able to parse a renderer from XML and read its 'type' attribute", function () {
-        expect(r.type()).toBe("pointline");
+        expect(r.type()).toBe(Renderer.POINTLINE);
     });
 
     it("should be able to parse a renderer from XML, serialize it and get the same XML as the original", function () {
         var xmlString2 = '<renderer type="pointline"/>';
         expect(r.serialize()).toBe(xmlString);
-	r = Renderer.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString2));
+        r = Renderer.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString2));
         expect(r.serialize()).toBe(xmlString2);
     });
 

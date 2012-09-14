@@ -7,7 +7,7 @@ describe("Renderer", function () {
         r;
 
     beforeEach(function () {
-        r = new Renderer("line");
+        r = new Renderer(Renderer.LINE);
     }); 
 
     it("should be able to create a Renderer", function () {
@@ -16,14 +16,14 @@ describe("Renderer", function () {
 
     describe("type attribute", function () {
         it("should be able to set/get the type attribute", function () {
-            r.type("lineerror");
-            expect(r.type()).toBe("lineerror");
+            r.type(Renderer.LINEERROR);
+            expect(r.type()).toBe(Renderer.LINEERROR);
         });
 
 
         it("should throw an error if types value is not one of the predefined values", function () {
             expect(function () {
-                r.type("barerror");
+                r.type(Renderer.BARERROR);
             }).not.toThrow();
             expect(function () {
                 r.type("barerrors");
@@ -39,13 +39,13 @@ describe("Renderer", function () {
             option = new RendererOption("linewidth", "100");
         });
 
-	//TODO: change to check for new style options
+        //TODO: change to check for new style options
         xit("should be able to add a RendererOption to a Renderer", function () {
             r.options().add(option);
             expect(r.options().at(0)).toBe(option);
         });
 
-	//TODO: change to check for new style options
+        //TODO: change to check for new style options
         xit("should be able to add multiple RendererOptions to a Renderer", function () {
             var option2 = new RendererOption("linecolor", "0x123456");
             r.options().add(option);
@@ -54,7 +54,7 @@ describe("Renderer", function () {
             expect(r.options().at(1)).toBe(option2);
         });
 
-	//TODO: change to check for new style options
+        //TODO: change to check for new style options
         xit("should be able to add an RendererOption with attributes to a Renderer", function () {
             option.name("linewidth");
             option.value("100");
@@ -62,7 +62,7 @@ describe("Renderer", function () {
             expect(r.options().at(0)).toBe(option);
         });
 
-	//TODO: change to check for new style options
+        //TODO: change to check for new style options
         xit("should be able to add multiple RendererOptions with attributes to a Renderer", function () {
             var option2 = new RendererOption("linecolor", "0x123456"),
                 option3 = new RendererOption("dotsize", "2");
@@ -77,7 +77,7 @@ describe("Renderer", function () {
             expect(r.options().at(2)).toBe(option3);
         });
 
-	//TODO: change to check for new style options
+        //TODO: change to check for new style options
         xit("should be able to set/get attributes of an RendererOption added to a Renderer", function () {
             r.options().add(option);
             r.options().at(0).name("dotcolor");
