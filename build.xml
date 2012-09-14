@@ -35,8 +35,12 @@
     <filelist dir="src/graphics/canvas" files="canvas_mixin.js"/>
     <fileset dir="src/graphics/canvas" includes="**/*.js" excludes="canvas_mixin.js" />
   </path>
+  <path id="path.graphics-logger-js">
+    <filelist dir="src/graphics/logger" files="logger_mixin.js"/>
+    <fileset dir="src/graphics/logger" includes="**/*.js" excludes="logger_mixin.js" />
+  </path>
   <path id="path.spec-js">
-    <fileset dir="spec" includes="**/*.js" />
+    <fileset dir="spec" includes="**/*.js"/>
   </path>
   <path id="path.mugl-xml">
     <fileset dir="spec/mugl" includes="**/*.xml" />
@@ -77,7 +81,7 @@
     </replaceregexp>
   </target>
 
-  <target name="html" depends="jasmine-index-html,jasmine-build-html,raphael-html,canvas-html">
+  <target name="html" depends="jasmine-index-html,jasmine-build-html,raphael-html,canvas-html,logger-html">
   </target>
 
   <target name="jasmine-index-html">
@@ -145,6 +149,24 @@
       <regexp pattern="&lt;!--BEGIN_ANT_LINES--&gt;.*&lt;!--END_ANT_LINES--&gt;"/>
       <substitution expression="&lt;!--BEGIN_ANT_LINES--&gt;${line.separator}${scripttags.mg-jq}${line.separator}${line.separator}${scripttags.canvas}${line.separator}&lt;!--END_ANT_LINES--&gt;"/>
       <fileset dir="spec/graphics/canvas" includes="**/*.html"/>
+    </replaceregexp>
+  </target>
+
+  <target name="logger-html">
+    <pathconvert property="scripttags.mg-jq" pathsep="${line.separator}">
+      <path refid="path.multigraph-core-js"/>
+      <path refid="path.parser-jquery-js"/>
+      <mapper type="regexp" from="^${basedir}/(.*)$" to='&lt;script type="text/javascript" src="../../../\1"&gt;&lt;/script&gt;'/>
+    </pathconvert>
+    <pathconvert property="scripttags.logger" pathsep="${line.separator}">
+      <path refid="path.graphics-logger-js"/>
+      <path refid="path.events-jquery-mouse-js"/>
+      <mapper type="regexp" from="^${basedir}/(.*)$" to='&lt;script type="text/javascript" src="../../../\1"&gt;&lt;/script&gt;'/>
+    </pathconvert>
+    <replaceregexp flags="s">
+      <regexp pattern="&lt;!--BEGIN_ANT_LINES--&gt;.*&lt;!--END_ANT_LINES--&gt;"/>
+      <substitution expression="&lt;!--BEGIN_ANT_LINES--&gt;${line.separator}${scripttags.mg-jq}${line.separator}${line.separator}${scripttags.logger}${line.separator}&lt;!--END_ANT_LINES--&gt;"/>
+      <fileset dir="spec/graphics/logger" includes="**/*.html"/>
     </replaceregexp>
   </target>
 
