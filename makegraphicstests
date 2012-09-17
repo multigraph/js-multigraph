@@ -59,15 +59,12 @@ chdir("../..");
 
 ###
 ###  create the list of graphics drivers by looking at subdirs of spec/graphics,
-###  but for now at least, skip the "logger" driver
 ###
 @drivers = ();
 chdir("spec/graphics");
 foreach $file (<*>) {
     if (-d $file) {
-        if ($file ne "logger") {
-            push(@drivers, $file);
-        }
+        push(@drivers, $file);
     }
 }
 chdir("../..");
@@ -110,7 +107,9 @@ print SPI <<EOF;
 EOF
 ;
 foreach $driver (@drivers) {
-    print SPI "<td><b>$driver</b></td>";
+    if ($driver ne "logger") {
+        print SPI "<td><b>$driver</b></td>";
+    }
 }
 print SPI "\n</tr>\n";
 foreach $mugl (sort keys(%{$instances})) {
@@ -126,10 +125,12 @@ foreach $mugl (sort keys(%{$instances})) {
                                      $driver, \@drivers,
                                      $size->{'prev'}, $size->{'next'});
             close(OUT);
-            $fbase = $fname;
-            $fbase =~ s/\.html$//;
-            printf(SPI '<td><a href="%s">%s</a></td>',
-                   "$driver/$fname", $fbase);
+            if ($driver ne "logger") {
+                $fbase = $fname;
+                $fbase =~ s/\.html$//;
+                printf(SPI '<td><a href="%s">%s</a></td>',
+                       "$driver/$fname", $fbase);
+            }
         }
         print(SPI "</tr>\n");
     }
@@ -176,8 +177,10 @@ sub make_test_html {
     $fname .= ".html";
     my @otherdriverlinks = ();
     foreach my $d (@drivers) {
-        if ($d ne $driver) {
-            push(@otherdriverlinks, sprintf('<a href="../%s/%s">%s</a>', $d, $fname, $d));
+        if ($d ne "logger") {
+            if ($d ne $driver) {
+                push(@otherdriverlinks, sprintf('<a href="../%s/%s">%s</a>', $d, $fname, $d));
+            }
         }
     }
     my $otherdriverlinks = join(" ", @otherdriverlinks);
@@ -194,7 +197,7 @@ sub make_test_html {
 </style>
 EOF
     }
-
+\
     return <<EOF;
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- 
@@ -249,7 +252,6 @@ EOF
 EOF
 
 }
-
 
 open(OUT, ">spec/graphics/logger/graphicstests.js");
 print OUT <<EOF

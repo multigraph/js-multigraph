@@ -28,6 +28,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
             this.width(this.$div().width());
             this.height(this.$div().height());
             this.render();
+            console.log(this.dumpLog());
         });
 
         Multigraph.respondsTo("render", function () {
@@ -45,6 +46,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
             for (i = 0; i < this.graphs().size(); ++i) {
                 output += this.graphs().at(i).dumpLog();
             }
+
+            output += "\n";
 
             return output;
         });

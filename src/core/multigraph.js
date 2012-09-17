@@ -38,6 +38,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
            return Multigraph.createCanvasGraph(obj.div, obj.mugl);
        } else if (obj.driver === "raphael") {
            return Multigraph.createRaphaelGraph(obj.div, obj.mugl);
+       } else if (obj.driver === "logger") {
+           return Multigraph.createLoggerGraph(obj.div, obj.mugl);
        }
        throw new Error("invalid graphic driver '" + obj.driver + "' specified to Multigraph.createGraph");
    };

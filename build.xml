@@ -37,7 +37,7 @@
   </path>
   <path id="path.graphics-logger-js">
     <filelist dir="src/graphics/logger" files="logger_mixin.js"/>
-    <fileset dir="src/graphics/logger" includes="**/*.js" excludes="logger_mixin.js" />
+    <fileset dir="src/graphics/logger" includes="**/*.js" excludes="logger_mixin.js log.js" />
   </path>
   <path id="path.spec-js">
     <fileset dir="spec" includes="**/*.js"/>
