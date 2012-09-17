@@ -6,7 +6,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
 
         Img.hasA("logger");
 
-        Img.respondsTo("dumpLogy", function () {
+        Img.respondsTo("dumpLog", function () {
             var logger = this.logger(),
                 output = "drawImage(" + logger.src + "," + logger.x + "," + logger.y + ");\n";
 
@@ -28,6 +28,13 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
                 by,
                 x,
                 y;
+
+            this.logger({
+                "src" : this.src(),
+                "x"   : "Not Yet Fetched",
+                "y"   : "Not Yet Fetched"
+            });
+
 
             if (this.fetched()) {
                 ax = window.multigraph.math.util.interp(this.anchor().x(), -1, 1, 0, this.image().width);
