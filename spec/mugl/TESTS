@@ -11,5 +11,6 @@
 ###  sizes mentioned here will be generated.
 ###
 
-tempgraph.xml  800  500
-tempgraph.xml  800  300
+tempgraph.xml  		800  500
+tempgraph.xml  		800  300
+dashboard-temp.xml  800  400

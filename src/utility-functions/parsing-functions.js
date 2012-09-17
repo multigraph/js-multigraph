@@ -113,10 +113,9 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
                 "labels": {
                     "label": {
                         "format": undefined,
-                        "start": undefined,
-                        "angle": undefined,
-                        "position": undefined,
+                        "position": function () { return new window.multigraph.math.Point(0,0); },
                         "anchor": function () { return new window.multigraph.math.Point(-1,1); },
+                        "angle": 0.0,
                         "spacing": undefined,
                         "densityfactor": undefined
 //                        "fontname": undefined,
@@ -129,7 +128,7 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
 //                    "format": "%1d",
 //                    "visible": "true",
                     "start-number": function() { return new window.multigraph.core.NumberValue(0); },
-//                  "start-datetime": { return new DatetimeValue(...); }
+                    "start-datetime": function() { return new window.multigraph.core.DatetimeValue(0); },
                     "angle": 0.0,
                     "position": function () { return new window.multigraph.math.Point(0,0); },
                     "anchor": function () { return new window.multigraph.math.Point(0,0); },

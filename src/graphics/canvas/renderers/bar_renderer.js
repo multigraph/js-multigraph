@@ -9,7 +9,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         ns.BarRenderer.respondsTo("begin", function (context) {
             var settings = {
                 "context"            : context,
-                "barpixelwidth"      : this.getOptionValue("barwidth") * this.plot().horizontalaxis().axisToDataRatio(),
+                "barpixelwidth"      : this.getOptionValue("barwidth").getRealValue() * this.plot().horizontalaxis().axisToDataRatio(),
                 "baroffset"          : this.getOptionValue("baroffset"),
                 "barpixelbase"       : (this.getOptionValue("barbase") !== null)?this.plot().verticalaxis().dataValueToAxisValue(this.getOptionValue("barbase")):0,
                 "fillcolor"          : this.getOptionValue("fillcolor"),
@@ -23,7 +23,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 
             this.settings(settings);
 
-            context.fillStyle = settings.fillcolor.getHexString("#");
+            //context.fillStyle = settings.fillcolor.getHexString("#");
             context.strokeStyle = settings.linecolor.getHexString("#");
         });
 
@@ -67,7 +67,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                 context = settings.context,
                 p,
                 x0,
-                x1;
+                x1,
+                fillcolor = this.getOptionValue("fillcolor", datap[1]);
 
             if (this.isMissing(datap)) {
                 return;
@@ -77,7 +78,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 
             x0 = p[0] + settings.baroffset;
             x1 = p[0] + settings.baroffset + settings.barpixelwidth;
-            
+
+            context.fillStyle = fillcolor.getHexString("#");
             context.fillRect(x0, settings.barpixelbase, settings.barpixelwidth, p[1] - settings.barpixelbase);
 
             if (settings.barpixelwidth > settings.hidelines) {

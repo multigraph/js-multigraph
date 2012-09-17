@@ -47,6 +47,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             this.isBuiltWith(function () {
                 this.window( new ns.Window() );
                 this.plotarea( new ns.Plotarea() );
+                this.background( new ns.Background() );
             });
 
             this.respondsTo("postParse", function () {

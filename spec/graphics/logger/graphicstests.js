@@ -52,7 +52,7 @@ describe("Logger Graphics Tests", function () {
     });
     xit("dashboard-temp.xml should match", function() {
         //var loggerOutput = getLoggerOutput("./mugl/dashboard-temp.xml", 800, 500);
-        var savedOutput = getFileContents("./graphics/logger/fixtures/dashboard-temp-800x500.log");
+        var savedOutput = getFileContents("./graphics/logger/fixtures/dashboard-temp-800x400.log");
         waitsFor(function () {
             return savedOutput.haveData;
         });

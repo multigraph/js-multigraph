@@ -37,9 +37,9 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     }
                 }
 
-                if (xml.find("variable").length > 0) {
+                if (xml.find("horizontalaxis variable, verticalaxis variable").length > 0) {
                     if (graph) {
-                        $.each(xml.find("variable"), function (i,e) {
+                        $.each(xml.find("horizontalaxis variable, verticalaxis variable"), function (i,e) {
                             variable = graph.variableById( $(e).attr("ref") );
                             if (variable !== undefined) {
                                 plot.data( variable.data() );

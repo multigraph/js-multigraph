@@ -3,6 +3,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.horizontalaxis.labels.label),
+        Axis = ns.Axis,
+        DataValue = ns.DataValue,
+
         Labeler = new window.jermaine.Model( "Labeler", function () {
 
             this.hasA("axis").which.validatesWith(function (axis) {
@@ -20,7 +23,19 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             this.hasA("spacing").which.validatesWith(ns.DataMeasure.isInstance);
             this.hasA("densityfactor").which.isA("number");
 
-            this.isBuiltWith("axis");
+            this.isBuiltWith("axis", function() {
+                var defaultValue;
+                if (this.axis().type() === DataValue.DATETIME) {
+                    defaultValue = defaultValues.horizontalaxis.labels['start-datetime'];
+                } else {
+                    defaultValue = defaultValues.horizontalaxis.labels['start-number'];
+                }
+                if (typeof(defaultValue) === "function") {
+                    this.start(defaultValue());
+                } else {
+                    this.start(defaultValue);
+                }
+            });
 
             this.respondsTo("isEqualExceptForSpacing", function(labeler) {
                 // return true iff the given labeler and this labeler are equal in every way
