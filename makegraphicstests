@@ -249,3 +249,64 @@ EOF
 EOF
 
 }
+
+
+open(OUT, ">spec/graphics/logger/graphicstests.js");
+print OUT <<EOF
+/*global describe, it, beforeEach, expect, xit, jasmine */
+describe("Logger Graphics Tests", function () {
+    "use strict";
+
+    var Graph = window.multigraph.core.Graph,
+        Axis = window.multigraph.core.Axis;
+
+    function getFileContents(name) {
+        var contentsObj = {
+            'haveData' : false
+        };
+        \$.ajax({ 'url': name,
+                 'success' : function(data) {
+                     contentsObj.contents = data;
+                     contentsObj.haveData = true;
+                 }});
+        return contentsObj;
+    }
+
+    beforeEach(function () {
+        //...
+    });
+EOF
+    ;
+
+foreach $mugl (sort keys(%{$instances})) {
+    $base = $mugl;
+    $base =~ s/\.xml$//;
+    foreach $size (@{$instances->{$mugl}}) {
+        $logfile = sprintf("./graphics/logger/fixtures/%s-%1dx%1d.log", $base, $size->{width}, $size->{height});
+        if (-f "spec/$logfile") {
+            $it = "it";
+        } else {
+            $it = "xit";
+        }
+        print OUT <<EOF
+    $it("$mugl should match", function() {
+        //var loggerOutput = getLoggerOutput("./mugl/$mugl", 800, 500);
+        var savedOutput = getFileContents("$logfile");
+        waitsFor(function () {
+            return savedOutput.haveData;
+        });
+        runs(function () {
+            expect(savedOutput.contents).toEqual(savedOutput.contents);
+        });
+    });
+EOF
+    ;
+    }
+}
+
+print OUT <<EOF
+});
+EOF
+;    
+
+close(OUT);
