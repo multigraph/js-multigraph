@@ -9,7 +9,7 @@
 -->
 <html>
 <head>
-  <title>canvas graphics test: dashboard-temp.xml (800 X 400)</title>
+  <title>logger graphics test: dashboard-aoi.xml (800 X 400)</title>
   <script type="text/javascript" src="../../../lib/jquery/jquery.min.js"></script>
   <script type="text/javascript" src="../../../lib/jermaine/jermaine.js"></script>
   <script type="text/javascript" src="../../../lib/util/util.js"></script>
@@ -104,15 +104,19 @@
 <script type="text/javascript" src="../../../src/parser/jquery/window.js"></script>
 <script type="text/javascript" src="../../../src/parser/jquery/zoom.js"></script>
 
-<script type="text/javascript" src="../../../src/graphics/canvas/canvas_mixin.js"></script>
-<script type="text/javascript" src="../../../src/graphics/canvas/axis.js"></script>
-<script type="text/javascript" src="../../../src/graphics/canvas/graph.js"></script>
-<script type="text/javascript" src="../../../src/graphics/canvas/labeler.js"></script>
-<script type="text/javascript" src="../../../src/graphics/canvas/multigraph.js"></script>
-<script type="text/javascript" src="../../../src/graphics/canvas/plot.js"></script>
-<script type="text/javascript" src="../../../src/graphics/canvas/renderers/bar_renderer.js"></script>
-<script type="text/javascript" src="../../../src/graphics/canvas/renderers/fill_renderer.js"></script>
-<script type="text/javascript" src="../../../src/graphics/canvas/renderers/pointline_renderer.js"></script>
+<script type="text/javascript" src="../../../src/graphics/logger/logger_mixin.js"></script>
+<script type="text/javascript" src="../../../src/graphics/logger/axis.js"></script>
+<script type="text/javascript" src="../../../src/graphics/logger/background.js"></script>
+<script type="text/javascript" src="../../../src/graphics/logger/graph.js"></script>
+<script type="text/javascript" src="../../../src/graphics/logger/img.js"></script>
+<script type="text/javascript" src="../../../src/graphics/logger/labeler.js"></script>
+<script type="text/javascript" src="../../../src/graphics/logger/multigraph.js"></script>
+<script type="text/javascript" src="../../../src/graphics/logger/plot.js"></script>
+<script type="text/javascript" src="../../../src/graphics/logger/plotarea.js"></script>
+<script type="text/javascript" src="../../../src/graphics/logger/renderers/bar_renderer.js"></script>
+<script type="text/javascript" src="../../../src/graphics/logger/renderers/fill_renderer.js"></script>
+<script type="text/javascript" src="../../../src/graphics/logger/renderers/pointline_renderer.js"></script>
+<script type="text/javascript" src="../../../src/graphics/logger/window.js"></script>
 <script type="text/javascript" src="../../../src/events/jquery/mouse/mixin.js"></script>
 <script type="text/javascript" src="../../../src/events/jquery/mouse/graph.js"></script>
 <script type="text/javascript" src="../../../src/events/jquery/mouse/multigraph.js"></script>
@@ -129,8 +133,8 @@
     $(document).ready(function() {
       var Multigraph = window.multigraph.core.Multigraph;
       var multigraphPromise = Multigraph.createGraph({ 'div'    : "thegraph",
-                                                       'mugl'   : "../../mugl/dashboard-temp.xml",
-                                                       'driver' : "canvas"
+                                                       'mugl'   : "../../mugl/dashboard-aoi.xml",
+                                                       'driver' : "logger"
                                                      });
     });
   </script>
@@ -139,15 +143,15 @@
 <center>
 <table>
 <tr>
-<td align="left"><h3>canvas graphics test: dashboard-temp.xml (800 X 400)</h3></td>
-<td align="right">Switch to: <a href="../raphael/dashboard-temp-800x400.html">raphael</a></td>
+<td align="left"><h3>logger graphics test: dashboard-aoi.xml (800 X 400)</h3></td>
+<td align="right">Switch to: <a href="../canvas/dashboard-aoi-800x400.html">canvas</a> <a href="../raphael/dashboard-aoi-800x400.html">raphael</a></td>
 </tr>
 <tr><td colspan="2">
 <table>
 <tr>
-<td width="40%" align="left">Previous: <a href="dashboard-sun-800x400.html">dashboard-sun-800x400.html</a></td>
+<td width="40%" align="left">Previous: <a href="bar_legend-800x500.html">bar_legend-800x500.html</a></td>
 <td width="20%" align="center"><a href="../index.html">All Graphics Tests</a></td>
-<td width="40%" align="right">Next: <a href="fill_graph-800x500.html">fill_graph-800x500.html</a></td>
+<td width="40%" align="right">Next: <a href="dashboard-asi-800x400.html">dashboard-asi-800x400.html</a></td>
 </tr>
 <tr><td align="center" colspan="3"><div id="thegraph"/></td></tr>
 </table>

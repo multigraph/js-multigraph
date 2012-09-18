@@ -1,0 +1,83 @@
+<mugl>
+  <background color="0xFFFFFF"/>
+  <window border="0" margin="0" padding="0"/>
+  <ui eventhandler="saui"/>
+  <legend visible="false"/>
+  <plotarea marginbottom="50" marginleft="60" marginright="25" margintop="10"/>
+
+  <horizontalaxis highlightstyle="labels" id="x" linewidth="0" max="2010" min="1979" tickmax="0" tickmin="-4" type="datetime">
+    <labels>
+      <label format="%Y" spacing="100Y 50Y 20Y 10Y 5Y 2Y 1Y"/>
+      <label format="%n %y" spacing="6M 3M 2M 1M"/>
+    </labels>
+    <title anchor="0 5" position="-10 0">Year</title>
+    <grid color="0xeeeeee"/>
+  </horizontalaxis>
+  <verticalaxis highlightstyle="labels" id="y" linewidth="0" max="8" min="4" tickmax="0" tickmin="-4">
+    <labels>
+      <label densityfactor="0.5" format="%1d" spacing="20 10 5 2 1"/>
+      <label densityfactor="0.5" format="%.1f" spacing="0.5 0.2 0.1"/>
+    </labels>
+    <title anchor="0 -4" angle="90" position="-15 0">Minimum Arctic Sea Ice Extent (millions of square km)</title>
+    
+    
+    <grid color="0xeeeeee"/>
+  </verticalaxis>
+
+  <plot>
+    <legend visible="false"/>
+    <horizontalaxis ref="x"><variable ref="datetime"/></horizontalaxis>
+    <verticalaxis ref="y"><variable ref="minSQ"/></verticalaxis>
+    
+    <renderer type="fill">
+      <option name="fillcolor" value="0x8fc6ff"/>
+      <option name="fillopacity" value="0.2"/>
+    </renderer>
+    <datatips format="{0}: {1}">
+      <variable format="'%y"/>
+      <variable format="%.1f"/>
+    </datatips>
+  </plot>
+
+  
+  <data>
+    <variables>
+      <variable column="0" id="datetime" type="datetime"/>
+      <variable column="1" id="minSQ" type="number"/>
+    </variables>
+    <values>197909,7.20
+    198009,7.85
+    198109,7.25
+    198209,7.45
+    198309,7.52
+    198409,7.17
+    198509,6.93
+    198609,7.54
+    198709,7.48
+    198809,7.49
+    198909,7.04
+    199009,6.24
+    199109,6.55
+    199209,7.55
+    199309,6.50
+    199409,7.18
+    199509,6.13
+    199609,7.88
+    199709,6.74
+    199809,6.56
+    199909,6.24
+    200009,6.32
+    200109,6.75
+    200209,5.96
+    200309,6.15
+    200409,6.05
+    200509,5.57
+    200609,5.92
+    200709,4.30
+    200809,4.73
+    200909,5.39
+    201009,4.93
+    201109,4.61
+    </values>
+  </data>
+</mugl>

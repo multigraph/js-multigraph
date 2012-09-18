@@ -9,7 +9,7 @@
 -->
 <html>
 <head>
-  <title>canvas graphics test: dashboard-temp.xml (800 X 400)</title>
+  <title>raphael graphics test: dashboard-sun.xml (800 X 400)</title>
   <script type="text/javascript" src="../../../lib/jquery/jquery.min.js"></script>
   <script type="text/javascript" src="../../../lib/jermaine/jermaine.js"></script>
   <script type="text/javascript" src="../../../lib/util/util.js"></script>
@@ -104,15 +104,22 @@
 <script type="text/javascript" src="../../../src/parser/jquery/window.js"></script>
 <script type="text/javascript" src="../../../src/parser/jquery/zoom.js"></script>
 
-<script type="text/javascript" src="../../../src/graphics/canvas/canvas_mixin.js"></script>
-<script type="text/javascript" src="../../../src/graphics/canvas/axis.js"></script>
-<script type="text/javascript" src="../../../src/graphics/canvas/graph.js"></script>
-<script type="text/javascript" src="../../../src/graphics/canvas/labeler.js"></script>
-<script type="text/javascript" src="../../../src/graphics/canvas/multigraph.js"></script>
-<script type="text/javascript" src="../../../src/graphics/canvas/plot.js"></script>
-<script type="text/javascript" src="../../../src/graphics/canvas/renderers/bar_renderer.js"></script>
-<script type="text/javascript" src="../../../src/graphics/canvas/renderers/fill_renderer.js"></script>
-<script type="text/javascript" src="../../../src/graphics/canvas/renderers/pointline_renderer.js"></script>
+<script type="text/javascript" src="../../../src/graphics/raphael/raphael.js"></script>
+<script type="text/javascript" src="../../../src/graphics/raphael/raphael_mixin.js"></script>
+<script type="text/javascript" src="../../../src/graphics/raphael/axis.js"></script>
+<script type="text/javascript" src="../../../src/graphics/raphael/background.js"></script>
+<script type="text/javascript" src="../../../src/graphics/raphael/graph.js"></script>
+<script type="text/javascript" src="../../../src/graphics/raphael/icon.js"></script>
+<script type="text/javascript" src="../../../src/graphics/raphael/img.js"></script>
+<script type="text/javascript" src="../../../src/graphics/raphael/labeler.js"></script>
+<script type="text/javascript" src="../../../src/graphics/raphael/legend.js"></script>
+<script type="text/javascript" src="../../../src/graphics/raphael/multigraph.js"></script>
+<script type="text/javascript" src="../../../src/graphics/raphael/plot.js"></script>
+<script type="text/javascript" src="../../../src/graphics/raphael/plotarea.js"></script>
+<script type="text/javascript" src="../../../src/graphics/raphael/renderers/bar_renderer.js"></script>
+<script type="text/javascript" src="../../../src/graphics/raphael/renderers/fill_renderer.js"></script>
+<script type="text/javascript" src="../../../src/graphics/raphael/renderers/pointline_renderer.js"></script>
+<script type="text/javascript" src="../../../src/graphics/raphael/window.js"></script>
 <script type="text/javascript" src="../../../src/events/jquery/mouse/mixin.js"></script>
 <script type="text/javascript" src="../../../src/events/jquery/mouse/graph.js"></script>
 <script type="text/javascript" src="../../../src/events/jquery/mouse/multigraph.js"></script>
@@ -129,8 +136,8 @@
     $(document).ready(function() {
       var Multigraph = window.multigraph.core.Multigraph;
       var multigraphPromise = Multigraph.createGraph({ 'div'    : "thegraph",
-                                                       'mugl'   : "../../mugl/dashboard-temp.xml",
-                                                       'driver' : "canvas"
+                                                       'mugl'   : "../../mugl/dashboard-sun.xml",
+                                                       'driver' : "raphael"
                                                      });
     });
   </script>
@@ -139,15 +146,15 @@
 <center>
 <table>
 <tr>
-<td align="left"><h3>canvas graphics test: dashboard-temp.xml (800 X 400)</h3></td>
-<td align="right">Switch to: <a href="../raphael/dashboard-temp-800x400.html">raphael</a></td>
+<td align="left"><h3>raphael graphics test: dashboard-sun.xml (800 X 400)</h3></td>
+<td align="right">Switch to: <a href="../canvas/dashboard-sun-800x400.html">canvas</a></td>
 </tr>
 <tr><td colspan="2">
 <table>
 <tr>
-<td width="40%" align="left">Previous: <a href="dashboard-sun-800x400.html">dashboard-sun-800x400.html</a></td>
+<td width="40%" align="left">Previous: <a href="dashboard-soi-800x400.html">dashboard-soi-800x400.html</a></td>
 <td width="20%" align="center"><a href="../index.html">All Graphics Tests</a></td>
-<td width="40%" align="right">Next: <a href="fill_graph-800x500.html">fill_graph-800x500.html</a></td>
+<td width="40%" align="right">Next: <a href="dashboard-temp-800x400.html">dashboard-temp-800x400.html</a></td>
 </tr>
 <tr><td align="center" colspan="3"><div id="thegraph"/></td></tr>
 </table>

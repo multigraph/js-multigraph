@@ -1,0 +1,182 @@
+<mugl>
+  <background color="0xFFFFFF"/>
+  <window border="0" margin="0" padding="0"/>
+  <legend visible="false"/>
+  <plotarea marginbottom="50" marginleft="60" marginright="25" margintop="10"/>
+  
+  <horizontalaxis highlightstyle="labels" id="datetime" linewidth="0" max="2009" min="1880" tickmax="0" tickmin="-4" type="datetime">
+    <labels>
+      <label format="%Y" spacing="200Y 100Y 50Y 20Y 10Y 5Y 2Y 1Y"/>
+      <label format="  %n %y" spacing="6M 3M 2M 1M"/>
+    </labels>
+    <title anchor="0 5" position="-10 0">Year</title>
+    <grid/>
+  </horizontalaxis>
+  <verticalaxis highlightstyle="labels" id="col1" linewidth="0" max="84" min="-250" tickmax="0" tickmin="-4" type="number">
+    <labels densityfactor="0.5" format="%.1f" spacing="100 50 20 10 5 2 1 0.5 0.2 0.1 0.05 0.02 0.01"/>
+    <title anchor="0 -4" angle="90" position="-15 0">Global Sea Level (mm) shown as difference from 1990</title>
+    
+    
+    <grid/>
+  </verticalaxis>
+
+  
+  <plot>
+    <horizontalaxis ref="datetime">
+      <variable ref="datetime"/>
+    </horizontalaxis>
+    <verticalaxis ref="col1">
+      <variable ref="col1"/>
+    </verticalaxis>
+    <legend visible="false"/>
+    <renderer type="fill">
+      <option name="fillcolor" value="0x3299CC"/>
+      <option name="fillopacity" value="0.5"/>
+    </renderer>
+    <datatips format="{0}: {1}">
+      <variable format="'%y"/>
+      <variable format="%1d"/>
+    </datatips>
+  </plot>
+
+  
+
+  
+  <data>
+    <variables>
+      <variable column="0" id="datetime" type="datetime"/>
+      <variable column="1" id="col1"/>
+    </variables>
+    <values>1880,-157.1
+    1881,-151.5
+    1882,-168.3
+    1883,-163.0
+    1884,-142.1
+    1885,-143.6
+    1886,-146.0
+    1887,-151.6
+    1888,-149.5
+    1889,-147.9
+    1890,-145.9
+    1891,-147.6
+    1892,-144.4
+    1893,-139.7
+    1894,-149.4
+    1895,-137.6
+    1896,-145.2
+    1897,-140.0
+    1898,-130.6
+    1899,-123.1
+    1900,-128.5
+    1901,-128.9
+    1902,-124.3
+    1903,-116.3
+    1904,-126.6
+    1905,-132.1
+    1906,-125.3
+    1907,-126.7
+    1908,-129.2
+    1909,-124.7
+    1910,-124.8
+    1911,-116.5
+    1912,-119.6
+    1913,-117.8
+    1914,-111.5
+    1915,-103.6
+    1916,-105.5
+    1917,-110.0
+    1918,-111.6
+    1919,-110.0
+    1920,-108.7
+    1921,-106.6
+    1922,-107.5
+    1923,-106.3
+    1924,-113.6
+    1925,-111.6
+    1926,-105.1
+    1927,-106.2
+    1928,-110.1
+    1929,-108.7
+    1930,-104.7
+    1931,-105.1
+    1932,-99.4
+    1933,-95.1
+    1934,-100.5
+    1935,-94.9
+    1936,-98.8
+    1937,-93.1
+    1938,-90.5
+    1939,-85.3
+    1940,-90.6
+    1941,-78.4
+    1942,-78.4
+    1943,-78.4
+    1944,-84.8
+    1945,-82.0
+    1946,-74.5
+    1947,-71.4
+    1948,-66.6
+    1949,-67.9
+    1950,-65.7
+    1951,-56.2
+    1952,-58.8
+    1953,-54.4
+    1954,-57.3
+    1955,-56.4
+    1956,-61.5
+    1957,-48.1
+    1958,-46.7
+    1959,-46.4
+    1960,-42.7
+    1961,-36.5
+    1962,-41.7
+    1963,-43.3
+    1964,-51.2
+    1965,-40.0
+    1966,-45.4
+    1967,-44.0
+    1968,-43.2
+    1969,-36.4
+    1970,-38.3
+    1971,-33.1
+    1972,-24.0
+    1973,-30.0
+    1974,-18.1
+    1975,-19.7
+    1976,-20.7
+    1977,-22.4
+    1978,-16.0
+    1979,-20.9
+    1980,-14.9
+    1981,-2.5
+    1982,-8.3
+    1983,0.1
+    1984,-0.8
+    1985,-11.1
+    1986,-10.5
+    1987,-9.9
+    1988,-5.2
+    1989,-0.7
+    1990,0.7
+    1991,3.8
+    1992,6.6
+    1993,2.1
+    1994,5.5
+    1995,10.7
+    1996,14.4
+    1997,22.6
+    1998,15.0
+    1999,21.7
+    2000,22.6
+    2001,27.1
+    2002,26.1
+    2003,35.1
+    2004,34.5
+    2005,34.1
+    2006,35.6
+    2007,39.1
+    2008,49.0
+    2009,55.5
+    </values>
+  </data>
+</mugl>

@@ -1,0 +1,81 @@
+<mugl>
+  <background color="0xFFFFFF"/>
+  <window border="0" margin="0" padding="0"/>
+  <legend visible="false"/>
+  <plotarea marginbottom="50" marginleft="55" marginright="25" margintop="10"/>
+  
+  <horizontalaxis highlightstyle="labels" id="datetime" linewidth="0" max="2010" min="1975" tickmax="0" tickmin="-4" type="datetime">
+    <labels>
+      <label format="%Y" spacing="200Y 100Y 50Y 20Y 10Y 5Y 2Y 1Y"/>
+      
+    </labels>
+    <grid/>
+    <title anchor="0 5" position="-10 0">Year</title>
+  </horizontalaxis>
+
+  <verticalaxis highlightstyle="labels" id="col1" linewidth="0" max="5" min="-15" tickmax="0" tickmin="-4" type="number">
+    <labels densityfactor="1.5" format="%.2f" spacing="100 50 20 10 5 2 1 0.5 0.3 0.24 0.2 0.1 0.05 0.02 0.01"/>
+    <grid/>		
+    <title anchor="0 -4" angle="90" position="-15 0">Cumulative Glacier Mass Balance (meters of water equivalent)</title>
+    <pan max="50" min="-50"/>
+  </verticalaxis>
+
+  <plot>
+    <horizontalaxis ref="datetime">
+      <variable ref="datetime"/>
+    </horizontalaxis>
+    
+    <verticalaxis ref="col1">
+      <variable ref="col1"/>
+    </verticalaxis>
+    <legend visible="false"/>
+    <renderer type="fill">
+
+      <option name="fillcolor" value="0x5bc69a"/>
+      <option name="fillopacity" value="0.2"/>
+    </renderer>
+    <datatips format="{0}: {1}">
+      <variable format="%Y"/>
+      <variable format="%.2f"/>
+    </datatips>
+  </plot>
+
+
+  <data>
+    <variables>
+      <variable column="0" id="datetime" type="datetime"/>
+      <variable column="1" id="col1"/>
+    </variables>
+    <values>1979,0
+    1980,-0.1600
+    1981,-0.2200
+    1982,-0.7000
+    1983,-0.5800
+    1984,-0.6300
+    1985,-1.0100
+    1986,-1.5600
+    1987,-1.4900
+    1988,-2.0100
+    1989,-1.9800
+    1990,-2.2300
+    1991,-2.7600
+    1992,-2.8800
+    1993,-2.8900
+    1994,-3.4100
+    1995,-3.5700
+    1996,-4.0100
+    1997,-4.5600
+    1998,-5.3300
+    1999,-5.8000
+    2000,-5.8500
+    2001,-6.0100
+    2002,-6.7000
+    2003,-7.9400
+    2004,-8.6900
+    2005,-9.2500
+    2006,-10.5050
+    2007,-11.1780
+    2008,-11.5670
+    </values>
+  </data>
+</mugl>
