@@ -66,8 +66,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             var widths = [],
                 heights = [],
                 i;
-//                maxLabelWidth,
-//                maxLabelHeight;
 
             if (this.visible() === false) {
                 return;
@@ -119,6 +117,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             this.blockWidth(this.iconOffset() + this.icon().width() + this.labelOffset() + this.maxLabelWidth() + this.labelEnding());
             this.blockHeight(this.iconOffset() + this.maxLabelHeight());
 
+// TODO: find out whether or not padding needs to be taken into consideration
             this.width((2 * this.border()) + (this.columns() * this.blockWidth()));
             this.height((2 * this.border()) + (this.rows() * this.blockHeight()) + this.iconOffset());
 
@@ -150,10 +149,16 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             this.renderLegend(graphicsContext);
 
             for (r = 0; r < this.rows(); r++) {
+                if (plotCount >= this.plots().size()) {
+                    break;
+                }
                 blocky = this.border() + ((this.rows() - r - 1) * this.blockHeight());
                 icony  = blocky + this.iconOffset();
                 labely = icony;
                 for (c = 0; c < this.columns(); c++) {
+                    if (plotCount >= this.plots().size()) {
+                        break;
+                    }
                     blockx = this.border() + (c * this.blockWidth());
                     iconx  = blockx + this.iconOffset();
                     labelx = iconx + this.icon().width() + this.labelOffset();
@@ -178,6 +183,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
         });
 
+// TODO: replace these functions with ones that properly measure the width/height of text.
+//       This will most likely be done in an abstract text class which has knowledge of the
+//       rendering environment.
         this.respondsTo("measureLabelWidth", function (string) {
                 // Graphics drivers should replace this method with an actual implementation; this
                 // is just a placeholder.  The implementation should return the width, in pixels,

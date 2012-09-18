@@ -83,6 +83,274 @@ describe("Legend", function () {
         expect(l.padding()).toBe(3);
     });
 
+    describe("initializeGeometry", function () {
+        var Graph = window.multigraph.core.Graph,
+            Plot = window.multigraph.core.Plot,
+            PlotLegend = window.multigraph.core.PlotLegend,
+            Icon = window.multigraph.core.Icon,
+            Box = window.multigraph.math.Box,
+            graph,
+            plot1,
+            plot2,
+            plot3,
+            plot4,
+            plot5;
+        
+        beforeEach(function () {
+            graph = new Graph();
+            graph.paddingBox(new Box());
+            graph.paddingBox().height(100).width(100);
+            graph.plotBox(new Box());
+            graph.plotBox().height(100).width(100);
+            plot1 = new Plot();
+            plot2 = new Plot();
+            plot3 = new Plot();
+            plot4 = new Plot();
+            plot5 = new Plot();
+            plot1.legend(new PlotLegend());
+            plot2.legend(new PlotLegend());
+            plot3.legend(new PlotLegend());
+            plot4.legend(new PlotLegend());
+            plot5.legend(new PlotLegend());
+            l.icon(new Icon());
+        });
+
+        it("should exist", function () {
+            expect(l.initializeGeometry).not.toBeUndefined();
+        });
+
+        describe("setting the visible attribute", function () {
+            it("should not change the visibility if it was explictly set", function () {
+                plot1.legend().visible(true).label("foo");
+                graph.plots().add(plot1);
+                l.visible(true);
+                l.initializeGeometry(graph);
+                expect(l.visible()).toEqual(true);
+
+                l = new Legend();
+                l.visible(false);
+                l.initializeGeometry(graph);
+                expect(l.visible()).toEqual(false);
+
+                plot2.legend().visible(true).label("bar");
+                plot3.legend().visible(true).label("foobar");
+                graph.plots().add(plot2);
+                graph.plots().add(plot3);
+                l = new Legend();
+                l.visible(false);
+                l.initializeGeometry(graph);
+                expect(l.visible()).toEqual(false);
+            });
+            it("should set visible to false if there are no plots in the graph", function () {
+                l.initializeGeometry(graph);
+                expect(l.visible()).toEqual(false);
+            });
+            it("should set visible to false if there are fewer than two plots with visible legends in the graph", function () {
+                plot1.legend().visible(true).label("foo");
+                graph.plots().add(plot1);
+                l.initializeGeometry(graph);
+                expect(l.visible()).toEqual(false);
+
+                plot2.legend().visible(false).label("bar");
+                plot3.legend().visible(false).label("foobar");
+                graph.plots().add(plot2);
+                graph.plots().add(plot3);
+                l = new Legend();
+                l.initializeGeometry(graph);
+                expect(l.visible()).toEqual(false);
+            });
+            it("should set visible to true if there is more than one plot with visible legends in the graph", function () {
+                plot1.legend().visible(true).label("foo");
+                plot2.legend().visible(true).label("bar");
+                graph.plots().add(plot1);
+                graph.plots().add(plot2);
+                l.initializeGeometry(graph);
+                expect(l.visible()).toEqual(true);
+
+                plot3.legend().visible(false).label("foobar");
+                plot4.legend().visible(false).label("larry");
+                graph.plots().add(plot3);
+                graph.plots().add(plot4);
+                l = new Legend();
+                l.icon(new Icon());
+                l.initializeGeometry(graph);
+                expect(l.visible()).toEqual(true);
+            });
+        });
+
+        it("should only track plots with visible legends", function () {
+            plot1.legend().visible(true).label("foo");
+            plot2.legend().visible(true).label("bar");
+            graph.plots().add(plot1);
+            graph.plots().add(plot2);
+            l.initializeGeometry(graph);
+            expect(l.plots().size()).toEqual(2);
+            expect(l.plots().at(0)).toEqual(plot1);
+            expect(l.plots().at(1)).toEqual(plot2);
+
+            plot3.legend().visible(false).label("foobar");
+            plot4.legend().visible(false).label("larry");
+            graph.plots().add(plot3);
+            graph.plots().add(plot4);
+            l = new Legend();
+            l.icon(new Icon());
+            l.initializeGeometry(graph);
+            expect(l.plots().size()).toEqual(2);
+            expect(l.plots().at(0)).toEqual(plot1);
+            expect(l.plots().at(1)).toEqual(plot2);
+
+            plot1.legend().visible(true).label("larry");
+            plot2.legend().visible(false).label("curly");
+            plot3.legend().visible(true).label("moe");
+            plot4.legend().visible(true).label("foobar");
+            graph = new Graph();
+            graph.paddingBox(new Box());
+            graph.paddingBox().height(100).width(100);
+            graph.plotBox(new Box());
+            graph.plotBox().height(100).width(100);
+            graph.plots().add(plot1);
+            graph.plots().add(plot2);
+            graph.plots().add(plot3);
+            graph.plots().add(plot4);
+            l = new Legend();
+            l.icon(new Icon());
+            l.initializeGeometry(graph);
+            expect(l.plots().size()).toEqual(3);
+            expect(l.plots().at(0)).toEqual(plot1);
+            expect(l.plots().at(1)).toEqual(plot3);
+            expect(l.plots().at(2)).toEqual(plot4);
+
+        });
+
+        it("should correctly compute the number of rows for the legend", function () {
+            plot1.legend().visible(true).label("foo");
+            plot2.legend().visible(true).label("bar");
+            graph.plots().add(plot1);
+            graph.plots().add(plot2);
+            l.rows(3)
+            l.initializeGeometry(graph);
+            expect(l.rows()).toEqual(3);
+
+            l = new Legend();
+            l.icon(new Icon());
+            l.initializeGeometry(graph);
+            expect(l.rows()).toEqual(2);
+
+            plot3.legend().visible(true).label("larry");
+            plot4.legend().visible(true).label("curly");
+            graph.plots().add(plot3);
+            graph.plots().add(plot4);
+            l = new Legend();
+            l.icon(new Icon());
+            l.initializeGeometry(graph);
+            expect(l.rows()).toEqual(4);
+            
+            l = new Legend();
+            l.icon(new Icon());
+            l.columns(2);
+            l.initializeGeometry(graph);
+            expect(l.rows()).toEqual(2);
+            
+            l = new Legend();
+            l.icon(new Icon());
+            l.columns(4);
+            l.initializeGeometry(graph);
+            expect(l.rows()).toEqual(1);
+            
+            l = new Legend();
+            l.icon(new Icon());
+            l.columns(5);
+            l.initializeGeometry(graph);
+            expect(l.rows()).toEqual(1);
+            
+        });
+
+        it("should correctly compute the number of columns for the legend", function () {
+            plot1.legend().visible(true).label("foo");
+            plot2.legend().visible(true).label("bar");
+            graph.plots().add(plot1);
+            graph.plots().add(plot2);
+            l.initializeGeometry(graph);
+            expect(l.columns()).toEqual(1);
+
+            l = new Legend();
+            l.icon(new Icon());
+            l.rows(2);
+            l.initializeGeometry(graph);
+            expect(l.columns()).toEqual(1);
+
+            l = new Legend();
+            l.icon(new Icon());
+            l.columns(5);
+            l.initializeGeometry(graph);
+            expect(l.columns()).toEqual(5);
+
+            plot3.legend().visible(true).label("larry");
+            plot4.legend().visible(true).label("curly");
+            graph.plots().add(plot3);
+            graph.plots().add(plot4);
+            l = new Legend();
+            l.icon(new Icon());
+            l.rows(2);
+            l.initializeGeometry(graph);
+            expect(l.columns()).toEqual(2);
+            
+            l = new Legend();
+            l.icon(new Icon());
+            l.rows(3);
+            l.initializeGeometry(graph);
+            expect(l.columns()).toEqual(2);
+            
+            l = new Legend();
+            l.icon(new Icon());
+            l.rows(6);
+            l.initializeGeometry(graph);
+            expect(l.columns()).toEqual(1);
+            
+        });
+
+        xit("should correctly compute the max label width", function () {
+            // TODO: create specs for this once a method exists to correctly measure
+            //       text width.
+        });
+
+        xit("should correctly compute the max label height", function () {
+            // TODO: create specs for this once a method exists to correctly measure
+            //       text height.
+        });
+
+        xit("should correctly compute the width of each 'block' of the legend", function () {
+            // TODO: create specs for this once a method exists to correctly measure
+            //       text width.
+        });
+
+        xit("should correctly compute the height of each 'block' of the legend", function () {
+            // TODO: create specs for this once a method exists to correctly measure
+            //       text height.
+        });
+
+        xit("should correctly compute the width of the legend", function () {
+            // TODO: create specs for this once a method exists to correctly measure
+            //       text width.
+        });
+
+        xit("should correctly compute the height of the legend", function () {
+            // TODO: create specs for this once a method exists to correctly measure
+            //       text height.
+        });
+
+        xit("should correctly compute the 'x' coordinate of the legend's lower left corner", function () {
+            // TODO: create specs for this once a method exists to correctly measure
+            //       text width.
+        });
+
+        xit("should correctly compute the 'y' coordinate of the legend's lower left corner", function () {
+            // TODO: create specs for this once a method exists to correctly measure
+            //       text height.
+        });
+
+    });
+
     describe("Icon", function () {
         var Icon = window.multigraph.core.Icon,
             icon;
