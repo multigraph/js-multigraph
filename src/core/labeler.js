@@ -8,6 +8,14 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
         Labeler = new window.jermaine.Model( "Labeler", function () {
 
+            var getValue = function(valueOrFunction) {
+                if (typeof(valueOrFunction) === "function") {
+                    return valueOrFunction();
+                } else {
+                    return value;
+                }
+            };
+
             this.hasA("axis").which.validatesWith(function (axis) {
                 return axis instanceof ns.Axis;
             });
@@ -24,17 +32,49 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             this.hasA("densityfactor").which.isA("number");
 
             this.isBuiltWith("axis", function() {
-                var defaultValue;
                 if (this.axis().type() === DataValue.DATETIME) {
-                    defaultValue = defaultValues.horizontalaxis.labels['start-datetime'];
+                    this.start( getValue(defaultValues.horizontalaxis.labels['start-datetime']) );
                 } else {
-                    defaultValue = defaultValues.horizontalaxis.labels['start-number'];
+                    this.start( getValue(defaultValues.horizontalaxis.labels['start-number']) );
                 }
-                if (typeof(defaultValue) === "function") {
-                    this.start(defaultValue());
-                } else {
-                    this.start(defaultValue);
+            });
+
+            this.respondsTo("initializeGeometry", function (graph) {
+                var labelDefaults = defaultValues.horizontalaxis.labels.label;
+
+                if (this.position() === undefined) {
+                    if (this.axis().orientation() === Axis.HORIZONTAL) {
+                        if (this.axis().perpOffset() > graph.plotBox().height()/2) {
+                            this.position( getValue(labelDefaults["position-horizontal-top"]) );
+                        } else {
+                            this.position( getValue(labelDefaults["position-horizontal-bottom"]) );
+                        }
+                    } else {
+                        if (this.axis().perpOffset() > graph.plotBox().width()/2) {
+                            this.position( getValue(labelDefaults["position-vertical-right"]) );
+                        } else {
+                            this.position( getValue(labelDefaults["position-vertical-left"]) );
+                        }
+                    }
                 }
+
+                if (this.anchor() === undefined) {
+                    if (this.axis().orientation() === Axis.HORIZONTAL) {
+                        if (this.axis().perpOffset() > graph.plotBox().height()/2) {
+                            this.anchor( getValue(labelDefaults["anchor-horizontal-top"]) );
+                        } else {
+                            this.anchor( getValue(labelDefaults["anchor-horizontal-bottom"]) );
+                        }
+                    } else {
+                        if (this.axis().perpOffset() > graph.plotBox().width()/2) {
+                            this.anchor( getValue(labelDefaults["anchor-vertical-right"]) );
+                        } else {
+                            this.anchor( getValue(labelDefaults["anchor-vertical-left"]) );
+                        }
+                    }
+                }
+
+
             });
 
             this.respondsTo("isEqualExceptForSpacing", function(labeler) {

@@ -113,8 +113,23 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
                 "labels": {
                     "label": {
                         "format": undefined,
-                        "position": function () { return new window.multigraph.math.Point(0,0); },
-                        "anchor": function () { return new window.multigraph.math.Point(-1,1); },
+                        // NOTE: the Labeler object's default values for position and anchor should be undefined.
+                        //       If those attributes are not specified in the MUGL, the Labeler's
+                        //       initializeGeometry() method sets them to one of the context-dependent values
+                        //       below.
+                        "position": undefined,
+                        "anchor": undefined,
+
+                        "position-horizontal-top"    : function() { return new window.multigraph.math.Point(0, 5); },
+                        "position-horizontal-bottom" : function() { return new window.multigraph.math.Point(0, -5); },
+                        "position-vertical-right"    : function() { return new window.multigraph.math.Point(5, 0); },
+                        "position-vertical-left"     : function() { return new window.multigraph.math.Point(-8, 0); },
+
+                        "anchor-horizontal-top"      : function() { return new window.multigraph.math.Point(0, -1); },
+                        "anchor-horizontal-bottom"   : function() { return new window.multigraph.math.Point(0, 1); },
+                        "anchor-vertical-right"      : function() { return new window.multigraph.math.Point(-1, 0); },
+                        "anchor-vertical-left"       : function() { return new window.multigraph.math.Point(1, 0); },
+
                         "angle": 0.0,
                         "spacing": undefined,
                         "densityfactor": undefined

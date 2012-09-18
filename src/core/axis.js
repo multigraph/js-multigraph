@@ -116,6 +116,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasA("axisToDataRatio").which.isA("number");
 
         this.respondsTo("initializeGeometry", function (graph) {
+            var i;
             if (this.orientation() === Axis.HORIZONTAL) {
                 this.pixelLength(this.length().calculateLength( graph.plotBox().width() ));
                 this.parallelOffset( this.position().x() + (this.base().x() + 1) * graph.plotBox().width()/2 - (this.anchor() + 1) * this.pixelLength() / 2 );
@@ -130,24 +131,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             if (this.hasDataMin() && this.hasDataMax()) {
                 this.computeAxisToDataRatio();
             }
-
-/*
-            if (_orientation == AxisOrientation.HORIZONTAL) {
-                _pixelLength = _length.calculateLength( _graph.plotBox.width );
-                _parallelOffset = _position.x + (_base.x + 1) * _graph.plotBox.width/2 - (_anchor + 1) * _pixelLength / 2;
-                _perpOffset = _position.y + (_base.y + 1) * _graph.plotBox.height/2;
-            } else {
-                _pixelLength = _length.calculateLength( _graph.plotBox.height );
-                _parallelOffset = _position.y + (_base.y + 1) * _graph.plotBox.height/2 - (_anchor + 1) * _pixelLength / 2;
-                _perpOffset = _position.x + (_base.x + 1) * _graph.plotBox.width/2;
+            for (i=0; i<this.labelers().size(); ++i) {
+                this.labelers().at(i).initializeGeometry(graph);
             }
-            _minOffset = _minposition.calculateCoordinate(_pixelLength);
-            _maxOffset = _pixelLength - _maxposition.calculateCoordinate(_pixelLength);
-            _reversed = (_minOffset > _pixelLength - _maxOffset);
-            if (_haveDataMin && _haveDataMax) {
-                computeAxisToDataRatio();
-            }
-*/
         });
 
         this.respondsTo("computeAxisToDataRatio", function () {
