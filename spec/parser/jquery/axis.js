@@ -42,6 +42,7 @@ describe("Axis parsing", function () {
 +       ' position="0,0"'
 +       ' spacing="10000 5000 2000 1000 500 200 100 50 20 10 5 2 1 0.1 0.01 0.001"'
 +       '/>'
++     '<grid color="0xeeeeee" visible="false"/>'
 + '</horizontalaxis>',
         $xml,
         axis;
@@ -186,6 +187,7 @@ describe("Axis parsing", function () {
                 +      ' position="0,0"'
                 +      ' spacing="10000 5000 2000 1000 500 200 100 50 20 10 5 2 1 0.1 0.01 0.001"'
                 +      '/>'
+                +    '<grid color="0xeeeeee" visible="false"/>'
                 + '</verticalaxis>';
             $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
         });
@@ -238,6 +240,7 @@ describe("Axis parsing", function () {
                 +     ' spacing="100 75 50 25 10 5 2 1 0.5 0.1"'
                 +     ' densityfactor="0.5"'
                 +      '/>'
+                +  '<grid color="0xeeeeee" visible="false"/>'
                 + '</verticalaxis>';
             $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
         });
@@ -287,6 +290,7 @@ describe("Axis parsing", function () {
                 +       ' spacing="5 2 1 .5"'
                 +        '/>'
                 +  '</labels>'
+                +  '<grid color="0xeeeeee" visible="false"/>'
                 + '</verticalaxis>';
             $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
             axis = Axis.parseXML($xml, Axis.VERTICAL);
@@ -345,6 +349,7 @@ describe("Axis parsing", function () {
                 +       ' densityfactor="0.5"'
                 +        '/>'
                 +  '</labels>'
+                +  '<grid color="0xeeeeee" visible="false"/>'
                 + '</verticalaxis>';
             $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
             axis = Axis.parseXML($xml, Axis.VERTICAL);
@@ -380,7 +385,7 @@ describe("Axis parsing", function () {
     describe("Pan parsing", function () {
 
         beforeEach(function () {
-            xmlString = '<verticalaxis color="0x000000" id="y2" type="number" pregap="0" postgap="0" anchor="-1" min="auto" minoffset="0" max="auto" maxoffset="0" tickmin="-3" tickmax="3" highlightstyle="axis" linewidth="1" length="0.9" position="0,0" base="-1,1" minposition="1" maxposition="1"><labels start="0" angle="0" format="%1d" anchor="0,0" position="0,0" spacing="10000 5000 2000 1000 500 200 100 50 20 10 5 2 1 0.1 0.01 0.001"/><pan allowed="yes" min="0" max="5"/></verticalaxis>';
+            xmlString = '<verticalaxis color="0x000000" id="y2" type="number" pregap="0" postgap="0" anchor="-1" min="auto" minoffset="0" max="auto" maxoffset="0" tickmin="-3" tickmax="3" highlightstyle="axis" linewidth="1" length="0.9" position="0,0" base="-1,1" minposition="1" maxposition="1"><labels start="0" angle="0" format="%1d" anchor="0,0" position="0,0" spacing="10000 5000 2000 1000 500 200 100 50 20 10 5 2 1 0.1 0.01 0.001"/><grid color="0xeeeeee" visible="false"/><pan allowed="yes" min="0" max="5"/></verticalaxis>';
             $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
         });
 
@@ -402,7 +407,7 @@ describe("Axis parsing", function () {
     describe("Zoom parsing", function () {
 
         beforeEach(function () {
-            xmlString = '<verticalaxis color="0x000000" id="y2" type="number" pregap="0" postgap="0" anchor="-1" min="auto" minoffset="0" max="auto" maxoffset="0" tickmin="-3" tickmax="3" highlightstyle="axis" linewidth="1" length="0.9" position="0,0" base="-1,1" minposition="1" maxposition="1"><labels start="0" angle="0" format="%1d" anchor="0,0" position="0,0" spacing="10000 5000 2000 1000 500 200 100 50 20 10 5 2 1 0.1 0.01 0.001"/><zoom allowed="yes" min="0" max="80" anchor="none"/></verticalaxis>';
+            xmlString = '<verticalaxis color="0x000000" id="y2" type="number" pregap="0" postgap="0" anchor="-1" min="auto" minoffset="0" max="auto" maxoffset="0" tickmin="-3" tickmax="3" highlightstyle="axis" linewidth="1" length="0.9" position="0,0" base="-1,1" minposition="1" maxposition="1"><labels start="0" angle="0" format="%1d" anchor="0,0" position="0,0" spacing="10000 5000 2000 1000 500 200 100 50 20 10 5 2 1 0.1 0.01 0.001"/><grid color="0xeeeeee" visible="false"/><zoom allowed="yes" min="0" max="80" anchor="none"/></verticalaxis>';
             $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
         });
 
@@ -424,7 +429,7 @@ describe("Axis parsing", function () {
     describe("Binding parsing", function () {
 
         beforeEach(function () {
-            xmlString = '<verticalaxis color="0x000000" id="y2" type="number" pregap="0" postgap="0" anchor="-1" min="auto" minoffset="0" max="auto" maxoffset="0" tickmin="-3" tickmax="3" highlightstyle="axis" linewidth="1" length="0.9" position="0,0" base="-1,1" minposition="1" maxposition="1"><labels start="0" angle="0" format="%1d" anchor="0,0" position="0,0" spacing="10000 5000 2000 1000 500 200 100 50 20 10 5 2 1 0.1 0.01 0.001"/><binding id="y" min="-10" max="50"/></verticalaxis>';
+            xmlString = '<verticalaxis color="0x000000" id="y2" type="number" pregap="0" postgap="0" anchor="-1" min="auto" minoffset="0" max="auto" maxoffset="0" tickmin="-3" tickmax="3" highlightstyle="axis" linewidth="1" length="0.9" position="0,0" base="-1,1" minposition="1" maxposition="1"><labels start="0" angle="0" format="%1d" anchor="0,0" position="0,0" spacing="10000 5000 2000 1000 500 200 100 50 20 10 5 2 1 0.1 0.01 0.001"/><grid color="0xeeeeee" visible="false"/><binding id="y" min="-10" max="50"/></verticalaxis>';
             $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
         });
 
