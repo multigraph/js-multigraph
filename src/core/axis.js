@@ -107,7 +107,11 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return (orientation === Axis.HORIZONTAL) || (orientation === Axis.VERTICAL);
         });
 */
-        this.isBuiltWith("orientation");
+        this.isBuiltWith("orientation", function() {
+            if (this.grid() === undefined) {
+                this.grid(new ns.Grid());
+            }
+        });
 
         this.hasA("pixelLength").which.isA("number");
         this.hasA("parallelOffset").which.isA("number");

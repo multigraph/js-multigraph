@@ -9,7 +9,12 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
             var grid = new ns.core.Grid();
             if (xml) {
                 grid.color(ns.math.RGBColor.parse(xml.attr("color")));
-                if (xml.attr("visible") === "true") {
+                //NOTE: visible attribute should default to true when parsing, so that
+                //      the presence of a <grid> tag at all will turn on a grid.  In
+                //      the Grid object itself, though, the default for the visible
+                //      attribute is false, so that when we create a default grid object
+                //      in code (as opposed to parsing), it defaults to not visible.
+                if ((xml.attr("visible") === "true") || (xml.attr("visible") === undefined)) {
                     grid.visible(true);
                 } else {
                     grid.visible(false);

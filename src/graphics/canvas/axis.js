@@ -3,9 +3,30 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 
     ns.mixin.add(function(ns) {
 
-        ns.Axis.respondsTo("renderGrid", function(graph, graphicsContext) {
-            this.prepareRender(graphicsContext);
-            // draw the grid lines here
+        ns.Axis.respondsTo("renderGrid", function(graph, context) {
+            this.prepareRender(context);
+
+            // draw the grid lines
+            if (this.hasDataMin() && this.hasDataMax()) { // skip if we don't yet have data values
+                if (this.grid().visible()) { // skip if grid lines aren't turned on
+                    if (this.labelers().size() > 0 && this.currentLabelDensity() <= 1.5) {
+                        this.currentLabeler().prepare(this.dataMin(), this.dataMax());
+                        while (this.currentLabeler().hasNext()) {
+                            var v = this.currentLabeler().next(),
+                                a = this.dataValueToAxisValue(v);
+                            if (this.orientation() === ns.Axis.HORIZONTAL) {
+                                context.moveTo(a, this.perpOffset());
+                                context.lineTo(a, graph.plotBox().height() - this.perpOffset());
+                            } else {
+                                context.moveTo(this.perpOffset(), a);
+                                context.lineTo(graph.plotBox().width() - this.perpOffset(), a);
+                            }
+                        }
+                        context.strokeStyle = this.grid().color().getHexString("#");
+                        context.stroke();
+                    }
+                }
+            }
         });
 
         ns.Axis.respondsTo("render", function(graph, context) {
