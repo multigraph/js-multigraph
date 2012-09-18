@@ -24,7 +24,7 @@ describe("Axis Grid parsing", function () {
     });
 
     it("should be able to parse a grid from XML and read its 'visible' attribute", function () {
-        expect(grid.visible()).toBe("false");
+        expect(grid.visible()).toBe(false);
     });
 
     it("should be able to parse a grid from XML, serialize it and get the same XML as the original", function () {

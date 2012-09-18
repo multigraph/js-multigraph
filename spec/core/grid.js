@@ -24,17 +24,17 @@ describe("Axis Grid", function () {
 
     describe("visible attribute", function () {
         it("should be able to set/get the visible attribute", function () {
-            grid.visible("true");
-            expect(grid.visible()).toBe("true");
+            grid.visible(true);
+            expect(grid.visible()).toBe(true);
         });
 
         it("should be throw an error if the setter value is not 'true' or 'false'", function () {
             expect(function () {
-                grid.visible("false");
+                grid.visible(false);
             }).not.toThrow();
             expect(function () {
                 grid.visible("falsey");
-            }).toThrow(new Error("validator failed with parameter falsey"));
+            }).toThrow(new Error("falsey should be a boolean"));
         });
 
     });

@@ -9,7 +9,11 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
             var grid = new ns.core.Grid();
             if (xml) {
                 grid.color(ns.math.RGBColor.parse(xml.attr("color")));
-                grid.visible(xml.attr("visible"));
+                if (xml.attr("visible") === "true") {
+                    grid.visible(true);
+                } else {
+                    grid.visible(false);
+                }
             }
             return grid;
         };

@@ -7,9 +7,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             this.hasA("color").which.validatesWith(function (color) {
                 return color instanceof window.multigraph.math.RGBColor;
             });
-            this.hasA("visible").which.validatesWith(function (visible) {
-                return visible === "true" || visible === "false";
-            });
+            this.hasA("visible").which.isA("boolean");
 
             window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis.grid, attributes);
         });

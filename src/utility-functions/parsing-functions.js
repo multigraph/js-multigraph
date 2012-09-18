@@ -153,8 +153,8 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
                     "densityfactor": undefined
                 },
                 "grid": {
-//                    "color": "0xeeeeee",
-                    "visible": "false"
+                    "color": function () { return new window.multigraph.math.RGBColor.parse("0xeeeeee"); },
+                    "visible": false
                 },
                 "pan": {
                     "allowed": true,

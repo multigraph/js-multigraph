@@ -286,15 +286,15 @@ describe("Axis", function () {
         });
 
         it("should be able to add a Grid with attributes to a Axis", function () {
-            grid.visible("false");
+            grid.visible(false);
             a.grid(grid);
             expect(a.grid()).toBe(grid);
         });
 
         it("should be able to set/get attributes from a grid added to a Axis", function () {
             a.grid(grid);
-            a.grid().visible("true").color(window.multigraph.math.RGBColor.parse("0x345345"));
-            expect(a.grid().visible()).toBe("true");
+            a.grid().visible(true).color(window.multigraph.math.RGBColor.parse("0x345345"));
+            expect(a.grid().visible()).toBe(true);
             expect(a.grid().color().getHexString()).toBe("0x345345");
         });
 
