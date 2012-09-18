@@ -1,2 +1,31 @@
-here is some log data
-woo hoo!
+setFillColor(#000000);
+drawRect(0,0,800,500);
+fillArea();
+setFillColor(#cccccc);
+drawRect(5,5,790,490);
+fillArea();
+drawImage(http://upload.wikimedia.org/wikipedia/commons/thumb/5/52/1908-kl-t-zamenhof.jpg/220px-1908-kl-t-zamenhof.jpg,Not Yet Fetched,Not Yet Fetched);
+setLineColor(#00ff0f);
+setLineWidth(3);
+drawRect(243,40,517,445);
+setLineColor(#ff0000);
+moveTo(20,219.5);
+lineTo(491,219.5);
+setLineColor(#000000);
+moveTo(0,0);
+lineTo(511,0);
+setLineColor(#000000);
+moveTo(0,0);
+lineTo(0,419);
+setLineColor(#000000);
+moveTo(255.5,0);
+lineTo(255.5,419);
+setLineColor(#000000);
+moveTo(511,0);
+lineTo(511,419);
+setLineColor(#000000);
+setLineWidth(1);
+moveTo(67.1,83.8);
+lineTo(161.3,167.6);
+lineTo(255.5,251.39999999999998);
+

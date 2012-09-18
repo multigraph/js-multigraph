@@ -1,0 +1,10 @@
+#!/bin/bash
+read -r -p "This command will rewrite all log files and should only be run from the root of the project.
+   Are you sure you want to procede? [Y/n] " response
+if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]
+then
+    for f in spec/graphics/logger/*.html
+    do
+        phantomjs src/graphics/logger/log.js $f
+    done
+fi
