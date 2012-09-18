@@ -253,21 +253,38 @@ EOF
 
 }
 
+###
+### create the js file for the logger graphics tests
+###
 open(OUT, ">spec/graphics/logger/graphicstests.js");
 print OUT <<EOF
-/*global describe, it, beforeEach, expect, xit, jasmine */
+/*global describe, it, beforeEach, expect, xit, jasmine, waitsFor, runs */
 describe("Logger Graphics Tests", function () {
     "use strict";
 
-    var Graph = window.multigraph.core.Graph,
-        Axis = window.multigraph.core.Axis;
-
-    function getFileContents(name) {
+    var getLoggerOutput = function (muglUrl, width, height) {
         var contentsObj = {
-            'haveData' : false
+            "haveData" : false
         };
-        \$.ajax({ 'url': name,
-                 'success' : function(data) {
+        \$.ajax({ "url": muglUrl,
+                 "dataType" : "text",
+                 "success" : function (data) {
+                     var multigraph = window.multigraph.core.Multigraph.parseXML( window.multigraph.parser.jquery.stringToJQueryXMLObj(data) );
+                     multigraph.width(width);
+                     multigraph.height(height);
+                     multigraph.render();
+                     contentsObj.contents = multigraph.dumpLog();
+                     contentsObj.haveData = true;
+                 }});
+        return contentsObj;
+    };
+
+    var getFileContents = function (name) {
+        var contentsObj = {
+            "haveData" : false
+        };
+        \$.ajax({ "url": name,
+                 "success" : function (data) {
                      contentsObj.contents = data;
                      contentsObj.haveData = true;
                  }});
@@ -275,7 +292,8 @@ describe("Logger Graphics Tests", function () {
     }
 
     beforeEach(function () {
-        //...
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
+        window.multigraph.graphics.logger.mixin.apply(window.multigraph.core);
     });
 EOF
     ;
@@ -291,14 +309,14 @@ foreach $mugl (sort keys(%{$instances})) {
             $it = "xit";
         }
         print OUT <<EOF
-    $it("$mugl should match", function() {
-        //var loggerOutput = getLoggerOutput("./mugl/$mugl", 800, 500);
+    $it("$mugl should match with a width of '$size->{width}' and a height of '$size->{height}'", function() {
+        var loggerOutput = getLoggerOutput("./mugl/$mugl", $size->{width}, $size->{height});
         var savedOutput = getFileContents("$logfile");
         waitsFor(function () {
-            return savedOutput.haveData;
+            return savedOutput.haveData \&\& loggerOutput.haveData;
         });
         runs(function () {
-            expect(savedOutput.contents).toEqual(savedOutput.contents);
+            expect(loggerOutput.contents).toEqual(savedOutput.contents);
         });
     });
 EOF

@@ -91,6 +91,7 @@
       <path refid="path.events-jquery-mouse-js"/>
       <path refid="path.graphics-raphael-js"/>
       <path refid="path.graphics-canvas-js"/>
+      <path refid="path.graphics-logger-js"/>
       <mapper type="regexp" from="^${basedir}/(.*)$" to='&lt;script type="text/javascript" src="../\1"&gt;&lt;/script&gt;'/>
     </pathconvert>
     <pathconvert property="scripttags.jasmine-spec" pathsep="${line.separator}">
