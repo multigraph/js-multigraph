@@ -65,6 +65,26 @@ describe("Logger Graphics Tests", function () {
             expect(loggerOutput.contents).toEqual(savedOutput.contents);
         });
     });
+    xit("dashboard-co2.xml should match with a width of '800' and a height of '400'", function() {
+        var loggerOutput = getLoggerOutput("./mugl/dashboard-co2.xml", 800, 400);
+        var savedOutput = getFileContents("./graphics/logger/fixtures/dashboard-co2-800x400.log");
+        waitsFor(function () {
+            return savedOutput.haveData && loggerOutput.haveData;
+        });
+        runs(function () {
+            expect(loggerOutput.contents).toEqual(savedOutput.contents);
+        });
+    });
+    xit("dashboard-snow.xml should match with a width of '800' and a height of '400'", function() {
+        var loggerOutput = getLoggerOutput("./mugl/dashboard-snow.xml", 800, 400);
+        var savedOutput = getFileContents("./graphics/logger/fixtures/dashboard-snow-800x400.log");
+        waitsFor(function () {
+            return savedOutput.haveData && loggerOutput.haveData;
+        });
+        runs(function () {
+            expect(loggerOutput.contents).toEqual(savedOutput.contents);
+        });
+    });
     it("dashboard-temp.xml should match with a width of '800' and a height of '400'", function() {
         var loggerOutput = getLoggerOutput("./mugl/dashboard-temp.xml", 800, 400);
         var savedOutput = getFileContents("./graphics/logger/fixtures/dashboard-temp-800x400.log");

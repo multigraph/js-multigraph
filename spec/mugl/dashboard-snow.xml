@@ -1,0 +1,101 @@
+<mugl>
+  <background color="0xFFFFFF"/>
+  <window border="0" margin="0" padding="0"/>
+  <legend visible="false"/>
+  <plotarea marginbottom="50" marginleft="60" marginright="25" margintop="10"/>
+  
+  <horizontalaxis highlightstyle="labels" id="datetime" linewidth="0" max="2011" min="1966" tickmax="0" tickmin="-4" type="datetime">
+    <labels>
+      <label format="%Y" spacing="200Y 100Y 50Y 20Y 10Y 5Y 2Y 1Y"/>
+      
+    </labels>
+    <grid/>
+    <title anchor="0 5" position="-10 0">Year</title>
+  </horizontalaxis>
+
+  <verticalaxis highlightstyle="labels" id="col1" linewidth="0" max="4" min="-4" tickmax="0" tickmin="-4" type="number">
+    <labels densityfactor="0.75" format="%.2f" spacing="1000000 100000 10000 1000 100 50 20 10 5 2 1 0.5 0.2 0.1 0.05 0.02 0.01"/>
+    <grid/>
+    <title anchor="0 -4" angle="90" position="-15 0">March-April Snow Cover Anomaly (million square km)</title>
+    
+    
+  </verticalaxis>
+
+  <plot>
+    <horizontalaxis ref="datetime">
+      <variable ref="datetime"/>
+    </horizontalaxis>
+    
+    <verticalaxis ref="col1">
+      <variable ref="col1"/>
+    </verticalaxis>
+    <renderer type="bar">
+      <option name="barwidth" value="0.5Y"/>
+      <option name="baroffset" value="1"/>
+      <option name="barbase" value="0"/>
+      
+      <option min="0" name="fillcolor" value="0x6666FF"/>
+      <option max="0" name="fillcolor" value="0x663333"/>
+
+      <option name="fillopacity" value="1"/>
+    </renderer>
+
+    <datatips format="{0}: {1}">
+      <variable format="'%y"/>
+      <variable format="%.1f"/>
+    </datatips>
+  </plot>
+
+  <data>
+    <variables>
+      <variable column="0" id="datetime" type="datetime"/>
+      <variable column="1" id="col1"/>
+    </variables>
+    <values>1967,2.257261
+    1968,-2.951414
+    1969,0.348671
+    1970,2.081126
+    1971,1.817752
+    1972,0.385988
+    1973,0.050091
+    1974,-0.604862
+    1975,0.650425
+    1976,-0.051941
+    1977,-0.299308
+    1978,1.170506
+    1979,3.329813
+    1980,2.330437
+    1981,2.331052
+    1982,0.410502
+    1983,-0.529107
+    1984,0.053779
+    1985,2.639376
+    1986,-0.652173
+    1987,1.504727
+    1988,-1.344816
+    1989,-1.482659
+    1990,-3.142418
+    1991,-1.774621
+    1992,-2.103828
+    1993,-1.715481
+    1994,-1.209568
+    1995,-0.192752
+    1996,1.659902
+    1997,-0.799419
+    1998,0.340144
+    1999,-1.119310
+    2000,-1.669887
+    2001,-0.994841
+    2002,-1.888668
+    2003,0.457870
+    2004,-2.035943
+    2005,-0.756835
+    2006,-0.508891
+    2007,-2.037548
+    2008,-2.496925
+    2009,-1.424976
+    2010,-1.226292
+    2011,0.177621
+    </values>
+  </data>
+</mugl>

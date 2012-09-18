@@ -9,7 +9,7 @@
 -->
 <html>
 <head>
-  <title>logger graphics test: bar_legend.xml (800 X 500)</title>
+  <title>raphael graphics test: dashboard-snow.xml (800 X 400)</title>
   <script type="text/javascript" src="../../../lib/jquery/jquery.min.js"></script>
   <script type="text/javascript" src="../../../lib/jermaine/jermaine.js"></script>
   <script type="text/javascript" src="../../../lib/util/util.js"></script>
@@ -104,19 +104,22 @@
 <script type="text/javascript" src="../../../src/parser/jquery/window.js"></script>
 <script type="text/javascript" src="../../../src/parser/jquery/zoom.js"></script>
 
-<script type="text/javascript" src="../../../src/graphics/logger/logger_mixin.js"></script>
-<script type="text/javascript" src="../../../src/graphics/logger/axis.js"></script>
-<script type="text/javascript" src="../../../src/graphics/logger/background.js"></script>
-<script type="text/javascript" src="../../../src/graphics/logger/graph.js"></script>
-<script type="text/javascript" src="../../../src/graphics/logger/img.js"></script>
-<script type="text/javascript" src="../../../src/graphics/logger/labeler.js"></script>
-<script type="text/javascript" src="../../../src/graphics/logger/multigraph.js"></script>
-<script type="text/javascript" src="../../../src/graphics/logger/plot.js"></script>
-<script type="text/javascript" src="../../../src/graphics/logger/plotarea.js"></script>
-<script type="text/javascript" src="../../../src/graphics/logger/renderers/bar_renderer.js"></script>
-<script type="text/javascript" src="../../../src/graphics/logger/renderers/fill_renderer.js"></script>
-<script type="text/javascript" src="../../../src/graphics/logger/renderers/pointline_renderer.js"></script>
-<script type="text/javascript" src="../../../src/graphics/logger/window.js"></script>
+<script type="text/javascript" src="../../../src/graphics/raphael/raphael.js"></script>
+<script type="text/javascript" src="../../../src/graphics/raphael/raphael_mixin.js"></script>
+<script type="text/javascript" src="../../../src/graphics/raphael/axis.js"></script>
+<script type="text/javascript" src="../../../src/graphics/raphael/background.js"></script>
+<script type="text/javascript" src="../../../src/graphics/raphael/graph.js"></script>
+<script type="text/javascript" src="../../../src/graphics/raphael/icon.js"></script>
+<script type="text/javascript" src="../../../src/graphics/raphael/img.js"></script>
+<script type="text/javascript" src="../../../src/graphics/raphael/labeler.js"></script>
+<script type="text/javascript" src="../../../src/graphics/raphael/legend.js"></script>
+<script type="text/javascript" src="../../../src/graphics/raphael/multigraph.js"></script>
+<script type="text/javascript" src="../../../src/graphics/raphael/plot.js"></script>
+<script type="text/javascript" src="../../../src/graphics/raphael/plotarea.js"></script>
+<script type="text/javascript" src="../../../src/graphics/raphael/renderers/bar_renderer.js"></script>
+<script type="text/javascript" src="../../../src/graphics/raphael/renderers/fill_renderer.js"></script>
+<script type="text/javascript" src="../../../src/graphics/raphael/renderers/pointline_renderer.js"></script>
+<script type="text/javascript" src="../../../src/graphics/raphael/window.js"></script>
 <script type="text/javascript" src="../../../src/events/jquery/mouse/mixin.js"></script>
 <script type="text/javascript" src="../../../src/events/jquery/mouse/graph.js"></script>
 <script type="text/javascript" src="../../../src/events/jquery/mouse/multigraph.js"></script>
@@ -124,7 +127,7 @@
   <style type="text/css">
 #thegraph {
   width:  800px;
-  height: 500px;
+  height: 400px;
   border: 0px;
 }
 </style>
@@ -133,8 +136,8 @@
     $(document).ready(function() {
       var Multigraph = window.multigraph.core.Multigraph;
       var multigraphPromise = Multigraph.createGraph({ 'div'    : "thegraph",
-                                                       'mugl'   : "../../mugl/bar_legend.xml",
-                                                       'driver' : "logger"
+                                                       'mugl'   : "../../mugl/dashboard-snow.xml",
+                                                       'driver' : "raphael"
                                                      });
     });
   </script>
@@ -143,15 +146,15 @@
 <center>
 <table>
 <tr>
-<td align="left"><h3>logger graphics test: bar_legend.xml (800 X 500)</h3></td>
-<td align="right">Switch to: <a href="../canvas/bar_legend-800x500.html">canvas</a> <a href="../raphael/bar_legend-800x500.html">raphael</a></td>
+<td align="left"><h3>raphael graphics test: dashboard-snow.xml (800 X 400)</h3></td>
+<td align="right">Switch to: <a href="../canvas/dashboard-snow-800x400.html">canvas</a></td>
 </tr>
 <tr><td colspan="2">
 <table>
 <tr>
-<td width="40%" align="left">Previous: <a href="bar_graph-800x500.html">bar_graph-800x500.html</a></td>
+<td width="40%" align="left">Previous: <a href="dashboard-co2-800x400.html">dashboard-co2-800x400.html</a></td>
 <td width="20%" align="center"><a href="../index.html">All Graphics Tests</a></td>
-<td width="40%" align="right">Next: <a href="dashboard-co2-800x400.html">dashboard-co2-800x400.html</a></td>
+<td width="40%" align="right">Next: <a href="dashboard-temp-800x400.html">dashboard-temp-800x400.html</a></td>
 </tr>
 <tr><td align="center" colspan="3"><div id="thegraph"/></td></tr>
 </table>

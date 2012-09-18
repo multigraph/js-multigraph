@@ -14,3 +14,5 @@
 tempgraph.xml  		800  500
 tempgraph.xml  		800  300
 dashboard-temp.xml  800  400
+dashboard-co2.xml   800  400
+dashboard-snow.xml  800  400
