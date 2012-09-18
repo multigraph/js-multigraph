@@ -30,7 +30,7 @@ describe("Logger Graphics Tests", function () {
             expect(savedOutput.contents).toEqual(savedOutput.contents);
         });
     });
-    xit("bar_graph.xml should match", function() {
+    it("bar_graph.xml should match", function() {
         //var loggerOutput = getLoggerOutput("./mugl/bar_graph.xml", 800, 500);
         var savedOutput = getFileContents("./graphics/logger/fixtures/bar_graph-800x500.log");
         waitsFor(function () {
@@ -40,7 +40,7 @@ describe("Logger Graphics Tests", function () {
             expect(savedOutput.contents).toEqual(savedOutput.contents);
         });
     });
-    xit("bar_legend.xml should match", function() {
+    it("bar_legend.xml should match", function() {
         //var loggerOutput = getLoggerOutput("./mugl/bar_legend.xml", 800, 500);
         var savedOutput = getFileContents("./graphics/logger/fixtures/bar_legend-800x500.log");
         waitsFor(function () {
@@ -60,7 +60,7 @@ describe("Logger Graphics Tests", function () {
             expect(savedOutput.contents).toEqual(savedOutput.contents);
         });
     });
-    xit("fill_graph.xml should match", function() {
+    it("fill_graph.xml should match", function() {
         //var loggerOutput = getLoggerOutput("./mugl/fill_graph.xml", 800, 500);
         var savedOutput = getFileContents("./graphics/logger/fixtures/fill_graph-800x500.log");
         waitsFor(function () {
@@ -70,7 +70,7 @@ describe("Logger Graphics Tests", function () {
             expect(savedOutput.contents).toEqual(savedOutput.contents);
         });
     });
-    xit("legend.xml should match", function() {
+    it("legend.xml should match", function() {
         //var loggerOutput = getLoggerOutput("./mugl/legend.xml", 800, 500);
         var savedOutput = getFileContents("./graphics/logger/fixtures/legend-800x500.log");
         waitsFor(function () {
@@ -80,7 +80,7 @@ describe("Logger Graphics Tests", function () {
             expect(savedOutput.contents).toEqual(savedOutput.contents);
         });
     });
-    xit("mymugl.xml should match", function() {
+    it("mymugl.xml should match", function() {
         //var loggerOutput = getLoggerOutput("./mugl/mymugl.xml", 800, 500);
         var savedOutput = getFileContents("./graphics/logger/fixtures/mymugl-800x500.log");
         waitsFor(function () {
@@ -90,7 +90,7 @@ describe("Logger Graphics Tests", function () {
             expect(savedOutput.contents).toEqual(savedOutput.contents);
         });
     });
-    xit("pointline_legend.xml should match", function() {
+    it("pointline_legend.xml should match", function() {
         //var loggerOutput = getLoggerOutput("./mugl/pointline_legend.xml", 800, 500);
         var savedOutput = getFileContents("./graphics/logger/fixtures/pointline_legend-800x500.log");
         waitsFor(function () {
@@ -100,7 +100,7 @@ describe("Logger Graphics Tests", function () {
             expect(savedOutput.contents).toEqual(savedOutput.contents);
         });
     });
-    xit("tempgraph-csv.xml should match", function() {
+    it("tempgraph-csv.xml should match", function() {
         //var loggerOutput = getLoggerOutput("./mugl/tempgraph-csv.xml", 800, 500);
         var savedOutput = getFileContents("./graphics/logger/fixtures/tempgraph-csv-800x500.log");
         waitsFor(function () {
@@ -110,7 +110,7 @@ describe("Logger Graphics Tests", function () {
             expect(savedOutput.contents).toEqual(savedOutput.contents);
         });
     });
-    xit("tempgraph-datetime.xml should match", function() {
+    it("tempgraph-datetime.xml should match", function() {
         //var loggerOutput = getLoggerOutput("./mugl/tempgraph-datetime.xml", 800, 500);
         var savedOutput = getFileContents("./graphics/logger/fixtures/tempgraph-datetime-800x500.log");
         waitsFor(function () {
@@ -120,7 +120,7 @@ describe("Logger Graphics Tests", function () {
             expect(savedOutput.contents).toEqual(savedOutput.contents);
         });
     });
-    xit("tempgraph.xml should match", function() {
+    it("tempgraph.xml should match", function() {
         //var loggerOutput = getLoggerOutput("./mugl/tempgraph.xml", 800, 500);
         var savedOutput = getFileContents("./graphics/logger/fixtures/tempgraph-800x500.log");
         waitsFor(function () {
@@ -130,7 +130,7 @@ describe("Logger Graphics Tests", function () {
             expect(savedOutput.contents).toEqual(savedOutput.contents);
         });
     });
-    xit("tempgraph.xml should match", function() {
+    it("tempgraph.xml should match", function() {
         //var loggerOutput = getLoggerOutput("./mugl/tempgraph.xml", 800, 500);
         var savedOutput = getFileContents("./graphics/logger/fixtures/tempgraph-800x300.log");
         waitsFor(function () {
@@ -140,7 +140,7 @@ describe("Logger Graphics Tests", function () {
             expect(savedOutput.contents).toEqual(savedOutput.contents);
         });
     });
-    xit("testgraph.xml should match", function() {
+    it("testgraph.xml should match", function() {
         //var loggerOutput = getLoggerOutput("./mugl/testgraph.xml", 800, 500);
         var savedOutput = getFileContents("./graphics/logger/fixtures/testgraph-800x500.log");
         waitsFor(function () {
