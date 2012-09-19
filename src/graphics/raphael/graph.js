@@ -28,6 +28,10 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             this.plotarea().render(this, paper, backgroundSet);
 
             for (i = 0; i < this.axes().size(); ++i) {
+                this.axes().at(i).renderGrid(this, paper, axesSet);
+            }
+
+            for (i = 0; i < this.axes().size(); ++i) {
                 this.axes().at(i).render(this, paper, axesSet, this.transformString());
             }
 
