@@ -8,15 +8,15 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
         ns.BarRenderer.respondsTo("begin", function (graphicsContext) {
             var settings = {
-                "paper"         : graphicsContext.paper,
-                "set"           : graphicsContext.set,
-                "path"          : "",
-                "barpixelwidth" : this.getOptionValue("barwidth") * this.plot().horizontalaxis().axisToDataRatio(),
-                "baroffset"     : this.getOptionValue("baroffset"),
-                "barpixelbase"  : (this.getOptionValue("barbase") !== null)?this.plot().verticalaxis().dataValueToAxisValue(this.getOptionValue("barbase")):0,
-                "fillcolor"     : this.getOptionValue("fillcolor"),
-                "linecolor"     : this.getOptionValue("linecolor"),
-                "hidelines"     : this.getOptionValue("hidelines"),
+                "paper"              : graphicsContext.paper,
+                "set"                : graphicsContext.set,
+                "paths"              : [],
+                "barpixelwidth"      : this.getOptionValue("barwidth").getRealValue() * this.plot().horizontalaxis().axisToDataRatio(),
+                "baroffset"          : this.getOptionValue("baroffset"),
+                "barpixelbase"       : (this.getOptionValue("barbase") !== null)?this.plot().verticalaxis().dataValueToAxisValue(this.getOptionValue("barbase")):0,
+                "fillcolor"          : this.getOptionValue("fillcolor"),
+                "linecolor"          : this.getOptionValue("linecolor"),
+                "hidelines"          : this.getOptionValue("hidelines"),
                 "barGroups"          : [],
                 "currentBarGroup"    : null,
                 "prevCorner"         : null,
@@ -30,17 +30,34 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             var settings = this.settings(),
                 p,
                 x0,
-                x1;
+                x1,
+                fillcolor = this.getOptionValue("fillcolor", datap[1]),
+                flag = false,
+                i;
 
             if (this.isMissing(datap)) {
                 return;
             }
+
             p = this.transformPoint(datap);
 
             x0 = p[0] + settings.baroffset;
             x1 = p[0] + settings.baroffset + settings.barpixelwidth;
             
-            settings.path += this.generateBar(x0, settings.barpixelbase, settings.barpixelwidth, p[1] - settings.barpixelbase);
+            for (i = 0; i < settings.paths.length; i++) {
+                if (settings.paths[i].fillcolor === fillcolor) {
+                    settings.paths[i].path += this.generateBar(x0, settings.barpixelbase, settings.barpixelwidth, p[1] - settings.barpixelbase);
+                    flag = true;
+                    break;
+                }
+            }
+
+            if (flag === false) {
+                i = settings.paths.length;
+                settings.paths[i] = {};
+                settings.paths[i].fillcolor = fillcolor;
+                settings.paths[i].path = this.generateBar(x0, settings.barpixelbase, settings.barpixelwidth, p[1] - settings.barpixelbase);
+            }
 
             if (settings.barpixelwidth > settings.hidelines) {
                 if (settings.prevCorner === null) {
@@ -132,13 +149,16 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 outlinePath += "L" + barGroup[n-1][0] + "," + settings.barpixelbase;
             }
 
-            settings.set.push( settings.paper.path(settings.path)
-                               .attr({
-                                   "stroke-width": 1,
-                                   "fill": settings.fillcolor.getHexString("#"),
-                                   "stroke": settings.fillcolor.getHexString("#")
-                               })
-                             );
+
+            for (i = 0; i < settings.paths.length; i++) {
+                settings.set.push( settings.paper.path(settings.paths[i].path)
+                                   .attr({
+                                       "stroke-width": 1,
+                                       "fill": settings.paths[i].fillcolor.getHexString("#"),
+                                       "stroke": settings.fillcolor.getHexString("#")
+                                   })
+                                 );
+            }
 
             settings.set.push( settings.paper.path(outlinePath)
                                .attr({
