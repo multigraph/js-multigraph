@@ -6,11 +6,11 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
         this.hasMany("mixinfuncs");
 
-        this.respondsTo("add", function(func) {
+        this.respondsTo("add", function (func) {
             this.mixinfuncs().add(func);
         });
 
-        this.respondsTo("apply", function() {
+        this.respondsTo("apply", function () {
             var i;
             for (i=0; i<this.mixinfuncs().size(); ++i) {
                 this.mixinfuncs().at(i).apply(this, arguments);

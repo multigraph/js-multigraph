@@ -137,13 +137,13 @@
  y
   <script type="text/javascript">
 
-$(document).ready(function() {
+$(document).ready(function () {
 
   var Multigraph = window.multigraph.core.Multigraph;
 
   var multigraphPromise = Multigraph.createLoggerGraph("mygraph", "../../mugl/fill_graph.xml");
 
-  multigraphPromise.done(function(multigraph) {
+  multigraphPromise.done(function (multigraph) {
     multigraph.init();
     console.log(multigraph.dumpLog());
   });

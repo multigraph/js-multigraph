@@ -8,11 +8,11 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
         Labeler = new window.jermaine.Model( "Labeler", function () {
 
-            var getValue = function(valueOrFunction) {
+            var getValue = function (valueOrFunction) {
                 if (typeof(valueOrFunction) === "function") {
                     return valueOrFunction();
                 } else {
-                    return value;
+                    return valueOrFunction;
                 }
             };
 
@@ -31,7 +31,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             this.hasA("spacing").which.validatesWith(ns.DataMeasure.isInstance);
             this.hasA("densityfactor").which.isA("number");
 
-            this.isBuiltWith("axis", function() {
+            this.isBuiltWith("axis", function () {
                 if (this.axis().type() === DataValue.DATETIME) {
                     this.start( getValue(defaultValues.horizontalaxis.labels['start-datetime']) );
                 } else {
@@ -77,7 +77,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
             });
 
-            this.respondsTo("isEqualExceptForSpacing", function(labeler) {
+            this.respondsTo("isEqualExceptForSpacing", function (labeler) {
                 // return true iff the given labeler and this labeler are equal in every way
                 // except for their spacing values
                 return ((this.axis()                         ===   labeler.axis()                            ) &&
@@ -95,18 +95,18 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             this.hasA("iteratorMinValue").which.validatesWith(ns.DataValue.isInstance);
             this.hasA("iteratorMaxValue").which.validatesWith(ns.DataValue.isInstance);
 
-            this.respondsTo("prepare", function(minDataValue, maxDataValue) {
+            this.respondsTo("prepare", function (minDataValue, maxDataValue) {
                 this.iteratorMinValue(minDataValue);
                 this.iteratorMaxValue(maxDataValue);
                 this.iteratorNextValue( this.spacing().firstSpacingLocationAtOrAfter(minDataValue, this.start()) );
             });
-            this.respondsTo("hasNext", function() {
+            this.respondsTo("hasNext", function () {
                 if (this.iteratorNextValue() === null || this.iteratorNextValue() === undefined) {
                     return false;
                 }
                 return this.iteratorNextValue().le(this.iteratorMaxValue());
             });
-            this.respondsTo("peekNext", function() {
+            this.respondsTo("peekNext", function () {
                 var value = this.iteratorNextValue();
                 if (value === null || value === undefined) {
                     return undefined;
@@ -116,7 +116,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 }
                 return value;
             });
-            this.respondsTo("next", function() {
+            this.respondsTo("next", function () {
                 var value = this.iteratorNextValue();
                 if (value === null || value === undefined) {
                     return undefined;
@@ -128,7 +128,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 return value;
             });
 
-            this.respondsTo("getLabelDensity", function(graphicsContext) {
+            this.respondsTo("getLabelDensity", function (graphicsContext) {
                 // convert the spacing measure to pixels:
                 var pixelSpacing = this.spacing().getRealValue() * this.axis().axisToDataRatio();
                 // length of the formatted axis min value, in pixels
@@ -138,7 +138,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             });
 
 
-            this.respondsTo("measureStringWidth", function(graphicsContext, string) {
+            this.respondsTo("measureStringWidth", function (graphicsContext, string) {
                 // Graphics drivers should replace this method with an actual implementation; this
                 // is just a placeholder.  The implementation should return the width, in pixels,
                 // of the given string.  Of course this is dependent on font choice, size, etc,
@@ -147,7 +147,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 // function to use font information.
                 return string.length*30;
             });
-            this.respondsTo("renderLabel", function(graphicsContext, value) {
+            this.respondsTo("renderLabel", function (graphicsContext, value) {
                 // Graphics drivers should replace this method with an actual implementation; this
                 // is just a placeholder.  The implementation should draw the string for the given
                 // value, formatted by the labeler's DataFormatter, in the location along the axis

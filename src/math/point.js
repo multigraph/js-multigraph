@@ -5,17 +5,17 @@ window.multigraph.util.namespace("window.multigraph.math", function (ns) {
         this.hasA("x").which.isA("number");
         this.hasA("y").which.isA("number");
         this.isBuiltWith("x", "y");
-        this.respondsTo("serialize", function() {
+        this.respondsTo("serialize", function () {
             return this.x() + "," + this.y();
         });
-        this.respondsTo("eq", function(p) {
+        this.respondsTo("eq", function (p) {
             return ((this.x()===p.x()) && (this.y()===p.y()));
         });
     });
 
     ns.Point.regExp = /^\s*([0-9\-\+\.eE]+)(,|\s+|\s*,\s+|\s+,\s*)([0-9\-\+\.eE]+)\s*$/;
 
-    ns.Point.parse = function(string) {
+    ns.Point.parse = function (string) {
         var ar = ns.Point.regExp.exec(string),
             p;
         // ar[1] is x value

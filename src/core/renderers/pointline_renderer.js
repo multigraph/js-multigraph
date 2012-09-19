@@ -97,7 +97,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         PointlineRenderer.X
     ];
 
-    PointlineRenderer.isShape = function(shape) {
+    PointlineRenderer.isShape = function (shape) {
         var i;
         for (i=0; i<PointlineRenderer.shapes.length; ++i) {
             if (PointlineRenderer.shapes[i] === shape) { return true; }
@@ -105,7 +105,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         return false;
     };
 
-    PointlineRenderer.parseShape = function(string) {
+    PointlineRenderer.parseShape = function (string) {
         if (string.toLowerCase() === PointlineRenderer.CIRCLE)   { return PointlineRenderer.CIRCLE;   }
         if (string.toLowerCase() === PointlineRenderer.SQUARE)   { return PointlineRenderer.SQUARE;   }
         if (string.toLowerCase() === PointlineRenderer.TRIANGLE) { return PointlineRenderer.TRIANGLE; }

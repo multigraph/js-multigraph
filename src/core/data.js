@@ -5,7 +5,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         Data,
         i;
 
-    var initializeColumns = function(data) {
+    var initializeColumns = function (data) {
         var i;
         for (i=0; i<data.columns().size(); ++i) {
             data.columns().at(i).data(data);
@@ -31,7 +31,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
         this.hasA("readyCallback").which.isA("function");
 
-        this.isBuiltWith("columns", function() {
+        this.isBuiltWith("columns", function () {
             Data.initializeColumns(this);
         });
 
@@ -107,7 +107,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             //no op
         });
 
-        this.respondsTo("isMissing", function(value, i) {
+        this.respondsTo("isMissing", function (value, i) {
             // This method should return true if the DataValue "value" meets the "missing" criteria of
             // the i-th column
             var column;

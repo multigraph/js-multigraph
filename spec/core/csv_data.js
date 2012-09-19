@@ -1,6 +1,7 @@
-/*global describe, it, beforeEach, expect, xit, jasmine */
+/*global describe, it, beforeEach, expect, xit, jasmine, waitsFor, runs */
 
 describe("CSV Data hoo", function () {
+    "use strict";
     var CSVData = window.multigraph.core.CSVData,
         NumberValue = window.multigraph.core.NumberValue,
         DataVariable = window.multigraph.core.DataVariable,
@@ -74,7 +75,7 @@ describe("CSV Data hoo", function () {
             expect(typeof(csv.getIterator)).toBe("function");
         });
 
-        it("does the right thing", function() {
+        it("does the right thing", function () {
 
             waitsFor(function () {
                 return csv.dataIsReady();

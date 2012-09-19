@@ -1,9 +1,9 @@
 window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (ns) {
     "use strict";
 
-    ns.mixin.add(function(ns) {
+    ns.mixin.add(function (ns) {
 
-        ns.Axis.respondsTo("renderGrid", function(graph, context) {
+        ns.Axis.respondsTo("renderGrid", function (graph, context) {
             this.prepareRender(context);
 
             // draw the grid lines
@@ -29,7 +29,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             }
         });
 
-        ns.Axis.respondsTo("render", function(graph, context) {
+        ns.Axis.respondsTo("render", function (graph, context) {
 
 
             //NOTE: axes are drawn relative to the graph's plot area (plotBox); the coordinates

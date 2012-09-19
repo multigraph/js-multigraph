@@ -2,7 +2,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
     "use strict";
 
     var scalarAttributes = ["width", "height", "border"];
-    ns.mixin.add(function(ns, parse, serialize) {
+    ns.mixin.add(function (ns, parse, serialize) {
         
         ns.core.Window[parse] = function (xml) {
             //WARNING: do not declare a local var named "window" here; it masks the global 'window' object,

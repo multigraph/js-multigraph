@@ -133,22 +133,22 @@
 
   <script type="text/javascript">
 
-$(document).ready(function() {
+$(document).ready(function () {
 
   var Multigraph = window.multigraph.core.Multigraph;
 
   var multigraphPromise = Multigraph.createCanvasGraph("mygraph", "../../mugl/mymugl.xml");
 
-  multigraphPromise.done(function(multigraph) {
+  multigraphPromise.done(function (multigraph) {
     console.log('got a multigraph now');
   });
 
-  multigraphPromise.done(function(multigraph) {
+  multigraphPromise.done(function (multigraph) {
     console.log('   its size is ' + multigraph.width() + ' X ' + multigraph.height());
   });
 
 /*
-  multigraphPromise.done(function(multigraph) {
+  multigraphPromise.done(function (multigraph) {
     var g = multigraph.graphs().at(0);
     var i;
     for (i=0; i<g.axes().size(); ++i) {

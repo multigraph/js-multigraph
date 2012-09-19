@@ -1,9 +1,9 @@
 window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
     "use strict";
 
-    ns.mixin.add(function(ns, parse, serialize) {
+    ns.mixin.add(function (ns, parse, serialize) {
 
-        ns.core.Plot[parse] = function(xml, graph) {
+        ns.core.Plot[parse] = function (xml, graph) {
             var Plot = window.multigraph.core.Plot,
                 PlotLegend = ns.core.PlotLegend,
                 Filter = ns.core.Filter,
@@ -102,7 +102,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
             return plot;
         };
 
-        ns.core.Plot.prototype[serialize] = function() {
+        ns.core.Plot.prototype[serialize] = function () {
             var output = '<plot>',
                 i;
 

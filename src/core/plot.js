@@ -33,7 +33,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
         window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.plot, attributes);
 
-        this.respondsTo("render", function(graph, graphicsContext) {
+        this.respondsTo("render", function (graph, graphicsContext) {
             // graphicsContext is an optional argument passed to Plot.render() by the
             // graphics driver, and used by that driver's implementation of Renderer.begin().
             // It can be any objectded by the driver -- usually some kind of graphics

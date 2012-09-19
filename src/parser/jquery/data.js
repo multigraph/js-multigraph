@@ -7,7 +7,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
         CSVData  = window.multigraph.core.CSVData,
         Data = window.multigraph.core.Data;
 
-    ns.mixin.add(function(ns, parse, serialize) {
+    ns.mixin.add(function (ns, parse, serialize) {
         
         Data[parse] = function (xml) {
 

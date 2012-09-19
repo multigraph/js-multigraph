@@ -80,20 +80,20 @@ describe("Axis Labeler", function () {
 
     describe("iteration", function () {
 
-        it("next() should return undefined if called before prepare() is called", function() {
+        it("next() should return undefined if called before prepare() is called", function () {
             expect(labeler.next()).toBeUndefined();
         });
-        it("peekNext() should return undefined if called before prepare() is called", function() {
+        it("peekNext() should return undefined if called before prepare() is called", function () {
             expect(labeler.peekNext()).toBeUndefined();
         });
-        it("hasNext() should return false if called before prepare() is called", function() {
+        it("hasNext() should return false if called before prepare() is called", function () {
             expect(labeler.hasNext()).toBe(false);
         });
 
 
         describe("iteration over NUMBER data values", function () {
 
-            it("should iterate over exactly the one value 0 for the range [0,0] with start=0 and spacing=1", function() {
+            it("should iterate over exactly the one value 0 for the range [0,0] with start=0 and spacing=1", function () {
                 labeler.spacing(new NumberMeasure(1));
                 labeler.start(new NumberValue(0));
                 labeler.prepare(new NumberValue(0), new NumberValue(0));
@@ -176,8 +176,8 @@ describe("Axis Labeler", function () {
                 expect(labeler.hasNext()).toBe(false);
             });
 
-            describe("behavior after iteration has completed", function() {
-                beforeEach(function() {
+            describe("behavior after iteration has completed", function () {
+                beforeEach(function () {
                     labeler.spacing(new NumberMeasure(1));
                     labeler.start(new NumberValue(0));
                     labeler.prepare(new NumberValue(0), new NumberValue(0));
@@ -186,13 +186,13 @@ describe("Axis Labeler", function () {
                     expect(labeler.next().getRealValue()).toEqual(0);
                     expect(labeler.hasNext()).toBe(false);
                 });
-                it("hasNext() should return false", function() {
+                it("hasNext() should return false", function () {
                     expect(labeler.hasNext()).toBe(false);
                 });
-                it("next() should return undefined", function() {
+                it("next() should return undefined", function () {
                     expect(labeler.next()).toBeUndefined();
                 });
-                it("peekNext() should return undefined", function() {
+                it("peekNext() should return undefined", function () {
                     expect(labeler.peekNext()).toBeUndefined();
                 });
 

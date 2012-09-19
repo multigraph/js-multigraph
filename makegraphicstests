@@ -220,7 +220,7 @@ EOF
 <!--END_ANT_LINES-->
   $style
   <script type="text/javascript">
-    \$(document).ready(function() {
+    \$(document).ready(function () {
       var Multigraph = window.multigraph.core.Multigraph;
       var multigraphPromise = Multigraph.createGraph({ 'div'    : "thegraph",
                                                        'mugl'   : "../../mugl/$mugl",
@@ -289,7 +289,7 @@ describe("Logger Graphics Tests", function () {
                      contentsObj.haveData = true;
                  }});
         return contentsObj;
-    }
+    };
 
     beforeEach(function () {
         window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
@@ -309,7 +309,7 @@ foreach $mugl (sort keys(%{$instances})) {
             $it = "xit";
         }
         print OUT <<EOF
-    $it("$mugl should match with a width of '$size->{width}' and a height of '$size->{height}'", function() {
+    $it("$mugl should match with a width of '$size->{width}' and a height of '$size->{height}'", function () {
         var loggerOutput = getLoggerOutput("./mugl/$mugl", $size->{width}, $size->{height});
         var savedOutput = getFileContents("$logfile");
         waitsFor(function () {

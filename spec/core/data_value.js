@@ -20,13 +20,13 @@ describe("DataValue", function () {
         expect(DataValue.DATETIME).not.toEqual(DataValue.NUMBER);
     });
 
-    describe("create method", function() {
-        it("should be able to create a NumberValue", function() {
+    describe("create method", function () {
+        it("should be able to create a NumberValue", function () {
             var x = DataValue.create(DataValue.NUMBER, 1.234);
             expect(x instanceof NumberValue).toBe(true);
             expect(x.getRealValue()).toEqual(1.234);
         });
-        it("should be able to create a DatetimeValue", function() {
+        it("should be able to create a DatetimeValue", function () {
             var x = DataValue.create(DataValue.DATETIME, 1923432);
             expect(x instanceof DatetimeValue).toBe(true);
             expect(x.getRealValue()).toEqual(1923432);
@@ -53,14 +53,14 @@ describe("DataValue", function () {
         });
     });
 
-    describe("parse method", function() {
+    describe("parse method", function () {
         it("should be able to parse '13.2' and get the correct NumberValue", function () {
             var x = DataValue.parse(DataValue.NUMBER, "13.2");
             expect(x instanceof NumberValue).toBe(true);
             expect(x.getRealValue()).toEqual(13.2);
         });
 
-        var datetimeParseTest = function(originalDatetimeInputString, serializedDatetimeString) {
+        var datetimeParseTest = function (originalDatetimeInputString, serializedDatetimeString) {
             it("should be able to parse '" + originalDatetimeInputString + "' and get the correct DatetimeValue", function () {
                 var x = DataValue.parse(DataValue.DATETIME, originalDatetimeInputString);
                 expect(x instanceof DatetimeValue).toBe(true);

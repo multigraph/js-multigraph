@@ -127,12 +127,12 @@ describe("PointlineRenderer", function () {
     });
 
     it("should throw an error if we try to get the value of an invalid option", function () {
-        expect(function() {
+        expect(function () {
             var v = r.getOptionValue("notAnOption");
         }).toThrow();
     });
     it("should throw an error if we try to set the value of an invalid option", function () {
-        expect(function() {
+        expect(function () {
             r.setOption("notAnOption", 0);
         }).toThrow();
     });

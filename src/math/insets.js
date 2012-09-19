@@ -6,7 +6,7 @@ window.multigraph.util.namespace("window.multigraph.math", function (ns) {
         this.hasA("left").which.isA("number");
         this.hasA("bottom").which.isA("number");
         this.hasA("right").which.isA("number");
-        this.respondsTo("set", function(top,left,bottom,right) {
+        this.respondsTo("set", function (top, left, bottom, right) {
             this.top(top);
             this.left(left);
             this.bottom(bottom);

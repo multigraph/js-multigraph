@@ -44,7 +44,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         buffer = buffer || 0;
 
         //first argument should be an array of strings
-        if(Object.prototype.toString.apply(columnIds) !== "[object Array]") {
+        if (Object.prototype.toString.apply(columnIds) !== "[object Array]") {
             throw new Error("ArrayData: getIterator method requires that the first parameter be an array of strings");
         } else {
             for (i = 0; i < columnIds.length; ++i) {
@@ -94,7 +94,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     ArrayData = window.jermaine.Model(function () {
         this.isA(Data);
         this.hasAn("array");
-        this.isBuiltWith("columns", "array", function() {
+        this.isBuiltWith("columns", "array", function () {
             Data.initializeColumns(this);
         });
 

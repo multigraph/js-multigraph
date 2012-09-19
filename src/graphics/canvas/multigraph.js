@@ -61,7 +61,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             multigraph.divid(divid);
             multigraph.init();
             multigraph.registerMouseEvents(multigraph.canvas());
-            multigraph.registerCommonDataCallback(function() {
+            multigraph.registerCommonDataCallback(function () {
                 multigraph.redraw();
             });
             deferred.resolve(multigraph);

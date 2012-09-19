@@ -3,7 +3,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
 
     var ArrayData  = window.multigraph.core.ArrayData;
 
-    ns.mixin.add(function(ns, parse, serialize) {
+    ns.mixin.add(function (ns, parse, serialize) {
         
         ArrayData.prototype[serialize+'Contents'] = function () {
             var output = '<values>',

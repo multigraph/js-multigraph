@@ -140,21 +140,21 @@
 
   <script type="text/javascript">
 
-$(document).ready(function() {
+$(document).ready(function () {
 
   var Multigraph = window.multigraph.core.Multigraph;
 
   var multigraphPromise = Multigraph.createRaphaelGraph("mygraph", "../../mugl/testgraph.xml");
 
-  multigraphPromise.done(function(multigraph) {
+  multigraphPromise.done(function (multigraph) {
 //    console.log('got a multigraph now');
   });
 
-  multigraphPromise.done(function(multigraph) {
+  multigraphPromise.done(function (multigraph) {
 //    console.log('   its size is ' + multigraph.width() + ' X ' + multigraph.height());
   });
 
-  multigraphPromise.done(function(multigraph) {
+  multigraphPromise.done(function (multigraph) {
     multigraph.init();
   });
 

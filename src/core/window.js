@@ -29,7 +29,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 return bordercolor instanceof window.multigraph.math.RGBColor;
             }).defaultsTo(window.multigraph.math.RGBColor.parse(defaultValues.window.bordercolor));
 
-            this.isBuiltWith(function() {
+            this.isBuiltWith(function () {
                 // temporary workaround until we can pass a function to be evaled to defaultsTo():
                 this.margin( defaultValues.window.margin() );
                 this.padding( defaultValues.window.padding() );

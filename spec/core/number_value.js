@@ -67,7 +67,7 @@ describe("NumberValue", function () {
                 expect(a567.eq(a123)).toBe(false);
                 expect(a123.eq(b123)).toBe(true);
             });
-            it("ge should work correctly", function() {
+            it("ge should work correctly", function () {
                 expect(a123.ge(a567)).toBe(false);
                 expect(a567.ge(a123)).toBe(true);
                 expect(a123.ge(b123)).toBe(true);

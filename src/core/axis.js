@@ -107,7 +107,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return (orientation === Axis.HORIZONTAL) || (orientation === Axis.VERTICAL);
         });
 */
-        this.isBuiltWith("orientation", function() {
+        this.isBuiltWith("orientation", function () {
             if (this.grid() === undefined) {
                 this.grid(new ns.Grid());
             }

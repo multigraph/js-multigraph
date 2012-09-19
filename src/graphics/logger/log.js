@@ -1,4 +1,4 @@
-/*global phantom, require, WebPage, error, timer */
+/*global phantom, require, WebPage, error, timer:true, setInterval:true */
 (function () {
     "use strict";
     var fs = require("fs"),

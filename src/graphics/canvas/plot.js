@@ -1,10 +1,10 @@
 window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (ns) {
     "use strict";
 
-    ns.mixin.add(function(ns) {
+    ns.mixin.add(function (ns) {
 
 /*
-        ns.Plot.respondsTo("transformPoint", function(input) {
+        ns.Plot.respondsTo("transformPoint", function (input) {
             // this method should be moved to Renderer.js
             var output = [],
                 haxis = this.horizontalaxis(),

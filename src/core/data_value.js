@@ -55,7 +55,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return new ns.NumberValue(realValue);
         } else if (type === DataValue.DATETIME) {
             return new ns.DatetimeValue(realValue);
-            return null;
         }
         throw new Error("attempt to parse an unknown DataValue type");
     };

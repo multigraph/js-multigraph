@@ -1,9 +1,9 @@
 window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
     "use strict";
 
-    ns.mixin.add(function(ns, parse, serialize) {
+    ns.mixin.add(function (ns, parse, serialize) {
 
-        ns.core.Multigraph[parse] = function(xml) {
+        ns.core.Multigraph[parse] = function (xml) {
             var multigraph = new ns.core.Multigraph();
             if (xml) {
                 if (xml.find(">graph").length > 0) {

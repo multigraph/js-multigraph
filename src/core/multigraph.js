@@ -30,7 +30,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
    });
 
-   Multigraph.createGraph = function(obj) {
+   Multigraph.createGraph = function (obj) {
        if (!obj.driver) {
            obj.driver = "canvas";
        }

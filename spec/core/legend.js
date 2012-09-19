@@ -227,7 +227,7 @@ describe("Legend", function () {
             plot2.legend().visible(true).label("bar");
             graph.plots().add(plot1);
             graph.plots().add(plot2);
-            l.rows(3)
+            l.rows(3);
             l.initializeGeometry(graph);
             expect(l.rows()).toEqual(3);
 

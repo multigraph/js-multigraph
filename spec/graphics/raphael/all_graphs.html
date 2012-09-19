@@ -140,14 +140,14 @@
 
   <script type="text/javascript">
 
-$(document).ready(function() {
+$(document).ready(function () {
 
   var drawMultigraph = function (divid, xmlfile) {
     var Multigraph = window.multigraph.core.Multigraph;
 
     var multigraphPromise = Multigraph.createRaphaelGraph(divid, xmlfile);
 
-    multigraphPromise.done(function(multigraph) {
+    multigraphPromise.done(function (multigraph) {
       multigraph.init();
     });
   }

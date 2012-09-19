@@ -90,7 +90,7 @@ describe("Graph", function () {
 
     });
 
-    it("should be able to create a Graph with an axis and then fetch that axis", function() {
+    it("should be able to create a Graph with an axis and then fetch that axis", function () {
         var g = new Graph();
         var a = new Axis(Axis.HORIZONTAL);
         a.id("x");
@@ -98,7 +98,7 @@ describe("Graph", function () {
         expect(g.axes().get(0)).toBe(a);
     });
 
-    it("should be able to create two graphs, each with an axis, and keep the axes distinct", function() {
+    it("should be able to create two graphs, each with an axis, and keep the axes distinct", function () {
         var g1 = new Graph();
         var a1 = new Axis(Axis.VERTICAL);
         a1.id("a1");
@@ -113,7 +113,7 @@ describe("Graph", function () {
         expect(g2.axes().get(0).id()).toBe("a2");
     });
 
-    it("should be able to create a Graph with an axis having a given id, and then fetch that axis's id from the graph", function() {
+    it("should be able to create a Graph with an axis having a given id, and then fetch that axis's id from the graph", function () {
         var g = new Graph();
         var a = new Axis();
         a.id("myaxis");
@@ -121,21 +121,21 @@ describe("Graph", function () {
         expect(g.axes().get(0).id()).toBe("myaxis");
     });
 
-    describe("initializeGeometry", function() {
+    describe("initializeGeometry", function () {
 
-        it("should not throw an error", function() {
-            expect(function() {
+        it("should not throw an error", function () {
+            expect(function () {
                 g.initializeGeometry(300, 200);
             }).not.toThrow();
         });
 
-        it("should set the correct window width and height", function() {
+        it("should set the correct window width and height", function () {
             g.initializeGeometry(300, 200);
             expect(g.windowBox().width()).toBe(300);
             expect(g.windowBox().height()).toBe(200);
         });
 
-        it("should compute the correct paddingBox dimensions", function() {
+        it("should compute the correct paddingBox dimensions", function () {
             g.initializeGeometry(300, 200);
             expect(g.paddingBox().width() ===
                    (300 - defaults.window.margin().left() - defaults.window.margin().right() -
@@ -149,7 +149,7 @@ describe("Graph", function () {
                   ).toBe(true);
         });
 
-        it("should compute the correct plotBox dimensions", function() {
+        it("should compute the correct plotBox dimensions", function () {
             g.initializeGeometry(300, 200);
             expect(g.plotBox().width() ===
                    g.paddingBox().width() -

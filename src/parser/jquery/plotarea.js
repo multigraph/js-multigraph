@@ -2,7 +2,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
     "use strict";
 
     var scalarAttributes = ["border"];
-    ns.mixin.add(function(ns, parse, serialize) {
+    ns.mixin.add(function (ns, parse, serialize) {
         
         ns.core.Plotarea[parse] = function (xml) {
             var plotarea = new ns.core.Plotarea();
