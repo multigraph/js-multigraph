@@ -75,7 +75,7 @@ describe("Logger Graphics Tests", function () {
             expect(loggerOutput.contents).toEqual(savedOutput.contents);
         });
     });
-    xit("dashboard-asi.xml should match with a width of '800' and a height of '400'", function () {
+    it("dashboard-asi.xml should match with a width of '800' and a height of '400'", function () {
         var loggerOutput = getLoggerOutput("./mugl/dashboard-asi.xml", 800, 400);
         var savedOutput = getFileContents("./graphics/logger/fixtures/dashboard-asi-800x400.log");
         waitsFor(function () {
@@ -85,7 +85,7 @@ describe("Logger Graphics Tests", function () {
             expect(loggerOutput.contents).toEqual(savedOutput.contents);
         });
     });
-    xit("dashboard-co2.xml should match with a width of '800' and a height of '400'", function () {
+    it("dashboard-co2.xml should match with a width of '800' and a height of '400'", function () {
         var loggerOutput = getLoggerOutput("./mugl/dashboard-co2.xml", 800, 400);
         var savedOutput = getFileContents("./graphics/logger/fixtures/dashboard-co2-800x400.log");
         waitsFor(function () {
@@ -95,7 +95,7 @@ describe("Logger Graphics Tests", function () {
             expect(loggerOutput.contents).toEqual(savedOutput.contents);
         });
     });
-    xit("dashboard-ghouse.xml should match with a width of '800' and a height of '400'", function () {
+    it("dashboard-ghouse.xml should match with a width of '800' and a height of '400'", function () {
         var loggerOutput = getLoggerOutput("./mugl/dashboard-ghouse.xml", 800, 400);
         var savedOutput = getFileContents("./graphics/logger/fixtures/dashboard-ghouse-800x400.log");
         waitsFor(function () {
@@ -105,7 +105,7 @@ describe("Logger Graphics Tests", function () {
             expect(loggerOutput.contents).toEqual(savedOutput.contents);
         });
     });
-    xit("dashboard-glacier.xml should match with a width of '800' and a height of '400'", function () {
+    it("dashboard-glacier.xml should match with a width of '800' and a height of '400'", function () {
         var loggerOutput = getLoggerOutput("./mugl/dashboard-glacier.xml", 800, 400);
         var savedOutput = getFileContents("./graphics/logger/fixtures/dashboard-glacier-800x400.log");
         waitsFor(function () {
@@ -125,7 +125,7 @@ describe("Logger Graphics Tests", function () {
             expect(loggerOutput.contents).toEqual(savedOutput.contents);
         });
     });
-    xit("dashboard-ocean.xml should match with a width of '800' and a height of '400'", function () {
+    it("dashboard-ocean.xml should match with a width of '800' and a height of '400'", function () {
         var loggerOutput = getLoggerOutput("./mugl/dashboard-ocean.xml", 800, 400);
         var savedOutput = getFileContents("./graphics/logger/fixtures/dashboard-ocean-800x400.log");
         waitsFor(function () {
@@ -165,7 +165,7 @@ describe("Logger Graphics Tests", function () {
             expect(loggerOutput.contents).toEqual(savedOutput.contents);
         });
     });
-    xit("dashboard-sea.xml should match with a width of '800' and a height of '400'", function () {
+    it("dashboard-sea.xml should match with a width of '800' and a height of '400'", function () {
         var loggerOutput = getLoggerOutput("./mugl/dashboard-sea.xml", 800, 400);
         var savedOutput = getFileContents("./graphics/logger/fixtures/dashboard-sea-800x400.log");
         waitsFor(function () {
@@ -175,7 +175,7 @@ describe("Logger Graphics Tests", function () {
             expect(loggerOutput.contents).toEqual(savedOutput.contents);
         });
     });
-    xit("dashboard-snow.xml should match with a width of '800' and a height of '400'", function () {
+    it("dashboard-snow.xml should match with a width of '800' and a height of '400'", function () {
         var loggerOutput = getLoggerOutput("./mugl/dashboard-snow.xml", 800, 400);
         var savedOutput = getFileContents("./graphics/logger/fixtures/dashboard-snow-800x400.log");
         waitsFor(function () {
@@ -195,7 +195,7 @@ describe("Logger Graphics Tests", function () {
             expect(loggerOutput.contents).toEqual(savedOutput.contents);
         });
     });
-    xit("dashboard-sun.xml should match with a width of '800' and a height of '400'", function () {
+    it("dashboard-sun.xml should match with a width of '800' and a height of '400'", function () {
         var loggerOutput = getLoggerOutput("./mugl/dashboard-sun.xml", 800, 400);
         var savedOutput = getFileContents("./graphics/logger/fixtures/dashboard-sun-800x400.log");
         waitsFor(function () {

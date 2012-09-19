@@ -38,6 +38,11 @@
 //                           color is used only for bars that extend
 //                           above the base.
 // 
+//     OPTION NAME:          fillopacity
+//     DATA TYPE:            number
+//     DEFAULT VALUE:        1
+//     DESCRIPTION:          Opacity used for the fill inside each bar.
+// 
 //     OPTION NAME:          hidelines
 //     DATA TYPE:            number
 //     DEFAULT VALUE:        2
@@ -75,6 +80,11 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             "name"          : "fillcolor",
             "type"          : ns.Renderer.RGBColorOption,
             "default"       : new window.multigraph.math.RGBColor(0,0,0)
+        },
+        {
+            "name"          : "fillopacity",
+            "type"          : ns.Renderer.NumberOption,
+            "default"       : 1.0
         },
         {
             "name"          : "linecolor",

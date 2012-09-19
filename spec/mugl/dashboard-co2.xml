@@ -54,8 +54,6 @@
     <renderer type="pointline">
       <option name="linecolor" value="0x990000"/>
       <option name="linewidth" value="1.5"/>
-      <option name="missingvalue" value="-9000"/>
-      <option name="missingop" value="lt"/>
     </renderer>
   </plot>
 
