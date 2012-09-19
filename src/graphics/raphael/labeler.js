@@ -16,16 +16,17 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         var drawText = function (text, graphicsContext, base, anchor, position, angle) {
             var h = measureTextHeight(graphicsContext.textElem, text),
                 w = measureTextWidth(graphicsContext.textElem, text),
-                ax = 0.5 * w * anchor.x(),
-                ay = 0.5 * h * anchor.y(),
+                ax = 0.5 * w * (anchor.x() + 1),
+                ay = 0.5 * h * (anchor.y() + 1),
 
-                dx = base.x() + position.x() + ax,
-                dy = base.y() + position.y() - ay,
+                dx = base.x() + (0.5 * w) + position.x() - ax,
+                dy = base.y() - (0.5 * h) - position.y() + ay,
                 transformString = "";
 
+            
             transformString += graphicsContext.transformString;
-            transformString += "r" + angle + "," + (dx - w/2) + "," + (dy - h/2);
-            transformString += "s1,-1";
+            transformString += "s1,-1," + dx + "," + base.y();
+            transformString += "r" + (-angle) + "," + (dx - w/2) + "," + dy;
 
             graphicsContext.paper.text(dx, dy, text).transform(transformString);
 
