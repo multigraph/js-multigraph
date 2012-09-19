@@ -9,16 +9,18 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 plotBoxHeight = graph.paddingBox().height() - this.margin().top() - this.margin().bottom(),
                 border;
 
-            border = paper.rect(paddingBox + this.margin().left(),
-                       paddingBox + this.margin().right(),
-                       plotBoxWidth,
-                       plotBoxHeight)
-                .attr({"fill-opacity" : 0,
-                       "stroke-opacity" : 1,
-                       "stroke" : this.bordercolor().getHexString("#"),
-                       "stroke-width": this.border()});
-            border.insertAfter(set);
-            set.push(border);
+            if (this.border() > 0) {
+                border = paper.rect(paddingBox + this.margin().left(),
+                                    paddingBox + this.margin().right(),
+                                    plotBoxWidth,
+                                    plotBoxHeight)
+                    .attr({"fill-opacity" : 0,
+                           "stroke-opacity" : 1,
+                           "stroke" : this.bordercolor().getHexString("#"),
+                           "stroke-width": this.border()});
+                border.insertAfter(set);
+                set.push(border);
+            }
 
         });
 

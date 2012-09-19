@@ -7,7 +7,10 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             var mb = graph.window().margin().left() + graph.window().border();
 
             set.push( paper.rect(mb,mb,width-2*mb,height-2*mb)
-                      .attr({"fill" : this.color().getHexString("#")}) );
+                      .attr({
+                          "fill"   : this.color().getHexString("#"),
+                          "stroke" : this.color().getHexString("#")
+                      }) );
             if (this.img() && this.img().src() !== undefined) {
                 this.img().render(graph, paper, set, width, height);
             }
