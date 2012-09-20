@@ -10,7 +10,7 @@
     editing various html files (jasmine test running, raphael test files, etc).
 -->
   <path id="path.multigraph-core-js">
-    <fileset dir="src/utility-functions" includes="**/*.js" />
+    <fileset dir="src/utility_functions" includes="**/*.js" />
     <filelist dir="src/core" files="data_value.js data_measure.js data_formatter.js" />
     <fileset dir="src/math" includes="**/*.js" />
     <filelist dir="src/core" files="renderer.js" />
