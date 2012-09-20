@@ -7,11 +7,21 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
         ns.core.Plotarea[parse] = function (xml) {
             var plotarea = new ns.core.Plotarea();
             if (xml) {
-                plotarea.margin().bottom(window.multigraph.utilityFunctions.parseIntegerOrUndefined(xml.attr("marginbottom")));
-                plotarea.margin().left(window.multigraph.utilityFunctions.parseIntegerOrUndefined(xml.attr("marginleft")));
-                plotarea.margin().top(window.multigraph.utilityFunctions.parseIntegerOrUndefined(xml.attr("margintop")));
-                plotarea.margin().right(window.multigraph.utilityFunctions.parseIntegerOrUndefined(xml.attr("marginright")));
-                plotarea.border(window.multigraph.utilityFunctions.parseIntegerOrUndefined(xml.attr("border")));
+                if (xml.attr("marginbottom") !== undefined) {
+                    plotarea.margin().bottom(parseInt(xml.attr("marginbottom"), 10));
+                }
+                if (xml.attr("marginleft") !== undefined) {
+                    plotarea.margin().left(parseInt(xml.attr("marginleft"), 10));
+                }
+                if (xml.attr("margintop") !== undefined) {
+                    plotarea.margin().top(parseInt(xml.attr("margintop"), 10));
+                }
+                if (xml.attr("marginright") !== undefined) {
+                    plotarea.margin().right(parseInt(xml.attr("marginright"), 10));
+                }
+                if (xml.attr("border") !== undefined) {
+                    plotarea.border(parseInt(xml.attr("border"), 10));
+                }
                 plotarea.bordercolor(ns.math.RGBColor.parse(xml.attr("bordercolor")));
             }
             return plotarea;

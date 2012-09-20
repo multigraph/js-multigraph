@@ -15,7 +15,9 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 if (xml.attr("position") !== undefined) {
                     title.position(window.multigraph.math.Point.parse(xml.attr("position")));
                 }
-                title.angle(window.multigraph.utilityFunctions.parseDoubleOrUndefined(xml.attr("angle")));
+                if (xml.attr("angle") !== undefined) {
+                    title.angle(parseFloat(xml.attr("angle")));
+                }
             }
             return title;
         };

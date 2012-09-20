@@ -54,8 +54,12 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 if (xml.attr("position")) {
                     axis.position(window.multigraph.math.Point.parse(xml.attr("position")));
                 }
-                axis.pregap(window.multigraph.utilityFunctions.parseDoubleOrUndefined(xml.attr("pregap")));
-                axis.postgap(window.multigraph.utilityFunctions.parseDoubleOrUndefined(xml.attr("postgap")));
+                if (xml.attr("pregap") !== undefined) {
+                    axis.pregap(parseFloat(xml.attr("pregap")));
+                }
+                if (xml.attr("postgap") !== undefined) {
+                    axis.postgap(parseFloat(xml.attr("postgap")));
+                }
                 if (xml.attr("anchor")) {
                     axis.anchor(parseFloat(xml.attr("anchor")));
                 }
@@ -72,18 +76,28 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 if (axis.min() !== "auto") {
                     axis.dataMin(ns.core.DataValue.parse(axis.type(), axis.min()));
                 }
-                axis.minoffset(window.multigraph.utilityFunctions.parseDoubleOrUndefined(xml.attr("minoffset")));
+                if (xml.attr("minoffset") !== undefined) {
+                    axis.minoffset(parseFloat(xml.attr("minoffset")));
+                }
                 axis.max(xml.attr("max"));
                 if (axis.max() !== "auto") {
                     axis.dataMax(ns.core.DataValue.parse(axis.type(), axis.max()));
                 }
-                axis.maxoffset(window.multigraph.utilityFunctions.parseDoubleOrUndefined(xml.attr("maxoffset")));
+                if (xml.attr("maxoffset") !== undefined) {
+                    axis.maxoffset(parseFloat(xml.attr("maxoffset")));
+                }
                 axis.positionbase(xml.attr("positionbase"));
                 axis.color(window.multigraph.math.RGBColor.parse(xml.attr("color")));
-                axis.tickmin(window.multigraph.utilityFunctions.parseIntegerOrUndefined(xml.attr("tickmin")));
-                axis.tickmax(window.multigraph.utilityFunctions.parseIntegerOrUndefined(xml.attr("tickmax")));
+                if (xml.attr("tickmin") !== undefined) {
+                    axis.tickmin(parseInt(xml.attr("tickmin"), 10));
+                }
+                if (xml.attr("tickmax") !== undefined) {
+                    axis.tickmax(parseInt(xml.attr("tickmax"), 10));
+                }
                 axis.highlightstyle(xml.attr("highlightstyle"));
-                axis.linewidth(window.multigraph.utilityFunctions.parseIntegerOrUndefined(xml.attr("linewidth")));
+                if (xml.attr("linewidth") !== undefined) {
+                    axis.linewidth(parseInt(xml.attr("linewidth"), 10));
+                }
 
                 if (xml.find("title").length > 0)        { axis.title(ns.core.AxisTitle[parse](xml.find("title")));                  }
                 if (xml.find("grid").length > 0)         { axis.grid(ns.core.Grid[parse](xml.find("grid")));                         }

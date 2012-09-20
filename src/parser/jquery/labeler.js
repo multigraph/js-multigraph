@@ -40,7 +40,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     labeler.start(defaults.start());
                 }
                 if (xml.attr("angle") !== undefined) {
-                    labeler.angle(ns.utilityFunctions.parseDoubleOrUndefined(xml.attr("angle")));
+                    labeler.angle(parseFloat(xml.attr("angle")));
                 } else if (defaults !== undefined) {
                     labeler.angle(defaults.angle());
                 }
@@ -55,7 +55,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     labeler.anchor(defaults.anchor());
                 }
                 if (xml.attr("densityfactor") !== undefined) {
-                    labeler.densityfactor(ns.utilityFunctions.parseDoubleOrUndefined(xml.attr("densityfactor")));
+                    labeler.densityfactor(parseFloat(xml.attr("densityfactor")));
                 } else if (defaults !== undefined) {
                     labeler.densityfactor(defaults.densityfactor());
                 }
@@ -80,7 +80,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     labeler.start(labels.start());
                 }
                 if (xml.attr("angle") !== undefined) {
-                    labeler.angle(ns.utilityFunctions.parseDoubleOrUndefined(xml.attr("angle")));
+                    labeler.angle(parseFloat(xml.attr("angle")));
                 } else if (labels !== undefined) {
                     labeler.angle(labels.angle());
                 }
@@ -95,7 +95,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     labeler.anchor(labels.anchor());
                 }
                 if (xml.attr("densityfactor") !== undefined) {
-                    labeler.densityfactor(ns.utilityFunctions.parseDoubleOrUndefined(xml.attr("densityfactor")));
+                    labeler.densityfactor(parseFloat(xml.attr("densityfactor")));
                 } else if (labels !== undefined) {
                     labeler.densityfactor(labels.densityfactor());
                 }

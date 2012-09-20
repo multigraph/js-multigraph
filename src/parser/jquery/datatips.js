@@ -17,9 +17,13 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 datatips.format(xml.attr("format"));
                 datatips.bgcolor(window.multigraph.math.RGBColor.parse(xml.attr("bgcolor")));
                 datatips.bgalpha(xml.attr("bgalpha"));
-                datatips.border(window.multigraph.utilityFunctions.parseIntegerOrUndefined(xml.attr("border")));
+                if (xml.attr("border") !== undefined) {
+                    datatips.border(parseInt(xml.attr("border"), 10));
+                }
                 datatips.bordercolor(window.multigraph.math.RGBColor.parse(xml.attr("bordercolor")));
-                datatips.pad(window.multigraph.utilityFunctions.parseIntegerOrUndefined(xml.attr("pad")));
+                if (xml.attr("pad") !== undefined) {
+                    datatips.pad(parseInt(xml.attr("pad"), 10));
+                }
 
             }
             return datatips;

@@ -9,17 +9,27 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
             //  which screws up the references to window.multigraph.* below!
             var w = new ns.core.Window();
             if (xml) {
-                w.width(window.multigraph.utilityFunctions.parseIntegerOrUndefined(xml.attr("width")));
-                w.height(window.multigraph.utilityFunctions.parseIntegerOrUndefined(xml.attr("height")));
-                w.border(window.multigraph.utilityFunctions.parseIntegerOrUndefined(xml.attr("border")));
+                if (xml.attr("width") !== undefined) {
+                    w.width(parseInt(xml.attr("width"), 10));
+                }
+                if (xml.attr("height") !== undefined) {
+                    w.height(parseInt(xml.attr("height"), 10));
+                }
+                if (xml.attr("border") !== undefined) {
+                    w.border(parseInt(xml.attr("border"), 10));
+                }
 
-                (function (m) {
-                    w.margin().set(m,m,m,m);
-                }(window.multigraph.utilityFunctions.parseIntegerOrUndefined(xml.attr("margin"))));
+                if (xml.attr("margin") !== undefined) {
+                    (function (m) {
+                        w.margin().set(m,m,m,m);
+                    }(parseInt(xml.attr("margin"), 10)));
+                }
 
-                (function (m) {
-                    w.padding().set(m,m,m,m);
-                }(window.multigraph.utilityFunctions.parseIntegerOrUndefined(xml.attr("padding"))));
+                if (xml.attr("padding") !== undefined) {
+                    (function (m) {
+                        w.padding().set(m,m,m,m);
+                    }(parseInt(xml.attr("padding"), 10)));
+                }
 
                 w.bordercolor(ns.math.RGBColor.parse(xml.attr("bordercolor")));
             }

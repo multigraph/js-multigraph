@@ -30,12 +30,24 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 legend.frame(xml.attr("frame"));
                 legend.color(ns.math.RGBColor.parse(xml.attr("color")));
                 legend.bordercolor(ns.math.RGBColor.parse(xml.attr("bordercolor")));
-                legend.opacity(window.multigraph.utilityFunctions.parseDoubleOrUndefined(xml.attr("opacity")));
-                legend.border(window.multigraph.utilityFunctions.parseIntegerOrUndefined(xml.attr("border")));
-                legend.rows(window.multigraph.utilityFunctions.parseIntegerOrUndefined(xml.attr("rows")));
-                legend.columns(window.multigraph.utilityFunctions.parseIntegerOrUndefined(xml.attr("columns")));
-                legend.cornerradius(window.multigraph.utilityFunctions.parseIntegerOrUndefined(xml.attr("cornerradius")));
-                legend.padding(window.multigraph.utilityFunctions.parseIntegerOrUndefined(xml.attr("padding")));
+                if (xml.attr("opacity") !== undefined) {
+                    legend.opacity(parseFloat(xml.attr("opacity")));
+                }
+                if (xml.attr("border") !== undefined) {
+                    legend.border(parseInt(xml.attr("border"), 10));
+                }
+                if (xml.attr("rows") !== undefined) {
+                    legend.rows(parseInt(xml.attr("rows"), 10));
+                }
+                if (xml.attr("columns") !== undefined) {
+                    legend.columns(parseInt(xml.attr("columns"), 10));
+                }
+                if (xml.attr("cornerradius") !== undefined) {
+                    legend.cornerradius(parseInt(xml.attr("cornerradius"), 10));
+                }
+                if (xml.attr("padding") !== undefined) {
+                    legend.padding(parseInt(xml.attr("padding"), 10));
+                }
                 if (xml.find("icon").length > 0) {
                     legend.icon(ns.core.Icon[parse](xml.find("icon")));
                 } else {

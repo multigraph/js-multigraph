@@ -12,7 +12,9 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 title.border(xml.attr("border"));
                 title.color(window.multigraph.math.RGBColor.parse(xml.attr("color")));
                 title.bordercolor(window.multigraph.math.RGBColor.parse(xml.attr("bordercolor")));
-                title.opacity(ns.utilityFunctions.parseDoubleOrUndefined(xml.attr("opacity")));
+                if (xml.attr("opacity") !== undefined) {
+                    title.opacity(parseFloat(xml.attr("opacity")));
+                }
                 title.padding(xml.attr("padding"));
                 title.cornerradius(xml.attr("cornerradius"));
                 if (xml.attr("anchor") !== undefined) {

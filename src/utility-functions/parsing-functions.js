@@ -24,6 +24,7 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
         return elem;
     };
 
+/*
     ns.parseInteger = function (number) {
         return parseInt(number, 10);
     };
@@ -41,6 +42,7 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
         number = parseFloat(number);
         return isNaN(number) === true ? undefined : number;
     };
+*/
 
     ns.getDefaultValuesFromXSD = function () {
         
