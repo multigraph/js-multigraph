@@ -4,7 +4,7 @@ describe("Graph Title parsing", function () {
     "use strict";
 
     var Title = window.multigraph.core.Title,
-        xmlString = '<title color="0xfffaab" bordercolor="0x127752" border="2" opacity="0" padding="4" cornerradius="10" base="0 0" position="-1 1" anchor="1 1">Cool Cats</title>',
+        xmlString = '<title color="0xfffaab" bordercolor="0x127752" border="2" opacity="0" padding="4" cornerradius="10" anchor="1,1" base="0,0" position="-1,1">Cool Cats</title>',
         $xml,
         title;
 
@@ -43,16 +43,16 @@ describe("Graph Title parsing", function () {
         expect(title.cornerradius()).toBe("10");
     });
 
+    it("should be able to parse a title from XML and read its 'anchor' attribute", function () {
+        expect(title.anchor().serialize()).toBe("1,1");
+    });
+
     it("should be able to parse a title from XML and read its 'base' attribute", function () {
-        expect(title.base()).toBe("0 0");
+        expect(title.base().serialize()).toBe("0,0");
     });
 
     it("should be able to parse a title from XML and read its 'position' attribute", function () {
-        expect(title.position()).toBe("-1 1");
-    });
-
-    it("should be able to parse a title from XML and read its 'anchor' attribute", function () {
-        expect(title.anchor()).toBe("1 1");
+        expect(title.position().serialize()).toBe("-1,1");
     });
 
     it("should be able to parse a title from XML and read its 'content'", function () {
@@ -60,7 +60,7 @@ describe("Graph Title parsing", function () {
     });
 
     it("should be able to parse a title from XML, serialize it and get the same XML as the original", function () {
-        var xmlString2 = '<title border="3" opacity="1" padding="4" cornerradius="10" base="0 1" position="0 0" anchor="1 0"/>';
+        var xmlString2 = '<title border="3" opacity="1" padding="4" cornerradius="10" anchor="1,0" base="0,1" position="0,0"/>';
         expect(title.serialize()).toBe(xmlString);
         title = Title.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString2));
         expect(title.serialize()).toBe(xmlString2);

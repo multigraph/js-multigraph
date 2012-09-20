@@ -257,7 +257,7 @@ describe("Axis", function () {
         });
 
         it("should be able to add a AxisTitle with attributes to a Axis", function () {
-            title.position("0 0");
+            title.position(new Point(0, 0));
             title.content("time");
             a.title(title);
             expect(a.title()).toBe(title);

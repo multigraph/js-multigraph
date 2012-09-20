@@ -4,6 +4,7 @@ describe("Axis Title", function () {
     "use strict";
 
     var AxisTitle = window.multigraph.core.AxisTitle,
+        Point = window.multigraph.math.Point,
         title;
 
     beforeEach(function () {
@@ -24,16 +25,18 @@ describe("Axis Title", function () {
 
     describe("position attribute", function () {
         it("should be able to set/get the position attribute", function () {
-            title.position("0 1");
-            expect(title.position()).toBe("0 1");
+            title.position(new Point(0, 1));
+            expect(title.position().x()).toBe(0);
+            expect(title.position().y()).toBe(1);
         });
 
     });
 
     describe("anchor attribute", function () {
         it("should be able to set/get the anchor attribute", function () {
-            title.anchor("-1 1");
-            expect(title.anchor()).toBe("-1 1");
+            title.anchor(new Point(-1, 1));
+            expect(title.anchor().x()).toBe(-1);
+            expect(title.anchor().y()).toBe(1);
         });
 
     });

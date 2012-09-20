@@ -21,14 +21,14 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             this.hasA("cornerradius").which.validatesWith(function (cornerradius) {
                 return typeof(cornerradius) === "string";
             });
+            this.hasA("anchor").which.validatesWith(function (anchor) {
+                return anchor instanceof window.multigraph.math.Point;
+            });
             this.hasA("base").which.validatesWith(function (base) {
-                return window.multigraph.utilityFunctions.validateCoordinatePair(base);
+                return base instanceof window.multigraph.math.Point;
             });
             this.hasA("position").which.validatesWith(function (position) {
-                return window.multigraph.utilityFunctions.validateCoordinatePair(position);
-            });
-            this.hasA("anchor").which.validatesWith(function (anchor) {
-                return window.multigraph.utilityFunctions.validateCoordinatePair(anchor);
+                return position instanceof window.multigraph.math.Point;
             });
 
             window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.title, attributes);

@@ -18,9 +18,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasA("bgalpha").which.validatesWith(function (bgalpha) {
             return typeof(bgalpha) === "string";
         });
-        this.hasA("border").which.validatesWith(function (border) {
-            return window.multigraph.utilityFunctions.validateInteger(border);
-        });
+        this.hasA("border").which.isA("integer");
         this.hasA("bordercolor").which.validatesWith(function (bordercolor) {
             return bordercolor instanceof window.multigraph.math.RGBColor;
         });

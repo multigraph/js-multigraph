@@ -5,17 +5,11 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.window),
         Window = new window.jermaine.Model( "Window", function () {
 
-            this.hasA("width").which.validatesWith(function (width) {
-                return window.multigraph.utilityFunctions.validateInteger(width);
-            });
+            this.hasA("width").which.isA("integer");
 
-            this.hasA("height").which.validatesWith(function (height) {
-                return window.multigraph.utilityFunctions.validateInteger(height);
-            });
+            this.hasA("height").which.isA("integer");
 
-            this.hasA("border").which.validatesWith(function (border) {
-                return window.multigraph.utilityFunctions.validateInteger(border);
-            }).defaultsTo(defaultValues.window.border);
+            this.hasA("border").which.isA("integer").and.defaultsTo(defaultValues.window.border);
 
             this.hasA("margin").which.validatesWith(function (margin) {
                 return margin instanceof window.multigraph.math.Insets;

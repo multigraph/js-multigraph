@@ -29,15 +29,11 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasA("opacity").which.validatesWith(function (opacity) {
             return window.multigraph.utilityFunctions.validateNumberRange(opacity, 0.0, 1.0);
         });
-        this.hasA("border").which.validatesWith(function (border) {
-            return window.multigraph.utilityFunctions.validateInteger(border);
-        });
+        this.hasA("border").which.isA("integer");
         this.hasA("rows").which.isA("integer").and.isGreaterThan(0);
         this.hasA("columns").which.isA("integer").and.isGreaterThan(0);
         this.hasA("cornerradius").which.isA("integer");
-        this.hasA("padding").which.validatesWith(function (padding) {
-            return window.multigraph.utilityFunctions.validateInteger(padding);
-        });
+        this.hasA("padding").which.isA("integer");
         this.hasAn("icon").which.validatesWith(function (icon) {
             return icon instanceof ns.Icon;
         });

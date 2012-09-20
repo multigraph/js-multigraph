@@ -9,9 +9,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 return margin instanceof window.multigraph.math.Insets;
             }); // defaultTo temporarily handled in isBuiltWith below
 
-            this.hasA("border").which.validatesWith(function (border) {
-                return window.multigraph.utilityFunctions.validateInteger(border);
-            }).defaultsTo(defaultValues.plotarea.border);
+            this.hasA("border").which.isA("integer").and.defaultsTo(defaultValues.plotarea.border);
 
             this.hasA("bordercolor").which.validatesWith(function (bordercolor) {
                 return bordercolor instanceof window.multigraph.math.RGBColor;

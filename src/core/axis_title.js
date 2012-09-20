@@ -6,10 +6,10 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         AxisTitle = new window.jermaine.Model( "AxisTitle", function () {
             this.hasA("content").which.isA("string");
             this.hasA("position").which.validatesWith(function (position) {
-                return window.multigraph.utilityFunctions.validateCoordinatePair(position);
+                return position instanceof window.multigraph.math.Point;
             });
             this.hasA("anchor").which.validatesWith(function (anchor) {
-                return window.multigraph.utilityFunctions.validateCoordinatePair(anchor);
+                return anchor instanceof window.multigraph.math.Point;
             });
             this.hasA("angle").which.isA("number");
 

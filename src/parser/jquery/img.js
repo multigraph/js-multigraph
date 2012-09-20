@@ -30,9 +30,15 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 output = '<img ';
 
             attributeStrings = window.multigraph.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
-            attributeStrings.push('anchor="' + this.anchor().serialize() + '"');
-            attributeStrings.push('base="' + this.base().serialize() + '"');
-            attributeStrings.push('position="' + this.position().serialize() + '"');
+            if (this.anchor() !== undefined) {
+                attributeStrings.push('anchor="' + this.anchor().serialize() + '"');
+            }
+            if (this.base() !== undefined) {
+                attributeStrings.push('base="' + this.base().serialize() + '"');
+            }
+            if (this.position() !== undefined) {
+                attributeStrings.push('position="' + this.position().serialize() + '"');
+            }
             output += attributeStrings.join(' ') + '/>';
 
             return output;

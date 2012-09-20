@@ -4,7 +4,7 @@ describe("Axis Title parsing", function () {
     "use strict";
 
     var AxisTitle = window.multigraph.core.AxisTitle,
-        xmlString = '<title position="-1 1" anchor="1 1" angle="70">A Title</title>',
+        xmlString = '<title angle="70" anchor="1,1" position="-1,1">A Title</title>',
         $xml,
         title;
 
@@ -19,11 +19,11 @@ describe("Axis Title parsing", function () {
     });
 
     it("should be able to parse a title from XML and read its 'position' attribute", function () {
-        expect(title.position()).toBe("-1 1");
+        expect(title.position().serialize()).toBe("-1,1");
     });
 
     it("should be able to parse a title from XML and read its 'anchor' attribute", function () {
-        expect(title.anchor()).toBe("1 1");
+        expect(title.anchor().serialize()).toBe("1,1");
     });
 
     it("should be able to parse a title from XML and read its 'angle' attribute", function () {
@@ -35,10 +35,7 @@ describe("Axis Title parsing", function () {
     });
 
     it("should be able to parse a title from XML, serialize it and get the same XML as the original", function () {
-        var xmlString2 = '<title position="1 -1" angle="-15"/>';
         expect(title.serialize()).toBe(xmlString);
-        title = AxisTitle.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString2));
-//        expect(title.serialize() === xmlString2).toBe(true);
     });
 
 });

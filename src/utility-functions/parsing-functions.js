@@ -90,15 +90,15 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
             },
             "title": {
                 "content": undefined,
-                "base": "0 1",
+                "anchor": function () { return new window.multigraph.math.Point(0,1); },
+                "base": function () { return new window.multigraph.math.Point(0,1); },
+                "position": function () { return new window.multigraph.math.Point(0,0); },
                 "border": "0",
 //                "color": "0xffffff",
 //                "bordercolor": "0x000000",
                 "opacity": 1.0,
                 "padding": "0",
-                "cornerradius": undefined,
-                "position": "0 0",
-                "anchor": "0 1"
+                "cornerradius": undefined
             },
             "horizontalaxis": {
                 "title": {
@@ -106,8 +106,8 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
 //                    "fontname": "default",
 //                    "fontsize": "12",
 //                    "fontcolor": "0x000000",
-                    "position": "0 -20",
-                    "anchor": "0 1",
+                    "anchor": function () { return new window.multigraph.math.Point(0,-20); },
+                    "position": function () { return new window.multigraph.math.Point(0,1); },
                     "angle": 0
                 },
                 "labels": {
@@ -204,8 +204,8 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
 //                    "fontname": "default",
 //                    "fontsize": "12",
 //                    "fontcolor": "0x000000",
-                    "position": "0 -20",
-                    "anchor": "0 1",
+                    "anchor": function () { return new window.multigraph.math.Point(0,-20); },
+                    "position": function () { return new window.multigraph.math.Point(0,1); },
                     "angle": "0"
                 },
                 "labels": {
