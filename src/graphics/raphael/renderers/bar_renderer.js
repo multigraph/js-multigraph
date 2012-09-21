@@ -181,28 +181,29 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         });
 
         ns.BarRenderer.respondsTo("renderLegendIcon", function (graphicsContext, x, y, icon, opacity) {
-            var settings = this.settings(),
+            var settings          = this.settings(),
+                rendererFillColor = this.getOptionValue("fillcolor", 0),
+                rendererOpacity   = this.getOptionValue("fillopacity", 0),
                 iconAttrs,
                 barwidth;
 
             // Draw icon background (with opacity)
             graphicsContext.paper.rect(x, y, icon.width(), icon.height())
-                .attr({
-                    "stroke" : "#ffffff",
-                    "fill" : "#ffffff"
+                .attr({                    
+                    "stroke" : "rgba(255, 255, 255, " + opacity + ")",
+                    "fill"   : "rgba(255, 255, 255, " + opacity + ")"
                 })
                 .transform(graphicsContext.transformString);
 
-            // TODO: need to get the fillcolor at y=0
             iconAttrs = {
                 "stroke-width" : 1,
-                "fill" : settings.fillcolor.getHexString("#")
+                "fill"         : rendererFillColor.toRGBA(opacity * rendererOpacity)
             };
 
             if (settings.barpixelwidth < settings.hidelines) {
-                iconAttrs.stroke = settings.fillcolor.getHexString("#");
+                iconAttrs.stroke = rendererFillColor.toRGBA(opacity * rendererOpacity);
             } else {
-                iconAttrs.stroke = settings.linecolor.getHexString("#");
+                iconAttrs.stroke = this.getOptionValue("linecolor", 0).toRGBA(opacity);
             }
 
             // Adjust the width of the icons bars based upon the width and height of the icon Ranges: {20, 10, 0}
@@ -214,7 +215,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 barwidth = icon.width() / 4;
             }
 
-        // If the icon is large enough draw extra bars
+            // If the icon is large enough draw extra bars
             if (icon.width() > 20 && icon.height() > 20) {
                 graphicsContext.paper.rect((icon.width() / 4) - (barwidth / 2), 0, barwidth, icon.height() / 2)
                     .attr(iconAttrs)

@@ -48,15 +48,14 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         });
 
         ns.PointlineRenderer.respondsTo("end", function () {
-            var settings = this.settings(),
-                linecolor = settings.linecolor.getHexString("#");
+            var settings = this.settings();
 
             if (settings.linewidth > 0) {
-            settings.set.push( settings.paper.path(settings.path)
-                               .attr({
-                                   "stroke": linecolor,
-                                   "stroke-width": settings.linewidth
-                               }));
+                settings.set.push( settings.paper.path(settings.path)
+                                   .attr({
+                                       "stroke"       : settings.linecolor.getHexString("#"),
+                                       "stroke-width" : settings.linewidth
+                                   }));
             }
 
             if (settings.pointsize > 0) {
@@ -75,15 +74,15 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
             if ((settings.pointshape === ns.PointlineRenderer.PLUS) || (settings.pointshape === ns.PointlineRenderer.X)) {
                 raphaelAttrs = {
-                    "stroke": settings.pointcolor.getHexString("#"),
-                    "stroke-width": settings.pointoutlinewidth
+                    "stroke"       : settings.pointcolor.getHexString("#"),
+                    "stroke-width" : settings.pointoutlinewidth
                 };
 
             } else {
                 raphaelAttrs = {
-                    "fill": settings.pointcolor.toRGBA(settings.pointopacity),
-                    "stroke": settings.pointoutlinecolor.getHexString("#"),
-                    "stroke-width": settings.pointoutlinewidth
+                    "fill"         : settings.pointcolor.toRGBA(settings.pointopacity),
+                    "stroke"       : settings.pointoutlinecolor.getHexString("#"),
+                    "stroke-width" : settings.pointoutlinewidth
                 };
             }
 
@@ -106,7 +105,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
             switch (shape) {
                 case ns.PointlineRenderer.PLUS:
-                    path +=  "M" + p[0] + "," + (p[1]-size);
+                    path += "M" + p[0] + "," + (p[1]-size);
                     path += "L" + p[0] + "," + (p[1]+size);
                     path += "M" + (p[0]-size) + "," + p[1];
                     path += "L" + (p[0]+size) + "," + p[1];
@@ -170,14 +169,14 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
         ns.PointlineRenderer.respondsTo("renderLegendIcon", function (graphicsContext, x, y, icon, opacity) {
             var settings = this.settings(),
-                path = "",
+                path     = "",
                 pointAttrs;
 
             // Draw icon background (with opacity)
             graphicsContext.paper.rect(x, y, icon.width(), icon.height())
                 .attr({
-                    "stroke" : "#ffffff",
-                    "fill" : "#ffffff"
+                    "stroke" : "rgba(255, 255, 255, " + opacity + ")",
+                    "fill"   : "rgba(255, 255, 255, " + opacity + ")"
                 })
                 .transform(graphicsContext.transformString);
 
@@ -186,7 +185,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 path += "L" + (x + icon.width()) + "," + (y + icon.height()/2);
                 graphicsContext.paper.path(path)
                     .attr({
-                        "stroke" : settings.linecolor.getHexString("#"),
+                        "stroke"       : settings.linecolor.toRGBA(opacity),
                         "stroke-width" : settings.linewidth
                     })
                     .transform(graphicsContext.transformString);
@@ -194,14 +193,14 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             if (settings.pointsize > 0) {
                 if ((settings.pointshape === ns.PointlineRenderer.PLUS) || (settings.pointshape === ns.PointlineRenderer.X)) {
                     pointAttrs = {
-                        "stroke": settings.pointcolor.getHexString("#"),
-                        "stroke-width": settings.pointoutlinewidth
+                        "stroke"       : settings.pointcolor.toRGBA(opacity),
+                        "stroke-width" : settings.pointoutlinewidth
                     };
                 } else {
                     pointAttrs = {
-                        "fill": settings.pointcolor.toRGBA(settings.pointopacity),
-                        "stroke": settings.pointoutlinecolor.getHexString("#"),
-                        "stroke-width": settings.pointoutlinewidth
+                        "fill"         : settings.pointcolor.toRGBA(opacity * settings.pointopacity),
+                        "stroke"       : settings.pointoutlinecolor.toRGBA(opacity),
+                        "stroke-width" : settings.pointoutlinewidth
                     };
                 }
 

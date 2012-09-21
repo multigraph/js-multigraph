@@ -1,5 +1,5 @@
 <mugl>
-  <legend visible="true"/>
+  <legend visible="true" opacity="1"/>
   <background color="0xcccccc"/>
   <window margin="0" padding="5" border="5" bordercolor="0x000000"/>
   <plotarea margintop="10" marginleft="38" marginbottom="35" marginright="35"/>

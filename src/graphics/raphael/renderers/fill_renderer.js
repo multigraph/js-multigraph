@@ -71,15 +71,15 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             }
             settings.set.push( settings.paper.path(settings.fillpath)
                                .attr({
-                                   "fill"        : settings.fillcolor.toRGBA(settings.fillopacity),
-                                   "stroke-width": 0.0001
+                                   "fill"   : settings.fillcolor.toRGBA(settings.fillopacity),
+                                   "stroke" : settings.fillcolor.toRGBA(settings.fillopacity)
                                }));
 
             if (settings.linewidth > 0) {
                 settings.set.push( settings.paper.path(settings.path)
                                    .attr({
-                                       "stroke": settings.linecolor.getHexString("#"),
-                                       "stroke-width": settings.linewidth
+                                       "stroke"       : settings.linecolor.getHexString("#"),
+                                       "stroke-width" : settings.linewidth
                                    }));
             }
 
@@ -91,11 +91,11 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 path = "";
             
             // Draw icon background (with opacity)
-            iconBackgroundAttrs.stroke = "#ffffff";
+            iconBackgroundAttrs.stroke = "rgba(255, 255, 255, " + opacity + ")";
             if (icon.width() < 10 || icon.height() < 10) {
-                iconBackgroundAttrs.fill = settings.fillcolor.getHexString("#");
+                iconBackgroundAttrs.fill = settings.fillcolor.toRGBA(opacity);
             } else {
-                iconBackgroundAttrs.fill = "#ffffff";
+                iconBackgroundAttrs.fill = "rgba(255, 255, 255, " + opacity + ")";
             }
 
             graphicsContext.paper.rect(x, y, icon.width(), icon.height())
@@ -122,9 +122,9 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             path += "L" + icon.width() + ",0";
             graphicsContext.paper.path(path)
                 .attr({
-                    "stroke": settings.linecolor.getHexString("#"),
-                    "stroke-width": settings.linewidth,
-                    "fill": settings.fillcolor.getHexString("#")
+                    "stroke"       : settings.linecolor.toRGBA(opacity),
+                    "stroke-width" : settings.linewidth,
+                    "fill"         : settings.fillcolor.toRGBA(opacity * settings.fillopacity)
                 })
                 .transform(graphicsContext.transformString + "t" + x + "," + y);
         });
