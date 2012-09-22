@@ -1,85 +1,150 @@
 window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (ns) {
     "use strict";
 
+    var Util = window.multigraph.math.util;
+
     ns.mixin.add(function (ns) {
 
-        // cached settings object, for quick access during rendering, populated in begin() method:
-        ns.FillRenderer.hasA("settings");
+        // cached state object, for quick access during rendering, populated in begin() method:
+        ns.FillRenderer.hasA("state");
 
         ns.FillRenderer.respondsTo("begin", function (context) {
-            var settings = {
-                "context" : context,
+            var state = {
+                "context"            : context,
+                "run"             : [],
                 "previouspoint"      : null,
-                "first"              : true,
                 "linecolor"          : this.getOptionValue("linecolor"),
                 "linewidth"          : this.getOptionValue("linewidth"),
                 "fillcolor"          : this.getOptionValue("fillcolor"),
                 "downfillcolor"      : this.getOptionValue("downfillcolor"),
                 "fillopacity"        : this.getOptionValue("fillopacity"),
-                "fillbase"           : this.getOptionValue("fillbase")
+                "fillbase"           : this.getOptionValue("fillbase"),
+                "currentfillcolor"   : null,
+                "currentlinecolor"   : null
             };
-            if (settings.fillbase !== null) {
-                settings.fillbase = this.plot().verticalaxis().dataValueToAxisValue(settings.fillbase);
+            if (state.downfillcolor === null) {
+                state.downfillcolor = state.fillcolor;
+            }
+            if (state.fillbase !== null) {
+                state.fillpixelbase = this.plot().verticalaxis().dataValueToAxisValue(state.fillbase);
             } else {
-                settings.fillbase = 0;
+                state.fillpixelbase = 0;
             }
 
-            this.settings(settings);
+            this.state(state);
 
-            context.fillStyle = settings.fillcolor.getHexString("#");
+            context.fillStyle = state.fillcolor.getHexString("#");
         });
 
+        // This renderer's dataPoint() method works by accumulating
+        // and drawing one "run" of data points at a time.  A "run" of
+        // points consists of a consecutive sequence of non-missing
+        // data points which have the same fill color.  (The fill
+        // color can change if the data line crosses the fill base
+        // line, if the downfillcolor is different from the
+        // fillcolor.)
         ns.FillRenderer.respondsTo("dataPoint", function (datap) {
-            var settings = this.settings(),
-                context = settings.context,
+            var state = this.state(),
+                context = state.context,
+                fillcolor,
+                linecolor,
                 p,
                 xFill;
 
+            // if this is a missing point, and if it's not the first point, end the current run and render it
             if (this.isMissing(datap)) {
-                settings.first = true;
-                settings.previouspoint = null;
+                if (state.previouspoint !== null) {
+                    state.run.push( [state.previouspoint[0], state.fillpixelbase] );
+                    this.renderRun();
+                    state.run = [];
+                    state.previouspoint = null;
+                }
                 return;
             }
 
+            // transform point to pixel coords
             p = this.transformPoint(datap);
 
-            if (settings.first) {
-                settings.first = false;
-                settings.previouspoint = p;
-                return;
+            // set the fillcolor and linecolor for this data point, based on whether it's above
+            // or below the base line
+            if (p[1] >= state.fillpixelbase) {
+                fillcolor = state.fillcolor;
+                linecolor = state.linecolor;
             } else {
-                // fill area
-                xFill = p[0] + 1; // increases width of each fill area by 1 to ensure contiguous fill
-                context.strokeStyle = settings.fillcolor.getHexString("#");
-                context.linewidth = 1;
-                context.beginPath();
-                context.moveTo(settings.previouspoint[0], settings.previouspoint[1]);
-                context.lineTo(xFill, p[1]);
-                context.lineTo(xFill, settings.fillbase);
-                context.lineTo(settings.previouspoint[0], settings.fillbase);
-                context.fill();
-                context.closePath();
-
-                // line
-                if (settings.linewidth > 0) {
-                    context.strokeStyle = settings.linecolor.getHexString("#");
-                    context.linewidth = settings.linewidth;
-                    context.beginPath();
-                    context.moveTo(settings.previouspoint[0], settings.previouspoint[1]);
-                    context.lineTo(p[0], p[1]);
-                    context.stroke();
-                    context.closePath();
-                }
-
-                settings.previouspoint = p;
-                return;                
+                fillcolor = state.downfillcolor;
+                linecolor = state.downlinecolor;
             }
+
+            // if we're starting a new run, start with this data point's base line projection
+            if (state.run.length === 0) {
+                state.run.push( [p[0], state.fillpixelbase] );
+            } else {
+                // if we're not starting a new run, but the fill color
+                // has changed, interpolate to find the exact base
+                // line crossing point, end the current run with that
+                // point, render it, and start a new run with the
+                // crossing point.
+                if (!fillcolor.eq(state.currentfillcolor)) {
+                    var x = Util.safe_interp(state.previouspoint[1], p[1], state.previouspoint[0], p[0], state.fillpixelbase);
+                    // base line crossing point is [x, state.fillpixelbase]
+                    state.run.push( [x, state.fillpixelbase] );
+                    this.renderRun();
+                    state.run = [];
+                    state.run.push( [x, state.fillpixelbase] );
+                }
+            }
+
+            // add this point to the current run, and remember it and the current colors for next time
+            state.run.push(p);
+            state.previouspoint = p;
+            state.currentfillcolor = fillcolor;
+            state.currentlinecolor = linecolor;
         });
 
         ns.FillRenderer.respondsTo("end", function () {
-            //no-op
-            return;
+            var state = this.state(),
+                context = state.context;
+            if (state.run.length > 0) {
+                state.run.push( [state.run[state.run.length-1][0], state.fillpixelbase] );
+                this.renderRun(state.currentfillcolor, state.currentlinecolor);
+            }
         });
+
+        // Render the current run of data points.  This consists of drawing the fill region
+        // under the points, and the lines connecting the points.  The first and last points
+        // in the run array are always on the base line; the points in between these two
+        // are the actual data points.
+        ns.FillRenderer.respondsTo("renderRun", function () {
+            var state = this.state(),
+                context = state.context,
+                i;
+
+            // fill the run
+            context.save();
+            context.globalAlpha = state.fillopacity;
+            context.strokeStyle = state.fillcolor.getHexString("#");
+            context.beginPath();
+            context.moveTo(state.run[0][0], state.run[0][1]);
+            for (i=1; i<state.run.length; ++i) {
+                context.lineTo(state.run[i][0], state.run[i][1]);
+            }
+            context.closePath();
+            context.fill();
+            context.restore();
+
+            // stroke the run
+            context.save();
+            context.strokeStyle = state.linecolor.getHexString("#");
+            context.lineWidth = state.linewidth;
+            context.beginPath();
+            context.moveTo(state.run[1][0], state.run[1][1]);
+            for (i=2; i<state.run.length-1; ++i) {
+                context.lineTo(state.run[i][0], state.run[i][1]);
+            }
+            context.stroke();
+            context.restore();
+        });
+
 
     });
 
