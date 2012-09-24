@@ -255,6 +255,16 @@ describe("Logger Graphics Tests", function () {
             expect(loggerOutput.contents).toEqual(savedOutput.contents);
         });
     });
+    xit("tempgraph-acis-maxt-webservice.xml should match with a width of '800' and a height of '500'", function () {
+        var loggerOutput = getLoggerOutput("./mugl/tempgraph-acis-maxt-webservice.xml", 800, 500);
+        var savedOutput = getFileContents("./graphics/logger/fixtures/tempgraph-acis-maxt-webservice-800x500.log");
+        waitsFor(function () {
+            return savedOutput.haveData && loggerOutput.haveData;
+        });
+        runs(function () {
+            expect(loggerOutput.contents).toEqual(savedOutput.contents);
+        });
+    });
     it("tempgraph-csv.xml should match with a width of '800' and a height of '500'", function () {
         var loggerOutput = getLoggerOutput("./mugl/tempgraph-csv.xml", 800, 500);
         var savedOutput = getFileContents("./graphics/logger/fixtures/tempgraph-csv-800x500.log");

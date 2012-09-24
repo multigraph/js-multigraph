@@ -1,6 +1,6 @@
 /*global describe, it, beforeEach, expect, xit, jasmine, waitsFor, runs */
 
-describe("CSV Data hoo", function () {
+describe("CSV Data", function () {
     "use strict";
     var CSVData = window.multigraph.core.CSVData,
         NumberValue = window.multigraph.core.NumberValue,
