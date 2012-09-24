@@ -176,6 +176,7 @@
       <filelist dir="${lib.dir}" files="${lib.dependencies}" />
       <path refid="path.multigraph-core-js"/>
       <path refid="path.parser-jquery-js"/>
+      <path refid="path.events-jquery-mouse-js"/>
       <path refid="path.graphics-raphael-js"/>
       <path refid="path.graphics-canvas-js"/>
     </concat>
