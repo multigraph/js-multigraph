@@ -5,14 +5,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         Data,
         i;
 
-    var initializeColumns = function (data) {
-        var i;
-        for (i=0; i<data.columns().size(); ++i) {
-            data.columns().at(i).data(data);
-        }
-    };
-
     Data = new window.jermaine.Model(function () {
+        var Data = this;
+
         //private find function
         var find = function (idOrColumn, thing, columns) {
             var result = -1;
@@ -24,6 +19,17 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return result;
         };
 
+        /**
+         * Set the 'data' attribute of each of this data object's columns
+         * to point to the data object itself.
+         */
+        this.respondsTo("initializeColumns", function () {
+            var i;
+            for (i=0; i<this.columns().size(); ++i) {
+                this.columns().at(i).data(this);
+            }
+        });
+
         this.hasMany("columns").eachOfWhich.validateWith(function (column) {
             this.message = "Data: constructor parameter should be an array of DataVariable objects";
             return column instanceof DataVariable;
@@ -32,7 +38,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasA("readyCallback").which.isA("function");
 
         this.isBuiltWith("columns", function () {
-            Data.initializeColumns(this);
+            this.initializeColumns();
         });
 
         this.respondsTo("columnIdToColumnNumber", function (id) {
@@ -122,7 +128,5 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
     });
 
-    Data.initializeColumns = initializeColumns;
-    
     ns.Data = Data;
 });

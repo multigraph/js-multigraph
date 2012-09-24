@@ -35,7 +35,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.isBuiltWith("columns", "filename", function () {
             var that = this;
 
-            Data.initializeColumns(that);
+            this.initializeColumns();
 
             if (that.filename() !== undefined) {
                 $.ajax({url:that.filename(), success:function (data) {
