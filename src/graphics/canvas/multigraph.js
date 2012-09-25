@@ -43,28 +43,40 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 
     });
 
-    window.multigraph.core.Multigraph.createCanvasGraph = function (divid, muglurl) {
+    window.multigraph.core.Multigraph.createCanvasGraph = function (divid, muglurl, errorHandler) {
+        var muglPromise,
+            deferred;
+        
+        try {
+            window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
+            ns.mixin.apply(window.multigraph.core);
+            window.multigraph.events.jquery.mouse.mixin.apply(window.multigraph, errorHandler);
 
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
-        ns.mixin.apply(window.multigraph.core);
-        window.multigraph.events.jquery.mouse.mixin.apply(window.multigraph);
-
-        var muglPromise = $.ajax({
-            "url"      : muglurl,
-            "dataType" : "text"
-        }),
+            muglPromise = $.ajax({
+                "url"      : muglurl,
+                "dataType" : "text"
+            });
 
             deferred = $.Deferred();
+        }
+        catch (e) {
+            errorHandler(e);
+        }
 
         muglPromise.done(function (data) {
-            var multigraph = window.multigraph.core.Multigraph.parseXML( window.multigraph.parser.jquery.stringToJQueryXMLObj(data) );
-            multigraph.divid(divid);
-            multigraph.init();
-            multigraph.registerMouseEvents(multigraph.canvas());
-            multigraph.registerCommonDataCallback(function () {
-                multigraph.redraw();
-            });
-            deferred.resolve(multigraph);
+            try {
+                var multigraph = window.multigraph.core.Multigraph.parseXML( window.multigraph.parser.jquery.stringToJQueryXMLObj(data) );
+                multigraph.divid(divid);
+                multigraph.init();
+                multigraph.registerMouseEvents(multigraph.canvas());
+                multigraph.registerCommonDataCallback(function () {
+                    multigraph.redraw();
+                });
+                deferred.resolve(multigraph);
+            }
+            catch (e) {
+                errorHandler(e);
+            }
         });
 
         return deferred.promise();

@@ -28,22 +28,31 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             }
         });
 
-   });
+    });
 
-   Multigraph.createGraph = function (obj) {
-       if (!obj.driver) {
-           obj.driver = "canvas";
-       }
-       if (obj.driver === "canvas") {
-           return Multigraph.createCanvasGraph(obj.div, obj.mugl);
-       } else if (obj.driver === "raphael") {
-           return Multigraph.createRaphaelGraph(obj.div, obj.mugl);
-       } else if (obj.driver === "logger") {
-           return Multigraph.createLoggerGraph(obj.div, obj.mugl);
-       }
-       throw new Error("invalid graphic driver '" + obj.driver + "' specified to Multigraph.createGraph");
-   };
+    Multigraph.createGraph = function (obj) {
+        if (!obj.driver) {
+            obj.driver = "canvas";
+        }
+        if (!obj.errorHandler || typeof(obj.errorHandler) !== "function") {
+            obj.errorHandler = Multigraph.createDefaultErrorHandler(obj.div);
+        }
+        if (obj.driver === "canvas") {
+            return Multigraph.createCanvasGraph(obj.div, obj.mugl, obj.errorHandler);
+        } else if (obj.driver === "raphael") {
+            return Multigraph.createRaphaelGraph(obj.div, obj.mugl, obj.errorHandler);
+        } else if (obj.driver === "logger") {
+            return Multigraph.createLoggerGraph(obj.div, obj.mugl);
+        }
+        throw new Error("invalid graphic driver '" + obj.driver + "' specified to Multigraph.createGraph");
+    };
 
-   ns.Multigraph = Multigraph;
+    Multigraph.createDefaultErrorHandler = function (divid) {
+        return function (e) {
+            $("#" + divid).append($("<div>", {"text" : e.message, "style" : "z-index:100; border:1px solid black; background-color : #CCC;"}));
+        };
+    };
+
+    ns.Multigraph = Multigraph;
 
 });

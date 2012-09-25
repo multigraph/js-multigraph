@@ -1,7 +1,7 @@
 window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", function (ns) {
     "use strict";
 
-    ns.mixin.add(function (ns) {
+    ns.mixin.add(function (ns, errorHandler) {
         var Graph = ns.core.Graph;
         var Axis  = ns.core.Axis;
 
@@ -29,42 +29,47 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
 
         Graph.respondsTo("doDrag", function (multigraph, bx, by, dx, dy, shiftKey) {
             var i = 0;
+// TODO: this try...catch is just to remind myself how to apply, make sure this is correct later
+            try {
+                if (!this.dragStarted()) {
+                    if (Math.abs(dx) > Math.abs(dy)) {
+                        this.dragOrientation(Axis.HORIZONTAL);
+                    } else {
+                        this.dragOrientation(Axis.VERTICAL);
+                    }
+                    this.dragAxis(this.findNearestAxis(bx, by, this.dragOrientation()));
+                    if (this.dragAxis() === undefined) {
+                        this.dragOrientation( (this.dragOrientation() === Axis.HORIZONTAL) ? Axis.VERTICAL : Axis.HORIZONTAL );
+                        this.dragAxis( this.findNearestAxis(bx, by, this.dragOrientation()) );
+                    }
+                    this.dragStarted(true);
+                }
 
-            if (!this.dragStarted()) {
-                if (Math.abs(dx) > Math.abs(dy)) {
-                    this.dragOrientation(Axis.HORIZONTAL);
+                // offset coordinates of base point by position of graph
+                bx -= this.x0();
+                by -= this.y0();
+
+                // do the action
+                if (shiftKey) {
+                    if (this.dragOrientation() === Axis.HORIZONTAL) {
+                        this.dragAxis().doZoom(bx, dx);
+                    } else {
+                        this.dragAxis().doZoom(by, dy);
+                    }
                 } else {
-                    this.dragOrientation(Axis.VERTICAL);
+                    if (this.dragOrientation() === Axis.HORIZONTAL) {
+                        this.dragAxis().doPan(bx, dx);
+                    } else {
+                        this.dragAxis().doPan(by, dy);
+                    }
                 }
-                this.dragAxis(this.findNearestAxis(bx, by, this.dragOrientation()));
-                if (this.dragAxis() === undefined) {
-                    this.dragOrientation( (this.dragOrientation() === Axis.HORIZONTAL) ? Axis.VERTICAL : Axis.HORIZONTAL );
-                    this.dragAxis( this.findNearestAxis(bx, by, this.dragOrientation()) );
-                }
-                this.dragStarted(true);
+
+
+                // draw everything
+                multigraph.redraw();
+            } catch (e) {
+                errorHandler(e);
             }
-
-            // offset coordinates of base point by position of graph
-            bx -= this.x0();
-            by -= this.y0();
-
-            // do the action
-            if (shiftKey) {
-                if (this.dragOrientation() === Axis.HORIZONTAL) {
-                    this.dragAxis().doZoom(bx, dx);
-                } else {
-                    this.dragAxis().doZoom(by, dy);
-                }
-            } else {
-                if (this.dragOrientation() === Axis.HORIZONTAL) {
-                    this.dragAxis().doPan(bx, dx);
-                } else {
-                    this.dragAxis().doPan(by, dy);
-                }
-            }
-
-            // draw everything
-            multigraph.redraw();
         });
 
         var axisDistanceToPoint = function (axis, x, y) {
