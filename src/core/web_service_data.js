@@ -174,7 +174,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 dataType : "text",
                 success  : function(data) {
                     // if data contains a <values> tag, extract its text string value
-                    if (data.indexOf("<values>")) {
+                    if (data.indexOf("<values>") > 0) {
                         data = window.multigraph.parser.jquery.stringToJQueryXMLObj(data).find("values").text();
                     }
                     node.parseData(that.getColumns(), data);
