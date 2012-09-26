@@ -82,6 +82,24 @@ describe("NumberValue", function () {
 
     });
 
+    describe("clone() method", function () {
+
+        var x;
+
+        beforeEach(function() {
+            x = new NumberValue(3.14159);
+        });
+
+        it("should exist", function () {
+            expect(typeof(x.clone)).toBe("function");
+        });
+
+        it("should return a value equal to the original", function () {
+            var y = x.clone();
+            expect(y.eq(x)).toBe(true);
+        });
+
+    });
 
 
 });

@@ -202,4 +202,23 @@ describe("DatetimeValue", function () {
 
     });
 
+    describe("clone() method", function () {
+
+        var x;
+
+        beforeEach(function() {
+            x = DatetimeValue.parse("20120912");
+        });
+
+        it("should exist", function () {
+            expect(typeof(x.clone)).toBe("function");
+        });
+
+        it("should return a value equal to the original", function () {
+            var y = x.clone();
+            expect(y.eq(x)).toBe(true);
+        });
+
+    });
+
 });
