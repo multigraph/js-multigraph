@@ -49,7 +49,17 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     Multigraph.createDefaultErrorHandler = function (divid) {
         return function (e) {
-            $("#" + divid).append($("<div>", {"text" : e.message, "style" : "z-index:100; border:1px solid black; background-color : #CCC;"}));
+            var errorMessages,
+                i;
+
+            $("#" + divid).append($("<ol>", {"text" : e.message, "style" : "z-index:100; border:1px solid black; background-color : #CCC; white-space: pre-wrap; text-align: left;"}));
+
+            if (e.stack && typeof(e.stack) === "string") {
+                errorMessages = e.stack.split(/\n/);
+                for (i = 1; i < errorMessages.length; i++) {
+                    $("#" + divid + " ol").append($("<li>", {"text" : errorMessages[i].trim().replace(" (file", "\n(file"), "style" : "margin-bottom: 3px;"}));
+                }
+            }
         };
     };
 
