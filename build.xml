@@ -222,4 +222,14 @@
   <target name="makegraphicstests">
     <exec executable="./makegraphicstests"/>
   </target>
+
+  <target name="doc">
+    <exec executable="./lib/jsdoc/jsdoc" failonerror="false">
+      <arg line="-r" />
+      <arg line="src" />
+      <arg line="-d" />
+      <arg line="doc" />
+    </exec>
+  </target>
+
 </project>
