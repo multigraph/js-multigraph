@@ -1,28 +1,22 @@
 window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
-    var WebServiceData,
-        Data = ns.Data,
-        ArrayData = ns.ArrayData,
-        DataValue = ns.DataValue,
-        DataFormatter = ns.DataFormatter;
-
-    WebServiceData = window.jermaine.Model(function () {
+    ns.WebServiceData = window.jermaine.Model(function () {
         var WebServiceData = this;
 
-        this.isA(Data);
+        this.isA(ns.Data);
         this.hasA("serviceaddress").which.isA("string");
         this.hasA("serviceaddresspattern").which.isA("string");
         this.hasA("format").which.isA("string");
-        this.hasA("formatter").which.validatesWith(DataFormatter.isInstance);
+        this.hasA("formatter").which.validatesWith(ns.DataFormatter.isInstance);
         this.isBuiltWith("columns", "serviceaddress", function () {
             this.initializeColumns();
             if (this.columns().size() > 0) {
                 var column0Type = this.columns().at(0).type();
                 if (this.format() === undefined) {
-                    this.format(column0Type===DataValue.NUMBER ? "%f" : "%Y%M%D%H%i%s");
+                    this.format(column0Type===ns.DataValue.NUMBER ? "%f" : "%Y%M%D%H%i%s");
                 }
-                this.formatter(DataFormatter.create(column0Type, this.format()));
+                this.formatter(ns.DataFormatter.create(column0Type, this.format()));
             }
         });
 
@@ -118,10 +112,10 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
 
         this.hasA("coveredMin").which.defaultsTo(null).and.validatesWith(function(x) {
-            return x === null || DataValue.isInstance(x);
+            return x === null || ns.DataValue.isInstance(x);
         });
         this.hasA("coveredMax").which.defaultsTo(null).and.validatesWith(function(x) {
-            return x === null || DataValue.isInstance(x);
+            return x === null || ns.DataValue.isInstance(x);
         });
 
         /**
@@ -321,6 +315,4 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
 
     });
-
-    ns.WebServiceData = WebServiceData;
 });

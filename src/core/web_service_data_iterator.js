@@ -1,14 +1,7 @@
 window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
-    var WebServiceDataIterator,
-        WebServiceData = ns.WebServiceData,
-        WebServiceDataCacheNode = ns.WebServiceDataCacheNode,
-        Data = ns.Data,
-        ArrayData = ns.ArrayData,
-        DataValue = ns.DataValue,
-        DataFormatter = ns.DataFormatter,
-        typeOf = window.multigraph.utilityFunctions.typeOf;
+    var UF = window.multigraph.util.namespace("window.multigraph.utilityFunctions");
 
     /**
      * An iterator for stepping through data values stored in a linked list of
@@ -28,7 +21,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * @param {integer} finalIndex: 
      *     Index, within finalNode, of the last value to iterate over
      */
-    WebServiceDataIterator = window.jermaine.Model(function () {
+    ns.WebServiceDataIterator = window.jermaine.Model(function () {
         var WebServiceDataIterator = this;
 
         this.hasA("currentNode").which.validatesWith(function(x) {
@@ -36,7 +29,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
         this.hasA("currentIndex").which.isA("integer");
         this.hasA("columnIndices").which.validatesWith(function(x) {
-            return typeOf(x) === "array";
+            return UF.typeOf(x) === "array";
         });
     
         this.hasA("initialNode").which.validatesWith(function(x) {
@@ -89,7 +82,5 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
 
     });
-
-    ns.WebServiceDataIterator = WebServiceDataIterator;
 
 });

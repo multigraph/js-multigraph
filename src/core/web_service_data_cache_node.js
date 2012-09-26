@@ -1,10 +1,7 @@
 window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
-    var WebServiceDataCacheNode,
-        DataValue = ns.DataValue,
-        ArrayData = ns.ArrayData,
-        typeOf = window.multigraph.utilityFunctions.typeOf;
+    var UF = window.multigraph.util.namespace("window.multigraph.utilityFunctions");
 
     /**
      * A WebServiceDataCacheNode represents a single node in the
@@ -38,7 +35,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * to other code outside of this object to fetch and populate the
      * data.
      */
-    WebServiceDataCacheNode = window.jermaine.Model(function () {
+    ns.WebServiceDataCacheNode = window.jermaine.Model(function () {
 
         /**
          * The actual data for this node.
@@ -47,7 +44,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             // accept null
             if (data === null) { return true; }
             // only accept arrays
-            if (typeOf(data) !== "array") {
+            if (UF.typeOf(data) !== "array") {
                 this.message = "WebServiceDataCacheNode's data attribute is not an Array";
                 return false;
             }
@@ -56,12 +53,12 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             if (data.length > 0) {
                 var firstRow = data[0],
                     i;
-                if (typeOf(firstRow) !== "array") {
+                if (UF.typeOf(firstRow) !== "array") {
                     this.message = "WebServiceDataCacheNode's data attribute is not an Array of Arrays";
                     return false;
                 }
                 for (i=0; i<firstRow.length; ++i) {
-                    if (!DataValue.isInstance(firstRow[i])) {
+                    if (!ns.DataValue.isInstance(firstRow[i])) {
                         this.message = "WebServiceDataCacheNode's data attribute is not an Array of Arrays of DataValues (bad value in position " + i + " of first row";
                         return false;
                     }
@@ -74,25 +71,25 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * The next node in the cache's linked list
          */
         this.hasA("next").which.defaultsTo(null).and.validatesWith(function(x) {
-            return x === null || x instanceof WebServiceDataCacheNode;
+            return x === null || x instanceof ns.WebServiceDataCacheNode;
         });
 
         /**
          * The previous node in the cache's linked list
          */
         this.hasA("prev").which.defaultsTo(null).and.validatesWith(function(x) {
-            return x === null || x instanceof WebServiceDataCacheNode;
+            return x === null || x instanceof ns.WebServiceDataCacheNode;
         });
 
         /**
          * The min of the covered value range
          */
-        this.hasA("coveredMin").which.validatesWith(DataValue.isInstance);
+        this.hasA("coveredMin").which.validatesWith(ns.DataValue.isInstance);
 
         /**
          * The max of the covered value range
          */
-        this.hasA("coveredMax").which.validatesWith(DataValue.isInstance);
+        this.hasA("coveredMax").which.validatesWith(ns.DataValue.isInstance);
 
         /**
          * Return the next node in the cache that actually has data,
@@ -190,7 +187,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             }
 
             // convert the csv dataText string to an array
-            arrayDataArray = ArrayData.textToDataValuesArray(columns, dataText);
+            arrayDataArray = ns.ArrayData.textToDataValuesArray(columns, dataText);
 
             // populate the data array by copying values from the converted array, skipping any
             // values that are already within the range covered by the rest of the cache
@@ -223,7 +220,5 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             this.data( data );
         });
     });
-
-    ns.WebServiceDataCacheNode = WebServiceDataCacheNode;
 
 });
