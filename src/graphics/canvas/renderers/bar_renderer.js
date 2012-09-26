@@ -177,6 +177,52 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             context.closePath();
 
         });
+
+        ns.BarRenderer.respondsTo("renderLegendIcon", function (context, x, y, icon, opacity) {
+            var settings          = this.settings(),
+                rendererFillColor = this.getOptionValue("fillcolor", 0),
+                rendererOpacity   = this.getOptionValue("fillopacity", 0),
+                barwidth;
+
+            context.save();
+            context.transform(1, 0, 0, 1, x, y);
+
+            // Draw icon background (with opacity)
+            context.fillStyle = "rgba(255, 255, 255, " + opacity + ")";
+            context.fillRect(0, 0, icon.width(), icon.height());
+
+            context.lineWidth = 1;
+            context.fillStyle = rendererFillColor.toRGBA(opacity * rendererOpacity);
+
+            if (settings.barpixelwidth < settings.hidelines) {
+                context.strokeStyle = rendererFillColor.toRGBA(opacity * rendererOpacity);
+            } else {
+                context.strokeStyle = this.getOptionValue("linecolor", 0).toRGBA(opacity);
+            }
+
+            // Adjust the width of the icons bars based upon the width and height of the icon Ranges: {20, 10, 0}
+            if (icon.width() > 20 || icon.height() > 20) {
+                barwidth = icon.width() / 6;
+            } else if (icon.width() > 10 || icon.height() > 10) {
+                barwidth = icon.width() / 4;
+            } else {
+                barwidth = icon.width() / 4;
+            }
+
+            // If the icon is large enough draw extra bars
+            if (icon.width() > 20 && icon.height() > 20) {
+                context.fillRect((icon.width() / 4) - (barwidth / 2), 0, barwidth, icon.height() / 2);
+                context.strokeRect((icon.width() / 4) - (barwidth / 2), 0, barwidth, icon.height() / 2);
+
+                context.fillRect(icon.width() - (icon.width() / 4) - (barwidth / 2), 0, barwidth, icon.height() / 3);
+                context.strokeRect(icon.width() - (icon.width() / 4) - (barwidth / 2), 0, barwidth, icon.height() / 3);
+            }
+
+            context.fillRect((icon.width() / 2) - (barwidth / 2), 0, barwidth, icon.height() - (icon.height() / 4));
+            context.strokeRect((icon.width() / 2) - (barwidth / 2), 0, barwidth, icon.height() - (icon.height() / 4));
+
+            context.restore();
+        });
     
     });
 

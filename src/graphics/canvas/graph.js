@@ -33,6 +33,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                 this.axes().at(i).render(this, context);
             }
 
+            this.legend().render(context);
+
         });
 
     });

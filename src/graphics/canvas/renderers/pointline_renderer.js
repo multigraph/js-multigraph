@@ -72,7 +72,6 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                 context.lineWidth = settings.pointoutlinewidth;
                 context.beginPath();
             } else {
-                //context.fillStyle = settings.pointcolor.getHexString("#");
                 context.fillStyle = settings.pointcolor.toRGBA(settings.pointopacity);
                 context.strokeStyle = settings.pointoutlinecolor.getHexString("#");
                 context.lineWidth = settings.pointoutlinewidth;
@@ -148,6 +147,46 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             context.fill();
             context.stroke();
 
+
+        });
+
+        ns.PointlineRenderer.respondsTo("renderLegendIcon", function (context, x, y, icon, opacity) {
+            var settings = this.settings();
+
+            context.save();
+            // Draw icon background (with opacity)
+            context.fillStyle = "rgba(255, 255, 255, " + opacity + ")";
+            context.fillRect(x, y, icon.width(), icon.height());
+
+            if (settings.linewidth > 0) {
+                context.strokeStyle = settings.linecolor.toRGBA(opacity);
+                context.lineWidth   = settings.linewidth;
+                context.beginPath();
+                context.moveTo(x, y + icon.height()/2);
+                context.lineTo(x + icon.width(), y + icon.height()/2);
+                context.stroke();
+                context.closePath();
+            }
+            if (settings.pointsize > 0) {
+                if ((settings.pointshape === ns.PointlineRenderer.PLUS) || (settings.pointshape === ns.PointlineRenderer.X)) {
+                    context.strokeStyle = settings.pointcolor.toRGBA(opacity);
+                    context.lineWidth   = settings.pointoutlinewidth;
+                    context.beginPath();
+                } else {
+                    context.fillStyle   = settings.pointcolor.toRGBA(opacity * settings.pointopacity);
+                    context.strokeStyle = settings.pointoutlinecolor.toRGBA(opacity);
+                    context.lineWidth   = settings.pointoutlinewidth;
+                }
+
+                this.drawPoint(context, settings, [(x + icon.width()/2), (y + icon.height()/2)]);
+
+                if ((settings.pointshape === ns.PointlineRenderer.PLUS) || (settings.pointshape === ns.PointlineRenderer.X)) {
+                    context.stroke();
+                    context.closePath();
+                }
+
+            }
+            context.restore();
 
         });
 
