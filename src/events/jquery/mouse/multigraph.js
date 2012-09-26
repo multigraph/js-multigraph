@@ -22,6 +22,7 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
             });
             $target.mouseup(function (event) {
                 mouseIsDown = false;
+                multigraph.graphs().at(0).doDragDone();
             });
             $target.mousemove(function (event) {
                 var eventX = event.pageX - $target.offset().left;
@@ -46,9 +47,11 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
                 mouseLastX = eventX;
                 mouseLastY = eventY;
                 mouseIsDown = false;
+                multigraph.graphs().at(0).doDragDone();
             });
             $target.mouseleave(function (event) {
                 mouseIsDown = false;
+                multigraph.graphs().at(0).doDragDone();
             });
         });
 

@@ -14,6 +14,12 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         return this.value.getTime();
     };
 
+    DatetimeValue.prototype.type = ns.DataValue.DATETIME;
+
+    DatetimeValue.prototype.clone = function() {
+        return new DatetimeValue(this.getRealValue());
+    };
+
     DatetimeValue.parse = function (string) {
         var Y = 0,
             M = 0,

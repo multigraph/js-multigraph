@@ -5,6 +5,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
         NumberValue  = window.multigraph.core.NumberValue,
         ArrayData  = window.multigraph.core.ArrayData,
         CSVData  = window.multigraph.core.CSVData,
+        WebServiceData  = window.multigraph.core.WebServiceData,
         Data = window.multigraph.core.Data;
 
     ns.mixin.add(function (ns, parse, serialize) {
@@ -45,6 +46,19 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     csv_xml = csv_xml[0];
                     var filename = $(csv_xml).attr("location");
                     return new CSVData(dataVariables, filename);
+                }
+
+                // if we have a <service> section, parse it and return a WebServiceData instance:
+                var service_xml = $(xml.find(">service"));
+                if (service_xml.length > 0 && dataVariables) {
+                    service_xml = service_xml[0];
+                    var location = $(service_xml).attr("location");
+                    var wsd = new WebServiceData(dataVariables, location);
+                    var format = $(service_xml).attr("format");
+                    if (format) {
+                        wsd.format(format);
+                    }
+                    return wsd;
                 }
             }
             return data;

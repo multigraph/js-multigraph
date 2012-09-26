@@ -80,14 +80,15 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     DataValue.EQ = "eq";
     DataValue.GE = "ge";
     DataValue.GT = "gt";
+    DataValue.NE = "ne";
 
     var comparatorFuncs = {};
-    comparatorFuncs[DataValue.LT] = function (x) { return this.compareTo(x)   < 0; };
     comparatorFuncs[DataValue.LT] = function (x) { return this.compareTo(x)   < 0; };
     comparatorFuncs[DataValue.LE] = function (x) { return this.compareTo(x)  <= 0; };
     comparatorFuncs[DataValue.EQ] = function (x) { return this.compareTo(x) === 0; };
     comparatorFuncs[DataValue.GE] = function (x) { return this.compareTo(x)  >= 0; };
     comparatorFuncs[DataValue.GT] = function (x) { return this.compareTo(x)   > 0; };
+    comparatorFuncs[DataValue.NE] = function (x) { return this.compareTo(x) !== 0; };
 
     /*
      * Mix the 5 comparator function into another object:
@@ -98,6 +99,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         obj[DataValue.EQ] = comparatorFuncs[DataValue.EQ];
         obj[DataValue.GE] = comparatorFuncs[DataValue.GE];
         obj[DataValue.GT] = comparatorFuncs[DataValue.GT];
+        obj[DataValue.NE] = comparatorFuncs[DataValue.NE];
     };
 
     /*
@@ -105,7 +107,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * functions, to be used like an enum type.
      */
     DataValue.comparators = function () {
-        return [ DataValue.LT, DataValue.LE, DataValue.EQ, DataValue.GE, DataValue.GT ];
+        return [ DataValue.LT, DataValue.LE, DataValue.EQ, DataValue.GE, DataValue.GT, DataValue.NE ];
     };
 
     /*
@@ -119,9 +121,10 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             case "eq": return DataValue.EQ;
             case "ge": return DataValue.GE;
             case "gt": return DataValue.GT;
+            case "ne": return DataValue.NE;
             }
         }
-        throw new Error(string + " should be one of 'lt', 'le', 'eq', 'ge', 'gt'.");
+        throw new Error(string + " should be one of 'lt', 'le', 'eq', 'ge', 'gt', 'ne'.");
     };
 
     ns.DataValue = DataValue;

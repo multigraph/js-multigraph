@@ -28,6 +28,12 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         return new NumberValue(this.value + measure.measure);
     };
 
+    NumberValue.prototype.type = ns.DataValue.NUMBER;
+
+    NumberValue.prototype.clone = function() {
+        return new NumberValue(this.value);
+    };
+
     NumberValue.parse = function (s) {
         return new NumberValue(parseFloat(s));
     };

@@ -113,6 +113,13 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             //no op
         });
 
+        this.respondsTo("pause", function() {
+            //no op
+        });
+        this.respondsTo("resume", function() {
+            //no op
+        });
+
         this.respondsTo("isMissing", function (value, i) {
             // This method should return true if the DataValue "value" meets the "missing" criteria of
             // the i-th column

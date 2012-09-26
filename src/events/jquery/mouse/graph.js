@@ -11,8 +11,20 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
             return a instanceof Axis;
         });
 
-        Graph.respondsTo("doDragReset", function (multigraph, bx, by, dx, dy, shiftKey) {
+        Graph.respondsTo("doDragReset", function () {
+            var i;
             this.dragStarted(false);
+            // pause all this graph's data sources:
+            for (i=0; i<this.data().size(); ++i) {
+                this.data().at(i).pause();
+            }
+        });
+        Graph.respondsTo("doDragDone", function () {
+            var i;
+            // unpause all this graph's data sources:
+            for (i=0; i<this.data().size(); ++i) {
+                this.data().at(i).resume();
+            }
         });
 
         Graph.respondsTo("doDrag", function (multigraph, bx, by, dx, dy, shiftKey) {
