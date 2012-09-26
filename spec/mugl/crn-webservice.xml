@@ -1,0 +1,173 @@
+<mugl>
+  <legend base="0 1" anchor="0 1" position="0 5" border="0" rows="1" frame="padding">
+    <icon width="15" height="15" border="0"/>
+  </legend>
+  <window margin="2" border="2" padding="5" />
+  <plotarea marginbottom="80" marginleft="60" marginright="170" margintop="25"/>
+  <horizontalaxis id="time"
+                  position="0 0"
+                  pregap="0"
+                  postgap="0"
+                  type="datetime"
+                  min="2009011116"
+                  max="2009011216">
+    <title/>
+    <labels format="%h:00%L%d %n%L%Y" start="0" angle="0" anchor="0 1" spacing="2M 1M 7D 5D 2D 24H 12H 6H 1H 30m 1m" />
+    <binding id="timebinding" min="2009011116" max="2009011216"/>
+    <grid/>
+  </horizontalaxis>
+  <verticalaxis id="temp"
+                position="0 0"
+                base = "-1 -1"
+                pregap="0"
+                postgap="0"
+                type="number"
+                min="0"
+                max="20.5">
+    <title angle="90" position="-45 0" anchor="0 -1">Temperature (C)</title>
+    <labels format="%.1f" start="0" angle="0" position="-10 0" anchor="1 0" spacing="50 20 10 5 2 1 0.1 0.01"/>
+    <binding id="tempbinding" min="0" max="1"/>
+  </verticalaxis>
+  
+  <verticalaxis id="precip"
+                position="0 0"
+                base="1 -1"
+                pregap="0"
+                postgap="0"
+                type="number"
+                min="0"
+                max="10.1">
+    <title angle="90" position="25 0" anchor="0 1">Precip (mm)</title>
+    <labels format="%.1f" start="0" angle="0" position="5 0" anchor="-1 0" spacing="50 20 10 5 2 1 0.1 0.01"/>
+    <zoom anchor="0"/>
+    <pan allowed="no"/>
+    <binding id="precipbinding" min="0" max="1"/>
+  </verticalaxis>
+  
+  <verticalaxis id="solarad"
+                position="60 0"
+                base="1 -1"
+                pregap="0"
+                postgap="0"
+                type="number"
+                min="0"
+                max="1100">
+    <title angle="90" position="35 0" anchor="0 1">Solar Radiation (W/m^2)</title>
+    <labels format="%1d" start="0" angle="0" position="5 0" anchor="-1 0" spacing="1000 500 200 50 20 10 5 2 1 0.1 0.01"/>
+    <zoom anchor="0"/>
+    <pan allowed="no"/>
+    <binding id="solaradbinding" min="0" max="1"/>
+  </verticalaxis>
+  
+  <verticalaxis id="windspd"
+                position="120 0"
+                base="1 -1"
+                pregap="0"
+                postgap="0"
+                type="number"
+                min="0"
+                max="15">
+    <title angle="90" position="35 0" anchor="0 1">Wind (m/s)</title>
+    <labels format="%.1f" start="0" angle="0" position="5 0" anchor="-1 0" spacing="1000 500 200 50 20 10 5 2 1 0.1 0.01"/>
+    <zoom anchor="0"/>
+    <pan allowed="no"/>
+    <binding id="windspdbinding" min="0" max="1"/>
+  </verticalaxis>
+  
+  <plot>
+    <legend label="Solar Radiation"/>
+    <horizontalaxis ref="time">
+      <variable ref="time_1h"/>
+    </horizontalaxis>
+    <verticalaxis ref="solarad">
+      <variable ref="solarad"/>
+    </verticalaxis>
+    <renderer type="fill">
+      <option name="linecolor" value="#ffaaaa"/>
+      <option name="fillcolor" value="#ffaaaa"/>
+    </renderer>
+  </plot>
+<!--  
+  <plot>
+    <legend label="Precip"/>
+    <horizontalaxis ref="time">
+      <variable ref="time_5m"/>
+    </horizontalaxis>
+    <verticalaxis ref="precip">
+      <variable ref="precip"/>
+    </verticalaxis>
+    <renderer type="bar">
+      <option name="fillcolor"  value="green"/>
+      <option name="barwidth" value="5m"/>
+      <option name="baroffset" value="0"/>
+      <option name="linecolor" value="black"/>
+    </renderer>
+  </plot>
+  
+  <plot>
+    <legend label="Air Temp"/>
+    <horizontalaxis ref="time">
+      <variable ref="time_5m"/>
+    </horizontalaxis>
+    <verticalaxis ref="temp">
+      <variable ref="temp"/>
+    </verticalaxis>
+    <renderer type="line">
+      <option name="linecolor" value="blue"/>
+      <option name="pointcolor"  value="black"/>
+      <option name="pointsize"   value="0"/>
+      <option name="linewidth" value="3"/>
+    </renderer>
+  </plot>
+-->  
+  <plot>
+    <legend label="Surface Temp"/>
+    <horizontalaxis ref="time">
+      <variable ref="time_1h"/>
+    </horizontalaxis>
+    <verticalaxis ref="temp">
+      <variable ref="sur_temp"/>
+    </verticalaxis>
+    <renderer type="line">
+      <option name="linecolor" value="red"/>
+      <option name="pointcolor"  value="black"/>
+      <option name="pointsize"   value="0"/>
+      <option name="linewidth" value="3"/>
+    </renderer>
+  </plot>
+  
+  <plot>
+    <legend label="Wind Speed"/>
+    <horizontalaxis ref="time">
+      <variable ref="time_1h"/>
+    </horizontalaxis>
+    <verticalaxis ref="windspd">
+      <variable ref="windspd"/>
+    </verticalaxis>
+    <renderer type="line">
+      <option name="linecolor" value="black"/>
+    </renderer>
+  </plot>
+  
+<!--  
+  <data>
+    <variables>
+      <variable id="time_5m" type="datetime"/>
+      <variable id="temp"/>
+      <variable id="precip"/>
+    </variables>
+    <service location="http://www.multigraph.org/data/examples/demo3/crndata.cgi/1026/T5,P5/"/>
+  </data>
+-->
+  
+  <data>
+    <variables>
+      <variable id="time_1h"  column="0" type="datetime"/>
+      <variable id="solarad"  column="1" type="number"/>
+      <variable id="sur_temp" column="2" type="number"/>
+      <variable id="windspd"  column="3" type="number"/>
+    </variables>
+    <service location="http://www.multigraph.org/data/examples/demo3/crndata.cgi/1026/SOLARAD,SUR_TEMP,WINDSPD/"/>
+  </data>
+  
+</mugl>

@@ -170,8 +170,13 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
             // initiate the fetch request
             $.ajax({
-                url : requestURL,
-                success : function(data) {
+                url      : requestURL,
+                dataType : "text",
+                success  : function(data) {
+                    // if data contains a <values> tag, extract its text string value
+                    if (data.indexOf("<values>")) {
+                        data = window.multigraph.parser.jquery.stringToJQueryXMLObj(data).find("values").text();
+                    }
                     node.parseData(that.getColumns(), data);
                     if (that.readyCallback() !== undefined) {
                         that.readyCallback()(node.dataMin(), node.dataMax());
@@ -214,7 +219,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                     "hasNext" : function () { return false; }
                 };
             }
-
             // convert columnIds to columnIndices
             columnIndices = [];
             for (i=0; i<columnIds.length; ++i) {

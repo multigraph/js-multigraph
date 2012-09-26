@@ -65,6 +65,16 @@ describe("Logger Graphics Tests", function () {
             expect(loggerOutput.contents).toEqual(savedOutput.contents);
         });
     });
+    xit("crn-webservice.xml should match with a width of '1000' and a height of '400'", function () {
+        var loggerOutput = getLoggerOutput("./mugl/crn-webservice.xml", 1000, 400);
+        var savedOutput = getFileContents("./graphics/logger/fixtures/crn-webservice-1000x400.log");
+        waitsFor(function () {
+            return savedOutput.haveData && loggerOutput.haveData;
+        });
+        runs(function () {
+            expect(loggerOutput.contents).toEqual(savedOutput.contents);
+        });
+    });
     xit("dashboard-aoi.xml should match with a width of '800' and a height of '400'", function () {
         var loggerOutput = getLoggerOutput("./mugl/dashboard-aoi.xml", 800, 400);
         var savedOutput = getFileContents("./graphics/logger/fixtures/dashboard-aoi-800x400.log");
