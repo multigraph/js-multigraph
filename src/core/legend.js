@@ -1,6 +1,42 @@
 window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
+    /**
+        @name Legend
+        @constructor
+        @param {boolean} visible
+        @param {point} base
+        @param {point} anchor
+        @param {point} position 
+        @param frame - plot or padding
+        @param {rgb} color 
+        @param {rgb} bordercolor 
+        @param {number} opacity 
+        @param {integer} border
+        @param {integer} rows
+        @param {integer} columns
+        @param {integer} cornerradius
+        @param {integer} padding
+        @param {icon} icon
+        @param {plot} plots
+        @param {integer} [iconOffset=5]
+        @param {integer} [labelOffset=5] 
+        @param {integer} [labelEnding=15]
+        @param width
+        @param height
+        @param x
+        @param y
+        @param blockWidth
+        @param blockHeight
+        @param maxLabelWidth
+        @param maxLabelHeight
+        @requires point.js
+        @requires rgb_color.js
+        @requires validation-functions.js
+        @requires plot.js
+        @requires icon.js
+    */
+
     var Icon,
         Legend,
         defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
@@ -58,6 +94,16 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasA("maxLabelWidth");
         this.hasA("maxLabelHeight");
 
+
+        /**
+            Initializes the legend
+            @method Legend#initializeGeometry
+            @param graph
+            @return {boolean} visible
+            @return widths
+            @return heights
+            @todo Find out whether or not padding needs to be taken into consideration.
+        */
         this.respondsTo("initializeGeometry", function (graph) {
             var widths = [],
                 heights = [],
@@ -127,6 +173,12 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
         });
 
+        /**
+            Draws the legend
+            @method Legend#render
+            @param graphicsContext
+           
+        */
         this.respondsTo("render", function (graphicsContext) {
             var blockx, blocky,
                 iconx, icony,
@@ -179,6 +231,16 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
         });
 
+
+        /**
+            Measure the width of the text
+            @method Legend#measureLabelWidth
+            @param {string}
+            @return length
+            @todo Replace this function with one that properly measure the width of text.  This will most likely be done in an abstract text class which has knowledge of the rendering environment.
+        */
+
+
 // TODO: replace these functions with ones that properly measure the width/height of text.
 //       This will most likely be done in an abstract text class which has knowledge of the
 //       rendering environment.
@@ -192,6 +254,15 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 return string.length*30;
         });
 
+
+
+        /**
+            Measure the height of the text
+            @method Legend#measureLabelHeight
+            @param {string}
+            @return height
+            @todo Replace this function with one that properly measures the height of text.  This will most likely be done in an abstract text class which has knowledge of the rendering environment.
+        */
         this.respondsTo("measureLabelHeight", function (string) {
                 // Graphics drivers should replace this method with an actual implementation; this
                 // is just a placeholder.  The implementation should return the height, in pixels,
