@@ -3,6 +3,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 
     ns.mixin.add(function (ns) {
 
+/*
         var measureTextWidth = function (context, string) {
             var metrics = context.measureText(string);
             return metrics.width;
@@ -15,10 +16,11 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             var metrics = context.measureText("M");
             return metrics.width;
         };
+*/
 
         var drawText = function (text, context, base, anchor, position, angle) {
-            var h = measureTextHeight(context, text);
-            var w = measureTextWidth(context, text);
+            var h = text.height();
+            var w = text.width();
             var ax = 0.5 * w * (anchor.x() + 1);
             var ay = 0.5 * h * (anchor.y() + 1);
 
@@ -29,16 +31,21 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             context.transform(1,0,0,1,-ax+position.x(),ay-position.y());
             context.transform(1,0,0,1,base.x(),base.y());
             context.rotate(-angle*Math.PI/180.0);
-            context.fillText(text, 0, 0);
+            context.fillText(text.string(), 0, 0);
             context.restore();
         };
 
         ns.Labeler.respondsTo("measureStringWidth", function (graphicsContext, string) {
-            return measureTextWidth(graphicsContext, string);
+            return (new ns.Text(string)).measureStringWidth(graphicsContext);
+//            return measureTextWidth(graphicsContext, string);
         });
+
         ns.Labeler.respondsTo("renderLabel", function (graphicsContext, value) {
-            var formattedString = this.formatter().format(value),
+            var formattedString = new ns.Text(this.formatter().format(value)),
                 a = this.axis().dataValueToAxisValue(value);
+
+            formattedString.initializeGeometry(graphicsContext);
+
             if (this.axis().orientation() === ns.Axis.HORIZONTAL) {
                 drawText(formattedString, graphicsContext, new window.multigraph.math.Point(a, this.axis().perpOffset()), this.anchor(), this.position(), this.angle());
             } else {
