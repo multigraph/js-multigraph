@@ -182,8 +182,26 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
             if (this.title())             { childStrings.push(this.title()[serialize]());        }
             if (this.labelers().size()>0) { childStrings.push(serializeLabels(this, serialize)); }
             if (this.grid())              { childStrings.push(this.grid()[serialize]());         }
-            if (this.pan())               { childStrings.push(this.pan()[serialize]());          }
-            if (this.zoom())              { childStrings.push(this.zoom()[serialize]());         }
+
+            if (this.pan()) {
+                // only serialize the pan subobject if it differs from the default
+                if (!this.pan().allowed() ||
+                    (this.pan().min() !== undefined) ||
+                    (this.pan().max() !== undefined)) {
+                    childStrings.push(this.pan()[serialize]());
+                }
+            }
+
+            if (this.zoom()) {
+                // only serialize the zoom subobject if it differs from the default
+                if (!this.zoom().allowed() ||
+                    (this.zoom().anchor() !== undefined) ||
+                    (this.zoom().min() !== undefined) ||
+                    (this.zoom().max() !== undefined)) {
+                childStrings.push(this.zoom()[serialize]());
+                }
+            }
+
             if (this.binding())           { childStrings.push(this.binding()[serialize]());      }
 
 
