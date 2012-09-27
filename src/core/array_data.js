@@ -1,14 +1,10 @@
 window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
-    var ArrayData,
-        Data = ns.Data,
-        DataValue = ns.DataValue;
-
-    ArrayData = window.jermaine.Model(function () {
+    ns.ArrayData = window.jermaine.Model(function () {
         var ArrayData = this;
 
-        this.isA(Data);
+        this.isA(ns.Data);
         this.hasAn("array");
         this.isBuiltWith("columns", "array", function () {
             this.initializeColumns();
@@ -29,11 +25,15 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 curr = 0,
                 i, j,
                 projection,
+                firstIndex,
+                lastIndex,
+                currentIndex,
+                columnIndices,
                 array = arrayData.array();
 
             buffer = buffer || 0;
 
-            //first argument should be an array of strings
+            // columnIds argument should be an array of strings
             if (Object.prototype.toString.apply(columnIds) !== "[object Array]") {
                 throw new Error("ArrayData: getIterator method requires that the first parameter be an array of strings");
             } else {
@@ -44,39 +44,76 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 }
             }
 
-            //second argument should be number value
-            /*if (!(min instanceof NumberValue)) {
-             throw new Error("ArrayData: getIterator method requires the second and third argument to be number values");
-             ;
-             }*/
+            //min,max arguments should be data values
+            if (!ns.DataValue.isInstance(min) || !ns.DataValue.isInstance(max)) {
+                throw new Error("ArrayData: getIterator method requires the second and third argument to be number values");
+            }
 
             //buffer argument should be an integer
             if (typeof(buffer) !== "number") {
                 throw new Error("ArrayData: getIterator method requires last argument to be an integer");
             }
 
-            for (i = buffer; i < array.length-buffer; ++i) {
-                if (array[i+buffer][0].ge(min) && array[i+buffer][0].le(max) ||
-                    array[i-buffer][0].ge(min) && array[i-buffer][0].le(max)) {
-                    projection = [];
-                    //build the projection
-                    for (j = 0;j < columnIds.length; ++j) {
-                        projection.push(array[i][arrayData.columnIdToColumnNumber(columnIds[j])]);
-                    }
-                    //push projected data
-                    arraySlice.push(projection);
-                }
+            // if we have no data, return an empty iterator
+            if (array.length === 0) {
+                return {
+                    "next"    : function () {},
+                    "hasNext" : function () { return false; }
+                };
             }
 
-            iter.next = function () {
-                return arraySlice[curr++];
-            };
+            // find the index of the first row in the array whose column0 value is >= min
+            for (firstIndex=0; firstIndex<array.length; ++firstIndex) {
+                if (array[firstIndex][0].ge(min)) {
+                    break;
+                }
+            }
+            // back up 'buffer' steps
+            firstIndex = firstIndex - buffer;
+            if (firstIndex < 0) {
+                firstIndex = 0;
+            }
+            
+            // find the index of the last row in the array whose column0 value is <= max
+            if (firstIndex === array.length-1) {
+                lastIndex = firstIndex;
+            } else {
+                for (lastIndex=firstIndex; lastIndex<array.length-1; ++lastIndex) {
+                    if (array[lastIndex+1][0].gt(max)) {
+                        break;
+                    }
+                }
+            }
+            // move forward 'buffer' steps
+            lastIndex = lastIndex + buffer;
+            if (lastIndex > array.length-1) {
+                lastIndex = array.length-1;
+            }
 
-            iter.hasNext = function () {
-                return curr < arraySlice.length;
-            };
+            columnIndices = [];
+            for (j = 0;j < columnIds.length; ++j) {
+                columnIndices.push( arrayData.columnIdToColumnNumber(columnIds[j]) );
+            }
 
-            return iter;
+            currentIndex = firstIndex;
+                
+            return {
+                next : function() {
+                    var projection = [],
+                        i;
+                    if (currentIndex > lastIndex) {
+                        return null;
+                    }
+                    for (i=0; i<columnIndices.length; ++i) {
+                        projection.push(array[currentIndex][i]);
+                    }
+                    ++currentIndex;
+                    return projection;
+                },
+                hasNext : function() {
+                    return currentIndex <= lastIndex;
+                }
+            };
             
         };
 
@@ -93,7 +130,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                         j;
                     if (stringValuesThisRow.length === dataVariableArray.length) {
                         for (j=0; j<stringValuesThisRow.length; ++j) {
-                            dataValuesThisRow.push(DataValue.parse(dataVariableArray[j].type(), stringValuesThisRow[j]));
+                            dataValuesThisRow.push(ns.DataValue.parse(dataVariableArray[j].type(), stringValuesThisRow[j]));
                         }
                         dataValues.push( dataValuesThisRow );
                     } else {
@@ -109,6 +146,4 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         };
 
     });
-
-    ns.ArrayData = ArrayData;
 });

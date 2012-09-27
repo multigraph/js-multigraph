@@ -51,7 +51,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 variableIds.push( this.variable().at(i).id() );
             }
 
-            var iter = data.getIterator(variableIds, haxis.dataMin(), haxis.dataMax(), 0);
+            var iter = data.getIterator(variableIds, haxis.dataMin(), haxis.dataMax(), 1);
 
             var renderer = this.renderer();
             renderer.setUpMissing(); //TODO: this is awkward -- figure out a better way!
