@@ -56,24 +56,26 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             this.respondsTo("initializeGeometry", function (width, height) {
                 var i;
                 this.windowBox( new Box(width, height) );
-                this.paddingBox( new Box(( width -
-                                           ( this.window().margin().left()  + this.window().border() + this.window().padding().left() ) -
-                                           ( this.window().margin().right() + this.window().border() + this.window().padding().right() )
-                                         ),
-                                         ( height -
-                                           ( this.window().margin().top()    + this.window().border() + this.window().padding().top() ) -
-                                           ( this.window().margin().bottom() + this.window().border() + this.window().padding().bottom() )
-                                         )
-                                        )
+                this.paddingBox( new Box(
+                    ( width -
+                      ( this.window().margin().left()  + this.window().border() + this.window().padding().left() ) -
+                      ( this.window().margin().right() + this.window().border() + this.window().padding().right() )
+                    ),
+                    ( height -
+                      ( this.window().margin().top()    + this.window().border() + this.window().padding().top() ) -
+                      ( this.window().margin().bottom() + this.window().border() + this.window().padding().bottom() )
+                    )
+                )
                                );
-                this.plotBox( new Box(( this.paddingBox().width() -
-                                        ( this.plotarea().margin().left() + this.plotarea().margin().right() + (2 * this.plotarea().border()))
-                                      ),
-                                      (
-                                          this.paddingBox().height() -
-                                              ( this.plotarea().margin().top() + this.plotarea().margin().bottom() + (2 * this.plotarea().border()))
-                                      )
-                                     )
+                this.plotBox( new Box(
+                    ( this.paddingBox().width() -
+                      ( this.plotarea().margin().left() + this.plotarea().margin().right() + (2 * this.plotarea().border()))
+                    ),
+                    (
+                        this.paddingBox().height() -
+                            ( this.plotarea().margin().top() + this.plotarea().margin().bottom() + (2 * this.plotarea().border()))
+                    )
+                )
                             );
                 for (i = 0; i < this.axes().size(); ++i) {
                     this.axes().at(i).initializeGeometry(this);

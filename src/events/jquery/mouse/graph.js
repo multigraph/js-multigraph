@@ -45,10 +45,6 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
                     this.dragStarted(true);
                 }
 
-                // offset coordinates of base point by position of graph
-                bx -= this.x0();
-                by -= this.y0();
-
                 // do the action
                 if (shiftKey) {
                     if (this.dragOrientation() === Axis.HORIZONTAL) {
@@ -72,16 +68,36 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
             }
         });
 
+        /**
+         * Compute the distance from an axis to a point.  The point
+         * (x,y) is expressed in pixel coordinates in the same
+         * coordinate system as the axis.
+         * 
+         * We use two different kinds of computations depending on
+         * whether the point lies inside or outside the region bounded
+         * by the two lines perpendicular to the axis through its
+         * endpoints.  If the point lies inside this region, the
+         * distance is simply the difference in the perpendicular
+         * coordinate of the point and the perpendicular coordinate of
+         * the axis.
+         * 
+         * If the point lies outside the region, then the distance is
+         * the L2 distance between the point and the closest endpoint
+         * of the axis.
+         */
         var axisDistanceToPoint = function (axis, x, y) {
-            var perpCoord     = (axis.orientation === Axis.HORIZONTAL) ? y : x;
-            var parallelCoord = (axis.orientation === Axis.HORIZONTAL) ? x : y;
-            if (parallelCoord < axis.parallelOffset) {
-                return l2dist(parallelCoord, perpCoord, axis.parallelOffset, axis.perpOffset);
+            var perpCoord     = (axis.orientation() === Axis.HORIZONTAL) ? y : x;
+            var parallelCoord = (axis.orientation() === Axis.HORIZONTAL) ? x : y;
+            if (parallelCoord < axis.parallelOffset()) {
+                // point is under or left of the axis; return L2 distance to bottom or left axis endpoint
+                return l2dist(parallelCoord, perpCoord, axis.parallelOffset(), axis.perpOffset());
             }
-            if (parallelCoord > axis.parallelOffset + axis.pixelLength) {
-                return l2dist(parallelCoord, perpCoord, axis.parallelOffset+axis.pixelLength, axis.perpOffset);
+            if (parallelCoord > axis.parallelOffset() + axis.pixelLength()) {
+                // point is above or right of the axis; return L2 distance to top or right axis endpoint
+                return l2dist(parallelCoord, perpCoord, axis.parallelOffset()+axis.pixelLength(), axis.perpOffset());
             }
-            return Math.abs(perpCoord - axis.perpOffset);
+            // point is between the axis endpoints; return difference in perpendicular coords
+            return Math.abs(perpCoord - axis.perpOffset());
         };
 
         var l2dist = function (x1, y1, x2, y2) {

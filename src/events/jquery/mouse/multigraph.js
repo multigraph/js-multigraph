@@ -2,21 +2,26 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
     "use strict";
 
     ns.mixin.add(function (ns) {
-        var Multigraph = ns.core.Multigraph;
+        var core = ns.core;
+        var math = window.multigraph.util.namespace("window.multigraph.math");
 
-        Multigraph.respondsTo("registerMouseEvents", function (target) {
+        core.Multigraph.respondsTo("registerMouseEvents", function (target) {
 
-            var baseX, baseY;
-            var mouseLastX, mouseLastY;
+            var base;
+            var mouseLast;
             var mouseIsDown = false;
             var dragStarted = false;
             var multigraph = this;
 
             var $target = $(target);
 
+            var eventLocationToGraphCoords = function (event) {
+                return new math.Point((event.pageX - $target.offset().left) - multigraph.graphs().at(0).x0(),
+                                      $target.height() - (event.pageY - $target.offset().top) - multigraph.graphs().at(0).y0());
+            };
+
             $target.mousedown(function (event) {
-                mouseLastX = baseX = (event.pageX - $target.offset().left);
-                mouseLastY = baseY = $target.height() - (event.pageY - $target.offset().top);
+                mouseLast = base = eventLocationToGraphCoords(event);
                 mouseIsDown = true;
                 dragStarted = false;
             });
@@ -25,27 +30,22 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
                 multigraph.graphs().at(0).doDragDone();
             });
             $target.mousemove(function (event) {
-                var eventX = event.pageX - $target.offset().left;
-                var eventY = $target.height() - (event.pageY - $target.offset().top);
+                var eventLoc = eventLocationToGraphCoords(event);
                 if (mouseIsDown) {
-                    var dx = eventX - mouseLastX;
-                    var dy = eventY - mouseLastY;
+                    var dx = eventLoc.x() - mouseLast.x();
+                    var dy = eventLoc.y() - mouseLast.y();
                     if (multigraph.graphs().size() > 0) {
                         if (!dragStarted ) {
                             multigraph.graphs().at(0).doDragReset();
                         }
-                        multigraph.graphs().at(0).doDrag(multigraph,baseX,baseY,dx,dy,event.shiftKey);
+                        multigraph.graphs().at(0).doDrag(multigraph,base.x(),base.y(),dx,dy,event.shiftKey);
                     }
                     dragStarted = true;
                 }
-                mouseLastX = eventX;
-                mouseLastY = eventY;
+                mouseLast = eventLoc;
             });
             $target.mouseenter(function (event) {
-                var eventX = event.pageX - $target.offset().left;
-                var eventY = $target.height() - (event.pageY - $target.offset().top);
-                mouseLastX = eventX;
-                mouseLastY = eventY;
+                mouseLast = eventLocationToGraphCoords(event);
                 mouseIsDown = false;
                 multigraph.graphs().at(0).doDragDone();
             });
