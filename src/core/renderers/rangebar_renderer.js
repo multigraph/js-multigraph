@@ -17,8 +17,9 @@
 //     OPTION NAME:          baroffset
 //     DATA TYPE:            number
 //     DEFAULT VALUE:        0
-//     DESCRIPTION:          The offset, in pixels, of the left edge of
-//                           each bar from the corresponding data value.
+//     DESCRIPTION:          The offset of the left edge of each bar
+//                           from the corresponding data value, as a
+//                           fraction (0-1) of the barwidth.
 // 
 //     OPTION NAME:          fillcolor
 //     DATA TYPE:            RGBColor

@@ -1,0 +1,66 @@
+<mugl>
+  <plotarea margintop="18"/>
+  <legend rows="1" border="0" opacity="0.0" base="0 1" anchor="0 1" position="0 25">
+    <icon border="0" width="30" height="30"/>
+  </legend>
+  <horizontalaxis id="date"
+		  type="datetime"
+		  min="20120920"
+		  max="20120927">
+    <labels spacing="100Y 50Y 20Y 10Y 5Y 1Y 6M 3M 2M 1M 7D 1D" format="%n %d%L%Y"/>
+    <title/>
+    <grid/>
+  </horizontalaxis>
+  <verticalaxis id="temp"
+		min="0"
+		max="100">
+    <title anchor="0 -1" angle="90" position="-25 0">Degrees (F)</title>
+    <grid/>
+    <labels spacing="100 50 20 10 5 1 0.5 0.2 0.1" format="%f"/>
+  </verticalaxis>
+
+  <plot>
+    <legend label="Normal Temperature Range"/>
+    <horizontalaxis ref="date">
+      <variable ref="date"/>
+    </horizontalaxis>
+    <verticalaxis ref="temp">
+      <variable ref="normal_mint"/>
+      <variable ref="normal_maxt"/>
+    </verticalaxis>
+    <renderer type="band">
+      <option name="fillcolor" value="0x99ff99"/>
+      <option name="linewidth" value="0"/>
+      <option name="linecolor" value="0x99ff99"/>
+    </renderer>
+  </plot>
+
+  <plot>
+    <legend label="Actual Temperature Range"/>
+    <horizontalaxis ref="date">
+      <variable ref="date"/>
+    </horizontalaxis>
+    <verticalaxis ref="temp">
+      <variable ref="mint"/>
+      <variable ref="maxt"/>
+    </verticalaxis>
+    <renderer type="rangebar">
+      <option name="fillcolor" value="0x0000cc"/>
+      <option name="barwidth" value="20H"/>
+      <option name="baroffset" value="0.5"/>
+    </renderer>
+  </plot>
+
+  <data>
+    <variables missingvalue="-9000" missingop="le">
+      <variable column="0" id="date" type="datetime"/>
+      <variable column="1" id="maxt"/>
+      <variable column="2" id="mint"/>
+      <variable column="3" id="normal_maxt"/>
+      <variable column="4" id="normal_mint"/>
+    </variables>
+    <service location="http://acis.multigraph.org/acisdata/13881-1/maxt,mint,normal_maxt,normal_mint/"/>
+  </data>
+
+</mugl>
+

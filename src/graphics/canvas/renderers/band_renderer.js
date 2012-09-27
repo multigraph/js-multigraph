@@ -1,8 +1,6 @@
 window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (ns) {
     "use strict";
 
-    var mathUtil = window.multigraph.math.util;
-
     ns.mixin.add(function (ns) {
 
         // cached state object, for quick access during rendering, populated in begin() method:

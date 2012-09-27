@@ -35,6 +35,16 @@ describe("Logger Graphics Tests", function () {
         window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
         window.multigraph.graphics.logger.mixin.apply(window.multigraph.core);
     });
+    xit("acis-webservice.xml should match with a width of '1000' and a height of '400'", function () {
+        var loggerOutput = getLoggerOutput("./mugl/acis-webservice.xml", 1000, 400);
+        var savedOutput = getFileContents("./graphics/logger/fixtures/acis-webservice-1000x400.log");
+        waitsFor(function () {
+            return savedOutput.haveData && loggerOutput.haveData;
+        });
+        runs(function () {
+            expect(loggerOutput.contents).toEqual(savedOutput.contents);
+        });
+    });
     it("background_image.xml should match with a width of '800' and a height of '500'", function () {
         var loggerOutput = getLoggerOutput("./mugl/background_image.xml", 800, 500);
         var savedOutput = getFileContents("./graphics/logger/fixtures/background_image-800x500.log");
@@ -268,6 +278,16 @@ describe("Logger Graphics Tests", function () {
     it("pointline_legend.xml should match with a width of '800' and a height of '500'", function () {
         var loggerOutput = getLoggerOutput("./mugl/pointline_legend.xml", 800, 500);
         var savedOutput = getFileContents("./graphics/logger/fixtures/pointline_legend-800x500.log");
+        waitsFor(function () {
+            return savedOutput.haveData && loggerOutput.haveData;
+        });
+        runs(function () {
+            expect(loggerOutput.contents).toEqual(savedOutput.contents);
+        });
+    });
+    xit("rangebar_graph.xml should match with a width of '800' and a height of '500'", function () {
+        var loggerOutput = getLoggerOutput("./mugl/rangebar_graph.xml", 800, 500);
+        var savedOutput = getFileContents("./graphics/logger/fixtures/rangebar_graph-800x500.log");
         waitsFor(function () {
             return savedOutput.haveData && loggerOutput.haveData;
         });
