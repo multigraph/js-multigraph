@@ -100,9 +100,9 @@ describe("Legend", function () {
         beforeEach(function () {
             graph = new Graph();
             graph.paddingBox(new Box());
-            graph.paddingBox().height(100).width(100);
+            graph.paddingBox().height(500).width(500);
             graph.plotBox(new Box());
-            graph.plotBox().height(100).width(100);
+            graph.plotBox().height(400).width(400);
             plot1 = new Plot();
             plot2 = new Plot();
             plot3 = new Plot();
@@ -310,44 +310,372 @@ describe("Legend", function () {
             
         });
 
-        xit("should correctly compute the max label width", function () {
-            // TODO: create specs for this once a method exists to correctly measure
-            //       text width.
+        // These figures were calculated by hand using the formula:
+        // multiply the number of characters on the longest line in the label by 15
+        it("should correctly compute the max label width", function () {
+            plot1.legend().visible(true).label(new Text("foo"));
+            plot2.legend().visible(true).label(new Text("bar"));
+            graph.plots().add(plot1);
+            graph.plots().add(plot2);
+            l.initializeGeometry(graph);
+            expect(l.maxLabelWidth()).toEqual(45);
+
+            l = new Legend();
+            l.icon(new Icon());
+            plot3.legend().visible(false).label(new Text("a very very very very long string"));
+            graph.plots().add(plot3);
+            l.initializeGeometry(graph);
+            expect(l.maxLabelWidth()).toEqual(45);
+
+            l = new Legend();
+            l.icon(new Icon());
+            plot4.legend().visible(true).label(new Text("a long string\nwith newlines"));
+            graph.plots().add(plot4);
+            l.initializeGeometry(graph);
+            expect(l.maxLabelWidth()).toEqual(195);
+
+            l = new Legend();
+            l.icon(new Icon());
+            plot5.legend().visible(true).label(new Text("a long string without newlines"));
+            graph.plots().add(plot5);
+            l.initializeGeometry(graph);
+            expect(l.maxLabelWidth()).toEqual(450);
         });
 
-        xit("should correctly compute the max label height", function () {
-            // TODO: create specs for this once a method exists to correctly measure
-            //       text height.
+        // These figures were calculated by hand using the formula:
+        // Take the max of multiplying the number of lines in the label by 12, and the height of the icon
+        it("should correctly compute the max label height", function () {
+            plot1.legend().visible(true).label(new Text("foo"));
+            plot2.legend().visible(true).label(new Text("bar"));
+            graph.plots().add(plot1);
+            graph.plots().add(plot2);
+            l.initializeGeometry(graph);
+            expect(l.maxLabelHeight()).toEqual(30);
+
+            l = new Legend();
+            l.icon((new Icon()).height(2));
+            plot3.legend().visible(false).label(new Text("a very very very very long string but tiny icon"));
+            graph.plots().add(plot3);
+            l.initializeGeometry(graph);
+            expect(l.maxLabelHeight()).toEqual(12);
+
+            l = new Legend();
+            l.icon((new Icon()).height(10));
+            plot4.legend().visible(true).label(new Text("a long string\nwith newlines"));
+            graph.plots().add(plot4);
+            l.initializeGeometry(graph);
+            expect(l.maxLabelHeight()).toEqual(24);
+
+            l = new Legend();
+            l.icon(new Icon());
+            plot5.legend().visible(true).label(new Text("a long string many\nmany\nmany\nnewlines"));
+            graph.plots().add(plot5);
+            l.initializeGeometry(graph);
+            expect(l.maxLabelHeight()).toEqual(48);
         });
 
-        xit("should correctly compute the width of each 'block' of the legend", function () {
-            // TODO: create specs for this once a method exists to correctly measure
-            //       text width.
+        // These figures were calculated by hand using the formula:
+        // this.iconOffset() + this.icon().width() + this.labelOffset() + this.maxLabelWidth() + this.labelEnding()
+        it("should correctly compute the width of each 'block' of the legend", function () {
+            plot1.legend().visible(true).label(new Text("foo"));
+            plot2.legend().visible(true).label(new Text("bar"));
+            graph.plots().add(plot1);
+            graph.plots().add(plot2);
+            l.initializeGeometry(graph);
+            expect(l.blockWidth()).toEqual(110);
+
+            l = new Legend();
+            l.icon((new Icon()).width(2));
+            plot3.legend().visible(false).label(new Text("a very very very very long string but tiny icon"));
+            graph.plots().add(plot3);
+            l.initializeGeometry(graph);
+            expect(l.blockWidth()).toEqual(72);
+
+            l = new Legend();
+            l.icon((new Icon()).width(70));
+            l.initializeGeometry(graph);
+            expect(l.blockWidth()).toEqual(140);
+
+            l = new Legend();
+            l.icon((new Icon()).height(10));
+            plot4.legend().visible(true).label(new Text("a long string\nwith newlines"));
+            graph.plots().add(plot4);
+            l.initializeGeometry(graph);
+            expect(l.blockWidth()).toEqual(260);
+
+            l = new Legend();
+            l.icon(new Icon());
+            plot5.legend().visible(true).label(new Text("this is a far longer string than anyone should ever use"));
+            graph.plots().add(plot5);
+            l.initializeGeometry(graph);
+            expect(l.blockWidth()).toEqual(890);            
         });
 
-        xit("should correctly compute the height of each 'block' of the legend", function () {
-            // TODO: create specs for this once a method exists to correctly measure
-            //       text height.
+        // These figures were calculated by hand using the formula:
+        // this.iconOffset() + this.maxLabelHeight()
+        it("should correctly compute the height of each 'block' of the legend", function () {
+            plot1.legend().visible(true).label(new Text("foo"));
+            plot2.legend().visible(true).label(new Text("this is a far longer string than anyone should ever use"));
+            graph.plots().add(plot1);
+            graph.plots().add(plot2);
+            l.initializeGeometry(graph);
+            expect(l.blockHeight()).toEqual(35);
+
+            l = new Legend();
+            l.icon((new Icon()).height(2));
+            plot3.legend().visible(false).label(new Text("a very very very very long string but tiny icon"));
+            graph.plots().add(plot3);
+            l.initializeGeometry(graph);
+            expect(l.blockHeight()).toEqual(17);
+
+            l = new Legend();
+            l.icon((new Icon()).height(70));
+            l.initializeGeometry(graph);
+            expect(l.blockHeight()).toEqual(75);
+
+            l = new Legend();
+            l.icon((new Icon()).height(10).width(5));
+            plot4.legend().visible(true).label(new Text("a long string\nwith newlines"));
+            graph.plots().add(plot4);
+            l.initializeGeometry(graph);
+            expect(l.blockHeight()).toEqual(29);
+
+            l = new Legend();
+            l.icon(new Icon());
+            plot5.legend().visible(true).label(new Text("this is a far\n longer\n string\n than anyone\n should ever use and \n with \n newlines"));
+            graph.plots().add(plot5);
+            l.initializeGeometry(graph);
+            expect(l.blockHeight()).toEqual(89);
         });
 
-        xit("should correctly compute the width of the legend", function () {
-            // TODO: create specs for this once a method exists to correctly measure
-            //       text width.
+
+        // These figures were calculated by hand using the formula:
+        // (2 * this.border()) + (this.columns() * this.blockWidth())
+        it("should correctly compute the width of the legend", function () {
+            plot1.legend().visible(true).label(new Text("foo"));
+            plot2.legend().visible(true).label(new Text("foobar"));
+            graph.plots().add(plot1);
+            graph.plots().add(plot2);
+            l.initializeGeometry(graph);
+            expect(l.width()).toEqual(157);
+
+            l = new Legend();
+            l.icon(new Icon());
+            l.border(0);
+            l.initializeGeometry(graph);
+            expect(l.width()).toEqual(155);
+
+            l = new Legend();
+            l.icon(new Icon());
+            l.rows(5);
+            l.initializeGeometry(graph);
+            expect(l.width()).toEqual(157);
+
+            l = new Legend();
+            l.icon(new Icon());
+            l.columns(5);
+            l.initializeGeometry(graph);
+            expect(l.width()).toEqual(777);
+
+            l = new Legend();
+            l.icon(new Icon());
+            plot3.legend().visible(false).label(new Text("a very very very very long string that isn't displayed"));
+            graph.plots().add(plot3);
+            l.initializeGeometry(graph);
+            expect(l.width()).toEqual(157);
+
+            l = new Legend();
+            l.icon((new Icon()).height(70).width(78));
+            l.initializeGeometry(graph);
+            expect(l.width()).toEqual(195);
+
+            l = new Legend();
+            l.icon((new Icon()).height(10).width(5));
+            plot4.legend().visible(true).label(new Text("a long string\nwith newlines"));
+            graph.plots().add(plot4);
+            l.initializeGeometry(graph);
+            expect(l.width()).toEqual(227);
+
+            l = new Legend();
+            l.icon(new Icon());
+            l.initializeGeometry(graph);
+            expect(l.width()).toEqual(262);
+
+            l = new Legend();
+            l.icon(new Icon());
+            plot5.legend().visible(true).label(new Text("this is a far longer string than anyone should ever use"));
+            graph.plots().add(plot5);
+            l.initializeGeometry(graph);
+            expect(l.width()).toEqual(892);
         });
 
-        xit("should correctly compute the height of the legend", function () {
-            // TODO: create specs for this once a method exists to correctly measure
-            //       text height.
+        // These figures were calculated by hand using the formula:
+        // (2 * this.border()) + (this.rows() * this.blockHeight()) + this.iconOffset()
+        it("should correctly compute the height of the legend", function () {
+            plot1.legend().visible(true).label(new Text("foo"));
+            plot2.legend().visible(true).label(new Text("foobar"));
+            graph.plots().add(plot1);
+            graph.plots().add(plot2);
+            l.initializeGeometry(graph);
+            expect(l.height()).toEqual(77);
+
+            l = new Legend();
+            l.icon(new Icon());
+            l.border(0);
+            l.initializeGeometry(graph);
+            expect(l.height()).toEqual(75);
+
+            l = new Legend();
+            l.icon(new Icon());
+            l.rows(5);
+            l.initializeGeometry(graph);
+            expect(l.height()).toEqual(182);
+
+            l = new Legend();
+            l.icon(new Icon());
+            l.columns(5);
+            l.initializeGeometry(graph);
+            expect(l.height()).toEqual(42);
+
+            l = new Legend();
+            l.icon(new Icon());
+            plot3.legend().visible(false).label(new Text("a very very very very long string that isn't displayed"));
+            graph.plots().add(plot3);
+            l.initializeGeometry(graph);
+            expect(l.height()).toEqual(77);
+
+            l = new Legend();
+            l.icon((new Icon()).height(70).width(78));
+            l.initializeGeometry(graph);
+            expect(l.height()).toEqual(157);
+
+            l = new Legend();
+            l.icon((new Icon()).height(7).width(78));
+            l.initializeGeometry(graph);
+            expect(l.height()).toEqual(41);
+
+            l = new Legend();
+            l.icon((new Icon()).height(10).width(5));
+            plot4.legend().visible(true).label(new Text("a long string\nwith newlines"));
+            graph.plots().add(plot4);
+            l.initializeGeometry(graph);
+            expect(l.height()).toEqual(94);
+
+            l = new Legend();
+            l.icon(new Icon());
+            l.initializeGeometry(graph);
+            expect(l.height()).toEqual(112);
+
+            l = new Legend();
+            l.icon(new Icon());
+            plot5.legend().visible(true).label(new Text("this is a\n far\n longer\n string\n than anyone\n should\n ever use with \nnewlines"));
+            graph.plots().add(plot5);
+            l.initializeGeometry(graph);
+            expect(l.height()).toEqual(411);
         });
 
-        xit("should correctly compute the 'x' coordinate of the legend's lower left corner", function () {
-            // TODO: create specs for this once a method exists to correctly measure
-            //       text width.
+        it("should correctly compute the 'x' coordinate of the legend's lower left corner", function () {
+            plot1.legend().visible(true).label(new Text("foo"));
+            plot2.legend().visible(true).label(new Text("foobar"));
+            graph.plots().add(plot1);
+            graph.plots().add(plot2);
+            l.initializeGeometry(graph);
+            expect(l.x()).toEqual(243);
+
+            l = new Legend();
+            l.icon(new Icon());
+            l.frame("padding");
+            l.initializeGeometry(graph);
+            expect(l.x()).toEqual(343);
+
+            l = new Legend();
+            l.icon(new Icon());
+            l.frame("padding").position().x(-10);
+            l.initializeGeometry(graph);
+            expect(l.x()).toEqual(333);
+
+            l = new Legend();
+            l.icon(new Icon());
+            l.base().x(-1)
+            l.anchor().x(-1)
+            l.frame("padding");
+            l.initializeGeometry(graph);
+            expect(l.x()).toEqual(0);
+
+            l = new Legend();
+            l.icon(new Icon());
+            l.base().x(-1)
+            l.anchor().x(-1)
+            l.initializeGeometry(graph);
+            expect(l.x()).toEqual(0);
+
+            l = new Legend();
+            l.icon(new Icon());
+            l.base().x(-1)
+            l.anchor().x(0)
+            l.frame("padding");
+            l.initializeGeometry(graph);
+            expect(l.x()).toEqual(-78.5);
+
+            l = new Legend();
+            l.icon(new Icon());
+            l.base().x(0)
+            l.anchor().x(-1)
+            l.initializeGeometry(graph);
+            expect(l.x()).toEqual(200);
+
         });
 
-        xit("should correctly compute the 'y' coordinate of the legend's lower left corner", function () {
-            // TODO: create specs for this once a method exists to correctly measure
-            //       text height.
+        it("should correctly compute the 'y' coordinate of the legend's lower left corner", function () {
+            plot1.legend().visible(true).label(new Text("foo"));
+            plot2.legend().visible(true).label(new Text("foobar"));
+            graph.plots().add(plot1);
+            graph.plots().add(plot2);
+            l.initializeGeometry(graph);
+            expect(l.y()).toEqual(323);
+
+            l = new Legend();
+            l.icon(new Icon());
+            l.frame("padding");
+            l.initializeGeometry(graph);
+            expect(l.y()).toEqual(423);
+
+            l = new Legend();
+            l.icon(new Icon());
+            l.frame("padding").position().y(-10);
+            l.initializeGeometry(graph);
+            expect(l.y()).toEqual(413);
+
+            l = new Legend();
+            l.icon(new Icon());
+            l.base().y(-1)
+            l.anchor().y(-1)
+            l.frame("padding");
+            l.initializeGeometry(graph);
+            expect(l.y()).toEqual(0);
+
+            l = new Legend();
+            l.icon(new Icon());
+            l.base().y(-1)
+            l.anchor().y(-1)
+            l.initializeGeometry(graph);
+            expect(l.y()).toEqual(0);
+
+            l = new Legend();
+            l.icon(new Icon());
+            l.base().y(-1)
+            l.anchor().y(0)
+            l.frame("padding");
+            l.initializeGeometry(graph);
+            expect(l.y()).toEqual(-38.5);
+
+            l = new Legend();
+            l.icon(new Icon());
+            l.base().y(0)
+            l.anchor().y(-1)
+            l.initializeGeometry(graph);
+            expect(l.y()).toEqual(200);
+
         });
 
     });
