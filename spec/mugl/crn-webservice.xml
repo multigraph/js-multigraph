@@ -87,7 +87,7 @@
       <option name="fillcolor" value="#ffaaaa"/>
     </renderer>
   </plot>
-<!--  
+
   <plot>
     <legend label="Precip"/>
     <horizontalaxis ref="time">
@@ -103,7 +103,7 @@
       <option name="linecolor" value="black"/>
     </renderer>
   </plot>
-  
+
   <plot>
     <legend label="Air Temp"/>
     <horizontalaxis ref="time">
@@ -119,7 +119,7 @@
       <option name="linewidth" value="3"/>
     </renderer>
   </plot>
--->  
+
   <plot>
     <legend label="Surface Temp"/>
     <horizontalaxis ref="time">
@@ -149,16 +149,8 @@
     </renderer>
   </plot>
   
-<!--  
-  <data>
-    <variables>
-      <variable id="time_5m" type="datetime"/>
-      <variable id="temp"/>
-      <variable id="precip"/>
-    </variables>
-    <service location="http://www.multigraph.org/data/examples/demo3/crndata.cgi/1026/T5,P5/"/>
-  </data>
--->
+
+
   
   <data>
     <variables>
@@ -170,4 +162,13 @@
     <service location="http://www.multigraph.org/data/examples/demo3/crndata.cgi/1026/SOLARAD,SUR_TEMP,WINDSPD/"/>
   </data>
   
+  <data>
+    <variables>
+      <variable column="0" id="time_5m" type="datetime"/>
+      <variable column="1" id="temp"/>
+      <variable column="2" id="precip"/>
+    </variables>
+    <service location="http://www.multigraph.org/data/examples/demo3/crndata.cgi/1026/T5,P5/"/>
+  </data>
+
 </mugl>

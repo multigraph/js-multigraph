@@ -42,8 +42,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return base instanceof window.multigraph.math.Point;
         });
 
-
-
         // The "min" attribute stores the "min" value from the mugl file, if there was one -- as a string!!!
         this.hasA("min").which.isA("string");
 
@@ -61,9 +59,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasA("minposition").which.validatesWith(function (minposition) {
             return minposition instanceof window.multigraph.math.Displacement;
         });
-
-
-
 
         // The "max" attribute stores the "max" value from the mugl file, if there was one -- as a string!!!
         this.hasA("max").which.isA("string");
@@ -83,9 +78,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasA("maxposition").which.validatesWith(function (maxposition) {
             return maxposition instanceof window.multigraph.math.Displacement;
         });
-
-
-
 
 
         this.hasA("positionbase").which.validatesWith(function (positionbase) {
@@ -111,6 +103,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             if (this.grid() === undefined) {
                 this.grid(new ns.Grid());
             }
+            this.zoom(new ns.Zoom());
+            this.pan(new ns.Pan());
         });
 
         this.hasA("pixelLength").which.isA("number");
@@ -199,13 +193,10 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 newRealMin,
                 newRealMax;
 
-            /*TODO: uncomment after zoom/pan modifications
             if (!this.pan().allowed()) { return; }
-            */
             offset = pixelDisplacement / this.axisToDataRatio();
             newRealMin = this.dataMin().getRealValue() - offset;
             newRealMax = this.dataMax().getRealValue() - offset;
-            /*TODO: uncomment after zoom/pan modifications
             if (pixelDisplacement < 0 && this.pan().min() && newRealMin < this.pan().min().getRealValue()) {
                 newRealMax += (this.pan().min().getRealValue() - newRealMin);
                 newRealMin = this.pan().min().getRealValue();
@@ -214,7 +205,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 newMin -= (newMax - this.pan().max().getRealValue());
                 newMax = this.pan().max();
             }
-            */
             this.dataMin(ns.DataValue.create(this.type(), newRealMin));
             this.dataMax(ns.DataValue.create(this.type(), newRealMax));
         });
@@ -225,17 +215,13 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 newMin,
                 newMax,
                 d;
-            /*TODO: uncomment after zoom/pan modifications
             if (!this.zoom().allowed()) {
                 return;
             }
-            */
             baseRealValue = this.axisValueToDataValue(pixelBase).getRealValue();
-            /*TODO: uncomment after zoom/pan modifications
-            if (this.zoom().anchor()) {
-            baseDataValue = this.zoom().anchor();
+            if (this.zoom().anchor() !== undefined) {
+                baseRealValue = this.zoom().anchor().getRealValue();
             }
-            */
             factor = 10 * Math.abs(pixelDisplacement / (this.pixelLength() - this.maxoffset() - this.minoffset()));
             /*TODO: uncomment after this.reversed() has been implemented
             if (this.reversed()) { factor = -factor; }
@@ -251,28 +237,24 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 newMax = ns.DataValue.create(this.type(),
                                              (this.dataMax().getRealValue() - baseRealValue) * ( 1 - factor ) + baseRealValue);
             }
-            /*TODO: uncomment after zoom/pan modifications
             if (this.pan().min() && newMin.lt(this.pan().min())) {
                 newMin = this.pan().min();
             }
             if (this.pan().max() && newMax.gt(this.pan().max())) {
                 newMax = this.pan().max();
             }
-            */
         
             if ((this.dataMin().le(this.dataMax()) && newMin.lt(newMax)) ||
                 (this.dataMin().ge(this.dataMax()) && newMin.gt(newMax))) {
-                /*TODO: uncomment after zoom/pan modifications
-                    if (this.zoom().max() && (newMax.gt(newMin.add(this.zoom().max())))) {
-                        d = (newMax.getRealValue() - newMin.getRealValue() - this.zoom().max().getRealValue()) / 2;
-                        newMax = newMax.addRealValue(-d);
-                        newMin = newMin.addRealValue(d);
-                    } else if (this.zoom().min() && (newMax.lt(newMin.add(this.zoom().min()))) {
-                        d = (this.zoom().min().getRealValue() - (newMax.getRealValue() - newMin.getRealValue())) / 2;
-                        newMax = newMax.addRealValue(d);
-                        newMin = newMin.addRealValue(-d);
-                    }
-                */
+                if (this.zoom().max() && (newMax.gt(newMin.add(this.zoom().max())))) {
+                    d = (newMax.getRealValue() - newMin.getRealValue() - this.zoom().max().getRealValue()) / 2;
+                    newMax = newMax.addRealValue(-d);
+                    newMin = newMin.addRealValue(d);
+                } else if (this.zoom().min() && (newMax.lt(newMin.add(this.zoom().min())))) {
+                    d = (this.zoom().min().getRealValue() - (newMax.getRealValue() - newMin.getRealValue())) / 2;
+                    newMax = newMax.addRealValue(d);
+                    newMin = newMin.addRealValue(-d);
+                }
                 this.dataMin(newMin);
                 this.dataMax(newMax);
             }
