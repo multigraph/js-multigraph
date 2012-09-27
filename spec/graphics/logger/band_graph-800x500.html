@@ -9,7 +9,7 @@
 -->
 <html>
 <head>
-  <title>canvas error test: wrong_variable_refs.xml (800 X 500)</title>
+  <title>logger graphics test: band_graph.xml (800 X 500)</title>
   <script type="text/javascript" src="../../../lib/jquery/jquery.min.js"></script>
   <script type="text/javascript" src="../../../lib/jermaine/jermaine.js"></script>
   <script type="text/javascript" src="../../../lib/util/util.js"></script>
@@ -105,18 +105,19 @@
 <script type="text/javascript" src="../../../src/parser/jquery/window.js"></script>
 <script type="text/javascript" src="../../../src/parser/jquery/zoom.js"></script>
 
-<script type="text/javascript" src="../../../src/graphics/canvas/canvas_mixin.js"></script>
-<script type="text/javascript" src="../../../src/graphics/canvas/axis.js"></script>
-<script type="text/javascript" src="../../../src/graphics/canvas/graph.js"></script>
-<script type="text/javascript" src="../../../src/graphics/canvas/icon.js"></script>
-<script type="text/javascript" src="../../../src/graphics/canvas/labeler.js"></script>
-<script type="text/javascript" src="../../../src/graphics/canvas/legend.js"></script>
-<script type="text/javascript" src="../../../src/graphics/canvas/multigraph.js"></script>
-<script type="text/javascript" src="../../../src/graphics/canvas/plot.js"></script>
-<script type="text/javascript" src="../../../src/graphics/canvas/renderers/band_renderer.js"></script>
-<script type="text/javascript" src="../../../src/graphics/canvas/renderers/bar_renderer.js"></script>
-<script type="text/javascript" src="../../../src/graphics/canvas/renderers/fill_renderer.js"></script>
-<script type="text/javascript" src="../../../src/graphics/canvas/renderers/pointline_renderer.js"></script>
+<script type="text/javascript" src="../../../src/graphics/logger/logger_mixin.js"></script>
+<script type="text/javascript" src="../../../src/graphics/logger/axis.js"></script>
+<script type="text/javascript" src="../../../src/graphics/logger/background.js"></script>
+<script type="text/javascript" src="../../../src/graphics/logger/graph.js"></script>
+<script type="text/javascript" src="../../../src/graphics/logger/img.js"></script>
+<script type="text/javascript" src="../../../src/graphics/logger/labeler.js"></script>
+<script type="text/javascript" src="../../../src/graphics/logger/multigraph.js"></script>
+<script type="text/javascript" src="../../../src/graphics/logger/plot.js"></script>
+<script type="text/javascript" src="../../../src/graphics/logger/plotarea.js"></script>
+<script type="text/javascript" src="../../../src/graphics/logger/renderers/bar_renderer.js"></script>
+<script type="text/javascript" src="../../../src/graphics/logger/renderers/fill_renderer.js"></script>
+<script type="text/javascript" src="../../../src/graphics/logger/renderers/pointline_renderer.js"></script>
+<script type="text/javascript" src="../../../src/graphics/logger/window.js"></script>
 <script type="text/javascript" src="../../../src/events/jquery/mouse/mixin.js"></script>
 <script type="text/javascript" src="../../../src/events/jquery/mouse/graph.js"></script>
 <script type="text/javascript" src="../../../src/events/jquery/mouse/multigraph.js"></script>
@@ -133,8 +134,8 @@
     $(document).ready(function () {
       var Multigraph = window.multigraph.core.Multigraph;
       var multigraphPromise = Multigraph.createGraph({ 'div'    : "thegraph",
-                                                       'mugl'   : "../../broken_mugl/wrong_variable_refs.xml",
-                                                       'driver' : "canvas"
+                                                       'mugl'   : "../../mugl/band_graph.xml",
+                                                       'driver' : "logger"
                                                      });
     });
   </script>
@@ -143,15 +144,15 @@
 <center>
 <table>
 <tr>
-<td align="left"><h3>canvas error test: wrong_variable_refs.xml (800 X 500)</h3></td>
-<td align="right">Switch to: <a href="../raphael/wrong_variable_refs-800x500-broken.html">raphael</a></td>
+<td align="left"><h3>logger graphics test: band_graph.xml (800 X 500)</h3></td>
+<td align="right">Switch to: <a href="../canvas/band_graph-800x500.html">canvas</a> <a href="../raphael/band_graph-800x500.html">raphael</a></td>
 </tr>
 <tr><td colspan="2">
 <table>
 <tr>
-<td width="40%" align="left">Previous: <a href="multiple_errors-800x500-broken.html">multiple_errors-800x500-broken.html</a></td>
-<td width="20%" align="center"><a href="../error_index.html">All Non-Functional Graphics Tests</a></td>
-<td width="40%" align="right"></td>
+<td width="40%" align="left">Previous: <a href="background_image-800x500.html">background_image-800x500.html</a></td>
+<td width="20%" align="center"><a href="../index.html">All Graphics Tests</a></td>
+<td width="40%" align="right">Next: <a href="bar_graph-800x500.html">bar_graph-800x500.html</a></td>
 </tr>
 <tr><td align="center" colspan="3"><div id="thegraph"/></td></tr>
 </table>

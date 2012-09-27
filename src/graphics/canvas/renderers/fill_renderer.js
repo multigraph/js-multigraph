@@ -1,7 +1,7 @@
 window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (ns) {
     "use strict";
 
-    var Util = window.multigraph.math.util;
+    var mathUtil = window.multigraph.math.util;
 
     ns.mixin.add(function (ns) {
 
@@ -48,8 +48,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                 context = state.context,
                 fillcolor,
                 linecolor,
-                p,
-                xFill;
+                p;
 
             // if this is a missing point, and if it's not the first point, end the current run and render it
             if (this.isMissing(datap)) {
@@ -85,7 +84,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                 // point, render it, and start a new run with the
                 // crossing point.
                 if (!fillcolor.eq(state.currentfillcolor)) {
-                    var x = Util.safe_interp(state.previouspoint[1], p[1], state.previouspoint[0], p[0], state.fillpixelbase);
+                    var x = mathUtil.safe_interp(state.previouspoint[1], p[1], state.previouspoint[0], p[0], state.fillpixelbase);
                     // base line crossing point is [x, state.fillpixelbase]
                     state.run.push( [x, state.fillpixelbase] );
                     this.renderRun();
