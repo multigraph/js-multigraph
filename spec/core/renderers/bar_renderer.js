@@ -13,7 +13,6 @@ describe("BarRenderer", function () {
         r;
 
     beforeEach(function () {
-        var vaxis;
         r = (
             (new BarRenderer())
                 .plot((new Plot())
