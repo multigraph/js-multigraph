@@ -1,7 +1,7 @@
 window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
     "use strict";
 
-    var scalarAttributes = ["visible", "label"];
+    var scalarAttributes = ["visible"];
 
     ns.mixin.add(function (ns, parse, serialize) {
         
@@ -18,16 +18,16 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     }
                 }
                 if (xml.attr("label") !== undefined) {
-                    legend.label(xml.attr("label"));
+                    legend.label(new ns.core.Text(xml.attr("label")));
                 }
             }
 
             if (legend.label() === undefined) {
                 // TODO: remove this ugly patch with something that works properly
                 if (plot.variable().size() >= 2) { 
-                    legend.label(plot.variable().at(1).id());
+                    legend.label(new ns.core.Text(plot.variable().at(1).id()));
                 } else {
-                    legend.label("plot");
+                    legend.label(new ns.core.Text("plot"));
                 }
             }
             return legend;
@@ -39,6 +39,10 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 i;
 
             attributeStrings = window.multigraph.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
+
+            if (this.label() !== undefined) {
+                attributeStrings.push('label="' + this.label().string() + '"');
+            }
 
             output += attributeStrings.join(' ') + '/>';
 

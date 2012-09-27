@@ -38,11 +38,13 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
         ns.Multigraph.respondsTo("render", function () {
             var i;
+            var text = this.paper().text(-8000, -8000, "foo");
             this.paper().clear();
-            this.initializeGeometry(this.width(), this.height());
+            this.initializeGeometry(this.width(), this.height(), text);
             for (i=0; i<this.graphs().size(); ++i) {
                 this.graphs().at(i).render(this.paper(), this.width(), this.height());
             }
+            text.remove();
         });
 
         ns.Multigraph.respondsTo("setupEvents", function (mouseDownEvent) {

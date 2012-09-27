@@ -24,7 +24,7 @@ describe("PlotLegend parsing", function () {
     });
 
     it("should be able to parse a legend from XML and read its 'label' attribute", function () {
-        expect(legend.label()).toBe("curly");
+        expect(legend.label().string()).toBe("curly");
     });
 
     it("should be able to parse a legend from XML, serialize it and get the same XML as the original", function () {

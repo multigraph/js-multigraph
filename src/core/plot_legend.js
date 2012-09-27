@@ -5,7 +5,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.plot.legend),
         PlotLegend = new window.jermaine.Model( "PlotLegend", function () {
             this.hasA("visible").which.isA("boolean");
-            this.hasA("label").which.isA("string");
+            this.hasA("label").which.validatesWith(function (label) {
+                return label instanceof ns.Text;
+            });
 
             window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.plot.legend, attributes);
         });

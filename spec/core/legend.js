@@ -5,6 +5,7 @@ describe("Legend", function () {
 
     var Legend = window.multigraph.core.Legend,
         Point = window.multigraph.math.Point,
+        Text = window.multigraph.core.Text,
         l;
 
     beforeEach(function () {
@@ -121,7 +122,7 @@ describe("Legend", function () {
 
         describe("setting the visible attribute", function () {
             it("should not change the visibility if it was explictly set", function () {
-                plot1.legend().visible(true).label("foo");
+                plot1.legend().visible(true).label(new Text("foo"));
                 graph.plots().add(plot1);
                 l.visible(true);
                 l.initializeGeometry(graph);
@@ -132,8 +133,8 @@ describe("Legend", function () {
                 l.initializeGeometry(graph);
                 expect(l.visible()).toEqual(false);
 
-                plot2.legend().visible(true).label("bar");
-                plot3.legend().visible(true).label("foobar");
+                plot2.legend().visible(true).label(new Text("bar"));
+                plot3.legend().visible(true).label(new Text("foobar"));
                 graph.plots().add(plot2);
                 graph.plots().add(plot3);
                 l = new Legend();
@@ -146,13 +147,13 @@ describe("Legend", function () {
                 expect(l.visible()).toEqual(false);
             });
             it("should set visible to false if there are fewer than two plots with visible legends in the graph", function () {
-                plot1.legend().visible(true).label("foo");
+                plot1.legend().visible(true).label(new Text("foo"));
                 graph.plots().add(plot1);
                 l.initializeGeometry(graph);
                 expect(l.visible()).toEqual(false);
 
-                plot2.legend().visible(false).label("bar");
-                plot3.legend().visible(false).label("foobar");
+                plot2.legend().visible(false).label(new Text("bar"));
+                plot3.legend().visible(false).label(new Text("foobar"));
                 graph.plots().add(plot2);
                 graph.plots().add(plot3);
                 l = new Legend();
@@ -160,15 +161,15 @@ describe("Legend", function () {
                 expect(l.visible()).toEqual(false);
             });
             it("should set visible to true if there is more than one plot with visible legends in the graph", function () {
-                plot1.legend().visible(true).label("foo");
-                plot2.legend().visible(true).label("bar");
+                plot1.legend().visible(true).label(new Text("foo"));
+                plot2.legend().visible(true).label(new Text("bar"));
                 graph.plots().add(plot1);
                 graph.plots().add(plot2);
                 l.initializeGeometry(graph);
                 expect(l.visible()).toEqual(true);
 
-                plot3.legend().visible(false).label("foobar");
-                plot4.legend().visible(false).label("larry");
+                plot3.legend().visible(false).label(new Text("foobar"));
+                plot4.legend().visible(false).label(new Text("larry"));
                 graph.plots().add(plot3);
                 graph.plots().add(plot4);
                 l = new Legend();
@@ -179,8 +180,8 @@ describe("Legend", function () {
         });
 
         it("should only track plots with visible legends", function () {
-            plot1.legend().visible(true).label("foo");
-            plot2.legend().visible(true).label("bar");
+            plot1.legend().visible(true).label(new Text("foo"));
+            plot2.legend().visible(true).label(new Text("bar"));
             graph.plots().add(plot1);
             graph.plots().add(plot2);
             l.initializeGeometry(graph);
@@ -188,8 +189,8 @@ describe("Legend", function () {
             expect(l.plots().at(0)).toEqual(plot1);
             expect(l.plots().at(1)).toEqual(plot2);
 
-            plot3.legend().visible(false).label("foobar");
-            plot4.legend().visible(false).label("larry");
+            plot3.legend().visible(false).label(new Text("foobar"));
+            plot4.legend().visible(false).label(new Text("larry"));
             graph.plots().add(plot3);
             graph.plots().add(plot4);
             l = new Legend();
@@ -199,10 +200,10 @@ describe("Legend", function () {
             expect(l.plots().at(0)).toEqual(plot1);
             expect(l.plots().at(1)).toEqual(plot2);
 
-            plot1.legend().visible(true).label("larry");
-            plot2.legend().visible(false).label("curly");
-            plot3.legend().visible(true).label("moe");
-            plot4.legend().visible(true).label("foobar");
+            plot1.legend().visible(true).label(new Text("larry"));
+            plot2.legend().visible(false).label(new Text("curly"));
+            plot3.legend().visible(true).label(new Text("moe"));
+            plot4.legend().visible(true).label(new Text("foobar"));
             graph = new Graph();
             graph.paddingBox(new Box());
             graph.paddingBox().height(100).width(100);
@@ -223,8 +224,8 @@ describe("Legend", function () {
         });
 
         it("should correctly compute the number of rows for the legend", function () {
-            plot1.legend().visible(true).label("foo");
-            plot2.legend().visible(true).label("bar");
+            plot1.legend().visible(true).label(new Text("foo"));
+            plot2.legend().visible(true).label(new Text("bar"));
             graph.plots().add(plot1);
             graph.plots().add(plot2);
             l.rows(3);
@@ -236,8 +237,8 @@ describe("Legend", function () {
             l.initializeGeometry(graph);
             expect(l.rows()).toEqual(2);
 
-            plot3.legend().visible(true).label("larry");
-            plot4.legend().visible(true).label("curly");
+            plot3.legend().visible(true).label(new Text("larry"));
+            plot4.legend().visible(true).label(new Text("curly"));
             graph.plots().add(plot3);
             graph.plots().add(plot4);
             l = new Legend();
@@ -266,8 +267,8 @@ describe("Legend", function () {
         });
 
         it("should correctly compute the number of columns for the legend", function () {
-            plot1.legend().visible(true).label("foo");
-            plot2.legend().visible(true).label("bar");
+            plot1.legend().visible(true).label(new Text("foo"));
+            plot2.legend().visible(true).label(new Text("bar"));
             graph.plots().add(plot1);
             graph.plots().add(plot2);
             l.initializeGeometry(graph);
@@ -285,8 +286,8 @@ describe("Legend", function () {
             l.initializeGeometry(graph);
             expect(l.columns()).toEqual(5);
 
-            plot3.legend().visible(true).label("larry");
-            plot4.legend().visible(true).label("curly");
+            plot3.legend().visible(true).label(new Text("larry"));
+            plot4.legend().visible(true).label(new Text("curly"));
             graph.plots().add(plot3);
             graph.plots().add(plot4);
             l = new Legend();

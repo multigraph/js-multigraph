@@ -58,9 +58,10 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasA("maxLabelWidth");
         this.hasA("maxLabelHeight");
 
-        this.respondsTo("initializeGeometry", function (graph) {
+        this.respondsTo("initializeGeometry", function (graph, graphicsContext) {
             var widths = [],
                 heights = [],
+                label,
                 i;
 
             if (this.visible() === false) {
@@ -95,9 +96,11 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             }
 
             for (i = 0; i < this.plots().size(); i++) {
-                if (this.plots().at(i).legend().label() !== undefined) {
-                    widths.push(this.measureLabelWidth(this.plots().at(i).legend().label()));
-                    heights.push(this.measureLabelHeight(this.plots().at(i).legend().label()));
+                label = this.plots().at(i).legend().label();
+                if (label !== undefined) {
+                    label.initializeGeometry(graphicsContext);
+                    widths.push(label.width());
+                    heights.push(label.height());
                 }
             }
 
@@ -168,7 +171,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                     }
                     
                     // Write the text
-                    this.renderLabel(this.plots().at(plotCount).legend().label(), graphicsContext, labelx, labely);
+                    this.renderLabel(this.plots().at(plotCount).legend().label().string(), graphicsContext, labelx, labely);
 
                     plotCount++;
                 }
@@ -177,29 +180,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             // preform any neccesary steps at the end of rendering
             this.end(graphicsContext);
 
-        });
-
-// TODO: replace these functions with ones that properly measure the width/height of text.
-//       This will most likely be done in an abstract text class which has knowledge of the
-//       rendering environment.
-        this.respondsTo("measureLabelWidth", function (string) {
-                // Graphics drivers should replace this method with an actual implementation; this
-                // is just a placeholder.  The implementation should return the width, in pixels,
-                // of the given string.  Of course this is dependent on font choice, size, etc,
-                // but we gloss over that at the moment.  Just return the width of the string
-                // using some reasonable default font for now.  Later on, we'll modify this
-                // function to use font information.
-                return string.length*30;
-        });
-
-        this.respondsTo("measureLabelHeight", function (string) {
-                // Graphics drivers should replace this method with an actual implementation; this
-                // is just a placeholder.  The implementation should return the height, in pixels,
-                // of the given string.  Of course this is dependent on font choice, size, etc,
-                // but we gloss over that at the moment.  Just return the height of the string
-                // using some reasonable default font for now.  Later on, we'll modify this
-                // function to use font information.
-                return 12;
         });
 
         window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.legend, attributes);

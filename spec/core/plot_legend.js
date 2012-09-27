@@ -4,6 +4,7 @@ describe("Plot Legend", function () {
     "use strict";
 
     var PlotLegend = window.multigraph.core.PlotLegend,
+        Text = window.multigraph.core.Text,
         legend;
 
     beforeEach(function () {
@@ -24,8 +25,8 @@ describe("Plot Legend", function () {
 
     describe("label attribute", function () {
         it("should be able to set/get the label attribute", function () {
-            legend.label("fred");
-            expect(legend.label()).toBe("fred");
+            legend.label(new Text("fred"));
+            expect(legend.label().string()).toBe("fred");
         });
 
     });

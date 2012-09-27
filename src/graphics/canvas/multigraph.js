@@ -37,7 +37,7 @@ var saveLevel = 0;
             this.context().setTransform(1, 0, 0, 1, 0, 0);
             this.context().transform(1,0,0,-1,0,this.height());
             this.context().clearRect(0, 0, this.width(), this.height());
-            this.initializeGeometry(this.width(), this.height());
+            this.initializeGeometry(this.width(), this.height(), this.context());
             for (i=0; i<this.graphs().size(); ++i) {
                 this.graphs().at(i).render(this.context(), this.width(), this.height());
             }

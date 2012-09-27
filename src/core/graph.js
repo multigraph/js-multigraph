@@ -53,7 +53,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             this.respondsTo("postParse", function () {
             });
 
-            this.respondsTo("initializeGeometry", function (width, height) {
+            this.respondsTo("initializeGeometry", function (width, height, graphicsContext) {
                 var i;
                 this.windowBox( new Box(width, height) );
                 this.paddingBox( new Box(
@@ -81,7 +81,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                     this.axes().at(i).initializeGeometry(this);
                 }
                 if (this.legend()) {
-                    this.legend().initializeGeometry(this);
+                    this.legend().initializeGeometry(this, graphicsContext);
                 }
             });
 

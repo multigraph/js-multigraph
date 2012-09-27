@@ -13,6 +13,7 @@ describe("Plot", function () {
         Datatips = window.multigraph.core.Datatips,
         DatatipsVariable = window.multigraph.core.DatatipsVariable,
         DataVariable = window.multigraph.core.DataVariable,
+        Text = window.multigraph.core.Text,
         p;
 
     beforeEach(function () {
@@ -110,9 +111,9 @@ describe("Plot", function () {
         it("should be able to set/get attributes a legend added to a Plot", function () {
             p.legend(legend);
             p.legend().visible(true);
-            p.legend().label("tag");
+            p.legend().label(new Text("tag"));
             expect(p.legend().visible()).toBe(true);
-            expect(p.legend().label()).toBe("tag");
+            expect(p.legend().label().string()).toBe("tag");
         });
 
     });

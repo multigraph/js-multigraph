@@ -51,7 +51,9 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     }
                 }
 
-                // TODO: Move this bit of code into a post-parse default insertion mechanism.
+                // TODO: Move this bit of code into a post-parse normalizer.
+                //       This code populates the plot variable's if they were not explicitly
+                //       set in the mugl.
                 // TODO: modify this code so that it only sucks in the proper number of variables
                 //       ie. 2 for pointline, bar, fill, 3 for error's, etc
                 var variableCount = 2;

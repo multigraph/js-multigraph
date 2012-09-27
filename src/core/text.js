@@ -14,6 +14,12 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
 
         this.respondsTo("measureStringWidth", function () {
+            // Graphics drivers should replace this method with an actual implementation; this
+            // is just a placeholder.  The implementation should return the width, in pixels,
+            // of the given string.  Of course this is dependent on font choice, size, etc,
+            // but we gloss over that at the moment.  Just return the width of the string
+            // using some reasonable default font for now.  Later on, we'll modify this
+            // function to use font information.
             var lines,
                 maxLength = 1,
                 testLength,
@@ -35,6 +41,12 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
 
         this.respondsTo("measureStringHeight", function () {
+            // Graphics drivers should replace this method with an actual implementation; this
+            // is just a placeholder.  The implementation should return the height, in pixels,
+            // of the given string.  Of course this is dependent on font choice, size, etc,
+            // but we gloss over that at the moment.  Just return the height of the string
+            // using some reasonable default font for now.  Later on, we'll modify this
+            // function to use font information.
             if (this.string() === undefined) {
                 throw new Error("measureStringHeight requires the string attr to be set.");
             }
