@@ -1,4 +1,4 @@
-window.multigraph.util.namespace("window.multigraph.math", function (ns) {
+window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
     ns.Text = new window.jermaine.Model( "Text", function () {
@@ -6,9 +6,11 @@ window.multigraph.util.namespace("window.multigraph.math", function (ns) {
         this.hasA("width").which.isA("number");
         this.hasA("height").which.isA("number");
 
-        this.isBuiltWith("string", function () {
-            this.width(this.measureStringWidth());
-            this.height(this.measureStringHeight());
+        this.isBuiltWith("string");
+
+        this.respondsTo("initializeGeometry", function (graphicsContext) {
+            this.width(this.measureStringWidth(graphicsContext));
+            this.height(this.measureStringHeight(graphicsContext));
         });
 
         this.respondsTo("measureStringWidth", function () {
