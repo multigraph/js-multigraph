@@ -73,8 +73,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                     context.lineTo(run[i][0], run[i][whichLine]);
                 }
                 context.stroke();
+                context.restore();
             }
-            context.restore();
         };
 
         // Render the current run of data points.  This consists of drawing the fill region
@@ -115,6 +115,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         ns.BandRenderer.respondsTo("renderLegendIcon", function (context, x, y, icon, opacity) {
             var state = this.state();
             
+            return;
+
             context.save();
             context.transform(1, 0, 0, 1, x, y);
 

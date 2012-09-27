@@ -16,6 +16,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             });
         });
 
+var saveLevel = 0;
+
         ns.Multigraph.respondsTo("init", function () {
             var canvasid = this.divid() + "-canvas";
             this.$div($("#" + this.divid()));
