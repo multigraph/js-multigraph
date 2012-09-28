@@ -38,7 +38,7 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
                         this.dragOrientation(Axis.VERTICAL);
                     }
                     this.dragAxis(this.findNearestAxis(bx, by, this.dragOrientation()));
-                    if (this.dragAxis() === undefined) {
+                    if (this.dragAxis() === null) {
                         this.dragOrientation( (this.dragOrientation() === Axis.HORIZONTAL) ? Axis.VERTICAL : Axis.HORIZONTAL );
                         this.dragAxis( this.findNearestAxis(bx, by, this.dragOrientation()) );
                     }
@@ -107,7 +107,7 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
         };
 
         Graph.respondsTo("findNearestAxis", function (x, y, orientation) {
-            var foundAxis = undefined,
+            var foundAxis = null,
                 mindist = 9999,
                 i,
                 axes = this.axes(),
@@ -118,7 +118,7 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
                 axis = axes.at(i);
                 if (axis.orientation() === orientation) {
                     d = axisDistanceToPoint(axis, x, y);
-                    if (foundAxis===undefined || d < mindist) {
+                    if (foundAxis===null || d < mindist) {
                         foundAxis = axis;
                         mindist = d;
                     }

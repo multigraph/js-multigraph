@@ -184,23 +184,29 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 return renderer;
             }
         }
+        throw new Error('Renderer.create: attempt to create a renderer of unknown type');
     };
 
     Renderer.declareOptions = function (renderer, OptionsModelName, options) {
         var i,
             OptionsModel,
-            optionsMetadata;
+            optionsMetadata,
+            declareOption = function(optionName, optionType) {
+                // NOTE: this call to hasMany() has to be in a function here, rather than just
+                // being written inline where it is used below, because we need a closure to
+                // capture value of options[i].type as optionType, for use in the validation
+                // function.  Otherwise, the validator captures the 'options' array and the
+                // local loop variable i instead, and evaluates options[i].type when validation
+                // is performed!
+                OptionsModel.hasMany(optionName).eachOfWhich.validatesWith(function (v) {
+                    return v instanceof optionType;
+                });
+            };
 
         OptionsModel    = window.jermaine.Model(OptionsModelName, function () {});
         optionsMetadata = {};
         for (i=0; i<options.length; ++i) {
-            //NOTE: need closure to capture value of options[i].type as optionType, for use in
-            //  validation function
-            (function (optionType) {
-                OptionsModel.hasMany(options[i].name).eachOfWhich.validatesWith(function (v) {
-                    return v instanceof optionType;
-                });
-            }(options[i].type));
+            declareOption(options[i].name, options[i].type);
             optionsMetadata[options[i].name] = {
                 "type"    : options[i].type,
                 "default" : options[i]["default"]

@@ -98,8 +98,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 throw new Error("WebServiceData.constructRequestURL: undefined formatter for column 0");
             }
             if (this.serviceaddresspattern() === undefined) {
-                if ((this.serviceaddress().indexOf("$min") < 0)
-                    &&
+                if ((this.serviceaddress().indexOf("$min") < 0) &&
                     (this.serviceaddress().indexOf("$max") < 0)) {
                     this.serviceaddresspattern(this.serviceaddress() + "$min,$max");
                 } else {
@@ -221,10 +220,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
             // find the data node containing the 'min' value
             initialNode = this.dataHead();
-            while ((initialNode != null)
-                   &&
-                   (initialNode.dataNext() != null)
-                   &&
+            while ((initialNode !== null) &&
+                   (initialNode.dataNext() !== null) &&
                    (min.gt(initialNode.dataMax()))) {
                 initialNode = initialNode.dataNext();
             }
@@ -234,8 +231,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             } else {
                 initialIndex = 0;
                 // find the index within the initial node corresponding to the 'min' value
-                while ((initialIndex < initialNode.data().length-1)
-                       &&
+                while ((initialIndex < initialNode.data().length-1) &&
                        (initialNode.data()[initialIndex][columnIndices[0]].lt(min))) {
                     ++initialIndex;
                 }
@@ -259,8 +255,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 
                 // find the data node containing the 'max' value
                 finalNode = initialNode;
-                while ( (max.gt(finalNode.dataMax()))
-                        &&
+                while ( (max.gt(finalNode.dataMax())) &&
                         (finalNode.dataNext() !== null) ) {
                     finalNode = finalNode.dataNext();
                 }
@@ -270,8 +265,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 if (finalNode === initialNode) {
                     finalIndex = initialIndex;
                 }
-                while ((finalIndex < finalNode.data().length-1)
-                       &&
+                while ((finalIndex < finalNode.data().length-1) &&
                        (finalNode.data()[finalIndex][columnIndices[0]].lt(max))) {
                     ++finalIndex;
                 }

@@ -171,7 +171,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                             dataValuesThisRow.push(ns.DataValue.parse(dataVariableArray[j].type(), stringValuesThisRow[j]));
                         }
                         dataValues.push( dataValuesThisRow );
-                    } else {
+                    //} else {
                         // we get here if the number of comma-separated values on the current line
                         // (lines[i]) is not the same as the number of columns in the metadata.  This
                         // should probably throw an error, or something like that.  For now, though, we

@@ -176,13 +176,13 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
             // set maxPrevValue to the max value in column0 in the cache prior to this block, if any:
             b = this.dataPrev();
-            if (b != null) {
+            if (b !== null) {
                 maxPrevValue = b.dataMax();
             }
 
             // set minNextValue to the min value in column0 in the cache after this block, if any:
             b = this.dataNext();
-            if (b != null) {
+            if (b !== null) {
                 minNextValue = b.dataMin();
             }
 
@@ -194,8 +194,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             data = [];
             for (i=0; i<arrayDataArray.length; ++i) {
                 row = arrayDataArray[i];
-                if ((maxPrevValue === null || row[0].gt(maxPrevValue))
-                    &&
+                if ((maxPrevValue === null || row[0].gt(maxPrevValue)) &&
                     (minNextValue === null || row[0].lt(minNextValue))) {
                     data.push( row );
                 }

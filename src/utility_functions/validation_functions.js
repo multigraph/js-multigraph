@@ -11,7 +11,9 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
         var s = typeof value;
         if (s === 'object') {
             if (value) {
-                if (Object.prototype.toString.call(value) == '[object Array]') {
+                //NOTE: Crockford used "=="   ?????!!!!!  mbp Fri Sep 28 08:44:34 2012
+                //if (Object.prototype.toString.call(value) == '[object Array]') {
+                if (Object.prototype.toString.call(value) === '[object Array]') {
                     s = 'array';
                 }
             } else {

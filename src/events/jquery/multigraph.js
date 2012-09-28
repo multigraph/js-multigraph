@@ -1,4 +1,5 @@
 (function($) {
+    "use strict";
 
     var core = window.multigraph.util.namespace("window.multigraph.core");
 
@@ -70,4 +71,4 @@
 
     });
 
-})(jQuery);
+}(jQuery));

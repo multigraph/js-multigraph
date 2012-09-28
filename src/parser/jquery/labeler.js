@@ -16,9 +16,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
             var labeler;
             if (xml) {
                 labeler = new ns.core.Labeler(axis);
-                if (spacing === null) {
-                    // skip spacing attribute completely
-                } else {
+                if (spacing !== null) {
                     if (spacing === undefined) {
                         spacing = xml.attr("spacing");
                     }

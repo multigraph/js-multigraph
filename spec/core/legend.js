@@ -596,31 +596,31 @@ describe("Legend", function () {
 
             l = new Legend();
             l.icon(new Icon());
-            l.base().x(-1)
-            l.anchor().x(-1)
+            l.base().x(-1);
+            l.anchor().x(-1);
             l.frame("padding");
             l.initializeGeometry(graph);
             expect(l.x()).toEqual(0);
 
             l = new Legend();
             l.icon(new Icon());
-            l.base().x(-1)
-            l.anchor().x(-1)
+            l.base().x(-1);
+            l.anchor().x(-1);
             l.initializeGeometry(graph);
             expect(l.x()).toEqual(0);
 
             l = new Legend();
             l.icon(new Icon());
-            l.base().x(-1)
-            l.anchor().x(0)
+            l.base().x(-1);
+            l.anchor().x(0);
             l.frame("padding");
             l.initializeGeometry(graph);
             expect(l.x()).toEqual(-78.5);
 
             l = new Legend();
             l.icon(new Icon());
-            l.base().x(0)
-            l.anchor().x(-1)
+            l.base().x(0);
+            l.anchor().x(-1);
             l.initializeGeometry(graph);
             expect(l.x()).toEqual(200);
 
@@ -648,31 +648,31 @@ describe("Legend", function () {
 
             l = new Legend();
             l.icon(new Icon());
-            l.base().y(-1)
-            l.anchor().y(-1)
+            l.base().y(-1);
+            l.anchor().y(-1);
             l.frame("padding");
             l.initializeGeometry(graph);
             expect(l.y()).toEqual(0);
 
             l = new Legend();
             l.icon(new Icon());
-            l.base().y(-1)
-            l.anchor().y(-1)
+            l.base().y(-1);
+            l.anchor().y(-1);
             l.initializeGeometry(graph);
             expect(l.y()).toEqual(0);
 
             l = new Legend();
             l.icon(new Icon());
-            l.base().y(-1)
-            l.anchor().y(0)
+            l.base().y(-1);
+            l.anchor().y(0);
             l.frame("padding");
             l.initializeGeometry(graph);
             expect(l.y()).toEqual(-38.5);
 
             l = new Legend();
             l.icon(new Icon());
-            l.base().y(0)
-            l.anchor().y(-1)
+            l.base().y(0);
+            l.anchor().y(-1);
             l.initializeGeometry(graph);
             expect(l.y()).toEqual(200);
 

@@ -59,17 +59,18 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 columnIndices = this.columnIndices(),
                 currentIndex = this.currentIndex(),
                 finalIndex = this.finalIndex(),
-                currentNode = this.currentNode();
+                currentNode = this.currentNode(),
+                i;
 
             if (currentNode === this.finalNode()) {
                 if (currentIndex > finalIndex) { return null; }
-                for (var i=0; i<columnIndices.length; ++i) {
+                for (i=0; i<columnIndices.length; ++i) {
                     vals.push(currentNode.data()[currentIndex][columnIndices[i]]);
                 }
                 this.currentIndex(++currentIndex);
                 return vals;
             } else {
-                for (var i=0; i<columnIndices.length; ++i) {
+                for (i=0; i<columnIndices.length; ++i) {
                     vals.push(currentNode.data()[currentIndex][columnIndices[i]]);
                 }
                 this.currentIndex(++currentIndex);
