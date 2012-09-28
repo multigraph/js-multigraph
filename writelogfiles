@@ -6,5 +6,8 @@ then
     for f in spec/graphics/logger/*.html
     do
         phantomjs src/graphics/logger/log.js $f
+        echo writing $f
     done
+    # runs graphicstests so the log tests will be enabled
+    ant graphicstests
 fi
