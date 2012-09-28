@@ -201,9 +201,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 newRealMax += (this.pan().min().getRealValue() - newRealMin);
                 newRealMin = this.pan().min().getRealValue();
             }
-            if (pixelDisplacement > 0 && this.pan().max() && newMax > this.pan().max().getRealValue()) {
-                newMin -= (newMax - this.pan().max().getRealValue());
-                newMax = this.pan().max();
+            if (pixelDisplacement > 0 && this.pan().max() && newRealMax > this.pan().max().getRealValue()) {
+                newRealMin -= (newRealMax - this.pan().max().getRealValue());
+                newRealMax = this.pan().max();
             }
             this.dataMin(ns.DataValue.create(this.type(), newRealMin));
             this.dataMax(ns.DataValue.create(this.type(), newRealMax));

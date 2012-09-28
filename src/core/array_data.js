@@ -121,7 +121,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
             columnIndices = [];
             for (j = 0;j < columnIds.length; ++j) {
-                columnIndices.push( arrayData.columnIdToColumnNumber(columnIds[j]) );
+                var k = arrayData.columnIdToColumnNumber(columnIds[j]);
+                columnIndices.push( k );
             }
 
             currentIndex = firstIndex;
@@ -134,7 +135,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                         return null;
                     }
                     for (i=0; i<columnIndices.length; ++i) {
-                        projection.push(array[currentIndex][i]);
+                        projection.push(array[currentIndex][columnIndices[i]]);
                     }
                     ++currentIndex;
                     return projection;
