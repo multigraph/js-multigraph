@@ -22,7 +22,8 @@
      *         a. an inline style attribute that sets its width
      *            and height using the width and height attributes from the
      *            <multigraph .../> tag
-     *         b. a class attribute value of "multigraph"
+     *         b. the same class attribute value, if any, as the enclosing
+     *            <multigraph> tag
      *         c. an automatically generated id
      *      After the <div> child of the <multigraph> is created, Multigraph's
      *      createGraph() function is called to insert the graph into that div.
