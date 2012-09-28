@@ -185,19 +185,6 @@ sub make_test_html {
     }
     my $otherdriverlinks = join(" ", @otherdriverlinks);
 
-    my $style = "";
-    if ($width || $height) {
-        $style = <<EOF;
-<style type="text/css">
-#thegraph {
-  width:  ${width}px;
-  height: ${height}px;
-  border: 0px;
-}
-</style>
-EOF
-    }
-\
     return <<EOF;
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- 
@@ -218,16 +205,6 @@ EOF
   <script type="text/javascript" src="../../../lib/requestanimationframe/requestanimationframe.js"></script>
 <!--BEGIN_ANT_LINES-->
 <!--END_ANT_LINES-->
-  $style
-  <script type="text/javascript">
-    \$(document).ready(function () {
-      var Multigraph = window.multigraph.core.Multigraph;
-      var multigraphPromise = Multigraph.createGraph({ 'div'    : "thegraph",
-                                                       'mugl'   : "../../mugl/$mugl",
-                                                       'driver' : "$driver"
-                                                     });
-    });
-  </script>
 </head>
 <body>
 <center>
@@ -243,7 +220,7 @@ EOF
 <td width="20%" align="center">$up</td>
 <td width="40%" align="right">$next</td>
 </tr>
-<tr><td align="center" colspan="3"><div id="thegraph"/></td></tr>
+<tr><td align="center" colspan="3"><multigraph src="../../mugl/$mugl" width="$width" height="$height" driver="$driver"/></td></tr>
 </table>
 </td></tr></table>
 </center>
@@ -496,19 +473,6 @@ sub make_error_test_html {
     }
     my $otherdriverlinks = join(" ", @otherdriverlinks);
 
-    my $style = "";
-    if ($width || $height) {
-        $style = <<EOF;
-<style type="text/css">
-#thegraph {
-  width:  ${width}px;
-  height: ${height}px;
-  border: 0px;
-}
-</style>
-EOF
-    }
-\
     return <<EOF;
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- 
@@ -529,16 +493,6 @@ EOF
   <script type="text/javascript" src="../../../lib/requestanimationframe/requestanimationframe.js"></script>
 <!--BEGIN_ANT_LINES-->
 <!--END_ANT_LINES-->
-  $style
-  <script type="text/javascript">
-    \$(document).ready(function () {
-      var Multigraph = window.multigraph.core.Multigraph;
-      var multigraphPromise = Multigraph.createGraph({ 'div'    : "thegraph",
-                                                       'mugl'   : "../../broken_mugl/$mugl",
-                                                       'driver' : "$driver"
-                                                     });
-    });
-  </script>
 </head>
 <body>
 <center>
@@ -554,7 +508,7 @@ EOF
 <td width="20%" align="center">$up</td>
 <td width="40%" align="right">$next</td>
 </tr>
-<tr><td align="center" colspan="3"><div id="thegraph"/></td></tr>
+<tr><td align="center" colspan="3"><multigraph src="../../broken_mugl/$mugl" width="$width" height="$height" driver="$driver"/></td></tr>
 </table>
 </td></tr></table>
 </center>

@@ -25,6 +25,7 @@
   <path id="path.events-jquery-mouse-js">
     <filelist dir="src/events/jquery/mouse" files="mixin.js"/>
     <fileset dir="src/events/jquery/mouse" includes="**/*.js" excludes="mixin.js" />
+    <fileset dir="src/events/jquery" includes="*.js" />
   </path>
   <path id="path.graphics-raphael-js">
     <filelist dir="src/graphics/raphael" files="raphael.js"/>

@@ -123,24 +123,8 @@
 <script type="text/javascript" src="../../../src/events/jquery/mouse/mixin.js"></script>
 <script type="text/javascript" src="../../../src/events/jquery/mouse/graph.js"></script>
 <script type="text/javascript" src="../../../src/events/jquery/mouse/multigraph.js"></script>
+<script type="text/javascript" src="../../../src/events/jquery/multigraph.js"></script>
 <!--END_ANT_LINES-->
-  <style type="text/css">
-#thegraph {
-  width:  800px;
-  height: 500px;
-  border: 0px;
-}
-</style>
-
-  <script type="text/javascript">
-    $(document).ready(function () {
-      var Multigraph = window.multigraph.core.Multigraph;
-      var multigraphPromise = Multigraph.createGraph({ 'div'    : "thegraph",
-                                                       'mugl'   : "../../broken_mugl/wrong_variable_refs.xml",
-                                                       'driver' : "canvas"
-                                                     });
-    });
-  </script>
 </head>
 <body>
 <center>
@@ -156,7 +140,7 @@
 <td width="20%" align="center"><a href="../error_index.html">All Non-Functional Graphics Tests</a></td>
 <td width="40%" align="right"></td>
 </tr>
-<tr><td align="center" colspan="3"><div id="thegraph"/></td></tr>
+<tr><td align="center" colspan="3"><multigraph src="../../broken_mugl/wrong_variable_refs.xml" width="800" height="500" driver="canvas"/></td></tr>
 </table>
 </td></tr></table>
 </center>
