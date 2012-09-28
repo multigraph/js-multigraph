@@ -106,6 +106,10 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         return 0;
     };
 
+    DatetimeValue.prototype.addRealValue = function ( realValueIncr ) {
+        return new DatetimeValue(this.value.getTime() + realValueIncr);
+    };
+
     DatetimeValue.prototype.add = function ( /*DataMeasure*/ measure) {
         var date = new DatetimeValue(this.getRealValue());
         switch (measure.unit) {

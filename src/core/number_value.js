@@ -22,6 +22,10 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         return 0;
     };
 
+    NumberValue.prototype.addRealValue = function ( realValueIncr ) {
+        return new NumberValue(this.value + realValueIncr);
+    };
+
     NumberValue.prototype.add = function (/*DataMeasure*/ measure) {
         // NOTE: deliberately accessing the 'measure' property of a NumberMeasure here, rather
         // than calling its getRealValue() method, for convenience and efficiency:
