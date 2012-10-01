@@ -7,7 +7,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return graph instanceof ns.Graph;
         });
 
-        this.hasA("divid").which.isA("string");
+        this.hasA("div"); // the actual div element
 
         this.respondsTo("initializeGeometry", function (width, height, graphicsContext) {
             var i;
@@ -31,33 +31,39 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     });
 
     Multigraph.createGraph = function (obj) {
+        var div = obj.div;
         if (!obj.driver) {
             obj.driver = "canvas";
         }
+        if (typeof(div) === "string") {
+            // if div is a string, assume it's an id, and convert
+            // it to the div element itself
+            div = $("#" + div)[0];
+        }
         if (!obj.errorHandler || typeof(obj.errorHandler) !== "function") {
-            obj.errorHandler = Multigraph.createDefaultErrorHandler(obj.div);
+            obj.errorHandler = Multigraph.createDefaultErrorHandler(div);
         }
         if (obj.driver === "canvas") {
-            return Multigraph.createCanvasGraph(obj.div, obj.mugl, obj.errorHandler);
+            return Multigraph.createCanvasGraph(div, obj.mugl, obj.errorHandler);
         } else if (obj.driver === "raphael") {
-            return Multigraph.createRaphaelGraph(obj.div, obj.mugl, obj.errorHandler);
+            return Multigraph.createRaphaelGraph(div, obj.mugl, obj.errorHandler);
         } else if (obj.driver === "logger") {
-            return Multigraph.createLoggerGraph(obj.div, obj.mugl);
+            return Multigraph.createLoggerGraph(div, obj.mugl);
         }
         throw new Error("invalid graphic driver '" + obj.driver + "' specified to Multigraph.createGraph");
     };
 
-    Multigraph.createDefaultErrorHandler = function (divid) {
+    Multigraph.createDefaultErrorHandler = function (div) {
         return function (e) {
             var errorMessages,
                 i;
 
-            $("#" + divid).append($("<ol>", {"text" : e.message, "style" : "z-index:100; border:1px solid black; background-color : #CCC; white-space: pre-wrap; text-align: left;"}));
+            $(div).append($("<ol>", {"text" : e.message, "style" : "z-index:100; border:1px solid black; background-color : #CCC; white-space: pre-wrap; text-align: left;"}));
 
             if (e.stack && typeof(e.stack) === "string") {
                 errorMessages = e.stack.split(/\n/);
                 for (i = 1; i < errorMessages.length; i++) {
-                    $("#" + divid + " ol").append($("<li>", {"text" : errorMessages[i].trim().replace(" (file", "\n(file"), "style" : "margin-bottom: 3px;"}));
+                    $($(div).find("ol")).append($("<li>", {"text" : errorMessages[i].trim().replace(" (file", "\n(file"), "style" : "margin-bottom: 3px;"}));
                 }
             }
         };

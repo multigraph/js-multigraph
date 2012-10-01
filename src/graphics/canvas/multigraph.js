@@ -3,7 +3,6 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 
     ns.mixin.add(function (ns) {
 
-        ns.Multigraph.hasA("$div");    // jQuery object for the Multigraph div
         ns.Multigraph.hasA("canvas");  // canvas object itself (the '<canvas>' tag itself)
         ns.Multigraph.hasA("context"); // canvas context object
         ns.Multigraph.hasA("width").which.isA("number");
@@ -16,16 +15,12 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             });
         });
 
-var saveLevel = 0;
-
         ns.Multigraph.respondsTo("init", function () {
-            var canvasid = this.divid() + "-canvas";
-            this.$div($("#" + this.divid()));
-            this.width(this.$div().width());
-            this.height(this.$div().height());
+            this.width($(this.div()).width());
+            this.height($(this.div()).height());
             if (this.width() > 0 && this.height() > 0) {
                 // create the canvas; store ref to the canvas object in this.canvas()
-                this.canvas($("<canvas id=\""+canvasid+"\" width=\""+this.width()+"\" height=\""+this.height()+"\"/>").appendTo(this.$div().empty())[0]);
+                this.canvas($("<canvas width=\""+this.width()+"\" height=\""+this.height()+"\"/>").appendTo($(this.div()).empty())[0]);
                 // get the canvas context; store ref to it in this.context()
                 this.context(this.canvas().getContext("2d"));
             }
@@ -45,7 +40,7 @@ var saveLevel = 0;
 
     });
 
-    window.multigraph.core.Multigraph.createCanvasGraph = function (divid, muglurl, errorHandler) {
+    window.multigraph.core.Multigraph.createCanvasGraph = function (div, muglurl, errorHandler) {
         var muglPromise,
             deferred;
         
@@ -68,7 +63,7 @@ var saveLevel = 0;
         muglPromise.done(function (data) {
             try {
                 var multigraph = window.multigraph.core.Multigraph.parseXML( window.multigraph.parser.jquery.stringToJQueryXMLObj(data) );
-                multigraph.divid(divid);
+                multigraph.div(div);
                 multigraph.init();
                 multigraph.registerMouseEvents(multigraph.canvas());
                 multigraph.registerCommonDataCallback(function () {

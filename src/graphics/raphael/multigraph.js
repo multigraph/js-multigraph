@@ -25,14 +25,14 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         });
 
         ns.Multigraph.respondsTo("init", function () {
-            this.$div($("#"+this.divid()));
+            this.$div($(this.div()));
             this.$div().on("mousedown", { "mg": this }, this.setupEvents);
             this.width(this.$div().width());
             this.height(this.$div().height());
             if (this.paper()) {
                 this.paper().remove();
             }
-            this.paper(new window.Raphael(this.divid(), this.width(), this.height()));
+            this.paper(new window.Raphael(this.div(), this.width(), this.height()));
             this.render();
         });
 
@@ -88,7 +88,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
     });
 
-    window.multigraph.core.Multigraph.createRaphaelGraph = function (divid, muglurl) {
+    window.multigraph.core.Multigraph.createRaphaelGraph = function (div, muglurl) {
 
         window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
         ns.mixin.apply(window.multigraph.core);
@@ -103,7 +103,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
         muglPromise.done(function (data) {
             var multigraph = window.multigraph.core.Multigraph.parseXML( window.multigraph.parser.jquery.stringToJQueryXMLObj(data) );
-            multigraph.divid(divid);
+            multigraph.div(div);
             multigraph.init();
             multigraph.registerCommonDataCallback(function () {
                 multigraph.redraw();

@@ -4,8 +4,6 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
     ns.mixin.add(function (ns) {
         var Multigraph = ns.Multigraph;
 
-        Multigraph.hasA("$div");
-
         Multigraph.hasA("width").which.isA("number");
         Multigraph.hasA("height").which.isA("number");
 
@@ -24,9 +22,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
         });
 
         Multigraph.respondsTo("init", function () {
-            this.$div($("#"+this.divid()));
-            this.width(this.$div().width());
-            this.height(this.$div().height());
+            this.width($(this.div()).width());
+            this.height($(this.div()).height());
             this.render();
             console.log(this.dumpLog());
         });
@@ -54,7 +51,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
 
     });
 
-    window.multigraph.core.Multigraph.createLoggerGraph = function (divid, muglurl) {
+    window.multigraph.core.Multigraph.createLoggerGraph = function (div, muglurl) {
 
         window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
         ns.mixin.apply(window.multigraph.core);
@@ -68,7 +65,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
 
         muglPromise.done(function (data) {
             var multigraph = window.multigraph.core.Multigraph.parseXML( window.multigraph.parser.jquery.stringToJQueryXMLObj(data) );
-            multigraph.divid(divid);
+            multigraph.div(div);
             multigraph.init();
             deferred.resolve(multigraph);
         });

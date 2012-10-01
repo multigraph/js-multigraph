@@ -220,7 +220,7 @@ sub make_test_html {
 <td width="20%" align="center">$up</td>
 <td width="40%" align="right">$next</td>
 </tr>
-<tr><td align="center" colspan="3"><multigraph src="../../mugl/$mugl" width="$width" height="$height" driver="$driver"/></td></tr>
+<tr><td align="center" colspan="3"><div class="multigraph" data-src="../../mugl/$mugl" data-width="$width" data-height="$height" data-driver="$driver"/></td></tr>
 </table>
 </td></tr></table>
 </center>
@@ -508,7 +508,7 @@ sub make_error_test_html {
 <td width="20%" align="center">$up</td>
 <td width="40%" align="right">$next</td>
 </tr>
-<tr><td align="center" colspan="3"><multigraph src="../../broken_mugl/$mugl" width="$width" height="$height" driver="$driver"/></td></tr>
+<tr><td align="center" colspan="3"><div class="multigraph" data-src="../../broken_mugl/$mugl" data-width="$width" data-height="$height" data-driver="$driver"/></td></tr>
 </table>
 </td></tr></table>
 </center>
