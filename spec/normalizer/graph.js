@@ -123,4 +123,23 @@ describe("Graph Normalizer", function () {
 
     });
 
+    describe("handling missing ids for axes", function () {
+
+        it("should insert the proper format of id", function () {
+            var h1 = new Axis(Axis.HORIZONTAL),
+                h2 = new Axis(Axis.HORIZONTAL),
+                h3 = new Axis(Axis.HORIZONTAL),
+                v1 = new Axis(Axis.VERTICAL),
+                v2 = new Axis(Axis.VERTICAL);
+
+            graph = new Graph();
+            graph.normalize();
+
+            expect(graph.axes().at(0).id()).toEqual("x");
+            expect(graph.axes().at(1).id()).toEqual("y");
+
+        });
+
+    });
+
 });
