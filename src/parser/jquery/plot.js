@@ -37,6 +37,14 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     }
                 }
 
+//
+// TODO: Uncomment this after the normalizer algorithm has been decided upon
+//                
+//                if (xml.find("horizontalaxis variable").length === 0) {
+//                    plot.variable().add(null);
+//                }
+
+
                 if (xml.find("horizontalaxis variable, verticalaxis variable").length > 0) {
                     if (graph) {
                         $.each(xml.find("horizontalaxis variable, verticalaxis variable"), function (i,e) {

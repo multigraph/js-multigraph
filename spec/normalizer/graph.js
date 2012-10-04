@@ -5,6 +5,7 @@ describe("Graph Normalizer", function () {
 
     var Graph = window.multigraph.core.Graph,
         Axis = window.multigraph.core.Axis,
+        Plot = window.multigraph.core.Plot,
         graph;
 
     beforeEach(function () {
@@ -140,6 +141,44 @@ describe("Graph Normalizer", function () {
 
         });
 
+    });
+
+    describe("handling missing plots", function () {
+        it("should insert a plot tag if one does not exist", function () {
+            expect(graph.plots().size()).toEqual(0);
+
+            graph.normalize();
+
+            expect(graph.plots().size()).toEqual(1);
+        });
+
+        it("should not insert a plot tag if at least one exists", function () {
+            var plot1 = new Plot(),
+                plot2 = new Plot(),
+                plot3 = new Plot();
+            expect(graph.plots().size()).toEqual(0);
+
+            graph.plots().add(plot1);
+
+            expect(graph.plots().size()).toEqual(1);
+
+            graph.normalize();
+
+            expect(graph.plots().size()).toEqual(1);
+            expect(graph.plots().at(0)).toBe(plot1);
+
+            graph.plots().add(plot2);
+            graph.plots().add(plot3);
+
+            expect(graph.plots().size()).toEqual(3);
+
+            graph.normalize();
+
+            expect(graph.plots().size()).toEqual(3);
+            expect(graph.plots().at(0)).toBe(plot1);
+            expect(graph.plots().at(1)).toBe(plot2);
+            expect(graph.plots().at(2)).toBe(plot3);
+        });
     });
 
 });

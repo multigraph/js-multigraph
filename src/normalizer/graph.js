@@ -59,6 +59,20 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
                 this.axes().at(i).normalize(this);
             }
 
+            //
+            // handles missing plot tags
+            //
+            if (this.plots().size() === 0) {
+                this.plots().add(new ns.Plot());
+            }
+
+            //
+            // normalizes the plots
+            //
+            for (i = 0; i < this.plots().size(); i++) {
+                this.plots().at(i).normalize(this);
+            }
+
         });
 
     });

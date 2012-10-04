@@ -16,7 +16,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return axis instanceof ns.Axis;
         });
         this.hasMany("variable").which.validatesWith(function (variable) {
-            return variable instanceof ns.DataVariable;
+            return variable instanceof ns.DataVariable || variable === null;
         });
         this.hasA("filter").which.validatesWith(function (filter) {
             return filter instanceof ns.Filter;
