@@ -58,6 +58,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             var errorMessages,
                 i;
 
+            $(div).css("overflow", "auto");
             $(div).append($("<ol>", {"text" : e.message, "style" : "z-index:100; border:1px solid black; background-color : #CCC; white-space: pre-wrap; text-align: left;"}));
 
             if (e.stack && typeof(e.stack) === "string") {
