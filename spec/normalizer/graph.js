@@ -5,12 +5,16 @@ describe("Graph Normalizer", function () {
 
     var Graph = window.multigraph.core.Graph,
         Axis = window.multigraph.core.Axis,
+        Data = window.multigraph.core.Data,
+        DataVariable = window.multigraph.core.DataVariable,
+        DataValue = window.multigraph.core.DataValue,
         Plot = window.multigraph.core.Plot,
         graph;
 
     beforeEach(function () {
         window.multigraph.normalizer.mixin.apply(window.multigraph.core);
         graph = new Graph();
+        graph.data().add(new Data([new DataVariable("x", 0, DataValue.NUMBER), new DataVariable("y", 1, DataValue.NUMBER), new DataVariable("y1", 2, DataValue.NUMBER)]));
     });
 
     describe("handling missing axes", function () {
@@ -134,6 +138,7 @@ describe("Graph Normalizer", function () {
                 v2 = new Axis(Axis.VERTICAL);
 
             graph = new Graph();
+            graph.data().add(new Data([new DataVariable("x", 0, DataValue.NUMBER), new DataVariable("y", 1, DataValue.NUMBER), new DataVariable("y1", 2, DataValue.NUMBER)]));
             graph.normalize();
 
             expect(graph.axes().at(0).id()).toEqual("x");

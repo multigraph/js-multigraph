@@ -37,13 +37,9 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     }
                 }
 
-//
-// TODO: Uncomment this after the normalizer algorithm has been decided upon
-//                
-//                if (xml.find("horizontalaxis variable").length === 0) {
-//                    plot.variable().add(null);
-//                }
-
+                if (xml.find("horizontalaxis variable").length === 0) {
+                    plot.variable().add(null);
+                }
 
                 if (xml.find("horizontalaxis variable, verticalaxis variable").length > 0) {
                     if (graph) {
@@ -116,12 +112,12 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
             var output = '<plot>',
                 i;
 
-            if (this.horizontalaxis() || this.variable().size() > 0) {
+            if (this.horizontalaxis() || (this.variable().size() > 0 && this.variable().at(0) !== null && this.variable().size() !==1)) {
                 output += '<horizontalaxis';
                 if (this.horizontalaxis() && this.horizontalaxis().id()) {
                     output += ' ref="' + this.horizontalaxis().id() + '"';
                 }
-                if (this.variable().size() > 0) {
+                if (this.variable().size() > 0 && this.variable().at(0) !== null) {
                     output += '><variable ref="' + this.variable().at(0).id() + '"/></horizontalaxis>';
                 } else {
                     output += '/>';
