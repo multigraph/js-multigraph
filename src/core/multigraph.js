@@ -56,9 +56,22 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     Multigraph.createDefaultErrorHandler = function (div) {
         return function (e) {
             var errorMessages,
+                flag = true,
                 i;
 
             $(div).css("overflow", "auto");
+
+            $(div).children("div").each(function (i) {
+                if ($(this).text() === "An error has occured. Please scroll down in this region to see the error messages.") {
+                    flag = false;
+                }
+            });
+
+            if (flag) {
+                $(div).prepend($("<br>"));
+                $(div).prepend($("<div>", {"text" : "An error has occured. Please scroll down in this region to see the error messages.", "style" : "z-index:100; border:1px solid black; background-color : #E00; white-space: pre-wrap; text-align: left;"}));
+            }
+
             $(div).append($("<ol>", {"text" : e.message, "style" : "z-index:100; border:1px solid black; background-color : #CCC; white-space: pre-wrap; text-align: left;"}));
 
             if (e.stack && typeof(e.stack) === "string") {

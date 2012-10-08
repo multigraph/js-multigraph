@@ -1,0 +1,91 @@
+<mugl>
+  <plotarea marginleft="40" marginright="40" marginbottom="45" margintop="35"/>
+  <legend rows="1" border="0" anchor="0 1" base="0 1" opacity="0.0" position="0 30">
+    <icon border="0" height="20"/>
+  </legend>
+  <horizontalaxis id="datetime" type="datetime" min="2012100716" max="2012100916">
+    <labels format="%H:%i%L%n %d%L%Y" spacing="1M 7D 1D 12H 6H 4H 2H 1H 30m 10m 5m"/>
+    <grid/>
+    <title/>
+  </horizontalaxis>
+  <verticalaxis id="celsius" positionbase="left">
+    <title angle="90" anchor="0 -1" position="-27 0">Celsius</title>
+    <binding id="tempbinding" min="0" max="100"/>
+  </verticalaxis>
+  <verticalaxis id="fahrenheit" positionbase="right" min="0" max="95">
+    <title angle="90" anchor="0 1" position="25 0">Fahrenheit</title>
+    <grid/>
+    <binding id="tempbinding" min="32" max="212"/>
+  </verticalaxis>
+  <plot>
+    <legend label="Outdoor Forecast"/>
+    <horizontalaxis ref="datetime">
+      <variable ref="f0d"/>
+    </horizontalaxis>
+    <verticalaxis ref="fahrenheit">
+      <variable ref="f0t" legendlabel="Current Forecast"/>
+    </verticalaxis>
+    <renderer type="line">
+      <option name="linecolor" value="green"/>
+      <option name="dotcolor" value="green"/>
+      <option name="linewidth" value="3"/>
+      <option name="dotsize" value="0"/>
+    </renderer>
+  </plot>
+  <plot>
+    <legend label="Living Room"/>
+    <horizontalaxis ref="datetime">
+      <variable ref="datetime"/>
+    </horizontalaxis>
+    <verticalaxis ref="celsius">
+      <variable ref="livtemp" legendlabel="Living Room Temp"/>
+    </verticalaxis>
+    <renderer type="line">
+      <option name="linecolor" value="red"/>
+      <option name="dotsize" value="0"/>
+    </renderer>
+  </plot>
+  <plot>
+    <legend label="Upstairs Office"/>
+    <horizontalaxis ref="datetime">
+      <variable ref="datetime"/>
+    </horizontalaxis>
+    <verticalaxis ref="celsius">
+      <variable ref="intemp" legendlabel="Indoor Temp"/>
+    </verticalaxis>
+    <renderer type="line">
+      <option name="linecolor" value="black"/>
+      <option name="dotsize" value="0"/>
+    </renderer>
+  </plot>
+  <plot>
+    <legend label="Outdoor"/>
+    <horizontalaxis ref="datetime">
+      <variable ref="datetime"/>
+    </horizontalaxis>
+    <verticalaxis ref="celsius">
+      <variable ref="outtemp" legendlabel="Outdoor Temp"/>
+    </verticalaxis>
+    <renderer type="line">
+      <option name="linecolor" value="blue"/>
+      <option name="linewidth" value="3"/>
+      <option name="dotsize" value="0"/>
+    </renderer>
+  </plot>
+  <data>
+    <variables missingvalue="-9999" missingop="eq">
+      <variable id="datetime" column="0" type="datetime"/>
+      <variable id="outtemp" column="1"/>
+      <variable id="intemp" column="2"/>
+      <variable id="livtemp" column="3"/>
+    </variables>
+    <service location="http://www.geomtech.com/vars/get/1,3,9"/>
+  </data>
+  <data>
+    <variables>
+      <variable id="f0d" column="0" type="datetime"/>
+      <variable id="f0t" column="1"/>
+    </variables>
+    <service location="http://www.geomtech.com/vars/get/4"/>
+  </data>
+</mugl>
