@@ -4,9 +4,10 @@
 <head>
   <title>Multigraph Canvas Test</title>
 
-  <script type="text/javascript" src="../../../lib/jquery/jquery.min.js"></script>
-
   <script type="text/javascript" src="../../../lib/jermaine/jermaine.js"></script>
+  <script type="text/javascript" src="../../../lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="../../../lib/jquery/jquery-embed.js"></script>
+
   <script type="text/javascript" src="../../../lib/util/util.js"></script>
   <script type="text/javascript" src="../../../lib/sprintf/sprintf-0.7-beta1.js"></script>
   <script type="text/javascript" src="../../../lib/requestanimationframe/requestanimationframe.js"></script>
@@ -130,46 +131,6 @@
 <script type="text/javascript" src="../../../src/events/jquery/multigraph.js"></script>
 <!--END_ANT_LINES-->
 
-  <style type="text/css">
-    .graph {
-      width:  800px;
-      height: 500px;
-      border: 0px;
-    }
-  </style>
-
-  <script type="text/javascript">
-
-$(document).ready(function () {
-
-  var drawMultigraph = function (divid, xmlfile) {
-    var Multigraph = window.multigraph.core.Multigraph;
-
-    var multigraphPromise = Multigraph.createCanvasGraph(divid, xmlfile);
-  }
-
-/** 
- * The lines between BEGIN_ANT_SCRIPT_LINES and END_SCRIPT_MUGL_LINES below are inserted/maintained automatically
- * by ant.  Do NOT edit them by hand; if you do, your edits will be lost next time ant is run.
- */
-//BEGIN_ANT_SCRIPT_LINES
-  drawMultigraph("background_image", "../../mugl/background_image.xml");
-  drawMultigraph("bar_graph", "../../mugl/bar_graph.xml");
-  drawMultigraph("bar_legend", "../../mugl/bar_legend.xml");
-  drawMultigraph("fill_graph", "../../mugl/fill_graph.xml");
-  drawMultigraph("legend", "../../mugl/legend.xml");
-  drawMultigraph("mymugl", "../../mugl/mymugl.xml");
-  drawMultigraph("pointline_legend", "../../mugl/pointline_legend.xml");
-  drawMultigraph("tempgraph-csv", "../../mugl/tempgraph-csv.xml");
-  drawMultigraph("tempgraph-datetime", "../../mugl/tempgraph-datetime.xml");
-  drawMultigraph("tempgraph", "../../mugl/tempgraph.xml");
-  drawMultigraph("testgraph", "../../mugl/testgraph.xml");
-//END_ANT_SCRIPT_LINES
-
-});
-
-  </script>
-
 </head>
 
 <body>
@@ -180,27 +141,27 @@ $(document).ready(function () {
 -->
 <!--BEGIN_ANT_DIV_LINES-->
 <p>background_image</p>
-<div id="background_image" class="graph"></div>
+<div class="multigraph" data-width="800" data-height="500" data-src="../../mugl/background_image.xml" data-driver="canvas"></div>
 <p>bar_graph</p>
-<div id="bar_graph" class="graph"></div>
+<div class="multigraph" data-width="800" data-height="500" data-src="../../mugl/bar_graph.xml" data-driver="canvas"></div>
 <p>bar_legend</p>
-<div id="bar_legend" class="graph"></div>
+<div class="multigraph" data-width="800" data-height="500" data-src="../../mugl/bar_legend.xml" data-driver="canvas"></div>
 <p>fill_graph</p>
-<div id="fill_graph" class="graph"></div>
+<div class="multigraph" data-width="800" data-height="500" data-src="../../mugl/fill_graph.xml" data-driver="canvas"></div>
 <p>legend</p>
-<div id="legend" class="graph"></div>
+<div class="multigraph" data-width="800" data-height="500" data-src="../../mugl/legend.xml" data-driver="canvas"></div>
 <p>mymugl</p>
-<div id="mymugl" class="graph"></div>
+<div class="multigraph" data-width="800" data-height="500" data-src="../../mugl/mymugl.xml" data-driver="canvas"></div>
 <p>pointline_legend</p>
-<div id="pointline_legend" class="graph"></div>
+<div class="multigraph" data-width="800" data-height="500" data-src="../../mugl/pointline_legend.xml" data-driver="canvas"></div>
 <p>tempgraph-csv</p>
-<div id="tempgraph-csv" class="graph"></div>
+<div class="multigraph" data-width="800" data-height="500" data-src="../../mugl/tempgraph-csv.xml" data-driver="canvas"></div>
 <p>tempgraph-datetime</p>
-<div id="tempgraph-datetime" class="graph"></div>
+<div class="multigraph" data-width="800" data-height="500" data-src="../../mugl/tempgraph-datetime.xml" data-driver="canvas"></div>
 <p>tempgraph</p>
-<div id="tempgraph" class="graph"></div>
+<div class="multigraph" data-width="800" data-height="500" data-src="../../mugl/tempgraph.xml" data-driver="canvas"></div>
 <p>testgraph</p>
-<div id="testgraph" class="graph"></div>
+<div class="multigraph" data-width="800" data-height="500" data-src="../../mugl/testgraph.xml" data-driver="canvas"></div>
 <!--END_ANT_DIV_LINES-->
 </center>
 </body>

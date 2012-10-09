@@ -58,20 +58,21 @@
     <delete file="${build.file.min}" />
   </target>
 
+<!--
   <target name="mugl" depends="html,graph-div-html,graph-mugl-scripts">
   </target>
-
   <target name="graph-div-html">
     <pathconvert property="graph-tags.graphics-spec" pathsep="${line.separator}">
       <path refid="path.mugl-xml"/>
       <mapper type="regexp" from="spec/mugl/(.*)\.xml$" to='&lt;p&gt;\1&lt;/p&gt;${line.separator}&lt;div id="\1" class="graph"&gt;&lt;/div&gt;'/>
     </pathconvert>
     <replaceregexp flags="s">
-      <regexp pattern="&lt;!--BEGIN_ANT_DIV_LINES--&gt;.*&lt;!--END_ANT_DIV_LINES--&gt;"/>
-      <substitution expression="&lt;!--BEGIN_ANT_DIV_LINES--&gt;${line.separator}${graph-tags.graphics-spec}${line.separator}&lt;!--END_ANT_DIV_LINES--&gt;"/>
+      <regexp pattern="&lt;!-!!-BEGIN_ANT_DIV_LINES-!!-&gt;.*&lt;!-!!-END_ANT_DIV_LINES-!!-&gt;"/>
+      <substitution expression="&lt;!-!!-BEGIN_ANT_DIV_LINES-!!-&gt;${line.separator}${graph-tags.graphics-spec}${line.separator}&lt;!-!!-END_ANT_DIV_LINES-!!-&gt;"/>
       <filelist dir="spec/graphics" files="raphael/all_graphs.html,canvas/all_graphs.html"/>
     </replaceregexp>
   </target>
+-->
 
   <target name="graph-mugl-scripts">
     <pathconvert property="js-scripts.graphics-spec" pathsep="${line.separator}">
