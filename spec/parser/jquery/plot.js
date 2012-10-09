@@ -144,6 +144,45 @@ describe("Plot parsing", function () {
             plot = Plot.parseXML($xml, graph);
             expect(plot.serialize()).toBe(xmlString);
         });
+
+        it("should be able to parse plots with specific axis children from XML, serialize it and get the same XML as the originals", function () {
+            xmlString = ''
+                + '<plot>'
+                +     '<horizontalaxis ref="x">'
+                +         '<variable'
+                +             ' ref="x"'
+                +         '/>'
+                +     '</horizontalaxis>'
+                +     '<legend'
+                +         ' visible="true"'
+                +         ' label="y"'
+                +         '/>'
+                + '</plot>';
+            $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+            plot = Plot.parseXML($xml, graph);
+            expect(plot.serialize()).toBe(xmlString);
+
+            xmlString = ''
+                + '<plot>'
+                +     '<verticalaxis ref="y">'
+                +         '<variable'
+                +             ' ref="y"'
+                +         '/>'
+                +         '<variable'
+                +             ' ref="y1"'
+                +         '/>'
+                +     '</verticalaxis>'
+                +     '<legend'
+                +         ' visible="true"'
+                +         ' label="y"'
+                +         '/>'
+                + '</plot>';
+            $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+            plot = Plot.parseXML($xml, graph);
+            expect(plot.serialize()).toBe(xmlString);
+
+        });
+
     });
 
     describe("PlotLegend parsing", function () {

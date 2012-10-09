@@ -55,40 +55,6 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     }
                 }
 
-                // TODO: Move this bit of code into a post-parse normalizer.
-                //       This code populates the plot variable's if they were not explicitly
-                //       set in the mugl.
-                // TODO: modify this code so that it only sucks in the proper number of variables
-                //       ie. 2 for pointline, bar, fill, 3 for error's, etc
-                var variableCount = 2;
-                if (graph) { 
-                    if (plot.variable().size() < variableCount) {
-                        var flag,
-                        i, j, r;
-                        for (i = 0; i < graph.data().size(); i++) {
-                            for (j = 0; j < graph.data().at(i).columns().size(); j++) {
-                                variable = graph.data().at(i).columns().at(j);
-                                flag = true;
-                                for (r = 0; r < plot.variable().size(); r++) {
-                                    if (variable === plot.variable().at(r)) {
-                                        flag = false;
-                                        break;
-                                    }
-                                }
-                                if (flag === true) {
-                                    plot.variable().add(variable);
-                                }
-                                if (plot.variable().size() >= variableCount) {
-                                    break;
-                                }
-                            }
-                            if (plot.variable().size() >= variableCount) {
-                                break;
-                            }
-                        }
-                    }
-                }
-
                 if (xml.find("legend").length > 0) {
                     plot.legend(PlotLegend[parse](xml.find("legend"), plot));
                 } else {
