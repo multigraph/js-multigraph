@@ -7,8 +7,8 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
             var multigraph = new ns.core.Multigraph();
             if (xml) {
                 if (xml.find(">graph").length > 0) {
-                    $.each(xml.find(">graph"), function (i,e) {
-                        multigraph.graphs().add( ns.core.Graph[parse]($(e)) );
+                    window.multigraph.jQuery.each(xml.find(">graph"), function (i,e) {
+                        multigraph.graphs().add( ns.core.Graph[parse](window.multigraph.jQuery(e)) );
                     });
                 } else if (xml.find(">graph").length === 0 && xml.children().length > 0) {
                     multigraph.graphs().add( ns.core.Graph[parse](xml) );

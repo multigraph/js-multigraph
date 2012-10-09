@@ -9,8 +9,8 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 labelers = axis.labelers(),
                 i,
                 j;
-            if ($.trim(xml.find("labels").attr("spacing"))!=="") {
-                spacingStrings = $.trim(xml.find("labels").attr("spacing")).split(/\s+/);
+            if (window.multigraph.jQuery.trim(xml.find("labels").attr("spacing"))!=="") {
+                spacingStrings = window.multigraph.jQuery.trim(xml.find("labels").attr("spacing")).split(/\s+/);
             }
             if (spacingStrings.length > 0) {
                 // If there was a spacing attr on the <labels> tag, create a new labeler for
@@ -24,14 +24,14 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 var defaults = ns.core.Labeler[parse](xml.find("labels"), axis, undefined, null);
                 // And loop over each <label> tag, creating labelers for each, splitting multiple
                 // spacings on the same <label> tag into multiple labelers:
-                $.each(xml.find("label"), function (j, e) {
+                window.multigraph.jQuery.each(xml.find("label"), function (j, e) {
                     spacingStrings = [];
-                    if ($.trim($(e).attr("spacing"))!=="") {
-                        spacingStrings = $.trim($(e).attr("spacing")).split(/\s+/);
+                    if (window.multigraph.jQuery.trim(window.multigraph.jQuery(e).attr("spacing"))!=="") {
+                        spacingStrings = window.multigraph.jQuery.trim(window.multigraph.jQuery(e).attr("spacing")).split(/\s+/);
                     }
                     for (i=0; i<spacingStrings.length; ++i) {
-                        //labelers.push( ns.core.Labeler[parse]($(e), axis, defaults, spacingStrings[i]) );
-                        labelers.add( ns.core.Labeler[parse]($(e), axis, defaults, spacingStrings[i]) );
+                        //labelers.push( ns.core.Labeler[parse](window.multigraph.jQuery(e), axis, defaults, spacingStrings[i]) );
+                        labelers.add( ns.core.Labeler[parse](window.multigraph.jQuery(e), axis, defaults, spacingStrings[i]) );
                     }
                 });
             }

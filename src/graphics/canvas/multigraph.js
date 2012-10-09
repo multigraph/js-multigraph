@@ -16,11 +16,11 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         });
 
         ns.Multigraph.respondsTo("init", function () {
-            this.width($(this.div()).width());
-            this.height($(this.div()).height());
+            this.width(window.multigraph.jQuery(this.div()).width());
+            this.height(window.multigraph.jQuery(this.div()).height());
             if (this.width() > 0 && this.height() > 0) {
                 // create the canvas; store ref to the canvas object in this.canvas()
-                this.canvas($("<canvas width=\""+this.width()+"\" height=\""+this.height()+"\"/>").appendTo($(this.div()).empty())[0]);
+                this.canvas(window.multigraph.jQuery("<canvas width=\""+this.width()+"\" height=\""+this.height()+"\"/>").appendTo(window.multigraph.jQuery(this.div()).empty())[0]);
                 // get the canvas context; store ref to it in this.context()
                 this.context(this.canvas().getContext("2d"));
             }
@@ -49,12 +49,12 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             ns.mixin.apply(window.multigraph.core);
             window.multigraph.events.jquery.mouse.mixin.apply(window.multigraph, errorHandler);
 
-            muglPromise = $.ajax({
+            muglPromise = window.multigraph.jQuery.ajax({
                 "url"      : muglurl,
                 "dataType" : "text"
             });
 
-            deferred = $.Deferred();
+            deferred = window.multigraph.jQuery.Deferred();
         }
         catch (e) {
             errorHandler(e);

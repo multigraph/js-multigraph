@@ -28,17 +28,17 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 if (xml.find(">title").length > 0) {
                     graph.title( ns.core.Title[parse](xml.find(">title")) );
                 }
-                $.each(xml.find(">horizontalaxis"), function (i,e) {
-                    graph.axes().add( ns.core.Axis[parse]($(e), ns.core.Axis.HORIZONTAL) );
+                window.multigraph.jQuery.each(xml.find(">horizontalaxis"), function (i,e) {
+                    graph.axes().add( ns.core.Axis[parse](window.multigraph.jQuery(e), ns.core.Axis.HORIZONTAL) );
                 });
-                $.each(xml.find(">verticalaxis"), function (i,e) {
-                    graph.axes().add( ns.core.Axis[parse]($(e), ns.core.Axis.VERTICAL) );
+                window.multigraph.jQuery.each(xml.find(">verticalaxis"), function (i,e) {
+                    graph.axes().add( ns.core.Axis[parse](window.multigraph.jQuery(e), ns.core.Axis.VERTICAL) );
                 });
-                $.each(xml.find(">data"), function (i,e) {
-                    graph.data().add( ns.core.Data[parse]($(e)) );
+                window.multigraph.jQuery.each(xml.find(">data"), function (i,e) {
+                    graph.data().add( ns.core.Data[parse](window.multigraph.jQuery(e)) );
                 });
-                $.each(xml.find(">plot"), function (i,e) {
-                    graph.plots().add( ns.core.Plot[parse]($(e), graph) );
+                window.multigraph.jQuery.each(xml.find(">plot"), function (i,e) {
+                    graph.plots().add( ns.core.Plot[parse](window.multigraph.jQuery(e), graph) );
                 });
                 graph.postParse();
             }

@@ -1,4 +1,4 @@
-$(document).ready(function() {
+window.multigraph.jQuery(document).ready(function() {
     "use strict";
 
     var JSNumberValueType = window.multigraph.valuetype.JSNumberValueType,
@@ -74,19 +74,19 @@ $(document).ready(function() {
     var createSpeedTest = function(id, func) {
         speedTester.createTest(
             function() {
-                $('#td_' + id).css({'background-color':'#66ff66'});
-                $('#' + id).text("running...");
+                window.multigraph.jQuery('#td_' + id).css({'background-color':'#66ff66'});
+                window.multigraph.jQuery('#' + id).text("running...");
             },
             function() {
-                $('#td_' + id).css({'background-color':'#ffffff'});
-                $('#' + id).text(func() + " ms");
+                window.multigraph.jQuery('#td_' + id).css({'background-color':'#ffffff'});
+                window.multigraph.jQuery('#' + id).text(func() + " ms");
             }
         );
     };
 
-    $("#create_label").text("create array of length " + N);
-    $("#read_label").text("read array of length " + N);
-    $("#add_label").text("create new array of length " + N + " of consecutive sums");
+    window.multigraph.jQuery("#create_label").text("create array of length " + N);
+    window.multigraph.jQuery("#read_label").text("read array of length " + N);
+    window.multigraph.jQuery("#add_label").text("create new array of length " + N + " of consecutive sums");
 
     createSpeedTest("number1_create", function() {
         return number1Tester.testCreate();

@@ -17,13 +17,13 @@ describe("New Parser Tests", function () {
                      
 //    console.log(xmlString);
 
-    var $xml = $(xmlString);
+    var $xml = window.multigraph.jQuery(xmlString);
 //    console.log($xml);
 
-    var pxml = $.parseXML(xmlString);
+    var pxml = window.multigraph.jQuery.parseXML(xmlString);
 //    console.log(pxml);
 
-    var $pxml = $(pxml);
+    var $pxml = window.multigraph.jQuery(pxml);
 //    console.log($pxml);
 
     var textNew = $pxml.find("title").text();

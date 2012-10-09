@@ -38,7 +38,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         if (typeof(div) === "string") {
             // if div is a string, assume it's an id, and convert
             // it to the div element itself
-            div = $("#" + div)[0];
+            div = window.multigraph.jQuery("#" + div)[0];
         }
         if (!obj.errorHandler || typeof(obj.errorHandler) !== "function") {
             obj.errorHandler = Multigraph.createDefaultErrorHandler(div);
@@ -59,25 +59,25 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 flag = true,
                 i;
 
-            $(div).css("overflow", "auto");
+            window.multigraph.jQuery(div).css("overflow", "auto");
 
-            $(div).children("div").each(function (i) {
-                if ($(this).text() === "An error has occured. Please scroll down in this region to see the error messages.") {
+            window.multigraph.jQuery(div).children("div").each(function (i) {
+                if (window.multigraph.jQuery(this).text() === "An error has occured. Please scroll down in this region to see the error messages.") {
                     flag = false;
                 }
             });
 
             if (flag) {
-                $(div).prepend($("<br>"));
-                $(div).prepend($("<div>", {"text" : "An error has occured. Please scroll down in this region to see the error messages.", "style" : "z-index:100; border:1px solid black; background-color : #E00; white-space: pre-wrap; text-align: left;"}));
+                window.multigraph.jQuery(div).prepend(window.multigraph.jQuery("<br>"));
+                window.multigraph.jQuery(div).prepend(window.multigraph.jQuery("<div>", {"text" : "An error has occured. Please scroll down in this region to see the error messages.", "style" : "z-index:100; border:1px solid black; background-color : #E00; white-space: pre-wrap; text-align: left;"}));
             }
 
-            $(div).append($("<ol>", {"text" : e.message, "style" : "z-index:100; border:1px solid black; background-color : #CCC; white-space: pre-wrap; text-align: left;"}));
+            window.multigraph.jQuery(div).append(window.multigraph.jQuery("<ol>", {"text" : e.message, "style" : "z-index:100; border:1px solid black; background-color : #CCC; white-space: pre-wrap; text-align: left;"}));
 
             if (e.stack && typeof(e.stack) === "string") {
                 errorMessages = e.stack.split(/\n/);
                 for (i = 1; i < errorMessages.length; i++) {
-                    $($(div).find("ol")).append($("<li>", {"text" : errorMessages[i].trim().replace(" (file", "\n(file"), "style" : "margin-bottom: 3px;"}));
+                    window.multigraph.jQuery(window.multigraph.jQuery(div).find("ol")).append(window.multigraph.jQuery("<li>", {"text" : errorMessages[i].trim().replace(" (file", "\n(file"), "style" : "margin-bottom: 3px;"}));
                 }
             }
         };

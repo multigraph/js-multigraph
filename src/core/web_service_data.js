@@ -162,7 +162,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             requestURL = this.constructRequestURL(min, max);
 
             // initiate the fetch request
-            $.ajax({
+            window.multigraph.jQuery.ajax({
                 url      : requestURL,
                 dataType : "text",
                 success  : function(data) {

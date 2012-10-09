@@ -13,7 +13,7 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
             var dragStarted = false;
             var multigraph = this;
 
-            var $target = $(target);
+            var $target = window.multigraph.jQuery(target);
 
             var eventLocationToGraphCoords = function (event) {
                 return new math.Point((event.pageX - $target.offset().left) - multigraph.graphs().at(0).x0(),

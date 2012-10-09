@@ -22,8 +22,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
         });
 
         Multigraph.respondsTo("init", function () {
-            this.width($(this.div()).width());
-            this.height($(this.div()).height());
+            this.width(window.multigraph.jQuery(this.div()).width());
+            this.height(window.multigraph.jQuery(this.div()).height());
             this.render();
             console.log(this.dumpLog());
         });
@@ -56,12 +56,12 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
         window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
         ns.mixin.apply(window.multigraph.core);
 
-        var muglPromise = $.ajax({
+        var muglPromise = window.multigraph.jQuery.ajax({
             "url"      : muglurl,
             "dataType" : "text"
         }),
 
-        deferred = $.Deferred();
+        deferred = window.multigraph.jQuery.Deferred();
 
         muglPromise.done(function (data) {
             var multigraph = window.multigraph.core.Multigraph.parseXML( window.multigraph.parser.jquery.stringToJQueryXMLObj(data) );

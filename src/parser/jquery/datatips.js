@@ -10,8 +10,8 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
             var datatips = new ns.core.Datatips();
             if (xml) {
                 if (xml.find("variable").length > 0) {
-                    $.each(xml.find("variable"), function (i, e) {
-                        datatips.variables().add( ns.core.DatatipsVariable[parse]($(e)) );
+                    window.multigraph.jQuery.each(xml.find("variable"), function (i, e) {
+                        datatips.variables().add( ns.core.DatatipsVariable[parse](window.multigraph.jQuery(e)) );
                     });
                 }
                 datatips.format(xml.attr("format"));

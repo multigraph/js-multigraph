@@ -25,7 +25,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         });
 
         ns.Multigraph.respondsTo("init", function () {
-            this.$div($(this.div()));
+            this.$div(window.multigraph.jQuery(this.div()));
             this.$div().on("mousedown", { "mg": this }, this.setupEvents);
             this.width(this.$div().width());
             this.height(this.$div().height());
@@ -94,12 +94,12 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         ns.mixin.apply(window.multigraph.core);
         window.multigraph.events.jquery.mouse.mixin.apply(window.multigraph);
 
-        var muglPromise = $.ajax({
+        var muglPromise = window.multigraph.jQuery.ajax({
             "url"      : muglurl,
             "dataType" : "text"
         }),
 
-            deferred = $.Deferred();
+            deferred = window.multigraph.jQuery.Deferred();
 
         muglPromise.done(function (data) {
             var multigraph = window.multigraph.core.Multigraph.parseXML( window.multigraph.parser.jquery.stringToJQueryXMLObj(data) );

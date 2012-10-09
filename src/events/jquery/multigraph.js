@@ -59,4 +59,4 @@
 
     });
 
-}(jQuery));
+}(window.multigraph.jQuery));

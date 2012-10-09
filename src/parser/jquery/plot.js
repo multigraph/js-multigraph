@@ -39,13 +39,13 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
 
                 if (xml.find("horizontalaxis variable, verticalaxis variable").length > 0) {
                     if (graph) {
-                        $.each(xml.find("horizontalaxis variable, verticalaxis variable"), function (i,e) {
-                            variable = graph.variableById( $(e).attr("ref") );
+                        window.multigraph.jQuery.each(xml.find("horizontalaxis variable, verticalaxis variable"), function (i,e) {
+                            variable = graph.variableById( window.multigraph.jQuery(e).attr("ref") );
                             if (variable !== undefined) {
                                 plot.data( variable.data() );
                                 plot.variable().add(variable);
                             } else {
-                                throw new Error("The graph does not contain a variable with an id of: " + $(e).attr("ref"));
+                                throw new Error("The graph does not contain a variable with an id of: " + window.multigraph.jQuery(e).attr("ref"));
                             }
                         });
                     }

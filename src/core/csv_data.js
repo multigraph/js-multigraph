@@ -38,7 +38,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             this.initializeColumns();
 
             if (that.filename() !== undefined) {
-                $.ajax({url:that.filename(), success:function (data) {
+                window.multigraph.jQuery.ajax({url:that.filename(), success:function (data) {
                     var i, j,
                         lines,
                         stringValues,

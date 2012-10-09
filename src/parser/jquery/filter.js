@@ -9,8 +9,8 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
             var filter = new ns.core.Filter();
             if (xml) {
                 if (xml.find("option").length > 0) {
-                    $.each(xml.find(">option"), function (i, e) {
-                        filter.options().add( ns.core.FilterOption[parse]($(e)) );
+                    window.multigraph.jQuery.each(xml.find(">option"), function (i, e) {
+                        filter.options().add( ns.core.FilterOption[parse](window.multigraph.jQuery(e)) );
                     });
                 }
                 filter.type(xml.attr("type"));

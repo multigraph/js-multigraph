@@ -16,11 +16,11 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 }
                 renderer.plot(plot);
                 if (xml.find("option").length > 0) {
-                    $.each(xml.find(">option"), function (i, e) {
-                        renderer.setOptionFromString($(e).attr("name"),
-                                                     $(e).attr("value"),
-                                                     $(e).attr("min"),
-                                                     $(e).attr("max"));
+                    window.multigraph.jQuery.each(xml.find(">option"), function (i, e) {
+                        renderer.setOptionFromString(window.multigraph.jQuery(e).attr("name"),
+                                                     window.multigraph.jQuery(e).attr("value"),
+                                                     window.multigraph.jQuery(e).attr("min"),
+                                                     window.multigraph.jQuery(e).attr("max"));
                     });
                 }
             }

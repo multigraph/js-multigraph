@@ -27,34 +27,34 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 default_missingop_string = variables_xml.attr("missingop");
 
                 if (variables_xml.find(">variable").length > 0) {
-                    $.each(variables_xml.find(">variable"), function (i,e) {
-                        dataVariables.push( ns.core.DataVariable[parse]($(e)) );
+                    window.multigraph.jQuery.each(variables_xml.find(">variable"), function (i,e) {
+                        dataVariables.push( ns.core.DataVariable[parse](window.multigraph.jQuery(e)) );
                     });
                 }
 
                 // if we have a <values> section, parse it and return an ArrayData instance:
-                values_xml = $(xml.find(">values"));
+                values_xml = window.multigraph.jQuery(xml.find(">values"));
                 if (values_xml.length > 0 && dataVariables) {
                     values_xml = values_xml[0];
-                    var dataValues = ArrayData.textToDataValuesArray(dataVariables, $(values_xml).text());
+                    var dataValues = ArrayData.textToDataValuesArray(dataVariables, window.multigraph.jQuery(values_xml).text());
                     return new ArrayData(dataVariables, dataValues);
                 }
 
                 // if we have a <csv> section, parse it and return a CSVData instance:
-                var csv_xml = $(xml.find(">csv"));
+                var csv_xml = window.multigraph.jQuery(xml.find(">csv"));
                 if (csv_xml.length > 0 && dataVariables) {
                     csv_xml = csv_xml[0];
-                    var filename = $(csv_xml).attr("location");
+                    var filename = window.multigraph.jQuery(csv_xml).attr("location");
                     return new CSVData(dataVariables, filename);
                 }
 
                 // if we have a <service> section, parse it and return a WebServiceData instance:
-                var service_xml = $(xml.find(">service"));
+                var service_xml = window.multigraph.jQuery(xml.find(">service"));
                 if (service_xml.length > 0 && dataVariables) {
                     service_xml = service_xml[0];
-                    var location = $(service_xml).attr("location");
+                    var location = window.multigraph.jQuery(service_xml).attr("location");
                     var wsd = new WebServiceData(dataVariables, location);
-                    var format = $(service_xml).attr("format");
+                    var format = window.multigraph.jQuery(service_xml).attr("format");
                     if (format) {
                         wsd.format(format);
                     }
