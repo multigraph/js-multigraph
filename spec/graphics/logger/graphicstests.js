@@ -6,7 +6,7 @@ describe("Logger Graphics Tests", function () {
         var contentsObj = {
             "haveData" : false
         };
-        $.ajax({ "url": muglUrl,
+        window.multigraph.jQuery.ajax({ "url": muglUrl,
                  "dataType" : "text",
                  "success" : function (data) {
                      var multigraph = window.multigraph.core.Multigraph.parseXML( window.multigraph.parser.jquery.stringToJQueryXMLObj(data) );
@@ -23,7 +23,7 @@ describe("Logger Graphics Tests", function () {
         var contentsObj = {
             "haveData" : false
         };
-        $.ajax({ "url": name,
+        window.multigraph.jQuery.ajax({ "url": name,
                  "success" : function (data) {
                      contentsObj.contents = data;
                      contentsObj.haveData = true;
