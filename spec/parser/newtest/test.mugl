@@ -1,8 +1,0 @@
-<mugl>
-  <horizontalaxis id="x">
-    <title>Hello World!</title>
-  </horizontalaxis>
-  <renderer type="line">
-    <option name="color" value="red"/>
-  </renderer>
-</mugl>

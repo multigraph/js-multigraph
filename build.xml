@@ -43,6 +43,9 @@
   <path id="path.spec-js">
     <fileset dir="spec" includes="**/*.js"/>
   </path>
+  <path id="path.build-spec-js">
+    <fileset dir="spec" includes="**/*.js" excludes="graphics/logger/**/*.js"/>
+  </path>
   <path id="path.mugl-xml">
     <fileset dir="spec/mugl" includes="**/*.xml" />
   </path>
@@ -107,13 +110,13 @@
   </target>
 
   <target name="jasmine-build-html">
-    <pathconvert property="scripttags.jasmine-spec" pathsep="${line.separator}">
-      <path refid="path.spec-js"/>
+    <pathconvert property="scripttags.jasmine-build-spec" pathsep="${line.separator}">
+      <path refid="path.build-spec-js"/>
       <mapper type="regexp" from="^${basedir}/spec/(.*)$" to='&lt;script type="text/javascript" src="\1"&gt;&lt;/script&gt;'/>
     </pathconvert>
     <replaceregexp flags="s">
       <regexp pattern="&lt;!--BEGIN_ANT_LINES--&gt;.*&lt;!--END_ANT_LINES--&gt;"/>
-      <substitution expression="&lt;!--BEGIN_ANT_LINES--&gt;${line.separator}${scripttags.jasmine-spec}${line.separator}&lt;!--END_ANT_LINES--&gt;"/>
+      <substitution expression="&lt;!--BEGIN_ANT_LINES--&gt;${line.separator}${scripttags.jasmine-build-spec}${line.separator}&lt;!--END_ANT_LINES--&gt;"/>
       <filelist dir="spec" files="build.html"/>
     </replaceregexp>
   </target>
