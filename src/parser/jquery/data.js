@@ -14,8 +14,8 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
 
             var variables_xml,
                 values_xml,
-                default_missingvalue_string,
-                default_missingop_string,
+//                default_missingvalue_string,
+//                default_missingop_string,
                 dataVariables = [],
                 data = { 'dummy' : 'foo' };
 
@@ -23,12 +23,12 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
 
                 // parse the <variables> section
                 variables_xml = xml.find("variables");
-                default_missingvalue_string = variables_xml.attr("missingvalue");
-                default_missingop_string = variables_xml.attr("missingop");
+                data.defaultMissingvalueString = variables_xml.attr("missingvalue");
+                data.defaultMissingopString = variables_xml.attr("missingop");
 
                 if (variables_xml.find(">variable").length > 0) {
                     $.each(variables_xml.find(">variable"), function (i,e) {
-                        dataVariables.push( ns.core.DataVariable[parse]($(e)) );
+                        dataVariables.push( DataVariable[parse]($(e), data) );
                     });
                 }
 
@@ -37,7 +37,14 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 if (values_xml.length > 0 && dataVariables) {
                     values_xml = values_xml[0];
                     var dataValues = ArrayData.textToDataValuesArray(dataVariables, $(values_xml).text());
-                    return new ArrayData(dataVariables, dataValues);
+                    var values = new ArrayData(dataVariables, dataValues);
+                    if (data.defaultMissingvalueString !== undefined) {
+                        values.defaultMissingvalue(data.defaultMissingvalueString);
+                    }
+                    if (data.defaultMissingopString !== undefined) {
+                        values.defaultMissingop(xml.attr("missingop"));
+                    }
+                    return values;
                 }
 
                 // if we have a <csv> section, parse it and return a CSVData instance:
@@ -45,7 +52,14 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 if (csv_xml.length > 0 && dataVariables) {
                     csv_xml = csv_xml[0];
                     var filename = $(csv_xml).attr("location");
-                    return new CSVData(dataVariables, filename);
+                    var csv = new CSVData(dataVariables, filename);
+                    if (data.defaultMissingvalueString !== undefined) {
+                        csv.defaultMissingvalue(data.defaultMissingvalueString);
+                    }
+                    if (data.defaultMissingopString !== undefined) {
+                        csv.defaultMissingop(xml.attr("missingop"));
+                    }
+                    return csv;
                 }
 
                 // if we have a <service> section, parse it and return a WebServiceData instance:
@@ -57,6 +71,12 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     var format = $(service_xml).attr("format");
                     if (format) {
                         wsd.format(format);
+                    }
+                    if (data.defaultMissingvalueString !== undefined) {
+                        wsd.defaultMissingvalue(data.defaultMissingvalueString);
+                    }
+                    if (data.defaultMissingopString !== undefined) {
+                        wsd.defaultMissingop(xml.attr("missingop"));
                     }
                     return wsd;
                 }

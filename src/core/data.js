@@ -37,6 +37,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
         this.hasA("readyCallback").which.isA("function");
 
+        this.hasA("defaultMissingvalue").which.isA("string");
+        this.hasA("defaultMissingop").which.isA("string").and.defaultsTo("eq");
+
         this.isBuiltWith("columns", function () {
             this.initializeColumns();
         });
