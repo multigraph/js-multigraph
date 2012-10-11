@@ -10,6 +10,13 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
                 axisid;
 
             //
+            // normalizes the data sections
+            //
+            for (i = 0; i < this.data().size(); i++) {
+                this.data().at(i).normalize();
+            }
+
+            //
             // Handles missing horizontalaxis and vertical axis tags
             //
             for (i = 0; i < this.axes().size(); i++) {

@@ -9,7 +9,6 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
             var variable;
             if (xml && xml.attr("id")) {
                 variable = new ns.core.DataVariable(xml.attr("id"));
-//                variable.data(data);
                 if (xml.attr("column")) {
                     variable.column(parseInt(xml.attr("column"), 10));
                 }
@@ -18,12 +17,8 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 }
                 if (xml.attr("missingvalue")) {
                     variable.missingvalue(DataValue.parse(variable.type(), xml.attr("missingvalue")));
-                } else if (data.defaultMissingvalueString !== undefined) {
-                    variable.missingvalue(DataValue.parse(variable.type(), data.defaultMissingvalueString));
                 }
                 if (xml.attr("missingop")) {
-                    variable.missingop(DataValue.parseComparator(xml.attr("missingop")));
-                } else if (data.defaultMissingopString !== undefined) {
                     variable.missingop(DataValue.parseComparator(xml.attr("missingop")));
                 }
             }
