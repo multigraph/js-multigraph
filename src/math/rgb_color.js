@@ -106,6 +106,46 @@ window.multigraph.util.namespace("window.multigraph.math", function (ns) {
                 green = grey;
                 blue = grey;
                 break;
+            case "skyblue":
+                red = parseInt("87", 16) / 255;
+                green = parseInt("ce", 16) / 255;
+                blue = parseInt("eb", 16) / 255;
+                break;
+            case "khaki":
+                red = parseInt("f0", 16) / 255;
+                green = parseInt("e6", 16) / 255;
+                blue = parseInt("8c", 16) / 255;
+                break;
+            case "orange":
+                red = parseInt("ff", 16) / 255;
+                green = parseInt("a5", 16) / 255;
+                blue = parseInt("00", 16) / 255;
+                break;
+            case "salmon":
+                red = parseInt("fa", 16) / 255;
+                green = parseInt("80", 16) / 255;
+                blue = parseInt("72", 16) / 255;
+                break;
+            case "olive":
+                red = parseInt("9a", 16) / 255;
+                green = parseInt("cd", 16) / 255;
+                blue = parseInt("32", 16) / 255;
+                break;
+            case "sienna":
+                red = parseInt("a0", 16) / 255;
+                green = parseInt("52", 16) / 255;
+                blue = parseInt("2d", 16) / 255;
+                break;
+            case "pink":
+                red = parseInt("ff", 16) / 255;
+                green = parseInt("b5", 16) / 255;
+                blue = parseInt("c5", 16) / 255;
+                break;
+            case "violet":
+                red = parseInt("ee", 16) / 255;
+                green = parseInt("82", 16) / 255;
+                blue = parseInt("ee", 16) / 255;
+                break;
             default:
                 parsedInput = parsedInput.replace(/(0(x|X)|#)/, "");
                 if (parsedInput.search(new RegExp(/([^0-9a-f])/)) !== -1) {

@@ -244,6 +244,54 @@ describe("RGBColor", function () {
                 expect(rgb2.g()).toBe(parseInt("ee", 16) / 255);
                 expect(rgb2.b()).toBe(parseInt("ee", 16) / 255);
             });
+            it("should parse 'skyblue' correctly", function () {
+                rgb2 = RGBColor.parse("skyblue");
+                expect(rgb2.r()).toEqual(parseInt("87", 16) / 255);
+                expect(rgb2.g()).toEqual(parseInt("ce", 16) / 255);
+                expect(rgb2.b()).toEqual(parseInt("eb", 16) / 255);
+            });
+            it("should parse 'khaki' correctly", function () {
+                rgb2 = RGBColor.parse("khaki");
+                expect(rgb2.r()).toEqual(parseInt("f0", 16) / 255);
+                expect(rgb2.g()).toEqual(parseInt("e6", 16) / 255);
+                expect(rgb2.b()).toEqual(parseInt("8c", 16) / 255);
+            });
+            it("should parse 'orange' correctly", function () {
+                rgb2 = RGBColor.parse("orange");
+                expect(rgb2.r()).toEqual(parseInt("ff", 16) / 255);
+                expect(rgb2.g()).toEqual(parseInt("a5", 16) / 255);
+                expect(rgb2.b()).toEqual(parseInt("00", 16) / 255);
+            });
+            it("should parse 'salmon' correctly", function () {
+                rgb2 = RGBColor.parse("salmon");
+                expect(rgb2.r()).toEqual(parseInt("fa", 16) / 255);
+                expect(rgb2.g()).toEqual(parseInt("80", 16) / 255);
+                expect(rgb2.b()).toEqual(parseInt("72", 16) / 255);
+            });
+            it("should parse 'olive' correctly", function () {
+                rgb2 = RGBColor.parse("olive");
+                expect(rgb2.r()).toEqual(parseInt("9a", 16) / 255);
+                expect(rgb2.g()).toEqual(parseInt("cd", 16) / 255);
+                expect(rgb2.b()).toEqual(parseInt("32", 16) / 255);
+            });
+            it("should parse 'sienna' correctly", function () {
+                rgb2 = RGBColor.parse("sienna");
+                expect(rgb2.r()).toEqual(parseInt("a0", 16) / 255);
+                expect(rgb2.g()).toEqual(parseInt("52", 16) / 255);
+                expect(rgb2.b()).toEqual(parseInt("2d", 16) / 255);
+            });
+            it("should parse 'pink' correctly", function () {
+                rgb2 = RGBColor.parse("pink");
+                expect(rgb2.r()).toEqual(parseInt("ff", 16) / 255);
+                expect(rgb2.g()).toEqual(parseInt("b5", 16) / 255);
+                expect(rgb2.b()).toEqual(parseInt("c5", 16) / 255);
+            });
+            it("should parse 'violet' correctly", function () {
+                rgb2 = RGBColor.parse("violet");
+                expect(rgb2.r()).toEqual(parseInt("ee", 16) / 255);
+                expect(rgb2.g()).toEqual(parseInt("82", 16) / 255);
+                expect(rgb2.b()).toEqual(parseInt("ee", 16) / 255);
+            });
             it("should parse 'BlAck' correctly", function () {
                 rgb2 = RGBColor.parse("BlAck");
                 expect(rgb2.r()).toBe(0);
@@ -283,8 +331,8 @@ describe("RGBColor", function () {
                     rgb2 = RGBColor.parse("red~ish");
                 }).toThrow("'red~ish' is not a valid color");
                 expect(function () {
-                    rgb2 = RGBColor.parse("pink");
-                }).toThrow("'pink' is not a valid color");
+                    rgb2 = RGBColor.parse("pin");
+                }).toThrow("'pin' is not a valid color");
                 expect(function () {
                     rgb2 = RGBColor.parse("teal");
                 }).toThrow("'teal' is not a valid color");
