@@ -4,6 +4,7 @@ describe("Plot Normalizer", function () {
     "use strict";
 
     var Plot = window.multigraph.core.Plot,
+        DataPlot = window.multigraph.core.DataPlot,
         Renderer = window.multigraph.core.Renderer,
         Axis = window.multigraph.core.Axis,
         Graph = window.multigraph.core.Graph,
@@ -17,7 +18,7 @@ describe("Plot Normalizer", function () {
         window.multigraph.normalizer.mixin.apply(window.multigraph.core);
         graph = new Graph();
         graph.data().add(new Data([new DataVariable("x", 0, DataValue.NUMBER), new DataVariable("y", 1, DataValue.NUMBER), new DataVariable("y1", 2, DataValue.NUMBER)]));
-        plot = new Plot();
+        plot = new DataPlot();
     });
 
     describe("handling axes", function () {
@@ -209,7 +210,7 @@ describe("Plot Normalizer", function () {
             plot.normalize(graph);
             expect(plot.variable().at(0)).toBe(variable1);
 
-            plot = new Plot();
+            plot = new DataPlot();
 
             plot.horizontalaxis(haxis);
             plot.verticalaxis(vaxis);
@@ -244,7 +245,7 @@ describe("Plot Normalizer", function () {
             expect(plot.variable().at(1)).toBe(variable2);
 
 
-            plot = new Plot();
+            plot = new DataPlot();
 
             plot.horizontalaxis(haxis);
             plot.verticalaxis(vaxis);
@@ -259,7 +260,7 @@ describe("Plot Normalizer", function () {
 
 
             
-            plot = new Plot();
+            plot = new DataPlot();
 
             plot.horizontalaxis(haxis);
             plot.verticalaxis(vaxis);
@@ -276,7 +277,7 @@ describe("Plot Normalizer", function () {
 
 
 
-            plot = new Plot();
+            plot = new DataPlot();
 
             plot.horizontalaxis(haxis);
             plot.verticalaxis(vaxis);
@@ -309,7 +310,7 @@ describe("Plot Normalizer", function () {
             expect(plot.variable().at(0)).toBe(variable2);
             expect(plot.variable().at(1)).toBe(variable1);
 
-            plot = new Plot();
+            plot = new DataPlot();
 
             graph.data().pop();
             graph.data().add(new Data([variable1, variable2, variable3]));
@@ -355,7 +356,7 @@ describe("Plot Normalizer", function () {
 
 
 
-            plot = new Plot();
+            plot = new DataPlot();
 
             plot.horizontalaxis(haxis);
             plot.verticalaxis(vaxis);
@@ -379,7 +380,7 @@ describe("Plot Normalizer", function () {
 
 
 
-            plot = new Plot();
+            plot = new DataPlot();
 
             plot.horizontalaxis(haxis);
             plot.verticalaxis(vaxis);
@@ -454,7 +455,7 @@ describe("Plot Normalizer", function () {
             expect(plot.variable().at(0)).toBe(variablea1);
             expect(plot.variable().at(1)).toBe(variablea2);
 
-            plot = new Plot();
+            plot = new DataPlot();
 
             plot.horizontalaxis(haxis);
             plot.verticalaxis(vaxis);

@@ -1,10 +1,11 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
 /*jshint laxbreak:true */
 
-describe("Plot parsing", function () {
+describe("DataPlot parsing", function () {
     "use strict";
 
     var Plot = window.multigraph.core.Plot,
+        DataPlot = window.multigraph.core.DataPlot,
         Graph = window.multigraph.core.Graph,
         Axis = window.multigraph.core.Axis,
         Data = window.multigraph.core.Data,
@@ -56,7 +57,7 @@ describe("Plot parsing", function () {
         it("should be able to parse a plot with axis children from XML", function () {
             plot = Plot.parseXML($xml, graph);
             expect(plot).not.toBeUndefined();
-            expect(plot instanceof Plot).toBe(true);
+            expect(plot instanceof DataPlot).toBe(true);
             expect(plot.horizontalaxis() instanceof Axis).toBe(true);            
             expect(plot.verticalaxis() instanceof Axis).toBe(true);            
         });
@@ -124,7 +125,7 @@ describe("Plot parsing", function () {
         it("should be able to parse a plot with variable children from XML", function () {
             plot = Plot.parseXML($xml, graph);
             expect(plot).not.toBeUndefined();
-            expect(plot instanceof Plot).toBe(true);
+            expect(plot instanceof DataPlot).toBe(true);
 //            expect(plot.horizontalaxis() instanceof Axis).toBe(true);            
 //            expect(plot.verticalaxis() instanceof Axis).toBe(true);            
             expect(plot.variable().at(0) instanceof DataVariable).toBe(true);
@@ -195,7 +196,7 @@ describe("Plot parsing", function () {
         it("should be able to parse a plot with a PlotLegend child from XML", function () {
             plot = Plot.parseXML($xml);
             expect(plot).not.toBeUndefined();
-            expect(plot instanceof Plot).toBe(true);
+            expect(plot instanceof DataPlot).toBe(true);
             expect(plot.legend() instanceof PlotLegend).toBe(true);
             
         });
@@ -216,7 +217,7 @@ describe("Plot parsing", function () {
         it("should be able to parse a plot with a PlotLegend child from XML", function () {
             plot = Plot.parseXML($xml);
             expect(plot).not.toBeUndefined();
-            expect(plot instanceof Plot).toBe(true);
+            expect(plot instanceof DataPlot).toBe(true);
             expect(plot.legend() instanceof PlotLegend).toBe(true);
             
         });
@@ -237,7 +238,7 @@ describe("Plot parsing", function () {
         it("should be able to parse a plot with a Renderer child from XML", function () {
             plot = Plot.parseXML($xml);
             expect(plot).not.toBeUndefined();
-            expect(plot instanceof Plot).toBe(true);
+            expect(plot instanceof DataPlot).toBe(true);
             expect(plot.renderer() instanceof Renderer).toBe(true);
             
         });
@@ -247,7 +248,7 @@ describe("Plot parsing", function () {
             $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
             plot = Plot.parseXML($xml);
             expect(plot).not.toBeUndefined();
-            expect(plot instanceof Plot).toBe(true);
+            expect(plot instanceof DataPlot).toBe(true);
             expect(plot.renderer() instanceof Renderer).toBe(true);
 /*
 TODO:  change to check for new style options!!!
@@ -280,7 +281,7 @@ TODO:  change to check for new style options!!!
         it("should be able to parse a plot with a Filter child from XML", function () {
             plot = Plot.parseXML($xml);
             expect(plot).not.toBeUndefined();
-            expect(plot instanceof Plot).toBe(true);
+            expect(plot instanceof DataPlot).toBe(true);
             expect(plot.filter() instanceof Filter).toBe(true);
             
         });
@@ -290,7 +291,7 @@ TODO:  change to check for new style options!!!
             $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
             plot = Plot.parseXML($xml);
             expect(plot).not.toBeUndefined();
-            expect(plot instanceof Plot).toBe(true);
+            expect(plot instanceof DataPlot).toBe(true);
             expect(plot.filter() instanceof Filter).toBe(true);
             expect(plot.filter().options().at(0) instanceof FilterOption);
             expect(plot.filter().options().at(1) instanceof FilterOption);
@@ -320,7 +321,7 @@ TODO:  change to check for new style options!!!
         it("should be able to parse a plot with a Datatips child from XML", function () {
             plot = Plot.parseXML($xml);
             expect(plot).not.toBeUndefined();
-            expect(plot instanceof Plot).toBe(true);
+            expect(plot instanceof DataPlot).toBe(true);
             expect(plot.datatips() instanceof Datatips).toBe(true);
             
         });
@@ -330,7 +331,7 @@ TODO:  change to check for new style options!!!
             $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
             plot = Plot.parseXML($xml);
             expect(plot).not.toBeUndefined();
-            expect(plot instanceof Plot).toBe(true);
+            expect(plot instanceof DataPlot).toBe(true);
             expect(plot.datatips() instanceof Datatips).toBe(true);
             expect(plot.datatips().variables().at(0) instanceof DatatipsVariable);
             expect(plot.datatips().variables().at(1) instanceof DatatipsVariable);
@@ -360,7 +361,7 @@ TODO:  change to check for new style options!!!
         it("should be able to parse a plot with multiple children from XML", function () {
             plot = Plot.parseXML($xml);
             expect(plot).not.toBeUndefined();
-            expect(plot instanceof Plot).toBe(true);
+            expect(plot instanceof DataPlot).toBe(true);
             expect(plot.datatips() instanceof Datatips).toBe(true);
             expect(plot.renderer() instanceof Renderer).toBe(true);
 /*

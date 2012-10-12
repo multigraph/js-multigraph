@@ -17,7 +17,7 @@ describe("Multigraph", function () {
     });
 
     describe("Children", function () {
-        var Plot = window.multigraph.core.Plot,
+        var DataPlot = window.multigraph.core.DataPlot,
             Window = window.multigraph.core.Window,
             Legend = window.multigraph.core.Legend,
             Background = window.multigraph.core.Background,
@@ -42,7 +42,7 @@ describe("Multigraph", function () {
             background = new Background(),
             plotarea = new Plotarea(),
             data = new Data(),
-            p = new Plot();
+            p = new DataPlot();
         });
 
         it("should be able to add a Graph to the Multigraph", function () {

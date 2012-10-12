@@ -85,6 +85,16 @@ describe("Logger Graphics Tests", function () {
             expect(loggerOutput.contents).toEqual(savedOutput.contents);
         });
     });
+    xit("constant-plot.xml should match with a width of '800' and a height of '500'", function () {
+        var loggerOutput = getLoggerOutput("./mugl/constant-plot.xml", 800, 500);
+        var savedOutput = getFileContents("./graphics/logger/fixtures/constant-plot-800x500.log");
+        waitsFor(function () {
+            return savedOutput.haveData && loggerOutput.haveData;
+        });
+        runs(function () {
+            expect(loggerOutput.contents).toEqual(savedOutput.contents);
+        });
+    });
     it("crn-webservice.xml should match with a width of '1000' and a height of '400'", function () {
         var loggerOutput = getLoggerOutput("./mugl/crn-webservice.xml", 1000, 400);
         var savedOutput = getFileContents("./graphics/logger/fixtures/crn-webservice-1000x400.log");

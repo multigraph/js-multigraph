@@ -232,9 +232,9 @@ describe("Renderer", function () {
                 var Axis = window.multigraph.core.Axis;
                 var DataValue = window.multigraph.core.DataValue;
                 var NumberValue = window.multigraph.core.NumberValue;
-                var Plot = window.multigraph.core.Plot;
+                var DataPlot = window.multigraph.core.DataPlot;
                 var plot = (
-                    (new Plot())
+                    (new DataPlot())
                         .verticalaxis((new Axis(Axis.VERTICAL)).type(DataValue.NUMBER))
                         .horizontalaxis((new Axis(Axis.HORIZONTAL)).type(DataValue.NUMBER))
                 );
@@ -255,9 +255,9 @@ describe("Renderer", function () {
                 var Axis = window.multigraph.core.Axis;
                 var DataValue = window.multigraph.core.DataValue;
                 var NumberValue = window.multigraph.core.NumberValue;
-                var Plot = window.multigraph.core.Plot;
+                var DataPlot = window.multigraph.core.DataPlot;
                 var plot = (
-                    (new Plot())
+                    (new DataPlot())
                         .verticalaxis((new Axis(Axis.VERTICAL)).type(DataValue.NUMBER))
                         .horizontalaxis((new Axis(Axis.HORIZONTAL)).type(DataValue.NUMBER))
                 );
@@ -280,9 +280,9 @@ describe("Renderer", function () {
                 var Axis = window.multigraph.core.Axis;
                 var DataValue = window.multigraph.core.DataValue;
                 var NumberValue = window.multigraph.core.NumberValue;
-                var Plot = window.multigraph.core.Plot;
+                var DataPlot = window.multigraph.core.DataPlot;
                 var plot = (
-                    (new Plot())
+                    (new DataPlot())
                         .verticalaxis((new Axis(Axis.VERTICAL)).type(DataValue.NUMBER))
                         .horizontalaxis((new Axis(Axis.HORIZONTAL)).type(DataValue.NUMBER))
                 );

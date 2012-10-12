@@ -70,13 +70,14 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
             // handles missing plot tags
             //
             if (this.plots().size() === 0) {
-                this.plots().add(new ns.Plot());
+                this.plots().add(new ns.DataPlot());
             }
 
             //
             // normalizes the plots
             //
             for (i = 0; i < this.plots().size(); i++) {
+                var p = this.plots().at(i);
                 this.plots().at(i).normalize(this);
             }
 

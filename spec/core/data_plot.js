@@ -1,10 +1,10 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
 
-describe("Plot", function () {
+describe("DataPlot", function () {
     "use strict";
 
     var Axis = window.multigraph.core.Axis,
-        Plot = window.multigraph.core.Plot,
+        DataPlot = window.multigraph.core.DataPlot,
         PlotLegend = window.multigraph.core.PlotLegend,
         Filter = window.multigraph.core.Filter,
         FilterOption = window.multigraph.core.FilterOption,
@@ -17,11 +17,11 @@ describe("Plot", function () {
         p;
 
     beforeEach(function () {
-        p = new Plot();
+        p = new DataPlot();
     }); 
 
-    it("should be able to create a Plot", function () {
-        expect(p instanceof Plot).toBe(true);
+    it("should be able to create a DataPlot", function () {
+        expect(p instanceof DataPlot).toBe(true);
     });
 
     describe("Axes", function () {
@@ -33,17 +33,17 @@ describe("Plot", function () {
             v = new Axis(Axis.VERTICAL);
         });
 
-        it("should be able to add a horizontal axis to a Plot", function () {
+        it("should be able to add a horizontal axis to a DataPlot", function () {
             p.horizontalaxis(h);
             expect(p.horizontalaxis()).toBe(h);
         });
 
-        it("should be able to add a vertical axis to a Plot", function () {
+        it("should be able to add a vertical axis to a DataPlot", function () {
             p.verticalaxis(v);
             expect(p.verticalaxis()).toBe(v);
         });
 
-        it("should be able to add axes with attributes to a Plot", function () {
+        it("should be able to add axes with attributes to a DataPlot", function () {
             h.id("xaxis");
             v.min("30").id("yaxis");
             p.horizontalaxis(h);
@@ -52,7 +52,7 @@ describe("Plot", function () {
             expect(p.verticalaxis()).toBe(v);
         });
 
-        it("should be able to set/get attributes of axes added to a Plot", function () {
+        it("should be able to set/get attributes of axes added to a DataPlot", function () {
             p.horizontalaxis(h);
             p.verticalaxis(v);
             p.horizontalaxis().id("xaxis").min("12");
@@ -76,12 +76,12 @@ describe("Plot", function () {
             v2.id("y").column(1);
         });
 
-        it("should be able to add a variable to a Plot", function () {
+        it("should be able to add a variable to a DataPlot", function () {
             p.variable().add(v);
             expect(p.variable().at(0)).toBe(v);
         });
 
-        it("should be able to add multiple variables to a Plot", function () {
+        it("should be able to add multiple variables to a DataPlot", function () {
             p.variable().add(v);
             p.variable().add(v2);
             expect(p.variable().at(0)).toBe(v);
@@ -97,18 +97,18 @@ describe("Plot", function () {
             legend = new PlotLegend();
         });
 
-        it("should be able to add a PlotLegend to a Plot", function () {
+        it("should be able to add a PlotLegend to a DataPlot", function () {
             p.legend(legend);
             expect(p.legend()).toBe(legend);
         });
 
-        it("should be able to add a PlotLegend with attributes to a Plot", function () {
+        it("should be able to add a PlotLegend with attributes to a DataPlot", function () {
             legend.visible(false);
             p.legend(legend);
             expect(p.legend()).toBe(legend);
         });
 
-        it("should be able to set/get attributes a legend added to a Plot", function () {
+        it("should be able to set/get attributes a legend added to a DataPlot", function () {
             p.legend(legend);
             p.legend().visible(true);
             p.legend().label(new Text("tag"));
@@ -125,12 +125,12 @@ describe("Plot", function () {
             renderer = new Renderer(Renderer.LINE);
         });
 
-        it("should be able to add a renderer to a Plot", function () {
+        it("should be able to add a renderer to a DataPlot", function () {
             p.renderer(renderer);
             expect(p.renderer()).toBe(renderer);
         });
 
-        it("should be able to add axes with attributes and children to a Plot", function () {
+        it("should be able to add axes with attributes and children to a DataPlot", function () {
 /*TODO: change to check for new style options
             var option = new RendererOption("barwidth", "3"),
                 option2 = new RendererOption("linecolor", "0x345678");
@@ -148,7 +148,7 @@ describe("Plot", function () {
 */
         });
 
-        it("should be able to set/get attributes of renderers added to a Plot", function () {
+        it("should be able to set/get attributes of renderers added to a DataPlot", function () {
 /*TODO: change to check for new style options
             var option = new RendererOption("barwidth", "3"),
                 option2 = new RendererOption("linecolor", "0x345678");
@@ -178,12 +178,12 @@ describe("Plot", function () {
             filter = new Filter();
         });
 
-        it("should be able to add a filter to a Plot", function () {
+        it("should be able to add a filter to a DataPlot", function () {
             p.filter(filter);
             expect(p.filter()).toBe(filter);
         });
 
-        it("should be able to add a filter with attributes and children to a Plot", function () {
+        it("should be able to add a filter with attributes and children to a DataPlot", function () {
             var option = new FilterOption(),
                 option2 = new FilterOption();
             filter.type("bar");
@@ -197,7 +197,7 @@ describe("Plot", function () {
             expect(p.filter().options().at(1)).toBe(option2);
         });
 
-        it("should be able to set/get attributes of filters added to a Plot", function () {
+        it("should be able to set/get attributes of filters added to a DataPlot", function () {
             var option = new FilterOption(),
                 option2 = new FilterOption();
             filter.options().add(option);
@@ -222,12 +222,12 @@ describe("Plot", function () {
             datatips = new Datatips();
         });
 
-        it("should be able to add a datatips to a Plot", function () {
+        it("should be able to add a datatips to a DataPlot", function () {
             p.datatips(datatips);
             expect(p.datatips()).toBe(datatips);
         });
 
-        it("should be able to add datatips with attributes and children to a Plot", function () {
+        it("should be able to add datatips with attributes and children to a DataPlot", function () {
             var variable = new DatatipsVariable(),
                 variable2 = new DatatipsVariable();
             datatips.format("number")
@@ -251,7 +251,7 @@ describe("Plot", function () {
             expect(p.datatips().variables().at(1)).toBe(variable2);
         });
 
-        it("should be able to set/get attributes of datatips added to a Plot", function () {
+        it("should be able to set/get attributes of datatips added to a DataPlot", function () {
             var variable = new DatatipsVariable(),
                 variable2 = new DatatipsVariable();
             datatips.variables().add(variable);

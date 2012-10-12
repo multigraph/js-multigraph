@@ -9,13 +9,13 @@ describe("BarRenderer", function () {
         DataValue = window.multigraph.core.DataValue,
         DataMeasure = window.multigraph.core.DataMeasure,
         NumberValue = window.multigraph.core.NumberValue,
-        Plot = window.multigraph.core.Plot,
+        DataPlot = window.multigraph.core.DataPlot,
         r;
 
     beforeEach(function () {
         r = (
             (new BarRenderer())
-                .plot((new Plot())
+                .plot((new DataPlot())
                       .verticalaxis( (new Axis(Axis.VERTICAL)).type(DataValue.NUMBER) )
                       .horizontalaxis( (new Axis(Axis.HORIZONTAL)).type(DataValue.NUMBER) )
                      )

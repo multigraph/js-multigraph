@@ -8,7 +8,7 @@ describe("Graph Normalizer", function () {
         Data = window.multigraph.core.Data,
         DataVariable = window.multigraph.core.DataVariable,
         DataValue = window.multigraph.core.DataValue,
-        Plot = window.multigraph.core.Plot,
+        DataPlot = window.multigraph.core.DataPlot,
         graph;
 
     beforeEach(function () {
@@ -158,9 +158,9 @@ describe("Graph Normalizer", function () {
         });
 
         it("should not insert a plot tag if at least one exists", function () {
-            var plot1 = new Plot(),
-                plot2 = new Plot(),
-                plot3 = new Plot();
+            var plot1 = new DataPlot(),
+                plot2 = new DataPlot(),
+                plot3 = new DataPlot();
             expect(graph.plots().size()).toEqual(0);
 
             graph.plots().add(plot1);

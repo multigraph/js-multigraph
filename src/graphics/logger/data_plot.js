@@ -3,9 +3,9 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
 
     ns.mixin.add(function (ns) {
 
-        var Plot = ns.Plot;
+        var DataPlot = ns.DataPlot;
 
-        Plot.respondsTo("dumpLog", function () {
+        DataPlot.respondsTo("dumpLog", function () {
             if (this.renderer()) {
                 return this.renderer().dumpLog();
             }

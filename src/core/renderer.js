@@ -30,12 +30,21 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             if (!this.plot()) {
                 console.log("Warning: renderer.setUpMissing() called for renderer that has no plot ref");
                 // this should really eventually throw an error
-                return false;
+                return;
             }
+
+            // for ConstantPlot, create function that always returns false, since it has no data
+            if (this.plot() instanceof ns.ConstantPlot) {
+                this.isMissing = function (p) {
+                    return false;
+                };
+                return;
+            };
+
             if (!this.plot().data()) {
                 // this should eventually throw an error
                 console.log("Warning: renderer.setUpMissing() called for renderer whose plot has no data ref");
-                return false;
+                return;
             }
             data = this.plot().data();
             this.isMissing = function (p) {

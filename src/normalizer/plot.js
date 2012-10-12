@@ -3,7 +3,7 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
 
     ns.mixin.add(function (ns) {
 
-        ns.Plot.respondsTo("normalize", function (graph) {
+        var normalizePlot = function (graph) {
             var i,
                 rendererType,
                 numberOfVariables,
@@ -98,36 +98,41 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
                     break;
             }
 
-            if (this.data() === undefined) {
-                this.data(graph.data().at(0));
+            if (this instanceof ns.DataPlot) {
+                if (this.data() === undefined) {
+                    this.data(graph.data().at(0));
+                }
+
+                if (this.variable().size() === 0) {
+                    this.variable().add(findNextVariableAtOrAfter(this, this.data(), 0));
+                }
+
+                if (this.variable().at(0) === null) {
+                    this.variable().replace(0, findNextVariableAtOrAfter(this, this.data(), 0));
+                }
+
+                while (this.variable().size() < numberOfVariables) {
+                    this.variable().add(findNextVariableAtOrAfter(this, this.data(), 1));
+                }
+
+                // 1. get variables from a data section, some will be used, others won't be.
+                // 2. check if horizontal axis needs a variable
+                //       if it does - find first unused variable, starting at position 0
+                //                  - if no unused variables exist - throw error
+                //                  - CONTINUE
+                //       if it does not - CONTINUE
+                // 3. check if vertical axis needs variable(s)
+                //       if it does - find first unused variable, starting at the position of
+                //                    the x variable
+                //                  - if no unused variables exist - throw error
+                //                  - check if vertical axis needs another variable
+                //                        if it does - Repeat step 3
             }
 
-            if (this.variable().size() === 0) {
-                this.variable().add(findNextVariableAtOrAfter(this, this.data(), 0));
-            }
+        };
 
-            if (this.variable().at(0) === null) {
-                this.variable().replace(0, findNextVariableAtOrAfter(this, this.data(), 0));
-            }
-
-            while (this.variable().size() < numberOfVariables) {
-                this.variable().add(findNextVariableAtOrAfter(this, this.data(), 1));
-            }
-
-            // 1. get variables from a data section, some will be used, others won't be.
-            // 2. check if horizontal axis needs a variable
-            //       if it does - find first unused variable, starting at position 0
-            //                  - if no unused variables exist - throw error
-            //                  - CONTINUE
-            //       if it does not - CONTINUE
-            // 3. check if vertical axis needs variable(s)
-            //       if it does - find first unused variable, starting at the position of
-            //                    the x variable
-            //                  - if no unused variables exist - throw error
-            //                  - check if vertical axis needs another variable
-            //                        if it does - Repeat step 3
-
-        });
+        ns.DataPlot.respondsTo("normalize", normalizePlot);
+        ns.ConstantPlot.respondsTo("normalize", normalizePlot);
 
     });
 

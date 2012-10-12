@@ -8,13 +8,13 @@ describe("PointlineRenderer", function () {
         Axis = window.multigraph.core.Axis,
         DataValue = window.multigraph.core.DataValue,
         NumberValue = window.multigraph.core.NumberValue,
-        Plot = window.multigraph.core.Plot,
+        DataPlot = window.multigraph.core.DataPlot,
         r;
 
     beforeEach(function () {
         r = (
             (new PointlineRenderer())
-                .plot((new Plot())
+                .plot((new DataPlot())
                       .verticalaxis( (new Axis(Axis.VERTICAL)).type(DataValue.NUMBER) )
                       .horizontalaxis( (new Axis(Axis.HORIZONTAL)).type(DataValue.NUMBER) )
                      )

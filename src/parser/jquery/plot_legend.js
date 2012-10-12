@@ -24,7 +24,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
 
             if (legend.label() === undefined) {
                 // TODO: remove this ugly patch with something that works properly
-                if (plot.variable().size() >= 2) { 
+                if (typeof(plot.variable)==="function" && plot.variable().size() >= 2) { 
                     legend.label(new ns.core.Text(plot.variable().at(1).id()));
                 } else {
                     legend.label(new ns.core.Text("plot"));

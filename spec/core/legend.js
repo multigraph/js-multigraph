@@ -86,7 +86,7 @@ describe("Legend", function () {
 
     describe("initializeGeometry", function () {
         var Graph = window.multigraph.core.Graph,
-            Plot = window.multigraph.core.Plot,
+            DataPlot = window.multigraph.core.DataPlot,
             PlotLegend = window.multigraph.core.PlotLegend,
             Icon = window.multigraph.core.Icon,
             Box = window.multigraph.math.Box,
@@ -103,11 +103,11 @@ describe("Legend", function () {
             graph.paddingBox().height(500).width(500);
             graph.plotBox(new Box());
             graph.plotBox().height(400).width(400);
-            plot1 = new Plot();
-            plot2 = new Plot();
-            plot3 = new Plot();
-            plot4 = new Plot();
-            plot5 = new Plot();
+            plot1 = new DataPlot();
+            plot2 = new DataPlot();
+            plot3 = new DataPlot();
+            plot4 = new DataPlot();
+            plot5 = new DataPlot();
             plot1.legend(new PlotLegend());
             plot2.legend(new PlotLegend());
             plot3.legend(new PlotLegend());

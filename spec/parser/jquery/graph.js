@@ -5,7 +5,7 @@ describe("Graph parsing", function () {
     "use strict";
 
     var Axis = window.multigraph.core.Axis,
-    Plot = window.multigraph.core.Plot,
+    DataPlot = window.multigraph.core.DataPlot,
     Window = window.multigraph.core.Window,
     Legend = window.multigraph.core.Legend,
     Background = window.multigraph.core.Background,
