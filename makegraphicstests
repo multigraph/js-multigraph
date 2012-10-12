@@ -164,7 +164,7 @@ sub make_test_html {
 
     $up = '<a href="../index.html">All Graphics Tests</a>';
 
-    my $title = "$driver graphics test: $mugl";
+    my $title = "$driver graphics test: <a href=\"../../mugl/$mugl\">$mugl</a>";
     if ($width || $height) {
         $title .= " ($width X $height)";
     }
