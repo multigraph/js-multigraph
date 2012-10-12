@@ -55,6 +55,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
 
         window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
         ns.mixin.apply(window.multigraph.core);
+        window.multigraph.normalizer.mixin.apply(window.multigraph.core);
 
         var muglPromise = $.ajax({
             "url"      : muglurl,
@@ -65,6 +66,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
 
         muglPromise.done(function (data) {
             var multigraph = window.multigraph.core.Multigraph.parseXML( window.multigraph.parser.jquery.stringToJQueryXMLObj(data) );
+            multigraph.normalize();
             multigraph.div(div);
             multigraph.init();
             deferred.resolve(multigraph);

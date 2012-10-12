@@ -48,6 +48,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
             ns.mixin.apply(window.multigraph.core);
             window.multigraph.events.jquery.mouse.mixin.apply(window.multigraph, errorHandler);
+            window.multigraph.normalizer.mixin.apply(window.multigraph.core);
 
             muglPromise = $.ajax({
                 "url"      : muglurl,
@@ -63,6 +64,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         muglPromise.done(function (data) {
             try {
                 var multigraph = window.multigraph.core.Multigraph.parseXML( window.multigraph.parser.jquery.stringToJQueryXMLObj(data) );
+                multigraph.normalize();
                 multigraph.div(div);
                 multigraph.init();
                 multigraph.registerMouseEvents(multigraph.canvas());
