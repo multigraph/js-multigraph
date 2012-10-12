@@ -1,0 +1,3 @@
+[submodule "lib/jermaine"]
+	path = lib/jermaine
+	url = https://github.com/semmypurewal/jermaine.git
