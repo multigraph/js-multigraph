@@ -12,7 +12,7 @@ describe("Data Variables parsing", function () {
     beforeEach(function () {
         window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
         $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
-        variables = Variables.parseXML($xml);
+        variables = Variables.parseXML($xml, {});
     });
 
     it("should be able to parse a variables from XML", function () {
@@ -30,7 +30,7 @@ describe("Data Variables parsing", function () {
     it("should be able to parse a variables from XML, serialize it and get the same XML as the original", function () {
         var xmlString2 = '<variables missingop="gt"/>';
         expect(variables.serialize()).toBe(xmlString);
-        variables = Variables.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString2));
+        variables = Variables.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString2), {});
 //        expect(variables.serialize() === xmlString2).toBe(true);
     });
 
@@ -40,7 +40,7 @@ describe("Data Variables parsing", function () {
             xmlString = '<variables missingop="gt"><variable id="x" column="7" type="number" missingvalue="1990" missingop="eq"/><variable id="y" column="2" type="number" missingvalue="19" missingop="gt"/><variable id="y1" column="2" type="number"/></variables>';
             window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
             $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
-            variables = Variables.parseXML($xml);
+            variables = Variables.parseXML($xml, {});
         });
 
         it("should be able to parse a variables with children from XML", function () {

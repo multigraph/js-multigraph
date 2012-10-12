@@ -40,6 +40,10 @@
     <filelist dir="src/graphics/logger" files="logger_mixin.js"/>
     <fileset dir="src/graphics/logger" includes="**/*.js" excludes="logger_mixin.js log.js" />
   </path>
+  <path id="path.normalizer-js">
+    <filelist dir="src/normalizer" files="normalizer_mixin.js"/>
+    <fileset dir="src/normalizer" includes="**/*.js" excludes="normalizer_mixin.js" />
+  </path>
   <path id="path.spec-js">
     <fileset dir="spec" includes="**/*.js"/>
   </path>
@@ -93,6 +97,7 @@
     <pathconvert property="scripttags.jasmine-src" pathsep="${line.separator}">
       <path refid="path.multigraph-core-js"/>
       <path refid="path.parser-jquery-js"/>
+      <path refid="path.normalizer-js"/>
       <path refid="path.events-jquery-mouse-js"/>
       <path refid="path.graphics-raphael-js"/>
       <path refid="path.graphics-canvas-js"/>
@@ -126,6 +131,7 @@
     <pathconvert property="scripttags.mg-jq" pathsep="${line.separator}">
       <path refid="path.multigraph-core-js"/>
       <path refid="path.parser-jquery-js"/>
+      <path refid="path.normalizer-js"/>
       <mapper type="regexp" from="^${basedir}/(.*)$" to='&lt;script type="text/javascript" src="../../../\1"&gt;&lt;/script&gt;'/>
     </pathconvert>
     <pathconvert property="scripttags.raphael" pathsep="${line.separator}">
@@ -149,6 +155,7 @@
     <pathconvert property="scripttags.canvas" pathsep="${line.separator}">
       <path refid="path.graphics-canvas-js"/>
       <path refid="path.events-jquery-mouse-js"/>
+      <path refid="path.normalizer-js"/>
       <mapper type="regexp" from="^${basedir}/(.*)$" to='&lt;script type="text/javascript" src="../../../\1"&gt;&lt;/script&gt;'/>
     </pathconvert>
     <replaceregexp flags="s">
@@ -181,6 +188,7 @@
       <filelist dir="${lib.dir}" files="${lib.dependencies}" />
       <path refid="path.multigraph-core-js"/>
       <path refid="path.parser-jquery-js"/>
+      <path refid="path.normalizer-js"/>
       <path refid="path.events-jquery-mouse-js"/>
       <path refid="path.graphics-raphael-js"/>
       <path refid="path.graphics-canvas-js"/>
