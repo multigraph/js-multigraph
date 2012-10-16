@@ -11,6 +11,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
         this.isA(ns.Data);
         this.hasAn("array");
+        this.hasA("stringArray");
         this.isBuiltWith("columns", "array", function () {
             this.initializeColumns();
         });
@@ -179,6 +180,54 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                         //console.log('bad line: ' + lines[i]);
                     }
                 }
+            }
+            return dataValues;
+        };
+
+        ArrayData.textToStringArray = function (text) {
+            var stringValues = [],
+                lines = text.split("\n"),
+                stringValuesThisRow,
+                numColumns,
+                i;
+
+            for (i = 0; i < lines.length; ++i) {
+                if (/\d/.test(lines[i])) { // skip line unless it contains a digit
+                    numColumns = lines[i].split(/\s*,\s*/).length;
+                    break;
+                }
+            }
+
+            for (i = 0; i < lines.length; ++i) {
+                if (/\d/.test(lines[i])) { // skip line unless it contains a digit
+                    stringValuesThisRow = lines[i].split(/\s*,\s*/);
+                    if (stringValuesThisRow.length === numColumns) {
+                        stringValues.push( stringValuesThisRow );
+                        } else {
+                            throw new Error("Data Parsing: The line '" + lines[i] + "' does not contain exactly " + numColumns + " columns");
+                    }
+                }
+            }
+            return stringValues;
+        };
+
+        /**
+           IMPORTANT NOTE: dataVariableArray is a plain javascript array of DataVariable instances; it is NOT a jermaine attr_list.
+        */
+        ArrayData.stringArrayToDataValuesArray = function (dataVariableArray, stringArray) {
+            //IMPORTANT NOTE: dataVariableArray is a plain javascript array of DataVariable instances; it
+            //is NOT a jermaine attr_list.
+            var dataValues = [],
+                dataValuesThisRow,
+                i,
+                j;
+
+            for (i = 0; i < stringArray.length; ++i) {
+                dataValuesThisRow = [];
+                for (j = 0; j < stringArray[i].length; ++j) {
+                    dataValuesThisRow.push(ns.DataValue.parse(dataVariableArray[j].type(), stringArray[i][j]));
+                }
+                dataValues.push( dataValuesThisRow );
             }
             return dataValues;
         };
