@@ -295,6 +295,16 @@ describe("Logger Graphics Tests", function () {
             expect(loggerOutput.contents).toEqual(savedOutput.contents);
         });
     });
+    xit("minimal_graph.xml should match with a width of '800' and a height of '500'", function () {
+        var loggerOutput = getLoggerOutput("./mugl/minimal_graph.xml", 800, 500);
+        var savedOutput = getFileContents("./graphics/logger/fixtures/minimal_graph-800x500.log");
+        waitsFor(function () {
+            return savedOutput.haveData && loggerOutput.haveData;
+        });
+        runs(function () {
+            expect(loggerOutput.contents).toEqual(savedOutput.contents);
+        });
+    });
     it("mymugl.xml should match with a width of '800' and a height of '500'", function () {
         var loggerOutput = getLoggerOutput("./mugl/mymugl.xml", 800, 500);
         var savedOutput = getFileContents("./graphics/logger/fixtures/mymugl-800x500.log");
