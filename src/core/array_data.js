@@ -12,7 +12,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.isA(ns.Data);
         this.hasAn("array");
         this.hasA("stringArray");
-        this.isBuiltWith("columns", "array", function () {
+        this.isBuiltWith("columns", "stringArray", function () {
             this.initializeColumns();
         });
 

@@ -246,8 +246,8 @@ describe("Graph parsing", function () {
         +    '</plot>'
         +    '<data>'
         +         '<variables>'
-        +           '<variable id="x" column="0" type="number"/>'
-        +           '<variable id="y" column="1" type="number"/>'
+        +           '<variable id="x" column="0" type="number" missingop="eq"/>'
+        +           '<variable id="y" column="1" type="number" missingop="eq"/>'
         +         '</variables>'
         +         '<values>'
         +             '3,4\n'
@@ -440,8 +440,8 @@ describe("Graph parsing", function () {
         +     '</verticalaxis>'
         +     '<data>'
         +         '<variables>'
-        +           '<variable id="x" column="0" type="number"/>'
-        +           '<variable id="y" column="1" type="number"/>'
+        +           '<variable id="x" column="0" type="number" missingop="eq"/>'
+        +           '<variable id="y" column="1" type="number" missingop="eq"/>'
         +         '</variables>'
         +         '<values>'
         +             '3,4\n'
@@ -451,10 +451,12 @@ describe("Graph parsing", function () {
         + '</graph>',
     $xml;
 
-    beforeEach(function () {
+    beforeEach(function () {        
         window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
+        window.multigraph.normalizer.mixin.apply(window.multigraph.core);
         $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
         g = Graph.parseXML($xml);
+        
     });
 
     it("should be able to parse a graph from XML", function () {
@@ -463,9 +465,16 @@ describe("Graph parsing", function () {
     });
 
     it("should be able to parse a graph from XML, then serialize it, and get the same XML as the original", function () {
+        var i;
+        for (i = 0; i < g.data().size(); i++) {
+            g.data().at(i).normalize();
+        } 
         expect(g.serialize()).toBe(xmlString);
         $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString2);
         g = Graph.parseXML($xml);
+        for (i = 0; i < g.data().size(); i++) {
+            g.data().at(i).normalize();
+        } 
         expect(g.serialize()).toBe(xmlString2);
     });
 

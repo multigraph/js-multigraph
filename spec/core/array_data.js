@@ -43,6 +43,7 @@ describe("ArrayData", function () {
         }
 
         testArrayData = new ArrayData(dataVariables, numberValueData);
+        testArrayData.array(numberValueData);
     });
 
     describe("constructor", function () {
@@ -261,6 +262,7 @@ describe("ArrayData", function () {
             }
             
             testArrayData = new ArrayData(dataVariables, numberValueData);
+            testArrayData.array(numberValueData);
             testArrayData.onReady(callback);            
         });
 
