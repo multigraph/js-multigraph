@@ -35,21 +35,26 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             context.restore();
         };
 
-        ns.Labeler.respondsTo("measureStringWidth", function (graphicsContext, string) {
-            return (new ns.Text(string)).measureStringWidth(graphicsContext);
-//            return measureTextWidth(graphicsContext, string);
+        ns.Labeler.respondsTo("measureStringWidth", function (context, string) {
+            return (new ns.Text(string)).initializeGeometry({
+                    "context" : context,
+                    "angle"   : this.angle()
+                }).width();
         });
 
-        ns.Labeler.respondsTo("renderLabel", function (graphicsContext, value) {
+        ns.Labeler.respondsTo("renderLabel", function (context, value) {
             var formattedString = new ns.Text(this.formatter().format(value)),
                 a = this.axis().dataValueToAxisValue(value);
 
-            formattedString.initializeGeometry(graphicsContext);
+            formattedString.initializeGeometry({
+                    "context" : context,
+                    "angle"   : this.angle()
+                });
 
             if (this.axis().orientation() === ns.Axis.HORIZONTAL) {
-                drawText(formattedString, graphicsContext, new window.multigraph.math.Point(a, this.axis().perpOffset()), this.anchor(), this.position(), this.angle());
+                drawText(formattedString, context, new window.multigraph.math.Point(a, this.axis().perpOffset()), this.anchor(), this.position(), this.angle());
             } else {
-                drawText(formattedString, graphicsContext, new window.multigraph.math.Point(this.axis().perpOffset(), a), this.anchor(), this.position(), this.angle());
+                drawText(formattedString, context, new window.multigraph.math.Point(this.axis().perpOffset(), a), this.anchor(), this.position(), this.angle());
             }
         });
 

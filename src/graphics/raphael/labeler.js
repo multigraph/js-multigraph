@@ -34,16 +34,21 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
         };
 
-        ns.Labeler.respondsTo("measureStringWidth", function (graphicsContext, string) {
-            return (new ns.Text(string)).measureStringWidth(graphicsContext);
-//            return measureTextWidth(graphicsContext, string);
+        ns.Labeler.respondsTo("measureStringWidth", function (elem, string) {
+            return (new ns.Text(string)).initializeGeometry({
+                    "elem"  : elem,
+                    "angle" : this.angle()
+                }).width();
         });
 
         ns.Labeler.respondsTo("renderLabel", function (graphicsContext, value) {
             var formattedString = new ns.Text(this.formatter().format(value)),
                 a = this.axis().dataValueToAxisValue(value);
 
-            formattedString.initializeGeometry(graphicsContext.textElem);
+            formattedString.initializeGeometry({
+                    "elem"  : graphicsContext.textElem,
+                    "angle" : this.angle()
+                });
 
             if (this.axis().orientation() === ns.Axis.HORIZONTAL) {
                 drawText(formattedString, graphicsContext, new window.multigraph.math.Point(a, this.axis().perpOffset()), this.anchor(), this.position(), this.angle());
