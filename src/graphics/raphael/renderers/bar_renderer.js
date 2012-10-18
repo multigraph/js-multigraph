@@ -184,6 +184,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             var settings          = this.settings(),
                 rendererFillColor = this.getOptionValue("fillcolor", 0),
                 rendererOpacity   = this.getOptionValue("fillopacity", 0),
+                path = "",
                 iconAttrs,
                 barwidth;
 
@@ -218,21 +219,15 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
             // If the icon is large enough draw extra bars
             if (icon.width() > 20 && icon.height() > 20) {
-                graphicsContext.set.push(
-                    graphicsContext.paper.rect((icon.width() / 4) - (barwidth / 2), 0, barwidth, icon.height() / 2)
-                        .attr(iconAttrs)
-                        .transform("t" + x + "," + y),
-
-                    graphicsContext.paper.rect(icon.width() - (icon.width() / 4) - (barwidth / 2), 0, barwidth, icon.height() / 3)
-                        .attr(iconAttrs)
-                        .transform("t" + x + "," + y)
-                );
+                path += this.generateBar(x + (icon.width() / 4) - (barwidth / 2), y, barwidth, icon.height() / 2);
+                path += this.generateBar(x + icon.width() - (icon.width() / 4) - (barwidth / 2), y, barwidth, icon.height() / 3);
             }
 
+            path += this.generateBar(x + (icon.width() / 2) - (barwidth / 2), y, barwidth, icon.height() - (icon.height() / 4));
+
             graphicsContext.set.push(
-                graphicsContext.paper.rect((icon.width() / 2) - (barwidth / 2), 0, barwidth, icon.height() - (icon.height() / 4))
+                graphicsContext.paper.path(path)
                     .attr(iconAttrs)
-                    .transform("t" + x + "," + y)
             );
 
         });
