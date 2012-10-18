@@ -39,7 +39,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
         });
 
-        ns.Axis.respondsTo("render", function (graph, paper, set, baseTransformString) {
+        ns.Axis.respondsTo("render", function (graph, paper, set) {
             var text = paper.text(-8000, -8000, "foo"),
                 tickmarkPath = "";
 
@@ -72,9 +72,9 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                             tickmarkPath += "M" + (this.perpOffset() + this.tickmin()) + "," + a;
                             tickmarkPath += "L" + (this.perpOffset() + this.tickmax()) + "," + a;
                         }
-                        this.currentLabeler().renderLabel({"paper": paper,
-                                                           "textElem": text,
-                                                           "transformString": baseTransformString
+                        this.currentLabeler().renderLabel({ "paper"    : paper,
+                                                            "set"      : set,
+                                                            "textElem" : text
                                                           }, v);
                     }
                     set.push(

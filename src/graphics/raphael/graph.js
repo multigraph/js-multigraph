@@ -14,6 +14,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 backgroundSet = paper.set(),
                 axesSet = paper.set(),
                 plotsSet = paper.set(),
+                legendSet = paper.set(),
                 i;
 
             this.x0( this.window().margin().left() + windowBorder + this.window().padding().left() + this.plotarea().margin().left() + this.plotarea().border() );
@@ -31,7 +32,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             }
 
             for (i = 0; i < this.axes().size(); ++i) {
-                this.axes().at(i).render(this, paper, axesSet, this.transformString());
+                this.axes().at(i).render(this, paper, axesSet);
             }
 
             for (i = 0; i < this.plots().size(); ++i) {
@@ -39,23 +40,25 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                                                  "set": plotsSet});
             }
 
-            this.legend().render({"paper": paper,
-                                  "transformString": this.transformString()});
+            this.legend().render({ "paper" : paper,
+                                   "set"   : legendSet});
 
-            this.transformSets(height, this.x0(), this.y0(), backgroundSet, axesSet, plotsSet);
+            this.transformSets(height, this.x0(), this.y0(), backgroundSet, axesSet, plotsSet, legendSet);
             this.fixLayers(backgroundSet, axesSet, plotsSet);
 
         });
 
-        Graph.respondsTo("transformSets", function (height, x0, y0, backgroundSet, axesSet, plotsSet) {
+        Graph.respondsTo("transformSets", function (height, x0, y0, backgroundSet, axesSet, plotsSet, legendSet) {
             var i;
             for (i = 0; i < backgroundSet.length; i++) {
                 if (backgroundSet[i].type !== "image") {
                     backgroundSet[i].transform("S 1, -1, 0, " + (height/2));
                 }
             }
-            axesSet.transform(this.transformString());
+            axesSet.transform(this.transformString() + "...");
             plotsSet.transform(this.transformString());
+            legendSet.transform(this.transformString() + "...");
+
             plotsSet.attr("clip-rect", "1,1," + (this.plotBox().width()-2) + "," + (this.plotBox().height()-2));
         });
 

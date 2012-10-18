@@ -163,13 +163,13 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 backgroundColor = "rgba(255, 255, 255, " + opacity + ")";
             }
 
-            graphicsContext.paper.rect(x, y, icon.width(), icon.height())
-                .attr({
-                    "stroke" : "rgba(255, 255, 255, " + opacity + ")",
-                    "fill"   : backgroundColor
-                })
-                .transform(graphicsContext.transformString);
-
+            graphicsContext.set.push(
+                graphicsContext.paper.rect(x, y, icon.width(), icon.height())
+                    .attr({
+                        "stroke" : "rgba(255, 255, 255, " + opacity + ")",
+                        "fill"   : backgroundColor
+                    })
+            );
             
             path += "M" + 0 + "," + (2*icon.height()/8);
             path += "L" + 0 + "," + (6*icon.height()/8);
@@ -179,13 +179,15 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
             linewidth = (state.line2width >= 0) ? state.line2width : state.linewidth;
             linecolor = (state.line2color !== null) ? state.line2color : state.linecolor;
-            graphicsContext.paper.path(path)
-                .attr({
-                    "stroke-width" : linewidth,
-                    "stroke"       : linecolor.toRGBA(opacity),
-                    "fill"         : state.fillcolor.toRGBA(opacity * state.fillopacity)
-                })
-                .transform(graphicsContext.transformString + "t" + x + "," + y);
+            graphicsContext.set.push(
+                graphicsContext.paper.path(path)
+                    .attr({
+                        "stroke-width" : linewidth,
+                        "stroke"       : linecolor.toRGBA(opacity),
+                        "fill"         : state.fillcolor.toRGBA(opacity * state.fillopacity)
+                    })
+                    .transform("t" + x + "," + y)
+            );
             
         });
 

@@ -20,17 +20,16 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 w = text.width(),
                 ax = 0.5 * w * (anchor.x() + 1),
                 ay = 0.5 * h * (anchor.y() + 1),
-
                 dx = base.x() + (0.5 * w) + position.x() - ax,
                 dy = base.y() - (0.5 * h) - position.y() + ay,
                 transformString = "";
 
-            
-            transformString += graphicsContext.transformString;
             transformString += "s1,-1," + dx + "," + base.y();
             transformString += "r" + (-angle) + "," + (dx - w/2) + "," + dy;
 
-            graphicsContext.paper.text(dx, dy, text.string()).transform(transformString);
+            graphicsContext.set.push(
+                graphicsContext.paper.text(dx, dy, text.string()).transform(transformString)
+            );
 
         };
 

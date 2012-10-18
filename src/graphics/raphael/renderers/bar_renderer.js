@@ -188,12 +188,13 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 barwidth;
 
             // Draw icon background (with opacity)
-            graphicsContext.paper.rect(x, y, icon.width(), icon.height())
-                .attr({                    
-                    "stroke" : "rgba(255, 255, 255, " + opacity + ")",
-                    "fill"   : "rgba(255, 255, 255, " + opacity + ")"
-                })
-                .transform(graphicsContext.transformString);
+            graphicsContext.set.push(
+                graphicsContext.paper.rect(x, y, icon.width(), icon.height())
+                    .attr({                    
+                        "stroke" : "rgba(255, 255, 255, " + opacity + ")",
+                        "fill"   : "rgba(255, 255, 255, " + opacity + ")"
+                    })
+            );
 
             iconAttrs = {
                 "stroke-width" : 1,
@@ -217,19 +218,22 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
             // If the icon is large enough draw extra bars
             if (icon.width() > 20 && icon.height() > 20) {
-                graphicsContext.paper.rect((icon.width() / 4) - (barwidth / 2), 0, barwidth, icon.height() / 2)
-                    .attr(iconAttrs)
-                    .transform(graphicsContext.transformString + "t" + x + "," + y);
+                graphicsContext.set.push(
+                    graphicsContext.paper.rect((icon.width() / 4) - (barwidth / 2), 0, barwidth, icon.height() / 2)
+                        .attr(iconAttrs)
+                        .transform("t" + x + "," + y),
 
-                graphicsContext.paper.rect(icon.width() - (icon.width() / 4) - (barwidth / 2), 0, barwidth, icon.height() / 3)
-                    .attr(iconAttrs)
-                    .transform(graphicsContext.transformString + "t" + x + "," + y);
+                    graphicsContext.paper.rect(icon.width() - (icon.width() / 4) - (barwidth / 2), 0, barwidth, icon.height() / 3)
+                        .attr(iconAttrs)
+                        .transform("t" + x + "," + y)
+                );
             }
 
-            graphicsContext.paper.rect((icon.width() / 2) - (barwidth / 2), 0, barwidth, icon.height() - (icon.height() / 4))
-                .attr(iconAttrs)
-                .transform(graphicsContext.transformString + "t" + x + "," + y);
-
+            graphicsContext.set.push(
+                graphicsContext.paper.rect((icon.width() / 2) - (barwidth / 2), 0, barwidth, icon.height() - (icon.height() / 4))
+                    .attr(iconAttrs)
+                    .transform("t" + x + "," + y)
+            );
 
         });
 
