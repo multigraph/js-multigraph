@@ -44,6 +44,14 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
                 }
                 mouseLast = eventLoc;
             });
+
+            $target.mousewheel(function(event, delta) {
+                var eventLoc = eventLocationToGraphCoords(event);
+                if (multigraph.graphs().size() > 0) {
+                    multigraph.graphs().at(0).doWheelZoom(multigraph,eventLoc.x(),eventLoc.y(),delta);
+                }
+            });
+
             $target.mouseenter(function (event) {
                 mouseLast = eventLocationToGraphCoords(event);
                 mouseIsDown = false;

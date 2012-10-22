@@ -11,20 +11,27 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
             return a instanceof Axis;
         });
 
-        Graph.respondsTo("doDragReset", function () {
+        Graph.respondsTo("pauseAllData", function () {
             var i;
-            this.dragStarted(false);
             // pause all this graph's data sources:
             for (i=0; i<this.data().size(); ++i) {
                 this.data().at(i).pause();
             }
         });
-        Graph.respondsTo("doDragDone", function () {
+        Graph.respondsTo("doDragReset", function () {
             var i;
-            // unpause all this graph's data sources:
+            this.dragStarted(false);
+            this.pauseAllData();
+        });
+        Graph.respondsTo("resumeAllData", function () {
+            var i;
+            // resume all this graph's data sources:
             for (i=0; i<this.data().size(); ++i) {
                 this.data().at(i).resume();
             }
+        });
+        Graph.respondsTo("doDragDone", function () {
+            this.resumeAllData();
         });
 
         Graph.respondsTo("doDrag", function (multigraph, bx, by, dx, dy, shiftKey) {
@@ -63,6 +70,34 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
 
                 // draw everything
                 multigraph.redraw();
+            } catch (e) {
+                errorHandler(e);
+            }
+        });
+
+        Graph.hasA("mouseWheelTimer").which.defaultsTo(null);
+
+        Graph.respondsTo("doWheelZoom", function (multigraph, x, y, delta) {
+            var i = 0,
+                that = this;
+            try {
+                this.pauseAllData();
+                var axis = this.findNearestAxis(x, y);
+                if (axis.orientation() === Axis.HORIZONTAL) {
+                    axis.doZoom(x, 4*delta);
+                } else {
+                    axis.doZoom(y, 4*delta);
+                }
+                multigraph.redraw();
+
+                // resume data fetching after .5 seconds of no mouse wheel motion:
+                if (this.mouseWheelTimer() !== null) {
+                    clearTimeout(this.mouseWheelTimer());
+                    this.mouseWheelTimer(null);
+                }
+                this.mouseWheelTimer(setTimeout(function() {
+                    that.resumeAllData();
+                }, 500)); 
             } catch (e) {
                 errorHandler(e);
             }
@@ -116,7 +151,9 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
                 d;
             for (i = 0; i < naxes; ++i) {
                 axis = axes.at(i);
-                if (axis.orientation() === orientation) {
+                if ((orientation === undefined) ||
+                    (orientation === null) ||
+                    (axis.orientation() === orientation)) {
                     d = axisDistanceToPoint(axis, x, y);
                     if (foundAxis===null || d < mindist) {
                         foundAxis = axis;
