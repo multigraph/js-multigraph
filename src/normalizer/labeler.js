@@ -5,7 +5,7 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
 
         ns.Labeler.respondsTo("normalize", function () {
             var i,
-                defaultNumberFormat = "%1d",
+                defaultNumberFormat = "%f",
                 defaultDatetimeFormat = "%Y-%M-%D %H:%i",
                 labelerFormat,
                 type = this.axis().type();
