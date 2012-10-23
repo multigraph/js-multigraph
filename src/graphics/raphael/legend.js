@@ -28,7 +28,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
         ns.Legend.respondsTo("renderLabel", function (label, graphicsContext, x, y) {
             graphicsContext.set.push(
-                graphicsContext.paper.text(x, y, label)
+                graphicsContext.paper.text(x, y, label.string())
                     .attr({
                         "fill" : "rgba(0, 0, 0, " + this.opacity() + ")",
                         "text-anchor" : "start"
