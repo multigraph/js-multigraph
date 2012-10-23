@@ -11,6 +11,10 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
             this.hasA("border").which.isA("integer").and.defaultsTo(defaultValues.plotarea.border);
 
+            this.hasA("color").which.validatesWith(function (color) {
+                return color === null || color instanceof window.multigraph.math.RGBColor;
+            }).defaultsTo(null);
+
             this.hasA("bordercolor").which.validatesWith(function (bordercolor) {
                 return bordercolor instanceof window.multigraph.math.RGBColor;
             }).defaultsTo(window.multigraph.math.RGBColor.parse(defaultValues.plotarea.bordercolor));

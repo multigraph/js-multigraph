@@ -21,6 +21,14 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             this.y0( this.window().margin().bottom() + this.window().border() + this.window().padding().bottom() + this.plotarea().margin().bottom() );
 
             context.transform(1,0,0,1,this.x0(),this.y0());
+
+            if (this.plotarea().color() !== null) {
+                context.save();
+                context.fillStyle = this.plotarea().color().getHexString("#");
+                context.fillRect(0,0,this.plotBox().width(), this.plotBox().height());
+                context.restore();
+            }
+
             for (i=0; i<this.axes().size(); ++i) {
                 this.axes().at(i).renderGrid(this, context);
             }
@@ -29,6 +37,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             context.save();
             context.rect(0,0,this.plotBox().width(), this.plotBox().height());
             context.clip();
+
 
             for (i=0; i<this.plots().size(); ++i) {
                 this.plots().at(i).render(this, context);

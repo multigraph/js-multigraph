@@ -22,6 +22,9 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 if (xml.attr("border") !== undefined) {
                     plotarea.border(parseInt(xml.attr("border"), 10));
                 }
+                if (xml.attr("color") !== undefined) {
+                    plotarea.color(ns.math.RGBColor.parse(xml.attr("color")));
+                }
                 plotarea.bordercolor(ns.math.RGBColor.parse(xml.attr("bordercolor")));
             }
             return plotarea;
@@ -38,6 +41,10 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
 
             if (this.bordercolor() !== undefined) {
                 attributeStrings.push('bordercolor="' + this.bordercolor().getHexString() + '"');
+            }
+
+            if (this.color() !== undefined && this.color() !== null) {
+                attributeStrings.push('color="' + this.color().getHexString() + '"');
             }
 
             attributeStrings = window.multigraph.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);

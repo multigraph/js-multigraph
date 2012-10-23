@@ -315,6 +315,16 @@ describe("Logger Graphics Tests", function () {
             expect(loggerOutput.contents).toEqual(savedOutput.contents);
         });
     });
+    xit("plotarea-background-color.xml should match with a width of '800' and a height of '500'", function () {
+        var loggerOutput = getLoggerOutput("./mugl/plotarea-background-color.xml", 800, 500);
+        var savedOutput = getFileContents("./graphics/logger/fixtures/plotarea-background-color-800x500.log");
+        waitsFor(function () {
+            return savedOutput.haveData && loggerOutput.haveData;
+        });
+        runs(function () {
+            expect(loggerOutput.contents).toEqual(savedOutput.contents);
+        });
+    });
     it("pointline_legend.xml should match with a width of '800' and a height of '500'", function () {
         var loggerOutput = getLoggerOutput("./mugl/pointline_legend.xml", 800, 500);
         var savedOutput = getFileContents("./graphics/logger/fixtures/pointline_legend-800x500.log");
