@@ -66,6 +66,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                 var multigraph = window.multigraph.core.Multigraph.parseXML( window.multigraph.parser.jquery.stringToJQueryXMLObj(data) );
                 multigraph.normalize();
                 multigraph.div(div);
+                window.multigraph.jQuery(div).css('cursor' , 'pointer');
                 multigraph.init();
                 multigraph.registerMouseEvents(multigraph.canvas());
                 multigraph.registerCommonDataCallback(function () {
