@@ -23,7 +23,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             }
 
             elem.attr("text", this.string());
-            return elem.getBBox().height;
+            return elem.getBBox().width;
         });
 
         Text.respondsTo("measureStringHeight", function (elem) {
