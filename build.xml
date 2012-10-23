@@ -131,12 +131,12 @@
     <pathconvert property="scripttags.mg-jq" pathsep="${line.separator}">
       <path refid="path.multigraph-core-js"/>
       <path refid="path.parser-jquery-js"/>
-      <path refid="path.normalizer-js"/>
       <mapper type="regexp" from="^${basedir}/(.*)$" to='&lt;script type="text/javascript" src="../../../\1"&gt;&lt;/script&gt;'/>
     </pathconvert>
     <pathconvert property="scripttags.raphael" pathsep="${line.separator}">
       <path refid="path.graphics-raphael-js"/>
       <path refid="path.events-jquery-mouse-js"/>
+      <path refid="path.normalizer-js"/>
       <mapper type="regexp" from="^${basedir}/(.*)$" to='&lt;script type="text/javascript" src="../../../\1"&gt;&lt;/script&gt;'/>
     </pathconvert>
     <replaceregexp flags="s">
