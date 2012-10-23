@@ -42,7 +42,9 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
 
             var axis = new ns.core.Axis(orientation),
                 i,
-                j;
+                j,
+                value,
+                positionbase;
 
             if (xml) {
 
@@ -51,8 +53,35 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     axis.type(ns.core.DataValue.parseType(xml.attr("type")));
                 }
                 axis.length(window.multigraph.math.Displacement.parse(xml.attr("length")));
+                if (xml.attr("positionbase")) {
+                    console.log('Warning: use of deprecated axis attribute "positionbase"');
+                    positionbase = xml.attr("positionbase");
+                    if ((positionbase === "left") || (positionbase === "bottom")) {
+                        axis.base(window.multigraph.math.Point.parse("-1 -1"));
+                    } else if (positionbase === "right") {
+                        axis.base(window.multigraph.math.Point.parse("1 -1"));
+                    } else if (positionbase === "top") {
+                        axis.base(window.multigraph.math.Point.parse("-1 1"));
+                    }
+                }
                 if (xml.attr("position")) {
-                    axis.position(window.multigraph.math.Point.parse(xml.attr("position")));
+                    try {
+                        axis.position(window.multigraph.math.Point.parse(xml.attr("position")));
+                    } catch (e) {
+                        // if position did not parse as a Point, and
+                        // if we have a positionbase, try interpreting
+                        // position as a number and constructing the
+                        // Point using positionbase
+                        value = parseInt(xml.attr("position"),10);
+                        if (value === NaN) {
+                            throw e;
+                        }
+                        if (orientation === ns.core.Axis.HORIZONTAL) {
+                            axis.position(window.multigraph.math.Point.parse('0 ' + value));
+                        } else {
+                            axis.position(window.multigraph.math.Point.parse(value + ' 0'));
+                        }
+                    }
                 }
                 if (xml.attr("pregap") !== undefined) {
                     axis.pregap(parseFloat(xml.attr("pregap")));
