@@ -73,7 +73,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                         // position as a number and constructing the
                         // Point using positionbase
                         value = parseInt(xml.attr("position"),10);
-                        if (value === NaN) {
+                        if (value !== value) { // test for isNaN
                             throw e;
                         }
                         if (orientation === ns.core.Axis.HORIZONTAL) {

@@ -39,7 +39,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                     return false;
                 };
                 return;
-            };
+            }
 
             if (!this.plot().data()) {
                 // this should eventually throw an error
