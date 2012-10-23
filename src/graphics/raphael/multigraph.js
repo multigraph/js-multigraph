@@ -38,8 +38,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
         ns.Multigraph.respondsTo("render", function () {
             var i;
-            var text = this.paper().text(-8000, -8000, "foo");
             this.paper().clear();
+            var text = this.paper().text(-8000, -8000, "foo");
             this.initializeGeometry(this.width(), this.height(), { "elem" : text });
             for (i=0; i<this.graphs().size(); ++i) {
                 this.graphs().at(i).render(this.paper(), this.width(), this.height());

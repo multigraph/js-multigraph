@@ -30,7 +30,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             graphicsContext.set.push(
                 graphicsContext.paper.text(x, y, label)
                     .attr({
-                        "fill" : "rgba(0, 0, 0, " + this.opacity() + ")"
+                        "fill" : "rgba(0, 0, 0, " + this.opacity() + ")",
+                        "text-anchor" : "start"
                     })
                     .transform("t0," + (this.maxLabelHeight()/2) + "s1,-1")
             );
