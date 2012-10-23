@@ -50,6 +50,7 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
                 if (multigraph.graphs().size() > 0) {
                     multigraph.graphs().at(0).doWheelZoom(multigraph,eventLoc.x(),eventLoc.y(),delta);
                 }
+                event.preventDefault();
             });
 
             $target.mouseenter(function (event) {
