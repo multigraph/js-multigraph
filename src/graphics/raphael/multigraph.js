@@ -94,6 +94,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         ns.mixin.apply(window.multigraph.core);
         window.multigraph.normalizer.mixin.apply(window.multigraph.core);
         window.multigraph.events.jquery.mouse.mixin.apply(window.multigraph);
+        window.multigraph.events.jquery.touch.mixin.apply(window.multigraph);
 
         var muglPromise = window.multigraph.jQuery.ajax({
             "url"      : muglurl,
