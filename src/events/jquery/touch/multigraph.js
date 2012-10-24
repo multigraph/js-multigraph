@@ -184,6 +184,11 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
                 touchStarted = true;
             };
 
+            $target.on("touchstart", handleTouchStart);
+            $target.on("touchmove", handleTouchMove);
+            $target.on("touchend", handleTouchEnd);
+            $target.on("touchleave", handleTouchLeave);
+
         });
 
     });
