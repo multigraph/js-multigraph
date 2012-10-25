@@ -187,6 +187,7 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
             };
 
             var handlePinchZoom = function (e) {
+
                 var a = touchLocationToGraphCoords(e.touches[0]);
                 var b = touchLocationToGraphCoords(e.touches[1]);
                 //                var previousa = touchLocationToGraphCoords(previousTouches[0]);
@@ -195,8 +196,13 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
                 var basey = (a.y() + b.y()) / 2;
                 //                var dx = (a.x() - previousa.x()) + (b.x() - previousb.x());
                 //                var dy = (a.y() - previousa.y()) + (b.y() - previousb.y());
-                var dx = (a.x() - previoustoucha.x()) + (b.x() - previoustouchb.x());
-                var dy = (a.y() - previoustoucha.y()) + (b.y() - previoustouchb.y());
+
+                //                var dx = (a.x() - previoustoucha.x()) + (b.x() - previoustouchb.x());
+                //                var dy = (a.y() - previoustoucha.y()) + (b.y() - previoustouchb.y());
+
+                var dx = calculateAbsoluteDistance(a.x(), b.x()) - calculateAbsoluteDistance(previoustoucha.x(), previoustouchb.x());
+                var dy = calculateAbsoluteDistance(a.y(), b.y()) - calculateAbsoluteDistance(previoustoucha.y(), previoustouchb.y());
+
                 if (multigraph.graphs().size() > 0) {
                     if (!touchStarted ) {
                         multigraph.graphs().at(0).doDragReset();
@@ -204,9 +210,19 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
                     multigraph.graphs().at(0).doDrag(multigraph, basex, basey, dx, dy, true);
                 }
                 touchStarted = true;
+
+                // two finger scroll
+                var cx = ((a.x() - previoustoucha.x()) + (b.x() - previoustouchb.x())) / 2;
+                var cy = ((a.y() - previoustoucha.y()) + (b.y() - previoustouchb.y())) / 2;
+                multigraph.graphs().at(0).doDrag(multigraph, basex, basey, cx, cy, false);
+
                 previoustoucha = a;
                 previoustouchb = b;
 
+            };
+
+            var calculateAbsoluteDistance = function (a, b) {
+                return Math.abs(a - b);
             };
 
             $target.on("touchstart", handleTouchStart);
