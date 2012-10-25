@@ -70,6 +70,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                 window.multigraph.jQuery(div).css('cursor' , 'pointer');
                 multigraph.init();
                 multigraph.registerMouseEvents(multigraph.canvas());
+                multigraph.registerTouchEvents(multigraph.canvas());
                 multigraph.registerCommonDataCallback(function () {
                     multigraph.redraw();
                 });

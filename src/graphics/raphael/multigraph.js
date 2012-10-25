@@ -27,6 +27,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         ns.Multigraph.respondsTo("init", function () {
             this.$div(window.multigraph.jQuery(this.div()));
             this.$div().on("mousedown", { "mg": this }, this.setupEvents);
+            this.registerTouchEvents(this.$div());
             this.width(this.$div().width());
             this.height(this.$div().height());
             if (this.paper()) {

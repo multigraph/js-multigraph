@@ -19,6 +19,11 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
             var base;
             var multigraph = this;
 
+            //            var deltas = [];
+
+            var previoustoucha;
+            var previoustouchb;
+
             var $target = window.multigraph.jQuery(target);
 
             var touchLocationToGraphCoords = function (touch) {
@@ -33,6 +38,7 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
                 if (e.touches.length === 1) {
                     base = touchLocationToGraphCoords(e.touches[0]);
                 }
+                previoustoucha = touchLocationToGraphCoords(e.touches[0]);
 
                 // double tap
                 if (e.touches.length === 1) {
@@ -64,6 +70,7 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
                 // pinch zoom
                 if (e.touches.length === 2) {
                     pinchZoomStarted = true;
+                    previoustouchb = touchLocationToGraphCoords(e.touches[1]);
                 } else {
                     pinchZoomStarted = false;
                 }
@@ -127,6 +134,15 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
 
                 touchStarted = false;
                 multigraph.graphs().at(0).doDragDone();
+
+                /*
+                var string = "";
+                for (var i =0; i < deltas.length; i++) {
+                    string += "dx: " + deltas[i].dx + ". dy: " + deltas[i].dy + ".\n" 
+                }
+                deltas = []
+                alert(string)
+                */
             };
 
             var handleTouchLeave = function (jqueryEvent) {
@@ -145,9 +161,12 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
 
             var handleDrag = function (e) {
                 var touchLoc = touchLocationToGraphCoords(e.touches[0]);
-                var previousLoc = touchLocationToGraphCoords(previousTouches[0]);
-                var dx = touchLoc.x() - previousLoc.x();
-                var dy = touchLoc.y() - previousLoc.y();
+                //                var previousLoc = touchLocationToGraphCoords(previousTouches[0]);
+                //                var dx = touchLoc.x() - previousLoc.x();
+                //                var dy = touchLoc.y() - previousLoc.y();
+                var dx = touchLoc.x() - previoustoucha.x();
+                var dy = touchLoc.y() - previoustoucha.y();
+                //                deltas.push({"dx":dx,"dy":dy});
                 if (multigraph.graphs().size() > 0) {
                     if (!touchStarted ) {
                         multigraph.graphs().at(0).doDragReset();
@@ -155,6 +174,7 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
                     multigraph.graphs().at(0).doDrag(multigraph, base.x(), base.y(), dx, dy, false);
                 }
                 touchStarted = true;
+                previoustoucha = touchLoc;
             };
 
             var handleDoubleTap = function () {
@@ -169,12 +189,14 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
             var handlePinchZoom = function (e) {
                 var a = touchLocationToGraphCoords(e.touches[0]);
                 var b = touchLocationToGraphCoords(e.touches[1]);
-                var previousa = touchLocationToGraphCoords(previousTouches[0]);
-                var previousb = touchLocationToGraphCoords(previousTouches[1]);
+                //                var previousa = touchLocationToGraphCoords(previousTouches[0]);
+                //                var previousb = touchLocationToGraphCoords(previousTouches[1]);
                 var basex = (a.x() + b.x()) / 2;
                 var basey = (a.y() + b.y()) / 2;
-                var dx = (a.x() - previousa.x()) + (b.x() - previousb.x());
-                var dy = (a.y() - previousa.y()) + (b.y() - previousb.y());
+                //                var dx = (a.x() - previousa.x()) + (b.x() - previousb.x());
+                //                var dy = (a.y() - previousa.y()) + (b.y() - previousb.y());
+                var dx = (a.x() - previoustoucha.x()) + (b.x() - previoustouchb.x());
+                var dy = (a.y() - previoustoucha.y()) + (b.y() - previoustouchb.y());
                 if (multigraph.graphs().size() > 0) {
                     if (!touchStarted ) {
                         multigraph.graphs().at(0).doDragReset();
@@ -182,6 +204,9 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
                     multigraph.graphs().at(0).doDrag(multigraph, basex, basey, dx, dy, true);
                 }
                 touchStarted = true;
+                previoustoucha = a;
+                previoustouchb = b;
+
             };
 
             $target.on("touchstart", handleTouchStart);
