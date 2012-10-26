@@ -134,7 +134,8 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
 
                         "angle": 0.0,
                         "spacing": undefined,
-                        "densityfactor": undefined
+                        "densityfactor": undefined,
+                        "color" : function () { return new window.multigraph.math.RGBColor.parse("0x000000"); }
 //                        "fontname": undefined,
 //                        "fontsize": undefined,
 //                        "fontcolor": undefined
@@ -149,6 +150,7 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
                     "angle": 0.0,
                     "position": function () { return new window.multigraph.math.Point(0,0); },
                     "anchor": function () { return new window.multigraph.math.Point(0,0); },
+                    "color" : function () { return new window.multigraph.math.RGBColor.parse("0x000000"); },
 //                    "spacing": "10000 5000 2000 1000 500 200 100 50 20 10 5 2 1 0.1 0.01 0.001",
 //                    "defaultDatetimeSpacing": "1000Y 500Y 200Y 100Y 50Y 20Y 10Y 5Y 2Y 1Y 6M 3M 2M 1M 7D 3D 2D 1D 12H 6H 3H 2H 1H",
                     "function": undefined,
@@ -196,6 +198,7 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
                 "color": function () { return new window.multigraph.math.RGBColor(0,0,0); },
                 "tickmin": -3,
                 "tickmax": 3,
+                "tickcolor": null,
                 "highlightstyle": "axis",
                 "linewidth": 1,
                 "orientation": undefined

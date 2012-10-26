@@ -63,6 +63,9 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                     while (this.currentLabeler().hasNext()) {
                         var v = this.currentLabeler().next();
                         var a = this.dataValueToAxisValue(v);
+                        if (this.tickcolor() !== undefined && this.tickcolor() !== null) {
+                            context.strokeStyle = this.tickcolor().getHexString('#');
+                        }
                         if (this.orientation() === ns.Axis.HORIZONTAL) {
                             context.moveTo(a, this.perpOffset()+this.tickmax());
                             context.lineTo(a, this.perpOffset()+this.tickmin());
@@ -70,9 +73,12 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                             context.moveTo(this.perpOffset()+this.tickmin(), a);
                             context.lineTo(this.perpOffset()+this.tickmax(), a);
                         }
+                        context.stroke();
+                        if (this.tickcolor() !== undefined && this.tickcolor() !== null) {
+                            context.restore();
+                        }
                         this.currentLabeler().renderLabel(context, v);
                     }
-                    context.stroke();
                 }
             }
 
