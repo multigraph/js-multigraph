@@ -31,6 +31,10 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             this.hasA("spacing").which.validatesWith(ns.DataMeasure.isInstance);
             this.hasA("densityfactor").which.isA("number");
 
+            this.hasA("color").which.validatesWith(function (color) {
+                return color instanceof window.multigraph.math.RGBColor;
+            });
+
             this.isBuiltWith("axis", function () {
                 if (this.axis().type() === DataValue.DATETIME) {
                     this.start( getValue(defaultValues.horizontalaxis.labels['start-datetime']) );

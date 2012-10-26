@@ -87,6 +87,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasA("color").which.validatesWith(function (color) {
             return color instanceof window.multigraph.math.RGBColor;
         });
+        this.hasA("tickcolor").which.validatesWith(function (color) {
+            return color === null || color instanceof window.multigraph.math.RGBColor;
+        });
         this.hasA("tickmin").which.isA("integer");
         this.hasA("tickmax").which.isA("integer");
         this.hasA("highlightstyle").which.validatesWith(function (highlightstyle) {

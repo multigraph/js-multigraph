@@ -117,6 +117,9 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 }
                 axis.positionbase(xml.attr("positionbase"));
                 axis.color(window.multigraph.math.RGBColor.parse(xml.attr("color")));
+                if (xml.attr("tickcolor")) {
+                    axis.tickcolor(window.multigraph.math.RGBColor.parse(xml.attr("tickcolor")));
+                }
                 if (xml.attr("tickmin") !== undefined) {
                     axis.tickmin(parseInt(xml.attr("tickmin"), 10));
                 }

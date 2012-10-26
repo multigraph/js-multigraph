@@ -18,13 +18,14 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         };
 */
 
-        var drawText = function (text, context, base, anchor, position, angle) {
+        var drawText = function (text, context, base, anchor, position, angle, color) {
             var h = text.height();
             var w = text.width();
             var ax = 0.5 * w * (anchor.x() + 1);
             var ay = 0.5 * h * (anchor.y() + 1);
 
             context.save();
+            context.fillStyle = color.getHexString("#");
             //TODO: later on, once we're sure this is doing the correct thing, combine these 4 transformations
             //      into a single one for efficiency:
             context.transform(1,0,0,-1,0,2*base.y());
@@ -52,9 +53,11 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                 });
 
             if (this.axis().orientation() === ns.Axis.HORIZONTAL) {
-                drawText(formattedString, context, new window.multigraph.math.Point(a, this.axis().perpOffset()), this.anchor(), this.position(), this.angle());
+                drawText(formattedString, context, new window.multigraph.math.Point(a, this.axis().perpOffset()),
+                         this.anchor(), this.position(), this.angle(), this.color());
             } else {
-                drawText(formattedString, context, new window.multigraph.math.Point(this.axis().perpOffset(), a), this.anchor(), this.position(), this.angle());
+                drawText(formattedString, context, new window.multigraph.math.Point(this.axis().perpOffset(), a),
+                         this.anchor(), this.position(), this.angle(), this.color());
             }
         });
 

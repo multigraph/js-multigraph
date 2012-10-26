@@ -57,6 +57,12 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 } else if (defaults !== undefined) {
                     labeler.densityfactor(defaults.densityfactor());
                 }
+
+                if (xml.attr("color") !== undefined) {
+                    labeler.color(window.multigraph.math.RGBColor.parse(xml.attr("color")));
+                } else if (defaults !== undefined) {
+                    labeler.color(defaults.color());
+                }
             }
             return labeler;
         };
