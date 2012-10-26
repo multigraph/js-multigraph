@@ -14,12 +14,15 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
             var pinchZoomStarted = false;
 
             var doubleTapTimeout;
-            var breakpoint;
 
             var base;
             var multigraph = this;
 
             //            var deltas = [];
+
+            var pinchZoomInitialDeltas = {};
+            var pinchZoomDetermined = false;
+            var pinchZoomDeterminedTimeout;
 
             var previoustoucha;
             var previoustouchb;
@@ -70,9 +73,11 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
                 // pinch zoom
                 if (e.touches.length === 2) {
                     pinchZoomStarted = true;
+                    pinchZoomDetermined = false;
                     previoustouchb = touchLocationToGraphCoords(e.touches[1]);
                 } else {
                     pinchZoomStarted = false;
+                    pinchZoomDetermined = false;
                 }
 
                 previousTouches = e.touches;
@@ -126,8 +131,10 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
                 // pinch zoom
                 if (e.touches.length === 2) {
                     pinchZoomStarted = true;
+                    pinchZoomDetermined = false;
                 } else {
                     pinchZoomStarted = false;
+                    pinchZoomDetermined = false;
                 }
                 
                 previousTouches = e.touches;
@@ -153,6 +160,7 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
                 clearTimeout(doubleTapTimeout);
                 dragStarted = false;
                 pinchZoomStarted = false;
+                pinchZoomDetermined = false;
                 previousTouches = e.touches;
 
                 touchStarted = false;
@@ -187,18 +195,10 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
             };
 
             var handlePinchZoom = function (e) {
-
                 var a = touchLocationToGraphCoords(e.touches[0]);
                 var b = touchLocationToGraphCoords(e.touches[1]);
-                //                var previousa = touchLocationToGraphCoords(previousTouches[0]);
-                //                var previousb = touchLocationToGraphCoords(previousTouches[1]);
                 var basex = (a.x() + b.x()) / 2;
                 var basey = (a.y() + b.y()) / 2;
-                //                var dx = (a.x() - previousa.x()) + (b.x() - previousb.x());
-                //                var dy = (a.y() - previousa.y()) + (b.y() - previousb.y());
-
-                //                var dx = (a.x() - previoustoucha.x()) + (b.x() - previoustouchb.x());
-                //                var dy = (a.y() - previoustoucha.y()) + (b.y() - previoustouchb.y());
 
                 var dx = calculateAbsoluteDistance(a.x(), b.x()) - calculateAbsoluteDistance(previoustoucha.x(), previoustouchb.x());
                 var dy = calculateAbsoluteDistance(a.y(), b.y()) - calculateAbsoluteDistance(previoustoucha.y(), previoustouchb.y());
@@ -207,14 +207,68 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
                     if (!touchStarted ) {
                         multigraph.graphs().at(0).doDragReset();
                     }
-                    multigraph.graphs().at(0).doDrag(multigraph, basex, basey, dx, dy, true);
+                    if (pinchZoomDetermined === true) {
+                        multigraph.graphs().at(0).doDrag(multigraph, basex, basey, dx, dy, true);
+                    }
                 }
                 touchStarted = true;
 
                 // two finger scroll
                 var cx = ((a.x() - previoustoucha.x()) + (b.x() - previoustouchb.x())) / 2;
                 var cy = ((a.y() - previoustoucha.y()) + (b.y() - previoustouchb.y())) / 2;
-                multigraph.graphs().at(0).doDrag(multigraph, basex, basey, cx, cy, false);
+                if (pinchZoomDetermined === true) {
+                    multigraph.graphs().at(0).doDrag(multigraph, basex, basey, cx, cy, false);
+                }
+
+                if (pinchZoomDetermined === false) {
+                    if (pinchZoomInitialDeltas.base === undefined) {
+                        pinchZoomInitialDeltas.base = {};
+                        pinchZoomInitialDeltas.base.x = basex;
+                        pinchZoomInitialDeltas.base.y = basey;
+                    } 
+                    if (pinchZoomInitialDeltas.zoomDeltas === undefined) {
+                        pinchZoomInitialDeltas.zoomDeltas = {
+                            "dx"     : 0,
+                            "dy"     : 0,
+                            "totalx" : 0,
+                            "totaly" : 0
+                        };
+                    }
+                    if (pinchZoomInitialDeltas.panDeltas === undefined) {
+                        pinchZoomInitialDeltas.panDeltas = {
+                            "dx" : 0,
+                            "dy" : 0
+                        };
+                    }
+                    pinchZoomInitialDeltas.zoomDeltas.dx += dx;
+                    pinchZoomInitialDeltas.zoomDeltas.dy += dy;
+                    pinchZoomInitialDeltas.panDeltas.dx += cx;
+                    pinchZoomInitialDeltas.panDeltas.dy += cy;
+
+                    pinchZoomInitialDeltas.zoomDeltas.totalx += Math.abs(dx);
+                    pinchZoomInitialDeltas.zoomDeltas.totaly += Math.abs(dy);
+
+                    if (pinchZoomDeterminedTimeout === undefined) {
+                        pinchZoomDeterminedTimeout = setTimeout(function () {
+                                var basex = pinchZoomInitialDeltas.base.x;
+                                var basey = pinchZoomInitialDeltas.base.y;
+                                var dx = pinchZoomInitialDeltas.zoomDeltas.dx;
+                                var dy = pinchZoomInitialDeltas.zoomDeltas.dy;
+                                var cx = pinchZoomInitialDeltas.panDeltas.dx;
+                                var cy = pinchZoomInitialDeltas.panDeltas.dy;
+
+                                multigraph.graphs().at(0).doDragReset();
+                                
+                                multigraph.graphs().at(0).doFirstPinchZoom(multigraph, basex, basey, dx, dy, pinchZoomInitialDeltas.zoomDeltas.totalx, pinchZoomInitialDeltas.zoomDeltas.totaly);
+                                multigraph.graphs().at(0).doDrag(multigraph, basex, basey, cx, cy, false);
+
+                                pinchZoomInitialDeltas = {};
+                                pinchZoomDetermined = true;
+                                clearTimeout(pinchZoomDeterminedTimeout);
+                                pinchZoomDeterminedTimeout = undefined;
+                            }, 60);
+                    }
+                }
 
                 previoustoucha = a;
                 previoustouchb = b;
