@@ -61,6 +61,12 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             //
             if (this.hasDataMin() && this.hasDataMax()) { // but skip if we don't yet have data values
                 if (this.currentLabeler()) {
+                    var tickAttrs = {};
+                    if (this.tickcolor() !== undefined && this.tickcolor() !== null) {
+                        tickAttrs.stroke = this.tickcolor().getHexString('#');
+                    } else {
+                        tickAttrs.stroke = "#000";
+                    }
                     this.currentLabeler().prepare(this.dataMin(), this.dataMax());
                     while (this.currentLabeler().hasNext()) {
                         var v = this.currentLabeler().next();
@@ -78,7 +84,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                                                           }, v);
                     }
                     set.push(
-                        paper.path(tickmarkPath)
+                        paper.path(tickmarkPath).attr(tickAttrs)
                     );
                 }
             }

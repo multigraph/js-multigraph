@@ -15,20 +15,23 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         };
 */
 
-        var drawText = function (text, graphicsContext, base, anchor, position, angle) {
+        var drawText = function (text, graphicsContext, base, anchor, position, angle, color) {
             var h = text.height(),
                 w = text.width(),
                 ax = 0.5 * w * (anchor.x() + 1),
                 ay = 0.5 * h * (anchor.y() + 1),
                 dx = base.x() + (0.5 * w) + position.x() - ax,
                 dy = base.y() - (0.5 * h) - position.y() + ay,
-                transformString = "";
+                transformString = "",
+                textAttrs = {};
 
             transformString += "s1,-1," + dx + "," + base.y();
             transformString += "r" + (-angle) + "," + (dx - w/2) + "," + dy;
 
+            textAttrs.fill = color.getHexString("#");
+
             graphicsContext.set.push(
-                graphicsContext.paper.text(dx, dy, text.string()).transform(transformString)
+                graphicsContext.paper.text(dx, dy, text.string()).transform(transformString).attr(textAttrs)
             );
 
         };
@@ -50,9 +53,9 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 });
 
             if (this.axis().orientation() === ns.Axis.HORIZONTAL) {
-                drawText(formattedString, graphicsContext, new window.multigraph.math.Point(a, this.axis().perpOffset()), this.anchor(), this.position(), this.angle());
+                drawText(formattedString, graphicsContext, new window.multigraph.math.Point(a, this.axis().perpOffset()), this.anchor(), this.position(), this.angle(), this.color());
             } else {
-                drawText(formattedString, graphicsContext, new window.multigraph.math.Point(this.axis().perpOffset(), a), this.anchor(), this.position(), this.angle());
+                drawText(formattedString, graphicsContext, new window.multigraph.math.Point(this.axis().perpOffset(), a), this.anchor(), this.position(), this.angle(), this.color());
             }
         });
 
