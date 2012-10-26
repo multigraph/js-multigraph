@@ -53,6 +53,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     FillRenderer = new window.jermaine.Model( "FillRenderer", function () {
         this.isA(ns.Renderer);
+        this.hasA("numberOfVariables").which.defaultsTo(2);
     });
 
     FillRenderer.GRAY = parseInt("80", 16) / 255;
@@ -89,6 +90,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             "default"       : null
         }
     ]);
+
+    ns.Renderer.FILL = new ns.Renderer.Type("fill");
 
     ns.Renderer.addType({"type"  : ns.Renderer.Type.parse("fill"),
                          "model" : FillRenderer});

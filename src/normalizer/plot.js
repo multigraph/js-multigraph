@@ -82,21 +82,7 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
                 
             };
 
-            switch (this.renderer().type()) {
-                case ns.Renderer.POINTLINE:
-                case ns.Renderer.POINT:
-                case ns.Renderer.LINE:
-                case ns.Renderer.BAR:
-                case ns.Renderer.FILL:
-                    numberOfVariables = 2;
-                    break;
-                case ns.Renderer.BAND:
-                case ns.Renderer.RANGEERROR:
-                case ns.Renderer.LINEERROR:
-                case ns.Renderer.BARERROR:
-                    numberOfVariables = 3;
-                    break;
-            }
+            numberOfVariables = this.renderer().numberOfVariables();
 
             if (this instanceof ns.DataPlot) {
                 if (this.data() === undefined) {
