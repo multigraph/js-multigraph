@@ -4,22 +4,31 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
     ns.mixin.add(function (ns) {
 
         window.multigraph.core.Plotarea.respondsTo("render", function (graph, paper, set) {
-            var paddingBox = graph.window().margin().left() + graph.window().border() + graph.window().padding().left(),
-                plotBoxWidth = graph.paddingBox().width() - this.margin().right() - this.margin().left(),
-                plotBoxHeight = graph.paddingBox().height() - this.margin().top() - this.margin().bottom(),
-                border;
+            var plotareaAttrs,
+                plotarea;
+
+            if (this.color() !== null) {
+                if (plotareaAttrs === undefined) {
+                    plotareaAttrs = {};
+                }
+                plotareaAttrs.fill   = this.color().getHexString("#");
+                plotareaAttrs.stroke = this.color().getHexString("#"); // set to fill color in case border isn't drawn
+            }
 
             if (this.border() > 0) {
-                border = paper.rect(paddingBox + this.margin().left(),
-                                    paddingBox + this.margin().right(),
-                                    plotBoxWidth,
-                                    plotBoxHeight)
-                    .attr({"fill-opacity" : 0,
-                           "stroke-opacity" : 1,
-                           "stroke" : this.bordercolor().getHexString("#"),
-                           "stroke-width": this.border()});
-                border.insertAfter(set);
-                set.push(border);
+                if (plotareaAttrs === undefined) {
+                    plotareaAttrs = { "fill-opacity" : 0 };
+                }
+                plotareaAttrs["stroke-opacity"] = 1;
+                plotareaAttrs.stroke            = this.bordercolor().getHexString("#");
+                plotareaAttrs["stroke-width"]   = this.border();
+            }
+
+            if (plotareaAttrs !== undefined) {
+                plotarea = paper.rect(graph.x0(), graph.y0(), graph.plotBox().width(), graph.plotBox().height())
+                    .attr(plotareaAttrs);
+                plotarea.insertAfter(set);
+                set.push(plotarea);
             }
 
         });
