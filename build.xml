@@ -45,10 +45,13 @@
     <fileset dir="src/normalizer" includes="**/*.js" excludes="normalizer_mixin.js" />
   </path>
   <path id="path.spec-js">
-    <fileset dir="spec" includes="**/*.js"/>
+    <fileset dir="spec" includes="**/*.js" excludes="graphics/logger/**/*.js"/>
   </path>
   <path id="path.build-spec-js">
     <fileset dir="spec" includes="**/*.js" excludes="graphics/logger/**/*.js"/>
+  </path>
+  <path id="path.spec-logger-js">
+    <filelist dir="spec/graphics/logger" files="graphicstests.js"/>
   </path>
   <path id="path.mugl-xml">
     <fileset dir="spec/mugl" includes="**/*.xml" />
@@ -90,7 +93,7 @@
     </replaceregexp>
   </target>
 
-  <target name="html" depends="jasmine-index-html,jasmine-build-html,raphael-html,canvas-html,logger-html">
+  <target name="html" depends="jasmine-index-html,jasmine-build-html,raphael-html,canvas-html,jasmine-logger-html,logger-html">
   </target>
 
   <target name="jasmine-index-html">
@@ -165,10 +168,23 @@
     </replaceregexp>
   </target>
 
+  <target name="jasmine-logger-html">
+    <pathconvert property="scripttags.jasmine-logger-spec" pathsep="${line.separator}">
+      <path refid="path.spec-logger-js"/>
+      <mapper type="regexp" from="^${basedir}/spec/(.*)$" to='&lt;script type="text/javascript" src="\1"&gt;&lt;/script&gt;'/>
+    </pathconvert>
+    <replaceregexp flags="s">
+      <regexp pattern="&lt;!--BEGIN_ANT_LINES--&gt;.*&lt;!--END_ANT_LINES--&gt;"/>
+      <substitution expression="&lt;!--BEGIN_ANT_LINES--&gt;${line.separator}${scripttags.jasmine-src}${line.separator}${line.separator}${scripttags.jasmine-logger-spec}${line.separator}&lt;!--END_ANT_LINES--&gt;"/>
+      <filelist dir="spec" files="logger.html"/>
+    </replaceregexp>
+  </target>
+
   <target name="logger-html">
     <pathconvert property="scripttags.mg-jq" pathsep="${line.separator}">
       <path refid="path.multigraph-core-js"/>
       <path refid="path.parser-jquery-js"/>
+      <path refid="path.normalizer-js"/>
       <mapper type="regexp" from="^${basedir}/(.*)$" to='&lt;script type="text/javascript" src="../../../\1"&gt;&lt;/script&gt;'/>
     </pathconvert>
     <pathconvert property="scripttags.logger" pathsep="${line.separator}">
