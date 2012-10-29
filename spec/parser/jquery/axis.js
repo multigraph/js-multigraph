@@ -23,7 +23,6 @@ describe("Axis parsing", function () {
 +     ' minoffset="19"'
 +     ' max="10"'
 +     ' maxoffset="2"'
-+     ' positionbase="0 0"'
 +     ' tickmin="-3"'
 +     ' tickmax="3"'
 +     ' highlightstyle="bold"'
@@ -115,10 +114,6 @@ describe("Axis parsing", function () {
     it("should be able to parse an axis from XML and read its 'maxposition' attribute", function () {
         expect(axis.maxposition().a()).toBe(1);
         expect(axis.maxposition().b()).toBe(0);
-    });
-
-    it("should be able to parse an axis from XML and read its 'positionbase' attribute", function () {
-        expect(axis.positionbase()).toBe("0 0");
     });
 
     it("should be able to parse an axis from XML and read its 'color' attribute", function () {

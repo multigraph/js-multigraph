@@ -115,7 +115,6 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 if (xml.attr("maxoffset") !== undefined) {
                     axis.maxoffset(parseFloat(xml.attr("maxoffset")));
                 }
-                axis.positionbase(xml.attr("positionbase"));
                 axis.color(window.multigraph.math.RGBColor.parse(xml.attr("color")));
                 if (xml.attr("tickcolor")) {
                     axis.tickcolor(window.multigraph.math.RGBColor.parse(xml.attr("tickcolor")));
