@@ -40,6 +40,7 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
             if (this.renderer() === undefined) {
                 rendererType = ns.Renderer.Type.parse("line");
                 this.renderer(ns.Renderer.create(rendererType));
+                this.renderer().plot(this);
             }
 
             //
