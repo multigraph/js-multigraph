@@ -10,9 +10,9 @@ describe("Logger Graphics Tests", function () {
                  "dataType" : "text",
                  "success" : function (data) {
                      var multigraph = window.multigraph.core.Multigraph.parseXML( window.multigraph.parser.jquery.stringToJQueryXMLObj(data) );
+                     multigraph.normalize();
                      multigraph.width(width);
                      multigraph.height(height);
-                     multigraph.normalize();
                      multigraph.render();
                      contentsObj.contents = multigraph.dumpLog();
                      contentsObj.haveData = true;

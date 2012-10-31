@@ -15,7 +15,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
             var variables_xml,
                 defaultMissingvalueString,
                 defaultMissingopString,
-                dataVariables,
+                dataVariables = [],
                 data = {};
 
             if (xml) {
@@ -26,7 +26,6 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 defaultMissingopString = variables_xml.attr("missingop");
 
                 if (variables_xml.find(">variable").length > 0) {
-                    dataVariables = [];
                     window.multigraph.jQuery.each(variables_xml.find(">variable"), function (i, e) {
                         dataVariables.push( ns.core.DataVariable[parse](window.multigraph.jQuery(e)) );
                     });
