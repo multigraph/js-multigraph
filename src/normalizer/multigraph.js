@@ -57,7 +57,7 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
                 }
             };
 
-            var callback = function () {
+            callback = function () {
                 if (this instanceof ns.WebServiceData) {
                     breakdownCallback(this);
                 } else if (this instanceof ns.CSVData) {

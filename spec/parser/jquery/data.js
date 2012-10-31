@@ -37,7 +37,7 @@ describe("NEW Data parsing", function () {
 
         beforeEach(function () {
             data = Data.parseXML($xml);
-            data.normalize()
+            data.normalize();
         });
 
         it("parser should return an ArrayData instance", function () {
