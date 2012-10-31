@@ -43,6 +43,7 @@ describe("ArrayData", function () {
         }
 
         testArrayData = new ArrayData(dataVariables, numberValueData);
+        testArrayData.array(numberValueData);
     });
 
     describe("constructor", function () {
@@ -261,11 +262,12 @@ describe("ArrayData", function () {
             }
             
             testArrayData = new ArrayData(dataVariables, numberValueData);
+            testArrayData.array(numberValueData);
             testArrayData.onReady(callback);            
         });
 
         it("should set the readyCallback", function () {
-            expect(testArrayData.readyCallback()).toBe(callback);
+            expect(testArrayData.readyCallbacks().at(0)).toBe(callback);
         });
 
         it("should call the callback", function () {

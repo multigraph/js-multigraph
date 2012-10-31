@@ -12,6 +12,7 @@ describe("NEW Data parsing", function () {
 
     beforeEach(function () {
         window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
+        window.multigraph.normalizer.mixin.apply(window.multigraph.core);
     });
 
     it("Data model should have a parseXML method", function () {
@@ -23,8 +24,8 @@ describe("NEW Data parsing", function () {
         var xmlString = ''
                 + '<data>'
                 +   '<variables>'
-                +     '<variable id="x" column="0" type="number"/>'
-                +     '<variable id="y" column="1" type="number"/>'
+                +     '<variable id="x" column="0" type="number" missingop="eq"/>'
+                +     '<variable id="y" column="1" type="number" missingop="eq"/>'
                 +   '</variables>'
                 +   '<values>'
                 +     '3,4\n'
@@ -36,6 +37,7 @@ describe("NEW Data parsing", function () {
 
         beforeEach(function () {
             data = Data.parseXML($xml);
+            data.normalize();
         });
 
         it("parser should return an ArrayData instance", function () {

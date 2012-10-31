@@ -36,8 +36,15 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 var values_xml = window.multigraph.jQuery(xml.find(">values"));
                 if (values_xml.length > 0) {
                     values_xml = values_xml[0];
-                    var dataValues = ArrayData.textToDataValuesArray(dataVariables, window.multigraph.jQuery(values_xml).text());
-                    data = new ArrayData(dataVariables, dataValues);
+                    var stringValues = ArrayData.textToStringArray(window.multigraph.jQuery(values_xml).text());
+                    var values = new ArrayData(dataVariables, stringValues);
+                    if (data.defaultMissingvalueString !== undefined) {
+                        values.defaultMissingvalue(data.defaultMissingvalueString);
+                    }
+                    if (data.defaultMissingopString !== undefined) {
+                        values.defaultMissingop(xml.attr("missingop"));
+                    }
+                    return values;
                 }
 
                 // if we have a <csv> section, parse it and return a CSVData instance:

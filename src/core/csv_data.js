@@ -15,9 +15,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasA("dataIsReady").which.isA("boolean").and.defaultsTo(false);
 
         this.respondsTo("onReady", function (callback) {
-            this.readyCallback(callback);
+            this.readyCallbacks().add(callback);
             if (this.dataIsReady()) {
-                callback(/* to be defined */);
+                this.callReadyCallbacks(/* to be defined */);
             }
         });
 
@@ -52,8 +52,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                     //in the callback to the request, we need to call onReady
                     that.dataIsReady(true);
                     // populate arraydata
-                    if (that.readyCallback() !== undefined) {
-                        that.readyCallback()();
+                    if (that.readyCallbacks().size() > 0) {
+                        that.callReadyCallbacks();
                     }
                 }});
             }

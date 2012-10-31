@@ -12,6 +12,7 @@ describe("Logger Graphics Tests", function () {
                      var multigraph = window.multigraph.core.Multigraph.parseXML( window.multigraph.parser.jquery.stringToJQueryXMLObj(data) );
                      multigraph.width(width);
                      multigraph.height(height);
+                     multigraph.normalize();
                      multigraph.render();
                      contentsObj.contents = multigraph.dumpLog();
                      contentsObj.haveData = true;
@@ -34,6 +35,7 @@ describe("Logger Graphics Tests", function () {
     beforeEach(function () {
         window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
         window.multigraph.graphics.logger.mixin.apply(window.multigraph.core);
+        window.multigraph.normalizer.mixin.apply(window.multigraph.core);
     });
     xit("acis-webservice.xml should match with a width of '1000' and a height of '400'", function () {
         var loggerOutput = getLoggerOutput("./mugl/acis-webservice.xml", 1000, 400);
@@ -275,7 +277,7 @@ describe("Logger Graphics Tests", function () {
             expect(loggerOutput.contents).toEqual(savedOutput.contents);
         });
     });
-    xit("fcav.xml should match with a width of '800' and a height of '500'", function () {
+    it("fcav.xml should match with a width of '800' and a height of '500'", function () {
         var loggerOutput = getLoggerOutput("./mugl/fcav.xml", 800, 500);
         var savedOutput = getFileContents("./graphics/logger/fixtures/fcav-800x500.log");
         waitsFor(function () {
@@ -295,7 +297,7 @@ describe("Logger Graphics Tests", function () {
             expect(loggerOutput.contents).toEqual(savedOutput.contents);
         });
     });
-    xit("fotos-sst.xml should match with a width of '800' and a height of '500'", function () {
+    it("fotos-sst.xml should match with a width of '800' and a height of '500'", function () {
         var loggerOutput = getLoggerOutput("./mugl/fotos-sst.xml", 800, 500);
         var savedOutput = getFileContents("./graphics/logger/fixtures/fotos-sst-800x500.log");
         waitsFor(function () {
@@ -308,6 +310,16 @@ describe("Logger Graphics Tests", function () {
     it("legend.xml should match with a width of '800' and a height of '500'", function () {
         var loggerOutput = getLoggerOutput("./mugl/legend.xml", 800, 500);
         var savedOutput = getFileContents("./graphics/logger/fixtures/legend-800x500.log");
+        waitsFor(function () {
+            return savedOutput.haveData && loggerOutput.haveData;
+        });
+        runs(function () {
+            expect(loggerOutput.contents).toEqual(savedOutput.contents);
+        });
+    });
+    xit("minimal_graph.xml should match with a width of '800' and a height of '500'", function () {
+        var loggerOutput = getLoggerOutput("./mugl/minimal_graph.xml", 800, 500);
+        var savedOutput = getFileContents("./graphics/logger/fixtures/minimal_graph-800x500.log");
         waitsFor(function () {
             return savedOutput.haveData && loggerOutput.haveData;
         });

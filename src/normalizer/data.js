@@ -31,7 +31,7 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
 
             // creates placeholder variables if the data tag has a 'values' tag
             if (this instanceof ns.ArrayData === true && this instanceof ns.CSVData === false && this instanceof ns.WebServiceData === false) {
-                var numMissingVariables = this.array()[0].length - this.columns().size();
+                var numMissingVariables = this.stringArray()[0].length - this.columns().size();
                 if (numMissingVariables > 0) {
                     for (i = 0; i < numMissingVariables; i++) {
                         unsortedVariables.push(null);
@@ -96,6 +96,15 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
                 this.columns().add(sortedVariables[i]);
             }
             this.initializeColumns();
+
+            // parses string values into the proper data types if the data tag has a 'values' tag
+            if (this instanceof ns.ArrayData === true && this instanceof ns.CSVData === false && this instanceof ns.WebServiceData === false) {
+                var dataValues = ns.ArrayData.stringArrayToDataValuesArray(sortedVariables, this.stringArray());
+                this.array(dataValues);
+//                console.log(                this.array());
+                this.stringArray([]);
+            }
+
         };
 
     });
