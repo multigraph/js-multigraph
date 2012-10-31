@@ -267,7 +267,7 @@ describe("ArrayData", function () {
         });
 
         it("should set the readyCallback", function () {
-            expect(testArrayData.readyCallback()).toBe(callback);
+            expect(testArrayData.readyCallbacks().at(0)).toBe(callback);
         });
 
         it("should call the callback", function () {

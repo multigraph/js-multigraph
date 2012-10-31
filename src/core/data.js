@@ -35,7 +35,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return column instanceof DataVariable;
         });
 
-        this.hasA("readyCallback").which.isA("function");
+        this.hasMany("readyCallbacks").eachOfWhich.isA("function");
 
         this.hasA("defaultMissingvalue").which.isA("string");
         this.hasA("defaultMissingop").which.isA("string").and.defaultsTo("eq");
@@ -104,7 +104,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return result;
         });
 
-        this.respondsTo("getBounds", function (columnId) {
+        this.respondsTo("getBounds", function () {
             //no op
         });
 
@@ -114,6 +114,32 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
         this.respondsTo("onReady", function (readyHandler) {
             //no op
+        });
+
+        this.respondsTo("callReadyCallbacks", function () {
+            var i;
+
+            for (i = 0; i < this.readyCallbacks().size(); i++) {
+                this.readyCallbacks().at(i).apply(this, arguments);
+            }
+        });
+
+        this.respondsTo("clearReadyCallback", function (readyHandler) {
+            var i,
+                callback,
+                callbacks = [];
+
+            for (i = this.readyCallbacks().size() - 1; i >= 0; i--) {
+                callback = this.readyCallbacks().pop();
+                if (callback === readyHandler) {
+                    break;
+                }
+                callbacks.push(callback);
+            }
+
+            for (i = callbacks.length - 1; i >= 0; i--) {
+                this.readyCallbacks().add(callbacks[i]);
+            }
         });
 
         this.respondsTo("pause", function() {

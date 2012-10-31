@@ -20,6 +20,11 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             }
         });
 
+        this.respondsTo("getBounds", function (column) {
+            // TODO: replace this kludge
+            return [0, 10];
+        });
+
         this.hasA("arraydata").which.defaultsTo(null).and.validatesWith(function(arraydata) {
             return arraydata instanceof ns.ArrayData || arraydata === null;
         });
@@ -171,8 +176,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                         data = window.multigraph.parser.jquery.stringToJQueryXMLObj(data).find("values").text();
                     }
                     node.parseData(that.getColumns(), data);
-                    if (that.readyCallback() !== undefined) {
-                        that.readyCallback()(node.dataMin(), node.dataMax());
+                    if (that.readyCallbacks().size() > 0) {
+                        that.callReadyCallbacks();
                     }
                 }
             });
@@ -294,7 +299,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
 
         this.respondsTo("onReady", function (callback) {
-            this.readyCallback(callback);
+            this.readyCallbacks().add(callback);
         });
 
         this.hasA("paused").which.isA("boolean").and.defaultsTo(false);
@@ -303,8 +308,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
         this.respondsTo("resume", function() {
             this.paused(false);
-            if (this.readyCallback() !== undefined) {
-                this.readyCallback()(this.coveredMin(), this.coveredMax());
+            if (this.readyCallbacks().size() > 0) {
+                this.callReadyCallbacks(this.coveredMin(), this.coveredMax());
             }
         });
 

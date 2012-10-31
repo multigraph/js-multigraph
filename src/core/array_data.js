@@ -28,14 +28,32 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return ArrayData.getArrayDataIterator(this, columnIds, min, max, buffer);
         });
 
+        this.respondsTo("getBounds", function (column) {
+            var i,
+                j = column.column(),
+                min = this.array()[0][j],
+                max = min;
+
+            for (i = 1; i < this.array().length; i++) {
+                if (this.array()[i][j] < min) {
+                    min = this.array()[i][j];
+                }
+                if (this.array()[i][j] > max) {
+                    max = this.array()[i][j];
+                }
+            }
+
+            return [min, max];
+        });
+
         /**
             @method ArrayData#onReady
             @param callback
         */
 
         this.respondsTo("onReady", function (callback) {
-            this.readyCallback(callback);
-            callback(this.array()[0][0], this.array()[this.array().length-1][0]);
+            this.readyCallbacks().add(callback);
+            this.callReadyCallbacks(this.array()[0][0], this.array()[this.array().length-1][0]);
         });
 
 
