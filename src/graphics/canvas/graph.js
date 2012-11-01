@@ -33,6 +33,14 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                 context.restore();
             }
 
+            if (this.plotarea().border() > 0) {
+                context.save();
+                context.lineWidth = this.plotarea().border();
+                context.strokeStyle = this.plotarea().bordercolor().getHexString("#");
+                context.strokeRect(0,0,this.plotBox().width(), this.plotBox().height());
+                context.restore();
+            }
+
             for (i=0; i<this.axes().size(); ++i) {
                 this.axes().at(i).renderGrid(this, context);
             }
