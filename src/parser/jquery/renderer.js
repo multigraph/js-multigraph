@@ -10,10 +10,10 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
 
             if (xml && xml.attr("type") !== undefined) {
                 rendererType = ns.core.Renderer.Type.parse(xml.attr("type"));
-                renderer = ns.core.Renderer.create(rendererType);
-                if (!renderer) {
-                    throw new Error("unknown renderer type '"+rendererType+"'");
+                if (!ns.core.Renderer.Type.isInstance(rendererType)) {
+                    throw new Error("unknown renderer type '" + xml.attr("type") + "'");
                 }
+                renderer = ns.core.Renderer.create(rendererType);
                 renderer.plot(plot);
                 if (xml.find("option").length > 0) {
                     window.multigraph.jQuery.each(xml.find(">option"), function (i, e) {

@@ -194,7 +194,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 return renderer;
             }
         }
-        throw new Error('Renderer.create: attempt to create a renderer of unknown type');
+        throw new Error("Renderer.create: '" + type + "' is not a known renderer type");
+//        throw new Error('Renderer.create: attempt to create a renderer of unknown type');
     };
 
     Renderer.declareOptions = function (renderer, OptionsModelName, options) {
