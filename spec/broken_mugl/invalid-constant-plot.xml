@@ -1,0 +1,53 @@
+<!-- constant tag on line 28 is missing its value attribute -->
+<mugl>
+  <window border="0" margin="0" padding="0"/>
+  <legend visible="false"/>
+  <plotarea marginbottom="50" marginleft="60" marginright="25" margintop="10"/>
+
+  <horizontalaxis highlightstyle="labels" id="x" linewidth="0" max="201207" min="200601" tickmax="0" tickmin="-4" type="datetime">
+    <labels>
+      <label format="%Y" spacing="100Y 50Y 20Y 10Y 5Y 2Y 1Y "/>
+      <label format="%n %y" spacing="6M 3M 2M 1M"/>
+    </labels>
+    <title anchor="0 5" position="-15 0">Month/Year</title>
+    <grid color="0xeeeeee"/>
+  </horizontalaxis>
+  <verticalaxis highlightstyle="labels" id="y" linewidth="0" max="4.5" min="-4.5" tickmax="0" tickmin="-4">
+    <labels>
+      <label densityfactor="0.5" format="%1d" spacing="20 10 5 2 1"/>
+      <label densityfactor="0.5" format="%.1f" spacing="0.5 0.2 0.1"/>
+    </labels>
+    <title anchor="0 -4" angle="90" position="-15 0">Some Constant Plots</title>
+    
+    
+    <grid color="0xeeeeee"/>
+  </verticalaxis>
+
+  <plot>
+    <legend visible="false"/>
+    <verticalaxis ref="y"><constant/></verticalaxis>
+    <renderer type="line">
+      <option name="linecolor" value="0x999999"/>
+      <option name="linewidth" value="1"/>
+    </renderer>
+  </plot>
+
+  <plot>
+    <legend visible="false"/>
+    <verticalaxis ref="y"><constant value="2"/></verticalaxis>
+    <renderer type="line">
+      <option name="linecolor" value="0x990000"/>
+      <option name="linewidth" value="1"/>
+    </renderer>
+  </plot>
+
+  <plot>
+    <legend visible="false"/>
+    <verticalaxis ref="y"><constant value="-2"/></verticalaxis>
+    <renderer type="line">
+      <option name="linecolor" value="0x000099"/>
+      <option name="linewidth" value="3"/>
+    </renderer>
+  </plot>
+
+</mugl>
