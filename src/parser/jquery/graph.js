@@ -34,6 +34,9 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 window.multigraph.jQuery.each(xml.find(">verticalaxis"), function (i,e) {
                     graph.axes().add( ns.core.Axis[parse](window.multigraph.jQuery(e), ns.core.Axis.VERTICAL) );
                 });
+                if (xml.find(">data").length === 0) {
+                    throw new Error("Graph Data Error: No data tags specified");
+                }
                 window.multigraph.jQuery.each(xml.find(">data"), function (i,e) {
                     graph.data().add( ns.core.Data[parse](window.multigraph.jQuery(e)) );
                 });
