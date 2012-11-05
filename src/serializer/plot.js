@@ -28,7 +28,7 @@ window.multigraph.util.namespace("window.multigraph.serializer", function (ns) {
                 }
                 axisHasContent = false;
                 if (this instanceof ns.core.ConstantPlot) {
-                    output += '<constant value="' + this.constantValue().toString() + '"/>';
+                    output += '><constant value="' + this.constantValue().toString() + '"/>';
                     axisHasContent = true;
                 } else {
                     if (this.variable().size() > 1) {
