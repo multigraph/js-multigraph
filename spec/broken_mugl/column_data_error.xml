@@ -1,3 +1,4 @@
+<!-- The column specified on line 33 is greater than the number of columns in the data section -->
 <mugl>
   <background color="0xcccccc"/>
     <window margin="0" padding="5" border="5" bordercolor="0x000000"/>

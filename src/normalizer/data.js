@@ -51,6 +51,17 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
                 sortedVariables[index] = unsortedVariables[i];
             }
             
+            // checks that columns were correctly specified for 'values' data tags
+            if (this instanceof ns.ArrayData === true && this instanceof ns.CSVData === false && this instanceof ns.WebServiceData === false) {
+                if (sortedVariables.length > this.stringArray()[0].length) {
+                    for (i = 0; i < sortedVariables.length; i++) {
+                        if (sortedVariables[i] instanceof ns.DataVariable && sortedVariables[i].column() > this.stringArray()[0].length) {
+                            throw new Error("Data Variable Error: Attempting to specify column '" + sortedVariables[i].column() + "' for a variable, while there are only " + this.stringArray()[0].length + " data columns available");
+                        }
+                    }                    
+                }
+            }
+
             //
             // Handles missing attrs.
             // creates the appropriate variable if missing and if the data had a 'values' tag.
