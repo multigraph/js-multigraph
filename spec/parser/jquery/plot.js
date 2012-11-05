@@ -67,7 +67,7 @@ describe("DataPlot parsing", function () {
             $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
             expect( function () {
                 Plot.parseXML($xml, graph);
-            }).toThrow(new Error("The graph does not contain an axis with an id of: x2"));
+            }).toThrow(new Error("Plot Horizontal Axis Error: The graph does not contain an axis with an id of 'x2'"));
         });
 
         it("should be able to parse a plot with axis children from XML, serialize it and get the same XML as the original", function () {
@@ -138,7 +138,7 @@ describe("DataPlot parsing", function () {
             $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
             expect( function () {
                 Plot.parseXML($xml, graph);
-            }).toThrow(new Error("The graph does not contain a variable with an id of: y3"));
+            }).toThrow(new Error("Plot Variable Error: No Data tag contains a variable with an id of 'y3'"));
         });
 
         it("should be able to parse a plot with axis children from XML, serialize it and get the same XML as the original", function () {

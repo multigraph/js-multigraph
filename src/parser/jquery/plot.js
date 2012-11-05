@@ -25,7 +25,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     if (graph) {
                         vaxis = graph.axisById(xml.find(">verticalaxis").attr("ref"));
                         if (vaxis === undefined) {
-                            throw new Error("The graph does not contain an axis with an id of: " + xml.find(">verticalaxis").attr("ref"));
+                            throw new Error("Plot Vertical Axis Error: The graph does not contain an axis with an id of '" + xml.find(">verticalaxis").attr("ref") + "'");
                         }
                     }
                 }
@@ -33,7 +33,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 if (xml.find("verticalaxis constant").length > 0) {
                     var constantValueString = xml.find("verticalaxis constant").attr("value");
                     if (constantValueString === undefined) {
-                        throw new Error("foo foo");
+                        throw new Error("Constant Plot Error: A 'value' attribute is needed to define a Constant Plot");
                     }
                     plot = new ConstantPlot(DataValue.parse(vaxis.type(), constantValueString));
                 } else {
@@ -54,7 +54,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                         if (haxis !== undefined) {
                             plot.horizontalaxis(haxis);
                         } else {
-                            throw new Error("The graph does not contain an axis with an id of: " + xml.find(">horizontalaxis").attr("ref"));
+                            throw new Error("Plot Horizontal Axis Error: The graph does not contain an axis with an id of '" + xml.find(">horizontalaxis").attr("ref") + "'");
                         }
                     }
                 }
@@ -67,6 +67,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                         plot.variable().add(null);
                     }
 
+                    // TODO: defer population of variables until normalizer has executed
                     //populate axis variables from xml
                     if (xml.find("horizontalaxis variable, verticalaxis variable").length > 0) {
                         if (graph) {
@@ -76,7 +77,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                                     plot.data( variable.data() );
                                     plot.variable().add(variable);
                                 } else {
-                                    throw new Error("The graph does not contain a variable with an id of: " + window.multigraph.jQuery(e).attr("ref"));
+                                    throw new Error("Plot Variable Error: No Data tag contains a variable with an id of '" + window.multigraph.jQuery(e).attr("ref") + "'");
                                 }
                             });
                         }
