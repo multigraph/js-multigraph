@@ -1,9 +1,7 @@
 window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
     "use strict";
 
-    var scalarAttributes = ["name", "value"];
-
-    ns.mixin.add(function (ns, parse, serialize) {
+    ns.mixin.add(function (ns, parse) {
         
         ns.core.FilterOption[parse] = function (xml) {
             var option = new ns.core.FilterOption();
@@ -14,16 +12,6 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
             return option;
         };
         
-        ns.core.FilterOption.prototype[serialize] = function () {
-            var attributeStrings = [],
-                output = '<option ';
-
-            attributeStrings = window.multigraph.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
-
-            output += attributeStrings.join(' ') + '/>';
-
-            return output;
-        };
-
     });
+
 });

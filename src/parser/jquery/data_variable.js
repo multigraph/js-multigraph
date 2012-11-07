@@ -3,7 +3,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
 
     var DataValue = window.multigraph.core.DataValue;
 
-    ns.mixin.add(function (ns, parse, serialize) {
+    ns.mixin.add(function (ns, parse) {
         
         ns.core.DataVariable[parse] = function (xml, data) {
             var variable;
@@ -25,22 +25,6 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
             return variable;
         };
         
-        ns.core.DataVariable.prototype[serialize] = function () {
-            var output = '<variable';
-
-            output += ' id="' + this.id() + '"';
-            output += ' column="' + this.column() + '"';
-            output += ' type="' + DataValue.serializeType(this.type()) + '"';
-            if (this.missingvalue() !== null && this.missingvalue() !== undefined) {
-                output += ' missingvalue="' + this.missingvalue().toString() + '"';
-            }
-            if (this.missingop() !== null && this.missingop() !== undefined) {
-                output += ' missingop="' + this.missingop() + '"';
-            }
-            output += '/>';
-
-            return output;
-        };
-
     });
+
 });

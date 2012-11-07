@@ -1,9 +1,7 @@
 window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
     "use strict";
 
-    var scalarAttributes = ["id", "min", "max"];
-
-    ns.mixin.add(function (ns, parse, serialize) {
+    ns.mixin.add(function (ns, parse) {
         
         ns.core.Binding[parse] = function (xml) {
             var binding;
@@ -13,16 +11,6 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
             return binding;
         };
         
-        ns.core.Binding.prototype[serialize] = function () {
-            var attributeStrings = [],
-                output = '<binding ';
-
-            attributeStrings = window.multigraph.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
-
-            output += attributeStrings.join(' ') + '/>';
-
-            return output;
-        };
-
     });
+
 });
