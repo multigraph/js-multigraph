@@ -7,6 +7,7 @@ describe("Axis Label serialization", function () {
     var Labeler = window.multigraph.core.Labeler,
         Axis = window.multigraph.core.Axis,
         DataFormatter = window.multigraph.core.DataFormatter,
+        DataMeasure = window.multigraph.core.DataMeasure,
         DataValue = window.multigraph.core.DataValue,
         Point = window.multigraph.math.Point,
         xmlString,
@@ -32,7 +33,7 @@ describe("Axis Label serialization", function () {
         labeler.angle(45);
         labeler.position(Point.parse("-1,1"));
         labeler.anchor(Point.parse("1,1"));
-        labeler.spacing(200);
+        labeler.spacing(DataMeasure.parse("number", "200"));
         labeler.densityfactor(0.9);
         expect(labeler.serialize()).toEqual(xmlString);
 
@@ -41,7 +42,7 @@ describe("Axis Label serialization", function () {
         labeler.start(DataValue.parse(DataValue.NUMBER, 10));
         labeler.angle(-30);
         labeler.anchor(Point.parse("1,1"));
-        labeler.spacing(10);
+        labeler.spacing(DataMeasure.parse("number", "10"));
         expect(labeler.serialize()).toEqual(xmlString);
     });
 

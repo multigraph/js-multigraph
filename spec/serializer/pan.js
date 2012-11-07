@@ -16,8 +16,8 @@ describe("Axis Pan serialization", function () {
         xmlString = '<pan allowed="yes" min="0" max="5"/>';
         pan = new Pan();
         pan.allowed(true);
-        pan.min(DataValue.parse("number", 0));
-        pan.max(DataValue.parse("number", 0));
+        pan.min(DataValue.parse("number", "0"));
+        pan.max(DataValue.parse("number", "5"));
         expect(pan.serialize()).toBe(xmlString);
 
         xmlString = '<pan allowed="no"/>';

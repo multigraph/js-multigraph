@@ -16,7 +16,7 @@ describe("Graph serialization", function () {
         Title = window.multigraph.core.Title,
         Window = window.multigraph.core.Window,
         DataValue = window.multigraph.core.DataValue,
-        Displacement = window.multigraph.core.Displacement,
+        Displacement = window.multigraph.math.Displacement,
         Point = window.multigraph.math.Point,
         RGBColor = window.multigraph.math.RGBColor,
         xmlString,
@@ -43,6 +43,14 @@ describe("Graph serialization", function () {
             +    '<background'
             +        ' color="0x123456"'
             +    '/>'
+            +     '<plotarea'
+            +         ' margintop="5"'
+            +         ' marginleft="10"'
+            +         ' marginbottom="19"'
+            +         ' marginright="5"'
+            +         ' bordercolor="0x111223"'
+            +         ' border="0"'
+            +     '/>'
             +    '<plot>'
             +        '<horizontalaxis'
             +            ' ref="x"'
@@ -58,15 +66,11 @@ describe("Graph serialization", function () {
             +                ' ref="y"'
             +            '/>'
             +        '</verticalaxis>'
-            +        '<legend'
-            +            ' visible="true"'
-            +            ' label="y"'
-            +        '/>'
             +    '</plot>'
             +    '<data>'
             +         '<variables>'
             +           '<variable id="x" column="0" type="number" missingop="eq"/>'
-            +           '<variable id="y" column="1" type="number" missingop="eq"/>'
+            +           '<variable id="y" column="1" type="number"/>'
             +         '</variables>'
             +         '<values>'
             +             '3,4\n'
@@ -86,7 +90,15 @@ describe("Graph serialization", function () {
         graph.window().border(0);
 
         graph.background(new Background());
-        graph.background(RGBColor.parse("0x123456"));
+        graph.background().color(RGBColor.parse("0x123456"));
+
+        graph.plotarea(new Plotarea());
+        graph.plotarea().margin().bottom(19);
+        graph.plotarea().margin().left(10);
+        graph.plotarea().margin().top(5);
+        graph.plotarea().margin().right(5);
+        graph.plotarea().border(0);
+        graph.plotarea().bordercolor(RGBColor.parse("0x111223"));
 
         graph.plots().add(new DataPlot());
         graph.plots().at(0).horizontalaxis(new Axis(Axis.HORIZONTAL));
@@ -99,12 +111,12 @@ describe("Graph serialization", function () {
         variables = [];
         variables.push(new DataVariable("x"));
         variables[0].column(0);
-        variables[0].type(DataValue.parse("number"));
+        variables[0].type("number");
         variables[0].missingop(DataValue.parseComparator("eq"));
 
         variables.push(new DataVariable("y"));
         variables[1].column(1);
-        variables[1].type(DataValue.parse("number"));
+        variables[1].type("number");
 
         graph.data().add(new ArrayData(variables, [["3", "4"], ["5", "6"]]));
         graph.data().at(0).stringArray([]);
@@ -170,28 +182,6 @@ describe("Graph serialization", function () {
             +     '>'
             +         'Graph Title'
             +     '</title>'
-            +    '<plot>'
-            +        '<horizontalaxis'
-            +            ' ref="x"'
-            +            '>'
-            +            '<variable'
-            +                ' ref="x"'
-            +            '/>'
-            +        '</horizontalaxis>'
-            +        '<verticalaxis'
-            +            ' ref="y"'
-            +            '>'
-            +            '<variable'
-            +                ' ref="y"'
-            +            '/>'
-            +        '</verticalaxis>'
-            +    '</plot>'
-            +    '<plot>'
-            +        '<horizontalaxis'
-            +            ' ref="x"'
-            +            '/>'
-            +        '</horizontalaxis>'
-            +    '</plot>'
             +     '<horizontalaxis'
             +         ' color="0x123456"'
             +         ' id="x"'
@@ -212,7 +202,9 @@ describe("Graph serialization", function () {
             +         ' base="1,-1"'
             +         ' minposition="-0.3"'
             +         ' maxposition="1"'
-            +     '/>'
+            +     '>'
+            +         '<grid color="0xeeeeee" visible="false"/>'
+            +     '</horizontalaxis>'
             +     '<horizontalaxis'
             +         ' color="0x123456"'
             +         ' id="x2"'
@@ -233,7 +225,9 @@ describe("Graph serialization", function () {
             +         ' base="1,-1"'
             +         ' minposition="-0.2"'
             +         ' maxposition="1"'
-            +     '/>'
+            +     '>'
+            +         '<grid color="0xeeeeee" visible="false"/>'
+            +     '</horizontalaxis>'
             +     '<verticalaxis'
             +         ' color="0x123456"'
             +         ' id="y"'
@@ -254,7 +248,9 @@ describe("Graph serialization", function () {
             +         ' base="1,-1"'
             +         ' minposition="0.2"'
             +         ' maxposition="1"'
-            +     '/>'
+            +     '>'
+            +         '<grid color="0xeeeeee" visible="false"/>'
+            +     '</verticalaxis>'
             +     '<verticalaxis'
             +         ' color="0x123456"'
             +         ' id="y2"'
@@ -275,11 +271,34 @@ describe("Graph serialization", function () {
             +         ' base="1,-1"'
             +         ' minposition="1"'
             +         ' maxposition="1"'
-            +     '/>'
+            +     '>'
+            +         '<grid color="0xeeeeee" visible="false"/>'
+            +     '</verticalaxis>'
+            +     '<plot>'
+            +         '<horizontalaxis'
+            +             ' ref="x"'
+            +             '>'
+            +             '<variable'
+            +                 ' ref="x"'
+            +             '/>'
+            +         '</horizontalaxis>'
+            +         '<verticalaxis'
+            +             ' ref="y"'
+            +             '>'
+            +             '<variable'
+            +                 ' ref="y"'
+            +             '/>'
+            +         '</verticalaxis>'
+            +     '</plot>'
+            +     '<plot>'
+            +         '<horizontalaxis'
+            +             ' ref="x"'
+            +             '/>'
+            +     '</plot>'
             +     '<data>'
             +         '<variables>'
             +           '<variable id="x" column="0" type="number" missingop="eq"/>'
-            +           '<variable id="y" column="1" type="number" missingop="eq"/>'
+            +           '<variable id="y" column="1" type="number"/>'
             +         '</variables>'
             +         '<values>'
             +             '3,4\n'
@@ -318,7 +337,7 @@ describe("Graph serialization", function () {
         graph.legend().icon().border(1);
 
         graph.background(new Background());
-        graph.background(RGBColor.parse("0x123456"));
+        graph.background().color(RGBColor.parse("0x123456"));
 
         graph.plotarea(new Plotarea());
         graph.plotarea().margin().bottom(19);
@@ -352,16 +371,16 @@ describe("Graph serialization", function () {
         graph.plots().at(1).horizontalaxis(new Axis(Axis.HORIZONTAL));
         graph.plots().at(1).horizontalaxis().id("x");
 
-        graph.axes.add(new Axis(Axis.HORIZONTAL));
+        graph.axes().add(new Axis(Axis.HORIZONTAL));
         graph.axes().at(0).color(RGBColor.parse("0x123456"));
         graph.axes().at(0).id("x");
         graph.axes().at(0).type("number");
         graph.axes().at(0).pregap(2);
         graph.axes().at(0).postgap(4);
         graph.axes().at(0).anchor(1);
-        graph.axes().at(0).min(DataValue.parse(graph.axes().at(0).type(), "0"));
+        graph.axes().at(0).min("0");
         graph.axes().at(0).minoffset(19);
-        graph.axes().at(0).max(DataValue.parse(graph.axes().at(0).type(), "10"));
+        graph.axes().at(0).max("10");
         graph.axes().at(0).maxoffset(2);
         graph.axes().at(0).tickmin(-3);
         graph.axes().at(0).tickmax(3);
@@ -373,16 +392,16 @@ describe("Graph serialization", function () {
         graph.axes().at(0).minposition(Displacement.parse("-0.3"));
         graph.axes().at(0).maxposition(Displacement.parse("1"));
 
-        graph.axes.add(new Axis(Axis.HORIZONTAL));
+        graph.axes().add(new Axis(Axis.HORIZONTAL));
         graph.axes().at(1).color(RGBColor.parse("0x123456"));
         graph.axes().at(1).id("x2");
         graph.axes().at(1).type("number");
         graph.axes().at(1).pregap(2);
         graph.axes().at(1).postgap(4);
         graph.axes().at(1).anchor(1);
-        graph.axes().at(1).min(DataValue.parse(graph.axes().at(1).type(), "0"));
+        graph.axes().at(1).min("0");
         graph.axes().at(1).minoffset(19);
-        graph.axes().at(1).max(DataValue.parse(graph.axes().at(1).type(), "10"));
+        graph.axes().at(1).max("10");
         graph.axes().at(1).maxoffset(2);
         graph.axes().at(1).tickmin(-3);
         graph.axes().at(1).tickmax(3);
@@ -394,16 +413,16 @@ describe("Graph serialization", function () {
         graph.axes().at(1).minposition(Displacement.parse("-0.2"));
         graph.axes().at(1).maxposition(Displacement.parse("1"));
 
-        graph.axes.add(new Axis(Axis.VERTICAL));
+        graph.axes().add(new Axis(Axis.VERTICAL));
         graph.axes().at(2).color(RGBColor.parse("0x123456"));
         graph.axes().at(2).id("y");
         graph.axes().at(2).type("number");
         graph.axes().at(2).pregap(2);
         graph.axes().at(2).postgap(4);
         graph.axes().at(2).anchor(1);
-        graph.axes().at(2).min(DataValue.parse(graph.axes().at(2).type(), "0"));
+        graph.axes().at(2).min("0");
         graph.axes().at(2).minoffset(19);
-        graph.axes().at(2).max(DataValue.parse(graph.axes().at(2).type(), "10"));
+        graph.axes().at(2).max("10");
         graph.axes().at(2).maxoffset(2);
         graph.axes().at(2).tickmin(-3);
         graph.axes().at(2).tickmax(3);
@@ -415,16 +434,16 @@ describe("Graph serialization", function () {
         graph.axes().at(2).minposition(Displacement.parse("0.2"));
         graph.axes().at(2).maxposition(Displacement.parse("1"));
 
-        graph.axes.add(new Axis(Axis.VERTICAL));
+        graph.axes().add(new Axis(Axis.VERTICAL));
         graph.axes().at(3).color(RGBColor.parse("0x123456"));
         graph.axes().at(3).id("y2");
         graph.axes().at(3).type("number");
         graph.axes().at(3).pregap(2);
         graph.axes().at(3).postgap(4);
         graph.axes().at(3).anchor(1);
-        graph.axes().at(3).min(DataValue.parse(graph.axes().at(3).type(), "0"));
+        graph.axes().at(3).min("0");
         graph.axes().at(3).minoffset(19);
-        graph.axes().at(3).max(DataValue.parse(graph.axes().at(3).type(), "10"));
+        graph.axes().at(3).max("10");
         graph.axes().at(3).maxoffset(2);
         graph.axes().at(3).tickmin(-3);
         graph.axes().at(3).tickmax(3);
@@ -439,12 +458,12 @@ describe("Graph serialization", function () {
         variables = [];
         variables.push(new DataVariable("x"));
         variables[0].column(0);
-        variables[0].type(DataValue.parse("number"));
+        variables[0].type("number");
         variables[0].missingop(DataValue.parseComparator("eq"));
 
         variables.push(new DataVariable("y"));
         variables[1].column(1);
-        variables[1].type(DataValue.parse("number"));
+        variables[1].type("number");
 
         graph.data().add(new ArrayData(variables, [["3", "4"], ["5", "6"]]));
         graph.data().at(0).stringArray([]);

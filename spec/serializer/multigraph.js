@@ -17,7 +17,7 @@ describe("Multigraph serialization", function () {
         Title = window.multigraph.core.Title,
         Window = window.multigraph.core.Window,
         DataValue = window.multigraph.core.DataValue,
-        Displacement = window.multigraph.core.Displacement,
+        Displacement = window.multigraph.math.Displacement,
         Point = window.multigraph.math.Point,
         RGBColor = window.multigraph.math.RGBColor,
         xmlString,
@@ -43,6 +43,14 @@ describe("Multigraph serialization", function () {
             +    '<background'
             +        ' color="0x123456"'
             +    '/>'
+            +    '<plotarea'
+            +        ' margintop="5"'
+            +        ' marginleft="10"'
+            +        ' marginbottom="19"'
+            +        ' marginright="5"'
+            +        ' bordercolor="0x111223"'
+            +        ' border="0"'
+            +    '/>'
             +    '<plot>'
             +        '<horizontalaxis'
             +            ' ref="x"'
@@ -58,15 +66,11 @@ describe("Multigraph serialization", function () {
             +                ' ref="y"'
             +            '/>'
             +        '</verticalaxis>'
-            +        '<legend'
-            +            ' visible="true"'
-            +            ' label="y"'
-            +        '/>'
             +    '</plot>'
             +    '<data>'
             +         '<variables>'
             +           '<variable id="x" column="0" type="number" missingop="eq"/>'
-            +           '<variable id="y" column="1" type="number" missingop="eq"/>'
+            +           '<variable id="y" column="1" type="number"/>'
             +         '</variables>'
             +         '<values>'
             +             '3,4\n'
@@ -88,7 +92,15 @@ describe("Multigraph serialization", function () {
         multigraph.graphs().at(0).window().border(0);
 
         multigraph.graphs().at(0).background(new Background());
-        multigraph.graphs().at(0).background(RGBColor.parse("0x123456"));
+        multigraph.graphs().at(0).background().color(RGBColor.parse("0x123456"));
+
+        multigraph.graphs().at(0).plotarea(new Plotarea());
+        multigraph.graphs().at(0).plotarea().margin().bottom(19);
+        multigraph.graphs().at(0).plotarea().margin().left(10);
+        multigraph.graphs().at(0).plotarea().margin().top(5);
+        multigraph.graphs().at(0).plotarea().margin().right(5);
+        multigraph.graphs().at(0).plotarea().border(0);
+        multigraph.graphs().at(0).plotarea().bordercolor(RGBColor.parse("0x111223"));
 
         multigraph.graphs().at(0).plots().add(new DataPlot());
         multigraph.graphs().at(0).plots().at(0).horizontalaxis(new Axis(Axis.HORIZONTAL));
@@ -101,12 +113,12 @@ describe("Multigraph serialization", function () {
         variables = [];
         variables.push(new DataVariable("x"));
         variables[0].column(0);
-        variables[0].type(DataValue.parse("number"));
+        variables[0].type("number");
         variables[0].missingop(DataValue.parseComparator("eq"));
 
         variables.push(new DataVariable("y"));
         variables[1].column(1);
-        variables[1].type(DataValue.parse("number"));
+        variables[1].type("number");
 
         multigraph.graphs().at(0).data().add(new ArrayData(variables, [["3", "4"], ["5", "6"]]));
         multigraph.graphs().at(0).data().at(0).stringArray([]);
@@ -179,28 +191,6 @@ describe("Multigraph serialization", function () {
             +         '>'
             +             'Graph Title'
             +         '</title>'
-            +        '<plot>'
-            +            '<horizontalaxis'
-            +                ' ref="x"'
-            +                '>'
-            +                '<variable'
-            +                    ' ref="x"'
-            +                '/>'
-            +            '</horizontalaxis>'
-            +            '<verticalaxis'
-            +                ' ref="y"'
-            +                '>'
-            +                '<variable'
-            +                    ' ref="y"'
-            +                '/>'
-            +            '</verticalaxis>'
-            +        '</plot>'
-            +        '<plot>'
-            +            '<horizontalaxis'
-            +                ' ref="x"'
-            +                '/>'
-            +            '</horizontalaxis>'
-            +        '</plot>'
             +         '<horizontalaxis'
             +             ' color="0x123456"'
             +             ' id="x"'
@@ -221,7 +211,9 @@ describe("Multigraph serialization", function () {
             +             ' base="1,-1"'
             +             ' minposition="-0.3"'
             +             ' maxposition="1"'
-            +         '/>'
+            +         '>'
+            +             '<grid color="0xeeeeee" visible="false"/>'
+            +         '</horizontalaxis>'
             +         '<horizontalaxis'
             +             ' color="0x123456"'
             +             ' id="x2"'
@@ -242,7 +234,9 @@ describe("Multigraph serialization", function () {
             +             ' base="1,-1"'
             +             ' minposition="-0.2"'
             +             ' maxposition="1"'
-            +         '/>'
+            +         '>'
+            +             '<grid color="0xeeeeee" visible="false"/>'
+            +         '</horizontalaxis>'
             +         '<verticalaxis'
             +             ' color="0x123456"'
             +             ' id="y"'
@@ -263,7 +257,9 @@ describe("Multigraph serialization", function () {
             +             ' base="1,-1"'
             +             ' minposition="0.2"'
             +             ' maxposition="1"'
-            +         '/>'
+            +         '>'
+            +             '<grid color="0xeeeeee" visible="false"/>'
+            +         '</verticalaxis>'
             +         '<verticalaxis'
             +             ' color="0x123456"'
             +             ' id="y2"'
@@ -284,11 +280,34 @@ describe("Multigraph serialization", function () {
             +             ' base="1,-1"'
             +             ' minposition="1"'
             +             ' maxposition="1"'
-            +         '/>'
+            +         '>'
+            +             '<grid color="0xeeeeee" visible="false"/>'
+            +         '</verticalaxis>'
+            +         '<plot>'
+            +             '<horizontalaxis'
+            +                 ' ref="x"'
+            +                 '>'
+            +                 '<variable'
+            +                     ' ref="x"'
+            +                 '/>'
+            +             '</horizontalaxis>'
+            +             '<verticalaxis'
+            +                 ' ref="y"'
+            +                 '>'
+            +                 '<variable'
+            +                     ' ref="y"'
+            +                 '/>'
+            +             '</verticalaxis>'
+            +         '</plot>'
+            +         '<plot>'
+            +             '<horizontalaxis'
+            +                 ' ref="x"'
+            +                 '/>'
+            +         '</plot>'
             +         '<data>'
             +             '<variables>'
             +               '<variable id="x" column="0" type="number" missingop="eq"/>'
-            +               '<variable id="y" column="1" type="number" missingop="eq"/>'
+            +               '<variable id="y" column="1" type="number"/>'
             +             '</variables>'
             +             '<values>'
             +                 '3,4\n'
@@ -350,28 +369,6 @@ describe("Multigraph serialization", function () {
             +         '>'
             +             'Graph Title'
             +         '</title>'
-            +        '<plot>'
-            +            '<horizontalaxis'
-            +                ' ref="x"'
-            +                '>'
-            +                '<variable'
-            +                    ' ref="x"'
-            +                '/>'
-            +            '</horizontalaxis>'
-            +            '<verticalaxis'
-            +                ' ref="y"'
-            +                '>'
-            +                '<variable'
-            +                    ' ref="y"'
-            +                '/>'
-            +            '</verticalaxis>'
-            +        '</plot>'
-            +        '<plot>'
-            +            '<horizontalaxis'
-            +                ' ref="x"'
-            +                '/>'
-            +            '</horizontalaxis>'
-            +        '</plot>'
             +         '<horizontalaxis'
             +             ' color="0x123456"'
             +             ' id="x"'
@@ -392,7 +389,9 @@ describe("Multigraph serialization", function () {
             +             ' base="1,-1"'
             +             ' minposition="-0.3"'
             +             ' maxposition="1"'
-            +         '/>'
+            +         '>'
+            +             '<grid color="0xeeeeee" visible="false"/>'
+            +         '</horizontalaxis>'
             +         '<horizontalaxis'
             +             ' color="0x123456"'
             +             ' id="x2"'
@@ -413,7 +412,9 @@ describe("Multigraph serialization", function () {
             +             ' base="1,-1"'
             +             ' minposition="-0.2"'
             +             ' maxposition="1"'
-            +         '/>'
+            +         '>'
+            +             '<grid color="0xeeeeee" visible="false"/>'
+            +         '</horizontalaxis>'
             +         '<verticalaxis'
             +             ' color="0x123456"'
             +             ' id="y"'
@@ -434,7 +435,9 @@ describe("Multigraph serialization", function () {
             +             ' base="1,-1"'
             +             ' minposition="0.2"'
             +             ' maxposition="1"'
-            +         '/>'
+            +         '>'
+            +             '<grid color="0xeeeeee" visible="false"/>'
+            +         '</verticalaxis>'
             +         '<verticalaxis'
             +             ' color="0x123456"'
             +             ' id="y2"'
@@ -455,11 +458,34 @@ describe("Multigraph serialization", function () {
             +             ' base="1,-1"'
             +             ' minposition="1"'
             +             ' maxposition="1"'
-            +         '/>'
+            +         '>'
+            +             '<grid color="0xeeeeee" visible="false"/>'
+            +         '</verticalaxis>'
+            +        '<plot>'
+            +            '<horizontalaxis'
+            +                ' ref="x"'
+            +                '>'
+            +                '<variable'
+            +                    ' ref="x"'
+            +                '/>'
+            +            '</horizontalaxis>'
+            +            '<verticalaxis'
+            +                ' ref="y"'
+            +                '>'
+            +                '<variable'
+            +                    ' ref="y"'
+            +                '/>'
+            +            '</verticalaxis>'
+            +        '</plot>'
+            +        '<plot>'
+            +            '<horizontalaxis'
+            +                ' ref="x"'
+            +                '/>'
+            +        '</plot>'
             +         '<data>'
             +             '<variables>'
             +               '<variable id="x" column="0" type="number" missingop="eq"/>'
-            +               '<variable id="y" column="1" type="number" missingop="eq"/>'
+            +               '<variable id="y" column="1" type="number"/>'
             +             '</variables>'
             +             '<values>'
             +                 '3,4\n'
@@ -501,7 +527,7 @@ describe("Multigraph serialization", function () {
         multigraph.graphs().at(0).legend().icon().border(1);
 
         multigraph.graphs().at(0).background(new Background());
-        multigraph.graphs().at(0).background(RGBColor.parse("0x123456"));
+        multigraph.graphs().at(0).background().color(RGBColor.parse("0x123456"));
 
         multigraph.graphs().at(0).plotarea(new Plotarea());
         multigraph.graphs().at(0).plotarea().margin().bottom(19);
@@ -535,16 +561,16 @@ describe("Multigraph serialization", function () {
         multigraph.graphs().at(0).plots().at(1).horizontalaxis(new Axis(Axis.HORIZONTAL));
         multigraph.graphs().at(0).plots().at(1).horizontalaxis().id("x");
 
-        multigraph.graphs().at(0).axes.add(new Axis(Axis.HORIZONTAL));
+        multigraph.graphs().at(0).axes().add(new Axis(Axis.HORIZONTAL));
         multigraph.graphs().at(0).axes().at(0).color(RGBColor.parse("0x123456"));
         multigraph.graphs().at(0).axes().at(0).id("x");
         multigraph.graphs().at(0).axes().at(0).type("number");
         multigraph.graphs().at(0).axes().at(0).pregap(2);
         multigraph.graphs().at(0).axes().at(0).postgap(4);
         multigraph.graphs().at(0).axes().at(0).anchor(1);
-        multigraph.graphs().at(0).axes().at(0).min(DataValue.parse(multigraph.graphs().at(0).axes().at(0).type(), "0"));
+        multigraph.graphs().at(0).axes().at(0).min("0");
         multigraph.graphs().at(0).axes().at(0).minoffset(19);
-        multigraph.graphs().at(0).axes().at(0).max(DataValue.parse(multigraph.graphs().at(0).axes().at(0).type(), "10"));
+        multigraph.graphs().at(0).axes().at(0).max("10");
         multigraph.graphs().at(0).axes().at(0).maxoffset(2);
         multigraph.graphs().at(0).axes().at(0).tickmin(-3);
         multigraph.graphs().at(0).axes().at(0).tickmax(3);
@@ -556,16 +582,16 @@ describe("Multigraph serialization", function () {
         multigraph.graphs().at(0).axes().at(0).minposition(Displacement.parse("-0.3"));
         multigraph.graphs().at(0).axes().at(0).maxposition(Displacement.parse("1"));
 
-        multigraph.graphs().at(0).axes.add(new Axis(Axis.HORIZONTAL));
+        multigraph.graphs().at(0).axes().add(new Axis(Axis.HORIZONTAL));
         multigraph.graphs().at(0).axes().at(1).color(RGBColor.parse("0x123456"));
         multigraph.graphs().at(0).axes().at(1).id("x2");
         multigraph.graphs().at(0).axes().at(1).type("number");
         multigraph.graphs().at(0).axes().at(1).pregap(2);
         multigraph.graphs().at(0).axes().at(1).postgap(4);
         multigraph.graphs().at(0).axes().at(1).anchor(1);
-        multigraph.graphs().at(0).axes().at(1).min(DataValue.parse(multigraph.graphs().at(0).axes().at(1).type(), "0"));
+        multigraph.graphs().at(0).axes().at(1).min("0");
         multigraph.graphs().at(0).axes().at(1).minoffset(19);
-        multigraph.graphs().at(0).axes().at(1).max(DataValue.parse(multigraph.graphs().at(0).axes().at(1).type(), "10"));
+        multigraph.graphs().at(0).axes().at(1).max("10");
         multigraph.graphs().at(0).axes().at(1).maxoffset(2);
         multigraph.graphs().at(0).axes().at(1).tickmin(-3);
         multigraph.graphs().at(0).axes().at(1).tickmax(3);
@@ -577,16 +603,16 @@ describe("Multigraph serialization", function () {
         multigraph.graphs().at(0).axes().at(1).minposition(Displacement.parse("-0.2"));
         multigraph.graphs().at(0).axes().at(1).maxposition(Displacement.parse("1"));
 
-        multigraph.graphs().at(0).axes.add(new Axis(Axis.VERTICAL));
+        multigraph.graphs().at(0).axes().add(new Axis(Axis.VERTICAL));
         multigraph.graphs().at(0).axes().at(2).color(RGBColor.parse("0x123456"));
         multigraph.graphs().at(0).axes().at(2).id("y");
         multigraph.graphs().at(0).axes().at(2).type("number");
         multigraph.graphs().at(0).axes().at(2).pregap(2);
         multigraph.graphs().at(0).axes().at(2).postgap(4);
         multigraph.graphs().at(0).axes().at(2).anchor(1);
-        multigraph.graphs().at(0).axes().at(2).min(DataValue.parse(multigraph.graphs().at(0).axes().at(2).type(), "0"));
+        multigraph.graphs().at(0).axes().at(2).min("0");
         multigraph.graphs().at(0).axes().at(2).minoffset(19);
-        multigraph.graphs().at(0).axes().at(2).max(DataValue.parse(multigraph.graphs().at(0).axes().at(2).type(), "10"));
+        multigraph.graphs().at(0).axes().at(2).max("10");
         multigraph.graphs().at(0).axes().at(2).maxoffset(2);
         multigraph.graphs().at(0).axes().at(2).tickmin(-3);
         multigraph.graphs().at(0).axes().at(2).tickmax(3);
@@ -598,16 +624,16 @@ describe("Multigraph serialization", function () {
         multigraph.graphs().at(0).axes().at(2).minposition(Displacement.parse("0.2"));
         multigraph.graphs().at(0).axes().at(2).maxposition(Displacement.parse("1"));
 
-        multigraph.graphs().at(0).axes.add(new Axis(Axis.VERTICAL));
+        multigraph.graphs().at(0).axes().add(new Axis(Axis.VERTICAL));
         multigraph.graphs().at(0).axes().at(3).color(RGBColor.parse("0x123456"));
         multigraph.graphs().at(0).axes().at(3).id("y2");
         multigraph.graphs().at(0).axes().at(3).type("number");
         multigraph.graphs().at(0).axes().at(3).pregap(2);
         multigraph.graphs().at(0).axes().at(3).postgap(4);
         multigraph.graphs().at(0).axes().at(3).anchor(1);
-        multigraph.graphs().at(0).axes().at(3).min(DataValue.parse(multigraph.graphs().at(0).axes().at(3).type(), "0"));
+        multigraph.graphs().at(0).axes().at(3).min("0");
         multigraph.graphs().at(0).axes().at(3).minoffset(19);
-        multigraph.graphs().at(0).axes().at(3).max(DataValue.parse(multigraph.graphs().at(0).axes().at(3).type(), "10"));
+        multigraph.graphs().at(0).axes().at(3).max("10");
         multigraph.graphs().at(0).axes().at(3).maxoffset(2);
         multigraph.graphs().at(0).axes().at(3).tickmin(-3);
         multigraph.graphs().at(0).axes().at(3).tickmax(3);
@@ -622,12 +648,12 @@ describe("Multigraph serialization", function () {
         variables = [];
         variables.push(new DataVariable("x"));
         variables[0].column(0);
-        variables[0].type(DataValue.parse("number"));
+        variables[0].type("number");
         variables[0].missingop(DataValue.parseComparator("eq"));
 
         variables.push(new DataVariable("y"));
         variables[1].column(1);
-        variables[1].type(DataValue.parse("number"));
+        variables[1].type("number");
 
         multigraph.graphs().at(0).data().add(new ArrayData(variables, [["3", "4"], ["5", "6"]]));
         multigraph.graphs().at(0).data().at(0).stringArray([]);
@@ -666,7 +692,7 @@ describe("Multigraph serialization", function () {
         multigraph.graphs().at(1).legend().icon().border(1);
 
         multigraph.graphs().at(1).background(new Background());
-        multigraph.graphs().at(1).background(RGBColor.parse("0x123456"));
+        multigraph.graphs().at(1).background().color(RGBColor.parse("0x123456"));
         multigraph.
         graphs().at(1).plotarea(new Plotarea());
         multigraph.graphs().at(1).plotarea().margin().bottom(19);
@@ -700,16 +726,16 @@ describe("Multigraph serialization", function () {
         multigraph.graphs().at(1).plots().at(1).horizontalaxis(new Axis(Axis.HORIZONTAL));
         multigraph.graphs().at(1).plots().at(1).horizontalaxis().id("x");
 
-        multigraph.graphs().at(1).axes.add(new Axis(Axis.HORIZONTAL));
+        multigraph.graphs().at(1).axes().add(new Axis(Axis.HORIZONTAL));
         multigraph.graphs().at(1).axes().at(0).color(RGBColor.parse("0x123456"));
         multigraph.graphs().at(1).axes().at(0).id("x");
         multigraph.graphs().at(1).axes().at(0).type("number");
         multigraph.graphs().at(1).axes().at(0).pregap(2);
         multigraph.graphs().at(1).axes().at(0).postgap(4);
         multigraph.graphs().at(1).axes().at(0).anchor(1);
-        multigraph.graphs().at(1).axes().at(0).min(DataValue.parse(multigraph.graphs().at(1).axes().at(0).type(), "0"));
+        multigraph.graphs().at(1).axes().at(0).min("0");
         multigraph.graphs().at(1).axes().at(0).minoffset(19);
-        multigraph.graphs().at(1).axes().at(0).max(DataValue.parse(multigraph.graphs().at(1).axes().at(0).type(), "10"));
+        multigraph.graphs().at(1).axes().at(0).max("10");
         multigraph.graphs().at(1).axes().at(0).maxoffset(2);
         multigraph.graphs().at(1).axes().at(0).tickmin(-3);
         multigraph.graphs().at(1).axes().at(0).tickmax(3);
@@ -721,16 +747,16 @@ describe("Multigraph serialization", function () {
         multigraph.graphs().at(1).axes().at(0).minposition(Displacement.parse("-0.3"));
         multigraph.graphs().at(1).axes().at(0).maxposition(Displacement.parse("1"));
 
-        multigraph.graphs().at(1).axes.add(new Axis(Axis.HORIZONTAL));
+        multigraph.graphs().at(1).axes().add(new Axis(Axis.HORIZONTAL));
         multigraph.graphs().at(1).axes().at(1).color(RGBColor.parse("0x123456"));
         multigraph.graphs().at(1).axes().at(1).id("x2");
         multigraph.graphs().at(1).axes().at(1).type("number");
         multigraph.graphs().at(1).axes().at(1).pregap(2);
         multigraph.graphs().at(1).axes().at(1).postgap(4);
         multigraph.graphs().at(1).axes().at(1).anchor(1);
-        multigraph.graphs().at(1).axes().at(1).min(DataValue.parse(multigraph.graphs().at(1).axes().at(1).type(), "0"));
+        multigraph.graphs().at(1).axes().at(1).min("0");
         multigraph.graphs().at(1).axes().at(1).minoffset(19);
-        multigraph.graphs().at(1).axes().at(1).max(DataValue.parse(multigraph.graphs().at(1).axes().at(1).type(), "10"));
+        multigraph.graphs().at(1).axes().at(1).max("10");
         multigraph.graphs().at(1).axes().at(1).maxoffset(2);
         multigraph.graphs().at(1).axes().at(1).tickmin(-3);
         multigraph.graphs().at(1).axes().at(1).tickmax(3);
@@ -742,16 +768,16 @@ describe("Multigraph serialization", function () {
         multigraph.graphs().at(1).axes().at(1).minposition(Displacement.parse("-0.2"));
         multigraph.graphs().at(1).axes().at(1).maxposition(Displacement.parse("1"));
 
-        multigraph.graphs().at(1).axes.add(new Axis(Axis.VERTICAL));
+        multigraph.graphs().at(1).axes().add(new Axis(Axis.VERTICAL));
         multigraph.graphs().at(1).axes().at(2).color(RGBColor.parse("0x123456"));
         multigraph.graphs().at(1).axes().at(2).id("y");
         multigraph.graphs().at(1).axes().at(2).type("number");
         multigraph.graphs().at(1).axes().at(2).pregap(2);
         multigraph.graphs().at(1).axes().at(2).postgap(4);
         multigraph.graphs().at(1).axes().at(2).anchor(1);
-        multigraph.graphs().at(1).axes().at(2).min(DataValue.parse(multigraph.graphs().at(1).axes().at(2).type(), "0"));
+        multigraph.graphs().at(1).axes().at(2).min("0");
         multigraph.graphs().at(1).axes().at(2).minoffset(19);
-        multigraph.graphs().at(1).axes().at(2).max(DataValue.parse(multigraph.graphs().at(1).axes().at(2).type(), "10"));
+        multigraph.graphs().at(1).axes().at(2).max("10");
         multigraph.graphs().at(1).axes().at(2).maxoffset(2);
         multigraph.graphs().at(1).axes().at(2).tickmin(-3);
         multigraph.graphs().at(1).axes().at(2).tickmax(3);
@@ -763,16 +789,16 @@ describe("Multigraph serialization", function () {
         multigraph.graphs().at(1).axes().at(2).minposition(Displacement.parse("0.2"));
         multigraph.graphs().at(1).axes().at(2).maxposition(Displacement.parse("1"));
 
-        multigraph.graphs().at(1).axes.add(new Axis(Axis.VERTICAL));
+        multigraph.graphs().at(1).axes().add(new Axis(Axis.VERTICAL));
         multigraph.graphs().at(1).axes().at(3).color(RGBColor.parse("0x123456"));
         multigraph.graphs().at(1).axes().at(3).id("y2");
         multigraph.graphs().at(1).axes().at(3).type("number");
         multigraph.graphs().at(1).axes().at(3).pregap(2);
         multigraph.graphs().at(1).axes().at(3).postgap(4);
         multigraph.graphs().at(1).axes().at(3).anchor(1);
-        multigraph.graphs().at(1).axes().at(3).min(DataValue.parse(multigraph.graphs().at(1).axes().at(3).type(), "0"));
+        multigraph.graphs().at(1).axes().at(3).min("0");
         multigraph.graphs().at(1).axes().at(3).minoffset(19);
-        multigraph.graphs().at(1).axes().at(3).max(DataValue.parse(multigraph.graphs().at(1).axes().at(3).type(), "10"));
+        multigraph.graphs().at(1).axes().at(3).max("10");
         multigraph.graphs().at(1).axes().at(3).maxoffset(2);
         multigraph.graphs().at(1).axes().at(3).tickmin(-3);
         multigraph.graphs().at(1).axes().at(3).tickmax(3);
@@ -787,12 +813,12 @@ describe("Multigraph serialization", function () {
         variables = [];
         variables.push(new DataVariable("x"));
         variables[0].column(0);
-        variables[0].type(DataValue.parse("number"));
+        variables[0].type("number");
         variables[0].missingop(DataValue.parseComparator("eq"));
 
         variables.push(new DataVariable("y"));
         variables[1].column(1);
-        variables[1].type(DataValue.parse("number"));
+        variables[1].type("number");
 
         multigraph.graphs().at(1).data().add(new ArrayData(variables, [["3", "4"], ["5", "6"]]));
         multigraph.graphs().at(1).data().at(0).stringArray([]);

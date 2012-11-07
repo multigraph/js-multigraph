@@ -31,8 +31,8 @@ describe("Axis Serialization", function () {
         if (format !== undefined) {
             labeler.formatter(DataFormatter.create(axis.type(), format));
         }
-        if (spacing === undefined) {
-            labeler.spacing(spacing);
+        if (spacing !== undefined) {
+            labeler.spacing(DataMeasure.parse(axis.type(), spacing));
         }
         if (anchor !== undefined) {
             labeler.anchor(Point.parse(anchor));
@@ -75,7 +75,9 @@ describe("Axis Serialization", function () {
             +     ' base="1,-1"'
             +     ' minposition="-1"'
             +     ' maxposition="1"'
-            + '/>';
+            +     '>'
+            +   '<grid color="0xeeeeee" visible="false"/>' // axes initialize a default grid
+            + '</horizontalaxis>';
         axis = new Axis(Axis.HORIZONTAL);
 
         axis.id("x");
@@ -89,7 +91,7 @@ describe("Axis Serialization", function () {
         axis.min("auto");
         axis.minoffset(19);
         axis.minposition(Displacement.parse("-1"));
-        axis.max(DataValue.parse(axis.type(), "10"));
+        axis.max("10");
         axis.maxoffset(2);
         axis.maxposition(Displacement.parse("1"));
         axis.color(RGBColor.parse("0x123456"));
@@ -132,6 +134,7 @@ describe("Axis Serialization", function () {
                 +       '>'
                 +     'A Title'
                 +   '</title>'
+                +   '<grid color="0xeeeeee" visible="false"/>' // axes initialize a default grid
                 + '</verticalaxis>';
 
             axis = new Axis(Axis.VERTICAL);
@@ -160,6 +163,7 @@ describe("Axis Serialization", function () {
             axis.title().angle(70);
             axis.title().anchor(Point.parse("1,1"));
             axis.title().position(Point.parse("-1,1"));
+            axis.title().content("A Title");
 
             expect(axis.serialize()).toBe(xmlString);
         });
@@ -202,6 +206,7 @@ describe("Axis Serialization", function () {
                 +     ' spacing="100 75 50 25 10 5 2 1 0.5 0.1"'
                 +     ' densityfactor="0.5"'
                 +      '/>'
+                +  '<grid color="0xeeeeee" visible="false"/>' // axes initialize a default grid
                 + '</verticalaxis>';
 
             axis = new Axis(Axis.VERTICAL);
@@ -242,36 +247,42 @@ describe("Axis Serialization", function () {
                 +   ' pregap="0"'
                 +   ' postgap="0"'
                 +   ' anchor="-1"'
-                +   ' minoffset="0"'
                 +   ' min="auto"'
-                +   ' minposition="-1"'
+                +   ' minoffset="0"'
                 +   ' max="auto"'
                 +   ' maxoffset="0"'
-                +   ' maxposition="1"'
                 +   ' tickmin="-3"'
                 +   ' tickmax="3"'
                 +   ' highlightstyle="axis"'
                 +   ' linewidth="1"'
-                +   ' length="0.9+0"'
+                +   ' length="0.9"'
                 +   ' position="0,0"'
                 +   ' base="-1,1"'
+                +   ' minposition="-1"'
+                +   ' maxposition="1"'
                 +    '>'
                 +  '<labels'
-                +     ' start="10"'
-                +     ' angle="9"'
-                +     ' format="%1d"'
-                +     ' anchor="0,0"'
-                +     ' position="1,1"'
-                +     ' densityfactor="0.5"'
                 +      '>'
                 +    '<label'
+                +       ' start="10"'
+                +       ' angle="9"'
+                +       ' format="%1d"'
+                +       ' anchor="0,0"'
+                +       ' position="1,1"'
                 +       ' spacing="200 100 50 10"'
+                +       ' densityfactor="0.5"'
                 +        '/>'
                 +    '<label'
+                +       ' start="10"'
+                +       ' angle="9"'
                 +       ' format="%2d"'
-                +       ' spacing="5 2 1 .5"'
+                +       ' anchor="0,0"'
+                +       ' position="1,1"'
+                +       ' spacing="5 2 1 0.5"'
+                +       ' densityfactor="0.5"'
                 +        '/>'
                 +  '</labels>'
+                +  '<grid color="0xeeeeee" visible="false"/>' // axes initialize a default grid
                 + '</verticalaxis>';
 
             axis = new Axis(Axis.VERTICAL);
@@ -290,7 +301,7 @@ describe("Axis Serialization", function () {
             axis.tickmax(3);
             axis.highlightstyle("axis");
             axis.linewidth(1);
-            axis.length(Displacement.parse("0.9+0"));
+            axis.length(Displacement.parse("0.9"));
             axis.position(Point.parse("0,0"));
             axis.base(Point.parse("-1,1"));
             axis.minposition(Displacement.parse("-1"));
@@ -396,7 +407,8 @@ describe("Axis Serialization", function () {
                 +    ' base="-1,1"'
                 +    ' minposition="1"'
                 +    ' maxposition="1"'
-                +    ' >'
+                +    '>'
+                +   '<grid color="0xeeeeee" visible="false"/>' // axes initialize a default grid
                 +   '<pan'
                 +      ' allowed="yes"'
                 +      ' min="0"'
@@ -461,6 +473,7 @@ describe("Axis Serialization", function () {
                 +    ' minposition="1"'
                 +    ' maxposition="1"'
                 +    '>'
+                +   '<grid color="0xeeeeee" visible="false"/>' // axes initialize a default grid
                 +   '<zoom'
                 +      ' allowed="yes"'
                 +      ' min="0"'
@@ -527,6 +540,7 @@ describe("Axis Serialization", function () {
                 +    ' minposition="1"'
                 +    ' maxposition="1"'
                 + '>'
+                +   '<grid color="0xeeeeee" visible="false"/>' // axes initialize a default grid
                 +   '<binding'
                 +      ' id="y"'
                 +      ' min="-10"'
@@ -662,10 +676,11 @@ describe("Axis Serialization", function () {
             axis.title().angle(70);
             axis.title().anchor(Point.parse("1,1"));
             axis.title().position(Point.parse("-1,1"));
+            axis.title().content("A Title");
 
             spacingStrings = "200 100 50 10".split(/\s+/);
             for (i = 0; i < spacingStrings.length; i++) {
-                axis.labelers().add(addLabeler(axis, "10", "9", "%2d", "0,0", "1,1", spacingStrings[i], "0.5"));
+                axis.labelers().add(addLabeler(axis, "10", "9", "%1d", "0,0", "1,1", spacingStrings[i], "0.5"));
             }
 
             spacingStrings = "5 2 1 0.5".split(/\s+/);
@@ -686,7 +701,7 @@ describe("Axis Serialization", function () {
             axis.zoom().allowed(true);
             axis.zoom().min(DataMeasure.parse(axis.type(), "0"));
             axis.zoom().max(DataMeasure.parse(axis.type(), "80"));
-            axis.zoom().anchor(null);
+            axis.zoom().anchor(DataValue.parse(axis.type(), "1"));
 
             axis.binding(new Binding("y", "-10", "50"));
 

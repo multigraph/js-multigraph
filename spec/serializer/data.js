@@ -36,12 +36,12 @@ describe("Data Serialization", function () {
 
             variables.push(new DataVariable("x"));
             variables[0].column(0);
-            variables[0].type(DataValue.parse("number"));
+            variables[0].type("number");
             variables[0].missingop(DataValue.parseComparator("eq"));
 
             variables.push(new DataVariable("y"));
             variables[1].column(1);
-            variables[1].type(DataValue.parse("number"));
+            variables[1].type("number");
 
             data = new ArrayData(variables, [["3", "4"], ["5", "6"]]);
             data.stringArray([]);
@@ -71,12 +71,11 @@ describe("Data Serialization", function () {
 
             variables.push(new DataVariable("x"));
             variables[0].column(0);
-            variables[0].type(DataValue.parse("number"));
-            variables[0].missingop(DataValue.parseComparator("eq"));
+            variables[0].type("number");
 
             variables.push(new DataVariable("y"));
             variables[1].column(1);
-            variables[1].type(DataValue.parse("number"));
+            variables[1].type("number");
 
             data = new CSVData(variables, "parser/jquery/fixtures/test1.csv");
 

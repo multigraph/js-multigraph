@@ -17,13 +17,13 @@ describe("Axis Zoom serialization", function () {
         zoom.allowed(true);
         zoom.min(window.multigraph.core.DataMeasure.parse("number", 0));
         zoom.max(window.multigraph.core.DataMeasure.parse("number", 80));
-        zoom.anchor(window.multigraph.core.DataMeasure.parse("number", 1));
+        zoom.anchor(window.multigraph.core.DataValue.parse("number", "1"));
         expect(zoom.serialize()).toBe(xmlString);
 
         xmlString = '<zoom allowed="no" anchor="0"/>';
         zoom = new Zoom();
         zoom.allowed(false);
-        zoom.anchor(window.multigraph.core.DataMeasure.parse("number", 0));
+        zoom.anchor(window.multigraph.core.DataValue.parse("number", 0));
         expect(zoom.serialize()).toBe(xmlString);
     });
 
