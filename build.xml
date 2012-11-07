@@ -181,13 +181,22 @@
   </target>
 
   <target name="jasmine-logger-html">
+    <pathconvert property="scripttags.jasmine-logger-src" pathsep="${line.separator}">
+      <path refid="path.multigraph-core-js"/>
+      <path refid="path.parser-jquery-js"/>
+      <path refid="path.normalizer-js"/>
+      <path refid="path.events-jquery-mouse-js"/>
+      <path refid="path.events-jquery-touch-js"/>
+      <path refid="path.graphics-logger-js"/>
+      <mapper type="regexp" from="^${basedir}/(.*)$" to='&lt;script type="text/javascript" src="../\1"&gt;&lt;/script&gt;'/>
+    </pathconvert>
     <pathconvert property="scripttags.jasmine-logger-spec" pathsep="${line.separator}">
       <path refid="path.spec-logger-js"/>
       <mapper type="regexp" from="^${basedir}/spec/(.*)$" to='&lt;script type="text/javascript" src="\1"&gt;&lt;/script&gt;'/>
     </pathconvert>
     <replaceregexp flags="s">
       <regexp pattern="&lt;!--BEGIN_ANT_LINES--&gt;.*&lt;!--END_ANT_LINES--&gt;"/>
-      <substitution expression="&lt;!--BEGIN_ANT_LINES--&gt;${line.separator}${scripttags.jasmine-src}${line.separator}${line.separator}${scripttags.jasmine-logger-spec}${line.separator}&lt;!--END_ANT_LINES--&gt;"/>
+      <substitution expression="&lt;!--BEGIN_ANT_LINES--&gt;${line.separator}${scripttags.jasmine-logger-src}${line.separator}${line.separator}${scripttags.jasmine-logger-spec}${line.separator}&lt;!--END_ANT_LINES--&gt;"/>
       <filelist dir="spec" files="logger.html"/>
     </replaceregexp>
   </target>
