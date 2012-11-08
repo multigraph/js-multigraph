@@ -1,17 +1,30 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
+/*jshint laxbreak:true */
 
 describe("Axis Pan parsing", function () {
     "use strict";
 
     var Pan = window.multigraph.core.Pan,
-        xmlString = '<pan allowed="yes" min="0" max="5"/>',
+        DataValue = window.multigraph.core.DataValue,
+        xmlString,
         $xml,
-        pan;
+        pan,
+        allowedString = "yes",
+        allowedBool = true,
+        minString = "0",
+        maxString = "5",
+        type = "number";
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
+        xmlString = ''
+            + '<pan'
+            +    ' allowed="' + allowedString + '"'
+            +    ' min="' + minString + '"'
+            +    ' max="' + maxString + '"'
+            +    '/>';
         $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
-        pan = Pan.parseXML($xml, "number");
+        pan = Pan.parseXML($xml, type);
     });
 
     it("should be able to parse a Pan from XML", function () {
@@ -20,22 +33,15 @@ describe("Axis Pan parsing", function () {
     });
 
     it("should be able to parse a pan from XML and read its 'allowed' attribute", function () {
-        expect(pan.allowed()).toBe(true);
+        expect(pan.allowed()).toEqual(allowedBool);
     });
 
     it("should be able to parse a pan from XML and read its 'min' attribute", function () {
-        expect(pan.min().getRealValue()).toBe(0);
+        expect(pan.min().getRealValue()).toEqual((DataValue.parse(type, minString)).getRealValue());
     });
 
     it("should be able to parse a pan from XML and read its 'max' attribute", function () {
-        expect(pan.max().getRealValue()).toBe(5);
-    });
-
-    it("should be able to parse a pan from XML, serialize it and get the same XML as the original", function () {
-        var xmlString2 = '<pan allowed="no"/>';
-        expect(pan.serialize()).toBe(xmlString);
-        pan = Pan.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString2), "number");
-        expect(pan.serialize()).toBe(xmlString2);
+        expect(pan.max().getRealValue()).toEqual((DataValue.parse(type, maxString)).getRealValue());
     });
 
 });

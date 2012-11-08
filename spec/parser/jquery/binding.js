@@ -1,4 +1,5 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
+/*jshint laxbreak:true */
 
 describe("Axis Binding parsing", function () {
     "use strict";
@@ -6,10 +7,19 @@ describe("Axis Binding parsing", function () {
     var Binding = window.multigraph.core.Binding,
         xmlString = '<binding id="y" min="-10" max="50"/>',
         $xml,
-        binding;
+        binding,
+        idString = "y",
+        minString = "-10",
+        maxString = "50";
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
+        xmlString = ''
+            + '<binding'
+            +    ' id="' + idString + '"'
+            +    ' min="' + minString + '"'
+            +    ' max="' + maxString + '"'
+            + '/>';
         $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
         binding = Binding.parseXML($xml);
     });
@@ -20,22 +30,15 @@ describe("Axis Binding parsing", function () {
     });
 
     it("should be able to parse a binding from XML and read its 'id' attribute", function () {
-        expect(binding.id()).toBe("y");
+        expect(binding.id()).toBe(idString);
     });
 
     it("should be able to parse a binding from XML and read its 'min' attribute", function () {
-        expect(binding.min()).toBe("-10");
+        expect(binding.min()).toBe(minString);
     });
 
     it("should be able to parse a binding from XML and read its 'max' attribute", function () {
-        expect(binding.max()).toBe("50");
-    });
-
-    it("should be able to parse a binding from XML, serialize it and get the same XML as the original", function () {
-        var xmlString2 = '<binding id="x" min="60" max="70"/>';
-        expect(binding.serialize()).toBe(xmlString);
-        binding = Binding.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString2));
-        expect(binding.serialize()).toBe(xmlString2);
+        expect(binding.max()).toBe(maxString);
     });
 
 });
