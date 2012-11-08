@@ -1,51 +1,77 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
+/*jshint laxbreak:true */
 
 describe("Background parsing", function () {
     "use strict";
 
     var Background = window.multigraph.core.Background,
-        xmlString = '<background color="0x123456"/>',
+        Img = window.multigraph.core.Img,
+        Point = window.multigraph.math.Point,
+        RGBColor = window.multigraph.math.RGBColor,
+        xmlString,
         $xml,
-        b;
+        background,
+        colorString = "0x123456";
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, 'parseXML', 'serialize');
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
+        xmlString = '<background color="' + colorString + '"/>',
         $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
-        b = Background.parseXML($xml);
+        background = Background.parseXML($xml);
     });
 
     it("should be able to parse a background from XML", function () {
-        expect(b).not.toBeUndefined();
+        expect(background).not.toBeUndefined();
+        expect(background instanceof Background).toBe(true);
     });
 
     it("should be able to parse a background from XML and read its 'color' attribute", function () {
-        expect(b.color().getHexString()).toBe("0x123456");
+        expect(background.color().getHexString("0x")).toEqual((RGBColor.parse(colorString)).getHexString("0x"));
     });
 
     describe("Img parsing", function () {
-        var Img = window.multigraph.core.Img;
+        var colorString = "0x123456",
+            srcString = "http://www.example.com/background_img.gif",
+            frameString = "plot",
+            anchorString = "1,1",
+            baseString = "0,0",
+            positionString = "-1,1";
 
         beforeEach(function () {
-            xmlString = '<background color="0x123456"><img src="http://www.example.com/corgi_pool.gif"/></background>';
-            window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
+            xmlString = ''
+                + '<background'
+                +    ' color="' + colorString + '"'
+                +    '>'
+                +   '<img'
+                +      ' src="' + srcString + '"'
+                +      ' frame="' + frameString + '"'
+                +      ' anchor="' + anchorString + '"'
+                +      ' base="' + baseString + '"'
+                +      ' position="' + positionString + '"'
+                +      '/>'
+                + '</background>';
             $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
-            b = Background.parseXML($xml);
+            background = Background.parseXML($xml);
         });
 
-        it("should be able to parse a background with children from XML", function () {
-            expect(b).not.toBeUndefined();
+        it("should be able to parse a background tag with a img tag from XML", function () {
+            expect(background).not.toBeUndefined();
+            expect(background instanceof Background).toBe(true);
+            expect(background.img()).not.toBeUndefined();
+            expect(background.img() instanceof Img).toBe(true);
         });
 
-        it("should be able to parse a img from XML and read its 'src' attribute", function () {
-            expect(b.img().src()).toBe("http://www.example.com/corgi_pool.gif");
-        });
-
-        xit("should be able to parse a background with children from XML, serialize it and get the same XML as the original", function () {
-            var xmlString2 = '<background color="0x459996"><img src="http://www.example.com/flavor_explosion.png" anchor="0 1" frame="padding"/></background>';
-            expect(b.serialize()).toBe(xmlString);
-            b = Background.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString2));
-            expect(b.serialize()).toBe(xmlString2);
+        it("should properly parse a background model with a img submodel from XML", function () {
+            expect(background.img().src()).toEqual(srcString);
+            expect(background.img().frame()).toEqual(frameString.toLowerCase());
+            expect(background.img().anchor().x()).toEqual((Point.parse(anchorString)).x());
+            expect(background.img().anchor().y()).toEqual((Point.parse(anchorString)).y());
+            expect(background.img().base().x()).toEqual((Point.parse(baseString)).x());
+            expect(background.img().base().y()).toEqual((Point.parse(baseString)).y());
+            expect(background.img().position().x()).toEqual((Point.parse(positionString)).x());
+            expect(background.img().position().y()).toEqual((Point.parse(positionString)).y());
         });
 
     });
+
 });
