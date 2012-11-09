@@ -27,11 +27,11 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
                 var bounds = data.getBounds(column);
 
                 if (!axis.hasDataMin()) {
-                    axis.dataMin(bounds[0]);
+                    axis.setDataRange(bounds[0], axis.dataMax());
                 }
                 
                 if (!axis.hasDataMax()) {
-                    axis.dataMax(bounds[1]);
+                    axis.setDataRange(axis.dataMin(), bounds[1]);
                 }                
             };
 

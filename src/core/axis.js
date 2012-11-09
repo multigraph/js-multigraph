@@ -191,6 +191,26 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             this.currentLabelDensity(currentLabelDensity);
         });
 
+        this.respondsTo("setDataRangeNoBind", function(min, max, dispatch) {
+            if (dispatch === undefined) {
+                dispatch = true;
+            }
+            this.dataMin(min);  //ns.DataValue.create(max) ???
+            this.dataMax(max);  //ns.DataValue.create(max) ???
+            // if (_graph != null) { _graph.invalidateDisplayList(); }
+            if (dispatch) {
+                //dispatchEvent(new AxisEvent(AxisEvent.CHANGE,min,max));  
+            }
+        });
+
+        this.respondsTo("setDataRange", function (min, max, dispatch) {
+            if (this.binding()) {
+                this.binding().setDataRange(this, min, max, dispatch);
+            } else {
+                this.setDataRangeNoBind(min, max, dispatch);
+            }
+        });
+
         this.respondsTo("doPan", function (pixelBase, pixelDisplacement) {
             var offset,
                 newRealMin,
@@ -208,8 +228,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 newRealMin -= (newRealMax - this.pan().max().getRealValue());
                 newRealMax = this.pan().max();
             }
-            this.dataMin(ns.DataValue.create(this.type(), newRealMin));
-            this.dataMax(ns.DataValue.create(this.type(), newRealMax));
+            this.setDataRange(ns.DataValue.create(this.type(), newRealMin),
+                          ns.DataValue.create(this.type(), newRealMax));
         });
 
         this.respondsTo("doZoom", function (pixelBase, pixelDisplacement) {
@@ -258,8 +278,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                     newMax = newMax.addRealValue(d);
                     newMin = newMin.addRealValue(-d);
                 }
-                this.dataMin(newMin);
-                this.dataMax(newMax);
+                this.setDataRange(newMin, newMax);
             }
         });
 
