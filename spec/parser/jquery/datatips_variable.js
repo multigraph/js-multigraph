@@ -1,32 +1,32 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
+/*jshint laxbreak:true */
 
 describe("DatatipsVariable parsing", function () {
     "use strict";
 
-    var Variable = window.multigraph.core.DatatipsVariable,
-        xmlString = '<variable format="number"/>',
+    var DatatipsVariable = window.multigraph.core.DatatipsVariable,
+        xmlString,
         $xml,
-        variable;
+        variable,
+        formatString = "number";
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
-	$xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
-        variable = Variable.parseXML($xml);
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
+        xmlString = ''
+            + '<variable'
+            +     ' format="' + formatString + '"'
+            +     '/>',
+        $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+        variable = DatatipsVariable.parseXML($xml);
     });
 
     it("should be able to parse a variable from XML", function () {
         expect(variable).not.toBeUndefined();
+        expect(variable instanceof DatatipsVariable).toBe(true);
     });
 
     it("should be able to parse a variable from XML and read its 'format' attribute", function () {
-        expect(variable.format()).toBe("number");
-    });
-
-    it("should be able to parse a variable from XML, serialize it and get the same XML as the original", function () {
-        var xmlString2 = '<variable format="datetime"/>';
-        expect(variable.serialize()).toBe(xmlString);
-	variable = Variable.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString2));
-        expect(variable.serialize()).toBe(xmlString2);
+        expect(variable.format()).toEqual(formatString);
     });
 
 });
