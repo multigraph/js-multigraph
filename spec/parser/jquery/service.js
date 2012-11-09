@@ -4,7 +4,7 @@ describe("Data Service parsing", function () {
     "use strict";
 
     var Service = window.multigraph.core.Service,
-        xmlString = '<service location="http://example.com/CoolnessOfCats/1990/2000"/>',
+        xmlString = '<service location="http://example.com/ExampleService/1990/2000"/>',
         $xml,
         service;
 
@@ -20,11 +20,11 @@ describe("Data Service parsing", function () {
     });
 
     it("should be able to parse a service from XML and read its 'location' attribute", function () {
-        expect(service.location()).toBe("http://example.com/CoolnessOfCats/1990/2000");
+        expect(service.location()).toBe("http://example.com/ExampleService/1990/2000");
     });
 
     it("should be able to parse a service from XML, serialize it and get the same XML as the original", function () {
-        var xmlString2 = '<service location="http://example.com/CoolnessOfFerrets/2000/2005"/>';
+        var xmlString2 = '<service location="http://example.com/ExampleService/2000/2005"/>';
         expect(service.serialize()).toBe(xmlString);
         service = Service.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString2));
         expect(service.serialize()).toBe(xmlString2);
