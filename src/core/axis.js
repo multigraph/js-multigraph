@@ -23,7 +23,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return zoom instanceof ns.Zoom;
         });
         this.hasA("binding").which.validatesWith(function (binding) {
-            return binding instanceof ns.AxisBinding;
+            return binding === null || binding instanceof ns.AxisBinding;
         });
         this.hasAn("id").which.validatesWith(function (id) {
             return typeof(id) === "string";

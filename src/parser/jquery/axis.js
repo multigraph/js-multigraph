@@ -134,9 +134,25 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 if (xml.find("grid").length > 0)         { axis.grid(ns.core.Grid[parse](xml.find("grid")));                         }
                 if (xml.find("pan").length > 0)          { axis.pan(ns.core.Pan[parse](xml.find("pan"), axis.type()));               }
                 if (xml.find("zoom").length > 0)         { axis.zoom(ns.core.Zoom[parse](xml.find("zoom"), axis.type()));            }
-                //if (xml.find("binding").length > 0)      { axis.binding(ns.core.Binding[parse](xml.find("binding")));                }
                 if (xml.find("labels").length > 0)       { parseLabels(xml, axis);                                                   }
 
+                if (xml.find("binding").length > 0) {
+                    var bindingIdAttr = xml.find("binding").attr("id");
+                    var bindingMinAttr = xml.find("binding").attr("min");
+                    var bindingMaxAttr = xml.find("binding").attr("max");
+                    var bindingMinDataValue = ns.core.DataValue.parse(axis.type(), bindingMinAttr);
+                    var bindingMaxDataValue = ns.core.DataValue.parse(axis.type(), bindingMaxAttr);
+                    if (typeof(bindingIdAttr) !== "string" || bindingIdAttr.length <= 0) {
+                        throw new Error("invalid axis binding id: '" + bindingIdAttr + "'");
+                    }
+                    if (! ns.core.DataValue.isInstance(bindingMinDataValue)) {
+                        throw new Error("invalid axis binding min: '" + bindingMinAttr + "'");
+                    }
+                    if (! ns.core.DataValue.isInstance(bindingMaxDataValue)) {
+                        throw new Error("invalid axis binding max: '" + bindingMaxAttr + "'");
+                    }
+                    ns.core.AxisBinding.findByIdOrCreateNew(bindingIdAttr).addAxis(axis, bindingMinDataValue, bindingMaxDataValue);
+                }
 
             }
             return axis;

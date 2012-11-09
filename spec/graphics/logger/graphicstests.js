@@ -57,6 +57,16 @@ describe("Logger Graphics Tests", function () {
             expect(loggerOutput.contents).toEqual(savedOutput.contents);
         });
     });
+    xit("axisbinding-tempgraph.xml should match with a width of '800' and a height of '500'", function () {
+        var loggerOutput = getLoggerOutput("./mugl/axisbinding-tempgraph.xml", 800, 500);
+        var savedOutput = getFileContents("./graphics/logger/fixtures/axisbinding-tempgraph-800x500.log");
+        waitsFor(function () {
+            return savedOutput.haveData && loggerOutput.haveData;
+        });
+        runs(function () {
+            expect(loggerOutput.contents).toEqual(savedOutput.contents);
+        });
+    });
     it("background_image.xml should match with a width of '800' and a height of '500'", function () {
         var loggerOutput = getLoggerOutput("./mugl/background_image.xml", 800, 500);
         var savedOutput = getFileContents("./graphics/logger/fixtures/background_image-800x500.log");

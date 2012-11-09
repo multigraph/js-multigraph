@@ -5,6 +5,7 @@ describe("Axis parsing", function () {
     "use strict";
 
     var Axis = window.multigraph.core.Axis,
+        AxisBinding = window.multigraph.core.AxisBinding,
         AxisTitle = window.multigraph.core.AxisTitle,
         Labels = window.multigraph.core.Labels,
         Labeler = window.multigraph.core.Labeler,
@@ -421,23 +422,53 @@ describe("Axis parsing", function () {
 
     });
 
-    xdescribe("Binding parsing", function () {
+    describe("AxisBinding parsing", function () {
 
         beforeEach(function () {
-            xmlString = '<verticalaxis color="0x000000" id="y2" type="number" pregap="0" postgap="0" anchor="-1" min="auto" minoffset="0" max="auto" maxoffset="0" tickmin="-3" tickmax="3" highlightstyle="axis" linewidth="1" length="0.9" position="0,0" base="-1,1" minposition="1" maxposition="1"><labels start="0" angle="0" format="%1d" anchor="0,0" position="0,0" spacing="10000 5000 2000 1000 500 200 100 50 20 10 5 2 1 0.1 0.01 0.001"/><grid color="0xeeeeee" visible="false"/><binding id="y" min="-10" max="50"/></verticalaxis>';
+            AxisBinding.forgetAllBindings();
+            xmlString = (
+                ''
+                    + '<verticalaxis id="y" type="number" min="0" max="10">'
+                    +   '<binding id="ybinding" min="0" max="10"/>'
+                    + '</verticalaxis>'
+            );
             $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
         });
 
-        it("should be able to parse a axis with a Binding child from XML", function () {
+        it("should be able to parse an axis with a <binding> tag", function () {
             axis = Axis.parseXML($xml, Axis.VERTICAL);
             expect(axis).not.toBeUndefined();
             expect(axis instanceof Axis).toBe(true);
-            expect(axis.binding() instanceof Binding).toBe(true);
+            expect(axis.binding() instanceof AxisBinding).toBe(true);
+            expect(axis.binding().id()).toEqual("ybinding");
         });
 
-        it("should be able to parse a axis with a Binding child from XML, serialize it and get the same XML as the original", function () {
+        it("axes parsed with the same binding id should be properly bound to each other", function () {
+            var xmlString2 = (
+                ''
+                    + '<verticalaxis id="y" type="number" min="0" max="10">'
+                    +   '<binding id="ybinding" min="0" max="100"/>'
+                    + '</verticalaxis>'
+            );
+            var $xml2 = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString2);
             axis = Axis.parseXML($xml, Axis.VERTICAL);
-            expect(axis.serialize()).toEqual(xmlString);
+            var axis2 = Axis.parseXML($xml2, Axis.VERTICAL);
+
+            expect(axis).not.toBeUndefined();
+            expect(axis instanceof Axis).toBe(true);
+            expect(axis.binding() instanceof AxisBinding).toBe(true);
+            expect(axis.binding().id()).toEqual("ybinding");
+
+
+            expect(axis2).not.toBeUndefined();
+            expect(axis2 instanceof Axis).toBe(true);
+            expect(axis2.binding() instanceof AxisBinding).toBe(true);
+            expect(axis2.binding().id()).toEqual("ybinding");
+
+            axis.setDataRange(0,5);
+            expect(axis2.dataMin().getRealValue()).toEqual(0);
+            expect(axis2.dataMax().getRealValue()).toEqual(50);
+
         });
 
     });

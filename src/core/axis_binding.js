@@ -16,10 +16,18 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
 
         this.respondsTo("addAxis", function(axis, min, max) {
+            // NOTE: min/max can be either numbers, or DataValue
+            // instances, but they CANNOT be strings.
+
             if (axis.binding()) {
                 axis.binding().removeAxis(axis);
             }
             axis.binding(this);
+
+            // convert min/max to numbers
+            min = axis.toRealValue(min);
+            max = axis.toRealValue(max);
+
             this.axes().push({
                 axis   : axis,
                 factor : 1 / (max - min),
@@ -117,6 +125,26 @@ to/from number values vs DataValue instances for min/max.
             }
             return binding;
         };
+
+        AxisBinding.forgetAllBindings = function() {
+
+            // This function is just for use in testing, so we can clear out the global list
+            // of bindings to get a fresh start between tests.
+
+            var i,j,binding;
+
+            // loop over all bindings, all axes, setting the axis binding to null
+            for (i=0; i<AxisBinding.instances.length; ++i) {
+                binding = AxisBinding.instances[i];
+                for (j=0; j<binding.axes().length; ++j) {
+                    binding.axes()[j].binding(null);
+                }
+            }
+
+            // reset the global binding list
+            AxisBinding.instances = [];
+        };
+
     });
 
 });
