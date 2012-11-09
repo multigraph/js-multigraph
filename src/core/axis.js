@@ -23,7 +23,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return zoom instanceof ns.Zoom;
         });
         this.hasA("binding").which.validatesWith(function (binding) {
-            return binding instanceof ns.Binding;
+            return binding instanceof ns.AxisBinding;
         });
         this.hasAn("id").which.validatesWith(function (id) {
             return typeof(id) === "string";
@@ -191,13 +191,42 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             this.currentLabelDensity(currentLabelDensity);
         });
 
+        this.respondsTo("toRealValue", function (value) {
+            if (typeof(value) === "number") {
+                return value;
+            } else if (ns.DataValue.isInstance(value)) {
+                return value.getRealValue();
+            } else {
+                throw new Error("unknown value type for axis value " + value);
+            }
+        });
+
+        this.respondsTo("toDataValue", function (value) {
+            if (typeof(value) === "number") {
+                return ns.DataValue.create(this.type(), value);
+            } else if (ns.DataValue.isInstance(value)) {
+                return value;
+            } else {
+                throw new Error("unknown value type for axis value " + value);
+            }
+        });
+
         this.respondsTo("setDataRangeNoBind", function(min, max, dispatch) {
+
+            // NOTE: min and max may either be plain numbers, or
+            // DataValue instances.  If they're plain numbers, they
+            // get converted to DataValue instances here before being
+            // passed to the dataMin()/dataMax() setters below.
+
+            var dataValueMin = this.toDataValue(min),
+                dataValueMax = this.toDataValue(max);
+
+            this.dataMin(dataValueMin);
+            this.dataMax(dataValueMax);
+            // if (_graph != null) { _graph.invalidateDisplayList(); }
             if (dispatch === undefined) {
                 dispatch = true;
             }
-            this.dataMin(min);  //ns.DataValue.create(max) ???
-            this.dataMax(max);  //ns.DataValue.create(max) ???
-            // if (_graph != null) { _graph.invalidateDisplayList(); }
             if (dispatch) {
                 //dispatchEvent(new AxisEvent(AxisEvent.CHANGE,min,max));  
             }

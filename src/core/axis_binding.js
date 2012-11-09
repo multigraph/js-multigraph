@@ -16,7 +16,11 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
 
         this.respondsTo("addAxis", function(axis, min, max) {
-            this.axes().add({
+            if (axis.binding()) {
+                axis.binding().removeAxis(axis);
+            }
+            axis.binding(this);
+            this.axes().push({
                 axis   : axis,
                 factor : 1 / (max - min),
                 offset : -min / (max - min),
@@ -37,10 +41,19 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
 
         this.respondsTo("setDataRange", function(initiatingAxis, min, max, dispatch) {
+
+            // NOTE: min and max may either be plain numbers, or
+            // DataValue instances.  If they're DataValue instances,
+            // get converted to numbers here before being
+            // passed to the individual axes' setDataRangeNoBind()
+            // method below.
+
             var initiatingAxisIndex,
                 i, j,
                 axes = this.axes(),
-                axis;
+                axis,
+                minRealValue = initiatingAxis.toRealValue(min),
+                maxRealValue = initiatingAxis.toRealValue(max);
 
             if (dispatch === undefined) {
                 dispatch = true; // dispatch defaults to true
@@ -55,16 +68,25 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             for (i=0; i<axes.length; ++i) {
                 axis = axes[i];
                 if (i === initiatingAxisIndex) {
-                    axis.axis.setDataRangeNoBind(min, max, dispatch);
+                    axis.axis.setDataRangeNoBind(minRealValue, maxRealValue, dispatch);
                 } else {
                     axis.axis.setDataRangeNoBind(
-                        (min * axes[initiatingAxisIndex].factor + axes[initiatingAxisIndex].offset - axis.offset) / axis.factor,
-                        (max * axes[initiatingAxisIndex].factor + axes[initiatingAxisIndex].offset - axis.offset) / axis.factor,
+                        (minRealValue * axes[initiatingAxisIndex].factor + axes[initiatingAxisIndex].offset - axis.offset) / axis.factor,
+                        (maxRealValue * axes[initiatingAxisIndex].factor + axes[initiatingAxisIndex].offset - axis.offset) / axis.factor,
                         dispatch
                     );
                 }
             }
         });
+
+/*
+
+NOTE: Note sure why/if we need the two functions below; they're here
+because I copied/translated them from the Flash version.  If we do end
+up needing them, we need to first resolve the issue of converting
+to/from number values vs DataValue instances for min/max.
+
+    mbp Fri Nov 9 17:15:26 2012
 
         this.respondsTo("setDataRangeNoBind", function (min, max, factor, offset) {
             var axes = this.axes(),
@@ -81,6 +103,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 binding.setDataRangeNoBind(min, max, factor, offset);
             }
         };
+*/
+
 
         AxisBinding.getInstanceById = function(id) {
             return AxisBinding.instances[id];
