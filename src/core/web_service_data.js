@@ -10,7 +10,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasA("format").which.isA("string");
         this.hasA("formatter").which.validatesWith(ns.DataFormatter.isInstance);
         this.isBuiltWith("columns", "serviceaddress", function () {
-            this.initializeColumns();
+            this.init();
             if (this.columns().size() > 0) {
                 var column0Type = this.columns().at(0).type();
                 if (this.format() === undefined) {
@@ -176,9 +176,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                         data = window.multigraph.parser.jquery.stringToJQueryXMLObj(data).find("values").text();
                     }
                     node.parseData(that.getColumns(), data);
-                    if (that.readyCallbacks().size() > 0) {
+//                    if (that.readyCallbacks().size() > 0) {
                         that.callReadyCallbacks();
-                    }
+//                    }
                 }
             });
         });
@@ -298,19 +298,13 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return new ns.WebServiceDataIterator(columnIndices, initialNode, initialIndex, finalNode, finalIndex);
         });
 
-        this.respondsTo("onReady", function (callback) {
-            this.readyCallbacks().add(callback);
-        });
-
         this.hasA("paused").which.isA("boolean").and.defaultsTo(false);
         this.respondsTo("pause", function() {
             this.paused(true);
         });
         this.respondsTo("resume", function() {
             this.paused(false);
-            if (this.readyCallbacks().size() > 0) {
-                this.callReadyCallbacks(this.coveredMin(), this.coveredMax());
-            }
+            this.callReadyCallbacks(this.coveredMin(), this.coveredMax());
         });
 
     });

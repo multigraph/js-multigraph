@@ -81,6 +81,31 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
                 this.plots().at(i).normalize(this);
             }
 
+
+//xyzzy
+
+
+// arrange to set axis min/max values when data is ready, if necessary
+// 
+// foreach axis:
+//   if the axis is missing either a dataMin or dataMax:
+//     - find a plot that references that axis as its verticalaxis or horizontalaxis
+//     - register an onReady callback for that plot's data object which sets the missing dataMin/dataMax values for the axis,
+//       and which then de-registers itself
+// 
+// make sure that the de-registering process works correctly when called
+// during the execution of callReadyCallbacks --- i.e.  make sure it doesn't
+// change the length of the list until every function in the list has
+// been called...
+
+//xyzzy
+
+
+
+
+
+
+
         });
 
     });

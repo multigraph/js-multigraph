@@ -4,12 +4,15 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
     ns.mixin.add(function (ns) {
 
         ns.Multigraph.respondsTo("normalize", function () {
-            var i,
-                that = this;
+            var i;
             
             for (i = 0; i < this.graphs().size(); ++i) {
                 this.graphs().at(i).normalize();
             }
+
+            //TODO: move this code to src/normalizer/graph.js, change implementation to be more jermainish, rename
+            //      functions with more meaningful names, register callbacks only when needed to provide missing axis
+            //      min/max settings
 
             //
             // determines axes dataMin and dataMax attributes if neccesary
@@ -36,7 +39,7 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
             };
 
             breakdownCallback = function (data) {
-                data.clearReadyCallback(callback);
+                data.clearReady(callback);
                 return;
             };
 

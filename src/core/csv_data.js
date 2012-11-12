@@ -14,10 +14,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasA("filename").which.isA("string");
         this.hasA("dataIsReady").which.isA("boolean").and.defaultsTo(false);
 
-        this.respondsTo("onReady", function (callback) {
-            this.readyCallbacks().add(callback);
+        this.respondsTo("onReadyAdd", function (callback) {
             if (this.dataIsReady()) {
-                this.callReadyCallbacks(/* to be defined */);
+                callback(/* to be defined */);
             }
         });
 
@@ -35,7 +34,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.isBuiltWith("columns", "filename", function () {
             var that = this;
 
-            this.initializeColumns();
+            this.init();
 
             if (that.filename() !== undefined) {
                 window.multigraph.jQuery.ajax({url:that.filename(), success:function (data) {
@@ -47,14 +46,15 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
                     //parse the data
                     dataValues = ArrayData.textToDataValuesArray(that.getColumns(), data);
+
+                    // populate array
                     that.array(dataValues);
 
                     //in the callback to the request, we need to call onReady
                     that.dataIsReady(true);
-                    // populate arraydata
-                    if (that.readyCallbacks().size() > 0) {
+//                  if (that.readyCallbacks().size() > 0) {
                         that.callReadyCallbacks();
-                    }
+//                  }
                 }});
             }
         });
