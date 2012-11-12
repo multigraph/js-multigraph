@@ -45,7 +45,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             deferred;
         
         try {
-            window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
+            window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
             ns.mixin.apply(window.multigraph.core);
             window.multigraph.events.jquery.mouse.mixin.apply(window.multigraph, errorHandler);
             window.multigraph.events.jquery.touch.mixin.apply(window.multigraph, errorHandler);
