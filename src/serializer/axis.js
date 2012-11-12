@@ -94,7 +94,7 @@ window.multigraph.util.namespace("window.multigraph.serializer", function (ns) {
                 }
             }
 
-            if (this.binding())           { childStrings.push(this.binding()[serialize]());      }
+//            if (this.binding())           { childStrings.push(this.binding()[serialize]());      }
 
 
             if (childStrings.length > 0) {
