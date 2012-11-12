@@ -35,7 +35,14 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     graph.axes().add( ns.core.Axis[parse](window.multigraph.jQuery(e), ns.core.Axis.VERTICAL) );
                 });
                 if (xml.find(">data").length === 0) {
-                    throw new Error("Graph Data Error: No data tags specified");
+                    // On second throught, let's not throw an error if no <data> tag
+                    // is specified, because conceivably there could be graphs in
+                    // which all the plots are constant plots, so no data is needed.
+                    // In particular, in our spec/mugl/constant-plot.xml test!
+                    // I'm not sure what should be done here --- maybe issue a warning,
+                    // or maybe don't do anything.
+                    //    mbp Mon Nov 12 16:05:21 2012
+                    //throw new Error("Graph Data Error: No data tags specified");
                 }
                 window.multigraph.jQuery.each(xml.find(">data"), function (i,e) {
                     graph.data().add( ns.core.Data[parse](window.multigraph.jQuery(e)) );
