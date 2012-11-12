@@ -8,11 +8,34 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     Data = new window.jermaine.Model(function () {
         var Data = this;
 
-        //private find function
-        var find = function (idOrColumn, thing, columns) {
+        /**
+         * private find function
+         * 
+         *   Searches through a jermaine attr_list of DataVariables (columns) for
+         *   an entry having a given id or column number.
+         * 
+         *      attrName: the name of the attribute to search on; should be either
+         *                "id" or "column"
+         *      attrValue: the value to search for. If attrName is "id", this value
+         *                 should be a string.  If attrName is "column", this value
+         *                 should be an int.
+         *      columns: the attr_list to search through
+         * 
+         *   Returns: the index (an int) of the DataVariable entry having
+         *            the given attribute value, if any, or -1 if none was found
+         * 
+         *  Example:
+         *       find("id", "x", columns)
+         *          finds the index of the DataVariable in the columns attr_list
+         *          having an id of "x"
+         *       find("column", "1", columns)
+         *          finds the index of the DataVariable in the columns attr_list
+         *          having a "column" attribute of 1
+         */
+        var find = function (attrName, attrValue, columns) {
             var result = -1;
             for (i = 0; i < columns.size(); ++i) {
-                if (columns.at(i)[idOrColumn]() === thing) {
+                if (columns.at(i)[attrName]() === attrValue) {
                     result = i;
                 }
             }
@@ -45,13 +68,17 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
 
         this.respondsTo("columnIdToColumnNumber", function (id) {
-            var column;
+            var columnIndex,
+                column = undefined;
 
             if (typeof(id) !== "string") {
                 throw new Error("Data: columnIdToColumnNumber expects parameter to be a string");
             }
-            
-            column = find("id", id, this.columns()) !== -1?this.columns().at(find("id", id, this.columns())):undefined;
+
+            columnIndex = find("id", id, this.columns());
+            if (columnIndex >= 0) {
+                column = this.columns().at(columnIndex);
+            }
 
             if (column === undefined) {
                 throw new Error("Data: no column with the label " + id);
