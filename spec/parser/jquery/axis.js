@@ -12,7 +12,6 @@ describe("Axis parsing", function () {
         Grid = window.multigraph.core.Grid,
         Pan = window.multigraph.core.Pan,
         Zoom = window.multigraph.core.Zoom,
-        Binding = window.multigraph.core.Binding,
         DataFormatter = window.multigraph.core.DataFormatter,
         DataMeasure = window.multigraph.core.DataMeasure,
         DataValue = window.multigraph.core.DataValue,
@@ -714,7 +713,7 @@ describe("Axis parsing", function () {
             expect(axis.grid() instanceof Grid).toBe(true);
             expect(axis.pan() instanceof Pan).toBe(true);
             expect(axis.zoom() instanceof Zoom).toBe(true);
-            //expect(axis.binding() instanceof Binding).toBe(true);
+            expect(axis.binding() instanceof AxisBinding).toBe(true);
 
             expect(axis.labelers().size()).toEqual(labelsSpacingStrings.length);
             for (i = 0; i < axis.labelers().size(); i++) {
@@ -748,8 +747,6 @@ describe("Axis parsing", function () {
 
             // binding
             expect(axis.binding().id()).toEqual(bindingIdString);
-            expect(axis.binding().min()).toEqual(bindingMinString);
-            expect(axis.binding().max()).toEqual(bindingMaxString);
 
             // labelers
             for (i = 0; i < axis.labelers().size(); i++) {
