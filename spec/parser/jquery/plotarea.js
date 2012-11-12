@@ -1,48 +1,63 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
+/*jshint laxbreak:true */
 
 describe("Plotarea parsing", function () {
     "use strict";
 
     var Plotarea = window.multigraph.core.Plotarea,
-        xmlString = '<plotarea margintop="5" marginleft="10" marginbottom="19" marginright="5" bordercolor="0x111223" border="0"/>',
+        RGBColor = window.multigraph.math.RGBColor,
+        xmlString,
         $xml,
-        p;
+        plotarea,
+        margintopString = "5",
+        marginleftString = "10",
+        marginbottomString = "19",
+        marginrightString = "5",
+        bordercolorString = "0x111223",
+        borderString = "0";
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
-	$xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
-        p = Plotarea.parseXML($xml);
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
+        xmlString = ''
+            + '<plotarea'
+            +     ' margintop="' + margintopString + '"'
+            +     ' marginleft="' + marginleftString + '"'
+            +     ' marginbottom="' + marginbottomString + '"'
+            +     ' marginright="' + marginrightString + '"'
+            +     ' bordercolor="' + bordercolorString + '"'
+            +     ' border="' + borderString + '"'
+            +     '/>',
+        $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+        plotarea = Plotarea.parseXML($xml);
+    });
+
+    it("should be able to parse a Plotarea from XML", function () {
+        expect(plotarea).not.toBeUndefined();
+        expect(plotarea instanceof Plotarea).toBe(true);
     });
 
     it("should be able to parse a plotarea from XML and read its 'margin().bottom' attribute", function () {
-        expect(p.margin().bottom()).toBe(19);
+        expect(plotarea.margin().bottom()).toEqual(parseInt(marginbottomString, 10));
     });
 
     it("should be able to parse a plotarea from XML and read its 'margin().left' attribute", function () {
-        expect(p.margin().left()).toBe(10);
+        expect(plotarea.margin().left()).toEqual(parseInt(marginleftString, 10));
     });
 
     it("should be able to parse a plotarea from XML and read its 'margin().top' attribute", function () {
-        expect(p.margin().top()).toBe(5);
+        expect(plotarea.margin().top()).toEqual(parseInt(margintopString, 10));
     });
 
     it("should be able to parse a plotarea from XML and read its 'margin().right' attribute", function () {
-        expect(p.margin().right()).toBe(5);
+        expect(plotarea.margin().right()).toEqual(parseInt(marginrightString, 10));
     });
 
     it("should be able to parse a plotarea from XML and read its 'border' attribute", function () {
-        expect(p.border()).toBe(0);
+        expect(plotarea.border()).toEqual(parseInt(borderString, 10));
     });
 
     it("should be able to parse a plotarea from XML and read its 'bordercolor' attribute", function () {
-        expect(p.bordercolor().getHexString()).toBe("0x111223");
-    });
-
-    it("should be able to parse a plotarea from XML, serialize it and get the same XML as the original", function () {
-        var xmlString2 = '<plotarea margintop="5" marginleft="10" marginbottom="19" marginright="5" bordercolor="0xeeeeee" border="0"/>';
-        expect(p.serialize()).toBe(xmlString);
-	p = Plotarea.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString2));
-        expect(p.serialize()).toBe(xmlString2);
+        expect(plotarea.bordercolor().getHexString("0x")).toEqual((RGBColor.parse(bordercolorString)).getHexString("0x"));
     });
 
 });

@@ -1,9 +1,9 @@
-window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
+window.multigraph.util.namespace("window.multigraph.serializer", function (ns) {
     "use strict";
 
     var ArrayData  = window.multigraph.core.ArrayData;
 
-    ns.mixin.add(function (ns, parse, serialize) {
+    ns.mixin.add(function (ns, serialize) {
         
         ArrayData.prototype[serialize+'Contents'] = function () {
             var output = '<values>',

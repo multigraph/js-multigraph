@@ -2,13 +2,12 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
     "use strict";
 
     var DataVariable = window.multigraph.core.DataVariable,
-        NumberValue  = window.multigraph.core.NumberValue,
         ArrayData  = window.multigraph.core.ArrayData,
         CSVData  = window.multigraph.core.CSVData,
         WebServiceData  = window.multigraph.core.WebServiceData,
         Data = window.multigraph.core.Data;
 
-    ns.mixin.add(function (ns, parse, serialize) {
+    ns.mixin.add(function (ns, parse) {
         
         Data[parse] = function (xml) {
 
@@ -79,23 +78,6 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
             return data;
         };
         
-        Data.prototype[serialize] = function () {
-            var output = '<data>',
-                i;
-
-            // serialize the <variables> section
-            output += '<variables>';
-            for (i=0; i<this.columns().size(); ++i) {
-                output += this.columns().at(i).serialize();
-            }
-            output += '</variables>';
-
-            // serialize the rest...
-            output += this[serialize+"Contents"]();
-
-            output += '</data>';
-            return output;
-        };
-
     });
+
 });

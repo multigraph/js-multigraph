@@ -1,9 +1,7 @@
 window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
     "use strict";
 
-    var scalarAttributes = ["format"];
-
-    ns.mixin.add(function (ns, parse, serialize) {
+    ns.mixin.add(function (ns, parse) {
         
         ns.core.DatatipsVariable[parse] = function (xml) {
             var variable = new ns.core.DatatipsVariable();
@@ -13,16 +11,6 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
             return variable;
         };
         
-        ns.core.DatatipsVariable.prototype[serialize] = function () {
-            var attributeStrings = [],
-                output = '<variable ';
-
-            attributeStrings = window.multigraph.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
-
-            output += attributeStrings.join(' ') + '/>';
-
-            return output;
-        };
-
     });
+
 });

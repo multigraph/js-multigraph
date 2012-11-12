@@ -53,7 +53,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
 
     window.multigraph.core.Multigraph.createLoggerGraph = function (div, muglurl) {
 
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
         ns.mixin.apply(window.multigraph.core);
         window.multigraph.normalizer.mixin.apply(window.multigraph.core);
 

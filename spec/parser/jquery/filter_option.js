@@ -1,36 +1,38 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
+/*jshint laxbreak:true */
 
 describe("Plot Filter Option parsing", function () {
     "use strict";
 
     var FilterOption = window.multigraph.core.FilterOption,
-        xmlString = '<option name="dotsize" value="12"/>',
+        xmlString,
         $xml,
-        option;
+        option,
+        nameString = "dotsize",
+        valueString = "12";
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
-	$xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
+        xmlString = ''
+            + '<option'
+            +     ' name="' + nameString + '"'
+            +     ' value="' + valueString + '"'
+            +     '/>';
+        $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
         option = FilterOption.parseXML($xml);
     });
 
     it("should be able to parse an option from XML", function () {
         expect(option).not.toBeUndefined();
+        expect(option instanceof FilterOption).toBe(true);
     });
 
     it("should be able to parse a option from XML and read its 'name' attribute", function () {
-        expect(option.name()).toBe("dotsize");
+        expect(option.name()).toEqual(nameString);
     });
 
     it("should be able to parse a option from XML and read its 'value' attribute", function () {
-        expect(option.value()).toBe("12");
-    });
-
-    it("should be able to parse a option from XML, serialize it and get the same XML as the original", function () {
-        var xmlString2 = '<option name="linewidth"/>';
-        expect(option.serialize()).toBe(xmlString);
-	option = FilterOption.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString2));
-        expect(option.serialize()).toBe(xmlString2);
+        expect(option.value()).toEqual(valueString);
     });
 
 });

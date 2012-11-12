@@ -1,8 +1,7 @@
 window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
     "use strict";
 
-    var scalarAttributes = ["width", "height", "border"];
-    ns.mixin.add(function (ns, parse, serialize) {
+    ns.mixin.add(function (ns, parse) {
         
         ns.core.Window[parse] = function (xml) {
             //WARNING: do not declare a local var named "window" here; it masks the global 'window' object,
@@ -36,22 +35,6 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
             return w;
         };
         
-        ns.core.Window.prototype[serialize] = function () {
-            var attributeStrings = [],
-                output = '<window ';
-
-            attributeStrings.push('margin="' + this.margin().top() + '"');
-            attributeStrings.push('padding="' + this.padding().top() + '"');
-            if (this.bordercolor() !== undefined) {
-                attributeStrings.push('bordercolor="' + this.bordercolor().getHexString() + '"');
-            }
-
-            attributeStrings = window.multigraph.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
-
-            output += attributeStrings.join(' ') + '/>';
-
-            return output;
-        };
-
     });
+
 });

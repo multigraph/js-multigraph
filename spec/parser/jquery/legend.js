@@ -6,99 +6,107 @@ describe("Legend parsing", function () {
 
     var Legend = window.multigraph.core.Legend,
         Icon = window.multigraph.core.Icon,
-        xmlString = ''
-            + '<legend'
-            +     ' color="0x56839c"'
-            +     ' bordercolor="0x941394"'
-            +     ' base="-1,-1"'
-            +     ' anchor="0,0"'
-            +     ' position="0.5,1"'
-            +     ' visible="true"'
-            +     ' frame="padding"'
-            +     ' opacity="1"'
-            +     ' border="10"'
-            +     ' rows="4"'
-            +     ' columns="3"'
-            +     ' cornerradius="5"'
-            +     ' padding="4"'
-            +     '>'
-            +     '<icon'
-            +         ' height="30"'
-            +         ' width="40"'
-            +         ' border="1"'
-            +     '/>'
-            + '</legend>',
+        Point = window.multigraph.math.Point,
+        RGBColor = window.multigraph.math.RGBColor,
+        xmlString,
+        colorString = "0x56839c",
+        bordercolorString = "0x941394",
+        baseString = "-1,-1",
+        anchorString = "0,0",
+        positionString = "0.5,1",
+        visibleBool = true,
+        frameString = "padding",
+        opacityString = "1",
+        borderString = "10",
+        rowsString = "4",
+        columnsString = "3",
+        cornerradiusString = "5",
+        paddingString = "4",
         $xml,
-        l,
-        b;
+        legend;
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
+        xmlString = ''
+            + '<legend'
+            +     ' color="' + colorString + '"'
+            +     ' bordercolor="' + bordercolorString + '"'
+            +     ' base="' + baseString + '"'
+            +     ' anchor="' + anchorString + '"'
+            +     ' position="' + positionString + '"'
+            +     ' visible="' + visibleBool + '"'
+            +     ' frame="' + frameString + '"'
+            +     ' opacity="' + opacityString + '"'
+            +     ' border="' + borderString + '"'
+            +     ' rows="' + rowsString + '"'
+            +     ' columns="' + columnsString + '"'
+            +     ' cornerradius="' + cornerradiusString + '"'
+            +     ' padding="' + paddingString + '"'
+            +     '/>';
         $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
-        l = Legend.parseXML($xml);
+        legend = Legend.parseXML($xml);
     });
 
     it("should be able to parse a legend from XML", function () {
-        expect(l).not.toBeUndefined();
-        expect(l instanceof Legend).toBe(true);
+        expect(legend).not.toBeUndefined();
+        expect(legend instanceof Legend).toBe(true);
     });
 
     it("should be able to parse a legend from XML and read its 'base' attribute", function () {
-        expect(l.base().x()).toBe(-1);
-        expect(l.base().y()).toBe(-1);
+        expect(legend.base().x()).toEqual((Point.parse(baseString)).x());
+        expect(legend.base().y()).toEqual((Point.parse(baseString)).y());
     });
 
     it("should be able to parse a legend from XML and read its 'anchor' attribute", function () {
-        expect(l.anchor().x()).toBe(0);
-        expect(l.anchor().y()).toBe(0);
+        expect(legend.anchor().x()).toEqual((Point.parse(anchorString)).x());
+        expect(legend.anchor().y()).toEqual((Point.parse(anchorString)).y());
     });
 
     it("should be able to parse a legend from XML and read its 'position' attribute", function () {
-        expect(l.position().x()).toEqual(0.5);
-        expect(l.position().y()).toEqual(1);
+        expect(legend.position().x()).toEqual((Point.parse(positionString)).x());
+        expect(legend.position().y()).toEqual((Point.parse(positionString)).y());
     });
 
     it("should be able to parse a legend from XML and read its 'frame' attribute", function () {
-        expect(l.frame()).toBe("padding");
+        expect(legend.frame()).toEqual(frameString.toLowerCase());
     });
 
     it("should be able to parse a legend from XML and read its 'color' attribute", function () {
-        expect(l.color().getHexString()).toBe("0x56839c");
+        expect(legend.color().getHexString("0x")).toEqual((RGBColor.parse(colorString)).getHexString("0x"));
     });
 
     it("should be able to parse a legend from XML and read its 'bordercolor' attribute", function () {
-        expect(l.bordercolor().getHexString()).toBe("0x941394");
+        expect(legend.bordercolor().getHexString("0x")).toEqual((RGBColor.parse(bordercolorString)).getHexString("0x"));
     });
 
     it("should be able to parse a legend from XML and read its 'opacity' attribute", function () {
-        expect(l.opacity()).toBe(1);
+        expect(legend.opacity()).toEqual(parseFloat(opacityString));
     });
 
     it("should be able to parse a legend from XML and read its 'border' attribute", function () {
-        expect(l.border()).toBe(10);
+        expect(legend.border()).toEqual(parseInt(borderString, 10));
     });
 
     it("should be able to parse a legend from XML and read its 'rows' attribute", function () {
-        expect(l.rows()).toBe(4);
+        expect(legend.rows()).toEqual(parseInt(rowsString, 10));
     });
 
     it("should be able to parse a legend from XML and read its 'columns' attribute", function () {
-        expect(l.columns()).toBe(3);
+        expect(legend.columns()).toEqual(parseInt(columnsString, 10));
     });
 
     it("should be able to parse a legend from XML and read its 'cornerradius' attribute", function () {
-        expect(l.cornerradius()).toBe(5);
+        expect(legend.cornerradius()).toEqual(parseInt(cornerradiusString, 10));
     });
 
     it("should be able to parse a legend from XML and read its 'padding' attribute", function () {
-        expect(l.padding()).toBe(4);
-    });
-
-    it("should be able to parse a legend from XML, serialize it and get the same XML as the original", function () {
-        expect(l.serialize()).toBe(xmlString);
+        expect(legend.padding()).toEqual(parseInt(paddingString, 10));
     });
 
     describe("Icon parsing", function () {
+        var heightString = "35",
+            widthString = "50",
+            borderString = "2";
 
         beforeEach(function () {
             xmlString = ''
@@ -118,59 +126,28 @@ describe("Legend parsing", function () {
                 +     ' padding="2"'
                 +     '>'
                 +     '<icon'
-                +         ' height="35"'
-                +         ' width="50"'
-                +         ' border="2"'
+                +         ' height="' + heightString + '"'
+                +         ' width="' + widthString + '"'
+                +         ' border="' + borderString + '"'
                 +     '/>'
                 + '</legend>';
-            window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
             $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
-            l = Legend.parseXML($xml);
+            legend = Legend.parseXML($xml);
         });
 
         it("should be able to parse a legend with children from XML", function () {
-            expect(l).not.toBeUndefined();
-            expect(l instanceof Legend).toBe(true);
+            expect(legend).not.toBeUndefined();
+            expect(legend instanceof Legend).toBe(true);
+            expect(legend.icon()).not.toBeUndefined();
+            expect(legend.icon() instanceof Icon).toBe(true);
         });
 
-        it("should be able to parse a icon from XML and read its 'height' attribute", function () {
-            expect(l.icon().height()).toBe(35);
-        });
-
-        it("should be able to parse a icon from XML and read its 'width' attribute", function () {
-            expect(l.icon().width()).toBe(50);
-        });
-
-        it("should be able to parse a icon from XML and read its 'border' attribute", function () {
-            expect(l.icon().border()).toBe(2);
-        });
-
-        it("should be able to parse a legend with children from XML, serialize it and get the same XML as the original", function () {
-            var xmlString2 = ''
-                + '<legend'
-                +     ' color="0x56839c"'
-                +     ' bordercolor="0x000000"'
-                +     ' base="0,-1"'
-                +     ' anchor="-1,-1"'
-                +     ' position="1,1"'
-                +     ' visible="false"'
-                +     ' frame="plot"'
-                +     ' opacity="0"'
-                +     ' border="10"'
-                +     ' columns="3"'
-                +     ' cornerradius="10"'
-                +     ' padding="3"'
-                +     '>'
-                +     '<icon'
-                +         ' height="45"'
-                +         ' width="40"'
-                +         ' border="5"'
-                +     '/>'
-                + '</legend>';
-            expect(l.serialize()).toBe(xmlString);
-            l = Legend.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString2));
-            expect(l.serialize()).toBe(xmlString2);
+        it("should properly parse a legend tag with an icon child tag from XML", function () {
+            expect(legend.icon().height()).toEqual(parseInt(heightString, 10));
+            expect(legend.icon().width()).toEqual(parseInt(widthString, 10));
+            expect(legend.icon().border()).toEqual(parseInt(borderString, 10));
         });
 
     });
+
 });

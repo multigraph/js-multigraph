@@ -1,9 +1,9 @@
-window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
+window.multigraph.util.namespace("window.multigraph.serializer", function (ns) {
     "use strict";
 
     var CSVData  = window.multigraph.core.CSVData;
 
-    ns.mixin.add(function (ns, parse, serialize) {
+    ns.mixin.add(function (ns, serialize) {
         
         CSVData.prototype[serialize+'Contents'] = function () {
             var output = '<csv location="';
