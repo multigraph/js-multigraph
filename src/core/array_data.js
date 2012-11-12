@@ -221,8 +221,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                     stringValuesThisRow = lines[i].split(/\s*,\s*/);
                     if (stringValuesThisRow.length === numColumns) {
                         stringValues.push( stringValuesThisRow );
-                        } else {
-                            throw new Error("Data Parsing: The line '" + lines[i] + "' does not contain exactly " + numColumns + " columns");
+                    } else {
+                        throw new Error("Data Parsing Error: The line '" + lines[i] + "' has " + stringValuesThisRow.length + " data columns when it requires " + numColumns + " columns");
                     }
                 }
             }
