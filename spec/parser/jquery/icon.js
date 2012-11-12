@@ -13,7 +13,7 @@ describe("Legend Icon parsing", function () {
         borderString = "7";
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
         xmlString = ''
             + '<icon'
             +    ' height="' + heightString + '"'
