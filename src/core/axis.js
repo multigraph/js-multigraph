@@ -316,6 +316,38 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             }
         });
 
+        /**
+         * Compute the distance from an axis to a point.  The point
+         * (x,y) is expressed in pixel coordinates in the same
+         * coordinate system as the axis.
+         * 
+         * We use two different kinds of computations depending on
+         * whether the point lies inside or outside the region bounded
+         * by the two lines perpendicular to the axis through its
+         * endpoints.  If the point lies inside this region, the
+         * distance is simply the difference in the perpendicular
+         * coordinate of the point and the perpendicular coordinate of
+         * the axis.
+         * 
+         * If the point lies outside the region, then the distance is
+         * the L2 distance between the point and the closest endpoint
+         * of the axis.
+         */
+        this.respondsTo("distanceToPoint", function (x, y) {
+            var perpCoord     = (this.orientation() === Axis.HORIZONTAL) ? y : x;
+            var parallelCoord = (this.orientation() === Axis.HORIZONTAL) ? x : y;
+            if (parallelCoord < this.parallelOffset()) {
+                // point is under or left of the axis; return L2 distance to bottom or left axis endpoint
+                return window.multigraph.math.util.l2dist(parallelCoord, perpCoord, this.parallelOffset(), this.perpOffset());
+            }
+            if (parallelCoord > this.parallelOffset() + this.pixelLength()) {
+                // point is above or right of the axis; return L2 distance to top or right axis endpoint
+                return window.multigraph.math.util.l2dist(parallelCoord, perpCoord, this.parallelOffset()+this.pixelLength(), this.perpOffset());
+            }
+            // point is between the axis endpoints; return difference in perpendicular coords
+            return Math.abs(perpCoord - this.perpOffset());
+        });
+
         window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis, attributes);
     });
     Axis.HORIZONTAL = new Orientation("horizontal");

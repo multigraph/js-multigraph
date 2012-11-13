@@ -26,6 +26,10 @@
     <filelist dir="src/serializer" files="serializer_mixin.js"/>
     <fileset dir="src/serializer" includes="**/*.js" excludes="serializer_mixin.js" />
   </path>
+  <path id="path.events-jquery-draggable-js">
+    <filelist dir="src/events/jquery/draggable" files="mixin.js"/>
+    <fileset dir="src/events/jquery/draggable" includes="**/*.js" excludes="mixin.js" />
+  </path>
   <path id="path.events-jquery-mouse-js">
     <filelist dir="src/events/jquery/mouse" files="mixin.js"/>
     <fileset dir="src/events/jquery/mouse" includes="**/*.js" excludes="mixin.js" />
@@ -110,6 +114,7 @@
       <path refid="path.parser-jquery-js"/>
       <path refid="path.serializer-js"/>
       <path refid="path.normalizer-js"/>
+      <path refid="path.events-jquery-draggable-js"/>
       <path refid="path.events-jquery-mouse-js"/>
       <path refid="path.events-jquery-touch-js"/>
       <path refid="path.graphics-raphael-js"/>
@@ -148,6 +153,7 @@
     </pathconvert>
     <pathconvert property="scripttags.raphael" pathsep="${line.separator}">
       <path refid="path.graphics-raphael-js"/>
+      <path refid="path.events-jquery-draggable-js"/>
       <path refid="path.events-jquery-mouse-js"/>
       <path refid="path.events-jquery-touch-js"/>
       <path refid="path.normalizer-js"/>
@@ -168,6 +174,7 @@
     </pathconvert>
     <pathconvert property="scripttags.canvas" pathsep="${line.separator}">
       <path refid="path.graphics-canvas-js"/>
+      <path refid="path.events-jquery-draggable-js"/>
       <path refid="path.events-jquery-mouse-js"/>
       <path refid="path.events-jquery-touch-js"/>
       <path refid="path.normalizer-js"/>
@@ -185,6 +192,7 @@
       <path refid="path.multigraph-core-js"/>
       <path refid="path.parser-jquery-js"/>
       <path refid="path.normalizer-js"/>
+      <path refid="path.events-jquery-draggable-js"/>
       <path refid="path.events-jquery-mouse-js"/>
       <path refid="path.events-jquery-touch-js"/>
       <path refid="path.graphics-logger-js"/>
@@ -210,6 +218,7 @@
     </pathconvert>
     <pathconvert property="scripttags.logger" pathsep="${line.separator}">
       <path refid="path.graphics-logger-js"/>
+      <path refid="path.events-jquery-draggable-js"/>
       <path refid="path.events-jquery-mouse-js"/>
       <path refid="path.events-jquery-touch-js"/>
       <mapper type="regexp" from="^${basedir}/(.*)$" to='&lt;script type="text/javascript" src="../../../\1"&gt;&lt;/script&gt;'/>
@@ -227,6 +236,7 @@
       <path refid="path.multigraph-core-js"/>
       <path refid="path.parser-jquery-js"/>
       <path refid="path.normalizer-js"/>
+      <path refid="path.events-jquery-draggable-js"/>
       <path refid="path.events-jquery-mouse-js"/>
       <path refid="path.events-jquery-touch-js"/>
       <path refid="path.graphics-raphael-js"/>
