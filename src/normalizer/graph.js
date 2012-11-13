@@ -96,7 +96,7 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
                         // find a DataPlot that references this axis...
                         plot = this.plots().at(j);
                         if (plot instanceof ns.DataPlot && (plot.horizontalaxis() === axis || plot.verticalaxis() === axis)) {
-                            // ... and then register an onReady listnener for this plot's data section which sets the
+                            // ... and then register a dataReady listener for this plot's data section which sets the
                             // missing bound(s) on the axis once the data is ready.  Do this inside a closure so that we
                             // can refer to a pointer to our dynamically-defined listener function from inside itself,
                             // so that we can de-register it once it is called; this is done via the the local variable
@@ -104,7 +104,7 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
                             // of the axis pointer, a pointer to the data object, and a boolean (isHorizontal) that
                             // indicates whether the axis is the plot's horizontal or vertical axis.
                             (function(axis, data, isHorizontal) {
-                                var axisBoundsSetter = function() {
+                                var axisBoundsSetter = function(event) {
                                     var columnNumber = isHorizontal ? 0 : 1,
                                         bounds = data.getBounds(columnNumber),
                                         min = axis.dataMin(),
@@ -118,9 +118,9 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
                                     if (!axis.hasDataMin() || !axis.hasDataMax()) {
                                         axis.setDataRange(min, max);
                                     }
-                                    data.removeListener("onReady", axisBoundsSetter);
+                                    data.removeListener('dataReady', axisBoundsSetter);
                                 };
-                                data.addListener("onReady", axisBoundsSetter);
+                                data.addListener('dataReady', axisBoundsSetter);
                             }(axis,                             // axis
                               plot.data(),                      // data
                               plot.horizontalaxis() === axis    // isHorizontal

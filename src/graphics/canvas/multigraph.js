@@ -71,7 +71,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                 multigraph.init();
                 multigraph.registerMouseEvents(multigraph.canvas());
                 multigraph.registerTouchEvents(multigraph.canvas());
-                multigraph.registerCommonDataCallback(function () {
+                multigraph.registerCommonDataCallback(function (event) {
                     multigraph.redraw();
                 });
                 deferred.resolve(multigraph);

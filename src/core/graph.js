@@ -88,7 +88,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             this.respondsTo("registerCommonDataCallback", function (callback) {
                 var i;
                 for (i=0; i<this.data().size(); ++i) {
-                    this.data().at(i).addListener("onReady", callback);
+                    this.data().at(i).addListener("dataReady", callback);
                 }
             });
 

@@ -46,7 +46,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
                     that.dataIsReady(true);
 
-                    that.emit("onReady" /*,...*/);
+                    that.emit({type : "dataReady"});
 
                 }});
             }

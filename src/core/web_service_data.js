@@ -177,7 +177,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                     }
                     node.parseData(that.getColumns(), data);
 
-                    that.emit("onReady" /*,...*/);
+                    that.emit({type : 'dataReady'});
                 }
             });
         });
@@ -303,7 +303,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
         this.respondsTo("resume", function() {
             this.paused(false);
-            this.emit("onReady", this.coveredMin(), this.coveredMax());
+            this.emit({type : 'dataReady',
+                       min : this.coveredMin(),
+                       max : this.coveredMax()});
         });
 
     });

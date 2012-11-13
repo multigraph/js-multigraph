@@ -229,7 +229,7 @@ describe("ArrayData", function () {
     });
 
 
-    describe("onReady method", function () {
+    xdescribe("onReady method", function () {
         var callback;
 
         beforeEach(function () {

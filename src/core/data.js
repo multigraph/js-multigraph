@@ -60,9 +60,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return column instanceof DataVariable;
         });
 
-//      this.hasMany("readyCallbacks").eachOfWhich.isA("function");
-//      this.hasA("readyCallbacks"); // js array; initialized to the empty array in init() method
-
         this.hasA("defaultMissingvalue").which.isA("string");
         this.hasA("defaultMissingop").which.isA("string").and.defaultsTo("eq");
 
@@ -71,7 +68,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             // off into a separate function so that it can be called from submodel's isBuiltWith initializers
             // as well, since Jermaine does not provide a way to call the parent models' isBuiltWith initializer
             // function.
-            //this.readyCallbacks([]);
             this.initializeColumns();
         });
 

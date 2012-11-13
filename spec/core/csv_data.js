@@ -20,7 +20,6 @@ describe("CSV Data", function () {
         });
 
         it("should have ArrayData methods", function () {
-            expect(typeof(csv.onReady)).toBe("function");
             expect(typeof(csv.getIterator)).toBe("function");
         });
 
@@ -32,7 +31,7 @@ describe("CSV Data", function () {
             var spy = jasmine.createSpy();
 
             csv = new CSVData([], "core/fixtures/csv_test1.csv");
-            csv.onReady(spy);
+            csv.addListener('dataReady', spy);
 
             waitsFor(function () {
                 return csv.dataIsReady();

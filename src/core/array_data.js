@@ -14,9 +14,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasA("stringArray");
         this.isBuiltWith("columns", "stringArray", function () {
             this.init();
-            this.addListener("listenerAdded", function (event, listener) {
-                if (event === "onReady") {
-                    listener(this.array()[0][0], this.array()[this.array().length-1][0]);
+            this.addListener("listenerAdded", function (event) {
+                if (event.targetType === "dataReady") {
+                    event.listener(this.array()[0][0], this.array()[this.array().length-1][0]);
                 }
             });
         });
