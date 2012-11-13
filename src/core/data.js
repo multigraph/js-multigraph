@@ -7,6 +7,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     Data = new window.jermaine.Model(function () {
         var Data = this;
+        
+        this.isA(ns.EventEmitter);
 
         /**
          * private find function
@@ -59,7 +61,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
 
 //      this.hasMany("readyCallbacks").eachOfWhich.isA("function");
-        this.hasA("readyCallbacks"); // js array; initialized to the empty array in init() method
+//      this.hasA("readyCallbacks"); // js array; initialized to the empty array in init() method
 
         this.hasA("defaultMissingvalue").which.isA("string");
         this.hasA("defaultMissingop").which.isA("string").and.defaultsTo("eq");
@@ -69,7 +71,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             // off into a separate function so that it can be called from submodel's isBuiltWith initializers
             // as well, since Jermaine does not provide a way to call the parent models' isBuiltWith initializer
             // function.
-            this.readyCallbacks([]);
+            //this.readyCallbacks([]);
             this.initializeColumns();
         });
 
@@ -149,106 +151,19 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             // submodels must implement this
         });
 
-        this.respondsTo("onReady", function (readyHandler) {
-            var callbacks = this.readyCallbacks(),
-                i;
-            for (i = 0; i < callbacks.length; i++) {
-                if (callbacks[i] === readyHandler) {
-                    return;
-                }
-            }
-            callbacks.push(readyHandler);
-            this.onReadyAdd(readyHandler);
-        });
-
         /*
          * The "onReady" contract:
          * 
          * Each submodel of this Data model should do the following:
          * 
-         * 1. Provide an implementation of the method
-         *    onReadyAdd(readyHandler), which should perform whatever
-         *    one-time action is appropriate for that submodel upon
-         *    the registration of a new "ready" callback.  Client code
-         *    (i.e. the rest of Multigraph) calls onReady() to
-         *    register a new "ready" callback; the generic
-         *    implementation of onReady() here in Data.js simply
-         *    checks to make sure the new callback isn't present in
-         *    the list of ready callbacks, and if it's not, adds it to
-         *    the list, and then passes it to onReadyAdd(), where the
-         *    submodel can do whatever it needs to do, if anything,
-         *    when a new callback is registered.
+         * 1. Emit an "onReady" event whenever new data is available.
+         *    The arguments to the event listener are the min and max
+         *    values of the range of (newly) available data.
          * 
-         *    The rationale behind onReadyAdd is that some data
-         *    submodels (in particular, ArrayData and CSVData), might
-         *    call a registered callback immedidately upon
-         *    registration, if data is ready at that time; onReadyAdd
-         *    is the place to do that).
-         * 
-         * 2. Call the callReadyCallbacks(...) method asynchronously
-         *    whenever new data is available.
+         * 2. Optionally, register a listener for its own "listenerAdded"
+         *    events, which performs whatever actions are needed, if any,
+         *    when a new "onReady" listener is registered.
          */
-
-        this.respondsTo("onReadyAdd", function (readyHandler) {
-            // Each submodel should implement this if desired
-
-        });
-
-        this.respondsTo("callReadyCallbacks", function () {
-            // each submodel should call this whenever appropriate...
-
-            var callbacks = this.readyCallbacks(),
-                i,
-                nulls = [];
-
-            // call all the callbacks in our list, except for nulls, which we keep
-            // track of
-            for (i = 0; i < callbacks.length; i++) {
-                if (callbacks[i] !== null) {
-                    callbacks[i].apply(this, arguments);
-                } else {
-                    nulls.push(i);
-                }
-            }
-
-            // remove any nulls from the callbacks list
-            if (nulls.length > 0) {
-                for (i=nulls.length-1; i>=0; --i) {
-                    callbacks.splice(nulls[i],1);
-                }
-            }
-        });
-
-        this.respondsTo("clearReady", function (readyHandler) {
-            // Removes a function from this data object's list of onReady callbacks.
-            //
-            // NOTE: so that everything will work correctly if this function
-            // is called from within an onReady callback, we do not alter
-            // the length of the callback list here.
-            // 
-            // If we were to actually remove the callback from the list, thereby
-            // shortening the list, the length of the callback list in the for(...)
-            // loop in callReadyCallbacks() above would change during execution
-            // of the loop, with the result that not every callback in the list
-            // would get called.
-            // 
-            // So, what we do here is to simply replace the to-be-removed callback's
-            // entry in the callback list with a null.
-            // 
-            // Then, in callReadyCallbacks() above, we check for any nulls in the
-            // list and remove them after the call loop has executed.
-            //
-
-            var callbacks = this.readyCallbacks(),
-                i;
-
-            for (i=0; i<callbacks.length; ++i) {
-                if (callbacks[i] === readyHandler) {
-                    callbacks[i] = null;
-                    break;
-                }
-            }
-        });
 
         this.respondsTo("pause", function() {
             //no op

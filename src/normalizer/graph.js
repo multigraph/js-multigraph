@@ -96,14 +96,13 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
                         // find a DataPlot that references this axis...
                         plot = this.plots().at(j);
                         if (plot instanceof ns.DataPlot && (plot.horizontalaxis() === axis || plot.verticalaxis() === axis)) {
-                            // ... and then register an onReady callback for this plot's data section which sets the
+                            // ... and then register an onReady listnener for this plot's data section which sets the
                             // missing bound(s) on the axis once the data is ready.  Do this inside a closure so that we
-                            // can refer to a pointer to our dynamically-defined callback function from inside itself,
-                            // so that we can remove it from the onReady() callback list once it is called; this is done
-                            // via the the local variable axisBoundsSetter.  The closure also serves to capture the
-                            // current values, via arguments, of the axis pointer, a pointer to the data object, and a
-                            // boolean (isHorizontal) that indicates whether the axis is the plot's horizontal or
-                            // vertical axis.
+                            // can refer to a pointer to our dynamically-defined listener function from inside itself,
+                            // so that we can de-register it once it is called; this is done via the the local variable
+                            // axisBoundsSetter.  The closure also serves to capture the current values, via arguments,
+                            // of the axis pointer, a pointer to the data object, and a boolean (isHorizontal) that
+                            // indicates whether the axis is the plot's horizontal or vertical axis.
                             (function(axis, data, isHorizontal) {
                                 var axisBoundsSetter = function() {
                                     var columnNumber = isHorizontal ? 0 : 1,
@@ -119,9 +118,9 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
                                     if (!axis.hasDataMin() || !axis.hasDataMax()) {
                                         axis.setDataRange(min, max);
                                     }
-                                    data.clearReady(axisBoundsSetter);
+                                    data.removeListener("onReady", axisBoundsSetter);
                                 };
-                                data.onReady(axisBoundsSetter);
+                                data.addListener("onReady", axisBoundsSetter);
                             }(axis,                             // axis
                               plot.data(),                      // data
                               plot.horizontalaxis() === axis    // isHorizontal

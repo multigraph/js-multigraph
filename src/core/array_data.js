@@ -14,6 +14,11 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasA("stringArray");
         this.isBuiltWith("columns", "stringArray", function () {
             this.init();
+            this.addListener("listenerAdded", function (event, listener) {
+                if (event === "onReady") {
+                    listener(this.array()[0][0], this.array()[this.array().length-1][0]);
+                }
+            });
         });
 
         /**
@@ -49,13 +54,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             @method ArrayData#onReady
             @param callback
         */
-
-        this.respondsTo("onReadyAdd", function (callback) {
-            if (callback) {
-                callback(this.array()[0][0], this.array()[this.array().length-1][0]);
-            }
-        });
-
 
        /**
             @method ArrayData#getArrayDataIterator

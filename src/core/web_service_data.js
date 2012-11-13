@@ -176,9 +176,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                         data = window.multigraph.parser.jquery.stringToJQueryXMLObj(data).find("values").text();
                     }
                     node.parseData(that.getColumns(), data);
-//                    if (that.readyCallbacks().size() > 0) {
-                        that.callReadyCallbacks();
-//                    }
+
+                    that.emit("onReady" /*,...*/);
                 }
             });
         });
@@ -304,7 +303,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
         this.respondsTo("resume", function() {
             this.paused(false);
-            this.callReadyCallbacks(this.coveredMin(), this.coveredMax());
+            this.emit("onReady", this.coveredMin(), this.coveredMax());
         });
 
     });

@@ -14,12 +14,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasA("filename").which.isA("string");
         this.hasA("dataIsReady").which.isA("boolean").and.defaultsTo(false);
 
-        this.respondsTo("onReadyAdd", function (callback) {
-            if (this.dataIsReady()) {
-                callback(/* to be defined */);
-            }
-        });
-
         this.respondsTo("getIterator", function (columnIds, min, max, buffer) {
             if (this.dataIsReady()) {
                 return ArrayData.getArrayDataIterator(this, columnIds, min, max, buffer);
@@ -50,11 +44,10 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                     // populate array
                     that.array(dataValues);
 
-                    //in the callback to the request, we need to call onReady
                     that.dataIsReady(true);
-//                  if (that.readyCallbacks().size() > 0) {
-                        that.callReadyCallbacks();
-//                  }
+
+                    that.emit("onReady" /*,...*/);
+
                 }});
             }
         });
