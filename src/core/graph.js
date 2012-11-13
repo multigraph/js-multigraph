@@ -134,6 +134,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             window.multigraph.utilityFunctions.insertDefaults(this, defaultValues, attributes);
         });
 
+    //TODO: convert to "respondsTo" ???
     Graph.prototype.axisById = function (id) {
       // return a pointer to the axis for this graph that has the given id, if any
         var axes = this.axes(),
@@ -146,6 +147,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         return undefined;
     };
 
+    //TODO: convert to "respondsTo" ???
     Graph.prototype.variableById = function (id) {
       // return a pointer to the variable for this graph that has the given id, if any
         var data = this.data(),
