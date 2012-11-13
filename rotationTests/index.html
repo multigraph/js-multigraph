@@ -149,6 +149,8 @@
 <script type="text/javascript" src="../src/graphics/canvas/renderers/rangebar_renderer.js"></script>
 <script type="text/javascript" src="../src/graphics/canvas/text.js"></script>
 
+<script type="text/javascript" src="../src/events/jquery/draggable/mixin.js"></script>
+<script type="text/javascript" src="../src/events/jquery/draggable/graph.js"></script>
 <script type="text/javascript" src="../src/events/jquery/mouse/mixin.js"></script>
 <script type="text/javascript" src="../src/events/jquery/mouse/graph.js"></script>
 <script type="text/javascript" src="../src/events/jquery/mouse/multigraph.js"></script>
@@ -203,6 +205,7 @@
               try {
                   window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
                   window.multigraph.graphics.canvas.mixin.apply(window.multigraph.core);
+                  window.multigraph.events.jquery.draggable.mixin.apply(window.multigraph, errorHandler);
                   window.multigraph.events.jquery.mouse.mixin.apply(window.multigraph, errorHandler);
                   window.multigraph.events.jquery.touch.mixin.apply(window.multigraph, errorHandler);
                   window.multigraph.normalizer.mixin.apply(window.multigraph.core);
@@ -287,7 +290,7 @@
 </head>
 <body>
 
-  <div id="dashboard-soi" class="multigraph-rotation" data-src="../spec/mugl/dashboard-soi.xml" data-width="800" data-height="400" data-driver="canvas"></div>
+  <div id="dashboard-soi" class="multigraph-rotation" data-src="rotationTest.xml" data-width="800" data-height="400" data-driver="canvas"></div>
 
 
 <div class="slider-wrapper">
