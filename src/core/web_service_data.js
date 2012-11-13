@@ -20,7 +20,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             }
         });
 
-        this.respondsTo("getBounds", function (column) {
+        this.respondsTo("getBounds", function (columnNumber) {
             // TODO: replace this kludge
             return [0, 10];
         });

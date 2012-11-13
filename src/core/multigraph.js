@@ -47,7 +47,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         }
         throw new Error("invalid graphic driver '" + obj.driver + "' specified to Multigraph.createGraph");
     };
-
+/*
     Multigraph.createDefaultErrorHandler = function (div) {
         return function (e) {
             var errorMessages,
@@ -75,6 +75,15 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                     window.multigraph.jQuery(window.multigraph.jQuery(div).find("ol")).append(window.multigraph.jQuery("<li>", {"text" : errorMessages[i].trim().replace(" (file", "\n(file"), "style" : "margin-bottom: 3px;"}));
                 }
             }
+        };
+    };
+*/
+
+    Multigraph.createDefaultErrorHandler = function (div) {
+        return function (e) {
+            throw e;
+            //console.log(e.message);
+            //console.log(e.stack);
         };
     };
 

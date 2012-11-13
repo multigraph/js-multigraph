@@ -141,12 +141,12 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return result;
         });
 
-        this.respondsTo("getBounds", function () {
-            //no op
+        this.respondsTo("getBounds", function (columnNumber) {
+            // submodels must implement this
         });
 
         this.respondsTo("getIterator", function () {
-            //no op
+            // submodels must implement this
         });
 
         this.respondsTo("onReady", function (readyHandler) {

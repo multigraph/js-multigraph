@@ -170,6 +170,11 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 i,
                 labelers = this.labelers(),
                 nlabelers = this.labelers().size();
+            if (!this.hasDataMin() || !this.hasDataMax()) {
+                // if either endpoint dataMin() or dataMax() hasn't been specified yet,
+                // return immediately without doing anything
+                return;
+            }
             if (nlabelers<=0) {
                 currentLabeler = null;
             } else {
