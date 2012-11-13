@@ -187,9 +187,12 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
 
             var handleDoubleTap = function () {
                 multigraph.graphs().at(0).doDragReset();                
-                multigraph.graphs().at(0).doDrag(multigraph, base.x(), base.y(), 10, 0, true);
-                multigraph.graphs().at(0).doDragReset();
-                multigraph.graphs().at(0).doDrag(multigraph, base.x(), base.y(), 0, 10, true);
+                var axis = multigraph.graphs().at(0).findNearestAxis(base.x(), base.y());
+                if (axis.orientation() === window.multigraph.core.Axis.HORIZONTAL) {
+                    multigraph.graphs().at(0).doDrag(multigraph, base.x(), base.y(), 10, 0, true);
+                } else {
+                    multigraph.graphs().at(0).doDrag(multigraph, base.x(), base.y(), 0, 10, true);
+                }
                 multigraph.graphs().at(0).doDragReset();                
                 multigraph.graphs().at(0).doDragDone();
             };
