@@ -19,12 +19,14 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 */
 
         var drawText = function (text, context, base, anchor, position, angle, color) {
-            var h = text.height();
-            var w = text.width();
+            var h = text.origHeight();
+            var w = text.origWidth();
+
 /*
             var h = 8;
             var w = 28;
 */
+
             var ax = 0.5 * w * (anchor.x() + 1);
             var ay = 0.5 * h * (anchor.y() + 1);
 /*
@@ -84,7 +86,7 @@ context.restore();
             return (new ns.Text(string)).initializeGeometry({
                     "context" : context,
                     "angle"   : this.angle()
-                }).width();
+                }).rotatedWidth();
         });
 
         ns.Labeler.respondsTo("renderLabel", function (context, value) {

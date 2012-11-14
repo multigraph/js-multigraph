@@ -144,8 +144,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 label = this.plots().at(i).legend().label();
                 if (label !== undefined) {
                     label.initializeGeometry(graphicsContext);
-                    widths.push(label.width());
-                    heights.push(label.height());
+                    widths.push(label.rotatedWidth());
+                    heights.push(label.rotatedHeight());
                 }
             }
 
