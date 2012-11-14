@@ -184,7 +184,7 @@ to/from number values vs DataValue instances for min/max.
             for (id in AxisBinding.instances) {
                 binding = AxisBinding.instances[id];
                 for (j=0; j<binding.axes().length; ++j) {
-                    binding.axes()[j].binding(null);
+                    binding.axes()[j].axis.binding(null);
                 }
             }
 
