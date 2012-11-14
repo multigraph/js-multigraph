@@ -1,0 +1,1126 @@
+{
+    "project": {},
+    "files": {
+        "src/core/array_data.js": {
+            "name": "src/core/array_data.js",
+            "modules": {},
+            "classes": {
+                "ArrayData": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/core/axis.js": {
+            "name": "src/core/axis.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/core/axis_binding.js": {
+            "name": "src/core/axis_binding.js",
+            "modules": {},
+            "classes": {
+                "axisBinding": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/core/data.js": {
+            "name": "src/core/data.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/core/event_emitter.js": {
+            "name": "src/core/event_emitter.js",
+            "modules": {},
+            "classes": {
+                "EventEmitter": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/core/legend.js": {
+            "name": "src/core/legend.js",
+            "modules": {},
+            "classes": {
+                "Legend": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/core/text.js": {
+            "name": "src/core/text.js",
+            "modules": {},
+            "classes": {
+                "Text": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/core/web_service_data.js": {
+            "name": "src/core/web_service_data.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/core/web_service_data_cache_node.js": {
+            "name": "src/core/web_service_data_cache_node.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/core/web_service_data_iterator.js": {
+            "name": "src/core/web_service_data_iterator.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/events/jquery/multigraph.js": {
+            "name": "src/events/jquery/multigraph.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/graphics/canvas/renderers/band_renderer.js": {
+            "name": "src/graphics/canvas/renderers/band_renderer.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/graphics/canvas/text.js": {
+            "name": "src/graphics/canvas/text.js",
+            "modules": {},
+            "classes": {},
+            "fors": {
+                "Text": 1
+            },
+            "namespaces": {}
+        },
+        "src/graphics/raphael/text.js": {
+            "name": "src/graphics/raphael/text.js",
+            "modules": {},
+            "classes": {},
+            "fors": {
+                "Text": 1
+            },
+            "namespaces": {}
+        },
+        "src/math/displacement.js": {
+            "name": "src/math/displacement.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/valuetype/speedtest/SpeedTester.js": {
+            "name": "src/valuetype/speedtest/SpeedTester.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {},
+    "classes": {
+        "ArrayData": {
+            "name": "ArrayData",
+            "shortname": "ArrayData",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/core/array_data.js",
+            "line": 4,
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "columns",
+                    "description": "",
+                    "type": "Array"
+                }
+            ]
+        },
+        "axisBinding": {
+            "name": "axisBinding",
+            "shortname": "axisBinding",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/core/axis_binding.js",
+            "line": 4,
+            "is_constructor": 1
+        },
+        "EventEmitter": {
+            "name": "EventEmitter",
+            "shortname": "EventEmitter",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/core/event_emitter.js",
+            "line": 5,
+            "description": "EventEmitter is a Jermaine model that supports basic event emitting /\nhandling for Jermaine objects.\n<p>\nEvents are represented as plain old JavaScript objects with at least\nthe following two properties:\n<dl>\n<dt>type</dt>\n<dd>a string giving the type of the event; this can be any\n    arbitrary string.  The event type is not restricted to be\n    from some predetermined list; applications are free to\n    use whatever strings they want for their event types.</dd>\n<dt>target</dt>\n<dd>a reference to the object that emitted the event</dd>\n</dl>\n<p>\nEvent objects may also contain arbitrary other properties that are specific to\na particular event type.\n<p>\nAny Jermaine model can declare itself to be an event emitter by saying\n\"this.isA(EventEmitter)\" in its model declaration.\n<p>\nThis adds three methods to the model:\n<dl>\n   <dt>addListener(eventType, listenerFunction)</dt>\n\n   <dd>Registers listenerFunction as a listener for events of type\n      eventType (a string).  listenerFunction should be a function\n      that accepts a single argument which will be a reference to an\n      event object as described above.  When the object emits the\n      event, the listener function will be invoked in the context\n      where its \"this\" keyword refers to the object that emitted the\n      event (the event target).  If listenerFunction is already\n      registered as a listener for eventType, this function does\n      nothing --- each listener function can be registered only once.</dd>\n\n   <dt>removeListener(eventType, listenerFunction)</dt>\n\n   <dd>Removes the given listenerFunction from the list of listeners\n      for this object for events of type eventType.</dd>\n\n   <dt>emit(event)</dt>\n\n   <dd>Causes the object to emit the given event.  The argument can be\n      either a string, in which case it is assumed to be an event type\n      and is converted to an event object with the given 'type'\n      property, or an event object with a 'type' property and any\n      other desired properties.  The emit() method automatically adds\n      a 'target' property to the event object, whose value is a\n      reference to the object emitting the event.</dd>\n</dl>\n\nIn most cases the emit() method is only called from within the\nimplementation of an EventEmitter object, and code external to the\nobject's model will use its addListener() and removeListener() methods\nto process events that the object emits.  All three of these methods\nare public methods, though, so it's also possible for code outside of\nan object's implementation to cause it to emit an event, or for the\nobject's own code to listen for and process its own events.\n<p>\nTwo special types of events are always present for every EventEmitter\nobject: the \"listenerAdded\" and \"listenerRemoved\" events.  These\nevents make it possible to monitor the addition or removal of event\nlisteners.  The \"listenerAdded\" event is emitted whenever a new\nlistener function is added, and the \"listenerRemoved\" event is emitted\nwhenever a listener is removed.  Each of these events contain the\nfollowing properties:\n<dl>\n    <dt>targetType</dt>\n    <dd>the event type associated with the listener\n                being added or removed</dd>\n    <dt>listener</dt>\n    <dd>the listener function being added or removed</dd>\n</dl>\n\n<b>EXAMPLE</b>\n<pre>\n   var Person = new window.jermaine.Model(function() {\n     this.isA(EventEmitter);\n     this.hasA(\"name\").which.isA(\"string\");\n     this.respondsTo(\"say\", function(something) {\n       console.log(this.name() + ' says ' + something);\n       this.emit({type : \"say\", message : something});\n     });\n   });\n\n   var person = new Person().name(\"Mark\");\n\n   var sayListener = function(event) {\n     console.log(event.target.name() + ' said ' + event.message);\n   };\n\n   person.say('Hello');\n   person.addListener(\"say\", sayListener);\n   person.say('Alright');\n   person.removeListener(\"say\", sayListener);\n   person.say('Goodbye');\n\n   OUTPUT:\n\n      Mark says Hello\n      Mark says Alright\n      Mark said Alright\n      Mark said Goodbye\n</pre>",
+            "is_constructor": 1
+        },
+        "Legend": {
+            "name": "Legend",
+            "shortname": "Legend",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/core/legend.js",
+            "line": 4,
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "visible",
+                    "description": "",
+                    "type": "Boolean"
+                },
+                {
+                    "name": "base",
+                    "description": "",
+                    "type": "Point"
+                },
+                {
+                    "name": "anchor",
+                    "description": "",
+                    "type": "Point"
+                },
+                {
+                    "name": "position",
+                    "description": "",
+                    "type": "Point"
+                },
+                {
+                    "name": "frame",
+                    "description": "- plot or padding"
+                },
+                {
+                    "name": "color",
+                    "description": "",
+                    "type": "Rgb"
+                },
+                {
+                    "name": "bordercolor",
+                    "description": "",
+                    "type": "Rgb"
+                },
+                {
+                    "name": "opacity",
+                    "description": "",
+                    "type": "Number"
+                },
+                {
+                    "name": "border",
+                    "description": "",
+                    "type": "Integer"
+                },
+                {
+                    "name": "rows",
+                    "description": "",
+                    "type": "Integer"
+                },
+                {
+                    "name": "columns",
+                    "description": "",
+                    "type": "Integer"
+                },
+                {
+                    "name": "cornerradius",
+                    "description": "",
+                    "type": "Integer"
+                },
+                {
+                    "name": "padding",
+                    "description": "",
+                    "type": "Integer"
+                },
+                {
+                    "name": "icon",
+                    "description": "",
+                    "type": "Icon"
+                },
+                {
+                    "name": "plots",
+                    "description": "",
+                    "type": "Plot"
+                },
+                {
+                    "name": "iconOffset",
+                    "description": "",
+                    "type": "Integer",
+                    "optional": true,
+                    "optdefault": "5"
+                },
+                {
+                    "name": "labelOffset",
+                    "description": "",
+                    "type": "Integer",
+                    "optional": true,
+                    "optdefault": "5"
+                },
+                {
+                    "name": "labelEnding",
+                    "description": "",
+                    "type": "Integer",
+                    "optional": true,
+                    "optdefault": "15"
+                },
+                {
+                    "name": "width",
+                    "description": ""
+                },
+                {
+                    "name": "height",
+                    "description": ""
+                },
+                {
+                    "name": "x",
+                    "description": ""
+                },
+                {
+                    "name": "y",
+                    "description": ""
+                },
+                {
+                    "name": "blockWidth",
+                    "description": ""
+                },
+                {
+                    "name": "blockHeight",
+                    "description": ""
+                },
+                {
+                    "name": "maxLabelWidth",
+                    "description": ""
+                },
+                {
+                    "name": "maxLabelHeight",
+                    "description": ""
+                }
+            ],
+            "requires": [
+                "point.js",
+                "rgb_color.js",
+                "validation-functions.js",
+                "plot.js",
+                "icon.js"
+            ]
+        },
+        "Text": {
+            "name": "Text",
+            "shortname": "Text",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/core/text.js",
+            "line": 4,
+            "description": "Text is a Jermaine model that supports storing and determining metrics of\nstrings in different graphics contexts.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "string",
+                    "description": "The string stored in the Text model",
+                    "type": "String"
+                }
+            ]
+        }
+    },
+    "classitems": [
+        {
+            "file": "src/core/array_data.js",
+            "line": 24,
+            "itemtype": "method",
+            "name": "ArrayData#getIterator",
+            "params": [
+                {
+                    "name": "columnIDs",
+                    "description": ""
+                },
+                {
+                    "name": "min",
+                    "description": ""
+                },
+                {
+                    "name": "max",
+                    "description": ""
+                },
+                {
+                    "name": "buffer",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "ArrayData"
+            },
+            "class": "ArrayData"
+        },
+        {
+            "file": "src/core/array_data.js",
+            "line": 53,
+            "itemtype": "method",
+            "name": "ArrayData#onReady",
+            "params": [
+                {
+                    "name": "callback",
+                    "description": ""
+                }
+            ],
+            "class": "ArrayData"
+        },
+        {
+            "file": "src/core/array_data.js",
+            "line": 58,
+            "itemtype": "method",
+            "name": "ArrayData#getArrayDataIterator",
+            "params": [
+                {
+                    "name": "arrayData",
+                    "description": "",
+                    "type": "String array"
+                },
+                {
+                    "name": "columnIDs",
+                    "description": ""
+                },
+                {
+                    "name": "min",
+                    "description": ""
+                },
+                {
+                    "name": "max",
+                    "description": ""
+                },
+                {
+                    "name": "buffer",
+                    "description": ""
+                }
+            ],
+            "throws": [
+                "{error} Throws error if arrayData is not an array of strings"
+            ],
+            "return": {
+                "description": "iter"
+            },
+            "class": "ArrayData"
+        },
+        {
+            "file": "src/core/array_data.js",
+            "line": 167,
+            "description": "IMPORTANT NOTE: dataVariableArray is a plain javascript array of DataVariable instances; it is NOT a jermaine attr_list.",
+            "itemtype": "method",
+            "name": "ArrayData#textToDataValuesArray",
+            "params": [
+                {
+                    "name": "dataVariableArray",
+                    "description": ""
+                },
+                {
+                    "name": "text",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "dataValues",
+                "type": "Array"
+            },
+            "todo": [
+                "If the number of comma-separated values on the current line is not the same as the number of columns in the metadata",
+                "should throw an error."
+            ],
+            "class": "ArrayData"
+        },
+        {
+            "file": "src/core/array_data.js",
+            "line": 230,
+            "description": "IMPORTANT NOTE: dataVariableArray is a plain javascript array of DataVariable instances; it is NOT a jermaine attr_list.",
+            "class": "ArrayData"
+        },
+        {
+            "file": "src/core/axis.js",
+            "line": 319,
+            "description": "Compute the distance from an axis to a point.  The point\n(x,y) is expressed in pixel coordinates in the same\ncoordinate system as the axis.\n\nWe use two different kinds of computations depending on\nwhether the point lies inside or outside the region bounded\nby the two lines perpendicular to the axis through its\nendpoints.  If the point lies inside this region, the\ndistance is simply the difference in the perpendicular\ncoordinate of the point and the perpendicular coordinate of\nthe axis.\n\nIf the point lies outside the region, then the distance is\nthe L2 distance between the point and the closest endpoint\nof the axis.",
+            "class": "axisBinding"
+        },
+        {
+            "file": "src/core/axis_binding.js",
+            "line": 56,
+            "description": "Force all the axes in this binding to sync up with each\nother, if possible.\n\nThis is done by looking for an axis in this binding which\nhas its dataMin and dataMax values set, and then calling\nits setDataRange() method with those values.  The main\npurpose of this method is to facilitate the initial setting\nof dataMin/dataMax values for axes in a binding that do not\nalready have dataMin/dataMax values set; this forces them\nto be set based on the binding, as determined by another\naxis in the binding.\n\nNote that this method is NOT the normal way for bound axes\nto interact with each other once initialization is\ncomplete; that is done via the axes' own setDataRange()\nmethod.",
+            "itemtype": "method",
+            "name": "AxisBinding#sync",
+            "return": {
+                "description": "a value indicating whether the sync was\n                  done; this will be true if and only if\n                  there is at least one axis in the binding\n                  having both its dataMin and dataMax\n                  values set.",
+                "type": "Boolean"
+            },
+            "class": "axisBinding"
+        },
+        {
+            "file": "src/core/data.js",
+            "line": 13,
+            "description": "private find function\n\n  Searches through a jermaine attr_list of DataVariables (columns) for\n  an entry having a given id or column number.\n\n     attrName: the name of the attribute to search on; should be either\n               \"id\" or \"column\"\n     attrValue: the value to search for. If attrName is \"id\", this value\n                should be a string.  If attrName is \"column\", this value\n                should be an int.\n     columns: the attr_list to search through\n\n  Returns: the index (an int) of the DataVariable entry having\n           the given attribute value, if any, or -1 if none was found\n\n Example:\n      find(\"id\", \"x\", columns)\n         finds the index of the DataVariable in the columns attr_list\n         having an id of \"x\"\n      find(\"column\", \"1\", columns)\n         finds the index of the DataVariable in the columns attr_list\n         having a \"column\" attribute of 1",
+            "class": "EventEmitter"
+        },
+        {
+            "file": "src/core/data.js",
+            "line": 47,
+            "description": "Set the 'data' attribute of each of this data object's columns\nto point to the data object itself.",
+            "class": "EventEmitter"
+        },
+        {
+            "file": "src/core/event_emitter.js",
+            "line": 125,
+            "description": "Adds a listener function for events of a specific type\nemitted by this object.",
+            "itemtype": "method",
+            "name": "EventEmitter#addListener",
+            "params": [
+                {
+                    "name": "eventType",
+                    "description": "the type of event",
+                    "type": "String"
+                },
+                {
+                    "name": "listener",
+                    "description": "a listener function",
+                    "type": "Function"
+                }
+            ],
+            "return": {
+                "description": "a value indicating whether the listener\n        was actually added (a listener is not added if it\n        is already registered for the eventType)",
+                "type": "Boolean"
+            },
+            "class": "EventEmitter"
+        },
+        {
+            "file": "src/core/event_emitter.js",
+            "line": 155,
+            "description": "Removes a listener function for events of a specific type\nemitted by this object.",
+            "itemtype": "method",
+            "name": "EventEmitter#removeListener",
+            "params": [
+                {
+                    "name": "eventType",
+                    "description": "the type of event",
+                    "type": "String"
+                },
+                {
+                    "name": "listener",
+                    "description": "the listener function to remove",
+                    "type": "Function"
+                }
+            ],
+            "return": {
+                "description": "a value indicating whether the listener\n        was actually removed.",
+                "type": "Boolean"
+            },
+            "class": "EventEmitter"
+        },
+        {
+            "file": "src/core/event_emitter.js",
+            "line": 183,
+            "description": "Call this objects listeners for a specific event.  If the \"event\"\nargument is a string, it is converted to an Object having\nthat string as the value of its \"type\" attribute; otherwise\nthe \"event\" argument should be an event Object having a\n\"type\" attribute and any other attributes approriate for\nthat event type.  In either case, all (if there are any) of\nthe current listeners on this object for events of the\ngiven type will be invoked, being passed an event object.",
+            "itemtype": "method",
+            "name": "EventEmitter#emit",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "either a string representing an event type, or an event\n                                object with a 'type' attribute.",
+                    "type": "Object or string"
+                }
+            ],
+            "return": {
+                "description": "(nothing)"
+            },
+            "class": "EventEmitter"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 97,
+            "description": "Initializes the legend",
+            "itemtype": "method",
+            "name": "Legend#initializeGeometry",
+            "params": [
+                {
+                    "name": "graph",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "heights"
+            },
+            "todo": [
+                "Find out whether or not padding needs to be taken into consideration."
+            ],
+            "class": "Legend"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 178,
+            "description": "Draws the legend",
+            "itemtype": "method",
+            "name": "Legend#render",
+            "params": [
+                {
+                    "name": "graphicsContext",
+                    "description": ""
+                }
+            ],
+            "class": "Legend"
+        },
+        {
+            "file": "src/core/text.js",
+            "line": 14,
+            "description": "The string stored in the Text model",
+            "itemtype": "property",
+            "name": "string",
+            "type": "{String}",
+            "class": "Text"
+        },
+        {
+            "file": "src/core/text.js",
+            "line": 22,
+            "description": "The unrotated width of the string",
+            "itemtype": "property",
+            "name": "origWidth",
+            "type": "{float}",
+            "final": 1,
+            "class": "Text"
+        },
+        {
+            "file": "src/core/text.js",
+            "line": 31,
+            "description": "The unrotated height of the string",
+            "itemtype": "property",
+            "name": "origHeight",
+            "type": "{float}",
+            "final": 1,
+            "class": "Text"
+        },
+        {
+            "file": "src/core/text.js",
+            "line": 40,
+            "description": "The rotated width of the string",
+            "itemtype": "property",
+            "name": "rotatedWidth",
+            "type": "{float}",
+            "final": 1,
+            "class": "Text"
+        },
+        {
+            "file": "src/core/text.js",
+            "line": 49,
+            "description": "The rotated height of the string",
+            "itemtype": "property",
+            "name": "rotatedHeight",
+            "type": "{float}",
+            "final": 1,
+            "class": "Text"
+        },
+        {
+            "file": "src/core/text.js",
+            "line": 60,
+            "description": "Determines unrotated and rotated widths and heights for the stored string. Overridden by\nimplementations in graphics drivers.",
+            "itemtype": "method",
+            "name": "initializeGeometry",
+            "chainable": 1,
+            "params": [
+                {
+                    "name": "graphicsContext",
+                    "description": "",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "angle",
+                            "description": "",
+                            "type": "Float"
+                        }
+                    ]
+                }
+            ],
+            "class": "Text"
+        },
+        {
+            "file": "src/core/text.js",
+            "line": 94,
+            "description": "Determines unrotated width for the stored string. Overridden by implementations in graphics\ndrivers.",
+            "itemtype": "method",
+            "name": "measureStringWidth",
+            "access": "private",
+            "tagname": "",
+            "return": {
+                "description": "Unrotated width of string.",
+                "type": "Float"
+            },
+            "params": [
+                {
+                    "name": "graphicsContext",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "class": "Text"
+        },
+        {
+            "file": "src/core/text.js",
+            "line": 130,
+            "description": "Determines unrotated height for the stored string. Overridden by implementations in graphics\ndrivers.",
+            "itemtype": "method",
+            "name": "measureStringHeight",
+            "access": "private",
+            "tagname": "",
+            "return": {
+                "description": "Unrotated height of string.",
+                "type": "Float"
+            },
+            "params": [
+                {
+                    "name": "graphicsContext",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "class": "Text"
+        },
+        {
+            "file": "src/core/web_service_data.js",
+            "line": 32,
+            "description": "A pointer to the head WebServiceDataCacheNode in this WebServieData's cache",
+            "class": "Text"
+        },
+        {
+            "file": "src/core/web_service_data.js",
+            "line": 41,
+            "description": "A pointer to the tail WebServiceDataCacheNode in this WebServieData's cache",
+            "class": "Text"
+        },
+        {
+            "file": "src/core/web_service_data.js",
+            "line": 50,
+            "description": "Return a pointer to the first WebServiceDataCacheNode in this WebServieData's cache\nthat actually contains data, if any.  If the cache doesn't contain any data, return null.",
+            "class": "Text"
+        },
+        {
+            "file": "src/core/web_service_data.js",
+            "line": 61,
+            "description": "Return a pointer to the last WebServiceDataCacheNode in this WebServieData's cache\nthat actually contains data, if any.  If the cache doesn't contain any data, return null.",
+            "class": "Text"
+        },
+        {
+            "file": "src/core/web_service_data.js",
+            "line": 72,
+            "description": "Insert a WebServiceCacheNode into this WebService's cache.\nIf this node's coveredMin is less than the cache head's\ncoveredMin, insert it at the head; otherwise insert it at\nthe tail.  Note that nodes are only inserted either at the\nhead or at the tail of the cache --- not in the middle.",
+            "class": "Text"
+        },
+        {
+            "file": "src/core/web_service_data.js",
+            "line": 125,
+            "description": "Initiate requests needed to fetch data between coveredMin and coveredMax, if any.",
+            "class": "Text"
+        },
+        {
+            "file": "src/core/web_service_data_cache_node.js",
+            "line": 6,
+            "description": "A WebServiceDataCacheNode represents a single node in the\ndoubly-linked list holding the data for a WebServiceDataCache.\nThe WebServiceDataCacheNode has an array of data (which may\nactually be null, if the node's data has not yet been loaded),\nnext and prev pointers to the next and previous nodes in the\nlinked list, and coveredMin and coveredMax values that indicate\nthe min and max values of the \"covered\" range of data for this\nnode.\n\nThe \"covered\" range is the interval of the data number line for\nwhich this node is responsible for storing data; Multigraph\nuses range this to avoid requesting the same data twice --- it\nnever requests data for a range already covered by an existing\ncache node.\n\nInitially, when the WebServiceDataCacheNode is created, the\nlimits of the covered range are specified in the constructor.\nLater on, when the node's data is actually populated, the\nlimits are potentially adjusted outward, if the range of data\nreceived is larger than the initially specified covered range.\nSo in all cases, the covered range indicates the range for\nwhich no more data is needed, because it's covered by this\nnode.\n\nNote that the covered range is never adjusted to be smaller.\n\nThe WebServiceDataCacheNode does not actually fetch any data\n--- it is simply a storage container for fetched data; it's up\nto other code outside of this object to fetch and populate the\ndata.",
+            "class": "Text"
+        },
+        {
+            "file": "src/core/web_service_data_cache_node.js",
+            "line": 40,
+            "description": "The actual data for this node.",
+            "class": "Text"
+        },
+        {
+            "file": "src/core/web_service_data_cache_node.js",
+            "line": 70,
+            "description": "The next node in the cache's linked list",
+            "class": "Text"
+        },
+        {
+            "file": "src/core/web_service_data_cache_node.js",
+            "line": 77,
+            "description": "The previous node in the cache's linked list",
+            "class": "Text"
+        },
+        {
+            "file": "src/core/web_service_data_cache_node.js",
+            "line": 84,
+            "description": "The min of the covered value range",
+            "class": "Text"
+        },
+        {
+            "file": "src/core/web_service_data_cache_node.js",
+            "line": 89,
+            "description": "The max of the covered value range",
+            "class": "Text"
+        },
+        {
+            "file": "src/core/web_service_data_cache_node.js",
+            "line": 94,
+            "description": "Return the next node in the cache that actually has data,\nor null if none exists.",
+            "class": "Text"
+        },
+        {
+            "file": "src/core/web_service_data_cache_node.js",
+            "line": 106,
+            "description": "Return the previous node in the cache that actually has data,\nor null if none exists.",
+            "class": "Text"
+        },
+        {
+            "file": "src/core/web_service_data_cache_node.js",
+            "line": 118,
+            "description": "Return the minimum (column 0) data value for this node.  Returns null\nif the node has no data yet.",
+            "class": "Text"
+        },
+        {
+            "file": "src/core/web_service_data_cache_node.js",
+            "line": 131,
+            "description": "Return the maximum (column 0) data value for this node.    Returns null\nif the node has no data yet.",
+            "class": "Text"
+        },
+        {
+            "file": "src/core/web_service_data_cache_node.js",
+            "line": 144,
+            "description": "Return true if this node has data; false if not",
+            "class": "Text"
+        },
+        {
+            "file": "src/core/web_service_data_cache_node.js",
+            "line": 153,
+            "description": "Populate this node's data array by parsing the values\ncontained in the 'dataText' string, which should be a\nstring of comma-separated values of the same sort expected\nby ArrayData and CSVData.  The first argument, 'columns',\nshould be a plain javascript array of DataVariable instances,\nof the sort returned by Data.getColumns().\n\nThis method examines other nodes in the cache in order\ninsure that values included in this node's data array\nare (a) strictly greater than the maximum value present in the\ncache prior to this node, and (b) strictly less than the\nminimum value present in the cache after this node.\nThis guarantees that there is no overlap between the\ndata in this node and other nodes in the cache.",
+            "class": "Text"
+        },
+        {
+            "file": "src/core/web_service_data_iterator.js",
+            "line": 6,
+            "description": "An iterator for stepping through data values stored in a linked list of\nWebServiceDataCacheNodes.  The constructor takes 5 arguments:",
+            "params": [
+                {
+                    "name": "columnIndices:!~YUIDOC_LINE~!",
+                    "description": "JavaScript array of the indices of the columns\n    of data to return",
+                    "type": "Array"
+                },
+                {
+                    "name": "initialNode:",
+                    "description": "\n    Pointer to the WebServiceDataCacheNode containing the first\n    value to iterate over",
+                    "type": "WebServiceDataCacheNode"
+                },
+                {
+                    "name": "initialIndex:",
+                    "description": "\n    Index, within initialNode, of the first value to iterate over",
+                    "type": "Integer"
+                },
+                {
+                    "name": "finalNode:",
+                    "description": "\n    Pointer to the WebServiceDataCacheNode containing the last\n    value to iterate over",
+                    "type": "WebServiceDataCacheNode"
+                },
+                {
+                    "name": "finalIndex:",
+                    "description": "\n    Index, within finalNode, of the last value to iterate over",
+                    "type": "Integer"
+                }
+            ],
+            "class": "Text"
+        },
+        {
+            "file": "src/events/jquery/multigraph.js",
+            "line": 6,
+            "description": "Inclusion of this file allows markup like the following to be\nused in HTML:\n\n    <div class=\"multigraph\"\n       data-src=\"MUGL_FILE\"\n       data-width=\"WIDTH\"\n       data-height=\"HEIGHT\"\n       data-driver=\"DRIVER\">\n    </div>\n\nThe data-driver tag is optional; if not specified, it currently\ndefaults to \"canvas\", but that will be changed in the future to\nmake a smart choice based on browser capabilities.\n\nThe data-width and data-height tags are also optional; if they\nare not specified, Multigraph will use the div size as determined\nby the browser (which may be set by css rules, for example).  If\ndata-width or data-height is present, it will override any css\nwidth or height.",
+            "class": "Text"
+        },
+        {
+            "file": "src/graphics/canvas/renderers/band_renderer.js",
+            "line": 58,
+            "description": "Private utility function to stroke line segments connecting the points of a run",
+            "class": "Text"
+        },
+        {
+            "file": "src/graphics/canvas/text.js",
+            "line": 7,
+            "description": "Determines unrotated and rotated widths and heights for the stored string in the canvas\nenvironment",
+            "itemtype": "method",
+            "name": "initializeGeometry",
+            "chainable": 1,
+            "params": [
+                {
+                    "name": "graphicsContext",
+                    "description": "",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "context",
+                            "description": "",
+                            "type": "Context"
+                        },
+                        {
+                            "name": "angle",
+                            "description": "",
+                            "type": "Float"
+                        }
+                    ]
+                }
+            ],
+            "class": "Text"
+        },
+        {
+            "file": "src/graphics/canvas/text.js",
+            "line": 44,
+            "description": "Determines unrotated width for the stored string in the canvas environment.",
+            "itemtype": "method",
+            "name": "measureStringWidth",
+            "access": "private",
+            "tagname": "",
+            "return": {
+                "description": "Unrotated width of string.",
+                "type": "Float"
+            },
+            "params": [
+                {
+                    "name": "context",
+                    "description": "",
+                    "type": "Context"
+                }
+            ],
+            "class": "Text"
+        },
+        {
+            "file": "src/graphics/canvas/text.js",
+            "line": 62,
+            "description": "Determines unrotated height for the stored string in the canvas environment.",
+            "itemtype": "method",
+            "name": "measureStringHeight",
+            "access": "private",
+            "tagname": "",
+            "return": {
+                "description": "Unrotated height of string.",
+                "type": "Float"
+            },
+            "params": [
+                {
+                    "name": "context",
+                    "description": "",
+                    "type": "Context"
+                }
+            ],
+            "class": "Text"
+        },
+        {
+            "file": "src/graphics/raphael/text.js",
+            "line": 7,
+            "description": "Determines unrotated and rotated widths and heights for the stored string in the raphael\nenvironment",
+            "itemtype": "method",
+            "name": "initializeGeometry",
+            "chainable": 1,
+            "params": [
+                {
+                    "name": "graphicsContext",
+                    "description": "",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "elem",
+                            "description": "",
+                            "type": "TextElem"
+                        },
+                        {
+                            "name": "angle",
+                            "description": "",
+                            "type": "Float"
+                        }
+                    ]
+                }
+            ],
+            "class": "Text"
+        },
+        {
+            "file": "src/graphics/raphael/text.js",
+            "line": 46,
+            "description": "Determines unrotated width for the stored string in the raphael environment.",
+            "itemtype": "method",
+            "name": "measureStringWidth",
+            "access": "private",
+            "tagname": "",
+            "return": {
+                "description": "Unrotated width of string.",
+                "type": "Float"
+            },
+            "params": [
+                {
+                    "name": "elem",
+                    "description": "",
+                    "type": "TextElem"
+                }
+            ],
+            "class": "Text"
+        },
+        {
+            "file": "src/graphics/raphael/text.js",
+            "line": 64,
+            "description": "Determines unrotated height for the stored string in the raphael environment.",
+            "itemtype": "method",
+            "name": "measureStringHeight",
+            "access": "private",
+            "tagname": "",
+            "return": {
+                "description": "Unrotated height of string.",
+                "type": "Float"
+            },
+            "params": [
+                {
+                    "name": "text",
+                    "description": "",
+                    "type": "TextElem"
+                }
+            ],
+            "class": "Text"
+        },
+        {
+            "file": "src/math/displacement.js",
+            "line": 4,
+            "description": "A Displacement represents a geometric position along a line\nsegment, expressed in terms of two quantities: a relative\nposition called 'a', and an absolute offset called 'b'.  The\nlength of the line segment is not known in advance --- the idea\nis that the Displacement object encapsulates a rule for\ndetermining a location along ANY line segment.  The Displacement\nhas methods which take the line segment length as an argument\nand return the computed final position.\n\nThere are two different position-calcuating methods,\ncorresponding to two different interpretations of the relative\nvalue 'a':\n\n'relative length':\n    'a' is a number between 0 and 1, representing a fraction of\n      the total length of the line segment; the relative\n      position determined by 'a' is the fraction 'a' of the\n      total length of the segment.\n    In this case, the position-calculating method\n      calculateLength(L) returns the number a * L + b, which\n      corresponds to moving 'a' of the way along the length L,\n      then adding 'b':\n            [--------------------------------X------------]\n            |<---- a * L --->|<---- b ------>|\n            |<------------------  L  -------------------->|\n\n'relative coordinate':\n    'a' is a number between -1 and 1, representing a coordinate\n      value in a [-1,1] coordinate system along the line\n      segment\n    In this case, the position-calculating method\n      calculateCoordinate(L) returns the number (a+1) * L/2 +\n      b.  which corresponds to moving to the position\n      determined by the 'a' coordinate, then adding 'b':\n            [------------------------------------X--------]\n            |<--- (a+1) * L/2 --->|<---- b ----->|\n            |<------------------  L  -------------------->|",
+            "class": ""
+        },
+        {
+            "file": "src/math/displacement.js",
+            "line": 76,
+            "description": "parse a string into a Displacement.  The string should be of one of the following forms:\n    \"A+B\"  ==>  a=A  b=B\n    \"A-B\"  ==>  a=A  b=-B\n    \"A\"    ==>  a=A  b=0\n    \"+A\"   ==>  a=A  b=0\n    \"-A\"   ==>  a=-A b=0",
+            "class": ""
+        },
+        {
+            "file": "src/valuetype/speedtest/SpeedTester.js",
+            "line": 1,
+            "description": "The SpeedTester object runs a sequence of tests (actually any sequence of functions) in such\na way as to ensure that the browser has a chance to update the page display between each test.\nThe idea is that each test function might update the DOM to indicate the results of that test,\nand we want the user to be able to see the results of each test immediately, rather than waiting\nuntil all tests are done.\n\nEach \"test\" actually consists of a pair of functions, one called the \"prep\" function, and one\ncalled the \"test\" function.  When the SpeedTester object runs the test, it runs the \"prep\" function\nfirst, followed by the \"test\" function, allowing the browser to refresh the screen after each one\nof these.\n\nUsage is as follows:\n\n    var speedTester = new window.speedtester.SpeedTester();\n\n    speedTester.createTest( [prep function], [test function] );\n    speedTester.createTest( [prep function], [test function] );\n    ...\n    speedTester.createTest( [prep function], [test function] );\n\n    speedTester.runTests();\n\nThe runTests() method runs all tests specified by calls to the createTest() method, in the\norder given. runTests() takes an optional argument, which is a function to be run\nafter all tests have run.",
+            "class": ""
+        }
+    ],
+    "warnings": [
+        {
+            "message": "Missing item type\nIMPORTANT NOTE: dataVariableArray is a plain javascript array of DataVariable instances; it is NOT a jermaine attr_list.",
+            "line": " src/core/array_data.js:230"
+        },
+        {
+            "message": "Missing item type\nCompute the distance from an axis to a point.  The point\n(x,y) is expressed in pixel coordinates in the same\ncoordinate system as the axis.\n\nWe use two different kinds of computations depending on\nwhether the point lies inside or outside the region bounded\nby the two lines perpendicular to the axis through its\nendpoints.  If the point lies inside this region, the\ndistance is simply the difference in the perpendicular\ncoordinate of the point and the perpendicular coordinate of\nthe axis.\n\nIf the point lies outside the region, then the distance is\nthe L2 distance between the point and the closest endpoint\nof the axis.",
+            "line": " src/core/axis.js:319"
+        },
+        {
+            "message": "Missing item type\nprivate find function\n\n  Searches through a jermaine attr_list of DataVariables (columns) for\n  an entry having a given id or column number.\n\n     attrName: the name of the attribute to search on; should be either\n               \"id\" or \"column\"\n     attrValue: the value to search for. If attrName is \"id\", this value\n                should be a string.  If attrName is \"column\", this value\n                should be an int.\n     columns: the attr_list to search through\n\n  Returns: the index (an int) of the DataVariable entry having\n           the given attribute value, if any, or -1 if none was found\n\n Example:\n      find(\"id\", \"x\", columns)\n         finds the index of the DataVariable in the columns attr_list\n         having an id of \"x\"\n      find(\"column\", \"1\", columns)\n         finds the index of the DataVariable in the columns attr_list\n         having a \"column\" attribute of 1",
+            "line": " src/core/data.js:13"
+        },
+        {
+            "message": "Missing item type\nSet the 'data' attribute of each of this data object's columns\nto point to the data object itself.",
+            "line": " src/core/data.js:47"
+        },
+        {
+            "message": "Missing item type\nA pointer to the head WebServiceDataCacheNode in this WebServieData's cache",
+            "line": " src/core/web_service_data.js:32"
+        },
+        {
+            "message": "Missing item type\nA pointer to the tail WebServiceDataCacheNode in this WebServieData's cache",
+            "line": " src/core/web_service_data.js:41"
+        },
+        {
+            "message": "Missing item type\nReturn a pointer to the first WebServiceDataCacheNode in this WebServieData's cache\nthat actually contains data, if any.  If the cache doesn't contain any data, return null.",
+            "line": " src/core/web_service_data.js:50"
+        },
+        {
+            "message": "Missing item type\nReturn a pointer to the last WebServiceDataCacheNode in this WebServieData's cache\nthat actually contains data, if any.  If the cache doesn't contain any data, return null.",
+            "line": " src/core/web_service_data.js:61"
+        },
+        {
+            "message": "Missing item type\nInsert a WebServiceCacheNode into this WebService's cache.\nIf this node's coveredMin is less than the cache head's\ncoveredMin, insert it at the head; otherwise insert it at\nthe tail.  Note that nodes are only inserted either at the\nhead or at the tail of the cache --- not in the middle.",
+            "line": " src/core/web_service_data.js:72"
+        },
+        {
+            "message": "Missing item type\nInitiate requests needed to fetch data between coveredMin and coveredMax, if any.",
+            "line": " src/core/web_service_data.js:125"
+        },
+        {
+            "message": "Missing item type\nA WebServiceDataCacheNode represents a single node in the\ndoubly-linked list holding the data for a WebServiceDataCache.\nThe WebServiceDataCacheNode has an array of data (which may\nactually be null, if the node's data has not yet been loaded),\nnext and prev pointers to the next and previous nodes in the\nlinked list, and coveredMin and coveredMax values that indicate\nthe min and max values of the \"covered\" range of data for this\nnode.\n\nThe \"covered\" range is the interval of the data number line for\nwhich this node is responsible for storing data; Multigraph\nuses range this to avoid requesting the same data twice --- it\nnever requests data for a range already covered by an existing\ncache node.\n\nInitially, when the WebServiceDataCacheNode is created, the\nlimits of the covered range are specified in the constructor.\nLater on, when the node's data is actually populated, the\nlimits are potentially adjusted outward, if the range of data\nreceived is larger than the initially specified covered range.\nSo in all cases, the covered range indicates the range for\nwhich no more data is needed, because it's covered by this\nnode.\n\nNote that the covered range is never adjusted to be smaller.\n\nThe WebServiceDataCacheNode does not actually fetch any data\n--- it is simply a storage container for fetched data; it's up\nto other code outside of this object to fetch and populate the\ndata.",
+            "line": " src/core/web_service_data_cache_node.js:6"
+        },
+        {
+            "message": "Missing item type\nThe actual data for this node.",
+            "line": " src/core/web_service_data_cache_node.js:40"
+        },
+        {
+            "message": "Missing item type\nThe next node in the cache's linked list",
+            "line": " src/core/web_service_data_cache_node.js:70"
+        },
+        {
+            "message": "Missing item type\nThe previous node in the cache's linked list",
+            "line": " src/core/web_service_data_cache_node.js:77"
+        },
+        {
+            "message": "Missing item type\nThe min of the covered value range",
+            "line": " src/core/web_service_data_cache_node.js:84"
+        },
+        {
+            "message": "Missing item type\nThe max of the covered value range",
+            "line": " src/core/web_service_data_cache_node.js:89"
+        },
+        {
+            "message": "Missing item type\nReturn the next node in the cache that actually has data,\nor null if none exists.",
+            "line": " src/core/web_service_data_cache_node.js:94"
+        },
+        {
+            "message": "Missing item type\nReturn the previous node in the cache that actually has data,\nor null if none exists.",
+            "line": " src/core/web_service_data_cache_node.js:106"
+        },
+        {
+            "message": "Missing item type\nReturn the minimum (column 0) data value for this node.  Returns null\nif the node has no data yet.",
+            "line": " src/core/web_service_data_cache_node.js:118"
+        },
+        {
+            "message": "Missing item type\nReturn the maximum (column 0) data value for this node.    Returns null\nif the node has no data yet.",
+            "line": " src/core/web_service_data_cache_node.js:131"
+        },
+        {
+            "message": "Missing item type\nReturn true if this node has data; false if not",
+            "line": " src/core/web_service_data_cache_node.js:144"
+        },
+        {
+            "message": "Missing item type\nPopulate this node's data array by parsing the values\ncontained in the 'dataText' string, which should be a\nstring of comma-separated values of the same sort expected\nby ArrayData and CSVData.  The first argument, 'columns',\nshould be a plain javascript array of DataVariable instances,\nof the sort returned by Data.getColumns().\n\nThis method examines other nodes in the cache in order\ninsure that values included in this node's data array\nare (a) strictly greater than the maximum value present in the\ncache prior to this node, and (b) strictly less than the\nminimum value present in the cache after this node.\nThis guarantees that there is no overlap between the\ndata in this node and other nodes in the cache.",
+            "line": " src/core/web_service_data_cache_node.js:153"
+        },
+        {
+            "message": "Missing item type\nAn iterator for stepping through data values stored in a linked list of\nWebServiceDataCacheNodes.  The constructor takes 5 arguments:",
+            "line": " src/core/web_service_data_iterator.js:6"
+        },
+        {
+            "message": "Missing item type\nInclusion of this file allows markup like the following to be\nused in HTML:\n\n    <div class=\"multigraph\"\n       data-src=\"MUGL_FILE\"\n       data-width=\"WIDTH\"\n       data-height=\"HEIGHT\"\n       data-driver=\"DRIVER\">\n    </div>\n\nThe data-driver tag is optional; if not specified, it currently\ndefaults to \"canvas\", but that will be changed in the future to\nmake a smart choice based on browser capabilities.\n\nThe data-width and data-height tags are also optional; if they\nare not specified, Multigraph will use the div size as determined\nby the browser (which may be set by css rules, for example).  If\ndata-width or data-height is present, it will override any css\nwidth or height.",
+            "line": " src/events/jquery/multigraph.js:6"
+        },
+        {
+            "message": "Missing item type\nPrivate utility function to stroke line segments connecting the points of a run",
+            "line": " src/graphics/canvas/renderers/band_renderer.js:58"
+        },
+        {
+            "message": "Missing item type\nA Displacement represents a geometric position along a line\nsegment, expressed in terms of two quantities: a relative\nposition called 'a', and an absolute offset called 'b'.  The\nlength of the line segment is not known in advance --- the idea\nis that the Displacement object encapsulates a rule for\ndetermining a location along ANY line segment.  The Displacement\nhas methods which take the line segment length as an argument\nand return the computed final position.\n\nThere are two different position-calcuating methods,\ncorresponding to two different interpretations of the relative\nvalue 'a':\n\n'relative length':\n    'a' is a number between 0 and 1, representing a fraction of\n      the total length of the line segment; the relative\n      position determined by 'a' is the fraction 'a' of the\n      total length of the segment.\n    In this case, the position-calculating method\n      calculateLength(L) returns the number a * L + b, which\n      corresponds to moving 'a' of the way along the length L,\n      then adding 'b':\n            [--------------------------------X------------]\n            |<---- a * L --->|<---- b ------>|\n            |<------------------  L  -------------------->|\n\n'relative coordinate':\n    'a' is a number between -1 and 1, representing a coordinate\n      value in a [-1,1] coordinate system along the line\n      segment\n    In this case, the position-calculating method\n      calculateCoordinate(L) returns the number (a+1) * L/2 +\n      b.  which corresponds to moving to the position\n      determined by the 'a' coordinate, then adding 'b':\n            [------------------------------------X--------]\n            |<--- (a+1) * L/2 --->|<---- b ----->|\n            |<------------------  L  -------------------->|",
+            "line": " src/math/displacement.js:4"
+        },
+        {
+            "message": "Missing item type\nparse a string into a Displacement.  The string should be of one of the following forms:\n    \"A+B\"  ==>  a=A  b=B\n    \"A-B\"  ==>  a=A  b=-B\n    \"A\"    ==>  a=A  b=0\n    \"+A\"   ==>  a=A  b=0\n    \"-A\"   ==>  a=-A b=0",
+            "line": " src/math/displacement.js:76"
+        },
+        {
+            "message": "Missing item type\nThe SpeedTester object runs a sequence of tests (actually any sequence of functions) in such\na way as to ensure that the browser has a chance to update the page display between each test.\nThe idea is that each test function might update the DOM to indicate the results of that test,\nand we want the user to be able to see the results of each test immediately, rather than waiting\nuntil all tests are done.\n\nEach \"test\" actually consists of a pair of functions, one called the \"prep\" function, and one\ncalled the \"test\" function.  When the SpeedTester object runs the test, it runs the \"prep\" function\nfirst, followed by the \"test\" function, allowing the browser to refresh the screen after each one\nof these.\n\nUsage is as follows:\n\n    var speedTester = new window.speedtester.SpeedTester();\n\n    speedTester.createTest( [prep function], [test function] );\n    speedTester.createTest( [prep function], [test function] );\n    ...\n    speedTester.createTest( [prep function], [test function] );\n\n    speedTester.runTests();\n\nThe runTests() method runs all tests specified by calls to the createTest() method, in the\norder given. runTests() takes an optional argument, which is a function to be run\nafter all tests have run.",
+            "line": " src/valuetype/speedtest/SpeedTester.js:1"
+        }
+    ]
+}
