@@ -42,6 +42,12 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                     "angle" : this.angle()
                 }).rotatedWidth();
         });
+        ns.Labeler.respondsTo("measureStringHeight", function (elem, string) {
+            return (new ns.Text(string)).initializeGeometry({
+                    "elem"  : elem,
+                    "angle" : this.angle()
+                }).rotatedHeight();
+        });
 
         ns.Labeler.respondsTo("renderLabel", function (graphicsContext, value) {
             var formattedString = new ns.Text(this.formatter().format(value)),

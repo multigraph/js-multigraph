@@ -133,10 +133,20 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             });
 
             this.respondsTo("getLabelDensity", function (graphicsContext) {
-                // convert the spacing measure to pixels:
-                var pixelSpacing = this.spacing().getRealValue() * this.axis().axisToDataRatio();
-                // length of the formatted axis min value, in pixels
-                var pixelFormattedValue = this.measureStringWidth(graphicsContext, this.formatter().format(this.axis().dataMin()));
+                var pixelSpacing              = this.spacing().getRealValue() * this.axis().axisToDataRatio(),
+                    axis                      = this.axis(),
+                    minRealValue              = axis.dataMin().getRealValue(),
+                    maxRealValue              = axis.dataMax().getRealValue(),
+                    representativeRealValue   = minRealValue + 0.51234567 * (maxRealValue - minRealValue),
+                    representativeValue       = DataValue.create(axis.type(), representativeRealValue ),
+                    representativeValueString = this.formatter().format(representativeValue);
+
+                // length of the formatted axis representative value, in pixels
+                var pixelFormattedValue = (
+                    (this.axis().orientation() === Axis.HORIZONTAL)
+                        ? this.measureStringWidth(graphicsContext, representativeValueString)
+                        : this.measureStringHeight(graphicsContext, representativeValueString)
+                );
                 // return the ratio -- the fraction of the spacing taken up by the formatted string
                 return pixelFormattedValue / pixelSpacing;
             });
@@ -149,6 +159,10 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 // but we gloss over that at the moment.  Just return the width of the string
                 // using some reasonable default font for now.  Later on, we'll modify this
                 // function to use font information.
+                return string.length*30;
+            });
+            this.respondsTo("measureStringHeight", function (graphicsContext, string) {
+                // see comment for measureStringWidth() above
                 return string.length*30;
             });
             this.respondsTo("renderLabel", function (graphicsContext, value) {

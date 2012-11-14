@@ -88,6 +88,12 @@ context.restore();
                     "angle"   : this.angle()
                 }).rotatedWidth();
         });
+        ns.Labeler.respondsTo("measureStringHeight", function (context, string) {
+            return (new ns.Text(string)).initializeGeometry({
+                    "context" : context,
+                    "angle"   : this.angle()
+                }).rotatedHeight();
+        });
 
         ns.Labeler.respondsTo("renderLabel", function (context, value) {
             var formattedString = new ns.Text(this.formatter().format(value)),
