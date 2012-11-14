@@ -1,0 +1,12 @@
+#! /usr/bin/perl
+
+#$dx = 0.001;
+$dx = 0.1;
+
+$x = -5;
+
+while ($x <= 5.0) {
+    $y = 5*sin($x*100);
+      printf("%f,%f\n", $x,$y);
+      $x += $dx;
+}

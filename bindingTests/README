@@ -1,0 +1,9 @@
+This directory contains a test that I wrote while debugging issues
+with axis binding.  It will not work as is, because I wrote it to
+depend on some extra attributes/methods (renderTime attribute,
+renderDoneFunc method, ...)  that I temporarily added to the
+core.Multigraph model.  I'm committing it to the source repository,
+though, in case it proves useful later as an example of a way
+to do tests.
+
+mbp Wed Nov 14 09:10:05 2012
