@@ -2,7 +2,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
     /**
-        @name ArrayData
+        @class ArrayData
         @constructor
         @param {array} columns
     */

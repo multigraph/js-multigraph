@@ -108,7 +108,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          *       Mark said Goodbye
          * </pre>
          * 
-         * @name EventEmitter
+         * @class EventEmitter
          * @constructor
          */
 

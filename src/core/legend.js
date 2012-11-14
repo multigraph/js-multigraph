@@ -2,7 +2,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
     /**
-        @name Legend
+        @class Legend
         @constructor
         @param {boolean} visible
         @param {point} base
