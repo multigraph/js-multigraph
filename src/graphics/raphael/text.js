@@ -5,14 +5,29 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         var Text = ns.Text;
 
         Text.respondsTo("initializeGeometry", function (graphicsContext) {
+            var origWidth,
+                origHeight,
+                rotatedWidth,
+                rotatedHeight;
+
+            graphicsContext.elem.transform("");
+
+            origWidth  = this.measureStringWidth(graphicsContext.elem);
+            origHeight = this.measureStringHeight(graphicsContext.elem);
+
             if (graphicsContext && graphicsContext.angle !== undefined) {
                 graphicsContext.elem.transform("R" + graphicsContext.angle);
+                rotatedWidth  = this.measureStringWidth(graphicsContext.elem);
+                rotatedHeight = this.measureStringHeight(graphicsContext.elem);
             } else {
-                graphicsContext.elem.transform("");
+                rotatedWidth  = origWidth;
+                rotatedHeight = origHeight;
             }
 
-            this.width(this.measureStringWidth(graphicsContext.elem));
-            this.height(this.measureStringHeight(graphicsContext.elem));
+            this.origWidth(origWidth);
+            this.origHeight(origHeight);
+            this.rotatedWidth(rotatedWidth);
+            this.rotatedHeight(rotatedHeight);
 
             return this;
         });

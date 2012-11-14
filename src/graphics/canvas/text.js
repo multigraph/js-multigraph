@@ -5,24 +5,27 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         var Text = ns.Text;
 
         Text.respondsTo("initializeGeometry", function (graphicsContext) {
-            var tempWidth,
-                tempHeight,
-                widthArea,
-                heightArea;
+            var origWidth,
+                origHeight,
+                rotatedWidth,
+                rotatedHeight;
 
-            tempWidth  = this.measureStringWidth(graphicsContext.context);
-            tempHeight = this.measureStringHeight(graphicsContext.context);
-            widthArea  = tempWidth;
-            heightArea = tempHeight;
+            origWidth  = this.measureStringWidth(graphicsContext.context);
+            origHeight = this.measureStringHeight(graphicsContext.context);
 
             if (graphicsContext && graphicsContext.angle !== undefined) {
                 var angle = graphicsContext.angle/180 * Math.PI;
-                widthArea = Math.abs(Math.cos(angle)) * tempWidth + Math.abs(Math.sin(angle)) * tempHeight;
-                heightArea = Math.abs(Math.sin(angle)) * tempWidth + Math.abs(Math.cos(angle)) * tempHeight;
+                rotatedWidth = Math.abs(Math.cos(angle)) * origWidth + Math.abs(Math.sin(angle)) * origHeight;
+                rotatedHeight = Math.abs(Math.sin(angle)) * origWidth + Math.abs(Math.cos(angle)) * origHeight;
+            } else {
+                rotatedWidth = origWidth;
+                rotatedHeight = origHeight;
             }
 
-            this.width(widthArea);
-            this.height(heightArea);
+            this.origWidth(origWidth);
+            this.origHeight(origHeight);
+            this.rotatedWidth(rotatedWidth);
+            this.rotatedHeight(rotatedHeight);
 
             return this;
         });

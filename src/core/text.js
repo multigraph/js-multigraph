@@ -3,30 +3,34 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     ns.Text = new window.jermaine.Model( "Text", function () {
         this.hasA("string").which.isA("string");
-        this.hasA("width").which.isA("number");
-        this.hasA("height").which.isA("number");
+        this.hasA("origWidth").which.isA("number");
+        this.hasA("origHeight").which.isA("number");
+        this.hasA("rotatedWidth").which.isA("number");
+        this.hasA("rotatedHeight").which.isA("number");
 
         this.isBuiltWith("string");
 
         this.respondsTo("initializeGeometry", function (graphicsContext) {
-            var tempWidth,
-                tempHeight,
-                widthArea,
-                heightArea;
+            var origWidth,
+                origHeight,
+                rotatedWidth,
+                rotatedHeight;
 
-            tempWidth  = this.measureStringWidth(graphicsContext);
-            tempHeight = this.measureStringHeight(graphicsContext);
-            widthArea  = tempWidth;
-            heightArea = tempHeight;
+            origWidth  = this.measureStringWidth(graphicsContext);
+            origHeight = this.measureStringHeight(graphicsContext);
+            rotatedWidth = origWidth;
+            rotatedHeight = origHeight;
 
             if (graphicsContext && graphicsContext.angle !== undefined) {
                 var angle = graphicsContext.angle/180 * Math.PI;
-                widthArea = Math.abs(Math.cos(angle)) * tempWidth + Math.abs(Math.sin(angle)) * tempHeight;
-                heightArea = Math.abs(Math.sin(angle)) * tempWidth + Math.abs(Math.cos(angle)) * tempHeight;
+                rotatedWidth = Math.abs(Math.cos(angle)) * origWidth + Math.abs(Math.sin(angle)) * origHeight;
+                rotatedHeight = Math.abs(Math.sin(angle)) * origWidth + Math.abs(Math.cos(angle)) * origHeight;
             }
 
-            this.width(widthArea);
-            this.height(heightArea);
+            this.origWidth(origWidth);
+            this.origHeight(origHeight);
+            this.rotatedWidth(rotatedWidth);
+            this.rotatedHeight(rotatedHeight);
 
             return this;
         });

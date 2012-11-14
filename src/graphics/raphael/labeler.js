@@ -16,8 +16,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 */
 
         var drawText = function (text, graphicsContext, base, anchor, position, angle, color) {
-            var h = text.height(),
-                w = text.width(),
+            var h = text.origHeight(),
+                w = text.origWidth(),
                 ax = 0.5 * w * (anchor.x() + 1),
                 ay = 0.5 * h * (anchor.y() + 1),
                 dx = base.x() + (0.5 * w) + position.x() - ax,
@@ -40,7 +40,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             return (new ns.Text(string)).initializeGeometry({
                     "elem"  : elem,
                     "angle" : this.angle()
-                }).width();
+                }).rotatedWidth();
         });
 
         ns.Labeler.respondsTo("renderLabel", function (graphicsContext, value) {
