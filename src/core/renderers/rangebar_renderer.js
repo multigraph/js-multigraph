@@ -56,6 +56,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     RangeBarRenderer = new window.jermaine.Model( "RangeBarRenderer", function () {
         this.isA(ns.Renderer);
+        this.hasA("numberOfVariables").which.defaultsTo(3);
     });
 
     ns.Renderer.declareOptions(RangeBarRenderer, "RangeBarRendererOptions", [
@@ -95,6 +96,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             "default"       : 2
         }
     ]);
+
+    ns.Renderer.RANGEBAR = new ns.Renderer.Type("rangebar");
 
     ns.Renderer.addType({"type"  : ns.Renderer.Type.parse("rangebar"),
                          "model" : RangeBarRenderer});

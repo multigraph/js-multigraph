@@ -10,7 +10,6 @@ describe("Axis", function () {
         Grid = window.multigraph.core.Grid,
         Pan = window.multigraph.core.Pan,
         Zoom = window.multigraph.core.Zoom,
-        Binding = window.multigraph.core.Binding,
         DataValue = window.multigraph.core.DataValue,
         NumberValue = window.multigraph.core.NumberValue,
         a;
@@ -358,7 +357,7 @@ describe("Axis", function () {
 
     });
 
-    describe("Binding", function () {
+    xdescribe("Binding", function () {
         var binding;
 
         beforeEach(function () {

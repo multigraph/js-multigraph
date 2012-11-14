@@ -11,8 +11,14 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
         this.isA(ns.Data);
         this.hasAn("array");
-        this.isBuiltWith("columns", "array", function () {
-            this.initializeColumns();
+        this.hasA("stringArray");
+        this.isBuiltWith("columns", "stringArray", function () {
+            this.init();
+            this.addListener("listenerAdded", function (event) {
+                if (event.targetType === "dataReady") {
+                    event.listener(this.array()[0][0], this.array()[this.array().length-1][0]);
+                }
+            });
         });
 
         /**
@@ -27,16 +33,27 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return ArrayData.getArrayDataIterator(this, columnIds, min, max, buffer);
         });
 
+        this.respondsTo("getBounds", function (columnNumber) {
+            var i,
+                min = this.array()[0][columnNumber],
+                max = min;
+
+            for (i = 1; i < this.array().length; i++) {
+                if (this.array()[i][columnNumber] < min) {
+                    min = this.array()[i][columnNumber];
+                }
+                if (this.array()[i][columnNumber] > max) {
+                    max = this.array()[i][columnNumber];
+                }
+            }
+
+            return [min, max];
+        });
+
         /**
             @method ArrayData#onReady
             @param callback
         */
-
-        this.respondsTo("onReady", function (callback) {
-            this.readyCallback(callback);
-            callback(this.array()[0][0], this.array()[this.array().length-1][0]);
-        });
-
 
        /**
             @method ArrayData#getArrayDataIterator
@@ -179,6 +196,54 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                         //console.log('bad line: ' + lines[i]);
                     }
                 }
+            }
+            return dataValues;
+        };
+
+        ArrayData.textToStringArray = function (text) {
+            var stringValues = [],
+                lines = text.split("\n"),
+                stringValuesThisRow,
+                numColumns,
+                i;
+
+            for (i = 0; i < lines.length; ++i) {
+                if (/\d/.test(lines[i])) { // skip line unless it contains a digit
+                    numColumns = lines[i].split(/\s*,\s*/).length;
+                    break;
+                }
+            }
+
+            for (i = 0; i < lines.length; ++i) {
+                if (/\d/.test(lines[i])) { // skip line unless it contains a digit
+                    stringValuesThisRow = lines[i].split(/\s*,\s*/);
+                    if (stringValuesThisRow.length === numColumns) {
+                        stringValues.push( stringValuesThisRow );
+                    } else {
+                        throw new Error("Data Parsing Error: The line '" + lines[i] + "' has " + stringValuesThisRow.length + " data columns when it requires " + numColumns + " columns");
+                    }
+                }
+            }
+            return stringValues;
+        };
+
+        /**
+           IMPORTANT NOTE: dataVariableArray is a plain javascript array of DataVariable instances; it is NOT a jermaine attr_list.
+        */
+        ArrayData.stringArrayToDataValuesArray = function (dataVariableArray, stringArray) {
+            //IMPORTANT NOTE: dataVariableArray is a plain javascript array of DataVariable instances; it
+            //is NOT a jermaine attr_list.
+            var dataValues = [],
+                dataValuesThisRow,
+                i,
+                j;
+
+            for (i = 0; i < stringArray.length; ++i) {
+                dataValuesThisRow = [];
+                for (j = 0; j < stringArray[i].length; ++j) {
+                    dataValuesThisRow.push(ns.DataValue.parse(dataVariableArray[j].type(), stringArray[i][j]));
+                }
+                dataValues.push( dataValuesThisRow );
             }
             return dataValues;
         };

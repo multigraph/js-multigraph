@@ -1,3 +1,4 @@
+<!-- no data tag exists -->
 <mugl>
   <background color="0xcccccc"/>
     <horizontalaxis id="x"  min="0" max="6" />

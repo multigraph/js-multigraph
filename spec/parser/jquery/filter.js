@@ -1,63 +1,119 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
+/*jshint laxbreak:true */
 
 describe("Plot Filter parsing", function () {
     "use strict";
 
     var Filter = window.multigraph.core.Filter,
-        xmlString = '<filter type="number"/>',
+        FilterOption = window.multigraph.core.FilterOption,
+        xmlString,
         $xml,
-        f;
+        filter,
+        typeString = "number";
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
-	$xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
-        f = Filter.parseXML($xml);
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
+        xmlString = ''
+            + '<filter'
+            +     ' type="' + typeString + '"'
+            +     '/>';
+        $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+        filter = Filter.parseXML($xml);
     });
 
     it("should be able to parse a filter from XML", function () {
-        expect(f).not.toBeUndefined();
+        expect(filter).not.toBeUndefined();
+        expect(filter instanceof Filter).toBe(true);
     });
 
     it("should be able to parse a filter from XML and read its 'type' attribute", function () {
-        expect(f.type() === "number").toBe(true);
-    });
-
-    it("should be able to parse a filter from XML, serialize it and get the same XML as the original", function () {
-        var xmlString2 = '<filter type="datetime"/>';
-        expect(f.serialize()).toBe(xmlString);
-	f = Filter.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString2));
-        expect(f.serialize()).toBe(xmlString2);
+        expect(filter.type()).toEqual(typeString);
     });
 
     describe("Option parsing", function () {
-        var FilterOption = window.multigraph.core.FilterOption;
 
-        beforeEach(function () {
-            xmlString = '<filter type="number"><option name="fred" value="jim"/></filter>';
-            window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
-            $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
-            f = Filter.parseXML($xml);
+        describe("with one option child tag", function () {
+            var option1NameString = "x1",
+                option1ValueString = "9000";
+
+            beforeEach(function () {
+                xmlString = ''
+                    + '<filter'
+                    +     ' type="number"'
+                    +     '>'
+                    +   '<option'
+                    +       ' name="' + option1NameString + '"'
+                    +       ' value="' + option1ValueString + '"'
+                    +       '/>'
+                    + '</filter>';
+                $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+                filter = Filter.parseXML($xml);
+            });
+
+            it("should be able to parse a filter with a option child tag from XML", function () {
+                expect(filter).not.toBeUndefined();
+                expect(filter instanceof Filter).toBe(true);
+            });
+
+            it("should properly parse the option children of a filter with a option child tag from XML", function () {
+                expect(filter.options().size()).toEqual(1);
+                expect(filter.options().at(0) instanceof FilterOption).toBe(true);
+                expect(filter.options().at(0).name()).toEqual(option1NameString);
+                expect(filter.options().at(0).value()).toEqual(option1ValueString);
+            });
+
         });
 
-        it("should be able to parse a filter with a child from XML", function () {
-            expect(f).not.toBeUndefined();
-            expect(f instanceof Filter).toBe(true);
-            expect(f.options().at(0) instanceof FilterOption).toBe(true);
-        });
+        describe("with multiple option child tags", function () {
+            var option1NameString = "x1",
+                option1ValueString = "9000",
+                option2NameString = "x2",
+                option2ValueString = "8000",
+                option3NameString = "x3",
+                option3ValueString = "7000";
 
-        it("should be able to parse a filter with multiple children from XML", function () {
-            xmlString = '<filter type="datetime"><option name="fred"/><option name="larry" value="curly"/><option name="moe" value="jim"/></filter>';
-            $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
-            f = Filter.parseXML($xml);
-            expect(f).not.toBeUndefined();
-        });
+            beforeEach(function () {
+                xmlString = ''
+                    + '<filter'
+                    +     ' type="number"'
+                    +     '>'
+                    +   '<option'
+                    +       ' name="' + option1NameString + '"'
+                    +       ' value="' + option1ValueString + '"'
+                    +       '/>'
+                    +   '<option'
+                    +       ' name="' + option2NameString + '"'
+                    +       ' value="' + option2ValueString + '"'
+                    +       '/>'
+                    +   '<option'
+                    +       ' name="' + option3NameString + '"'
+                    +       ' value="' + option3ValueString + '"'
+                    +       '/>'
+                    + '</filter>';
+                $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+                filter = Filter.parseXML($xml);
+            });
 
-        it("should be able to parse a filter with children from XML, serialize it and get the same XML as the original", function () {
-            var xmlString2 = '<filter type="datetime"><option name="fred"/><option name="larry" value="curly"/><option name="moe" value="jim"/></filter>';
-            expect(f.serialize()).toBe(xmlString);
-            f = Filter.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString2));
-            expect(f.serialize()).toBe(xmlString2);
+            it("should be able to parse a filter with multiple option child tags from XML", function () {
+                expect(filter).not.toBeUndefined();
+                expect(filter instanceof Filter).toBe(true);
+            });
+
+            it("should properly parse the option children of a filter with multiple option child tags from XML", function () {
+                expect(filter.options().size()).toEqual(3);
+                expect(filter.options().at(0) instanceof FilterOption).toBe(true);
+                expect(filter.options().at(1) instanceof FilterOption).toBe(true);
+                expect(filter.options().at(2) instanceof FilterOption).toBe(true);
+                expect(filter.options().at(0).name()).toEqual(option1NameString);
+                expect(filter.options().at(0).value()).toEqual(option1ValueString);
+                expect(filter.options().at(1).name()).toEqual(option2NameString);
+                expect(filter.options().at(1).value()).toEqual(option2ValueString);
+                expect(filter.options().at(2).name()).toEqual(option3NameString);
+                expect(filter.options().at(2).value()).toEqual(option3ValueString);
+            });
+
         });
 
     });
+
 });

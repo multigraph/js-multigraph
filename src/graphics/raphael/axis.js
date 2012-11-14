@@ -39,7 +39,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
         });
 
-        ns.Axis.respondsTo("render", function (graph, paper, set, baseTransformString) {
+        ns.Axis.respondsTo("render", function (graph, paper, set) {
             var text = paper.text(-8000, -8000, "foo"),
                 tickmarkPath = "";
 
@@ -61,6 +61,12 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             //
             if (this.hasDataMin() && this.hasDataMax()) { // but skip if we don't yet have data values
                 if (this.currentLabeler()) {
+                    var tickAttrs = {};
+                    if (this.tickcolor() !== undefined && this.tickcolor() !== null) {
+                        tickAttrs.stroke = this.tickcolor().getHexString('#');
+                    } else {
+                        tickAttrs.stroke = "#000";
+                    }
                     this.currentLabeler().prepare(this.dataMin(), this.dataMax());
                     while (this.currentLabeler().hasNext()) {
                         var v = this.currentLabeler().next();
@@ -72,13 +78,13 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                             tickmarkPath += "M" + (this.perpOffset() + this.tickmin()) + "," + a;
                             tickmarkPath += "L" + (this.perpOffset() + this.tickmax()) + "," + a;
                         }
-                        this.currentLabeler().renderLabel({"paper": paper,
-                                                           "textElem": text,
-                                                           "transformString": baseTransformString
+                        this.currentLabeler().renderLabel({ "paper"    : paper,
+                                                            "set"      : set,
+                                                            "textElem" : text
                                                           }, v);
                     }
                     set.push(
-                        paper.path(tickmarkPath)
+                        paper.path(tickmarkPath).attr(tickAttrs)
                     );
                 }
             }

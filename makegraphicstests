@@ -200,6 +200,7 @@ sub make_test_html {
   <title>$title</title>
   <script type="text/javascript" src="../../../lib/jermaine/build/jermaine.js"></script>
   <script type="text/javascript" src="../../../lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="../../../lib/jquery/jquery.mousewheel.js"></script>
   <script type="text/javascript" src="../../../lib/jquery/jquery-embed.js"></script>
   <script type="text/javascript" src="../../../lib/util/util.js"></script>
   <script type="text/javascript" src="../../../lib/sprintf/sprintf-0.7-beta1.js"></script>
@@ -248,6 +249,7 @@ describe("Logger Graphics Tests", function () {
                  "dataType" : "text",
                  "success" : function (data) {
                      var multigraph = window.multigraph.core.Multigraph.parseXML( window.multigraph.parser.jquery.stringToJQueryXMLObj(data) );
+                     multigraph.normalize();
                      multigraph.width(width);
                      multigraph.height(height);
                      multigraph.render();
@@ -270,8 +272,9 @@ describe("Logger Graphics Tests", function () {
     };
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
         window.multigraph.graphics.logger.mixin.apply(window.multigraph.core);
+        window.multigraph.normalizer.mixin.apply(window.multigraph.core);
     });
 EOF
     ;
@@ -487,8 +490,10 @@ sub make_error_test_html {
 <html>
 <head>
   <title>$title</title>
-  <script type="text/javascript" src="../../../lib/jquery/jquery.min.js"></script>
   <script type="text/javascript" src="../../../lib/jermaine/build/jermaine.js"></script>
+  <script type="text/javascript" src="../../../lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="../../../lib/jquery/jquery.mousewheel.js"></script>
+  <script type="text/javascript" src="../../../lib/jquery/jquery-embed.js"></script>
   <script type="text/javascript" src="../../../lib/util/util.js"></script>
   <script type="text/javascript" src="../../../lib/sprintf/sprintf-0.7-beta1.js"></script>
   <script type="text/javascript" src="../../../lib/requestanimationframe/requestanimationframe.js"></script>

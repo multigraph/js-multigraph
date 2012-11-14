@@ -13,6 +13,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasA("plot").which.validatesWith(function (plot) {
             return plot instanceof ns.Plot;
         });
+        this.hasA("numberOfVariables").which.isA("number");
 
         this.respondsTo("setUpMissing", function () {
             // A call to this method results in the addition (or replacement) of a method called "isMissing()"
@@ -39,7 +40,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                     return false;
                 };
                 return;
-            };
+            }
 
             if (!this.plot().data()) {
                 // this should eventually throw an error
@@ -193,7 +194,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 return renderer;
             }
         }
-        throw new Error('Renderer.create: attempt to create a renderer of unknown type');
+        throw new Error("Renderer.create: '" + type + "' is not a known renderer type");
+//        throw new Error('Renderer.create: attempt to create a renderer of unknown type');
     };
 
     Renderer.declareOptions = function (renderer, OptionsModelName, options) {
@@ -339,16 +341,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
         
     });
-
-    Renderer.POINTLINE = new Type("pointline");
-    Renderer.POINT     = new Type("point");
-    Renderer.LINE      = new Type("line");
-    Renderer.BAR       = new Type("bar");
-    Renderer.FILL      = new Type("fill");
-    Renderer.BAND      = new Type("band");
-    Renderer.RANGEBAR  = new Type("rangebar");
-    Renderer.LINEERROR = new Type("lineerror");
-    Renderer.BARERROR  = new Type("barerror");
 
     Renderer.Type = Type;
 

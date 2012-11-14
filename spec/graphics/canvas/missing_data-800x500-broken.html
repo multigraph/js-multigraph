@@ -10,8 +10,10 @@
 <html>
 <head>
   <title>canvas error test: missing_data.xml (800 X 500)</title>
-  <script type="text/javascript" src="../../../lib/jquery/jquery.min.js"></script>
   <script type="text/javascript" src="../../../lib/jermaine/build/jermaine.js"></script>
+  <script type="text/javascript" src="../../../lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="../../../lib/jquery/jquery.mousewheel.js"></script>
+  <script type="text/javascript" src="../../../lib/jquery/jquery-embed.js"></script>
   <script type="text/javascript" src="../../../lib/util/util.js"></script>
   <script type="text/javascript" src="../../../lib/sprintf/sprintf-0.7-beta1.js"></script>
   <script type="text/javascript" src="../../../lib/requestanimationframe/requestanimationframe.js"></script>
@@ -30,14 +32,15 @@
 <script type="text/javascript" src="../../../src/math/rgb_color.js"></script>
 <script type="text/javascript" src="../../../src/math/util.js"></script>
 <script type="text/javascript" src="../../../src/core/renderer.js"></script>
+<script type="text/javascript" src="../../../src/core/event_emitter.js"></script>
 <script type="text/javascript" src="../../../src/core/data_variable.js"></script>
 <script type="text/javascript" src="../../../src/core/data.js"></script>
 <script type="text/javascript" src="../../../src/core/plot.js"></script>
 <script type="text/javascript" src="../../../src/core/array_data.js"></script>
 <script type="text/javascript" src="../../../src/core/axis.js"></script>
+<script type="text/javascript" src="../../../src/core/axis_binding.js"></script>
 <script type="text/javascript" src="../../../src/core/axis_title.js"></script>
 <script type="text/javascript" src="../../../src/core/background.js"></script>
-<script type="text/javascript" src="../../../src/core/binding.js"></script>
 <script type="text/javascript" src="../../../src/core/constant_plot.js"></script>
 <script type="text/javascript" src="../../../src/core/csv_data.js"></script>
 <script type="text/javascript" src="../../../src/core/data_plot.js"></script>
@@ -70,19 +73,15 @@
 <script type="text/javascript" src="../../../src/core/renderers/rangebar_renderer.js"></script>
 <script type="text/javascript" src="../../../src/core/service.js"></script>
 <script type="text/javascript" src="../../../src/core/text.js"></script>
-<script type="text/javascript" src="../../../src/core/variables.js"></script>
 <script type="text/javascript" src="../../../src/core/web_service_data.js"></script>
 <script type="text/javascript" src="../../../src/core/web_service_data_cache_node.js"></script>
 <script type="text/javascript" src="../../../src/core/web_service_data_iterator.js"></script>
 <script type="text/javascript" src="../../../src/core/window.js"></script>
 <script type="text/javascript" src="../../../src/core/zoom.js"></script>
 <script type="text/javascript" src="../../../src/parser/jquery/jquery_mixin.js"></script>
-<script type="text/javascript" src="../../../src/parser/jquery/array_data.js"></script>
 <script type="text/javascript" src="../../../src/parser/jquery/axis.js"></script>
 <script type="text/javascript" src="../../../src/parser/jquery/axis_title.js"></script>
 <script type="text/javascript" src="../../../src/parser/jquery/background.js"></script>
-<script type="text/javascript" src="../../../src/parser/jquery/binding.js"></script>
-<script type="text/javascript" src="../../../src/parser/jquery/csv_data.js"></script>
 <script type="text/javascript" src="../../../src/parser/jquery/data.js"></script>
 <script type="text/javascript" src="../../../src/parser/jquery/data_variable.js"></script>
 <script type="text/javascript" src="../../../src/parser/jquery/datatips.js"></script>
@@ -103,21 +102,14 @@
 <script type="text/javascript" src="../../../src/parser/jquery/plot_legend.js"></script>
 <script type="text/javascript" src="../../../src/parser/jquery/plotarea.js"></script>
 <script type="text/javascript" src="../../../src/parser/jquery/renderer.js"></script>
-<script type="text/javascript" src="../../../src/parser/jquery/service.js"></script>
-<script type="text/javascript" src="../../../src/parser/jquery/variables.js"></script>
 <script type="text/javascript" src="../../../src/parser/jquery/window.js"></script>
 <script type="text/javascript" src="../../../src/parser/jquery/zoom.js"></script>
-<script type="text/javascript" src="../../../src/normalizer/normalizer_mixin.js"></script>
-<script type="text/javascript" src="../../../src/normalizer/axis.js"></script>
-<script type="text/javascript" src="../../../src/normalizer/data.js"></script>
-<script type="text/javascript" src="../../../src/normalizer/graph.js"></script>
-<script type="text/javascript" src="../../../src/normalizer/multigraph.js"></script>
-<script type="text/javascript" src="../../../src/normalizer/plot.js"></script>
 
 <script type="text/javascript" src="../../../src/graphics/canvas/canvas_mixin.js"></script>
 <script type="text/javascript" src="../../../src/graphics/canvas/axis.js"></script>
 <script type="text/javascript" src="../../../src/graphics/canvas/graph.js"></script>
 <script type="text/javascript" src="../../../src/graphics/canvas/icon.js"></script>
+<script type="text/javascript" src="../../../src/graphics/canvas/img.js"></script>
 <script type="text/javascript" src="../../../src/graphics/canvas/labeler.js"></script>
 <script type="text/javascript" src="../../../src/graphics/canvas/legend.js"></script>
 <script type="text/javascript" src="../../../src/graphics/canvas/multigraph.js"></script>
@@ -127,14 +119,20 @@
 <script type="text/javascript" src="../../../src/graphics/canvas/renderers/pointline_renderer.js"></script>
 <script type="text/javascript" src="../../../src/graphics/canvas/renderers/rangebar_renderer.js"></script>
 <script type="text/javascript" src="../../../src/graphics/canvas/text.js"></script>
+<script type="text/javascript" src="../../../src/events/jquery/draggable/mixin.js"></script>
+<script type="text/javascript" src="../../../src/events/jquery/draggable/graph.js"></script>
 <script type="text/javascript" src="../../../src/events/jquery/mouse/mixin.js"></script>
 <script type="text/javascript" src="../../../src/events/jquery/mouse/graph.js"></script>
 <script type="text/javascript" src="../../../src/events/jquery/mouse/multigraph.js"></script>
 <script type="text/javascript" src="../../../src/events/jquery/multigraph.js"></script>
+<script type="text/javascript" src="../../../src/events/jquery/touch/mixin.js"></script>
+<script type="text/javascript" src="../../../src/events/jquery/touch/graph.js"></script>
+<script type="text/javascript" src="../../../src/events/jquery/touch/multigraph.js"></script>
 <script type="text/javascript" src="../../../src/normalizer/normalizer_mixin.js"></script>
 <script type="text/javascript" src="../../../src/normalizer/axis.js"></script>
 <script type="text/javascript" src="../../../src/normalizer/data.js"></script>
 <script type="text/javascript" src="../../../src/normalizer/graph.js"></script>
+<script type="text/javascript" src="../../../src/normalizer/labeler.js"></script>
 <script type="text/javascript" src="../../../src/normalizer/multigraph.js"></script>
 <script type="text/javascript" src="../../../src/normalizer/plot.js"></script>
 <!--END_ANT_LINES-->
@@ -151,7 +149,7 @@
 <tr>
 <td width="40%" align="left">Previous: <a href="invalid_csv_location-800x500-broken.html">invalid_csv_location-800x500-broken.html</a></td>
 <td width="20%" align="center"><a href="../error_index.html">All Non-Functional Graphics Tests</a></td>
-<td width="40%" align="right">Next: <a href="multiple_errors-800x500-broken.html">multiple_errors-800x500-broken.html</a></td>
+<td width="40%" align="right">Next: <a href="missing_data_columns-800x500-broken.html">missing_data_columns-800x500-broken.html</a></td>
 </tr>
 <tr><td align="center" colspan="3"><div class="multigraph" data-src="../../broken_mugl/missing_data.xml" data-width="800" data-height="500" data-driver="canvas"/></td></tr>
 </table>

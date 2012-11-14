@@ -85,9 +85,56 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 }
             });
 
+            this.respondsTo("registerCommonDataCallback", function (callback) {
+                var i;
+                for (i=0; i<this.data().size(); ++i) {
+                    this.data().at(i).addListener("dataReady", callback);
+                }
+            });
+
+            this.respondsTo("pauseAllData", function () {
+                var i;
+                // pause all this graph's data sources:
+                for (i=0; i<this.data().size(); ++i) {
+                    this.data().at(i).pause();
+                }
+            });
+
+            this.respondsTo("resumeAllData", function () {
+                var i;
+                // resume all this graph's data sources:
+                for (i=0; i<this.data().size(); ++i) {
+                    this.data().at(i).resume();
+                }
+            });
+
+            this.respondsTo("findNearestAxis", function (x, y, orientation) {
+                var foundAxis = null,
+                    mindist = 9999,
+                    i,
+                    axes = this.axes(),
+                    naxes = this.axes().size(),
+                    axis,
+                    d;
+                for (i = 0; i < naxes; ++i) {
+                    axis = axes.at(i);
+                    if ((orientation === undefined) ||
+                        (orientation === null) ||
+                        (axis.orientation() === orientation)) {
+                        d = axis.distanceToPoint(x, y);
+                        if (foundAxis===null || d < mindist) {
+                            foundAxis = axis;
+                            mindist = d;
+                        }
+                    }
+                }
+                return foundAxis;
+            });
+
             window.multigraph.utilityFunctions.insertDefaults(this, defaultValues, attributes);
         });
 
+    //TODO: convert to "respondsTo" ???
     Graph.prototype.axisById = function (id) {
       // return a pointer to the axis for this graph that has the given id, if any
         var axes = this.axes(),
@@ -100,6 +147,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         return undefined;
     };
 
+    //TODO: convert to "respondsTo" ???
     Graph.prototype.variableById = function (id) {
       // return a pointer to the variable for this graph that has the given id, if any
         var data = this.data(),

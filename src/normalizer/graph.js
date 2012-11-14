@@ -4,10 +4,12 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
     ns.mixin.add(function (ns) {
 
         ns.Graph.respondsTo("normalize", function () {
-            var i,
+            var i, j,
                 haxisCount = 0,
                 vaxisCount = 0,
-                axisid;
+                axis,
+                axisid,
+                plot;
 
             //
             // normalizes the data sections
@@ -80,6 +82,56 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
                 var p = this.plots().at(i);
                 this.plots().at(i).normalize(this);
             }
+
+
+            //
+            // arrange to set axis min/max values when data is ready, if necessary
+            // 
+            for (i = 0; i < this.axes().size(); i++) {
+                // for each axis...
+                axis = this.axes().at(i);
+                if (!axis.hasDataMin() || axis.hasDataMax()) {
+                    // if this axis is mising either a dataMin() or dataMax() value...
+                    for (j=0; j < this.plots().size(); ++j) {
+                        // find a DataPlot that references this axis...
+                        plot = this.plots().at(j);
+                        if (plot instanceof ns.DataPlot && (plot.horizontalaxis() === axis || plot.verticalaxis() === axis)) {
+                            // ... and then register a dataReady listener for this plot's data section which sets the
+                            // missing bound(s) on the axis once the data is ready.  Do this inside a closure so that we
+                            // can refer to a pointer to our dynamically-defined listener function from inside itself,
+                            // so that we can de-register it once it is called; this is done via the the local variable
+                            // axisBoundsSetter.  The closure also serves to capture the current values, via arguments,
+                            // of the axis pointer, a pointer to the data object, and a boolean (isHorizontal) that
+                            // indicates whether the axis is the plot's horizontal or vertical axis.
+                            (function(axis, data, isHorizontal) {
+                                var axisBoundsSetter = function(event) {
+                                    var columnNumber = isHorizontal ? 0 : 1,
+                                        bounds = data.getBounds(columnNumber),
+                                        min = axis.dataMin(),
+                                        max = axis.dataMax();
+                                    if (!axis.hasDataMin()) {
+                                        min = bounds[0];
+                                    }
+                                    if (!axis.hasDataMax()) {
+                                        max = bounds[1];
+                                    }
+                                    if (!axis.hasDataMin() || !axis.hasDataMax()) {
+                                        axis.setDataRange(min, max);
+                                    }
+                                    data.removeListener('dataReady', axisBoundsSetter);
+                                };
+                                data.addListener('dataReady', axisBoundsSetter);
+                            }(axis,                             // axis
+                              plot.data(),                      // data
+                              plot.horizontalaxis() === axis    // isHorizontal
+                             ));
+                            break; // for (j=0; j < this.plots().size(); ++j)...
+                        }
+                    }
+                }
+            }
+
+
 
         });
 

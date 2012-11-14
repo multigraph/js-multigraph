@@ -17,10 +17,30 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 
             context.fillStyle = this.background().color().getHexString("#");
             context.fillRect(mb,mb,width-2*mb,height-2*mb);
+
+            if (this.background().img() && this.background().img().src() !== undefined) {
+                this.background().img().render(this, context, width, height);
+            }
+
             this.x0( this.window().margin().left()  + this.window().border() + this.window().padding().left() + this.plotarea().margin().left() );
             this.y0( this.window().margin().bottom() + this.window().border() + this.window().padding().bottom() + this.plotarea().margin().bottom() );
-
             context.transform(1,0,0,1,this.x0(),this.y0());
+
+            if (this.plotarea().color() !== null) {
+                context.save();
+                context.fillStyle = this.plotarea().color().getHexString("#");
+                context.fillRect(0,0,this.plotBox().width(), this.plotBox().height());
+                context.restore();
+            }
+
+            if (this.plotarea().border() > 0) {
+                context.save();
+                context.lineWidth = this.plotarea().border();
+                context.strokeStyle = this.plotarea().bordercolor().getHexString("#");
+                context.strokeRect(0,0,this.plotBox().width(), this.plotBox().height());
+                context.restore();
+            }
+
             for (i=0; i<this.axes().size(); ++i) {
                 this.axes().at(i).renderGrid(this, context);
             }
@@ -29,6 +49,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             context.save();
             context.rect(0,0,this.plotBox().width(), this.plotBox().height());
             context.clip();
+
 
             for (i=0; i<this.plots().size(); ++i) {
                 this.plots().at(i).render(this, context);

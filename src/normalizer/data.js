@@ -31,7 +31,7 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
 
             // creates placeholder variables if the data tag has a 'values' tag
             if (this instanceof ns.ArrayData === true && this instanceof ns.CSVData === false && this instanceof ns.WebServiceData === false) {
-                var numMissingVariables = this.array()[0].length - this.columns().size();
+                var numMissingVariables = this.stringArray()[0].length - this.columns().size();
                 if (numMissingVariables > 0) {
                     for (i = 0; i < numMissingVariables; i++) {
                         unsortedVariables.push(null);
@@ -51,6 +51,17 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
                 sortedVariables[index] = unsortedVariables[i];
             }
             
+            // checks that columns were correctly specified for 'values' data tags
+            if (this instanceof ns.ArrayData === true && this instanceof ns.CSVData === false && this instanceof ns.WebServiceData === false) {
+                if (sortedVariables.length > this.stringArray()[0].length) {
+                    for (i = 0; i < sortedVariables.length; i++) {
+                        if (sortedVariables[i] instanceof ns.DataVariable && sortedVariables[i].column() > this.stringArray()[0].length) {
+                            throw new Error("Data Variable Error: Attempting to specify column '" + sortedVariables[i].column() + "' for a variable, while there are only " + this.stringArray()[0].length + " data columns available");
+                        }
+                    }                    
+                }
+            }
+
             //
             // Handles missing attrs.
             // creates the appropriate variable if missing and if the data had a 'values' tag.
@@ -96,6 +107,15 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
                 this.columns().add(sortedVariables[i]);
             }
             this.initializeColumns();
+
+            // parses string values into the proper data types if the data tag has a 'values' tag
+            if (this instanceof ns.ArrayData === true && this instanceof ns.CSVData === false && this instanceof ns.WebServiceData === false) {
+                var dataValues = ns.ArrayData.stringArrayToDataValuesArray(sortedVariables, this.stringArray());
+                this.array(dataValues);
+//                console.log(                this.array());
+                this.stringArray([]);
+            }
+
         };
 
     });

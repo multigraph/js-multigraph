@@ -23,7 +23,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return zoom instanceof ns.Zoom;
         });
         this.hasA("binding").which.validatesWith(function (binding) {
-            return binding instanceof ns.Binding;
+            return binding === null || binding instanceof ns.AxisBinding;
         });
         this.hasAn("id").which.validatesWith(function (id) {
             return typeof(id) === "string";
@@ -86,6 +86,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
         this.hasA("color").which.validatesWith(function (color) {
             return color instanceof window.multigraph.math.RGBColor;
+        });
+        this.hasA("tickcolor").which.validatesWith(function (color) {
+            return color === null || color instanceof window.multigraph.math.RGBColor;
         });
         this.hasA("tickmin").which.isA("integer");
         this.hasA("tickmax").which.isA("integer");
@@ -167,6 +170,11 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 i,
                 labelers = this.labelers(),
                 nlabelers = this.labelers().size();
+            if (!this.hasDataMin() || !this.hasDataMax()) {
+                // if either endpoint dataMin() or dataMax() hasn't been specified yet,
+                // return immediately without doing anything
+                return;
+            }
             if (nlabelers<=0) {
                 currentLabeler = null;
             } else {
@@ -188,6 +196,55 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             this.currentLabelDensity(currentLabelDensity);
         });
 
+        this.respondsTo("toRealValue", function (value) {
+            if (typeof(value) === "number") {
+                return value;
+            } else if (ns.DataValue.isInstance(value)) {
+                return value.getRealValue();
+            } else {
+                throw new Error("unknown value type for axis value " + value);
+            }
+        });
+
+        this.respondsTo("toDataValue", function (value) {
+            if (typeof(value) === "number") {
+                return ns.DataValue.create(this.type(), value);
+            } else if (ns.DataValue.isInstance(value)) {
+                return value;
+            } else {
+                throw new Error("unknown value type for axis value " + value);
+            }
+        });
+
+        this.respondsTo("setDataRangeNoBind", function(min, max, dispatch) {
+
+            // NOTE: min and max may either be plain numbers, or
+            // DataValue instances.  If they're plain numbers, they
+            // get converted to DataValue instances here before being
+            // passed to the dataMin()/dataMax() setters below.
+
+            var dataValueMin = this.toDataValue(min),
+                dataValueMax = this.toDataValue(max);
+
+            this.dataMin(dataValueMin);
+            this.dataMax(dataValueMax);
+            // if (_graph != null) { _graph.invalidateDisplayList(); }
+            if (dispatch === undefined) {
+                dispatch = true;
+            }
+            if (dispatch) {
+                //dispatchEvent(new AxisEvent(AxisEvent.CHANGE,min,max));  
+            }
+        });
+
+        this.respondsTo("setDataRange", function (min, max, dispatch) {
+            if (this.binding()) {
+                this.binding().setDataRange(this, min, max, dispatch);
+            } else {
+                this.setDataRangeNoBind(min, max, dispatch);
+            }
+        });
+
         this.respondsTo("doPan", function (pixelBase, pixelDisplacement) {
             var offset,
                 newRealMin,
@@ -205,8 +262,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 newRealMin -= (newRealMax - this.pan().max().getRealValue());
                 newRealMax = this.pan().max();
             }
-            this.dataMin(ns.DataValue.create(this.type(), newRealMin));
-            this.dataMax(ns.DataValue.create(this.type(), newRealMax));
+            this.setDataRange(ns.DataValue.create(this.type(), newRealMin),
+                          ns.DataValue.create(this.type(), newRealMax));
         });
 
         this.respondsTo("doZoom", function (pixelBase, pixelDisplacement) {
@@ -255,9 +312,40 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                     newMax = newMax.addRealValue(d);
                     newMin = newMin.addRealValue(-d);
                 }
-                this.dataMin(newMin);
-                this.dataMax(newMax);
+                this.setDataRange(newMin, newMax);
             }
+        });
+
+        /**
+         * Compute the distance from an axis to a point.  The point
+         * (x,y) is expressed in pixel coordinates in the same
+         * coordinate system as the axis.
+         * 
+         * We use two different kinds of computations depending on
+         * whether the point lies inside or outside the region bounded
+         * by the two lines perpendicular to the axis through its
+         * endpoints.  If the point lies inside this region, the
+         * distance is simply the difference in the perpendicular
+         * coordinate of the point and the perpendicular coordinate of
+         * the axis.
+         * 
+         * If the point lies outside the region, then the distance is
+         * the L2 distance between the point and the closest endpoint
+         * of the axis.
+         */
+        this.respondsTo("distanceToPoint", function (x, y) {
+            var perpCoord     = (this.orientation() === Axis.HORIZONTAL) ? y : x;
+            var parallelCoord = (this.orientation() === Axis.HORIZONTAL) ? x : y;
+            if (parallelCoord < this.parallelOffset()) {
+                // point is under or left of the axis; return L2 distance to bottom or left axis endpoint
+                return window.multigraph.math.util.l2dist(parallelCoord, perpCoord, this.parallelOffset(), this.perpOffset());
+            }
+            if (parallelCoord > this.parallelOffset() + this.pixelLength()) {
+                // point is above or right of the axis; return L2 distance to top or right axis endpoint
+                return window.multigraph.math.util.l2dist(parallelCoord, perpCoord, this.parallelOffset()+this.pixelLength(), this.perpOffset());
+            }
+            // point is between the axis endpoints; return difference in perpendicular coords
+            return Math.abs(perpCoord - this.perpOffset());
         });
 
         window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis, attributes);

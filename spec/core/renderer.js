@@ -16,8 +16,8 @@ describe("Renderer", function () {
 
     describe("type attribute", function () {
         it("should be able to set/get the type attribute", function () {
-            r.type(Renderer.LINEERROR);
-            expect(r.type()).toBe(Renderer.LINEERROR);
+            r.type(Renderer.RANGEBAR);
+            expect(r.type()).toBe(Renderer.RANGEBAR);
         });
 
 

@@ -27,6 +27,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         ns.Multigraph.respondsTo("init", function () {
             this.$div(window.multigraph.jQuery(this.div()));
             this.$div().on("mousedown", { "mg": this }, this.setupEvents);
+            this.registerTouchEvents(this.$div());
             this.width(this.$div().width());
             this.height(this.$div().height());
             if (this.paper()) {
@@ -38,9 +39,9 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
         ns.Multigraph.respondsTo("render", function () {
             var i;
-            var text = this.paper().text(-8000, -8000, "foo");
             this.paper().clear();
-            this.initializeGeometry(this.width(), this.height(), text);
+            var text = this.paper().text(-8000, -8000, "foo");
+            this.initializeGeometry(this.width(), this.height(), { "elem" : text });
             for (i=0; i<this.graphs().size(); ++i) {
                 this.graphs().at(i).render(this.paper(), this.width(), this.height());
             }
@@ -90,10 +91,12 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
     window.multigraph.core.Multigraph.createRaphaelGraph = function (div, muglurl) {
 
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
         ns.mixin.apply(window.multigraph.core);
         window.multigraph.normalizer.mixin.apply(window.multigraph.core);
+        window.multigraph.events.jquery.draggable.mixin.apply(window.multigraph);
         window.multigraph.events.jquery.mouse.mixin.apply(window.multigraph);
+        window.multigraph.events.jquery.touch.mixin.apply(window.multigraph);
 
         var muglPromise = window.multigraph.jQuery.ajax({
             "url"      : muglurl,
@@ -106,6 +109,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             var multigraph = window.multigraph.core.Multigraph.parseXML( window.multigraph.parser.jquery.stringToJQueryXMLObj(data) );
             multigraph.normalize();
             multigraph.div(div);
+            window.multigraph.jQuery(div).css('cursor' , 'pointer');
             multigraph.init();
             multigraph.registerCommonDataCallback(function () {
                 multigraph.redraw();

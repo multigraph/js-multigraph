@@ -69,7 +69,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     PointlineRenderer = new window.jermaine.Model( "PointlineRenderer", function () {
         this.isA(ns.Renderer);
-
+        this.hasA("numberOfVariables").which.defaultsTo(2);
         //
         //this.isBuiltWith(...)  NO NO NO!!!
         //
@@ -182,6 +182,10 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             "default"       : new window.multigraph.math.RGBColor(0,0,0)
         }
     ]);
+
+    ns.Renderer.POINTLINE = new ns.Renderer.Type("pointline");
+    ns.Renderer.POINT     = new ns.Renderer.Type("point");
+    ns.Renderer.LINE      = new ns.Renderer.Type("line");
 
     ns.Renderer.addType({"type"  : ns.Renderer.Type.parse("pointline"),
                          "model" : PointlineRenderer});

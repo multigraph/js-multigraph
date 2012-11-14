@@ -1,15 +1,42 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
+/*jshint laxbreak:true */
 
 describe("Graph Title parsing", function () {
     "use strict";
 
     var Title = window.multigraph.core.Title,
-        xmlString = '<title color="0xfffaab" bordercolor="0x127752" border="2" opacity="0" padding="4" cornerradius="10" anchor="1,1" base="0,0" position="-1,1">Cool Cats</title>',
+        Point = window.multigraph.math.Point,
+        RGBColor = window.multigraph.math.RGBColor,
+        xmlString,
         $xml,
-        title;
+        title,
+        colorString = "0xfffaab",
+        bordercolorString = "0x127752",
+        borderString = "2",
+        opacityString = "0",
+        paddingString = "4",
+        cornerradiusString = "10",
+        anchorString = "1,1",
+        baseString = "0,0",
+        positionString ="-1,1",
+        contentString = "Graph Title";
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
+        xmlString = ''
+            + '<title'
+            +     ' color="' + colorString + '"'
+            +     ' bordercolor="' + bordercolorString + '"'
+            +     ' border="' + borderString + '"'
+            +     ' opacity="' + opacityString + '"'
+            +     ' padding="' + paddingString + '"'
+            +     ' cornerradius="' + cornerradiusString + '"'
+            +     ' anchor="' + anchorString + '"'
+            +     ' base="' + baseString + '"'
+            +     ' position="' + positionString + '"'
+            +     '>'
+            +       contentString
+            + '</title>',
         $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
         title = Title.parseXML($xml);
     });
@@ -20,50 +47,46 @@ describe("Graph Title parsing", function () {
     });
 
     it("should be able to parse a title from XML and read its 'border' attribute", function () {
-        expect(title.border()).toBe("2");
+        expect(title.border()).toEqual(borderString);
     });
 
     it("should be able to parse a title from XML and read its 'color' attribute", function () {
-        expect(title.color().getHexString()).toBe("0xfffaab");
+        expect(title.color().getHexString("0x")).toEqual((RGBColor.parse(colorString)).getHexString("0x"));
     });
 
     it("should be able to parse a title from XML and read its 'bordercolor' attribute", function () {
-        expect(title.bordercolor().getHexString()).toBe("0x127752");
+        expect(title.bordercolor().getHexString()).toEqual((RGBColor.parse(bordercolorString)).getHexString("0x"));
     });
 
     it("should be able to parse a title from XML and read its 'opacity' attribute", function () {
-        expect(title.opacity()).toBe(0);
+        expect(title.opacity()).toEqual(parseFloat(opacityString));
     });
 
     it("should be able to parse a title from XML and read its 'padding' attribute", function () {
-        expect(title.padding()).toBe("4");
+        expect(title.padding()).toEqual(paddingString);
     });
 
     it("should be able to parse a title from XML and read its 'cornerradius' attribute", function () {
-        expect(title.cornerradius()).toBe("10");
+        expect(title.cornerradius()).toEqual(cornerradiusString);
     });
 
     it("should be able to parse a title from XML and read its 'anchor' attribute", function () {
-        expect(title.anchor().serialize()).toBe("1,1");
+        expect(title.anchor().x()).toEqual((Point.parse(anchorString)).x());
+        expect(title.anchor().y()).toEqual((Point.parse(anchorString)).y());
     });
 
     it("should be able to parse a title from XML and read its 'base' attribute", function () {
-        expect(title.base().serialize()).toBe("0,0");
+        expect(title.base().x()).toEqual((Point.parse(baseString)).x());
+        expect(title.base().y()).toEqual((Point.parse(baseString)).y());
     });
 
     it("should be able to parse a title from XML and read its 'position' attribute", function () {
-        expect(title.position().serialize()).toBe("-1,1");
+        expect(title.position().x()).toEqual((Point.parse(positionString)).x());
+        expect(title.position().y()).toEqual((Point.parse(positionString)).y());
     });
 
     it("should be able to parse a title from XML and read its 'content'", function () {
-        expect(title.content()).toBe("Cool Cats");
-    });
-
-    it("should be able to parse a title from XML, serialize it and get the same XML as the original", function () {
-        var xmlString2 = '<title border="3" opacity="1" padding="4" cornerradius="10" anchor="1,0" base="0,1" position="0,0"/>';
-        expect(title.serialize()).toBe(xmlString);
-        title = Title.parseXML(window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString2));
-        expect(title.serialize()).toBe(xmlString2);
+        expect(title.content()).toEqual(contentString);
     });
 
 });

@@ -7,12 +7,37 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     Data = new window.jermaine.Model(function () {
         var Data = this;
+        
+        this.isA(ns.EventEmitter);
 
-        //private find function
-        var find = function (idOrColumn, thing, columns) {
+        /**
+         * private find function
+         * 
+         *   Searches through a jermaine attr_list of DataVariables (columns) for
+         *   an entry having a given id or column number.
+         * 
+         *      attrName: the name of the attribute to search on; should be either
+         *                "id" or "column"
+         *      attrValue: the value to search for. If attrName is "id", this value
+         *                 should be a string.  If attrName is "column", this value
+         *                 should be an int.
+         *      columns: the attr_list to search through
+         * 
+         *   Returns: the index (an int) of the DataVariable entry having
+         *            the given attribute value, if any, or -1 if none was found
+         * 
+         *  Example:
+         *       find("id", "x", columns)
+         *          finds the index of the DataVariable in the columns attr_list
+         *          having an id of "x"
+         *       find("column", "1", columns)
+         *          finds the index of the DataVariable in the columns attr_list
+         *          having a "column" attribute of 1
+         */
+        var find = function (attrName, attrValue, columns) {
             var result = -1;
             for (i = 0; i < columns.size(); ++i) {
-                if (columns.at(i)[idOrColumn]() === thing) {
+                if (columns.at(i)[attrName]() === attrValue) {
                     result = i;
                 }
             }
@@ -35,23 +60,33 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return column instanceof DataVariable;
         });
 
-        this.hasA("readyCallback").which.isA("function");
-
         this.hasA("defaultMissingvalue").which.isA("string");
         this.hasA("defaultMissingop").which.isA("string").and.defaultsTo("eq");
 
-        this.isBuiltWith("columns", function () {
+        this.respondsTo("init", function() {
+            // Initialization function --- should be called from isBuiltWith initializer.  This is split
+            // off into a separate function so that it can be called from submodel's isBuiltWith initializers
+            // as well, since Jermaine does not provide a way to call the parent models' isBuiltWith initializer
+            // function.
             this.initializeColumns();
         });
 
+        this.isBuiltWith("columns", function () {
+            this.init();
+        });
+
         this.respondsTo("columnIdToColumnNumber", function (id) {
-            var column;
+            var columnIndex,
+                column = undefined;
 
             if (typeof(id) !== "string") {
                 throw new Error("Data: columnIdToColumnNumber expects parameter to be a string");
             }
-            
-            column = find("id", id, this.columns()) !== -1?this.columns().at(find("id", id, this.columns())):undefined;
+
+            columnIndex = find("id", id, this.columns());
+            if (columnIndex >= 0) {
+                column = this.columns().at(columnIndex);
+            }
 
             if (column === undefined) {
                 throw new Error("Data: no column with the label " + id);
@@ -104,17 +139,27 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return result;
         });
 
-        this.respondsTo("getBounds", function (columnId) {
-            //no op
+        this.respondsTo("getBounds", function (columnNumber) {
+            // submodels must implement this
         });
 
         this.respondsTo("getIterator", function () {
-            //no op
+            // submodels must implement this
         });
 
-        this.respondsTo("onReady", function (readyHandler) {
-            //no op
-        });
+        /*
+         * The "onReady" contract:
+         * 
+         * Each submodel of this Data model should do the following:
+         * 
+         * 1. Emit an "onReady" event whenever new data is available.
+         *    The arguments to the event listener are the min and max
+         *    values of the range of (newly) available data.
+         * 
+         * 2. Optionally, register a listener for its own "listenerAdded"
+         *    events, which performs whatever actions are needed, if any,
+         *    when a new "onReady" listener is registered.
+         */
 
         this.respondsTo("pause", function() {
             //no op

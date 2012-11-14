@@ -32,7 +32,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             this.context().setTransform(1, 0, 0, 1, 0, 0);
             this.context().transform(1,0,0,-1,0,this.height());
             this.context().clearRect(0, 0, this.width(), this.height());
-            this.initializeGeometry(this.width(), this.height(), this.context());
+            this.initializeGeometry(this.width(), this.height(), {"context" : this.context()});
             for (i=0; i<this.graphs().size(); ++i) {
                 this.graphs().at(i).render(this.context(), this.width(), this.height());
             }
@@ -45,9 +45,11 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             deferred;
         
         try {
-            window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML", "serialize");
+            window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
             ns.mixin.apply(window.multigraph.core);
+            window.multigraph.events.jquery.draggable.mixin.apply(window.multigraph, errorHandler);
             window.multigraph.events.jquery.mouse.mixin.apply(window.multigraph, errorHandler);
+            window.multigraph.events.jquery.touch.mixin.apply(window.multigraph, errorHandler);
             window.multigraph.normalizer.mixin.apply(window.multigraph.core);
 
             muglPromise = window.multigraph.jQuery.ajax({
@@ -66,9 +68,11 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                 var multigraph = window.multigraph.core.Multigraph.parseXML( window.multigraph.parser.jquery.stringToJQueryXMLObj(data) );
                 multigraph.normalize();
                 multigraph.div(div);
+                window.multigraph.jQuery(div).css('cursor' , 'pointer');
                 multigraph.init();
                 multigraph.registerMouseEvents(multigraph.canvas());
-                multigraph.registerCommonDataCallback(function () {
+                multigraph.registerTouchEvents(multigraph.canvas());
+                multigraph.registerCommonDataCallback(function (event) {
                     multigraph.redraw();
                 });
                 deferred.resolve(multigraph);

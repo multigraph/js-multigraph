@@ -33,7 +33,6 @@ describe("WebServiceData", function () {
         });
 
         it("instance should have WebServiceData methods", function () {
-            expect(typeof(wsd.onReady)).toBe("function");
             expect(typeof(wsd.getIterator)).toBe("function");
         });
 

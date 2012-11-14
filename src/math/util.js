@@ -13,6 +13,11 @@ window.multigraph.util.namespace("window.multigraph.math", function (ns) {
             // the average of the two y values, rather than NaN
             if (x0 === x1) { return (y0 + y1) / 2; }
             return ns.util.interp(x, x0, x1, y0, y1);
+        },
+        "l2dist" : function (x1, y1, x2, y2) {
+            var dx = x1 - x2;
+            var dy = y1 - y2;
+            return Math.sqrt(dx*dx + dy*dy);
         }
     };
 

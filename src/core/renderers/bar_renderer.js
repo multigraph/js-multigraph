@@ -58,6 +58,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     BarRenderer = new window.jermaine.Model( "BarRenderer", function () {
         this.isA(ns.Renderer);
+        this.hasA("numberOfVariables").which.defaultsTo(2);
     });
 
     ns.Renderer.declareOptions(BarRenderer, "BarRendererOptions", [
@@ -97,6 +98,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             "default"       : 2
         }
     ]);
+
+    ns.Renderer.BAR = new ns.Renderer.Type("bar");
 
     ns.Renderer.addType({"type"  : ns.Renderer.Type.parse("bar"),
                          "model" : BarRenderer});

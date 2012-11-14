@@ -173,22 +173,24 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 pointAttrs;
 
             // Draw icon background (with opacity)
-            graphicsContext.paper.rect(x, y, icon.width(), icon.height())
-                .attr({
-                    "stroke" : "rgba(255, 255, 255, " + opacity + ")",
-                    "fill"   : "rgba(255, 255, 255, " + opacity + ")"
-                })
-                .transform(graphicsContext.transformString);
+            graphicsContext.set.push(
+                graphicsContext.paper.rect(x, y, icon.width(), icon.height())
+                    .attr({
+                        "stroke" : "rgba(255, 255, 255, " + opacity + ")",
+                        "fill"   : "rgba(255, 255, 255, " + opacity + ")"
+                    })
+            );
 
             if (settings.linewidth > 0) {
                 path += "M" + x + "," + (y + icon.height()/2);
                 path += "L" + (x + icon.width()) + "," + (y + icon.height()/2);
-                graphicsContext.paper.path(path)
-                    .attr({
-                        "stroke"       : settings.linecolor.toRGBA(opacity),
-                        "stroke-width" : settings.linewidth
-                    })
-                    .transform(graphicsContext.transformString);
+                graphicsContext.set.push(
+                    graphicsContext.paper.path(path)
+                        .attr({
+                            "stroke"       : settings.linecolor.toRGBA(opacity),
+                            "stroke-width" : settings.linewidth
+                        })
+                    );
             }
             if (settings.pointsize > 0) {
                 if ((settings.pointshape === ns.PointlineRenderer.PLUS) || (settings.pointshape === ns.PointlineRenderer.X)) {
@@ -204,9 +206,10 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                     };
                 }
 
-                graphicsContext.paper.path( this.drawPoint(settings.pointshape, settings.pointsize, [(x + icon.width()/2), (y + icon.height()/2)]) )
-                    .attr(pointAttrs)
-                    .transform(graphicsContext.transformString);
+                graphicsContext.set.push(
+                    graphicsContext.paper.path( this.drawPoint(settings.pointshape, settings.pointsize, [(x + icon.width()/2), (y + icon.height()/2)]) )
+                        .attr(pointAttrs)
+                );
             }
 
         });

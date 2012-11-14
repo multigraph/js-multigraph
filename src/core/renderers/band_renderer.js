@@ -68,6 +68,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     BandRenderer = new window.jermaine.Model( "BandRenderer", function () {
         this.isA(ns.Renderer);
+        this.hasA("numberOfVariables").which.defaultsTo(3);
     });
 
     BandRenderer.GRAY = parseInt("80", 16) / 255;
@@ -114,6 +115,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             "default"       : 1.0
         }
     ]);
+
+    ns.Renderer.BAND = new ns.Renderer.Type("band");
 
     ns.Renderer.addType({"type"  : ns.Renderer.Type.parse("band"),
                          "model" : BandRenderer});

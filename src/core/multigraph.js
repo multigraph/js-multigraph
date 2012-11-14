@@ -17,14 +17,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
 
         this.respondsTo("registerCommonDataCallback", function (callback) {
-            var i, j,
-                graphs = this.graphs(),
-                data;
-            for (i=0; i < graphs.size(); ++i) {
-                data = graphs.at(i).data();
-                for (j=0; j<data.size(); ++j) {
-                    data.at(j).onReady(callback);
-                }
+            var i;
+            for (i=0; i < this.graphs().size(); ++i) {
+                this.graphs().at(i).registerCommonDataCallback(callback);
             }
         });
 
@@ -52,7 +47,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         }
         throw new Error("invalid graphic driver '" + obj.driver + "' specified to Multigraph.createGraph");
     };
-
+/*
     Multigraph.createDefaultErrorHandler = function (div) {
         return function (e) {
             var errorMessages,
@@ -80,6 +75,15 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                     window.multigraph.jQuery(window.multigraph.jQuery(div).find("ol")).append(window.multigraph.jQuery("<li>", {"text" : errorMessages[i].trim().replace(" (file", "\n(file"), "style" : "margin-bottom: 3px;"}));
                 }
             }
+        };
+    };
+*/
+
+    Multigraph.createDefaultErrorHandler = function (div) {
+        return function (e) {
+            throw e;
+            //console.log(e.message);
+            //console.log(e.stack);
         };
     };
 

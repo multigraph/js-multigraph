@@ -98,9 +98,10 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 iconBackgroundAttrs.fill = "rgba(255, 255, 255, " + opacity + ")";
             }
 
-            graphicsContext.paper.rect(x, y, icon.width(), icon.height())
-                .attr(iconBackgroundAttrs)
-                .transform(graphicsContext.transformString);
+            graphicsContext.set.push(
+                graphicsContext.paper.rect(x, y, icon.width(), icon.height())
+                    .attr(iconBackgroundAttrs)
+            );
 
             path += "M0,0";
 
@@ -120,13 +121,16 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             }
 
             path += "L" + icon.width() + ",0";
-            graphicsContext.paper.path(path)
-                .attr({
-                    "stroke"       : settings.linecolor.toRGBA(opacity),
-                    "stroke-width" : settings.linewidth,
-                    "fill"         : settings.fillcolor.toRGBA(opacity * settings.fillopacity)
-                })
-                .transform(graphicsContext.transformString + "t" + x + "," + y);
+
+            graphicsContext.set.push(
+                graphicsContext.paper.path(path)
+                    .attr({
+                        "stroke"       : settings.linecolor.toRGBA(opacity),
+                        "stroke-width" : settings.linewidth,
+                        "fill"         : settings.fillcolor.toRGBA(opacity * settings.fillopacity)
+                    })
+                    .transform("t" + x + "," + y)
+            );
         });
 
     });

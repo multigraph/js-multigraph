@@ -14,18 +14,30 @@
     <filelist dir="src/core" files="data_value.js data_measure.js data_formatter.js" />
     <fileset dir="src/math" includes="**/*.js" />
     <filelist dir="src/core" files="renderer.js" />
-    <filelist dir="src/core" files="data_variable.js data.js plot.js" />
+    <filelist dir="src/core" files="event_emitter.js data_variable.js data.js plot.js" />
     <fileset dir="src/core" includes="**/*.js"
-	     excludes="src/core/data_value.js src/core/data_measure.js src/core/data_formatter.js src/core/renderer.js src/core/data_variable.js src/core/data.js src/core/plot.js" />
+	     excludes="src/core/data_value.js src/core/data_measure.js src/core/data_formatter.js src/core/renderer.js src/core/event_emitter.js src/core/data_variable.js src/core/data.js src/core/plot.js" />
   </path>
   <path id="path.parser-jquery-js">
     <filelist dir="src/parser/jquery" files="jquery_mixin.js"/>
     <fileset dir="src/parser/jquery" includes="**/*.js" excludes="jquery_mixin.js" />
   </path>
+  <path id="path.serializer-js">
+    <filelist dir="src/serializer" files="serializer_mixin.js"/>
+    <fileset dir="src/serializer" includes="**/*.js" excludes="serializer_mixin.js" />
+  </path>
+  <path id="path.events-jquery-draggable-js">
+    <filelist dir="src/events/jquery/draggable" files="mixin.js"/>
+    <fileset dir="src/events/jquery/draggable" includes="**/*.js" excludes="mixin.js" />
+  </path>
   <path id="path.events-jquery-mouse-js">
     <filelist dir="src/events/jquery/mouse" files="mixin.js"/>
     <fileset dir="src/events/jquery/mouse" includes="**/*.js" excludes="mixin.js" />
     <fileset dir="src/events/jquery" includes="*.js" />
+  </path>
+  <path id="path.events-jquery-touch-js">
+    <filelist dir="src/events/jquery/touch" files="mixin.js"/>
+    <fileset dir="src/events/jquery/touch" includes="**/*.js" excludes="mixin.js" />
   </path>
   <path id="path.graphics-raphael-js">
     <filelist dir="src/graphics/raphael" files="raphael.js"/>
@@ -45,10 +57,13 @@
     <fileset dir="src/normalizer" includes="**/*.js" excludes="normalizer_mixin.js" />
   </path>
   <path id="path.spec-js">
-    <fileset dir="spec" includes="**/*.js"/>
+    <fileset dir="spec" includes="**/*.js" excludes="graphics/logger/**/*.js"/>
   </path>
   <path id="path.build-spec-js">
-    <fileset dir="spec" includes="**/*.js" excludes="graphics/logger/**/*.js"/>
+    <fileset dir="spec" includes="**/*.js" excludes="graphics/logger/**/*.js serializer/**/*.js"/>
+  </path>
+  <path id="path.spec-logger-js">
+    <filelist dir="spec/graphics/logger" files="graphicstests.js"/>
   </path>
   <path id="path.mugl-xml">
     <fileset dir="spec/mugl" includes="**/*.xml" />
@@ -90,15 +105,18 @@
     </replaceregexp>
   </target>
 
-  <target name="html" depends="jasmine-index-html,jasmine-build-html,raphael-html,canvas-html,logger-html">
+  <target name="html" depends="jasmine-index-html,jasmine-build-html,raphael-html,canvas-html,jasmine-logger-html,logger-html">
   </target>
 
   <target name="jasmine-index-html">
     <pathconvert property="scripttags.jasmine-src" pathsep="${line.separator}">
       <path refid="path.multigraph-core-js"/>
       <path refid="path.parser-jquery-js"/>
+      <path refid="path.serializer-js"/>
       <path refid="path.normalizer-js"/>
+      <path refid="path.events-jquery-draggable-js"/>
       <path refid="path.events-jquery-mouse-js"/>
+      <path refid="path.events-jquery-touch-js"/>
       <path refid="path.graphics-raphael-js"/>
       <path refid="path.graphics-canvas-js"/>
       <path refid="path.graphics-logger-js"/>
@@ -131,12 +149,14 @@
     <pathconvert property="scripttags.mg-jq" pathsep="${line.separator}">
       <path refid="path.multigraph-core-js"/>
       <path refid="path.parser-jquery-js"/>
-      <path refid="path.normalizer-js"/>
       <mapper type="regexp" from="^${basedir}/(.*)$" to='&lt;script type="text/javascript" src="../../../\1"&gt;&lt;/script&gt;'/>
     </pathconvert>
     <pathconvert property="scripttags.raphael" pathsep="${line.separator}">
       <path refid="path.graphics-raphael-js"/>
+      <path refid="path.events-jquery-draggable-js"/>
       <path refid="path.events-jquery-mouse-js"/>
+      <path refid="path.events-jquery-touch-js"/>
+      <path refid="path.normalizer-js"/>
       <mapper type="regexp" from="^${basedir}/(.*)$" to='&lt;script type="text/javascript" src="../../../\1"&gt;&lt;/script&gt;'/>
     </pathconvert>
     <replaceregexp flags="s">
@@ -154,7 +174,9 @@
     </pathconvert>
     <pathconvert property="scripttags.canvas" pathsep="${line.separator}">
       <path refid="path.graphics-canvas-js"/>
+      <path refid="path.events-jquery-draggable-js"/>
       <path refid="path.events-jquery-mouse-js"/>
+      <path refid="path.events-jquery-touch-js"/>
       <path refid="path.normalizer-js"/>
       <mapper type="regexp" from="^${basedir}/(.*)$" to='&lt;script type="text/javascript" src="../../../\1"&gt;&lt;/script&gt;'/>
     </pathconvert>
@@ -165,15 +187,40 @@
     </replaceregexp>
   </target>
 
+  <target name="jasmine-logger-html">
+    <pathconvert property="scripttags.jasmine-logger-src" pathsep="${line.separator}">
+      <path refid="path.multigraph-core-js"/>
+      <path refid="path.parser-jquery-js"/>
+      <path refid="path.normalizer-js"/>
+      <path refid="path.events-jquery-draggable-js"/>
+      <path refid="path.events-jquery-mouse-js"/>
+      <path refid="path.events-jquery-touch-js"/>
+      <path refid="path.graphics-logger-js"/>
+      <mapper type="regexp" from="^${basedir}/(.*)$" to='&lt;script type="text/javascript" src="../\1"&gt;&lt;/script&gt;'/>
+    </pathconvert>
+    <pathconvert property="scripttags.jasmine-logger-spec" pathsep="${line.separator}">
+      <path refid="path.spec-logger-js"/>
+      <mapper type="regexp" from="^${basedir}/spec/(.*)$" to='&lt;script type="text/javascript" src="\1"&gt;&lt;/script&gt;'/>
+    </pathconvert>
+    <replaceregexp flags="s">
+      <regexp pattern="&lt;!--BEGIN_ANT_LINES--&gt;.*&lt;!--END_ANT_LINES--&gt;"/>
+      <substitution expression="&lt;!--BEGIN_ANT_LINES--&gt;${line.separator}${scripttags.jasmine-logger-src}${line.separator}${line.separator}${scripttags.jasmine-logger-spec}${line.separator}&lt;!--END_ANT_LINES--&gt;"/>
+      <filelist dir="spec" files="logger.html"/>
+    </replaceregexp>
+  </target>
+
   <target name="logger-html">
     <pathconvert property="scripttags.mg-jq" pathsep="${line.separator}">
       <path refid="path.multigraph-core-js"/>
       <path refid="path.parser-jquery-js"/>
+      <path refid="path.normalizer-js"/>
       <mapper type="regexp" from="^${basedir}/(.*)$" to='&lt;script type="text/javascript" src="../../../\1"&gt;&lt;/script&gt;'/>
     </pathconvert>
     <pathconvert property="scripttags.logger" pathsep="${line.separator}">
       <path refid="path.graphics-logger-js"/>
+      <path refid="path.events-jquery-draggable-js"/>
       <path refid="path.events-jquery-mouse-js"/>
+      <path refid="path.events-jquery-touch-js"/>
       <mapper type="regexp" from="^${basedir}/(.*)$" to='&lt;script type="text/javascript" src="../../../\1"&gt;&lt;/script&gt;'/>
     </pathconvert>
     <replaceregexp flags="s">
@@ -189,7 +236,9 @@
       <path refid="path.multigraph-core-js"/>
       <path refid="path.parser-jquery-js"/>
       <path refid="path.normalizer-js"/>
+      <path refid="path.events-jquery-draggable-js"/>
       <path refid="path.events-jquery-mouse-js"/>
+      <path refid="path.events-jquery-touch-js"/>
       <path refid="path.graphics-raphael-js"/>
       <path refid="path.graphics-canvas-js"/>
     </concat>

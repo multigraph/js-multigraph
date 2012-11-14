@@ -1,8 +1,7 @@
 window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
     "use strict";
 
-    var scalarAttributes = ["border"];
-    ns.mixin.add(function (ns, parse, serialize) {
+    ns.mixin.add(function (ns, parse) {
         
         ns.core.Plotarea[parse] = function (xml) {
             var plotarea = new ns.core.Plotarea();
@@ -22,30 +21,14 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 if (xml.attr("border") !== undefined) {
                     plotarea.border(parseInt(xml.attr("border"), 10));
                 }
+                if (xml.attr("color") !== undefined) {
+                    plotarea.color(ns.math.RGBColor.parse(xml.attr("color")));
+                }
                 plotarea.bordercolor(ns.math.RGBColor.parse(xml.attr("bordercolor")));
             }
             return plotarea;
         };
         
-        ns.core.Plotarea.prototype[serialize] = function () {
-            var attributeStrings = [],
-                output = '<plotarea ';
-
-            attributeStrings.push('margintop="' + this.margin().top() + '"');
-            attributeStrings.push('marginleft="' + this.margin().left() + '"');
-            attributeStrings.push('marginbottom="' + this.margin().bottom() + '"');
-            attributeStrings.push('marginright="' + this.margin().right() + '"');
-
-            if (this.bordercolor() !== undefined) {
-                attributeStrings.push('bordercolor="' + this.bordercolor().getHexString() + '"');
-            }
-
-            attributeStrings = window.multigraph.utilityFunctions.serializeScalarAttributes(this, scalarAttributes, attributeStrings);
-
-            output += attributeStrings.join(' ') + '/>';
-
-            return output;
-        };
-
     });
+
 });

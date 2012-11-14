@@ -222,7 +222,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                     }
                     
                     // Write the text
-                    this.renderLabel(this.plots().at(plotCount).legend().label().string(), graphicsContext, labelx, labely);
+                    this.renderLabel(this.plots().at(plotCount).legend().label(), graphicsContext, labelx, labely);
 
                     plotCount++;
                 }
