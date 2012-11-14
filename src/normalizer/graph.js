@@ -85,7 +85,15 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
 
 
             //
-            // arrange to set axis min/max values when data is ready, if necessary
+            // execute the setDataRange method for each axis binding, to sync up all axes
+            // that participate in the binding (this takes care of setting dataMin/dataMax
+            // for any axes that don't have them already but which are bound to axes that
+            // do have them)
+            // 
+            ns.AxisBinding.syncAllBindings();
+
+            //
+            // arrange to set missing axis min/max values when data is ready, if necessary
             // 
             for (i = 0; i < this.axes().size(); i++) {
                 // for each axis...

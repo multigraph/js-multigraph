@@ -4,7 +4,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     ns.AxisBinding = new window.jermaine.Model( "AxisBinding", function () {
         var AxisBinding = this;
 
-        AxisBinding.instances = [];
+        AxisBinding.instances = {};
 
         this.hasA("id").which.isA("string");
 
@@ -46,6 +46,46 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                     break;
                 }
             }
+        });
+
+        /**
+         * Force all the axes in this binding to sync up with each
+         * other, if possible.
+         * 
+         * This is done by looking for an axis in this binding which
+         * has its dataMin and dataMax values set, and then calling
+         * its setDataRange() method with those values.  The main
+         * purpose of this method is to facilitate the initial setting
+         * of dataMin/dataMax values for axes in a binding that do not
+         * already have dataMin/dataMax values set; this forces them
+         * to be set based on the binding, as determined by another
+         * axis in the binding.
+         * 
+         * Note that this method is NOT the normal way for bound axes
+         * to interact with each other once initialization is
+         * complete; that is done via the axes' own setDataRange()
+         * method.
+         * 
+         * @method AxisBinding#sync
+         * 
+         * @return {boolean} a value indicating whether the sync was
+         *                   done; this will be true if and only if
+         *                   there is at least one axis in the binding
+         *                   having both its dataMin and dataMax
+         *                   values set.
+         */
+        this.respondsTo("sync", function() {
+            var i,
+                axes = this.axes(),
+                axis;
+            for (i=0; i<axes.length; ++i) {
+                axis = axes[i].axis;
+                if (axis.hasDataMin() && axis.hasDataMax()) {
+                    axis.setDataRange(axis.dataMin(), axis.dataMax());
+                    return true;
+                }
+            }
+            return false;
         });
 
         this.respondsTo("setDataRange", function(initiatingAxis, min, max, dispatch) {
@@ -126,23 +166,30 @@ to/from number values vs DataValue instances for min/max.
             return binding;
         };
 
+        AxisBinding.syncAllBindings = function() {
+            var id;
+            for (id in AxisBinding.instances) {
+                AxisBinding.instances[id].sync();
+            }
+        };
+
         AxisBinding.forgetAllBindings = function() {
 
             // This function is just for use in testing, so we can clear out the global list
             // of bindings to get a fresh start between tests.
 
-            var i,j,binding;
+            var id,j,binding;
 
             // loop over all bindings, all axes, setting the axis binding to null
-            for (i=0; i<AxisBinding.instances.length; ++i) {
-                binding = AxisBinding.instances[i];
+            for (id in AxisBinding.instances) {
+                binding = AxisBinding.instances[id];
                 for (j=0; j<binding.axes().length; ++j) {
                     binding.axes()[j].binding(null);
                 }
             }
 
             // reset the global binding list
-            AxisBinding.instances = [];
+            AxisBinding.instances = {};
         };
 
     });
