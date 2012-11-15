@@ -25,10 +25,26 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     });
 
+    var browserHasCanvasSupport = function () {
+        return (
+                (!!window.HTMLCanvasElement)
+                &&
+                (!!window.CanvasRenderingContext2D)
+                &&
+                (function (elem) {
+                    return !!(elem.getContext && elem.getContext('2d'));
+                }(document.createElement('canvas')))
+            );
+    };
+
     Multigraph.createGraph = function (obj) {
         var div = obj.div;
         if (!obj.driver) {
-            obj.driver = "canvas";
+            if (browserHasCanvasSupport()) {
+                obj.driver = "canvas";
+            } else {
+                obj.driver = "raphael";
+            }
         }
         if (typeof(div) === "string") {
             // if div is a string, assume it's an id, and convert
@@ -47,6 +63,11 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         }
         throw new Error("invalid graphic driver '" + obj.driver + "' specified to Multigraph.createGraph");
     };
+
+    //
+    // make window.multigraph.create be an alias for window.multigraph.core.Multigraph.create:
+    //
+    window.multigraph.create = Multigraph.createGraph;
 /*
     Multigraph.createDefaultErrorHandler = function (div) {
         return function (e) {

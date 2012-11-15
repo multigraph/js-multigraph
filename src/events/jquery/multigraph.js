@@ -41,10 +41,16 @@
             if (height !== undefined) {
                 $(this).css('height', height + 'px');
             }
+
+            /*
+             // don't default to canvas here any more; Multigraph.createGraph now does
+             // browser detection and will default to canvas if possible, otherwise
+             // to raphael
             if (driver === undefined) {
                 driver = "canvas";
             }
-            
+            */
+
             options = {
                 'div'    : this,
                 'mugl'   : src,
