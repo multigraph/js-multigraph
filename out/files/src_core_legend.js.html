@@ -301,7 +301,7 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
          * @author jrfrimme
          * @modified Thu Nov 15 09:43:27 2012
          *&#x2F;
-        this.hasA(&quot;iconOffset&quot;).which.isA(&quot;number&quot;).and.defaultsTo(5);
+        this.hasA(&quot;iconOffset&quot;).which.isAn(&quot;integer&quot;).and.defaultsTo(5);
 
         &#x2F;**
          * Internal value which determines the number of pixels between an entries label and its icon.
@@ -315,7 +315,7 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
          * @author jrfrimme
          * @modified Thu Nov 15 09:43:29 2012
          *&#x2F;
-        this.hasA(&quot;labelOffset&quot;).which.isA(&quot;number&quot;).and.defaultsTo(5);
+        this.hasA(&quot;labelOffset&quot;).which.isAn(&quot;integer&quot;).and.defaultsTo(5);
 
         &#x2F;**
          * Internal value which determines the number of pixels between the right end of an entries label and
@@ -329,7 +329,7 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
          * @author jrfrimme
          * @modified Thu Nov 15 09:43:33 2012
          *&#x2F;
-        this.hasA(&quot;labelEnding&quot;).which.isA(&quot;number&quot;).and.defaultsTo(15);
+        this.hasA(&quot;labelEnding&quot;).which.isAn(&quot;integer&quot;).defaultsTo(15);
 
         &#x2F;**
          * Computed value of the width of the Legend.
@@ -432,6 +432,7 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
          * &#x60;maxLabelHeight&#x60;, &#x60;blockWidth&#x60;, &#x60;blockHeight&#x60;, &#x60;width&#x60;, &#x60;height&#x60;, &#x60;x&#x60; and &#x60;y&#x60;.
          *
          * @method initializeGeometry
+         * @chainable
          * @param {Graph} graph Jermaine Graph model
          * @param {Object} graphicsContext graphical environemnt specific variables
          *   @param {Context|TextElem} graphicsContext.context|elem context or Raphael TextElem, depending on
@@ -447,7 +448,7 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
                 i;
 
             if (this.visible() === false) {
-                return;
+                return this;
             }
 
             for (i = 0; i &lt; graph.plots().size(); i++) {
@@ -461,7 +462,7 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
                     this.visible(true);
                 } else {
                     this.visible(false);
-                    return;
+                    return this;
                 }
             }
 
@@ -510,6 +511,7 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
                 this.y(((this.base().y() + 1) * graph.plotBox().height()&#x2F;2) - ((this.anchor().y() + 1) * this.height()&#x2F;2) + this.position().y());
             }
 
+            return this;
         });
 
         &#x2F;**
@@ -518,6 +520,7 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
          * drawing of each element to the graphical packages.
          * 
          * @method render
+         * @chainable
          * @param {Object} graphicsContext graphical environemnt specific variables
          *   @param {Context|TextElem} graphicsContext.context|elem context or Raphael TextElem, depending on
          *   the graphical environment
@@ -534,7 +537,7 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
                 r, c;
 
             if (this.visible() === false) {
-                return;
+                return this;
             }
 
             &#x2F;&#x2F; preform any neccesary setup
@@ -576,48 +579,8 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
             &#x2F;&#x2F; preform any neccesary steps at the end of rendering
             this.end(graphicsContext);
 
+            return this;
         });
-
-&#x2F;&#x2F;        &#x2F;**
-&#x2F;&#x2F;            Measure the width of the text
-&#x2F;&#x2F;            @method Legend#measureLabelWidth
-&#x2F;&#x2F;            @param {string}
-&#x2F;&#x2F;            @return length
-&#x2F;&#x2F;            @todo Replace this function with one that properly measure the width of text.  This will most likely be done in an abstract text class which has knowledge of the rendering environment.
-&#x2F;&#x2F;        *&#x2F;
-&#x2F;&#x2F;
-&#x2F;&#x2F;
-&#x2F;&#x2F;&#x2F;&#x2F; TODO: replace these functions with ones that properly measure the width&#x2F;height of text.
-&#x2F;&#x2F;&#x2F;&#x2F;       This will most likely be done in an abstract text class which has knowledge of the
-&#x2F;&#x2F;&#x2F;&#x2F;       rendering environment.
-&#x2F;&#x2F;        this.respondsTo(&quot;measureLabelWidth&quot;, function (string) {
-&#x2F;&#x2F;                &#x2F;&#x2F; Graphics drivers should replace this method with an actual implementation; this
-&#x2F;&#x2F;                &#x2F;&#x2F; is just a placeholder.  The implementation should return the width, in pixels,
-&#x2F;&#x2F;                &#x2F;&#x2F; of the given string.  Of course this is dependent on font choice, size, etc,
-&#x2F;&#x2F;                &#x2F;&#x2F; but we gloss over that at the moment.  Just return the width of the string
-&#x2F;&#x2F;                &#x2F;&#x2F; using some reasonable default font for now.  Later on, we&#x27;ll modify this
-&#x2F;&#x2F;                &#x2F;&#x2F; function to use font information.
-&#x2F;&#x2F;                return string.length*30;
-&#x2F;&#x2F;        });
-&#x2F;&#x2F;
-&#x2F;&#x2F;
-&#x2F;&#x2F;
-&#x2F;&#x2F;        &#x2F;**
-&#x2F;&#x2F;            Measure the height of the text
-&#x2F;&#x2F;            @method Legend#measureLabelHeight
-&#x2F;&#x2F;            @param {string}
-&#x2F;&#x2F;            @return height
-&#x2F;&#x2F;            @todo Replace this function with one that properly measures the height of text.  This will most likely be done in an abstract text class which has knowledge of the rendering environment.
-&#x2F;&#x2F;        *&#x2F;
-&#x2F;&#x2F;        this.respondsTo(&quot;measureLabelHeight&quot;, function (string) {
-&#x2F;&#x2F;                &#x2F;&#x2F; Graphics drivers should replace this method with an actual implementation; this
-&#x2F;&#x2F;                &#x2F;&#x2F; is just a placeholder.  The implementation should return the height, in pixels,
-&#x2F;&#x2F;                &#x2F;&#x2F; of the given string.  Of course this is dependent on font choice, size, etc,
-&#x2F;&#x2F;                &#x2F;&#x2F; but we gloss over that at the moment.  Just return the height of the string
-&#x2F;&#x2F;                &#x2F;&#x2F; using some reasonable default font for now.  Later on, we&#x27;ll modify this
-&#x2F;&#x2F;                &#x2F;&#x2F; function to use font information.
-&#x2F;&#x2F;                return 12;
-&#x2F;&#x2F;        });
 
         window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.legend, attributes);
     });

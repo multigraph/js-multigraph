@@ -771,6 +771,7 @@
             "description": "Initializes the Legend's geometry. Determines values for the internal attributes `maxLabelWidth`,\n`maxLabelHeight`, `blockWidth`, `blockHeight`, `width`, `height`, `x` and `y`.",
             "itemtype": "method",
             "name": "initializeGeometry",
+            "chainable": 1,
             "params": [
                 {
                     "name": "graph",
@@ -799,10 +800,11 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 417,
+            "line": 419,
             "description": "Preforms setup needed to render Legends in a graphical package agnostic fashion. The function \ncomputes the location of the Legend area and each component of the Plot entries and delegates the\ndrawing of each element to the graphical packages.",
             "itemtype": "method",
             "name": "render",
+            "chainable": 1,
             "params": [
                 {
                     "name": "graphicsContext",
@@ -1425,7 +1427,7 @@
         },
         {
             "message": "unknown tag: modified",
-            "line": " src/core/legend.js:417"
+            "line": " src/core/legend.js:419"
         },
         {
             "message": "unknown tag: modified",
