@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Multigraph Auto Driver Test</title>
+  <script type="text/javascript" src="../build/multigraph.js"></script>
+<script type="text/javascript">
+(function($){
+
+  $(document).ready(function() {
+    multigraph.create({
+         div : $('.multigraph')[0],
+        mugl : 'mugl.xml',
+    }).done(function(m) {
+        $('.driver').html('driver is ' + window.multigraph.driver);
+    });
+
+  });
+
+}(multigraph.jQuery));
+</script>
+</head>
+<body>
+<center>
+<div class="multigraph" style="width: 800px; height: 400px;"></div>
+
+<p class="driver">
+</center>
+</html>
