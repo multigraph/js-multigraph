@@ -203,7 +203,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @author jrfrimme
          * @modified Thu Nov 15 09:43:27 2012
          */
-        this.hasA("iconOffset").which.defaultsTo(5);
+        this.hasA("iconOffset").which.isAn("integer").and.defaultsTo(5);
 
         /**
          * Internal value which determines the number of pixels between an entries label and its icon.
@@ -217,7 +217,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @author jrfrimme
          * @modified Thu Nov 15 09:43:29 2012
          */
-        this.hasA("labelOffset").which.defaultsTo(5);
+        this.hasA("labelOffset").which.isAn("integer").and.defaultsTo(5);
 
         /**
          * Internal value which determines the number of pixels between the right end of an entries label and
@@ -231,7 +231,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @author jrfrimme
          * @modified Thu Nov 15 09:43:33 2012
          */
-        this.hasA("labelEnding").which.defaultsTo(15);
+        this.hasA("labelEnding").which.isAn("integer").defaultsTo(15);
 
         /**
          * Computed value of the width of the Legend.
@@ -243,7 +243,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @author jrfrimme
          * @modified Thu Nov 15 09:43:37 2012
          */
-        this.hasA("width");
+        this.hasA("width").which.isA("number");
 
         /**
          * Computed value of the height of the Legend.
@@ -255,7 +255,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @author jrfrimme
          * @modified Thu Nov 15 09:43:39 2012
          */
-        this.hasA("height");
+        this.hasA("height").which.isA("number");
 
         /**
          * Computed `x` value of the Legend's lower left corner relative to its frame.
@@ -267,7 +267,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @author jrfrimme
          * @modified Thu Nov 15 09:43:42 2012
          */
-        this.hasA("x");
+        this.hasA("x").which.isA("number");
 
         /**
          * Computed `y` value of the Legend's lower left corner relative to its frame.
@@ -279,7 +279,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @author jrfrimme
          * @modified Thu Nov 15 09:43:45 2012
          */
-        this.hasA("y");
+        this.hasA("y").which.isA("number");
 
         /**
          * Computed width of an individual plot entry.
@@ -291,7 +291,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @author jrfrimme
          * @modified Thu Nov 15 09:43:52 2012
          */
-        this.hasA("blockWidth");
+        this.hasA("blockWidth").which.isA("number");
 
         /**
          * Computed height of an individual plot entry.
@@ -303,7 +303,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @author jrfrimme
          * @modified Thu Nov 15 09:43:55 2012
          */
-        this.hasA("blockHeight");
+        this.hasA("blockHeight").which.isA("number");
 
         /**
          * Computed width of the longest label of all plot entries.
@@ -315,7 +315,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @author jrfrimme
          * @modified Thu Nov 15 09:43:57 2012
          */
-        this.hasA("maxLabelWidth");
+        this.hasA("maxLabelWidth").which.isA("number");
 
         /**
          * Maximum value of the Icon's height and the computed height of the tallest label of all plot entries.
@@ -327,13 +327,14 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @author jrfrimme
          * @modified Thu Nov 15 09:44:01 2012
          */
-        this.hasA("maxLabelHeight");
+        this.hasA("maxLabelHeight").which.isA("number");
 
         /**
          * Initializes the Legend's geometry. Determines values for the internal attributes `maxLabelWidth`,
          * `maxLabelHeight`, `blockWidth`, `blockHeight`, `width`, `height`, `x` and `y`.
          *
          * @method initializeGeometry
+         * @chainable
          * @param {Graph} graph Jermaine Graph model
          * @param {Object} graphicsContext graphical environemnt specific variables
          *   @param {Context|TextElem} graphicsContext.context|elem context or Raphael TextElem, depending on
@@ -349,7 +350,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 i;
 
             if (this.visible() === false) {
-                return;
+                return this;
             }
 
             for (i = 0; i < graph.plots().size(); i++) {
@@ -363,7 +364,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                     this.visible(true);
                 } else {
                     this.visible(false);
-                    return;
+                    return this;
                 }
             }
 
@@ -412,6 +413,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 this.y(((this.base().y() + 1) * graph.plotBox().height()/2) - ((this.anchor().y() + 1) * this.height()/2) + this.position().y());
             }
 
+            return this;
         });
 
         /**
@@ -420,6 +422,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * drawing of each element to the graphical packages.
          * 
          * @method render
+         * @chainable
          * @param {Object} graphicsContext graphical environemnt specific variables
          *   @param {Context|TextElem} graphicsContext.context|elem context or Raphael TextElem, depending on
          *   the graphical environment
@@ -436,7 +439,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 r, c;
 
             if (this.visible() === false) {
-                return;
+                return this;
             }
 
             // preform any neccesary setup
@@ -478,6 +481,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             // preform any neccesary steps at the end of rendering
             this.end(graphicsContext);
 
+            return this;
         });
 
 //        /**
