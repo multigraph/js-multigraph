@@ -192,143 +192,14 @@
             "plugin_for": [],
             "extension_for": [],
             "file": "src/core/legend.js",
-            "line": 4,
+            "line": 9,
+            "description": "Legend is a Jermaine model that supports the rendering of Multigraph Legends.",
             "is_constructor": 1,
-            "params": [
-                {
-                    "name": "visible",
-                    "description": "",
-                    "type": "Boolean"
-                },
-                {
-                    "name": "base",
-                    "description": "",
-                    "type": "Point"
-                },
-                {
-                    "name": "anchor",
-                    "description": "",
-                    "type": "Point"
-                },
-                {
-                    "name": "position",
-                    "description": "",
-                    "type": "Point"
-                },
-                {
-                    "name": "frame",
-                    "description": "- plot or padding"
-                },
-                {
-                    "name": "color",
-                    "description": "",
-                    "type": "Rgb"
-                },
-                {
-                    "name": "bordercolor",
-                    "description": "",
-                    "type": "Rgb"
-                },
-                {
-                    "name": "opacity",
-                    "description": "",
-                    "type": "Number"
-                },
-                {
-                    "name": "border",
-                    "description": "",
-                    "type": "Integer"
-                },
-                {
-                    "name": "rows",
-                    "description": "",
-                    "type": "Integer"
-                },
-                {
-                    "name": "columns",
-                    "description": "",
-                    "type": "Integer"
-                },
-                {
-                    "name": "cornerradius",
-                    "description": "",
-                    "type": "Integer"
-                },
-                {
-                    "name": "padding",
-                    "description": "",
-                    "type": "Integer"
-                },
-                {
-                    "name": "icon",
-                    "description": "",
-                    "type": "Icon"
-                },
-                {
-                    "name": "plots",
-                    "description": "",
-                    "type": "Plot"
-                },
-                {
-                    "name": "iconOffset",
-                    "description": "",
-                    "type": "Integer",
-                    "optional": true,
-                    "optdefault": "5"
-                },
-                {
-                    "name": "labelOffset",
-                    "description": "",
-                    "type": "Integer",
-                    "optional": true,
-                    "optdefault": "5"
-                },
-                {
-                    "name": "labelEnding",
-                    "description": "",
-                    "type": "Integer",
-                    "optional": true,
-                    "optdefault": "15"
-                },
-                {
-                    "name": "width",
-                    "description": ""
-                },
-                {
-                    "name": "height",
-                    "description": ""
-                },
-                {
-                    "name": "x",
-                    "description": ""
-                },
-                {
-                    "name": "y",
-                    "description": ""
-                },
-                {
-                    "name": "blockWidth",
-                    "description": ""
-                },
-                {
-                    "name": "blockHeight",
-                    "description": ""
-                },
-                {
-                    "name": "maxLabelWidth",
-                    "description": ""
-                },
-                {
-                    "name": "maxLabelHeight",
-                    "description": ""
-                }
-            ],
             "requires": [
-                "point.js",
-                "rgb_color.js",
-                "validation-functions.js",
-                "plot.js",
-                "icon.js"
+                "Point",
+                "RGBColor",
+                "Plot",
+                "Icon"
             ]
         },
         "Mixin": {
@@ -574,19 +445,353 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 97,
-            "description": "Initializes the legend",
+            "line": 17,
+            "description": "The value which determines if the legend will be rendered; a value of `true` means the Legend will\nbe drawn while `false` means that it will not.",
+            "itemtype": "property",
+            "name": "visible",
+            "type": "{boolean}",
+            "author": "jrfrimme",
+            "modified": "Thu Nov 15 09:41:47 2012",
+            "class": "Legend"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 28,
+            "description": "The value which gives the location of the base point relative to the Legend's frame.",
+            "itemtype": "property",
+            "name": "base",
+            "type": "{Point}",
+            "author": "jrfrimme",
+            "modified": "Thu Nov 15 09:42:25 2012",
+            "class": "Legend"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 40,
+            "description": "The value which gives the location of the Legend's anchor point to be attached to the base point.",
+            "itemtype": "property",
+            "name": "anchor",
+            "type": "{Point}",
+            "author": "jrfrimme",
+            "modified": "Thu Nov 15 09:42:42 2012",
+            "class": "Legend"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 52,
+            "description": "A coordinate pair of pixel offsets for the base point.",
+            "itemtype": "property",
+            "name": "position",
+            "type": "{Point}",
+            "author": "jrfrimme",
+            "modified": "Thu Nov 15 09:42:48 2012",
+            "class": "Legend"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 64,
+            "description": "The value which determines whether the legend is positioned relative to the plot area or the padding\nbox. A value of `plot` means the Legend will be drawn relative to the plot area while `padding` means\nthat it will the padding box.",
+            "itemtype": "property",
+            "name": "frame",
+            "type": "{String}",
+            "author": "jrfrimme",
+            "modified": "Thu Nov 15 09:42:52 2012",
+            "class": "Legend"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 78,
+            "description": "The value which determines the background color of the Legend.",
+            "itemtype": "property",
+            "name": "color",
+            "type": "{RGBColor}",
+            "author": "jrfrimme",
+            "modified": "Thu Nov 15 09:42:55 2012",
+            "class": "Legend"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 90,
+            "description": "The value which determines the bordercolor of the Legend.",
+            "itemtype": "property",
+            "name": "bordercolor",
+            "type": "{RGBColor}",
+            "author": "jrfrimme",
+            "modified": "Thu Nov 15 09:42:59 2012",
+            "class": "Legend"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 102,
+            "description": "The value which determines the opacity of the Legend; depending on where the Legend is positioned it\nmay obscure parts of the plot data.",
+            "itemtype": "property",
+            "name": "opacity",
+            "type": "{Float}",
+            "author": "jrfrimme",
+            "modified": "Thu Nov 15 09:43:02 2012",
+            "class": "Legend"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 115,
+            "description": "The value which determines the thickness of the border drawn around the Legend; a value of `0` turns\nthe border off.",
+            "itemtype": "property",
+            "name": "border",
+            "type": "{Integer}",
+            "author": "jrfrimme",
+            "modified": "Thu Nov 15 09:43:05 2012",
+            "class": "Legend"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 126,
+            "description": "The value which determines the number of rows to be used for Plot entries in the Legend. If left\nunspecified then rows will be inserted to account for each Plot entry.",
+            "itemtype": "property",
+            "name": "rows",
+            "type": "{Integer}",
+            "author": "jrfrimme",
+            "modified": "Thu Nov 15 09:43:08 2012",
+            "class": "Legend"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 137,
+            "description": "The value which determines the number of columns to be used for Plot entries in the Legend. If rows\nis set while columns is left unspecified then columns will be inserted to account for each Plot\nentry.",
+            "itemtype": "property",
+            "name": "columns",
+            "type": "{Integer}",
+            "author": "jrfrimme",
+            "modified": "Thu Nov 15 09:43:12 2012",
+            "class": "Legend"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 149,
+            "description": "The value which determines whether the corners of the legend box are rounded when drawn. A value of\n`0` means that the corners will be drawn square while values greater than `0` mean that the corners\nare rounded off with circles whose radius in pixels is this value.",
+            "itemtype": "property",
+            "name": "cornerradius",
+            "type": "{Integer}",
+            "author": "jrfrimme",
+            "modified": "Thu Nov 15 09:43:15 2012",
+            "class": "Legend"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 161,
+            "description": "The value which determines the pixel width of the padding between the Legend border and its entries.",
+            "itemtype": "property",
+            "name": "padding",
+            "type": "{Integer}",
+            "author": "jrfrimme",
+            "modified": "Thu Nov 15 09:43:18 2012",
+            "class": "Legend"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 171,
+            "description": "A optional sub-model which determines the appearance of the Icons for the Plot entries.",
+            "itemtype": "property",
+            "name": "icon",
+            "type": "{Icon}",
+            "author": "jrfrimme",
+            "modified": "Thu Nov 15 09:43:20 2012",
+            "class": "Legend"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 183,
+            "description": "Pointers to Plot models that have entries in the Legend.",
+            "itemtype": "property",
+            "name": "plots",
+            "type": "{Plot}",
+            "author": "jrfrimme",
+            "modified": "Thu Nov 15 09:43:24 2012",
+            "class": "Legend"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 195,
+            "description": "Internal value which determines the number of pixels between an entries icon and its border.",
+            "itemtype": "property",
+            "name": "iconOffset",
+            "type": "{Integer}",
+            "default": "5",
+            "access": "private",
+            "tagname": "",
+            "final": 1,
+            "author": "jrfrimme",
+            "modified": "Thu Nov 15 09:43:27 2012",
+            "class": "Legend"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 208,
+            "description": "Internal value which determines the number of pixels between an entries label and its icon.",
+            "itemtype": "property",
+            "name": "labelOffset",
+            "type": "{}",
+            "default": "5",
+            "access": "private",
+            "tagname": "",
+            "final": 1,
+            "author": "jrfrimme",
+            "modified": "Thu Nov 15 09:43:29 2012",
+            "class": "Legend"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 222,
+            "description": "Internal value which determines the number of pixels between the right end of an entries label and\nits border",
+            "itemtype": "property",
+            "name": "labelEnding",
+            "type": "{Integer}",
+            "default": "15",
+            "access": "private",
+            "tagname": "",
+            "final": 1,
+            "author": "jrfrimme",
+            "modified": "Thu Nov 15 09:43:33 2012",
+            "class": "Legend"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 236,
+            "description": "Computed value of the width of the Legend.",
+            "itemtype": "property",
+            "name": "width",
+            "type": "{Float}",
+            "access": "private",
+            "tagname": "",
+            "final": 1,
+            "author": "jrfrimme",
+            "modified": "Thu Nov 15 09:43:37 2012",
+            "class": "Legend"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 248,
+            "description": "Computed value of the height of the Legend.",
+            "itemtype": "property",
+            "name": "height",
+            "type": "{Float}",
+            "access": "private",
+            "tagname": "",
+            "final": 1,
+            "author": "jrfrimme",
+            "modified": "Thu Nov 15 09:43:39 2012",
+            "class": "Legend"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 260,
+            "description": "Computed `x` value of the Legend's lower left corner relative to its frame.",
+            "itemtype": "property",
+            "name": "x",
+            "type": "{Float}",
+            "access": "private",
+            "tagname": "",
+            "final": 1,
+            "author": "jrfrimme",
+            "modified": "Thu Nov 15 09:43:42 2012",
+            "class": "Legend"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 272,
+            "description": "Computed `y` value of the Legend's lower left corner relative to its frame.",
+            "itemtype": "property",
+            "name": "y",
+            "type": "{Float}",
+            "access": "private",
+            "tagname": "",
+            "final": 1,
+            "author": "jrfrimme",
+            "modified": "Thu Nov 15 09:43:45 2012",
+            "class": "Legend"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 284,
+            "description": "Computed width of an individual plot entry.",
+            "itemtype": "property",
+            "name": "blockWidth",
+            "type": "{Float}",
+            "access": "private",
+            "tagname": "",
+            "final": 1,
+            "author": "jrfrimme",
+            "modified": "Thu Nov 15 09:43:52 2012",
+            "class": "Legend"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 296,
+            "description": "Computed height of an individual plot entry.",
+            "itemtype": "property",
+            "name": "blockHeight",
+            "type": "{Float}",
+            "access": "private",
+            "tagname": "",
+            "final": 1,
+            "author": "jrfrimme",
+            "modified": "Thu Nov 15 09:43:55 2012",
+            "class": "Legend"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 308,
+            "description": "Computed width of the longest label of all plot entries.",
+            "itemtype": "property",
+            "name": "maxLabelWidth",
+            "type": "{Float}",
+            "access": "private",
+            "tagname": "",
+            "final": 1,
+            "author": "jrfrimme",
+            "modified": "Thu Nov 15 09:43:57 2012",
+            "class": "Legend"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 320,
+            "description": "Maximum value of the Icon's height and the computed height of the tallest label of all plot entries.",
+            "itemtype": "property",
+            "name": "maxLabelHeight",
+            "type": "{Float}",
+            "access": "private",
+            "tagname": "",
+            "final": 1,
+            "author": "jrfrimme",
+            "modified": "Thu Nov 15 09:44:01 2012",
+            "class": "Legend"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 332,
+            "description": "Initializes the Legend's geometry. Determines values for the internal attributes `maxLabelWidth`,\n`maxLabelHeight`, `blockWidth`, `blockHeight`, `width`, `height`, `x` and `y`.",
             "itemtype": "method",
-            "name": "Legend#initializeGeometry",
+            "name": "initializeGeometry",
             "params": [
                 {
                     "name": "graph",
-                    "description": ""
+                    "description": "Jermaine Graph model",
+                    "type": "Graph"
+                },
+                {
+                    "name": "graphicsContext",
+                    "description": "graphical environemnt specific variables",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "context|elem",
+                            "description": "context or Raphael TextElem, depending on\n  the graphical environment",
+                            "type": "Context|TextElem"
+                        }
+                    ]
                 }
             ],
-            "return": {
-                "description": "heights"
-            },
+            "author": "jrfrimme",
+            "modified": "Thu Nov 15 09:44:20 2012",
             "todo": [
                 "Find out whether or not padding needs to be taken into consideration."
             ],
@@ -594,16 +799,31 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 178,
-            "description": "Draws the legend",
+            "line": 417,
+            "description": "Preforms setup needed to render Legends in a graphical package agnostic fashion. The function \ncomputes the location of the Legend area and each component of the Plot entries and delegates the\ndrawing of each element to the graphical packages.",
             "itemtype": "method",
-            "name": "Legend#render",
+            "name": "render",
             "params": [
                 {
                     "name": "graphicsContext",
-                    "description": ""
+                    "description": "graphical environemnt specific variables",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "context|elem",
+                            "description": "context or Raphael TextElem, depending on\n  the graphical environment",
+                            "type": "Context|TextElem"
+                        },
+                        {
+                            "name": "set",
+                            "description": "In the case of Raphael rendering environement, pass in a set for\n  Legend elements",
+                            "type": "Set"
+                        }
+                    ]
                 }
             ],
+            "author": "jrfrimme",
+            "modified": "Thu Nov 15 09:44:31 2012",
             "class": "Legend"
         },
         {
@@ -1095,6 +1315,118 @@
         }
     ],
     "warnings": [
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/legend.js:17"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/legend.js:28"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/legend.js:40"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/legend.js:52"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/legend.js:64"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/legend.js:78"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/legend.js:90"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/legend.js:102"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/legend.js:115"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/legend.js:126"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/legend.js:137"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/legend.js:149"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/legend.js:161"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/legend.js:171"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/legend.js:183"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/legend.js:195"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/legend.js:208"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/legend.js:222"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/legend.js:236"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/legend.js:248"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/legend.js:260"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/legend.js:272"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/legend.js:284"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/legend.js:296"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/legend.js:308"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/legend.js:320"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/legend.js:332"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/legend.js:417"
+        },
         {
             "message": "unknown tag: modified",
             "line": " src/core/mixin.js:4"

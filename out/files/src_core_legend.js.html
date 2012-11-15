@@ -99,108 +99,347 @@
 window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (ns) {
     &quot;use strict&quot;;
 
-    &#x2F;**
-        @class Legend
-        @constructor
-        @param {boolean} visible
-        @param {point} base
-        @param {point} anchor
-        @param {point} position 
-        @param frame - plot or padding
-        @param {rgb} color 
-        @param {rgb} bordercolor 
-        @param {number} opacity 
-        @param {integer} border
-        @param {integer} rows
-        @param {integer} columns
-        @param {integer} cornerradius
-        @param {integer} padding
-        @param {icon} icon
-        @param {plot} plots
-        @param {integer} [iconOffset=5]
-        @param {integer} [labelOffset=5] 
-        @param {integer} [labelEnding=15]
-        @param width
-        @param height
-        @param x
-        @param y
-        @param blockWidth
-        @param blockHeight
-        @param maxLabelWidth
-        @param maxLabelHeight
-        @requires point.js
-        @requires rgb_color.js
-        @requires validation-functions.js
-        @requires plot.js
-        @requires icon.js
-    *&#x2F;
-
     var Icon,
         Legend,
         defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.legend);
 
+    &#x2F;**
+     * Legend is a Jermaine model that supports the rendering of Multigraph Legends.
+     *
+     * @class Legend
+     * @constructor
+     * @requires Point,RGBColor,Plot,Icon
+    *&#x2F;
     Legend = new window.jermaine.Model( &quot;Legend&quot;, function () {
+        &#x2F;**
+         * The value which determines if the legend will be rendered; a value of &#x60;true&#x60; means the Legend will
+         * be drawn while &#x60;false&#x60; means that it will not.
+         *
+         * @property visible
+         * @type {boolean}
+         * @author jrfrimme
+         * @modified Thu Nov 15 09:41:47 2012
+         *&#x2F;
         this.hasA(&quot;visible&quot;).which.isA(&quot;boolean&quot;);
+
+        &#x2F;**
+         * The value which gives the location of the base point relative to the Legend&#x27;s frame.
+         *
+         * @property base
+         * @type {Point}
+         * @author jrfrimme
+         * @modified Thu Nov 15 09:42:25 2012
+         *&#x2F;
         this.hasA(&quot;base&quot;).which.validatesWith(function (base) {
             return base instanceof window.multigraph.math.Point;
         });
+
+        &#x2F;**
+         * The value which gives the location of the Legend&#x27;s anchor point to be attached to the base point.
+         *
+         * @property anchor
+         * @type {Point}
+         * @author jrfrimme
+         * @modified Thu Nov 15 09:42:42 2012
+         *&#x2F;
         this.hasAn(&quot;anchor&quot;).which.validatesWith(function (anchor) {
             return anchor instanceof window.multigraph.math.Point;
         });
+
+        &#x2F;**
+         * A coordinate pair of pixel offsets for the base point.
+         *
+         * @property position
+         * @type {Point}
+         * @author jrfrimme
+         * @modified Thu Nov 15 09:42:48 2012
+         *&#x2F;
         this.hasA(&quot;position&quot;).which.validatesWith(function (position) {
             return position instanceof window.multigraph.math.Point;
         });
+
+        &#x2F;**
+         * The value which determines whether the legend is positioned relative to the plot area or the padding
+         * box. A value of &#x60;plot&#x60; means the Legend will be drawn relative to the plot area while &#x60;padding&#x60; means
+         * that it will the padding box.
+         *
+         * @property frame
+         * @type {String}
+         * @author jrfrimme
+         * @modified Thu Nov 15 09:42:52 2012
+         *&#x2F;
         this.hasA(&quot;frame&quot;).which.validatesWith(function (frame) {
             return frame === &quot;plot&quot; || frame === &quot;padding&quot;;
         });
+
+        &#x2F;**
+         * The value which determines the background color of the Legend.
+         *
+         * @property color
+         * @type {RGBColor}
+         * @author jrfrimme
+         * @modified Thu Nov 15 09:42:55 2012
+         *&#x2F;
         this.hasA(&quot;color&quot;).which.validatesWith(function (color) {
             return color instanceof window.multigraph.math.RGBColor;
         });
+
+        &#x2F;**
+         * The value which determines the bordercolor of the Legend.
+         *
+         * @property bordercolor
+         * @type {RGBColor}
+         * @author jrfrimme
+         * @modified Thu Nov 15 09:42:59 2012
+         *&#x2F;
         this.hasA(&quot;bordercolor&quot;).which.validatesWith(function (bordercolor) {
             return bordercolor instanceof window.multigraph.math.RGBColor;
         });
+
+        &#x2F;**
+         * The value which determines the opacity of the Legend; depending on where the Legend is positioned it
+         * may obscure parts of the plot data.
+         *
+         * @property opacity
+         * @type {Float}
+         * @author jrfrimme
+         * @modified Thu Nov 15 09:43:02 2012
+         *&#x2F;
         this.hasA(&quot;opacity&quot;).which.validatesWith(function (opacity) {
             return window.multigraph.utilityFunctions.validateNumberRange(opacity, 0.0, 1.0);
         });
+
+        &#x2F;**
+         * The value which determines the thickness of the border drawn around the Legend; a value of &#x60;0&#x60; turns
+         * the border off.
+         *
+         * @property border
+         * @type {Integer}
+         * @author jrfrimme
+         * @modified Thu Nov 15 09:43:05 2012
+         *&#x2F;
         this.hasA(&quot;border&quot;).which.isA(&quot;integer&quot;);
+
+        &#x2F;**
+         * The value which determines the number of rows to be used for Plot entries in the Legend. If left
+         * unspecified then rows will be inserted to account for each Plot entry.
+         *
+         * @property rows
+         * @type {Integer}
+         * @author jrfrimme
+         * @modified Thu Nov 15 09:43:08 2012
+         *&#x2F;
         this.hasA(&quot;rows&quot;).which.isA(&quot;integer&quot;).and.isGreaterThan(0);
+
+        &#x2F;**
+         * The value which determines the number of columns to be used for Plot entries in the Legend. If rows
+         * is set while columns is left unspecified then columns will be inserted to account for each Plot
+         * entry.
+         *
+         * @property columns
+         * @type {Integer}
+         * @author jrfrimme
+         * @modified Thu Nov 15 09:43:12 2012
+         *&#x2F;
         this.hasA(&quot;columns&quot;).which.isA(&quot;integer&quot;).and.isGreaterThan(0);
+
+        &#x2F;**
+         * The value which determines whether the corners of the legend box are rounded when drawn. A value of
+         * &#x60;0&#x60; means that the corners will be drawn square while values greater than &#x60;0&#x60; mean that the corners
+         * are rounded off with circles whose radius in pixels is this value.
+         *
+         * @property cornerradius
+         * @type {Integer}
+         * @author jrfrimme
+         * @modified Thu Nov 15 09:43:15 2012
+         *&#x2F;
         this.hasA(&quot;cornerradius&quot;).which.isA(&quot;integer&quot;);
+
+        &#x2F;**
+         * The value which determines the pixel width of the padding between the Legend border and its entries.
+         *
+         * @property padding
+         * @type {Integer}
+         * @author jrfrimme
+         * @modified Thu Nov 15 09:43:18 2012
+         *&#x2F;
         this.hasA(&quot;padding&quot;).which.isA(&quot;integer&quot;);
+
+        &#x2F;**
+         * A optional sub-model which determines the appearance of the Icons for the Plot entries.
+         *
+         * @property icon
+         * @type {Icon}
+         * @author jrfrimme
+         * @modified Thu Nov 15 09:43:20 2012
+         *&#x2F;
         this.hasAn(&quot;icon&quot;).which.validatesWith(function (icon) {
             return icon instanceof ns.Icon;
         });
 
+        &#x2F;**
+         * Pointers to Plot models that have entries in the Legend.
+         *
+         * @property plots
+         * @type {Plot}
+         * @author jrfrimme
+         * @modified Thu Nov 15 09:43:24 2012
+         *&#x2F;
         this.hasMany(&quot;plots&quot;).which.validatesWith(function (plot) {
             return plot instanceof ns.Plot;
         });
 
-        this.hasA(&quot;iconOffset&quot;).which.defaultsTo(5);
-        this.hasA(&quot;labelOffset&quot;).which.defaultsTo(5);
-        this.hasA(&quot;labelEnding&quot;).which.defaultsTo(15);
-
-        this.hasA(&quot;width&quot;);
-        this.hasA(&quot;height&quot;);
-
-        this.hasA(&quot;x&quot;);
-        this.hasA(&quot;y&quot;);
-
-        this.hasA(&quot;blockWidth&quot;);
-        this.hasA(&quot;blockHeight&quot;);
-
-        this.hasA(&quot;maxLabelWidth&quot;);
-        this.hasA(&quot;maxLabelHeight&quot;);
+        &#x2F;**
+         * Internal value which determines the number of pixels between an entries icon and its border.
+         *
+         * @property iconOffset
+         * @type {Integer}
+         * @default 5
+         * @private
+         * @final
+         * @author jrfrimme
+         * @modified Thu Nov 15 09:43:27 2012
+         *&#x2F;
+        this.hasA(&quot;iconOffset&quot;).which.isA(&quot;number&quot;).and.defaultsTo(5);
 
         &#x2F;**
-            Initializes the legend
-            @method Legend#initializeGeometry
-            @param graph
-            @return {boolean} visible
-            @return widths
-            @return heights
-            @todo Find out whether or not padding needs to be taken into consideration.
-        *&#x2F;
+         * Internal value which determines the number of pixels between an entries label and its icon.
+         *
+         * @property labelOffset
+         * @type {Integer}
+         * @default 5
+         * @private
+         * @final
+         * @type {}
+         * @author jrfrimme
+         * @modified Thu Nov 15 09:43:29 2012
+         *&#x2F;
+        this.hasA(&quot;labelOffset&quot;).which.isA(&quot;number&quot;).and.defaultsTo(5);
+
+        &#x2F;**
+         * Internal value which determines the number of pixels between the right end of an entries label and
+         * its border
+         *
+         * @property labelEnding
+         * @type {Integer}
+         * @default 15
+         * @private
+         * @final
+         * @author jrfrimme
+         * @modified Thu Nov 15 09:43:33 2012
+         *&#x2F;
+        this.hasA(&quot;labelEnding&quot;).which.isA(&quot;number&quot;).and.defaultsTo(15);
+
+        &#x2F;**
+         * Computed value of the width of the Legend.
+         *
+         * @property width
+         * @type {Float}
+         * @private
+         * @final
+         * @author jrfrimme
+         * @modified Thu Nov 15 09:43:37 2012
+         *&#x2F;
+        this.hasA(&quot;width&quot;).which.isA(&quot;number&quot;);
+
+        &#x2F;**
+         * Computed value of the height of the Legend.
+         *
+         * @property height
+         * @type {Float}
+         * @private
+         * @final
+         * @author jrfrimme
+         * @modified Thu Nov 15 09:43:39 2012
+         *&#x2F;
+        this.hasA(&quot;height&quot;).which.isA(&quot;number&quot;);
+
+        &#x2F;**
+         * Computed &#x60;x&#x60; value of the Legend&#x27;s lower left corner relative to its frame.
+         *
+         * @property x
+         * @type {Float}
+         * @private
+         * @final
+         * @author jrfrimme
+         * @modified Thu Nov 15 09:43:42 2012
+         *&#x2F;
+        this.hasA(&quot;x&quot;).which.isA(&quot;number&quot;);
+
+        &#x2F;**
+         * Computed &#x60;y&#x60; value of the Legend&#x27;s lower left corner relative to its frame.
+         *
+         * @property y
+         * @type {Float}
+         * @private
+         * @final
+         * @author jrfrimme
+         * @modified Thu Nov 15 09:43:45 2012
+         *&#x2F;
+        this.hasA(&quot;y&quot;).which.isA(&quot;number&quot;);
+
+        &#x2F;**
+         * Computed width of an individual plot entry.
+         *
+         * @property blockWidth
+         * @type {Float}
+         * @private
+         * @final
+         * @author jrfrimme
+         * @modified Thu Nov 15 09:43:52 2012
+         *&#x2F;
+        this.hasA(&quot;blockWidth&quot;).which.isA(&quot;number&quot;);
+
+        &#x2F;**
+         * Computed height of an individual plot entry.
+         *
+         * @property blockHeight
+         * @type {Float}
+         * @private
+         * @final
+         * @author jrfrimme
+         * @modified Thu Nov 15 09:43:55 2012
+         *&#x2F;
+        this.hasA(&quot;blockHeight&quot;).which.isA(&quot;number&quot;);
+
+        &#x2F;**
+         * Computed width of the longest label of all plot entries.
+         *
+         * @property maxLabelWidth
+         * @type {Float}
+         * @private
+         * @final
+         * @author jrfrimme
+         * @modified Thu Nov 15 09:43:57 2012
+         *&#x2F;
+        this.hasA(&quot;maxLabelWidth&quot;).which.isA(&quot;number&quot;);
+
+        &#x2F;**
+         * Maximum value of the Icon&#x27;s height and the computed height of the tallest label of all plot entries.
+         *
+         * @property maxLabelHeight
+         * @type {Float}
+         * @private
+         * @final
+         * @author jrfrimme
+         * @modified Thu Nov 15 09:44:01 2012
+         *&#x2F;
+        this.hasA(&quot;maxLabelHeight&quot;).which.isA(&quot;number&quot;);
+
+        &#x2F;**
+         * Initializes the Legend&#x27;s geometry. Determines values for the internal attributes &#x60;maxLabelWidth&#x60;,
+         * &#x60;maxLabelHeight&#x60;, &#x60;blockWidth&#x60;, &#x60;blockHeight&#x60;, &#x60;width&#x60;, &#x60;height&#x60;, &#x60;x&#x60; and &#x60;y&#x60;.
+         *
+         * @method initializeGeometry
+         * @param {Graph} graph Jermaine Graph model
+         * @param {Object} graphicsContext graphical environemnt specific variables
+         *   @param {Context|TextElem} graphicsContext.context|elem context or Raphael TextElem, depending on
+         *   the graphical environment
+         * @author jrfrimme
+         * @modified Thu Nov 15 09:44:20 2012
+         * @todo Find out whether or not padding needs to be taken into consideration.
+         *&#x2F;
         this.respondsTo(&quot;initializeGeometry&quot;, function (graph, graphicsContext) {
             var widths = [],
                 heights = [],
@@ -274,11 +513,19 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
         });
 
         &#x2F;**
-            Draws the legend
-            @method Legend#render
-            @param graphicsContext
-           
-        *&#x2F;
+         * Preforms setup needed to render Legends in a graphical package agnostic fashion. The function 
+         * computes the location of the Legend area and each component of the Plot entries and delegates the
+         * drawing of each element to the graphical packages.
+         * 
+         * @method render
+         * @param {Object} graphicsContext graphical environemnt specific variables
+         *   @param {Context|TextElem} graphicsContext.context|elem context or Raphael TextElem, depending on
+         *   the graphical environment
+         *   @param {Set} graphicsContext.set In the case of Raphael rendering environement, pass in a set for
+         *   Legend elements
+         * @author jrfrimme
+         * @modified Thu Nov 15 09:44:31 2012
+         *&#x2F;
         this.respondsTo(&quot;render&quot;, function (graphicsContext) {
             var blockx, blocky,
                 iconx, icony,
