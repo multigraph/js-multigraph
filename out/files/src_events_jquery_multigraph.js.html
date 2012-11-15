@@ -49,6 +49,8 @@
             
                 <li><a href="..&#x2F;classes/Legend.html">Legend</a></li>
             
+                <li><a href="..&#x2F;classes/Mixin.html">Mixin</a></li>
+            
                 <li><a href="..&#x2F;classes/Text.html">Text</a></li>
             
             </ul>
@@ -137,10 +139,16 @@
             if (height !== undefined) {
                 $(this).css(&#x27;height&#x27;, height + &#x27;px&#x27;);
             }
+
+            &#x2F;*
+             &#x2F;&#x2F; don&#x27;t default to canvas here any more; Multigraph.createGraph now does
+             &#x2F;&#x2F; browser detection and will default to canvas if possible, otherwise
+             &#x2F;&#x2F; to raphael
             if (driver === undefined) {
                 driver = &quot;canvas&quot;;
             }
-            
+            *&#x2F;
+
             options = {
                 &#x27;div&#x27;    : this,
                 &#x27;mugl&#x27;   : src,

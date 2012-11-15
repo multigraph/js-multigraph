@@ -4,6 +4,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "ArrayData",
         "EventEmitter",
         "Legend",
+        "Mixin",
         "Text",
         "axisBinding"
     ],

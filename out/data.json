@@ -51,6 +51,15 @@
             "fors": {},
             "namespaces": {}
         },
+        "src/core/mixin.js": {
+            "name": "src/core/mixin.js",
+            "modules": {},
+            "classes": {
+                "Mixin": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "src/core/text.js": {
             "name": "src/core/text.js",
             "modules": {},
@@ -322,6 +331,20 @@
                 "icon.js"
             ]
         },
+        "Mixin": {
+            "name": "Mixin",
+            "shortname": "Mixin",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/core/mixin.js",
+            "line": 4,
+            "description": "The Mixin model provides a convenient way for Jermaine\napplications to \"mix in\" additional functionality to a model,\nfrom outside the model's initial definition.\n\nThe ability to add features (methods and/or attributes) to a\nJermaine model outside its initial definition already exists in\nJermaine -- this Mixin model does not actually add new\nfunctionality to Jermaine; it just provides a convenient\npattern for grouping additional features together and applying\nthem to a model as a group.\n\nThe Mixin model maintains an internal list of functions, called\nmixin functions, and provides an add() method for adding a\nfunction to that list.\n\nThe apply() method calls all of the mixinfunctions that have been\nadded to the list, passing each one the same arguments\nthat were passed to the apply() function itself.\n\nThat's it.  That's all the Mixin class does.  It's up to you to\nput whatever jermaine-model-extending code you want in the\nmixin functions you add to the Mixin; the Mixin simply serves\nas a place to hold them all, and a convenient way to execute\nthem all at once.",
+            "author": "mbp",
+            "modified": "Wed Nov 14 23:45:37 2012"
+        },
         "Text": {
             "name": "Text",
             "shortname": "Text",
@@ -582,6 +605,68 @@
                 }
             ],
             "class": "Legend"
+        },
+        {
+            "file": "src/core/mixin.js",
+            "line": 36,
+            "description": "The internal list of functions to be applied.",
+            "itemtype": "property",
+            "name": "mixinfuncs",
+            "access": "private",
+            "tagname": "",
+            "type": "{}",
+            "author": "mbp",
+            "modified": "Wed Nov 14 23:45:43 2012",
+            "class": "Mixin"
+        },
+        {
+            "file": "src/core/mixin.js",
+            "line": 47,
+            "description": "Internal value for tracking whether apply() has been called\nfor this Mixin.",
+            "itemtype": "property",
+            "name": "applied",
+            "type": "{}",
+            "access": "private",
+            "tagname": "",
+            "author": "mbp",
+            "modified": "Thu Nov 15 00:19:39 2012",
+            "class": "Mixin"
+        },
+        {
+            "file": "src/core/mixin.js",
+            "line": 59,
+            "description": "Adds a function to this Mixin's mixin list.  Does not check\nto see if the function is already on the list -- just blindly\nappends the given function to the list.",
+            "itemtype": "method",
+            "name": "add",
+            "params": [
+                {
+                    "name": "func",
+                    "description": ""
+                }
+            ],
+            "author": "mbp",
+            "modified": "Wed Nov 14 23:45:48 2012",
+            "class": "Mixin"
+        },
+        {
+            "file": "src/core/mixin.js",
+            "line": 73,
+            "description": "Call each of this Mixin's mixin functions.  Any\narguments passed to apply() will be passed through to each\nmixin function called.\n\napply() checks to see whether it has ever been called\nbefore for this Mixin, and only executes the mixin\nfunctions if this is the first call to apply(); calls to\napply() after the first one will have no effect.  (This is\ntrue even if additional mixin functions are added after\napply() is called; the Mixin maintains a single internal\nBoolean value that tracks whether apply() has been called.)",
+            "itemtype": "method",
+            "name": "apply",
+            "author": "mbp",
+            "modified": "Wed Nov 14 23:45:51 2012",
+            "class": "Mixin"
+        },
+        {
+            "file": "src/core/mixin.js",
+            "line": 101,
+            "description": "Just like apply(), but forces the mixin functions to be called\nregardless of whether apply() was previously called for this\nMixin.",
+            "itemtype": "method",
+            "name": "reapply",
+            "author": "mbp",
+            "modified": "Thu Nov 15 00:22:34 2012",
+            "class": "Mixin"
         },
         {
             "file": "src/core/text.js",
@@ -1010,6 +1095,30 @@
         }
     ],
     "warnings": [
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/mixin.js:4"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/mixin.js:36"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/mixin.js:47"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/mixin.js:59"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/mixin.js:73"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/mixin.js:101"
+        },
         {
             "message": "Missing item type\nIMPORTANT NOTE: dataVariableArray is a plain javascript array of DataVariable instances; it is NOT a jermaine attr_list.",
             "line": " src/core/array_data.js:230"
