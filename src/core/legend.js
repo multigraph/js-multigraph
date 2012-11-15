@@ -484,47 +484,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return this;
         });
 
-//        /**
-//            Measure the width of the text
-//            @method Legend#measureLabelWidth
-//            @param {string}
-//            @return length
-//            @todo Replace this function with one that properly measure the width of text.  This will most likely be done in an abstract text class which has knowledge of the rendering environment.
-//        */
-//
-//
-//// TODO: replace these functions with ones that properly measure the width/height of text.
-////       This will most likely be done in an abstract text class which has knowledge of the
-////       rendering environment.
-//        this.respondsTo("measureLabelWidth", function (string) {
-//                // Graphics drivers should replace this method with an actual implementation; this
-//                // is just a placeholder.  The implementation should return the width, in pixels,
-//                // of the given string.  Of course this is dependent on font choice, size, etc,
-//                // but we gloss over that at the moment.  Just return the width of the string
-//                // using some reasonable default font for now.  Later on, we'll modify this
-//                // function to use font information.
-//                return string.length*30;
-//        });
-//
-//
-//
-//        /**
-//            Measure the height of the text
-//            @method Legend#measureLabelHeight
-//            @param {string}
-//            @return height
-//            @todo Replace this function with one that properly measures the height of text.  This will most likely be done in an abstract text class which has knowledge of the rendering environment.
-//        */
-//        this.respondsTo("measureLabelHeight", function (string) {
-//                // Graphics drivers should replace this method with an actual implementation; this
-//                // is just a placeholder.  The implementation should return the height, in pixels,
-//                // of the given string.  Of course this is dependent on font choice, size, etc,
-//                // but we gloss over that at the moment.  Just return the height of the string
-//                // using some reasonable default font for now.  Later on, we'll modify this
-//                // function to use font information.
-//                return 12;
-//        });
-
         window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.legend, attributes);
     });
 
