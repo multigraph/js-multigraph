@@ -103,14 +103,29 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
      * @class axisBinding
      * @constructor
      *&#x2F;
-
     ns.AxisBinding = new window.jermaine.Model( &quot;AxisBinding&quot;, function () {
         var AxisBinding = this;
 
         AxisBinding.instances = {};
 
+        &#x2F;**
+         * 
+         *
+         * @property id
+         * @type {String}
+         * @author jrfrimme
+         * @modified Fri Nov 16 11:53:50 2012
+         *&#x2F;
         this.hasA(&quot;id&quot;).which.isA(&quot;string&quot;);
 
+        &#x2F;**
+         * 
+         *
+         * @property axes
+         * @type {Array}
+         * @author jrfrimme
+         * @modified Fri Nov 16 11:53:57 2012
+         *&#x2F;
         this.hasA(&quot;axes&quot;); &#x2F;&#x2F; js array
 
         this.isBuiltWith(&quot;id&quot;, function() {
@@ -118,6 +133,16 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
             this.axes([]);
         });
 
+        &#x2F;**
+         * 
+         *
+         * @method addAxis
+         * @param {Axis} axis
+         * @param {number|DataValue} min
+         * @param {number|DataValue} max
+         * @author jrfrimme
+         * @modified Fri Nov 16 11:54:00 2012
+         *&#x2F;
         this.respondsTo(&quot;addAxis&quot;, function(axis, min, max) {
             &#x2F;&#x2F; NOTE: min&#x2F;max can be either numbers, or DataValue
             &#x2F;&#x2F; instances, but they CANNOT be strings.
@@ -140,6 +165,14 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
             });
         });
 
+        &#x2F;**
+         * 
+         *
+         * @method removeAxis
+         * @param {Axis} axis
+         * @author jrfrimme
+         * @modified Fri Nov 16 11:54:07 2012
+         *&#x2F;
         this.respondsTo(&quot;removeAxis&quot;, function(axis) {
             var axes = this.axes(),
                 i;
@@ -169,7 +202,7 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
          * complete; that is done via the axes&#x27; own setDataRange()
          * method.
          * 
-         * @method AxisBinding#sync
+         * @method sync
          * 
          * @return {boolean} a value indicating whether the sync was
          *                   done; this will be true if and only if
@@ -187,10 +220,22 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
                     axis.setDataRange(axis.dataMin(), axis.dataMax());
                     return true;
                 }
+
             }
             return false;
         });
 
+        &#x2F;**
+         * 
+         *
+         * @method setDataRange
+         * @param {Axis} initiatingAxis
+         * @param {number|DataValue} min
+         * @param {number|DataValue} max
+         * @param {Boolean} dispatch
+         * @author jrfrimme
+         * @modified Fri Nov 16 11:30:05 2012
+         *&#x2F;
         this.respondsTo(&quot;setDataRange&quot;, function(initiatingAxis, min, max, dispatch) {
 
             &#x2F;&#x2F; NOTE: min and max may either be plain numbers, or
@@ -257,10 +302,26 @@ to&#x2F;from number values vs DataValue instances for min&#x2F;max.
 *&#x2F;
 
 
+        &#x2F;**
+         * 
+         *
+         * @method getInstanceById
+         * @static
+         * @param id
+         * @author jrfrimme
+         *&#x2F;
         AxisBinding.getInstanceById = function(id) {
             return AxisBinding.instances[id];
         };
 
+        &#x2F;**
+         * 
+         *
+         * @method findByIdOrCreateNew
+         * @static
+         * @param id
+         * @author jrfrimme
+         *&#x2F;
         AxisBinding.findByIdOrCreateNew = function(id) {
             var binding = AxisBinding.getInstanceById(id);
             if (!binding) {
@@ -269,6 +330,13 @@ to&#x2F;from number values vs DataValue instances for min&#x2F;max.
             return binding;
         };
 
+        &#x2F;**
+         * 
+         *
+         * @method syncAllBindings
+         * @static
+         * @author jrfrimme
+         *&#x2F;
         AxisBinding.syncAllBindings = function() {
             var id;
             for (id in AxisBinding.instances) {
@@ -276,6 +344,13 @@ to&#x2F;from number values vs DataValue instances for min&#x2F;max.
             }
         };
 
+        &#x2F;**
+         * 
+         *
+         * @method forgetAllBindings
+         * @static
+         * @author jrfrimme
+         *&#x2F;
         AxisBinding.forgetAllBindings = function() {
 
             &#x2F;&#x2F; This function is just for use in testing, so we can clear out the global list

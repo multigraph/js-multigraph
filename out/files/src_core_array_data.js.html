@@ -100,10 +100,11 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
     &quot;use strict&quot;;
 
     &#x2F;**
-        @class ArrayData
-        @constructor
-        @param {array} columns
-    *&#x2F;
+     * @class ArrayData
+     * @constructor
+     * @param {array} columns A array of DataVariables
+     * @param {array} stringArray A array of the preparsed DataValues
+     *&#x2F;
     ns.ArrayData = window.jermaine.Model(function () {
         var ArrayData = this;
 
@@ -120,17 +121,30 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
         });
 
         &#x2F;**
-            @method ArrayData#getIterator
-            @param columnIDs
-            @param min
-            @param max
-            @param buffer
-            @return ArrayData
-        *&#x2F;
+         * 
+         *
+         * @method getIterator
+         * @param {string array} columnIDs
+         * @param {DataValue} min
+         * @param {DataValue} max
+         * @param {Integer} buffer
+         * @return ArrayData
+         * @author jrfrimme
+         * @modified Fri Nov 16 11:14:29 2012
+         *&#x2F;
         this.respondsTo(&quot;getIterator&quot;, function (columnIds, min, max, buffer) {
             return ArrayData.getArrayDataIterator(this, columnIds, min, max, buffer);
         });
 
+        &#x2F;**
+         * Determines the upper and lower bounds of a column in a dataset.
+         *
+         * @method getBounds
+         * @param {Integer} columnNumber Column in the dataset to have its bounds determined.
+         * @return {array} Array in the form: [lowerBound, upperBound].
+         * @author jrfrimme
+         * @modified Fri Nov 16 11:14:16 2012
+         *&#x2F;
         this.respondsTo(&quot;getBounds&quot;, function (columnNumber) {
             var i,
                 min = this.array()[0][columnNumber],
@@ -149,20 +163,22 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
         });
 
         &#x2F;**
-            @method ArrayData#onReady
-            @param callback
-        *&#x2F;
+         * @method onReady
+         * @param callback
+         *&#x2F;
 
-       &#x2F;**
-            @method ArrayData#getArrayDataIterator
-            @param {string array} arrayData
-            @param columnIDs
-            @param min
-            @param max
-            @param buffer
-            @throws {error} Throws error if arrayData is not an array of strings
-            @return iter
-       *&#x2F;
+        &#x2F;**
+         * @method getArrayDataIterator
+         * @static
+         * @param {ArrayData} arrayData
+         * @param {string array} columnIDs
+         * @param {DataValue} min
+         * @param {DataValue} max
+         * @param {Integer} buffer
+         * @throws {error} Throws error if arrayData is not an array of strings
+         * @return iter
+         * @author jrfrimme
+         *&#x2F;
         ArrayData.getArrayDataIterator = function (arrayData, columnIds, min, max, buffer) {
             var iter = {},
                 arraySlice = [],
@@ -263,13 +279,14 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
         };
 
         &#x2F;**
-            IMPORTANT NOTE: dataVariableArray is a plain javascript array of DataVariable instances; it is NOT a jermaine attr_list.
-            @method ArrayData#textToDataValuesArray
-            @param dataVariableArray
-            @param text
-            @return {array} dataValues
-            @todo If the number of comma-separated values on the current line is not the same as the number of columns in the metadata, should throw an error.
-       *&#x2F;
+         * @method textToDataValuesArray
+         * @static
+         * @param {array} dataVariableArray
+         * @param {string} text
+         * @return {array} dataValues
+         * @author jrfrimme
+         * @todo If the number of comma-separated values on the current line is not the same as the number of columns in the metadata, should throw an error.
+         *&#x2F;
         ArrayData.textToDataValuesArray = function (dataVariableArray, text) {
             &#x2F;&#x2F;IMPORTANT NOTE: dataVariableArray is a plain javascript array of DataVariable instances; it
             &#x2F;&#x2F;is NOT a jermaine attr_list.
@@ -298,6 +315,13 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
             return dataValues;
         };
 
+        &#x2F;**
+         * @method textToStringArray
+         * @static
+         * @param {string} text 
+         * @return {array} stringValues
+         * @author jrfrimme
+         *&#x2F;
         ArrayData.textToStringArray = function (text) {
             var stringValues = [],
                 lines = text.split(&quot;\n&quot;),
@@ -326,8 +350,15 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
         };
 
         &#x2F;**
-           IMPORTANT NOTE: dataVariableArray is a plain javascript array of DataVariable instances; it is NOT a jermaine attr_list.
-        *&#x2F;
+         * Parses an array of strings into an array of DataValues.
+         * 
+         * @method textToStringArray
+         * @static
+         * @param {array} dataVariableArray Plain javascript array of DataVariables
+         * @param {array} stringArray Array of values in string form
+         * @return {array} dataValues 
+         * @author jrfrimme
+         *&#x2F;
         ArrayData.stringArrayToDataValuesArray = function (dataVariableArray, stringArray) {
             &#x2F;&#x2F;IMPORTANT NOTE: dataVariableArray is a plain javascript array of DataVariable instances; it
             &#x2F;&#x2F;is NOT a jermaine attr_list.

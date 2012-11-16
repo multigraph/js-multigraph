@@ -60,6 +60,13 @@
             "fors": {},
             "namespaces": {}
         },
+        "src/core/multigraph.js": {
+            "name": "src/core/multigraph.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
         "src/core/text.js": {
             "name": "src/core/text.js",
             "modules": {},
@@ -153,7 +160,12 @@
             "params": [
                 {
                     "name": "columns",
-                    "description": "",
+                    "description": "A array of DataVariables",
+                    "type": "Array"
+                },
+                {
+                    "name": "stringArray",
+                    "description": "A array of the preparsed DataValues",
                     "type": "Array"
                 }
             ]
@@ -240,37 +252,64 @@
     "classitems": [
         {
             "file": "src/core/array_data.js",
-            "line": 24,
+            "line": 25,
             "itemtype": "method",
-            "name": "ArrayData#getIterator",
+            "name": "getIterator",
             "params": [
                 {
                     "name": "columnIDs",
-                    "description": ""
+                    "description": "",
+                    "type": "String array"
                 },
                 {
                     "name": "min",
-                    "description": ""
+                    "description": "",
+                    "type": "DataValue"
                 },
                 {
                     "name": "max",
-                    "description": ""
+                    "description": "",
+                    "type": "DataValue"
                 },
                 {
                     "name": "buffer",
-                    "description": ""
+                    "description": "",
+                    "type": "Integer"
                 }
             ],
             "return": {
                 "description": "ArrayData"
             },
+            "author": "jrfrimme",
+            "modified": "Fri Nov 16 11:14:29 2012",
             "class": "ArrayData"
         },
         {
             "file": "src/core/array_data.js",
-            "line": 53,
+            "line": 41,
+            "description": "Determines the upper and lower bounds of a column in a dataset.",
             "itemtype": "method",
-            "name": "ArrayData#onReady",
+            "name": "getBounds",
+            "params": [
+                {
+                    "name": "columnNumber",
+                    "description": "Column in the dataset to have its bounds determined.",
+                    "type": "Integer"
+                }
+            ],
+            "return": {
+                "description": "Array in the form: [lowerBound, upperBound].",
+                "type": "Array"
+            },
+            "author": "jrfrimme",
+            "modified": "Fri Nov 16 11:14:16 2012",
+            "class": "ArrayData"
+        },
+        {
+            "file": "src/core/array_data.js",
+            "line": 67,
+            "itemtype": "method",
+            "name": "onReady",
             "params": [
                 {
                     "name": "callback",
@@ -281,30 +320,35 @@
         },
         {
             "file": "src/core/array_data.js",
-            "line": 58,
+            "line": 72,
             "itemtype": "method",
-            "name": "ArrayData#getArrayDataIterator",
+            "name": "getArrayDataIterator",
+            "static": 1,
             "params": [
                 {
                     "name": "arrayData",
                     "description": "",
-                    "type": "String array"
+                    "type": "ArrayData"
                 },
                 {
                     "name": "columnIDs",
-                    "description": ""
+                    "description": "",
+                    "type": "String array"
                 },
                 {
                     "name": "min",
-                    "description": ""
+                    "description": "",
+                    "type": "DataValue"
                 },
                 {
                     "name": "max",
-                    "description": ""
+                    "description": "",
+                    "type": "DataValue"
                 },
                 {
                     "name": "buffer",
-                    "description": ""
+                    "description": "",
+                    "type": "Integer"
                 }
             ],
             "throws": [
@@ -313,28 +357,32 @@
             "return": {
                 "description": "iter"
             },
+            "author": "jrfrimme",
             "class": "ArrayData"
         },
         {
             "file": "src/core/array_data.js",
-            "line": 167,
-            "description": "IMPORTANT NOTE: dataVariableArray is a plain javascript array of DataVariable instances; it is NOT a jermaine attr_list.",
+            "line": 183,
             "itemtype": "method",
-            "name": "ArrayData#textToDataValuesArray",
+            "name": "textToDataValuesArray",
+            "static": 1,
             "params": [
                 {
                     "name": "dataVariableArray",
-                    "description": ""
+                    "description": "",
+                    "type": "Array"
                 },
                 {
                     "name": "text",
-                    "description": ""
+                    "description": "",
+                    "type": "String"
                 }
             ],
             "return": {
                 "description": "dataValues",
                 "type": "Array"
             },
+            "author": "jrfrimme",
             "todo": [
                 "If the number of comma-separated values on the current line is not the same as the number of columns in the metadata",
                 "should throw an error."
@@ -343,8 +391,48 @@
         },
         {
             "file": "src/core/array_data.js",
-            "line": 230,
-            "description": "IMPORTANT NOTE: dataVariableArray is a plain javascript array of DataVariable instances; it is NOT a jermaine attr_list.",
+            "line": 220,
+            "itemtype": "method",
+            "name": "textToStringArray",
+            "static": 1,
+            "params": [
+                {
+                    "name": "text",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "stringValues",
+                "type": "Array"
+            },
+            "author": "jrfrimme",
+            "class": "ArrayData"
+        },
+        {
+            "file": "src/core/array_data.js",
+            "line": 254,
+            "description": "Parses an array of strings into an array of DataValues.",
+            "itemtype": "method",
+            "name": "textToStringArray",
+            "static": 1,
+            "params": [
+                {
+                    "name": "dataVariableArray",
+                    "description": "Plain javascript array of DataVariables",
+                    "type": "Array"
+                },
+                {
+                    "name": "stringArray",
+                    "description": "Array of values in string form",
+                    "type": "Array"
+                }
+            ],
+            "return": {
+                "description": "dataValues",
+                "type": "Array"
+            },
+            "author": "jrfrimme",
             "class": "ArrayData"
         },
         {
@@ -355,14 +443,155 @@
         },
         {
             "file": "src/core/axis_binding.js",
-            "line": 56,
+            "line": 13,
+            "itemtype": "property",
+            "name": "id",
+            "type": "{String}",
+            "author": "jrfrimme",
+            "modified": "Fri Nov 16 11:53:50 2012",
+            "class": "axisBinding"
+        },
+        {
+            "file": "src/core/axis_binding.js",
+            "line": 23,
+            "itemtype": "property",
+            "name": "axes",
+            "type": "{Array}",
+            "author": "jrfrimme",
+            "modified": "Fri Nov 16 11:53:57 2012",
+            "class": "axisBinding"
+        },
+        {
+            "file": "src/core/axis_binding.js",
+            "line": 38,
+            "itemtype": "method",
+            "name": "addAxis",
+            "params": [
+                {
+                    "name": "axis",
+                    "description": "",
+                    "type": "Axis"
+                },
+                {
+                    "name": "min",
+                    "description": "",
+                    "type": "Number|DataValue"
+                },
+                {
+                    "name": "max",
+                    "description": "",
+                    "type": "Number|DataValue"
+                }
+            ],
+            "author": "jrfrimme",
+            "modified": "Fri Nov 16 11:54:00 2012",
+            "class": "axisBinding"
+        },
+        {
+            "file": "src/core/axis_binding.js",
+            "line": 70,
+            "itemtype": "method",
+            "name": "removeAxis",
+            "params": [
+                {
+                    "name": "axis",
+                    "description": "",
+                    "type": "Axis"
+                }
+            ],
+            "author": "jrfrimme",
+            "modified": "Fri Nov 16 11:54:07 2012",
+            "class": "axisBinding"
+        },
+        {
+            "file": "src/core/axis_binding.js",
+            "line": 89,
             "description": "Force all the axes in this binding to sync up with each\nother, if possible.\n\nThis is done by looking for an axis in this binding which\nhas its dataMin and dataMax values set, and then calling\nits setDataRange() method with those values.  The main\npurpose of this method is to facilitate the initial setting\nof dataMin/dataMax values for axes in a binding that do not\nalready have dataMin/dataMax values set; this forces them\nto be set based on the binding, as determined by another\naxis in the binding.\n\nNote that this method is NOT the normal way for bound axes\nto interact with each other once initialization is\ncomplete; that is done via the axes' own setDataRange()\nmethod.",
             "itemtype": "method",
-            "name": "AxisBinding#sync",
+            "name": "sync",
             "return": {
                 "description": "a value indicating whether the sync was\n                  done; this will be true if and only if\n                  there is at least one axis in the binding\n                  having both its dataMin and dataMax\n                  values set.",
                 "type": "Boolean"
             },
+            "class": "axisBinding"
+        },
+        {
+            "file": "src/core/axis_binding.js",
+            "line": 130,
+            "itemtype": "method",
+            "name": "setDataRange",
+            "params": [
+                {
+                    "name": "initiatingAxis",
+                    "description": "",
+                    "type": "Axis"
+                },
+                {
+                    "name": "min",
+                    "description": "",
+                    "type": "Number|DataValue"
+                },
+                {
+                    "name": "max",
+                    "description": "",
+                    "type": "Number|DataValue"
+                },
+                {
+                    "name": "dispatch",
+                    "description": "",
+                    "type": "Boolean"
+                }
+            ],
+            "author": "jrfrimme",
+            "modified": "Fri Nov 16 11:30:05 2012",
+            "class": "axisBinding"
+        },
+        {
+            "file": "src/core/axis_binding.js",
+            "line": 207,
+            "itemtype": "method",
+            "name": "getInstanceById",
+            "static": 1,
+            "params": [
+                {
+                    "name": "id",
+                    "description": ""
+                }
+            ],
+            "author": "jrfrimme",
+            "class": "axisBinding"
+        },
+        {
+            "file": "src/core/axis_binding.js",
+            "line": 219,
+            "itemtype": "method",
+            "name": "findByIdOrCreateNew",
+            "static": 1,
+            "params": [
+                {
+                    "name": "id",
+                    "description": ""
+                }
+            ],
+            "author": "jrfrimme",
+            "class": "axisBinding"
+        },
+        {
+            "file": "src/core/axis_binding.js",
+            "line": 235,
+            "itemtype": "method",
+            "name": "syncAllBindings",
+            "static": 1,
+            "author": "jrfrimme",
+            "class": "axisBinding"
+        },
+        {
+            "file": "src/core/axis_binding.js",
+            "line": 249,
+            "itemtype": "method",
+            "name": "forgetAllBindings",
+            "static": 1,
+            "author": "jrfrimme",
             "class": "axisBinding"
         },
         {
@@ -382,7 +611,7 @@
             "line": 125,
             "description": "Adds a listener function for events of a specific type\nemitted by this object.",
             "itemtype": "method",
-            "name": "EventEmitter#addListener",
+            "name": "addListener",
             "params": [
                 {
                     "name": "eventType",
@@ -406,7 +635,7 @@
             "line": 155,
             "description": "Removes a listener function for events of a specific type\nemitted by this object.",
             "itemtype": "method",
-            "name": "EventEmitter#removeListener",
+            "name": "removeListener",
             "params": [
                 {
                     "name": "eventType",
@@ -430,12 +659,12 @@
             "line": 183,
             "description": "Call this objects listeners for a specific event.  If the \"event\"\nargument is a string, it is converted to an Object having\nthat string as the value of its \"type\" attribute; otherwise\nthe \"event\" argument should be an event Object having a\n\"type\" attribute and any other attributes approriate for\nthat event type.  In either case, all (if there are any) of\nthe current listeners on this object for events of the\ngiven type will be invoked, being passed an event object.",
             "itemtype": "method",
-            "name": "EventEmitter#emit",
+            "name": "emit",
             "params": [
                 {
                     "name": "event",
                     "description": "either a string representing an event type, or an event\n                                object with a 'type' attribute.",
-                    "type": "Object or string"
+                    "type": "Object|string"
                 }
             ],
             "return": {
@@ -891,6 +1120,23 @@
             "class": "Mixin"
         },
         {
+            "file": "src/core/multigraph.js",
+            "line": 42,
+            "description": "Create a Multigraph according to specified options.",
+            "itemtype": "method",
+            "name": "Multigraph.createGraph",
+            "params": [
+                {
+                    "name": "options!~YUIDOC_LINE~!!~YUIDOC_LINE~!A",
+                    "description": "plain JavaScript object containing options as key/value pairs.\nIt can contain the following keys:\n\ndiv: (REQUIRED) The DOM element div into which the multigraph should be\n     placed; this value may be either (a) a string which is taken\n     to be the id attribute of a div in the page, (b) a reference\n     to the div DOM element itself, or (c) a jQuery object\n     corresponding to the div DOM element.\n\nmugl: (REQUIRED) the URL from which the MUGL file for the Multigraph can\n      be loaded\n\ndriver: (OPTIONAL) Indicates which graphics driver to use;\n      should be one of the strings \"canvas\", \"raphael\",\n      \"logger\", or \"auto\".  The default (which is used if the\n      'driver' tag is absent) is \"auto\", which causes\n      Multigraph to check the features of the browser it is\n      running in and choose the most appropriate driver.\n\nerror: (OPTIONAL) A function for displaying error\n      messages to the user.  Multigraph will call this function\n      if and when it encounters an error.  The function should\n      receive a single argument which is an instance of the\n      JavaScrip Error object.  The default is to use\n      Multigraph's own internal mechanism for displaying user\n      messages.\n\nwarning: (OPTIONAL) A function for displaying warning\n      messages to the user.  Multigraph will call this function\n      if and when it needs to display a warning message. The\n      function should receive a single argument which is an\n      instance of the JavaScrip Error object.  The default is\n      to use Multigraph's own internal mechanism for displaying\n      user messages.",
+                    "type": "Object"
+                }
+            ],
+            "author": "mbp",
+            "modified": "Fri Nov 16 00:34:21 2012",
+            "class": "Text"
+        },
+        {
             "file": "src/core/text.js",
             "line": 14,
             "description": "The string stored in the Text model",
@@ -1319,6 +1565,34 @@
     "warnings": [
         {
             "message": "unknown tag: modified",
+            "line": " src/core/array_data.js:25"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/array_data.js:41"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/axis_binding.js:13"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/axis_binding.js:23"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/axis_binding.js:38"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/axis_binding.js:70"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/axis_binding.js:130"
+        },
+        {
+            "message": "unknown tag: modified",
             "line": " src/core/legend.js:17"
         },
         {
@@ -1454,8 +1728,12 @@
             "line": " src/core/mixin.js:101"
         },
         {
-            "message": "Missing item type\nIMPORTANT NOTE: dataVariableArray is a plain javascript array of DataVariable instances; it is NOT a jermaine attr_list.",
-            "line": " src/core/array_data.js:230"
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/core/multigraph.js:42"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/multigraph.js:42"
         },
         {
             "message": "Missing item type\nCompute the distance from an axis to a point.  The point\n(x,y) is expressed in pixel coordinates in the same\ncoordinate system as the axis.\n\nWe use two different kinds of computations depending on\nwhether the point lies inside or outside the region bounded\nby the two lines perpendicular to the axis through its\nendpoints.  If the point lies inside this region, the\ndistance is simply the difference in the perpendicular\ncoordinate of the point and the perpendicular coordinate of\nthe axis.\n\nIf the point lies outside the region, then the distance is\nthe L2 distance between the point and the closest endpoint\nof the axis.",

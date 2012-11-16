@@ -295,6 +295,13 @@ strings in different graphics contexts.</p>
                                 
                             </li>
                         
+                            <li class="index-item method">
+                                <a href="#method_Multigraph.createGraph">Multigraph.createGraph</a>
+
+                                
+                                
+                            </li>
+                        
                     </ul>
                 </div>
             
@@ -1333,6 +1340,126 @@ drivers.</p>
                 
             </div>
         </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_Multigraph.createGraph" class="method item">
+    <h3 class="name"><code>Multigraph.createGraph</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>options!~YUIDOC_LINE~!!~YUIDOC_LINE~!A</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_core_multigraph.js.html#l42"><code>src&#x2F;core&#x2F;multigraph.js:42</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Create a Multigraph according to specified options.</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">options!~YUIDOC_LINE~!!~YUIDOC_LINE~!A</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>plain JavaScript object containing options as key/value pairs.
+It can contain the following keys:</p>
+
+<p>div: (REQUIRED) The DOM element div into which the multigraph should be
+     placed; this value may be either (a) a string which is taken
+     to be the id attribute of a div in the page, (b) a reference
+     to the div DOM element itself, or (c) a jQuery object
+     corresponding to the div DOM element.</p>
+
+<p>mugl: (REQUIRED) the URL from which the MUGL file for the Multigraph can
+      be loaded</p>
+
+<p>driver: (OPTIONAL) Indicates which graphics driver to use;
+      should be one of the strings "canvas", "raphael",
+      "logger", or "auto".  The default (which is used if the
+      'driver' tag is absent) is "auto", which causes
+      Multigraph to check the features of the browser it is
+      running in and choose the most appropriate driver.</p>
+
+<p>error: (OPTIONAL) A function for displaying error
+      messages to the user.  Multigraph will call this function
+      if and when it encounters an error.  The function should
+      receive a single argument which is an instance of the
+      JavaScrip Error object.  The default is to use
+      Multigraph's own internal mechanism for displaying user
+      messages.</p>
+
+<p>warning: (OPTIONAL) A function for displaying warning
+      messages to the user.  Multigraph will call this function
+      if and when it needs to display a warning message. The
+      function should receive a single argument which is an
+      instance of the JavaScrip Error object.  The default is
+      to use Multigraph's own internal mechanism for displaying
+      user messages.</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
     
 
     
