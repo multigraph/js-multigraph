@@ -108,6 +108,7 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
      * @param string {String} The string stored in the Text model
      *&#x2F;
     ns.Text = new window.jermaine.Model( &quot;Text&quot;, function () {
+        this.isBuiltWith(&quot;string&quot;);
 
         &#x2F;**
          * The string stored in the Text model
@@ -152,8 +153,6 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
          * @final
          *&#x2F;
         this.hasA(&quot;rotatedHeight&quot;).which.isA(&quot;number&quot;);
-
-        this.isBuiltWith(&quot;string&quot;);
 
         &#x2F;**
          * Determines unrotated and rotated widths and heights for the stored string. Overridden by

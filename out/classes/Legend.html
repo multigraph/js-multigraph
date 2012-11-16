@@ -113,6 +113,12 @@
 
 <div class="box intro">
     <p>Legend is a Jermaine model that supports the rendering of Multigraph Legends.</p>
+
+<p>The methods for this object take a parameter called <code>graphicsContext</code>, which is a
+driver-specific object that stores whatever state/configuration is needed by the
+driver.  Each driver is responsible for creating its own graphicsContext object and
+passing it to these methods, which in turn pass that object on to the driver-specific
+methods that they call.</p>
 </div>
 
 
@@ -468,7 +474,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l332"><code>src&#x2F;core&#x2F;legend.js:332</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l338"><code>src&#x2F;core&#x2F;legend.js:338</code></a>
         
         </p>
 
@@ -480,7 +486,10 @@
 
     <div class="description">
         <p>Initializes the Legend's geometry. Determines values for the internal attributes <code>maxLabelWidth</code>,
-<code>maxLabelHeight</code>, <code>blockWidth</code>, <code>blockHeight</code>, <code>width</code>, <code>height</code>, <code>x</code> and <code>y</code>.</p>
+<code>maxLabelHeight</code>, <code>blockWidth</code>, <code>blockHeight</code>, <code>width</code>, <code>height</code>, <code>x</code> and <code>y</code>; these values
+determine the size and position of the legend and its various internal components, and need
+to be recomputed whenever the geometry of the containing graph changes;  this method is
+called by Graph.initializeGeometry().</p>
     </div>
 
     
@@ -513,27 +522,9 @@
                     
 
                     <div class="param-description">
-                        <p>graphical environemnt specific variables</p>
+                        <p>driver-specific graphics context object</p>
                     </div>
 
-                    
-                        <ul class="params-list">
-                            
-                            <li class="param">
-                                
-                                    <code class="param-name">context|elem</code>
-                                    <span class="type">Context | TextElem</span>
-                                
-
-                                <div class="param-description">
-                                    <p>context or Raphael TextElem, depending on
-  the graphical environment</p>
-                                </div>
-
-                                
-                            </li>
-                            
-                        </ul>
                     
                 </li>
             
@@ -591,7 +582,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l419"><code>src&#x2F;core&#x2F;legend.js:419</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l426"><code>src&#x2F;core&#x2F;legend.js:426</code></a>
         
         </p>
 
@@ -602,9 +593,9 @@
     </div>
 
     <div class="description">
-        <p>Preforms setup needed to render Legends in a graphical package agnostic fashion. The function 
-computes the location of the Legend area and each component of the Plot entries and delegates the
-drawing of each element to the graphical packages.</p>
+        <p>Renders the legend; calls various driver-specific graphics functions to do the
+actual drawing of the various parts of the legend (background, borders, icons,
+text).</p>
     </div>
 
     
@@ -622,41 +613,9 @@ drawing of each element to the graphical packages.</p>
                     
 
                     <div class="param-description">
-                        <p>graphical environemnt specific variables</p>
+                        <p>driver-specific graphics context object</p>
                     </div>
 
-                    
-                        <ul class="params-list">
-                            
-                            <li class="param">
-                                
-                                    <code class="param-name">context|elem</code>
-                                    <span class="type">Context | TextElem</span>
-                                
-
-                                <div class="param-description">
-                                    <p>context or Raphael TextElem, depending on
-  the graphical environment</p>
-                                </div>
-
-                                
-                            </li>
-                            
-                            <li class="param">
-                                
-                                    <code class="param-name">set</code>
-                                    <span class="type">Set</span>
-                                
-
-                                <div class="param-description">
-                                    <p>In the case of Raphael rendering environement, pass in a set for
-  Legend elements</p>
-                                </div>
-
-                                
-                            </li>
-                            
-                        </ul>
                     
                 </li>
             
@@ -701,7 +660,7 @@ drawing of each element to the graphical packages.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l40"><code>src&#x2F;core&#x2F;legend.js:40</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l46"><code>src&#x2F;core&#x2F;legend.js:46</code></a>
         
         </p>
 
@@ -745,7 +704,7 @@ drawing of each element to the graphical packages.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l28"><code>src&#x2F;core&#x2F;legend.js:28</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l34"><code>src&#x2F;core&#x2F;legend.js:34</code></a>
         
         </p>
 
@@ -793,7 +752,7 @@ drawing of each element to the graphical packages.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l296"><code>src&#x2F;core&#x2F;legend.js:296</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l302"><code>src&#x2F;core&#x2F;legend.js:302</code></a>
         
         </p>
 
@@ -841,7 +800,7 @@ drawing of each element to the graphical packages.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l284"><code>src&#x2F;core&#x2F;legend.js:284</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l290"><code>src&#x2F;core&#x2F;legend.js:290</code></a>
         
         </p>
 
@@ -885,7 +844,7 @@ drawing of each element to the graphical packages.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l115"><code>src&#x2F;core&#x2F;legend.js:115</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l121"><code>src&#x2F;core&#x2F;legend.js:121</code></a>
         
         </p>
 
@@ -930,7 +889,7 @@ the border off.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l90"><code>src&#x2F;core&#x2F;legend.js:90</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l96"><code>src&#x2F;core&#x2F;legend.js:96</code></a>
         
         </p>
 
@@ -974,7 +933,7 @@ the border off.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l78"><code>src&#x2F;core&#x2F;legend.js:78</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l84"><code>src&#x2F;core&#x2F;legend.js:84</code></a>
         
         </p>
 
@@ -1018,7 +977,7 @@ the border off.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l137"><code>src&#x2F;core&#x2F;legend.js:137</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l143"><code>src&#x2F;core&#x2F;legend.js:143</code></a>
         
         </p>
 
@@ -1064,7 +1023,7 @@ entry.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l149"><code>src&#x2F;core&#x2F;legend.js:149</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l155"><code>src&#x2F;core&#x2F;legend.js:155</code></a>
         
         </p>
 
@@ -1110,7 +1069,7 @@ are rounded off with circles whose radius in pixels is this value.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l64"><code>src&#x2F;core&#x2F;legend.js:64</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l70"><code>src&#x2F;core&#x2F;legend.js:70</code></a>
         
         </p>
 
@@ -1160,7 +1119,7 @@ that it will the padding box.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l248"><code>src&#x2F;core&#x2F;legend.js:248</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l254"><code>src&#x2F;core&#x2F;legend.js:254</code></a>
         
         </p>
 
@@ -1204,7 +1163,7 @@ that it will the padding box.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l171"><code>src&#x2F;core&#x2F;legend.js:171</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l177"><code>src&#x2F;core&#x2F;legend.js:177</code></a>
         
         </p>
 
@@ -1252,7 +1211,7 @@ that it will the padding box.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l195"><code>src&#x2F;core&#x2F;legend.js:195</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l201"><code>src&#x2F;core&#x2F;legend.js:201</code></a>
         
         </p>
 
@@ -1302,7 +1261,7 @@ that it will the padding box.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l222"><code>src&#x2F;core&#x2F;legend.js:222</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l228"><code>src&#x2F;core&#x2F;legend.js:228</code></a>
         
         </p>
 
@@ -1353,7 +1312,7 @@ its border</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l208"><code>src&#x2F;core&#x2F;legend.js:208</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l214"><code>src&#x2F;core&#x2F;legend.js:214</code></a>
         
         </p>
 
@@ -1403,7 +1362,7 @@ its border</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l320"><code>src&#x2F;core&#x2F;legend.js:320</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l326"><code>src&#x2F;core&#x2F;legend.js:326</code></a>
         
         </p>
 
@@ -1451,7 +1410,7 @@ its border</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l308"><code>src&#x2F;core&#x2F;legend.js:308</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l314"><code>src&#x2F;core&#x2F;legend.js:314</code></a>
         
         </p>
 
@@ -1495,7 +1454,7 @@ its border</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l102"><code>src&#x2F;core&#x2F;legend.js:102</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l108"><code>src&#x2F;core&#x2F;legend.js:108</code></a>
         
         </p>
 
@@ -1540,7 +1499,7 @@ may obscure parts of the plot data.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l161"><code>src&#x2F;core&#x2F;legend.js:161</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l167"><code>src&#x2F;core&#x2F;legend.js:167</code></a>
         
         </p>
 
@@ -1584,7 +1543,7 @@ may obscure parts of the plot data.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l183"><code>src&#x2F;core&#x2F;legend.js:183</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l189"><code>src&#x2F;core&#x2F;legend.js:189</code></a>
         
         </p>
 
@@ -1628,7 +1587,7 @@ may obscure parts of the plot data.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l52"><code>src&#x2F;core&#x2F;legend.js:52</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l58"><code>src&#x2F;core&#x2F;legend.js:58</code></a>
         
         </p>
 
@@ -1672,7 +1631,7 @@ may obscure parts of the plot data.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l126"><code>src&#x2F;core&#x2F;legend.js:126</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l132"><code>src&#x2F;core&#x2F;legend.js:132</code></a>
         
         </p>
 
@@ -1717,7 +1676,7 @@ unspecified then rows will be inserted to account for each Plot entry.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l17"><code>src&#x2F;core&#x2F;legend.js:17</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l23"><code>src&#x2F;core&#x2F;legend.js:23</code></a>
         
         </p>
 
@@ -1766,7 +1725,7 @@ be drawn while <code>false</code> means that it will not.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l236"><code>src&#x2F;core&#x2F;legend.js:236</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l242"><code>src&#x2F;core&#x2F;legend.js:242</code></a>
         
         </p>
 
@@ -1814,7 +1773,7 @@ be drawn while <code>false</code> means that it will not.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l260"><code>src&#x2F;core&#x2F;legend.js:260</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l266"><code>src&#x2F;core&#x2F;legend.js:266</code></a>
         
         </p>
 
@@ -1862,7 +1821,7 @@ be drawn while <code>false</code> means that it will not.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l272"><code>src&#x2F;core&#x2F;legend.js:272</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_legend.js.html#l278"><code>src&#x2F;core&#x2F;legend.js:278</code></a>
         
         </p>
 
