@@ -126,7 +126,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * Adds a listener function for events of a specific type
          * emitted by this object.
          * 
-         * @method EventEmitter#addListener
+         * @method addListener
          * @param {string} eventType the type of event
          * @param {function} listener a listener function
          * @return {boolean} a value indicating whether the listener
@@ -156,7 +156,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * Removes a listener function for events of a specific type
          * emitted by this object.
          * 
-         * @method EventEmitter#removeListener
+         * @method removeListener
          * @param {string} eventType the type of event
          * @param {function} listener the listener function to remove
          * @return {boolean} a value indicating whether the listener
@@ -190,8 +190,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * the current listeners on this object for events of the
          * given type will be invoked, being passed an event object.
          * 
-         * @method EventEmitter#emit
-         * @param {Object or string} event either a string representing an event type, or an event
+         * @method emit
+         * @param {Object|string} event either a string representing an event type, or an event
          *                                 object with a 'type' attribute.
          * @return (nothing)
          */

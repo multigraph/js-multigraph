@@ -5,14 +5,29 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * @class axisBinding
      * @constructor
      */
-
     ns.AxisBinding = new window.jermaine.Model( "AxisBinding", function () {
         var AxisBinding = this;
 
         AxisBinding.instances = {};
 
+        /**
+         * 
+         *
+         * @property id
+         * @type {String}
+         * @author jrfrimme
+         * @modified Fri Nov 16 11:53:50 2012
+         */
         this.hasA("id").which.isA("string");
 
+        /**
+         * 
+         *
+         * @property axes
+         * @type {Array}
+         * @author jrfrimme
+         * @modified Fri Nov 16 11:53:57 2012
+         */
         this.hasA("axes"); // js array
 
         this.isBuiltWith("id", function() {
@@ -20,6 +35,16 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             this.axes([]);
         });
 
+        /**
+         * 
+         *
+         * @method addAxis
+         * @param {Axis} axis
+         * @param {number|DataValue} min
+         * @param {number|DataValue} max
+         * @author jrfrimme
+         * @modified Fri Nov 16 11:54:00 2012
+         */
         this.respondsTo("addAxis", function(axis, min, max) {
             // NOTE: min/max can be either numbers, or DataValue
             // instances, but they CANNOT be strings.
@@ -42,6 +67,14 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             });
         });
 
+        /**
+         * 
+         *
+         * @method removeAxis
+         * @param {Axis} axis
+         * @author jrfrimme
+         * @modified Fri Nov 16 11:54:07 2012
+         */
         this.respondsTo("removeAxis", function(axis) {
             var axes = this.axes(),
                 i;
@@ -71,7 +104,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * complete; that is done via the axes' own setDataRange()
          * method.
          * 
-         * @method AxisBinding#sync
+         * @method sync
          * 
          * @return {boolean} a value indicating whether the sync was
          *                   done; this will be true if and only if
@@ -89,10 +122,22 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                     axis.setDataRange(axis.dataMin(), axis.dataMax());
                     return true;
                 }
+
             }
             return false;
         });
 
+        /**
+         * 
+         *
+         * @method setDataRange
+         * @param {Axis} initiatingAxis
+         * @param {number|DataValue} min
+         * @param {number|DataValue} max
+         * @param {Boolean} dispatch
+         * @author jrfrimme
+         * @modified Fri Nov 16 11:30:05 2012
+         */
         this.respondsTo("setDataRange", function(initiatingAxis, min, max, dispatch) {
 
             // NOTE: min and max may either be plain numbers, or
@@ -159,10 +204,26 @@ to/from number values vs DataValue instances for min/max.
 */
 
 
+        /**
+         * 
+         *
+         * @method getInstanceById
+         * @static
+         * @param id
+         * @author jrfrimme
+         */
         AxisBinding.getInstanceById = function(id) {
             return AxisBinding.instances[id];
         };
 
+        /**
+         * 
+         *
+         * @method findByIdOrCreateNew
+         * @static
+         * @param id
+         * @author jrfrimme
+         */
         AxisBinding.findByIdOrCreateNew = function(id) {
             var binding = AxisBinding.getInstanceById(id);
             if (!binding) {
@@ -171,6 +232,13 @@ to/from number values vs DataValue instances for min/max.
             return binding;
         };
 
+        /**
+         * 
+         *
+         * @method syncAllBindings
+         * @static
+         * @author jrfrimme
+         */
         AxisBinding.syncAllBindings = function() {
             var id;
             for (id in AxisBinding.instances) {
@@ -178,6 +246,13 @@ to/from number values vs DataValue instances for min/max.
             }
         };
 
+        /**
+         * 
+         *
+         * @method forgetAllBindings
+         * @static
+         * @author jrfrimme
+         */
         AxisBinding.forgetAllBindings = function() {
 
             // This function is just for use in testing, so we can clear out the global list
