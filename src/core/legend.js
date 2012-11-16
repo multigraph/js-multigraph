@@ -8,7 +8,13 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     /**
      * Legend is a Jermaine model that supports the rendering of Multigraph Legends.
-     *
+     * 
+     * The methods for this object take a parameter called `graphicsContext`, which is a
+     * driver-specific object that stores whatever state/configuration is needed by the
+     * driver.  Each driver is responsible for creating its own graphicsContext object and
+     * passing it to these methods, which in turn pass that object on to the driver-specific
+     * methods that they call.
+     * 
      * @class Legend
      * @constructor
      * @requires Point,RGBColor,Plot,Icon
@@ -331,14 +337,15 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
         /**
          * Initializes the Legend's geometry. Determines values for the internal attributes `maxLabelWidth`,
-         * `maxLabelHeight`, `blockWidth`, `blockHeight`, `width`, `height`, `x` and `y`.
-         *
+         * `maxLabelHeight`, `blockWidth`, `blockHeight`, `width`, `height`, `x` and `y`; these values
+         * determine the size and position of the legend and its various internal components, and need
+         * to be recomputed whenever the geometry of the containing graph changes;  this method is
+         * called by Graph.initializeGeometry().
+         * 
          * @method initializeGeometry
          * @chainable
          * @param {Graph} graph Jermaine Graph model
-         * @param {Object} graphicsContext graphical environemnt specific variables
-         *   @param {Context|TextElem} graphicsContext.context|elem context or Raphael TextElem, depending on
-         *   the graphical environment
+         * @param {Object} graphicsContext driver-specific graphics context object
          * @author jrfrimme
          * @modified Thu Nov 15 09:44:20 2012
          * @todo Find out whether or not padding needs to be taken into consideration.
@@ -417,17 +424,15 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
 
         /**
-         * Preforms setup needed to render Legends in a graphical package agnostic fashion. The function 
-         * computes the location of the Legend area and each component of the Plot entries and delegates the
-         * drawing of each element to the graphical packages.
+         * Renders the legend; calls various driver-specific graphics functions to do the
+         * actual drawing of the various parts of the legend (background, borders, icons,
+         * text).
          * 
          * @method render
          * @chainable
-         * @param {Object} graphicsContext graphical environemnt specific variables
-         *   @param {Context|TextElem} graphicsContext.context|elem context or Raphael TextElem, depending on
-         *   the graphical environment
-         *   @param {Set} graphicsContext.set In the case of Raphael rendering environement, pass in a set for
-         *   Legend elements
+         * 
+         * @param {Object} graphicsContext driver-specific graphics context object
+         * 
          * @author jrfrimme
          * @modified Thu Nov 15 09:44:31 2012
          */
@@ -442,7 +447,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 return this;
             }
 
-            // preform any neccesary setup
+            // perform any neccesary setup
             this.begin(graphicsContext);
 
             // Draw the legend box
