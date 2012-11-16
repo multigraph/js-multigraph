@@ -110,8 +110,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 // If this renderer has no option named "name", bail out immediately.  This should eventually
                 // throw an error, but for now we just quietly ignore it, to eliminate error conditions coming
                 // from unimplemented options.
-                console.log("WARNING: renderer has no option named '" + name + "'");
-                return;
+                //console.log("WARNING: renderer has no option named '" + name + "'");
+                throw new ns.Warning("WARNING: renderer has no option named '" + name + "'");
             }
             rendererOpt = new (this.optionsMetadata[name].type)();
             rendererOpt.parseValue(stringValue, this);

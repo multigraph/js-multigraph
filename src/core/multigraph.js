@@ -1,6 +1,8 @@
 window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
+    var $ = window.multigraph.jQuery;
+
     var Multigraph = new window.jermaine.Model( "Multigraph", function () {
 
         this.hasMany("graphs").which.validatesWith(function (graph) {
@@ -37,74 +39,147 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             );
     };
 
-    Multigraph.createGraph = function (obj) {
-        var div = obj.div;
-        if (!obj.driver) {
+    /**
+     * Create a Multigraph according to specified options.
+     *
+     * @function Multigraph.createGraph
+     * 
+     * @param {Object} options
+     * 
+     * A plain JavaScript object containing options as key/value pairs.
+     * It can contain the following keys:
+     * 
+     * div: (REQUIRED) The DOM element div into which the multigraph should be
+     *      placed; this value may be either (a) a string which is taken
+     *      to be the id attribute of a div in the page, (b) a reference
+     *      to the div DOM element itself, or (c) a jQuery object
+     *      corresponding to the div DOM element.
+     * 
+     * mugl: (REQUIRED) the URL from which the MUGL file for the Multigraph can
+     *       be loaded
+     * 
+     * driver: (OPTIONAL) Indicates which graphics driver to use;
+     *       should be one of the strings "canvas", "raphael",
+     *       "logger", or "auto".  The default (which is used if the
+     *       'driver' tag is absent) is "auto", which causes
+     *       Multigraph to check the features of the browser it is
+     *       running in and choose the most appropriate driver.
+     * 
+     * error: (OPTIONAL) A function for displaying error
+     *       messages to the user.  Multigraph will call this function
+     *       if and when it encounters an error.  The function should
+     *       receive a single argument which is an instance of the
+     *       JavaScrip Error object.  The default is to use
+     *       Multigraph's own internal mechanism for displaying user
+     *       messages.
+     *
+     * warning: (OPTIONAL) A function for displaying warning
+     *       messages to the user.  Multigraph will call this function
+     *       if and when it needs to display a warning message. The
+     *       function should receive a single argument which is an
+     *       instance of the JavaScrip Error object.  The default is
+     *       to use Multigraph's own internal mechanism for displaying
+     *       user messages.
+     * 
+     * @author mbp
+     * @modified Fri Nov 16 00:34:21 2012
+     */
+    Multigraph.createGraph = function (options) {
+        var div = options.div,
+            messageHandler,
+            defaultMessageHandler;
+
+        // if driver wasn't specified, choose the best based on browser capability
+        if (!options.driver) {
             if (browserHasCanvasSupport()) {
-                obj.driver = "canvas";
+                options.driver = "canvas";
             } else {
-                obj.driver = "raphael";
+                options.driver = "raphael";
             }
         }
+
+        // if div is a string, assume it's an id, and convert it to the div element itself
         if (typeof(div) === "string") {
-            // if div is a string, assume it's an id, and convert
-            // it to the div element itself
             div = window.multigraph.jQuery("#" + div)[0];
         }
-        if (!obj.errorHandler || typeof(obj.errorHandler) !== "function") {
-            obj.errorHandler = Multigraph.createDefaultErrorHandler(div);
+
+        //
+        // NOTE: each of the Multigraph.create{DRIVER}Graph functions below takes an
+        // "options" object argument just like Multigraph.createGraph does.  In general this
+        // "options" object is the same as the one passed to this Multigraph.createGraph
+        // function, but it differs in one way: Instead of containing separate "error" and
+        // "warning" properties which are optional, the "options" object passed to the
+        // Multigraph.create{DRIVER}Graph functions requires a single (non-optional!)
+        // "messageHandler" property, which in turn contains "error" and "warning" properties
+        // which are functions for handling errors and warnings, respectively.  Both the
+        // "error" and a "warning" properties must be present in the "messageHandler" object
+        // and must point to valid functions.
+        // 
+        // The rationale behind this is to allow convenience for callers of the more "public"
+        // Multigraph.createGraph function, so that they don't have to specify an error or
+        // warning handler function unless they want to use custom ones.  The internal
+        // Multigraph.create{DRIVER}Graph functions, however, always need access to error and
+        // warning functions, and often need to pass both of them on to other functions, so
+        // they're encapsulated together into a single messageHandler object to make this
+        // easier.
+        //
+        // Build the messageHandler object:
+        messageHandler = {};
+        if (typeof(options.error) === "function") {
+            messageHandler.error = options.error;
         }
-        if (obj.driver === "canvas") {
-            return Multigraph.createCanvasGraph(div, obj.mugl, obj.errorHandler);
-        } else if (obj.driver === "raphael") {
-            return Multigraph.createRaphaelGraph(div, obj.mugl, obj.errorHandler);
-        } else if (obj.driver === "logger") {
-            return Multigraph.createLoggerGraph(div, obj.mugl);
+        if (typeof(options.warning) === "function") {
+            messageHandler.warning = options.warning;
         }
-        throw new Error("invalid graphic driver '" + obj.driver + "' specified to Multigraph.createGraph");
+
+        if (! messageHandler.error  || ! messageHandler.warning) {
+            defaultMessageHandler = Multigraph.createDefaultMessageHandlers(div);
+            if (! messageHandler.error) {
+                messageHandler.error = defaultMessageHandler.error;
+            }
+            if (! messageHandler.warning) {
+                messageHandler.warning = defaultMessageHandler.warning;
+            }
+        }
+        options.messageHandler = messageHandler;
+
+        // delegate to the driver-specific create function
+        if (options.driver === "canvas") {
+            return Multigraph.createCanvasGraph(options);
+        } else if (options.driver === "raphael") {
+            return Multigraph.createRaphaelGraph(options);
+        } else if (options.driver === "logger") {
+            return Multigraph.createLoggerGraph(options);
+        } else {
+            options.messageHanlder.error(new Error("invalid graphic driver '" + options.driver + "' specified to Multigraph.createGraph"));
+            return undefined;
+        }
     };
 
     //
     // make window.multigraph.create be an alias for window.multigraph.core.Multigraph.create:
     //
     window.multigraph.create = Multigraph.createGraph;
-/*
-    Multigraph.createDefaultErrorHandler = function (div) {
-        return function (e) {
-            var errorMessages,
-                flag = true,
-                i;
 
-            window.multigraph.jQuery(div).css("overflow", "auto");
+    Multigraph.createDefaultMessageHandlers = function (div) {
 
-            window.multigraph.jQuery(div).children("div").each(function (i) {
-                if (window.multigraph.jQuery(this).text() === "An error has occured. Please scroll down in this region to see the error messages.") {
-                    flag = false;
-                }
-            });
+        $(div).css('position', 'relative');
+        $(div).errorDisplay({});
 
-            if (flag) {
-                window.multigraph.jQuery(div).prepend(window.multigraph.jQuery("<br>"));
-                window.multigraph.jQuery(div).prepend(window.multigraph.jQuery("<div>", {"text" : "An error has occured. Please scroll down in this region to see the error messages.", "style" : "z-index:100; border:1px solid black; background-color : #E00; white-space: pre-wrap; text-align: left;"}));
+        return {
+            error : function(e) {
+                $(div).errorDisplay("displayError", e.message, e.message, {
+                    fontColor       : '#000000',
+                    backgroundColor : '#ff0000'
+                });
+            },
+
+            warning : function (w) {
+                $(div).errorDisplay("displayError", w.message, w.message, {
+                    fontColor       : '#000000',
+                    backgroundColor : '#e06a1b'
+                });
             }
-
-            window.multigraph.jQuery(div).append(window.multigraph.jQuery("<ol>", {"text" : e.message, "style" : "z-index:100; border:1px solid black; background-color : #CCC; white-space: pre-wrap; text-align: left;"}));
-
-            if (e.stack && typeof(e.stack) === "string") {
-                errorMessages = e.stack.split(/\n/);
-                for (i = 1; i < errorMessages.length; i++) {
-                    window.multigraph.jQuery(window.multigraph.jQuery(div).find("ol")).append(window.multigraph.jQuery("<li>", {"text" : errorMessages[i].trim().replace(" (file", "\n(file"), "style" : "margin-bottom: 3px;"}));
-                }
-            }
-        };
-    };
-*/
-
-    Multigraph.createDefaultErrorHandler = function (div) {
-        return function (e) {
-            throw e;
-            //console.log(e.message);
-            //console.log(e.stack);
         };
     };
 

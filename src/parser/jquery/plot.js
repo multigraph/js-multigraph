@@ -3,7 +3,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
 
     ns.mixin.add(function (ns, parse) {
 
-        ns.core.Plot[parse] = function (xml, graph) {
+        ns.core.Plot[parse] = function (xml, graph, messageHandler) {
             var DataPlot = window.multigraph.core.DataPlot,
                 ConstantPlot = window.multigraph.core.ConstantPlot,
                 DataValue = ns.core.DataValue,
@@ -93,7 +93,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
 
 //populate renderer from xml
                 if (xml.find("renderer").length > 0) {
-                    plot.renderer(Renderer[parse](xml.find("renderer"), plot));
+                    plot.renderer(Renderer[parse](xml.find("renderer"), plot, messageHandler));
                 }
 
 //populate filter from xml

@@ -3,7 +3,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
 
     ns.mixin.add(function (ns, parse) {
 
-        ns.core.Graph[parse] = function (xml) {
+        ns.core.Graph[parse] = function (xml, messageHandler) {
             var graph = new ns.core.Graph();
             if (xml) {
                 // NOTE: 'OBJ.find(">TAG")' returns a list of JQuery objects corresponding to the immediate
@@ -48,7 +48,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     graph.data().add( ns.core.Data[parse](window.multigraph.jQuery(e)) );
                 });
                 window.multigraph.jQuery.each(xml.find(">plot"), function (i,e) {
-                    graph.plots().add( ns.core.Plot[parse](window.multigraph.jQuery(e), graph) );
+                    graph.plots().add( ns.core.Plot[parse](window.multigraph.jQuery(e), graph, messageHandler) );
                 });
                 graph.postParse();
             }

@@ -3,7 +3,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
 
     ns.mixin.add(function (ns, parse) {
 
-        ns.core.Renderer[parse] = function (xml, plot) {
+        ns.core.Renderer[parse] = function (xml, plot, messageHandler) {
             var rendererType,
                 renderer,
                 opt;
@@ -17,10 +17,18 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 renderer.plot(plot);
                 if (xml.find("option").length > 0) {
                     window.multigraph.jQuery.each(xml.find(">option"), function (i, e) {
-                        renderer.setOptionFromString(window.multigraph.jQuery(e).attr("name"),
-                                                     window.multigraph.jQuery(e).attr("value"),
-                                                     window.multigraph.jQuery(e).attr("min"),
-                                                     window.multigraph.jQuery(e).attr("max"));
+                        try {
+                            renderer.setOptionFromString(window.multigraph.jQuery(e).attr("name"),
+                                                         window.multigraph.jQuery(e).attr("value"),
+                                                         window.multigraph.jQuery(e).attr("min"),
+                                                         window.multigraph.jQuery(e).attr("max"));
+                        } catch (e) {
+                            if (e instanceof window.multigraph.core.Warning) {
+                                messageHandler.warning(e);
+                            } else {
+                                throw e;
+                            }
+                        }
                     });
                 }
             }
