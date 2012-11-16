@@ -170,14 +170,16 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             error : function(e) {
                 $(div).errorDisplay("displayError", e.message, e.message, {
                     fontColor       : '#000000',
-                    backgroundColor : '#ff0000'
+                    backgroundColor : '#ff0000',
+                    indicatorColor  : '#ff0000'
                 });
             },
 
             warning : function (w) {
                 $(div).errorDisplay("displayError", w.message, w.message, {
                     fontColor       : '#000000',
-                    backgroundColor : '#e06a1b'
+                    backgroundColor : '#e06a1b',
+                    indicatorColor  : '#e06a1b'
                 });
             }
         };
