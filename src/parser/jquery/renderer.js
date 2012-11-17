@@ -3,6 +3,16 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
 
     ns.mixin.add(function (ns, parse) {
 
+
+        // Remove this function once we completely remove support for legacy "missingvalue" and
+        // "missingop" renderer options.
+        var legacyMissingValueMissingOpSupport = function(renderer, xml, plot, messageHandler) {
+            // this function should check the options specified in the xml, and if 
+            // "missingvalue" and/or "missingop" are present, should use them to populate
+            // the corresponding attributes of the plot's data variables, if they have not already
+            // been specified.  It provides backwards compatiblity...
+        };
+
         ns.core.Renderer[parse] = function (xml, plot, messageHandler) {
             var rendererType,
                 renderer,
@@ -30,6 +40,9 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                             }
                         }
                     });
+                    // remove this call once we completely remove support for legacy "missingvalue" and
+                    // "missingop" renderer options
+                    legacyMissingValueMissingOpSupport(renderer, xml, plot, messageHandler);
                 }
             }
             return renderer;
