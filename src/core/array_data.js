@@ -2,7 +2,13 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
     /**
+     * @module multigraph
+     * @submodule core
+     */
+
+    /**
      * @class ArrayData
+     * @for ArrayData
      * @constructor
      * @param {array} columns A array of DataVariables
      * @param {array} stringArray A array of the preparsed DataValues

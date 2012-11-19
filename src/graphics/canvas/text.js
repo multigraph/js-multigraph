@@ -1,6 +1,11 @@
 window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (ns) {
     "use strict";
 
+    /**
+     * @module multigraph
+     * @submodule canvas
+     */
+
     ns.mixin.add(function (ns) {
         var Text = ns.Text;
 

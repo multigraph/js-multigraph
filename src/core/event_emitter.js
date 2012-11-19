@@ -1,6 +1,11 @@
 window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
+    /**
+     * @module multigraph
+     * @submodule core
+     */
+
     ns.EventEmitter = new window.jermaine.Model(function () {
         /**
          * EventEmitter is a Jermaine model that supports basic event emitting /
@@ -81,6 +86,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          *   > the listener function being added or removed
          *
          * @class EventEmitter
+         * @for EventEmitter
          * @constructor
          * @example
          *     var Person = new window.jermaine.Model(function() {

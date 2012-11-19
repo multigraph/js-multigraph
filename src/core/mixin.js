@@ -2,6 +2,11 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
     /**
+     * @module multigraph
+     * @submodule core
+     */
+
+    /**
      * The Mixin model provides a convenient way for Jermaine
      * applications to "mix in" additional functionality to a model,
      * from outside the model's initial definition.
@@ -28,6 +33,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * them all at once.
      *
      * @class Mixin
+     * @for Mixin
      * @author mbp
      * @modified Wed Nov 14 23:45:37 2012
      */

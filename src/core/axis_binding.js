@@ -2,7 +2,13 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
     /**
+     * @module multigraph
+     * @submodule core
+     */
+
+    /**
      * @class axisBinding
+     * @for axisbinding
      * @constructor
      */
     ns.AxisBinding = new window.jermaine.Model( "AxisBinding", function () {

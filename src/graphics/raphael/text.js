@@ -1,6 +1,11 @@
 window.multigraph.util.namespace("window.multigraph.graphics.raphael", function (ns) {
     "use strict";
 
+    /**
+     * @module multigraph
+     * @submodule raphael
+     */
+
     ns.mixin.add(function (ns) {
         var Text = ns.Text;
 

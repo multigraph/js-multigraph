@@ -1,6 +1,14 @@
 window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
+    /**
+     * Core functionality for the javascript implementation of multigraph.
+     *
+     * @module multigraph
+     * @submodule core
+     * @main core
+     */
+
     var $ = window.multigraph.jQuery;
 
     var Multigraph = new window.jermaine.Model( "Multigraph", function () {

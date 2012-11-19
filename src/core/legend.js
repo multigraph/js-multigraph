@@ -1,6 +1,11 @@
 window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
+    /**
+     * @module multigraph
+     * @submodule core
+     */
+
     var Icon,
         Legend,
         defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
@@ -16,6 +21,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * methods that they call.
      * 
      * @class Legend
+     * @for Legend
      * @constructor
      * @requires Point,RGBColor,Plot,Icon
     */

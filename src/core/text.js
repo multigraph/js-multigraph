@@ -1,11 +1,16 @@
 window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
+    /**
+     * @module multigraph
+     * @submodule core
+     */
 
     /**
      * Text is a Jermaine model that supports storing and determining metrics of
      * strings in different graphics contexts.
      *
      * @class Text
+     * @for Text
      * @constructor
      * @param string {String} The string stored in the Text model
      */
