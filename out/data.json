@@ -1,5 +1,10 @@
 {
-    "project": {},
+    "project": {
+        "name": "js-Multigraph",
+        "description": "Multigraph's JavaScript Implementation",
+        "url": "http://www.multigraph.org/",
+        "version": "3.0.0"
+    },
     "files": {
         "src/core/array_data.js": {
             "name": "src/core/array_data.js",
@@ -178,13 +183,6 @@
         },
         "src/math/displacement.js": {
             "name": "src/math/displacement.js",
-            "modules": {},
-            "classes": {},
-            "fors": {},
-            "namespaces": {}
-        },
-        "src/valuetype/speedtest/SpeedTester.js": {
-            "name": "src/valuetype/speedtest/SpeedTester.js",
             "modules": {},
             "classes": {},
             "fors": {},
@@ -2314,13 +2312,6 @@
             "description": "parse a string into a Displacement.  The string should be of one of the following forms:\n    \"A+B\"  ==>  a=A  b=B\n    \"A-B\"  ==>  a=A  b=-B\n    \"A\"    ==>  a=A  b=0\n    \"+A\"   ==>  a=A  b=0\n    \"-A\"   ==>  a=-A b=0",
             "class": "",
             "module": "multigraph"
-        },
-        {
-            "file": "src/valuetype/speedtest/SpeedTester.js",
-            "line": 1,
-            "description": "The SpeedTester object runs a sequence of tests (actually any sequence of functions) in such\na way as to ensure that the browser has a chance to update the page display between each test.\nThe idea is that each test function might update the DOM to indicate the results of that test,\nand we want the user to be able to see the results of each test immediately, rather than waiting\nuntil all tests are done.\n\nEach \"test\" actually consists of a pair of functions, one called the \"prep\" function, and one\ncalled the \"test\" function.  When the SpeedTester object runs the test, it runs the \"prep\" function\nfirst, followed by the \"test\" function, allowing the browser to refresh the screen after each one\nof these.\n\nUsage is as follows:\n\n    var speedTester = new window.speedtester.SpeedTester();\n\n    speedTester.createTest( [prep function], [test function] );\n    speedTester.createTest( [prep function], [test function] );\n    ...\n    speedTester.createTest( [prep function], [test function] );\n\n    speedTester.runTests();\n\nThe runTests() method runs all tests specified by calls to the createTest() method, in the\norder given. runTests() takes an optional argument, which is a function to be run\nafter all tests have run.",
-            "class": "",
-            "module": "multigraph"
         }
     ],
     "warnings": [
@@ -2569,32 +2560,16 @@
             "line": " src/core/multigraph.js:63"
         },
         {
-            "message": "replacing incorrect tag: function with method",
-            "line": " src/core/multigraph.js:80"
-        },
-        {
             "message": "unknown tag: modified",
             "line": " src/core/multigraph.js:80"
-        },
-        {
-            "message": "replacing incorrect tag: function with method",
-            "line": " src/core/multigraph.js:101"
         },
         {
             "message": "unknown tag: modified",
             "line": " src/core/multigraph.js:101"
         },
         {
-            "message": "replacing incorrect tag: function with method",
-            "line": " src/core/multigraph.js:219"
-        },
-        {
             "message": "unknown tag: modified",
             "line": " src/core/multigraph.js:219"
-        },
-        {
-            "message": "replacing incorrect tag: function with method",
-            "line": " src/core/multigraph.js:266"
         },
         {
             "message": "unknown tag: modified",
@@ -2703,10 +2678,6 @@
         {
             "message": "Missing item type\nparse a string into a Displacement.  The string should be of one of the following forms:\n    \"A+B\"  ==>  a=A  b=B\n    \"A-B\"  ==>  a=A  b=-B\n    \"A\"    ==>  a=A  b=0\n    \"+A\"   ==>  a=A  b=0\n    \"-A\"   ==>  a=-A b=0",
             "line": " src/math/displacement.js:76"
-        },
-        {
-            "message": "Missing item type\nThe SpeedTester object runs a sequence of tests (actually any sequence of functions) in such\na way as to ensure that the browser has a chance to update the page display between each test.\nThe idea is that each test function might update the DOM to indicate the results of that test,\nand we want the user to be able to see the results of each test immediately, rather than waiting\nuntil all tests are done.\n\nEach \"test\" actually consists of a pair of functions, one called the \"prep\" function, and one\ncalled the \"test\" function.  When the SpeedTester object runs the test, it runs the \"prep\" function\nfirst, followed by the \"test\" function, allowing the browser to refresh the screen after each one\nof these.\n\nUsage is as follows:\n\n    var speedTester = new window.speedtester.SpeedTester();\n\n    speedTester.createTest( [prep function], [test function] );\n    speedTester.createTest( [prep function], [test function] );\n    ...\n    speedTester.createTest( [prep function], [test function] );\n\n    speedTester.runTests();\n\nThe runTests() method runs all tests specified by calls to the createTest() method, in the\norder given. runTests() takes an optional argument, which is a function to be run\nafter all tests have run.",
-            "line": " src/valuetype/speedtest/SpeedTester.js:1"
         }
     ]
 }
