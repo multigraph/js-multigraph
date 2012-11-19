@@ -45,7 +45,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     //throw new Error("Graph Data Error: No data tags specified");
                 }
                 window.multigraph.jQuery.each(xml.find(">data"), function (i,e) {
-                    graph.data().add( ns.core.Data[parse](window.multigraph.jQuery(e)) );
+                    graph.data().add( ns.core.Data[parse](window.multigraph.jQuery(e), messageHandler) );
                 });
                 window.multigraph.jQuery.each(xml.find(">plot"), function (i,e) {
                     graph.plots().add( ns.core.Plot[parse](window.multigraph.jQuery(e), graph, messageHandler) );
