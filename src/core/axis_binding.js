@@ -8,7 +8,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     /**
      * @class axisBinding
-     * @for axisbinding
+     * @for axisBinding
      * @constructor
      */
     ns.AxisBinding = new window.jermaine.Model( "AxisBinding", function () {
