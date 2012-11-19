@@ -80,7 +80,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     /**
      * Determines if the browser supports canvas elements.
      *
-     * @function browserHasCanvasSupport
+     * @method browserHasCanvasSupport
      * @private
      * @static
      * @author jrfrimme
@@ -103,7 +103,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * jQuery `promise` which interacts with the multigraph through its
      * `done` function.
      *
-     * @function createGraph
+     * @method createGraph
      * @param {Object} options
      *
      * @param {String|HTML Element|jQuery Object} options.div (REQUIRED)
@@ -219,7 +219,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     /**
      * `window.multigraph.create` is an alias for `window.multigraph.core.Multigraph.createGraph`.
      *
-     * @function window.multigraph.create
+     * @method window.multigraph.create
      * @param {Object} options
      *
      * @param {String|HTML Element|jQuery Object} options.div (REQUIRED)
@@ -266,7 +266,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     /**
      * Creates default error and warning functions for multigraph.
      *
-     * @function createDefaultMessageHandlers
+     * @method createDefaultMessageHandlers
      * @param {HTML Element} div
      * @static
      * @return {Object} Object keyed by `error` and `warning` which respectively point to

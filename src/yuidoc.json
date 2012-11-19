@@ -1,5 +1,8 @@
 {
     "name": "js-Multigraph",
     "description": "Multigraph's JavaScript Implementation",
-    "url": "http://www.multigraph.org/"
+    "url": "http://www.multigraph.org/",
+    "options":{
+        "exclude": ".DS_Store,.svn,CVS,.git,build_rollup_tmp,build_tmp,src/valuetype/spec,src/valuetype/speedtest"
+    }
 }
