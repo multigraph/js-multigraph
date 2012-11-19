@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src&#x2F;graphics&#x2F;canvas&#x2F;text.js</title>
+    <title>src&#x2F;graphics&#x2F;canvas&#x2F;canvas_mixin.js</title>
     <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.7.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
@@ -102,7 +102,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: src&#x2F;graphics&#x2F;canvas&#x2F;text.js</h1>
+                        <h1 class="file-heading">File: src&#x2F;graphics&#x2F;canvas&#x2F;canvas_mixin.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
@@ -110,90 +110,19 @@ window.multigraph.util.namespace(&quot;window.multigraph.graphics.canvas&quot;, 
     &quot;use strict&quot;;
 
     &#x2F;**
+     * Mixin functions for canvas driver.
+     *
      * @module multigraph
      * @submodule canvas
+     * @main canvas
      *&#x2F;
 
+    ns.mixin = new window.multigraph.core.Mixin();
+
     ns.mixin.add(function (ns) {
-        var Text = ns.Text;
-
-        &#x2F;**
-         * Determines unrotated and rotated widths and heights for the stored string in the canvas
-         * environment
-         *
-         * @method initializeGeometry
-         * @for Text
-         * @chainable
-         * @param {Object} graphicsContext
-         *   @param {Context} graphicsContext.context
-         *   @param {Float} graphicsContext.angle
-         *&#x2F;
-        Text.respondsTo(&quot;initializeGeometry&quot;, function (graphicsContext) {
-            var origWidth,
-                origHeight,
-                rotatedWidth,
-                rotatedHeight;
-
-            origWidth  = this.measureStringWidth(graphicsContext.context);
-            origHeight = this.measureStringHeight(graphicsContext.context);
-
-            if (graphicsContext &amp;&amp; graphicsContext.angle !== undefined) {
-                var angle = graphicsContext.angle&#x2F;180 * Math.PI;
-                rotatedWidth = Math.abs(Math.cos(angle)) * origWidth + Math.abs(Math.sin(angle)) * origHeight;
-                rotatedHeight = Math.abs(Math.sin(angle)) * origWidth + Math.abs(Math.cos(angle)) * origHeight;
-            } else {
-                rotatedWidth = origWidth;
-                rotatedHeight = origHeight;
-            }
-
-            this.origWidth(origWidth);
-            this.origHeight(origHeight);
-            this.rotatedWidth(rotatedWidth);
-            this.rotatedHeight(rotatedHeight);
-
-            return this;
-        });
-
-        &#x2F;**
-         * Determines unrotated width for the stored string in the canvas environment.
-         *
-         * @method measureStringWidth
-         * @for Text
-         * @private
-         * @return {Float} Unrotated width of string.
-         * @param {Context} context
-         *&#x2F;
-        Text.respondsTo(&quot;measureStringWidth&quot;, function (context) {
-            if (this.string() === undefined) {
-                throw new Error(&quot;measureStringWidth requires the string attr to be set.&quot;);
-            }
-
-            var metrics = context.measureText(this.string());
-            return metrics.width;
-        });
-
-        &#x2F;**
-         * Determines unrotated height for the stored string in the canvas environment.
-         *
-         * @method measureStringHeight
-         * @for Text
-         * @private
-         * @return {Float} Unrotated height of string.
-         * @param {Context} context
-         *&#x2F;
-        Text.respondsTo(&quot;measureStringHeight&quot;, function (context) {
-            if (this.string() === undefined) {
-                throw new Error(&quot;measureStringHeight requires the string attr to be set.&quot;);
-            }
-
-            &#x2F;&#x2F;NOTE: kludge: canvas cannot exactly measure text height, so we just return a value
-            &#x2F;&#x2F;      estimated by using the width of an &quot;M&quot; as a substitute.  Maybe improve this
-            &#x2F;&#x2F;      later by using a better workaround.
-            var metrics = context.measureText(&quot;M&quot;),
-                newlineCount = this.string().match(&#x2F;\n&#x2F;g);
-            return (newlineCount !== null ? (newlineCount.length + 1) : 1) * metrics.width;
-        });
+        window.multigraph.driver = &quot;canvas&quot;;
     });
+
 });
 
     </pre>
