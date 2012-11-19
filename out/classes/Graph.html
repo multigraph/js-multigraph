@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>axisBinding</title>
+    <title>Graph</title>
     <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.7.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
@@ -104,7 +104,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>axisBinding Class</h1>
+                        <h1>Graph Class</h1>
 <div class="box meta">
     
 
@@ -112,7 +112,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="..&#x2F;files&#x2F;src_core_axis_binding.js.html#l9"><code>src&#x2F;core&#x2F;axis_binding.js:9</code></a>
+            Defined in: <a href="..&#x2F;files&#x2F;src_core_graph.js.html#l10"><code>src&#x2F;core&#x2F;graph.js:10</code></a>
         </div>
     
 
@@ -129,14 +129,14 @@
 
 
 <div class="box intro">
-    
+    <p>The Graph Jermaine model controls the properties for an individual Graph.</p>
 </div>
 
 
     <div class="constructor">
         <h2>Constructor</h2>
-        <div id="method_axisBinding" class="method item">
-    <h3 class="name"><code>axisBinding</code></h3>
+        <div id="method_Graph" class="method item">
+    <h3 class="name"><code>Graph</code></h3>
 
     
         <span class="paren">()</span>
@@ -167,7 +167,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_axis_binding.js.html#l9"><code>src&#x2F;core&#x2F;axis_binding.js:9</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_graph.js.html#l10"><code>src&#x2F;core&#x2F;graph.js:10</code></a>
         
         </p>
 
@@ -216,65 +216,36 @@
                     <ul class="index-list methods">
                         
                             <li class="index-item method">
-                                <a href="#method_addAxis">addAxis</a>
+                                <a href="#method_findNearestAxis">findNearestAxis</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_findByIdOrCreateNew">findByIdOrCreateNew</a>
-
-                                
-                                    <span class="flag static">static</span>
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_forgetAllBindings">forgetAllBindings</a>
-
-                                
-                                    <span class="flag static">static</span>
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_getInstanceById">getInstanceById</a>
-
-                                
-                                    <span class="flag static">static</span>
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_removeAxis">removeAxis</a>
+                                <a href="#method_initializeGeometry">initializeGeometry</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_setDataRange">setDataRange</a>
+                                <a href="#method_pauseAllData">pauseAllData</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_sync">sync</a>
+                                <a href="#method_registerCommonDataCallback">registerCommonDataCallback</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_syncAllBindings">syncAllBindings</a>
+                                <a href="#method_resumeAllData">resumeAllData</a>
 
-                                
-                                    <span class="flag static">static</span>
                                 
                                 
                             </li>
@@ -297,7 +268,70 @@
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_id">id</a>
+                                <a href="#property_background">background</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_data">data</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_legend">legend</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_paddingBox">paddingBox</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_plotarea">plotarea</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_plotBox">plotBox</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_plots">plots</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_title">title</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_window">window</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_windowBox">windowBox</a>
 
                                 
                                 
@@ -317,8 +351,8 @@
                 <h2 class="off-left">Methods</h2>
 
                 
-                    <div id="method_addAxis" class="method item">
-    <h3 class="name"><code>addAxis</code></h3>
+                    <div id="method_findNearestAxis" class="method item">
+    <h3 class="name"><code>findNearestAxis</code></h3>
 
     
         <div class="args">
@@ -326,19 +360,19 @@
             
                 <li class="arg">
                     
-                        <code>axis</code>
+                        <code>x</code>
                     
                 </li>
             
                 <li class="arg">
                     
-                        <code>min</code>
+                        <code>y</code>
                     
                 </li>
             
                 <li class="arg">
                     
-                        <code>max</code>
+                        <code>orientation</code>
                     
                 </li>
             
@@ -371,7 +405,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_axis_binding.js.html#l44"><code>src&#x2F;core&#x2F;axis_binding.js:44</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_graph.js.html#l245"><code>src&#x2F;core&#x2F;graph.js:245</code></a>
         
         </p>
 
@@ -393,8 +427,8 @@
             
                 <li class="param">
                     
-                        <code class="param-name">axis</code>
-                        <span class="type">Axis</span>
+                        <code class="param-name">x</code>
+                        <span class="type">Object</span>
                     
 
                     
@@ -408,8 +442,8 @@
             
                 <li class="param">
                     
-                        <code class="param-name">min</code>
-                        <span class="type">Number | DataValue</span>
+                        <code class="param-name">y</code>
+                        <span class="type">Object</span>
                     
 
                     
@@ -423,96 +457,7 @@
             
                 <li class="param">
                     
-                        <code class="param-name">max</code>
-                        <span class="type">Number | DataValue</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method_findByIdOrCreateNew" class="method item">
-    <h3 class="name"><code>findByIdOrCreateNew</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>id</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <span class="flag static">static</span>
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;src_core_axis_binding.js.html#l225"><code>src&#x2F;core&#x2F;axis_binding.js:225</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">id</code>
+                        <code class="param-name">orientation</code>
                         <span class="type">Object</span>
                     
 
@@ -535,64 +480,8 @@
 </div>
 
                 
-                    <div id="method_forgetAllBindings" class="method item">
-    <h3 class="name"><code>forgetAllBindings</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <span class="flag static">static</span>
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;src_core_axis_binding.js.html#l255"><code>src&#x2F;core&#x2F;axis_binding.js:255</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method_getInstanceById" class="method item">
-    <h3 class="name"><code>getInstanceById</code></h3>
+                    <div id="method_initializeGeometry" class="method item">
+    <h3 class="name"><code>initializeGeometry</code></h3>
 
     
         <div class="args">
@@ -600,7 +489,19 @@
             
                 <li class="arg">
                     
-                        <code>id</code>
+                        <code>width</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>height</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>graphicsContext</code>
                     
                 </li>
             
@@ -617,8 +518,6 @@
     
 
     
-        <span class="flag static">static</span>
-    
 
     
 
@@ -635,7 +534,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_axis_binding.js.html#l213"><code>src&#x2F;core&#x2F;axis_binding.js:213</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_graph.js.html#l155"><code>src&#x2F;core&#x2F;graph.js:155</code></a>
         
         </p>
 
@@ -646,7 +545,9 @@
     </div>
 
     <div class="description">
-        
+        <p>Initializes the Graph's geometry. Determines the width and height of the Graph's <code>windowBox</code>,
+<code>paddingBox</code> and <code>plotBox</code>; calls its Axes' and Legend's implementations of
+<code>initializeGeometry</code>.</p>
     </div>
 
     
@@ -657,7 +558,37 @@
             
                 <li class="param">
                     
-                        <code class="param-name">id</code>
+                        <code class="param-name">width</code>
+                        <span class="type">Integer</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Width of the multigraph's div</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">height</code>
+                        <span class="type">Integer</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Height of the multigraph's div</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">graphicsContext</code>
                         <span class="type">Object</span>
                     
 
@@ -680,8 +611,62 @@
 </div>
 
                 
-                    <div id="method_removeAxis" class="method item">
-    <h3 class="name"><code>removeAxis</code></h3>
+                    <div id="method_pauseAllData" class="method item">
+    <h3 class="name"><code>pauseAllData</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_core_graph.js.html#l215"><code>src&#x2F;core&#x2F;graph.js:215</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_registerCommonDataCallback" class="method item">
+    <h3 class="name"><code>registerCommonDataCallback</code></h3>
 
     
         <div class="args">
@@ -689,7 +674,7 @@
             
                 <li class="arg">
                     
-                        <code>axis</code>
+                        <code>callback</code>
                     
                 </li>
             
@@ -722,7 +707,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_axis_binding.js.html#l76"><code>src&#x2F;core&#x2F;axis_binding.js:76</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_graph.js.html#l199"><code>src&#x2F;core&#x2F;graph.js:199</code></a>
         
         </p>
 
@@ -733,7 +718,8 @@
     </div>
 
     <div class="description">
-        
+        <p>Convience function for registering callback functions on the Graph's <code>Data</code> models. Adds
+<code>dataReady</code> event listeners to each of the Graph's <code>Data</code> models.</p>
     </div>
 
     
@@ -744,8 +730,8 @@
             
                 <li class="param">
                     
-                        <code class="param-name">axis</code>
-                        <span class="type">Axis</span>
+                        <code class="param-name">callback</code>
+                        <span class="type">Function</span>
                     
 
                     
@@ -767,248 +753,8 @@
 </div>
 
                 
-                    <div id="method_setDataRange" class="method item">
-    <h3 class="name"><code>setDataRange</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>initiatingAxis</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>min</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>max</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>dispatch</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;src_core_axis_binding.js.html#l136"><code>src&#x2F;core&#x2F;axis_binding.js:136</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">initiatingAxis</code>
-                        <span class="type">Axis</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">min</code>
-                        <span class="type">Number | DataValue</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">max</code>
-                        <span class="type">Number | DataValue</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">dispatch</code>
-                        <span class="type">Boolean</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method_sync" class="method item">
-    <h3 class="name"><code>sync</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type">Boolean</span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;src_core_axis_binding.js.html#l95"><code>src&#x2F;core&#x2F;axis_binding.js:95</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Force all the axes in this binding to sync up with each
-other, if possible.</p>
-
-<p>This is done by looking for an axis in this binding which
-has its dataMin and dataMax values set, and then calling
-its setDataRange() method with those values.  The main
-purpose of this method is to facilitate the initial setting
-of dataMin/dataMax values for axes in a binding that do not
-already have dataMin/dataMax values set; this forces them
-to be set based on the binding, as determined by another
-axis in the binding.</p>
-
-<p>Note that this method is NOT the normal way for bound axes
-to interact with each other once initialization is
-complete; that is done via the axes' own setDataRange()
-method.</p>
-    </div>
-
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type">Boolean</span>:
-                    
-                    a value indicating whether the sync was
-                  done; this will be true if and only if
-                  there is at least one axis in the binding
-                  having both its dataMin and dataMax
-                  values set.
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
-                    <div id="method_syncAllBindings" class="method item">
-    <h3 class="name"><code>syncAllBindings</code></h3>
+                    <div id="method_resumeAllData" class="method item">
+    <h3 class="name"><code>resumeAllData</code></h3>
 
     
         <span class="paren">()</span>
@@ -1023,8 +769,6 @@ method.</p>
     
 
     
-        <span class="flag static">static</span>
-    
 
     
 
@@ -1041,7 +785,7 @@ method.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_axis_binding.js.html#l241"><code>src&#x2F;core&#x2F;axis_binding.js:241</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_graph.js.html#l230"><code>src&#x2F;core&#x2F;graph.js:230</code></a>
         
         </p>
 
@@ -1073,7 +817,7 @@ method.</p>
                 
                     <div id="property_axes" class="property item">
     <h3 class="name"><code>axes</code></h3>
-    <span class="type">Array</span>
+    <span class="type">Axis</span>
 
     
 
@@ -1094,7 +838,7 @@ method.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_axis_binding.js.html#l29"><code>src&#x2F;core&#x2F;axis_binding.js:29</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_graph.js.html#l78"><code>src&#x2F;core&#x2F;graph.js:78</code></a>
         
         </p>
 
@@ -1104,7 +848,7 @@ method.</p>
     </div>
 
     <div class="description">
-        
+        <p>Jermaine Attr_List of the Graph's Axes.</p>
     </div>
 
     
@@ -1115,9 +859,9 @@ method.</p>
 </div>
 
                 
-                    <div id="property_id" class="property item">
-    <h3 class="name"><code>id</code></h3>
-    <span class="type">String</span>
+                    <div id="property_background" class="property item">
+    <h3 class="name"><code>background</code></h3>
+    <span class="type">Background</span>
 
     
 
@@ -1138,7 +882,7 @@ method.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_axis_binding.js.html#l19"><code>src&#x2F;core&#x2F;axis_binding.js:19</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_graph.js.html#l55"><code>src&#x2F;core&#x2F;graph.js:55</code></a>
         
         </p>
 
@@ -1148,7 +892,403 @@ method.</p>
     </div>
 
     <div class="description">
+        <p>Child model which controls the properties of the Graph's Background.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_data" class="property item">
+    <h3 class="name"><code>data</code></h3>
+    <span class="type">Data</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
         
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_core_graph.js.html#l100"><code>src&#x2F;core&#x2F;graph.js:100</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Jermiane Attr_List of the Graph's Data sets.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_legend" class="property item">
+    <h3 class="name"><code>legend</code></h3>
+    <span class="type"><a href="../classes/Legend.html" class="crosslink">Legend</a></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_core_graph.js.html#l44"><code>src&#x2F;core&#x2F;graph.js:44</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Child model which controls the properties of the Graph's Legend.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_paddingBox" class="property item">
+    <h3 class="name"><code>paddingBox</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_core_graph.js.html#l123"><code>src&#x2F;core&#x2F;graph.js:123</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Stores the computed width and height of the Graph's paddingBox.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_plotarea" class="property item">
+    <h3 class="name"><code>plotarea</code></h3>
+    <span class="type">Plotarea</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_core_graph.js.html#l31"><code>src&#x2F;core&#x2F;graph.js:31</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Child model which controls the properties of the Graph's Plotarea.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_plotBox" class="property item">
+    <h3 class="name"><code>plotBox</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_core_graph.js.html#l134"><code>src&#x2F;core&#x2F;graph.js:134</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Stroes the computed width and height of the Graph's plotBox.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_plots" class="property item">
+    <h3 class="name"><code>plots</code></h3>
+    <span class="type">Plot</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_core_graph.js.html#l89"><code>src&#x2F;core&#x2F;graph.js:89</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Jermiane Attr_List of the Graph's Plots.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_title" class="property item">
+    <h3 class="name"><code>title</code></h3>
+    <span class="type">Title</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_core_graph.js.html#l67"><code>src&#x2F;core&#x2F;graph.js:67</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Child model which controls the properties of the Graph's Title.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_window" class="property item">
+    <h3 class="name"><code>window</code></h3>
+    <span class="type">Window</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_core_graph.js.html#l20"><code>src&#x2F;core&#x2F;graph.js:20</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Child model which controls the properties of the Graph's Window.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_windowBox" class="property item">
+    <h3 class="name"><code>windowBox</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_core_graph.js.html#l112"><code>src&#x2F;core&#x2F;graph.js:112</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Stores the computed width and height of the Graph's windowBox.</p>
     </div>
 
     

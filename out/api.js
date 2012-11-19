@@ -3,11 +3,12 @@ YUI.add("yuidoc-meta", function(Y) {
     "classes": [
         "ArrayData",
         "EventEmitter",
+        "Graph",
         "Legend",
         "Mixin",
+        "Multigraph",
         "Text",
-        "axisBinding",
-        "axisbinding"
+        "axisBinding"
     ],
     "modules": [
         "canvas",

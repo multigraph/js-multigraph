@@ -28,7 +28,7 @@
                 "axisBinding": 1
             },
             "fors": {
-                "axisbinding": 1
+                "axisBinding": 1
             },
             "namespaces": {}
         },
@@ -47,6 +47,17 @@
             },
             "fors": {
                 "EventEmitter": 1
+            },
+            "namespaces": {}
+        },
+        "src/core/graph.js": {
+            "name": "src/core/graph.js",
+            "modules": {},
+            "classes": {
+                "Graph": 1
+            },
+            "fors": {
+                "Graph": 1
             },
             "namespaces": {}
         },
@@ -75,8 +86,12 @@
         "src/core/multigraph.js": {
             "name": "src/core/multigraph.js",
             "modules": {},
-            "classes": {},
-            "fors": {},
+            "classes": {
+                "Multigraph": 1
+            },
+            "fors": {
+                "Multigraph": 1
+            },
             "namespaces": {}
         },
         "src/core/text.js": {
@@ -187,18 +202,21 @@
             "classes": {
                 "ArrayData": 1,
                 "axisBinding": 1,
-                "axisbinding": 1,
                 "EventEmitter": 1,
+                "Graph": 1,
                 "Legend": 1,
                 "Mixin": 1,
+                "Multigraph": 1,
                 "Text": 1
             },
             "fors": {
                 "ArrayData": 1,
-                "axisbinding": 1,
+                "axisBinding": 1,
                 "EventEmitter": 1,
+                "Graph": 1,
                 "Legend": 1,
                 "Mixin": 1,
+                "Multigraph": 1,
                 "Text": 1
             },
             "namespaces": {},
@@ -211,10 +229,11 @@
             "classes": {
                 "ArrayData": 1,
                 "axisBinding": 1,
-                "axisbinding": 1,
                 "EventEmitter": 1,
+                "Graph": 1,
                 "Legend": 1,
                 "Mixin": 1,
+                "Multigraph": 1,
                 "Text": 1
             },
             "fors": {},
@@ -300,18 +319,6 @@
             "line": 9,
             "is_constructor": 1
         },
-        "axisbinding": {
-            "name": "axisbinding",
-            "shortname": "axisbinding",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "multigraph",
-            "submodule": "core",
-            "namespace": ""
-        },
         "EventEmitter": {
             "name": "EventEmitter",
             "shortname": "EventEmitter",
@@ -330,6 +337,22 @@
             "example": [
                 "\n    var Person = new window.jermaine.Model(function() {\n        this.isA(EventEmitter);\n        this.hasA(\"name\").which.isA(\"string\");\n        this.respondsTo(\"say\", function(something) {\n            console.log(this.name() + ' says ' + something);\n            this.emit({type : \"say\", message : something});\n        });\n    });\n    var person = new Person().name(\"Mark\");\n\n    var sayListener = function(event) {\n        console.log(event.target.name() + ' said ' + event.message);\n    };\n\n    person.say('Hello');\n    person.addListener(\"say\", sayListener);\n    person.say('Alright');\n    person.removeListener(\"say\", sayListener);\n    person.say('Goodbye');\n\n\n    OUTPUT:\n\n        Mark says Hello\n        Mark says Alright\n        Mark said Alright\n        Mark said Goodbye"
             ]
+        },
+        "Graph": {
+            "name": "Graph",
+            "shortname": "Graph",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "multigraph",
+            "submodule": "core",
+            "namespace": "",
+            "file": "src/core/graph.js",
+            "line": 10,
+            "description": "The Graph Jermaine model controls the properties for an individual Graph.",
+            "is_constructor": 1
         },
         "Legend": {
             "name": "Legend",
@@ -369,6 +392,22 @@
             "description": "The Mixin model provides a convenient way for Jermaine\napplications to \"mix in\" additional functionality to a model,\nfrom outside the model's initial definition.\n\nThe ability to add features (methods and/or attributes) to a\nJermaine model outside its initial definition already exists in\nJermaine -- this Mixin model does not actually add new\nfunctionality to Jermaine; it just provides a convenient\npattern for grouping additional features together and applying\nthem to a model as a group.\n\nThe Mixin model maintains an internal list of functions, called\nmixin functions, and provides an add() method for adding a\nfunction to that list.\n\nThe apply() method calls all of the mixinfunctions that have been\nadded to the list, passing each one the same arguments\nthat were passed to the apply() function itself.\n\nThat's it.  That's all the Mixin class does.  It's up to you to\nput whatever jermaine-model-extending code you want in the\nmixin functions you add to the Mixin; the Mixin simply serves\nas a place to hold them all, and a convenient way to execute\nthem all at once.",
             "author": "mbp",
             "modified": "Wed Nov 14 23:45:37 2012"
+        },
+        "Multigraph": {
+            "name": "Multigraph",
+            "shortname": "Multigraph",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "multigraph",
+            "submodule": "core",
+            "namespace": "",
+            "file": "src/core/multigraph.js",
+            "line": 14,
+            "description": "The Multigraph Jermaine model is the root class for the js-multigraph project.",
+            "is_constructor": 1
         },
         "Text": {
             "name": "Text",
@@ -609,7 +648,7 @@
             "type": "{String}",
             "author": "jrfrimme",
             "modified": "Fri Nov 16 11:53:50 2012",
-            "class": "axisbinding",
+            "class": "axisBinding",
             "module": "multigraph",
             "submodule": "core"
         },
@@ -621,7 +660,7 @@
             "type": "{Array}",
             "author": "jrfrimme",
             "modified": "Fri Nov 16 11:53:57 2012",
-            "class": "axisbinding",
+            "class": "axisBinding",
             "module": "multigraph",
             "submodule": "core"
         },
@@ -649,7 +688,7 @@
             ],
             "author": "jrfrimme",
             "modified": "Fri Nov 16 11:54:00 2012",
-            "class": "axisbinding",
+            "class": "axisBinding",
             "module": "multigraph",
             "submodule": "core"
         },
@@ -667,7 +706,7 @@
             ],
             "author": "jrfrimme",
             "modified": "Fri Nov 16 11:54:07 2012",
-            "class": "axisbinding",
+            "class": "axisBinding",
             "module": "multigraph",
             "submodule": "core"
         },
@@ -681,7 +720,7 @@
                 "description": "a value indicating whether the sync was\n                  done; this will be true if and only if\n                  there is at least one axis in the binding\n                  having both its dataMin and dataMax\n                  values set.",
                 "type": "Boolean"
             },
-            "class": "axisbinding",
+            "class": "axisBinding",
             "module": "multigraph",
             "submodule": "core"
         },
@@ -714,7 +753,7 @@
             ],
             "author": "jrfrimme",
             "modified": "Fri Nov 16 11:30:05 2012",
-            "class": "axisbinding",
+            "class": "axisBinding",
             "module": "multigraph",
             "submodule": "core"
         },
@@ -731,7 +770,7 @@
                 }
             ],
             "author": "jrfrimme",
-            "class": "axisbinding",
+            "class": "axisBinding",
             "module": "multigraph",
             "submodule": "core"
         },
@@ -748,7 +787,7 @@
                 }
             ],
             "author": "jrfrimme",
-            "class": "axisbinding",
+            "class": "axisBinding",
             "module": "multigraph",
             "submodule": "core"
         },
@@ -759,7 +798,7 @@
             "name": "syncAllBindings",
             "static": 1,
             "author": "jrfrimme",
-            "class": "axisbinding",
+            "class": "axisBinding",
             "module": "multigraph",
             "submodule": "core"
         },
@@ -770,7 +809,7 @@
             "name": "forgetAllBindings",
             "static": 1,
             "author": "jrfrimme",
-            "class": "axisbinding",
+            "class": "axisBinding",
             "module": "multigraph",
             "submodule": "core"
         },
@@ -857,6 +896,244 @@
                 "description": "(nothing)"
             },
             "class": "EventEmitter",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph.js",
+            "line": 20,
+            "description": "Child model which controls the properties of the Graph's Window.",
+            "itemtype": "property",
+            "name": "window",
+            "type": "{Window}",
+            "author": "jrfrimme",
+            "modified": "Mon Nov 19 15:56:29 2012",
+            "class": "Graph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph.js",
+            "line": 31,
+            "description": "Child model which controls the properties of the Graph's Plotarea.",
+            "itemtype": "property",
+            "name": "plotarea",
+            "type": "{Plotarea}",
+            "author": "jrfrimme",
+            "modified": "Mon Nov 19 15:59:37 2012",
+            "class": "Graph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph.js",
+            "line": 44,
+            "description": "Child model which controls the properties of the Graph's Legend.",
+            "itemtype": "property",
+            "name": "legend",
+            "type": "{Legend}",
+            "author": "jrfrimme",
+            "modified": "Mon Nov 19 16:00:05 2012",
+            "class": "Graph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph.js",
+            "line": 55,
+            "description": "Child model which controls the properties of the Graph's Background.",
+            "itemtype": "property",
+            "name": "background",
+            "type": "{Background}",
+            "author": "jrfrimme",
+            "modified": "Mon Nov 19 16:02:47 2012",
+            "class": "Graph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph.js",
+            "line": 67,
+            "description": "Child model which controls the properties of the Graph's Title.",
+            "itemtype": "property",
+            "name": "title",
+            "type": "{Title}",
+            "author": "jrfrimme",
+            "modified": "Mon Nov 19 16:03:17 2012",
+            "class": "Graph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph.js",
+            "line": 78,
+            "description": "Jermaine Attr_List of the Graph's Axes.",
+            "itemtype": "property",
+            "name": "axes",
+            "type": "{Axis}",
+            "author": "jrfrimme",
+            "modified": "Mon Nov 19 16:03:44 2012",
+            "class": "Graph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph.js",
+            "line": 89,
+            "description": "Jermiane Attr_List of the Graph's Plots.",
+            "itemtype": "property",
+            "name": "plots",
+            "type": "{Plot}",
+            "author": "jrfrimme",
+            "modified": "Mon Nov 19 16:04:20 2012",
+            "class": "Graph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph.js",
+            "line": 100,
+            "description": "Jermiane Attr_List of the Graph's Data sets.",
+            "itemtype": "property",
+            "name": "data",
+            "type": "{Data}",
+            "author": "jrfrimme",
+            "modified": "Mon Nov 19 16:05:03 2012",
+            "class": "Graph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph.js",
+            "line": 112,
+            "description": "Stores the computed width and height of the Graph's windowBox.",
+            "itemtype": "property",
+            "name": "windowBox",
+            "type": "{}",
+            "author": "jrfrimme",
+            "modified": "Mon Nov 19 16:05:41 2012",
+            "class": "Graph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph.js",
+            "line": 123,
+            "description": "Stores the computed width and height of the Graph's paddingBox.",
+            "itemtype": "property",
+            "name": "paddingBox",
+            "type": "{}",
+            "author": "jrfrimme",
+            "modified": "Mon Nov 19 16:07:02 2012",
+            "class": "Graph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph.js",
+            "line": 134,
+            "description": "Stroes the computed width and height of the Graph's plotBox.",
+            "itemtype": "property",
+            "name": "plotBox",
+            "type": "{}",
+            "author": "jrfrimme",
+            "modified": "Mon Nov 19 16:07:26 2012",
+            "class": "Graph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph.js",
+            "line": 155,
+            "description": "Initializes the Graph's geometry. Determines the width and height of the Graph's `windowBox`,\n`paddingBox` and `plotBox`; calls its Axes' and Legend's implementations of\n`initializeGeometry`.",
+            "itemtype": "method",
+            "name": "initializeGeometry",
+            "params": [
+                {
+                    "name": "width",
+                    "description": "Width of the multigraph's div",
+                    "type": "Integer"
+                },
+                {
+                    "name": "height",
+                    "description": "Height of the multigraph's div",
+                    "type": "Integer"
+                },
+                {
+                    "name": "graphicsContext",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "author": "jrfrimme",
+            "modified": "Mon Nov 19 16:09:29 2012",
+            "class": "Graph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph.js",
+            "line": 199,
+            "description": "Convience function for registering callback functions on the Graph's `Data` models. Adds\n`dataReady` event listeners to each of the Graph's `Data` models.",
+            "itemtype": "method",
+            "name": "registerCommonDataCallback",
+            "params": [
+                {
+                    "name": "callback",
+                    "description": "",
+                    "type": "Function"
+                }
+            ],
+            "author": "jrfrimme",
+            "modified": "Mon Nov 19 16:13:49 2012",
+            "class": "Graph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph.js",
+            "line": 215,
+            "itemtype": "method",
+            "name": "pauseAllData",
+            "author": "jrfrimme",
+            "modified": "Mon Nov 19 16:16:15 2012",
+            "class": "Graph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph.js",
+            "line": 230,
+            "itemtype": "method",
+            "name": "resumeAllData",
+            "author": "jrfrimme",
+            "modified": "Mon Nov 19 16:16:19 2012",
+            "class": "Graph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph.js",
+            "line": 245,
+            "itemtype": "method",
+            "name": "findNearestAxis",
+            "params": [
+                {
+                    "name": "x",
+                    "description": ""
+                },
+                {
+                    "name": "y",
+                    "description": ""
+                },
+                {
+                    "name": "orientation",
+                    "description": ""
+                }
+            ],
+            "author": "jrfrimme",
+            "modified": "Mon Nov 19 16:17:06 2012",
+            "class": "Graph",
             "module": "multigraph",
             "submodule": "core"
         },
@@ -1356,20 +1633,215 @@
         },
         {
             "file": "src/core/multigraph.js",
-            "line": 50,
-            "description": "Create a Multigraph according to specified options.",
+            "line": 23,
+            "description": "Jermiane Attr_List of all the graphs in a Multigraph.",
+            "itemtype": "property",
+            "name": "graphs",
+            "type": "{Graph}",
+            "author": "jrfrimme",
+            "modified": "Mon Nov 19 14:37:04 2012",
+            "class": "Multigraph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/multigraph.js",
+            "line": 35,
+            "description": "The div the multigraph is rendered in.",
+            "itemtype": "property",
+            "name": "div",
+            "type": "{HTML Element}",
+            "author": "jrfrimme",
+            "modified": "Mon Nov 19 14:38:41 2012",
+            "class": "Multigraph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/multigraph.js",
+            "line": 45,
+            "description": "Initializes the Multigraph's geometry by calling the `initializeGeometry` function of\neach of its graph children.",
             "itemtype": "method",
-            "name": "Multigraph.createGraph",
+            "name": "initializeGeometry",
             "params": [
                 {
-                    "name": "options!~YUIDOC_LINE~!!~YUIDOC_LINE~!A",
-                    "description": "plain JavaScript object containing options as key/value pairs.\nIt can contain the following keys:\n\ndiv: (REQUIRED) The DOM element div into which the multigraph should be\n     placed; this value may be either (a) a string which is taken\n     to be the id attribute of a div in the page, (b) a reference\n     to the div DOM element itself, or (c) a jQuery object\n     corresponding to the div DOM element.\n\nmugl: (REQUIRED) the URL from which the MUGL file for the Multigraph can\n      be loaded\n\ndriver: (OPTIONAL) Indicates which graphics driver to use;\n      should be one of the strings \"canvas\", \"raphael\",\n      \"logger\", or \"auto\".  The default (which is used if the\n      'driver' tag is absent) is \"auto\", which causes\n      Multigraph to check the features of the browser it is\n      running in and choose the most appropriate driver.\n\nerror: (OPTIONAL) A function for displaying error\n      messages to the user.  Multigraph will call this function\n      if and when it encounters an error.  The function should\n      receive a single argument which is an instance of the\n      JavaScrip Error object.  The default is to use\n      Multigraph's own internal mechanism for displaying user\n      messages.\n\nwarning: (OPTIONAL) A function for displaying warning\n      messages to the user.  Multigraph will call this function\n      if and when it needs to display a warning message. The\n      function should receive a single argument which is an\n      instance of the JavaScrip Error object.  The default is\n      to use Multigraph's own internal mechanism for displaying\n      user messages.",
+                    "name": "width",
+                    "description": "Width of the multigraph's div.",
+                    "type": "Integer"
+                },
+                {
+                    "name": "height",
+                    "description": "Height of the multigraph's div.",
+                    "type": "Integer"
+                },
+                {
+                    "name": "graphicsContext",
+                    "description": "",
                     "type": "Object"
                 }
             ],
+            "author": "jrfrimme",
+            "modified": "Mon Nov 19 14:39:27 2012",
+            "class": "Multigraph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/multigraph.js",
+            "line": 63,
+            "description": "Convience function for registering callback functions for data becoming ready.",
+            "itemtype": "method",
+            "name": "registerCommonDataCallback",
+            "params": [
+                {
+                    "name": "callback",
+                    "description": "Callback function to be registered.",
+                    "type": "Function"
+                }
+            ],
+            "author": "jrfrimme",
+            "modified": "Mon Nov 19 14:43:44 2012",
+            "class": "Multigraph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/multigraph.js",
+            "line": 80,
+            "description": "Determines if the browser supports canvas elements.",
+            "itemtype": "method",
+            "name": "browserHasCanvasSupport",
+            "access": "private",
+            "tagname": "",
+            "static": 1,
+            "author": "jrfrimme",
+            "modified": "Mon Nov 19 14:44:00 2012",
+            "class": "Multigraph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/multigraph.js",
+            "line": 101,
+            "description": "Creates a Multigraph according to specified options. Returns a\njQuery `promise` which interacts with the multigraph through its\n`done` function.",
+            "itemtype": "method",
+            "name": "createGraph",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "div",
+                            "description": "(REQUIRED)\n     The DOM element div into which the multigraph should be\n     placed; this value may be either (a) a string which is taken\n     to be the id attribute of a div in the page, (b) a reference\n     to the div DOM element itself, or (c) a jQuery object\n     corresponding to the div DOM element.",
+                            "type": "String|HTML Element|jQuery Object"
+                        },
+                        {
+                            "name": "mugl",
+                            "description": "(REQUIRED) the URL from which the MUGL\n      file for the Multigraph can be loaded",
+                            "type": "URI"
+                        },
+                        {
+                            "name": "driver",
+                            "description": "(OPTIONAL) Indicates which\n      graphics driver to use; should be one of the strings\n      \"canvas\", \"raphael\", \"logger\", or \"auto\".  The default\n      (which is used if the 'driver' tag is absent) is \"auto\",\n      which causes Multigraph to check the features of the\n      browser it is running in and choose the most appropriate\n      driver.",
+                            "type": "String"
+                        },
+                        {
+                            "name": "error",
+                            "description": "(OPTIONAL) A function for\n      displaying error messages to the user.  Multigraph will\n      call this function if and when it encounters an error.  The\n      function should receive a single argument which is an\n      instance of the JavaScrip Error object.  The default is to\n      use Multigraph's own internal mechanism for displaying user\n      messages.",
+                            "type": "Function"
+                        },
+                        {
+                            "name": "warning",
+                            "description": "(OPTIONAL) A function for\n      displaying warning messages to the user.  Multigraph will\n      call this function if and when it needs to display a\n      warning message. The function should receive a single\n      argument which is an instance of the JavaScript Error\n      object.  The default is to use Multigraph's own internal\n      mechanism for displaying user messages.",
+                            "type": "Function"
+                        }
+                    ]
+                }
+            ],
+            "return": {
+                "description": "jQuery promise which provides interaction with\n    the graph through its `done` function.",
+                "type": "Promise"
+            },
             "author": "mbp",
             "modified": "Fri Nov 16 00:34:21 2012",
-            "class": "Text",
+            "class": "Multigraph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/multigraph.js",
+            "line": 219,
+            "description": "`window.multigraph.create` is an alias for `window.multigraph.core.Multigraph.createGraph`.",
+            "itemtype": "method",
+            "name": "window.multigraph.create",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "div",
+                            "description": "(REQUIRED)\n     The DOM element div into which the multigraph should be\n     placed; this value may be either (a) a string which is taken\n     to be the id attribute of a div in the page, (b) a reference\n     to the div DOM element itself, or (c) a jQuery object\n     corresponding to the div DOM element.",
+                            "type": "String|HTML Element|jQuery Object"
+                        },
+                        {
+                            "name": "mugl",
+                            "description": "(REQUIRED) the URL from which the MUGL\n      file for the Multigraph can be loaded",
+                            "type": "URI"
+                        },
+                        {
+                            "name": "driver",
+                            "description": "(OPTIONAL) Indicates which\n      graphics driver to use; should be one of the strings\n      \"canvas\", \"raphael\", \"logger\", or \"auto\".  The default\n      (which is used if the 'driver' tag is absent) is \"auto\",\n      which causes Multigraph to check the features of the\n      browser it is running in and choose the most appropriate\n      driver.",
+                            "type": "String"
+                        },
+                        {
+                            "name": "error",
+                            "description": "(OPTIONAL) A function for\n      displaying error messages to the user.  Multigraph will\n      call this function if and when it encounters an error.  The\n      function should receive a single argument which is an\n      instance of the JavaScrip Error object.  The default is to\n      use Multigraph's own internal mechanism for displaying user\n      messages.",
+                            "type": "Function"
+                        },
+                        {
+                            "name": "warning",
+                            "description": "(OPTIONAL) A function for\n      displaying warning messages to the user.  Multigraph will\n      call this function if and when it needs to display a\n      warning message. The function should receive a single\n      argument which is an instance of the JavaScript Error\n      object.  The default is to use Multigraph's own internal\n      mechanism for displaying user messages.",
+                            "type": "Function"
+                        }
+                    ]
+                }
+            ],
+            "return": {
+                "description": "jQuery promise which provides interaction with\n    the graph through its `done` function.",
+                "type": "Promise"
+            },
+            "static": 1,
+            "author": "jrfrimme",
+            "modified": "Mon Nov 19 15:12:15 2012",
+            "class": "Multigraph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/multigraph.js",
+            "line": 266,
+            "description": "Creates default error and warning functions for multigraph.",
+            "itemtype": "method",
+            "name": "createDefaultMessageHandlers",
+            "params": [
+                {
+                    "name": "div",
+                    "description": "",
+                    "type": "HTML Element"
+                }
+            ],
+            "static": 1,
+            "return": {
+                "description": "Object keyed by `error` and `warning` which respectively point to\n    the generated default error and warning functions.",
+                "type": "Object"
+            },
+            "author": "jrfrimme",
+            "modified": "Mon Nov 19 15:08:11 2012",
+            "class": "Multigraph",
             "module": "multigraph",
             "submodule": "core"
         },
@@ -1882,6 +2354,70 @@
         },
         {
             "message": "unknown tag: modified",
+            "line": " src/core/graph.js:20"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/graph.js:31"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/graph.js:44"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/graph.js:55"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/graph.js:67"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/graph.js:78"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/graph.js:89"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/graph.js:100"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/graph.js:112"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/graph.js:123"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/graph.js:134"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/graph.js:155"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/graph.js:199"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/graph.js:215"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/graph.js:230"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/graph.js:245"
+        },
+        {
+            "message": "unknown tag: modified",
             "line": " src/core/legend.js:29"
         },
         {
@@ -2017,12 +2553,52 @@
             "line": " src/core/mixin.js:107"
         },
         {
-            "message": "replacing incorrect tag: function with method",
-            "line": " src/core/multigraph.js:50"
+            "message": "unknown tag: modified",
+            "line": " src/core/multigraph.js:23"
         },
         {
             "message": "unknown tag: modified",
-            "line": " src/core/multigraph.js:50"
+            "line": " src/core/multigraph.js:35"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/multigraph.js:45"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/multigraph.js:63"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/core/multigraph.js:80"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/multigraph.js:80"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/core/multigraph.js:101"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/multigraph.js:101"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/core/multigraph.js:219"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/multigraph.js:219"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/core/multigraph.js:266"
+        },
+        {
+            "message": "unknown tag: modified",
+            "line": " src/core/multigraph.js:266"
         },
         {
             "message": "Missing item type\nCompute the distance from an axis to a point.  The point\n(x,y) is expressed in pixel coordinates in the same\ncoordinate system as the axis.\n\nWe use two different kinds of computations depending on\nwhether the point lies inside or outside the region bounded\nby the two lines perpendicular to the axis through its\nendpoints.  If the point lies inside this region, the\ndistance is simply the difference in the perpendicular\ncoordinate of the point and the perpendicular coordinate of\nthe axis.\n\nIf the point lies outside the region, then the distance is\nthe L2 distance between the point and the closest endpoint\nof the axis.",
