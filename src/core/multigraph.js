@@ -176,7 +176,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             },
 
             warning : function (w) {
-                $(div).errorDisplay("displayError", w.message, w.message, {
+                // w can be either a string, or a Warning instance
+                var message = "Warning: " + ((typeof(w) === "string") ? w : w.message);
+                $(div).errorDisplay("displayError", message, message, {
                     fontColor       : '#000000',
                     backgroundColor : '#e06a1b',
                     indicatorColor  : '#e06a1b'

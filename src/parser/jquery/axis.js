@@ -38,13 +38,12 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
         };
 
         
-        ns.core.Axis[parse] = function (xml, orientation) {
+        ns.core.Axis[parse] = function (xml, orientation, messageHandler) {
 
             var axis = new ns.core.Axis(orientation),
                 i,
                 j,
-                value,
-                positionbase;
+                value;
 
             if (xml) {
 
@@ -53,33 +52,46 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     axis.type(ns.core.DataValue.parseType(xml.attr("type")));
                 }
                 axis.length(window.multigraph.math.Displacement.parse(xml.attr("length")));
-                if (xml.attr("positionbase")) {
-                    console.log('Warning: use of deprecated axis attribute "positionbase"');
-                    positionbase = xml.attr("positionbase");
-                    if ((positionbase === "left") || (positionbase === "bottom")) {
-                        axis.base(window.multigraph.math.Point.parse("-1 -1"));
-                    } else if (positionbase === "right") {
-                        axis.base(window.multigraph.math.Point.parse("1 -1"));
-                    } else if (positionbase === "top") {
-                        axis.base(window.multigraph.math.Point.parse("-1 1"));
+
+                //
+                // The following provides support for the deprecated "positionbase" axis attribute;
+                // MUGL files should use the "base" attribute instead.  When we're ready to remove
+                // support for the deprecated attribute, delete this block of code:
+                //
+                (function () {
+                    var positionbase = xml.attr("positionbase");
+                    if (positionbase) {
+                        messageHandler.warning('Use of deprecated axis attribute "positionbase"; use "base" attribute instead');
+                        if ((positionbase === "left") || (positionbase === "bottom")) {
+                            axis.base(window.multigraph.math.Point.parse("-1 -1"));
+                        } else if (positionbase === "right") {
+                            axis.base(window.multigraph.math.Point.parse("1 -1"));
+                        } else if (positionbase === "top") {
+                            axis.base(window.multigraph.math.Point.parse("-1 1"));
+                        }
                     }
-                }
+                }());
+                //
+                // End of code to delete when removing support for deprecated "positionbase"
+                // attribute.
+                //
+
                 if (xml.attr("position")) {
                     try {
                         axis.position(window.multigraph.math.Point.parse(xml.attr("position")));
                     } catch (e) {
-                        // if position did not parse as a Point, and
-                        // if we have a positionbase, try interpreting
-                        // position as a number and constructing the
-                        // Point using positionbase
+                        // If position did not parse as a Point, and if it can be interpreted
+                        // as a number, construct the position point by interpreting that
+                        // number as an offset from the 0 location along the perpendicular
+                        // direction.
                         value = parseInt(xml.attr("position"),10);
                         if (value !== value) { // test for isNaN
                             throw e;
                         }
                         if (orientation === ns.core.Axis.HORIZONTAL) {
-                            axis.position(window.multigraph.math.Point.parse('0 ' + value));
+                            axis.position(new window.multigraph.math.Point(0, value));
                         } else {
-                            axis.position(window.multigraph.math.Point.parse(value + ' 0'));
+                            axis.position(new window.multigraph.math.Point(value, 0));
                         }
                     }
                 }

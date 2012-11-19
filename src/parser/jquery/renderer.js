@@ -21,8 +21,10 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
 
                     //
                     // The following provides support for deprecatd the "missingvalue" and
-                    // "missingop" renderer options.  Remove this block of code once we completely
-                    // remove support for this.
+                    // "missingop" renderer options.  Those options are not officially supported
+                    // any more; MUGL files should use the  missingvalue/missingop attributes
+                    // of <data><variable> or <data><variables> instead.  When we're ready to
+                    // remove this support, delete the block of code:
                     //
                     (function(renderer, xml, plot, messageHandler) {
                         var i,
@@ -42,14 +44,14 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                             }
                         }
                         if (missingValueOption.length > 0) {
-                            messageHandler.warning(new ns.core.Warning("Renderer option 'missingvalue' is deprecated; " +
-                                                                       "use 'missingvalue' attribute of <data><variable> instead"));
+                            messageHandler.warning("Renderer option 'missingvalue' is deprecated; " +
+                                                   "use 'missingvalue' attribute of 'data'/'variable'; instead");
                             // remove the element from the xml so that the option-processing code below doesn't see it
                             missingValueOption.remove();
                         }
                         if (missingOpOption.length > 0) {
-                            messageHandler.warning(new ns.core.Warning("Renderer option 'missingop' is deprecated; " +
-                                                                       "use 'missingop' attribute of <data><variable> instead"));
+                            messageHandler.warning("Renderer option 'missingop' is deprecated; " +
+                                                   "use 'missingvalue' attribute of 'data'/'variable'; instead");
                             // remove the element from the xml so that the option-processing code below doesn't see it
                             missingOpOption.remove();
                         }
