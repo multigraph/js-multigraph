@@ -22,7 +22,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @property id
          * @type {String}
          * @author jrfrimme
-         * @modified Fri Nov 16 11:53:50 2012
          */
         this.hasA("id").which.isA("string");
 
@@ -32,7 +31,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @property axes
          * @type {Array}
          * @author jrfrimme
-         * @modified Fri Nov 16 11:53:57 2012
          */
         this.hasA("axes"); // js array
 
@@ -49,7 +47,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @param {number|DataValue} min
          * @param {number|DataValue} max
          * @author jrfrimme
-         * @modified Fri Nov 16 11:54:00 2012
          */
         this.respondsTo("addAxis", function(axis, min, max) {
             // NOTE: min/max can be either numbers, or DataValue
@@ -79,7 +76,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @method removeAxis
          * @param {Axis} axis
          * @author jrfrimme
-         * @modified Fri Nov 16 11:54:07 2012
          */
         this.respondsTo("removeAxis", function(axis) {
             var axes = this.axes(),
@@ -142,7 +138,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @param {number|DataValue} max
          * @param {Boolean} dispatch
          * @author jrfrimme
-         * @modified Fri Nov 16 11:30:05 2012
          */
         this.respondsTo("setDataRange", function(initiatingAxis, min, max, dispatch) {
 

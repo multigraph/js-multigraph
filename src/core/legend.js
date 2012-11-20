@@ -33,7 +33,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @property visible
          * @type {boolean}
          * @author jrfrimme
-         * @modified Thu Nov 15 09:41:47 2012
          */
         this.hasA("visible").which.isA("boolean");
 
@@ -43,7 +42,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @property base
          * @type {Point}
          * @author jrfrimme
-         * @modified Thu Nov 15 09:42:25 2012
          */
         this.hasA("base").which.validatesWith(function (base) {
             return base instanceof window.multigraph.math.Point;
@@ -55,7 +53,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @property anchor
          * @type {Point}
          * @author jrfrimme
-         * @modified Thu Nov 15 09:42:42 2012
          */
         this.hasAn("anchor").which.validatesWith(function (anchor) {
             return anchor instanceof window.multigraph.math.Point;
@@ -67,7 +64,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @property position
          * @type {Point}
          * @author jrfrimme
-         * @modified Thu Nov 15 09:42:48 2012
          */
         this.hasA("position").which.validatesWith(function (position) {
             return position instanceof window.multigraph.math.Point;
@@ -81,7 +77,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @property frame
          * @type {String}
          * @author jrfrimme
-         * @modified Thu Nov 15 09:42:52 2012
          */
         this.hasA("frame").which.validatesWith(function (frame) {
             return frame === "plot" || frame === "padding";
@@ -93,7 +88,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @property color
          * @type {RGBColor}
          * @author jrfrimme
-         * @modified Thu Nov 15 09:42:55 2012
          */
         this.hasA("color").which.validatesWith(function (color) {
             return color instanceof window.multigraph.math.RGBColor;
@@ -105,7 +99,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @property bordercolor
          * @type {RGBColor}
          * @author jrfrimme
-         * @modified Thu Nov 15 09:42:59 2012
          */
         this.hasA("bordercolor").which.validatesWith(function (bordercolor) {
             return bordercolor instanceof window.multigraph.math.RGBColor;
@@ -118,7 +111,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @property opacity
          * @type {Float}
          * @author jrfrimme
-         * @modified Thu Nov 15 09:43:02 2012
          */
         this.hasA("opacity").which.validatesWith(function (opacity) {
             return window.multigraph.utilityFunctions.validateNumberRange(opacity, 0.0, 1.0);
@@ -131,7 +123,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @property border
          * @type {Integer}
          * @author jrfrimme
-         * @modified Thu Nov 15 09:43:05 2012
          */
         this.hasA("border").which.isA("integer");
 
@@ -142,7 +133,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @property rows
          * @type {Integer}
          * @author jrfrimme
-         * @modified Thu Nov 15 09:43:08 2012
          */
         this.hasA("rows").which.isA("integer").and.isGreaterThan(0);
 
@@ -154,7 +144,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @property columns
          * @type {Integer}
          * @author jrfrimme
-         * @modified Thu Nov 15 09:43:12 2012
          */
         this.hasA("columns").which.isA("integer").and.isGreaterThan(0);
 
@@ -166,7 +155,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @property cornerradius
          * @type {Integer}
          * @author jrfrimme
-         * @modified Thu Nov 15 09:43:15 2012
          */
         this.hasA("cornerradius").which.isA("integer");
 
@@ -176,7 +164,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @property padding
          * @type {Integer}
          * @author jrfrimme
-         * @modified Thu Nov 15 09:43:18 2012
          */
         this.hasA("padding").which.isA("integer");
 
@@ -186,7 +173,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @property icon
          * @type {Icon}
          * @author jrfrimme
-         * @modified Thu Nov 15 09:43:20 2012
          */
         this.hasAn("icon").which.validatesWith(function (icon) {
             return icon instanceof ns.Icon;
@@ -198,7 +184,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @property plots
          * @type {Plot}
          * @author jrfrimme
-         * @modified Thu Nov 15 09:43:24 2012
          */
         this.hasMany("plots").which.validatesWith(function (plot) {
             return plot instanceof ns.Plot;
@@ -213,7 +198,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @private
          * @final
          * @author jrfrimme
-         * @modified Thu Nov 15 09:43:27 2012
          */
         this.hasA("iconOffset").which.isAn("integer").and.defaultsTo(5);
 
@@ -227,7 +211,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @final
          * @type {}
          * @author jrfrimme
-         * @modified Thu Nov 15 09:43:29 2012
          */
         this.hasA("labelOffset").which.isAn("integer").and.defaultsTo(5);
 
@@ -241,7 +224,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @private
          * @final
          * @author jrfrimme
-         * @modified Thu Nov 15 09:43:33 2012
          */
         this.hasA("labelEnding").which.isAn("integer").defaultsTo(15);
 
@@ -253,7 +235,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @private
          * @final
          * @author jrfrimme
-         * @modified Thu Nov 15 09:43:37 2012
          */
         this.hasA("width").which.isA("number");
 
@@ -265,7 +246,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @private
          * @final
          * @author jrfrimme
-         * @modified Thu Nov 15 09:43:39 2012
          */
         this.hasA("height").which.isA("number");
 
@@ -277,7 +257,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @private
          * @final
          * @author jrfrimme
-         * @modified Thu Nov 15 09:43:42 2012
          */
         this.hasA("x").which.isA("number");
 
@@ -289,7 +268,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @private
          * @final
          * @author jrfrimme
-         * @modified Thu Nov 15 09:43:45 2012
          */
         this.hasA("y").which.isA("number");
 
@@ -301,7 +279,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @private
          * @final
          * @author jrfrimme
-         * @modified Thu Nov 15 09:43:52 2012
          */
         this.hasA("blockWidth").which.isA("number");
 
@@ -313,7 +290,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @private
          * @final
          * @author jrfrimme
-         * @modified Thu Nov 15 09:43:55 2012
          */
         this.hasA("blockHeight").which.isA("number");
 
@@ -325,7 +301,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @private
          * @final
          * @author jrfrimme
-         * @modified Thu Nov 15 09:43:57 2012
          */
         this.hasA("maxLabelWidth").which.isA("number");
 
@@ -337,7 +312,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @private
          * @final
          * @author jrfrimme
-         * @modified Thu Nov 15 09:44:01 2012
          */
         this.hasA("maxLabelHeight").which.isA("number");
 
@@ -353,7 +327,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @param {Graph} graph Jermaine Graph model
          * @param {Object} graphicsContext driver-specific graphics context object
          * @author jrfrimme
-         * @modified Thu Nov 15 09:44:20 2012
          * @todo Find out whether or not padding needs to be taken into consideration.
          */
         this.respondsTo("initializeGeometry", function (graph, graphicsContext) {
@@ -440,7 +413,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @param {Object} graphicsContext driver-specific graphics context object
          * 
          * @author jrfrimme
-         * @modified Thu Nov 15 09:44:31 2012
          */
         this.respondsTo("render", function (graphicsContext) {
             var blockx, blocky,

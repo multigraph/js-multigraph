@@ -35,7 +35,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * @class Mixin
      * @for Mixin
      * @author mbp
-     * @modified Wed Nov 14 23:45:37 2012
      */
     var Mixin = new window.jermaine.Model( "Mixin", function () {
 
@@ -46,7 +45,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @private
          * @type {}
          * @author mbp
-         * @modified Wed Nov 14 23:45:43 2012
          */
         this.hasMany("mixinfuncs");
 
@@ -58,7 +56,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @type {}
          * @private
          * @author mbp
-         * @modified Thu Nov 15 00:19:39 2012
          */
         this.hasA("applied").which.isA("boolean").defaultsTo(false);
 
@@ -70,7 +67,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @method add
          * @param {} func
          * @author mbp
-         * @modified Wed Nov 14 23:45:48 2012
          */
         this.respondsTo("add", function (mixinfunc) {
             this.mixinfuncs().add(mixinfunc);
@@ -91,7 +87,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          *
          * @method apply
          * @author mbp
-         * @modified Wed Nov 14 23:45:51 2012
          */
         this.respondsTo("apply", function () {
             if (! this.applied()) {
@@ -111,7 +106,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          *
          * @method reapply
          * @author mbp
-         * @modified Thu Nov 15 00:22:34 2012
          */
         this.respondsTo("reapply", function () {
             this.applied(false);

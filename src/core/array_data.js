@@ -38,7 +38,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @param {Integer} buffer
          * @return ArrayData
          * @author jrfrimme
-         * @modified Fri Nov 16 11:14:29 2012
          */
         this.respondsTo("getIterator", function (columnIds, min, max, buffer) {
             return ArrayData.getArrayDataIterator(this, columnIds, min, max, buffer);
@@ -51,7 +50,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @param {Integer} columnNumber Column in the dataset to have its bounds determined.
          * @return {array} Array in the form: [lowerBound, upperBound].
          * @author jrfrimme
-         * @modified Fri Nov 16 11:14:16 2012
          */
         this.respondsTo("getBounds", function (columnNumber) {
             var i,

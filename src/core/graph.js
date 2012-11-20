@@ -23,7 +23,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
              * @property window
              * @type {Window}
              * @author jrfrimme
-             * @modified Mon Nov 19 15:56:29 2012
              */
             this.hasA("window").which.validatesWith(function (w) {
                 return w instanceof ns.Window;
@@ -34,7 +33,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
              * @property plotarea
              * @type {Plotarea}
              * @author jrfrimme
-             * @modified Mon Nov 19 15:59:37 2012
              */
             this.hasA("plotarea").which.validatesWith(function (plotarea) {
                 return plotarea instanceof ns.Plotarea;
@@ -47,7 +45,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
              * @property legend
              * @type {Legend}
              * @author jrfrimme
-             * @modified Mon Nov 19 16:00:05 2012
              */
             this.hasA("legend").which.validatesWith(function (legend) {
                 return legend instanceof ns.Legend;
@@ -58,7 +55,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
              * @property background
              * @type {Background}
              * @author jrfrimme
-             * @modified Mon Nov 19 16:02:47 2012
              */
             this.hasA("background").which.validatesWith(function (background) {
                 return background instanceof ns.Background;
@@ -70,7 +66,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
              * @property title
              * @type {Title}
              * @author jrfrimme
-             * @modified Mon Nov 19 16:03:17 2012
              */
             this.hasA("title").which.validatesWith(function (title) {
                 return title instanceof ns.Title;
@@ -81,7 +76,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
              * @property axes
              * @type {Axis}
              * @author jrfrimme
-             * @modified Mon Nov 19 16:03:44 2012
              */
             this.hasMany("axes").which.validatesWith(function (axis) {
                 return axis instanceof ns.Axis;
@@ -92,7 +86,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
              * @property plots
              * @type {Plot}
              * @author jrfrimme
-             * @modified Mon Nov 19 16:04:20 2012
              */
             this.hasMany("plots").which.validatesWith(function (plot) {
                 return plot instanceof ns.Plot;
@@ -103,7 +96,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
              * @property data
              * @type {Data}
              * @author jrfrimme
-             * @modified Mon Nov 19 16:05:03 2012
              */
             this.hasMany("data").which.validatesWith(function (data) {
                 return data instanceof ns.Data;
@@ -115,7 +107,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
              * @property windowBox
              * @type {}
              * @author jrfrimme
-             * @modified Mon Nov 19 16:05:41 2012
              */
             this.hasA("windowBox").which.validatesWith(function (val) {
                 return val instanceof Box;
@@ -126,7 +117,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
              * @property paddingBox
              * @type {}
              * @author jrfrimme
-             * @modified Mon Nov 19 16:07:02 2012
              */
             this.hasA("paddingBox").which.validatesWith(function (val) {
                 return val instanceof Box;
@@ -137,7 +127,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
              * @property plotBox
              * @type {}
              * @author jrfrimme
-             * @modified Mon Nov 19 16:07:26 2012
              */
             this.hasA("plotBox").which.validatesWith(function (val) {
                 return val instanceof Box;
@@ -162,7 +151,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
              * @param {Integer} height Height of the multigraph's div
              * @param {Object} graphicsContext
              * @author jrfrimme
-             * @modified Mon Nov 19 16:09:29 2012
              */
             this.respondsTo("initializeGeometry", function (width, height, graphicsContext) {
                 var i;
@@ -203,7 +191,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
              * @method registerCommonDataCallback
              * @param {Function} callback
              * @author jrfrimme
-             * @modified Mon Nov 19 16:13:49 2012
              */
             this.respondsTo("registerCommonDataCallback", function (callback) {
                 var i;
@@ -217,7 +204,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
              *
              * @method pauseAllData
              * @author jrfrimme
-             * @modified Mon Nov 19 16:16:15 2012
              */
             this.respondsTo("pauseAllData", function () {
                 var i;
@@ -232,7 +218,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
              *
              * @method resumeAllData
              * @author jrfrimme
-             * @modified Mon Nov 19 16:16:19 2012
              */
             this.respondsTo("resumeAllData", function () {
                 var i;
@@ -250,7 +235,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
              * @param {} y
              * @param {} orientation
              * @author jrfrimme
-             * @modified Mon Nov 19 16:17:06 2012
              */
             this.respondsTo("findNearestAxis", function (x, y, orientation) {
                 var foundAxis = null,

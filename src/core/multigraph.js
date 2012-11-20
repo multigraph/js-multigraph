@@ -26,7 +26,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @property graphs
          * @type {Graph}
          * @author jrfrimme
-         * @modified Mon Nov 19 14:37:04 2012
          */
         this.hasMany("graphs").which.validatesWith(function (graph) {
             return graph instanceof ns.Graph;
@@ -38,7 +37,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @property div
          * @type {HTML Element}
          * @author jrfrimme
-         * @modified Mon Nov 19 14:38:41 2012
          */
         this.hasA("div"); // the actual div element
 
@@ -51,7 +49,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @param {Integer} height Height of the multigraph's div.
          * @param {Object} graphicsContext
          * @author jrfrimme
-         * @modified Mon Nov 19 14:39:27 2012
          */
         this.respondsTo("initializeGeometry", function (width, height, graphicsContext) {
             var i;
@@ -66,7 +63,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @method registerCommonDataCallback
          * @param {Function} callback Callback function to be registered.
          * @author jrfrimme
-         * @modified Mon Nov 19 14:43:44 2012
          */
         this.respondsTo("registerCommonDataCallback", function (callback) {
             var i;
@@ -84,7 +80,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * @private
      * @static
      * @author jrfrimme
-     * @modified Mon Nov 19 14:44:00 2012
      */
     var browserHasCanvasSupport = function () {
         return (
@@ -142,7 +137,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * @return {Promise} jQuery promise which provides interaction with
      *     the graph through its `done` function.
      * @author mbp
-     * @modified Fri Nov 16 00:34:21 2012
      */
     Multigraph.createGraph = function (options) {
         var div = options.div,
@@ -259,7 +253,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      *     the graph through its `done` function.
      * @static
      * @author jrfrimme
-     * @modified Mon Nov 19 15:12:15 2012
      */
     window.multigraph.create = Multigraph.createGraph;
 
@@ -272,7 +265,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * @return {Object} Object keyed by `error` and `warning` which respectively point to
      *     the generated default error and warning functions.
      * @author jrfrimme
-     * @modified Mon Nov 19 15:08:11 2012
      */
     Multigraph.createDefaultMessageHandlers = function (div) {
 
