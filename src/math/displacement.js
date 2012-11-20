@@ -2,9 +2,17 @@ window.multigraph.util.namespace("window.multigraph.math", function (ns) {
     "use strict";
 
     /**
+     * The Math module provides utility models and functions which correspond to mathematical concepts.
+     *
+     * @module multigraph
+     * @submodule math
+     * @main math
+     */
+
+    /**
      * A Displacement represents a geometric position along a line
      * segment, expressed in terms of two quantities: a relative
-     * position called 'a', and an absolute offset called 'b'.  The
+     * position called `a`, and an absolute offset called `b`.  The
      * length of the line segment is not known in advance --- the idea
      * is that the Displacement object encapsulates a rule for
      * determining a location along ANY line segment.  The Displacement
@@ -13,33 +21,40 @@ window.multigraph.util.namespace("window.multigraph.math", function (ns) {
      *
      * There are two different position-calcuating methods,
      * corresponding to two different interpretations of the relative
-     * value 'a':
+     * value `a`:
      *
-     * 'relative length':
-     *     'a' is a number between 0 and 1, representing a fraction of
+     * **relative length**:
+     *     `a` is a number between 0 and 1, representing a fraction of
      *       the total length of the line segment; the relative
-     *       position determined by 'a' is the fraction 'a' of the
+     *       position determined by `a` is the fraction `a` of the
      *       total length of the segment.
      *     In this case, the position-calculating method
-     *       calculateLength(L) returns the number a * L + b, which
-     *       corresponds to moving 'a' of the way along the length L,
-     *       then adding 'b':
+     *       `calculateLength(L)` returns the number `a * L + b`, which
+     *       corresponds to moving `a` of the way along the length L,
+     *       then adding `b`:
+     *
      *             [--------------------------------X------------]
      *             |<---- a * L --->|<---- b ------>|
      *             |<------------------  L  -------------------->|
      *
-     * 'relative coordinate':
-     *     'a' is a number between -1 and 1, representing a coordinate
+     * **relative coordinate**:
+     *     `a` is a number between -1 and 1, representing a coordinate
      *       value in a [-1,1] coordinate system along the line
-     *       segment
+     *       segment.
      *     In this case, the position-calculating method
-     *       calculateCoordinate(L) returns the number (a+1) * L/2 +
-     *       b.  which corresponds to moving to the position
-     *       determined by the 'a' coordinate, then adding 'b':
+     *       `calculateCoordinate(L)` returns the number `(a+1) * L/2 +
+     *       b`.  which corresponds to moving to the position
+     *       determined by the `a` coordinate, then adding `b`:
+     *
      *             [------------------------------------X--------]
      *             |<--- (a+1) * L/2 --->|<---- b ----->|
      *             |<------------------  L  -------------------->|
      *
+     * @class Displacement
+     * @for Displacement
+     * @constructor
+     * @param {Number} a
+     * @param {Integer} b (OPTIONAL)
      */
     ns.Displacement = new window.jermaine.Model( "Displacement", function () {
         
@@ -72,15 +87,21 @@ window.multigraph.util.namespace("window.multigraph.math", function (ns) {
 
     ns.Displacement.regExp = /^([\+\-]?[0-9\.]+)([+\-])([0-9\.+\-]+)$/;
 
+    /**
+     * Parses a string into a Displacement.  The string should be of one of the following forms:
+     *
+     *     "A+B"  ==>  a=A  b=B
+     *     "A-B"  ==>  a=A  b=-B
+     *     "A"    ==>  a=A  b=0
+     *     "+A"   ==>  a=A  b=0
+     *     "-A"   ==>  a=-A b=0
+     * 
+     * @method parse
+     * @param {String} string
+     * @static
+     * @author jrfrimme
+     */
     ns.Displacement.parse = function (string) {
-        /**
-         * parse a string into a Displacement.  The string should be of one of the following forms:
-         *     "A+B"  ==>  a=A  b=B
-         *     "A-B"  ==>  a=A  b=-B
-         *     "A"    ==>  a=A  b=0
-         *     "+A"   ==>  a=A  b=0
-         *     "-A"   ==>  a=-A b=0
-         **/
         var ar = ns.Displacement.regExp.exec(string),
             d,
             a,

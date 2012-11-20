@@ -1,6 +1,17 @@
 window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
+    /**
+     * @module multigraph
+     * @submodule core
+     */
+
+    /**
+     * @class WebServiceData
+     * @for WebServiceData
+     * @constructor
+     * @extends Data
+     */
     ns.WebServiceData = window.jermaine.Model(function () {
         var WebServiceData = this;
 
@@ -30,7 +41,11 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
 
         /**
-         * A pointer to the head WebServiceDataCacheNode in this WebServieData's cache
+         * A pointer to the head WebServiceDataCacheNode in this WebServieData's cache.
+         *
+         * @property cacheHead
+         * @type {null|WebServiceDataCacheNode}
+         * @author jrfrimme
          */
         this.hasA("cacheHead").which.defaultsTo(null).and.validatesWith(function(x) {
             //NOTE: need "ns." prefix on WebServiceDataCacheNode below, because of file
@@ -39,7 +54,11 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
 
         /**
-         * A pointer to the tail WebServiceDataCacheNode in this WebServieData's cache
+         * A pointer to the tail WebServiceDataCacheNode in this WebServieData's cache.
+         *
+         * @property cacheTail
+         * @type {null|WebServiceDataCacheNode}
+         * @author jrfrimme
          */
         this.hasA("cacheTail").which.defaultsTo(null).and.validatesWith(function(x) {
             //NOTE: need "ns." prefix on WebServiceDataCacheNode below, because of file
@@ -50,6 +69,10 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         /**
          * Return a pointer to the first WebServiceDataCacheNode in this WebServieData's cache
          * that actually contains data, if any.  If the cache doesn't contain any data, return null.
+         *
+         * @method dataHead
+         * @author jrfrimme
+         * @return {null|WebServiceDataCacheNode}
          */
         this.respondsTo("dataHead", function() {
             var head = this.cacheHead();
@@ -61,6 +84,10 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         /**
          * Return a pointer to the last WebServiceDataCacheNode in this WebServieData's cache
          * that actually contains data, if any.  If the cache doesn't contain any data, return null.
+         *
+         * @method dataTail
+         * @author jrfrimme
+         * @return {null|WebServiceDataCacheNode}
          */
         this.respondsTo("dataTail", function() {
             var tail = this.cacheTail();
@@ -75,6 +102,10 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * coveredMin, insert it at the head; otherwise insert it at
          * the tail.  Note that nodes are only inserted either at the
          * head or at the tail of the cache --- not in the middle.
+         *
+         * @method insertCacheNode
+         * @param {WebServiceCacheNode} node
+         * @author jrfrimme
          */
         this.respondsTo("insertCacheNode", function(node) {
             var head = this.cacheHead(),
@@ -124,6 +155,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
         /**
          * Initiate requests needed to fetch data between coveredMin and coveredMax, if any.
+         *
+         * @method insureCoveredRange
+         * @author jrfrimme
          */
         this.respondsTo("insureCoveredRange", function() {
             var head = this.cacheHead(),

@@ -1,11 +1,24 @@
 window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
+    /**
+     * @module multigraph
+     * @submodule core
+     */
+
     var Axis,
         defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.horizontalaxis),
         Orientation = new window.multigraph.math.Enum("AxisOrientation");
 
+    /**
+     * Axis is a Jermaine model that controls Multigraph axes.
+     *
+     * @class Axis
+     * @for Axis
+     * @constructor
+     * @param {AxisOrientation} Orientation
+     */
     Axis = new window.jermaine.Model( "Axis", function () {
         this.hasA("title").which.validatesWith(function (title) {
             return title instanceof ns.AxisTitle;
@@ -42,14 +55,32 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return base instanceof window.multigraph.math.Point;
         });
 
-        // The "min" attribute stores the "min" value from the mugl file, if there was one -- as a string!!!
+        /**
+         * Stores the "min" value from the mugl file as a string, if there was one.
+         *
+         * @property min
+         * @type {String}
+         * @author jrfrimme
+         */
         this.hasA("min").which.isA("string");
 
-        // The "dataMin" attribute is the current min DataValue for the axis
+        /**
+         * The current min DataValue for the axis.
+         *
+         * @property dataMin
+         * @type {DataValue}
+         * @author jrfrimme
+         */
         this.hasA("dataMin").which.validatesWith(function (x) {
             return ns.DataValue.isInstance(x);
         });
-        // Convenience method for checking to see if dataMin has been set or not
+        /**
+         * Convenience method for checking to see if dataMin has been set or not
+         *
+         * @method hasDataMin
+         * @author jrfrimme
+         * @return {Boolean}
+         */
         this.respondsTo("hasDataMin", function () {
             return this.dataMin() !== undefined;
         });
@@ -60,14 +91,32 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return minposition instanceof window.multigraph.math.Displacement;
         });
 
-        // The "max" attribute stores the "max" value from the mugl file, if there was one -- as a string!!!
+        /**
+         * Stores the "max" value from the mugl file as a string, if there was one.
+         *
+         * @property max
+         * @type {String}
+         * @author jrfrimme
+         */
         this.hasA("max").which.isA("string");
 
-        // The "dataMax" attribute is the current max DataValue for the axis
+        /**
+         * The current max DataValue for the axis.
+         *
+         * @property dataMax
+         * @type {DataValue}
+         * @author jrfrimme
+         */
         this.hasA("dataMax").which.validatesWith(function (x) {
             return ns.DataValue.isInstance(x);
         });
-        // Convenience method for checking to see if dataMax has been set or not
+        /**
+         * Convenience method for checking to see if dataMax has been set or not.
+         *
+         * @method hasDataMax
+         * @author jrfrimme
+         * @return {Boolean}
+         */
         this.respondsTo("hasDataMax", function () {
             return this.dataMax() !== undefined;
         });
@@ -158,11 +207,17 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
         this.hasA("currentLabelDensity").which.isA("number");
 
+        /**
+         * Decides which labeler to use: take the one with the largest density <= 0.8.
+         * Unless all have density > 0.8, in which case we take the first one.  This assumes
+         * that the labelers list is ordered in increasing order of label density.
+         * This function sets the `currentLabeler` and `currentLabelDensity` attributes.
+         *
+         * @method prepareRender
+         * @param {Object} graphicsContext
+         * @author jrfrimme
+         */
         this.respondsTo("prepareRender", function (graphicsContext) {
-            // Decide which labeler to use: take the one with the largest density <= 0.8.
-            // Unless all have density > 0.8, in which case we take the first one.  This assumes
-            // that the labelers list is ordered in increasing order of label density.
-            // This function sets the currentLabeler and currentLabelDensity attributes.
             var currentLabeler,
                 currentLabelDensity = 0,
                 density = 0,
@@ -332,6 +387,11 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * If the point lies outside the region, then the distance is
          * the L2 distance between the point and the closest endpoint
          * of the axis.
+         *
+         * @method distanceToPoint
+         * @param {} x
+         * @param {} y
+         * @author jrfrimme
          */
         this.respondsTo("distanceToPoint", function (x, y) {
             var perpCoord     = (this.orientation() === Axis.HORIZONTAL) ? y : x;

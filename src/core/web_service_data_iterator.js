@@ -1,24 +1,33 @@
 window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
+    /**
+     * @module multigraph
+     * @submodule core
+     */
+
     var UF = window.multigraph.util.namespace("window.multigraph.utilityFunctions");
 
     /**
      * An iterator for stepping through data values stored in a linked list of
      * WebServiceDataCacheNodes.  The constructor takes 5 arguments:
      * 
-     * @param {Array} columnIndices:
+     * @class WebServiceDataIterator
+     * @for WebServiceDataIterator
+     * @constructor
+     *
+     * @param {Array} columnIndices
      *     JavaScript array of the indices of the columns
      *     of data to return
-     * @param {WebServiceDataCacheNode} initialNode: 
+     * @param {WebServiceDataCacheNode} initialNode
      *     Pointer to the WebServiceDataCacheNode containing the first
      *     value to iterate over
-     * @param {integer} initialIndex: 
+     * @param {integer} initialIndex
      *     Index, within initialNode, of the first value to iterate over
-     * @param {WebServiceDataCacheNode} finalNode: 
+     * @param {WebServiceDataCacheNode} finalNode
      *     Pointer to the WebServiceDataCacheNode containing the last
      *     value to iterate over
-     * @param {integer} finalIndex: 
+     * @param {integer} finalIndex
      *     Index, within finalNode, of the last value to iterate over
      */
     ns.WebServiceDataIterator = window.jermaine.Model(function () {

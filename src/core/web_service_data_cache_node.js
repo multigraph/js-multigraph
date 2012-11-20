@@ -1,6 +1,11 @@
 window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
+    /**
+     * @module multigraph
+     * @submodule core
+     */
+
     var UF = window.multigraph.util.namespace("window.multigraph.utilityFunctions");
 
     /**
@@ -34,11 +39,21 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * --- it is simply a storage container for fetched data; it's up
      * to other code outside of this object to fetch and populate the
      * data.
+     *
+     * @class WebServiceDataCacheNode
+     * @for WebServiceDataCacheNode
+     * @constructor
+     * @param {DataValue} coveredMin
+     * @param {DataValue} coveredMax
      */
     ns.WebServiceDataCacheNode = window.jermaine.Model(function () {
 
         /**
          * The actual data for this node.
+         *
+         * @property data
+         * @type {Array|null}
+         * @author jrfrimme
          */
         this.hasA("data").which.defaultsTo(null).and.validatesWith(function(data) {
             // accept null
@@ -69,6 +84,10 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
         /**
          * The next node in the cache's linked list
+         *
+         * @property next
+         * @type {WebServiceDataCacheNode|null}
+         * @author jrfrimme
          */
         this.hasA("next").which.defaultsTo(null).and.validatesWith(function(x) {
             return x === null || x instanceof ns.WebServiceDataCacheNode;
@@ -76,6 +95,10 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
         /**
          * The previous node in the cache's linked list
+         *
+         * @property prev
+         * @type {WebServiceDataCacheNode|null}
+         * @author jrfrimme
          */
         this.hasA("prev").which.defaultsTo(null).and.validatesWith(function(x) {
             return x === null || x instanceof ns.WebServiceDataCacheNode;
@@ -83,17 +106,29 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
         /**
          * The min of the covered value range
+         *
+         * @property coveredMin
+         * @type {DataValue}
+         * @author jrfrimme
          */
         this.hasA("coveredMin").which.validatesWith(ns.DataValue.isInstance);
 
         /**
          * The max of the covered value range
+         *
+         * @property coveredMax
+         * @type {DataValue}
+         * @author jrfrimme
          */
         this.hasA("coveredMax").which.validatesWith(ns.DataValue.isInstance);
 
         /**
          * Return the next node in the cache that actually has data,
          * or null if none exists.
+         *
+         * @method dataNext
+         * @author jrfrimme
+         * @return {WebServiceDataCacheNode|null}
          */
         this.respondsTo("dataNext", function() {
             var node = this.next();
@@ -106,6 +141,10 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         /**
          * Return the previous node in the cache that actually has data,
          * or null if none exists.
+         *
+         * @method dataPrev
+         * @author jrfrimme
+         * @return {WebServiceDataCacheNode|null}
          */
         this.respondsTo("dataPrev", function() {
             var node = this.prev();
@@ -118,6 +157,10 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         /**
          * Return the minimum (column 0) data value for this node.  Returns null
          * if the node has no data yet.
+         *
+         * @method dataMin
+         * @author jrfrimme
+         * @return {DataValue|null}
          */
         this.respondsTo("dataMin", function() {
             var data = this.data();
@@ -131,6 +174,10 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         /**
          * Return the maximum (column 0) data value for this node.    Returns null
          * if the node has no data yet.
+         *
+         * @method dataMax
+         * @author jrfrimme
+         * @return {DataValue|null}
          */
         this.respondsTo("dataMax", function() {
             var data = this.data();
@@ -142,7 +189,11 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
 
         /**
-         * Return true if this node has data; false if not
+         * Return true if this node has data; false if not.
+         *
+         * @method hasData
+         * @author jrfrimme
+         * @return Boolean
          */
         this.respondsTo("hasData", function() {
             return this.data() !== null;
@@ -154,9 +205,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * Populate this node's data array by parsing the values
          * contained in the 'dataText' string, which should be a
          * string of comma-separated values of the same sort expected
-         * by ArrayData and CSVData.  The first argument, 'columns',
+         * by ArrayData and CSVData.  The first argument, `columns`,
          * should be a plain javascript array of DataVariable instances,
-         * of the sort returned by Data.getColumns().
+         * of the sort returned by `Data.getColumns()`.
          * 
          * This method examines other nodes in the cache in order
          * insure that values included in this node's data array
@@ -165,6 +216,11 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * minimum value present in the cache after this node.
          * This guarantees that there is no overlap between the
          * data in this node and other nodes in the cache.
+         *
+         * @method parseData
+         * @param {DataVariable Attr_List} columns
+         * @param {String} dataText
+         * @author jrfrimme
          */
         this.respondsTo("parseData", function(columns, dataText) {
             var i, b,

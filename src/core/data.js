@@ -1,38 +1,54 @@
 window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
+    /**
+     * @module multigraph
+     * @submodule core
+     */
+
     var DataVariable = ns.DataVariable,
         Data,
         i;
 
+    /**
+     * @class Data
+     * @for Data
+     * @constructor
+     * @param {DataVariable} columns
+     */
     Data = new window.jermaine.Model(function () {
         var Data = this;
         
         this.isA(ns.EventEmitter);
 
         /**
-         * private find function
-         * 
-         *   Searches through a jermaine attr_list of DataVariables (columns) for
-         *   an entry having a given id or column number.
-         * 
-         *      attrName: the name of the attribute to search on; should be either
-         *                "id" or "column"
-         *      attrValue: the value to search for. If attrName is "id", this value
-         *                 should be a string.  If attrName is "column", this value
-         *                 should be an int.
-         *      columns: the attr_list to search through
-         * 
-         *   Returns: the index (an int) of the DataVariable entry having
-         *            the given attribute value, if any, or -1 if none was found
-         * 
-         *  Example:
-         *       find("id", "x", columns)
-         *          finds the index of the DataVariable in the columns attr_list
-         *          having an id of "x"
-         *       find("column", "1", columns)
-         *          finds the index of the DataVariable in the columns attr_list
-         *          having a "column" attribute of 1
+         * Searches through a jermaine attr_list of DataVariables (columns) for
+         * an entry having a given id or column number.
+         *
+         * @method find
+         * @private
+         * @param {String} attrName The name of the attribute to search on;
+         *     should be either "id" or "column".
+         * @param {String|Integer} attrValue The value to search for. If attrName
+         *     is "id", this value should be a string.  If attrName is "column",
+         *     this value should be an int.
+         * @param {DataVariable Attr_List} columns The attr_list to search through.
+         * @static
+         * @return {Integer} The index (an int) of the DataVariable entry having
+         *     the given attribute value, if any, or -1 if none was found
+         * @author jrfrimme
+         *
+         * @example
+         *
+         *     find("id", "x", columns)
+         *
+         *         finds the index of the DataVariable in the columns attr_list
+         *         having an id of "x"
+         *
+         *     find("column", 1, columns)
+         *
+         *         finds the index of the DataVariable in the columns attr_list
+         *         having a "column" attribute of 1
          */
         var find = function (attrName, attrValue, columns) {
             var result = -1;
@@ -45,8 +61,11 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         };
 
         /**
-         * Set the 'data' attribute of each of this data object's columns
+         * Set the `data` attribute of each of this data object's columns
          * to point to the data object itself.
+         *
+         * @method initializeColumns
+         * @author jrfrimme
          */
         this.respondsTo("initializeColumns", function () {
             var i;
@@ -63,11 +82,16 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasA("defaultMissingvalue").which.isA("string");
         this.hasA("defaultMissingop").which.isA("string").and.defaultsTo("eq");
 
+        /**
+         * Initialization function --- should be called from isBuiltWith initializer.  This is split
+         * off into a separate function so that it can be called from submodel's isBuiltWith initializers
+         * as well, since Jermaine does not provide a way to call the parent models' isBuiltWith initializer
+         * function.
+         *
+         * @method init
+         * @author jrfrimme
+         */
         this.respondsTo("init", function() {
-            // Initialization function --- should be called from isBuiltWith initializer.  This is split
-            // off into a separate function so that it can be called from submodel's isBuiltWith initializers
-            // as well, since Jermaine does not provide a way to call the parent models' isBuiltWith initializer
-            // function.
             this.initializeColumns();
         });
 

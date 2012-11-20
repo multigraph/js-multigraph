@@ -55,7 +55,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             }
         });
 
-        /**
+        /*
          * Private utility function to stroke line segments connecting the points of a run
          */
         var strokeRunLine = function(context, run, whichLine, color, defaultColor, width, defaultWidth) {

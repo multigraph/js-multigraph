@@ -3,7 +3,7 @@
 
     var core = window.multigraph.util.namespace("window.multigraph.core");
 
-    /**
+    /*
      * Inclusion of this file allows markup like the following to be
      * used in HTML:
      * 
