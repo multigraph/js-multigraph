@@ -1,15 +1,75 @@
 window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
+    /**
+     * @module multigraph
+     * @submodule core
+     */
 
+    /**
+     * Text is a Jermaine model that supports storing and determining metrics of
+     * strings in different graphics contexts.
+     *
+     * @class Text
+     * @for Text
+     * @constructor
+     * @param string {String} The string stored in the Text model
+     */
     ns.Text = new window.jermaine.Model( "Text", function () {
-        this.hasA("string").which.isA("string");
-        this.hasA("origWidth").which.isA("number");
-        this.hasA("origHeight").which.isA("number");
-        this.hasA("rotatedWidth").which.isA("number");
-        this.hasA("rotatedHeight").which.isA("number");
-
         this.isBuiltWith("string");
 
+        /**
+         * The string stored in the Text model
+         *
+         * @property string
+         * @type {String}
+         */
+        this.hasA("string").which.isA("string");
+
+        /**
+         * The unrotated width of the string
+         *
+         * @property origWidth
+         * @type {float}
+         * @final
+         */
+        this.hasA("origWidth").which.isA("number");
+
+        /**
+         * The unrotated height of the string
+         *
+         * @property origHeight
+         * @type {float}
+         * @final
+         */
+        this.hasA("origHeight").which.isA("number");
+
+        /**
+         * The rotated width of the string
+         *
+         * @property rotatedWidth
+         * @type {float}
+         * @final
+         */
+        this.hasA("rotatedWidth").which.isA("number");
+
+        /**
+         * The rotated height of the string
+         *
+         * @property rotatedHeight
+         * @type {float}
+         * @final
+         */
+        this.hasA("rotatedHeight").which.isA("number");
+
+        /**
+         * Determines unrotated and rotated widths and heights for the stored string. Overridden by
+         * implementations in graphics drivers.
+         *
+         * @method initializeGeometry
+         * @chainable
+         * @param {Object} graphicsContext
+         *   @param {Float} graphicsContext.angle
+         */
         this.respondsTo("initializeGeometry", function (graphicsContext) {
             var origWidth,
                 origHeight,
@@ -35,6 +95,15 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return this;
         });
 
+        /**
+         * Determines unrotated width for the stored string. Overridden by implementations in graphics
+         * drivers.
+         *
+         * @method measureStringWidth
+         * @private
+         * @return {Float} Unrotated width of string.
+         * @param {Object} graphicsContext
+         */
         this.respondsTo("measureStringWidth", function (graphicsContext) {
             // Graphics drivers should replace this method with an actual implementation; this
             // is just a placeholder.  The implementation should return the width, in pixels,
@@ -62,6 +131,15 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return maxLength * 15;
         });
 
+        /**
+         * Determines unrotated height for the stored string. Overridden by implementations in graphics
+         * drivers.
+         *
+         * @method measureStringHeight
+         * @private
+         * @return {Float} Unrotated height of string.
+         * @param {Object} graphicsContext
+         */
         this.respondsTo("measureStringHeight", function (graphicsContext) {
             // Graphics drivers should replace this method with an actual implementation; this
             // is just a placeholder.  The implementation should return the height, in pixels,

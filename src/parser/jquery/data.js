@@ -9,7 +9,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
 
     ns.mixin.add(function (ns, parse) {
         
-        Data[parse] = function (xml) {
+        Data[parse] = function (xml, messageHandler) {
 
             var variables_xml,
                 defaultMissingvalueString,
@@ -50,7 +50,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 if (csv_xml.length > 0) {
                     csv_xml = csv_xml[0];
                     var filename = window.multigraph.jQuery(csv_xml).attr("location");
-                    data = new CSVData(dataVariables, filename);
+                    data = new CSVData(dataVariables, filename, messageHandler);
                 }
 
                 // if we have a <service> section, parse it and return a WebServiceData instance:

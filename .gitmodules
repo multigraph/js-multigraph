@@ -1,3 +1,6 @@
 [submodule "lib/jermaine"]
 	path = lib/jermaine
 	url = https://github.com/semmypurewal/jermaine.git
+[submodule "lib/error-display"]
+	path = lib/error-display
+	url = https://github.com/nemac/error-display.git

@@ -51,25 +51,35 @@ window.multigraph.util.namespace("window.multigraph.graphics.logger", function (
 
     });
 
-    window.multigraph.core.Multigraph.createLoggerGraph = function (div, muglurl) {
+    window.multigraph.core.Multigraph.createLoggerGraph = function (options) {
+        var muglPromise,
+            deferred;
 
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
-        ns.mixin.apply(window.multigraph.core);
-        window.multigraph.normalizer.mixin.apply(window.multigraph.core);
+        try {
+            window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
+            ns.mixin.apply(window.multigraph.core);
+            window.multigraph.normalizer.mixin.apply(window.multigraph.core);
 
-        var muglPromise = window.multigraph.jQuery.ajax({
-            "url"      : muglurl,
-            "dataType" : "text"
-        }),
+            muglPromise = window.multigraph.jQuery.ajax({
+                "url"      : options.mugl,
+                "dataType" : "text"
+            }),
 
-        deferred = window.multigraph.jQuery.Deferred();
+            deferred = window.multigraph.jQuery.Deferred();
+        } catch (e) {
+            options.messageHandler.error(e);
+        }
 
         muglPromise.done(function (data) {
-            var multigraph = window.multigraph.core.Multigraph.parseXML( window.multigraph.parser.jquery.stringToJQueryXMLObj(data) );
-            multigraph.normalize();
-            multigraph.div(div);
-            multigraph.init();
-            deferred.resolve(multigraph);
+            try {
+                var multigraph = window.multigraph.core.Multigraph.parseXML( window.multigraph.parser.jquery.stringToJQueryXMLObj(data), options.messageHandler );
+                multigraph.normalize();
+                multigraph.div(options.div);
+                multigraph.init();
+                deferred.resolve(multigraph);
+            } catch (e) {
+                options.messageHandler.error(e);
+            }
         });
 
         return deferred.promise();

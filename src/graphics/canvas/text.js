@@ -1,9 +1,25 @@
 window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (ns) {
     "use strict";
 
+    /**
+     * @module multigraph
+     * @submodule canvas
+     */
+
     ns.mixin.add(function (ns) {
         var Text = ns.Text;
 
+        /**
+         * Determines unrotated and rotated widths and heights for the stored string in the canvas
+         * environment
+         *
+         * @method initializeGeometry
+         * @for Text
+         * @chainable
+         * @param {Object} graphicsContext
+         *   @param {Context} graphicsContext.context
+         *   @param {Float} graphicsContext.angle
+         */
         Text.respondsTo("initializeGeometry", function (graphicsContext) {
             var origWidth,
                 origHeight,
@@ -30,6 +46,15 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             return this;
         });
 
+        /**
+         * Determines unrotated width for the stored string in the canvas environment.
+         *
+         * @method measureStringWidth
+         * @for Text
+         * @private
+         * @return {Float} Unrotated width of string.
+         * @param {Context} context
+         */
         Text.respondsTo("measureStringWidth", function (context) {
             if (this.string() === undefined) {
                 throw new Error("measureStringWidth requires the string attr to be set.");
@@ -39,6 +64,15 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             return metrics.width;
         });
 
+        /**
+         * Determines unrotated height for the stored string in the canvas environment.
+         *
+         * @method measureStringHeight
+         * @for Text
+         * @private
+         * @return {Float} Unrotated height of string.
+         * @param {Context} context
+         */
         Text.respondsTo("measureStringHeight", function (context) {
             if (this.string() === undefined) {
                 throw new Error("measureStringHeight requires the string attr to be set.");

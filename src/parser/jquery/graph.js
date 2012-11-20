@@ -3,7 +3,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
 
     ns.mixin.add(function (ns, parse) {
 
-        ns.core.Graph[parse] = function (xml) {
+        ns.core.Graph[parse] = function (xml, messageHandler) {
             var graph = new ns.core.Graph();
             if (xml) {
                 // NOTE: 'OBJ.find(">TAG")' returns a list of JQuery objects corresponding to the immediate
@@ -29,10 +29,10 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     graph.title( ns.core.Title[parse](xml.find(">title")) );
                 }
                 window.multigraph.jQuery.each(xml.find(">horizontalaxis"), function (i,e) {
-                    graph.axes().add( ns.core.Axis[parse](window.multigraph.jQuery(e), ns.core.Axis.HORIZONTAL) );
+                    graph.axes().add( ns.core.Axis[parse](window.multigraph.jQuery(e), ns.core.Axis.HORIZONTAL, messageHandler) );
                 });
                 window.multigraph.jQuery.each(xml.find(">verticalaxis"), function (i,e) {
-                    graph.axes().add( ns.core.Axis[parse](window.multigraph.jQuery(e), ns.core.Axis.VERTICAL) );
+                    graph.axes().add( ns.core.Axis[parse](window.multigraph.jQuery(e), ns.core.Axis.VERTICAL, messageHandler) );
                 });
                 if (xml.find(">data").length === 0) {
                     // On second throught, let's not throw an error if no <data> tag
@@ -45,10 +45,10 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     //throw new Error("Graph Data Error: No data tags specified");
                 }
                 window.multigraph.jQuery.each(xml.find(">data"), function (i,e) {
-                    graph.data().add( ns.core.Data[parse](window.multigraph.jQuery(e)) );
+                    graph.data().add( ns.core.Data[parse](window.multigraph.jQuery(e), messageHandler) );
                 });
                 window.multigraph.jQuery.each(xml.find(">plot"), function (i,e) {
-                    graph.plots().add( ns.core.Plot[parse](window.multigraph.jQuery(e), graph) );
+                    graph.plots().add( ns.core.Plot[parse](window.multigraph.jQuery(e), graph, messageHandler) );
                 });
                 graph.postParse();
             }

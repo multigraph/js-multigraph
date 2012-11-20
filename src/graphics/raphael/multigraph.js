@@ -89,32 +89,43 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
     });
 
-    window.multigraph.core.Multigraph.createRaphaelGraph = function (div, muglurl) {
+    window.multigraph.core.Multigraph.createRaphaelGraph = function (options) {
+        var muglPromise,
+            deferred;
+        
+        try {
+            window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
+            ns.mixin.apply(window.multigraph.core);
+            window.multigraph.normalizer.mixin.apply(window.multigraph.core);
+            window.multigraph.events.jquery.draggable.mixin.apply(window.multigraph);
+            window.multigraph.events.jquery.mouse.mixin.apply(window.multigraph);
+            window.multigraph.events.jquery.touch.mixin.apply(window.multigraph);
 
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
-        ns.mixin.apply(window.multigraph.core);
-        window.multigraph.normalizer.mixin.apply(window.multigraph.core);
-        window.multigraph.events.jquery.draggable.mixin.apply(window.multigraph);
-        window.multigraph.events.jquery.mouse.mixin.apply(window.multigraph);
-        window.multigraph.events.jquery.touch.mixin.apply(window.multigraph);
-
-        var muglPromise = window.multigraph.jQuery.ajax({
-            "url"      : muglurl,
-            "dataType" : "text"
-        }),
+            muglPromise = window.multigraph.jQuery.ajax({
+                "url"      : options.mugl,
+                "dataType" : "text"
+            }),
 
             deferred = window.multigraph.jQuery.Deferred();
+        } catch (e) {
+            options.messageHandler.error(e);
+        }
 
         muglPromise.done(function (data) {
-            var multigraph = window.multigraph.core.Multigraph.parseXML( window.multigraph.parser.jquery.stringToJQueryXMLObj(data) );
-            multigraph.normalize();
-            multigraph.div(div);
-            window.multigraph.jQuery(div).css('cursor' , 'pointer');
-            multigraph.init();
-            multigraph.registerCommonDataCallback(function () {
-                multigraph.redraw();
-            });
-            deferred.resolve(multigraph);
+            try {
+                var multigraph = window.multigraph.core.Multigraph.parseXML( window.multigraph.parser.jquery.stringToJQueryXMLObj(data), options.messageHandler );
+                multigraph.normalize();
+                multigraph.div(options.div);
+                window.multigraph.jQuery(options.div).css('cursor' , 'pointer');
+                multigraph.init();
+                multigraph.registerCommonDataCallback(function () {
+                    multigraph.redraw();
+                });
+                deferred.resolve(multigraph);
+            }
+            catch (e) {
+                options.messageHandler.error(e);
+            }
         });
 
         return deferred.promise();

@@ -67,7 +67,7 @@ describe("Labeler Normalizer", function () {
         });
 
         it("should insert a number formatter with the correct default if one does not exist and the axis is of type 'number'", function () {
-            var formatter = DataFormatter.create(DataValue.NUMBER, "%f");
+            var formatter = DataFormatter.create(DataValue.NUMBER, "%.1f");
             expect(numberlabel.formatter()).toBe(undefined);
 
             numberlabel.normalize();

@@ -105,13 +105,34 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
 
         this.respondsTo("setOptionFromString", function (name, stringValue, stringMin, stringMax) {
+            //
+            // Two blocks of code below provides support for the deprecated "dotsize" and "dotcolor"
+            // options, which have been replaced by "pointsize" and "pointcolor".  Delete these blocks
+            // when removing support for this.
+            // 
+
+            // 
+            // First block in support of deprecated dotsize/dotcolor options:
+            //
+            var warning = undefined;
+            if (name === "dotsize") {
+                name = "pointsize";
+                warning = new ns.Warning('deprecated "dotsize" option used for "' + this.type() + '" renderer; use "pointsize" instead');
+            } else if (name === "dotcolor") {
+                name = "pointcolor";
+                warning = new ns.Warning('deprecated "dotcolor" option used for "' + this.type() + '" renderer; use "pointcolor" instead');
+            }
+            // 
+            // End of first block in support of deprecated dotsize/dotcolor options
+            //
+
             var rendererOpt;
             if (!this.optionsMetadata[name]) {
                 // If this renderer has no option named "name", bail out immediately.  This should eventually
                 // throw an error, but for now we just quietly ignore it, to eliminate error conditions coming
                 // from unimplemented options.
-                console.log("WARNING: renderer has no option named '" + name + "'");
-                return;
+                //console.log("WARNING: renderer has no option named '" + name + "'");
+                throw new ns.Warning('"' + this.type() + '"' + ' renderer has no option named "' + name + '"');
             }
             rendererOpt = new (this.optionsMetadata[name].type)();
             rendererOpt.parseValue(stringValue, this);
@@ -124,6 +145,16 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 }
             }
             this.setOption(name, rendererOpt.value(), rendererOpt.min(), rendererOpt.max());
+
+            // 
+            // Second block in support of deprecated dotsize/dotcolor options:
+            //
+            if (warning) {
+                throw warning;
+            }
+            // 
+            // End of second block in support of deprecated dotsize/dotcolor options:
+            //
         });
 
 

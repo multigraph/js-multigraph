@@ -202,6 +202,7 @@ sub make_test_html {
   <script type="text/javascript" src="../../../lib/jquery/jquery.min.js"></script>
   <script type="text/javascript" src="../../../lib/jquery/jquery.mousewheel.js"></script>
   <script type="text/javascript" src="../../../lib/jquery/jquery-embed.js"></script>
+  <script type="text/javascript" src="../../../lib/error-display/build/errorDisplay.js"></script>
   <script type="text/javascript" src="../../../lib/util/util.js"></script>
   <script type="text/javascript" src="../../../lib/sprintf/sprintf-0.7-beta1.js"></script>
   <script type="text/javascript" src="../../../lib/requestanimationframe/requestanimationframe.js"></script>
@@ -494,6 +495,7 @@ sub make_error_test_html {
   <script type="text/javascript" src="../../../lib/jquery/jquery.min.js"></script>
   <script type="text/javascript" src="../../../lib/jquery/jquery.mousewheel.js"></script>
   <script type="text/javascript" src="../../../lib/jquery/jquery-embed.js"></script>
+  <script type="text/javascript" src="../../../lib/error-display/build/errorDisplay.js"></script>
   <script type="text/javascript" src="../../../lib/util/util.js"></script>
   <script type="text/javascript" src="../../../lib/sprintf/sprintf-0.7-beta1.js"></script>
   <script type="text/javascript" src="../../../lib/requestanimationframe/requestanimationframe.js"></script>

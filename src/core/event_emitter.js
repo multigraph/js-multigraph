@@ -1,58 +1,64 @@
 window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
+    /**
+     * @module multigraph
+     * @submodule core
+     */
+
     ns.EventEmitter = new window.jermaine.Model(function () {
         /**
          * EventEmitter is a Jermaine model that supports basic event emitting /
          * handling for Jermaine objects.
-         * <p>
+         *
          * Events are represented as plain old JavaScript objects with at least
          * the following two properties:
-         * <dl>
-         * <dt>type</dt>
-         * <dd>a string giving the type of the event; this can be any
+         *
+         *   **type**
+         *
+         *   > a string giving the type of the event; this can be any
          *     arbitrary string.  The event type is not restricted to be
          *     from some predetermined list; applications are free to
-         *     use whatever strings they want for their event types.</dd>
-         * <dt>target</dt>
-         * <dd>a reference to the object that emitted the event</dd>
-         * </dl>
-         * <p>
+         *     use whatever strings they want for their event types.
+         *
+         *   **target**
+         *
+         *   > a reference to the object that emitted the event
+         *
          * Event objects may also contain arbitrary other properties that are specific to
          * a particular event type.
-         * <p>
+         *
          * Any Jermaine model can declare itself to be an event emitter by saying
          * "this.isA(EventEmitter)" in its model declaration.
-         * <p>
+         *
          * This adds three methods to the model:
-         * <dl>
-         *    <dt>addListener(eventType, listenerFunction)</dt>
+         *  
+         *   **addListener(eventType, listenerFunction)**
          *
-         *    <dd>Registers listenerFunction as a listener for events of type
-         *       eventType (a string).  listenerFunction should be a function
-         *       that accepts a single argument which will be a reference to an
-         *       event object as described above.  When the object emits the
-         *       event, the listener function will be invoked in the context
-         *       where its "this" keyword refers to the object that emitted the
-         *       event (the event target).  If listenerFunction is already
-         *       registered as a listener for eventType, this function does
-         *       nothing --- each listener function can be registered only once.</dd>
+         *   > Registers listenerFunction as a listener for events of type
+         *     eventType (a string).  listenerFunction should be a function
+         *     that accepts a single argument which will be a reference to an
+         *     event object as described above.  When the object emits the
+         *     event, the listener function will be invoked in the context
+         *     where its "this" keyword refers to the object that emitted the
+         *     event (the event target).  If listenerFunction is already
+         *     registered as a listener for eventType, this function does
+         *     nothing --- each listener function can be registered only once.
          *
-         *    <dt>removeListener(eventType, listenerFunction)</dt>
+         *   **removeListener(eventType, listenerFunction)**
          *
-         *    <dd>Removes the given listenerFunction from the list of listeners
-         *       for this object for events of type eventType.</dd>
+         *   > Removes the given listenerFunction from the list of listeners
+         *     for this object for events of type eventType.
          *
-         *    <dt>emit(event)</dt>
+         *   **emit(event)**
          *
-         *    <dd>Causes the object to emit the given event.  The argument can be
-         *       either a string, in which case it is assumed to be an event type
-         *       and is converted to an event object with the given 'type'
-         *       property, or an event object with a 'type' property and any
-         *       other desired properties.  The emit() method automatically adds
-         *       a 'target' property to the event object, whose value is a
-         *       reference to the object emitting the event.</dd>
-         * </dl>
+         *   > Causes the object to emit the given event.  The argument can be
+         *     either a string, in which case it is assumed to be an event type
+         *     and is converted to an event object with the given 'type'
+         *     property, or an event object with a 'type' property and any
+         *     other desired properties.  The emit() method automatically adds
+         *     a 'target' property to the event object, whose value is a
+         *     reference to the object emitting the event.
          *
          * In most cases the emit() method is only called from within the
          * implementation of an EventEmitter object, and code external to the
@@ -61,7 +67,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * are public methods, though, so it's also possible for code outside of
          * an object's implementation to cause it to emit an event, or for the
          * object's own code to listen for and process its own events.
-         * <p>
+         *
          * Two special types of events are always present for every EventEmitter
          * object: the "listenerAdded" and "listenerRemoved" events.  These
          * events make it possible to monitor the addition or removal of event
@@ -69,47 +75,47 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * listener function is added, and the "listenerRemoved" event is emitted
          * whenever a listener is removed.  Each of these events contain the
          * following properties:
-         * <dl>
-         *     <dt>targetType</dt>
-         *     <dd>the event type associated with the listener
-         *                 being added or removed</dd>
-         *     <dt>listener</dt>
-         *     <dd>the listener function being added or removed</dd>
-         * </dl>
          *
-         * <b>EXAMPLE</b>
-         * <pre>
-         *    var Person = new window.jermaine.Model(function() {
-         *      this.isA(EventEmitter);
-         *      this.hasA("name").which.isA("string");
-         *      this.respondsTo("say", function(something) {
-         *        console.log(this.name() + ' says ' + something);
-         *        this.emit({type : "say", message : something});
-         *      });
-         *    });
+         *   **targetType**
          *
-         *    var person = new Person().name("Mark");
+         *   > the event type associated with the listener
+         *     being added or removed
          *
-         *    var sayListener = function(event) {
-         *      console.log(event.target.name() + ' said ' + event.message);
-         *    };
+         *   **listener**
          *
-         *    person.say('Hello');
-         *    person.addListener("say", sayListener);
-         *    person.say('Alright');
-         *    person.removeListener("say", sayListener);
-         *    person.say('Goodbye');
+         *   > the listener function being added or removed
          *
-         *    OUTPUT:
-         *
-         *       Mark says Hello
-         *       Mark says Alright
-         *       Mark said Alright
-         *       Mark said Goodbye
-         * </pre>
-         * 
-         * @name EventEmitter
+         * @class EventEmitter
+         * @for EventEmitter
          * @constructor
+         * @example
+         *     var Person = new window.jermaine.Model(function() {
+         *         this.isA(EventEmitter);
+         *         this.hasA("name").which.isA("string");
+         *         this.respondsTo("say", function(something) {
+         *             console.log(this.name() + ' says ' + something);
+         *             this.emit({type : "say", message : something});
+         *         });
+         *     });
+         *     var person = new Person().name("Mark");
+         *
+         *     var sayListener = function(event) {
+         *         console.log(event.target.name() + ' said ' + event.message);
+         *     };
+         *
+         *     person.say('Hello');
+         *     person.addListener("say", sayListener);
+         *     person.say('Alright');
+         *     person.removeListener("say", sayListener);
+         *     person.say('Goodbye');
+         *
+         *
+         *     OUTPUT:
+         *
+         *         Mark says Hello
+         *         Mark says Alright
+         *         Mark said Alright
+         *         Mark said Goodbye
          */
 
         // listeners is a plain old JS object whose keys are events
@@ -126,7 +132,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * Adds a listener function for events of a specific type
          * emitted by this object.
          * 
-         * @method EventEmitter#addListener
+         * @method addListener
          * @param {string} eventType the type of event
          * @param {function} listener a listener function
          * @return {boolean} a value indicating whether the listener
@@ -156,7 +162,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * Removes a listener function for events of a specific type
          * emitted by this object.
          * 
-         * @method EventEmitter#removeListener
+         * @method removeListener
          * @param {string} eventType the type of event
          * @param {function} listener the listener function to remove
          * @return {boolean} a value indicating whether the listener
@@ -190,8 +196,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * the current listeners on this object for events of the
          * given type will be invoked, being passed an event object.
          * 
-         * @method EventEmitter#emit
-         * @param {Object or string} event either a string representing an event type, or an event
+         * @method emit
+         * @param {Object|string} event either a string representing an event type, or an event
          *                                 object with a 'type' attribute.
          * @return (nothing)
          */
