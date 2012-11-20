@@ -286,12 +286,7 @@
   </target>
 
   <target name="doc">
-    <exec executable="./lib/jsdoc/jsdoc" failonerror="false">
-      <arg line="-r" />
-      <arg line="src" />
-      <arg line="-d" />
-      <arg line="doc" />
-    </exec>
+    <exec executable="yuidoc"/>
   </target>
 
 </project>
