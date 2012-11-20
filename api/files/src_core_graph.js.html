@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>src&#x2F;core&#x2F;graph.js - js-Multigraph</title>
+    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.7.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
+    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.7.0&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="..&#x2F;assets/css/logo.png" title="js-Multigraph"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="..&#x2F;classes/ArrayData.html">ArrayData</a></li>
+            
+                <li><a href="..&#x2F;classes/Axis.html">Axis</a></li>
+            
+                <li><a href="..&#x2F;classes/axisBinding.html">axisBinding</a></li>
+            
+                <li><a href="..&#x2F;classes/Data.html">Data</a></li>
+            
+                <li><a href="..&#x2F;classes/Displacement.html">Displacement</a></li>
+            
+                <li><a href="..&#x2F;classes/EventEmitter.html">EventEmitter</a></li>
+            
+                <li><a href="..&#x2F;classes/Graph.html">Graph</a></li>
+            
+                <li><a href="..&#x2F;classes/Legend.html">Legend</a></li>
+            
+                <li><a href="..&#x2F;classes/Mixin.html">Mixin</a></li>
+            
+                <li><a href="..&#x2F;classes/Multigraph.html">Multigraph</a></li>
+            
+                <li><a href="..&#x2F;classes/Text.html">Text</a></li>
+            
+                <li><a href="..&#x2F;classes/WebServiceData.html">WebServiceData</a></li>
+            
+                <li><a href="..&#x2F;classes/WebServiceDataCacheNode.html">WebServiceDataCacheNode</a></li>
+            
+                <li><a href="..&#x2F;classes/WebServiceDataIterator.html">WebServiceDataIterator</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="..&#x2F;modules/canvas.html">canvas</a></li>
+            
+                <li><a href="..&#x2F;modules/core.html">core</a></li>
+            
+                <li><a href="..&#x2F;modules/math.html">math</a></li>
+            
+                <li><a href="..&#x2F;modules/multigraph.html">multigraph</a></li>
+            
+                <li><a href="..&#x2F;modules/raphael.html">raphael</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: src&#x2F;core&#x2F;graph.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (ns) {
+    &quot;use strict&quot;;
+
+    &#x2F;**
+     * @module multigraph
+     * @submodule core
+     *&#x2F;
+    var Box = window.multigraph.math.Box;
+
+    &#x2F;**
+     * The Graph Jermaine model controls the properties for an individual Graph.
+     *
+     * @class Graph
+     * @for Graph
+     * @constructor
+     *&#x2F;
+    var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = window.multigraph.utilityFunctions.getKeys(defaultValues),
+        Graph = new window.jermaine.Model( &quot;Graph&quot;, function () {
+            &#x2F;**
+             * Child model which controls the properties of the Graph&#x27;s Window.
+             *
+             * @property window
+             * @type {Window}
+             * @author jrfrimme
+             *&#x2F;
+            this.hasA(&quot;window&quot;).which.validatesWith(function (w) {
+                return w instanceof ns.Window;
+            });
+            &#x2F;**
+             * Child model which controls the properties of the Graph&#x27;s Plotarea.
+             *
+             * @property plotarea
+             * @type {Plotarea}
+             * @author jrfrimme
+             *&#x2F;
+            this.hasA(&quot;plotarea&quot;).which.validatesWith(function (plotarea) {
+                return plotarea instanceof ns.Plotarea;
+            });
+
+
+            &#x2F;**
+             * Child model which controls the properties of the Graph&#x27;s Legend.
+             *
+             * @property legend
+             * @type {Legend}
+             * @author jrfrimme
+             *&#x2F;
+            this.hasA(&quot;legend&quot;).which.validatesWith(function (legend) {
+                return legend instanceof ns.Legend;
+            });
+            &#x2F;**
+             * Child model which controls the properties of the Graph&#x27;s Background.
+             *
+             * @property background
+             * @type {Background}
+             * @author jrfrimme
+             *&#x2F;
+            this.hasA(&quot;background&quot;).which.validatesWith(function (background) {
+                return background instanceof ns.Background;
+            });
+
+            &#x2F;**
+             * Child model which controls the properties of the Graph&#x27;s Title.
+             *
+             * @property title
+             * @type {Title}
+             * @author jrfrimme
+             *&#x2F;
+            this.hasA(&quot;title&quot;).which.validatesWith(function (title) {
+                return title instanceof ns.Title;
+            });
+            &#x2F;**
+             * Jermaine Attr_List of the Graph&#x27;s Axes.
+             *
+             * @property axes
+             * @type {Axis}
+             * @author jrfrimme
+             *&#x2F;
+            this.hasMany(&quot;axes&quot;).which.validatesWith(function (axis) {
+                return axis instanceof ns.Axis;
+            });
+            &#x2F;**
+             * Jermiane Attr_List of the Graph&#x27;s Plots.
+             *
+             * @property plots
+             * @type {Plot}
+             * @author jrfrimme
+             *&#x2F;
+            this.hasMany(&quot;plots&quot;).which.validatesWith(function (plot) {
+                return plot instanceof ns.Plot;
+            });
+            &#x2F;**
+             * Jermiane Attr_List of the Graph&#x27;s Data sets.
+             *
+             * @property data
+             * @type {Data}
+             * @author jrfrimme
+             *&#x2F;
+            this.hasMany(&quot;data&quot;).which.validatesWith(function (data) {
+                return data instanceof ns.Data;
+            });
+
+            &#x2F;**
+             * Stores the computed width and height of the Graph&#x27;s windowBox.
+             *
+             * @property windowBox
+             * @type {}
+             * @author jrfrimme
+             *&#x2F;
+            this.hasA(&quot;windowBox&quot;).which.validatesWith(function (val) {
+                return val instanceof Box;
+            });
+            &#x2F;**
+             * Stores the computed width and height of the Graph&#x27;s paddingBox.
+             *
+             * @property paddingBox
+             * @type {}
+             * @author jrfrimme
+             *&#x2F;
+            this.hasA(&quot;paddingBox&quot;).which.validatesWith(function (val) {
+                return val instanceof Box;
+            });
+            &#x2F;**
+             * Stroes the computed width and height of the Graph&#x27;s plotBox.
+             *
+             * @property plotBox
+             * @type {}
+             * @author jrfrimme
+             *&#x2F;
+            this.hasA(&quot;plotBox&quot;).which.validatesWith(function (val) {
+                return val instanceof Box;
+            });
+            
+            this.isBuiltWith(function () {
+                this.window( new ns.Window() );
+                this.plotarea( new ns.Plotarea() );
+                this.background( new ns.Background() );
+            });
+
+            this.respondsTo(&quot;postParse&quot;, function () {
+            });
+
+            &#x2F;**
+             * Initializes the Graph&#x27;s geometry. Determines the width and height of the Graph&#x27;s &#x60;windowBox&#x60;,
+             * &#x60;paddingBox&#x60; and &#x60;plotBox&#x60;; calls its Axes&#x27; and Legend&#x27;s implementations of
+             * &#x60;initializeGeometry&#x60;.
+             *
+             * @method initializeGeometry
+             * @param {Integer} width Width of the multigraph&#x27;s div
+             * @param {Integer} height Height of the multigraph&#x27;s div
+             * @param {Object} graphicsContext
+             * @author jrfrimme
+             *&#x2F;
+            this.respondsTo(&quot;initializeGeometry&quot;, function (width, height, graphicsContext) {
+                var i;
+                this.windowBox( new Box(width, height) );
+                this.paddingBox( new Box(
+                    ( width -
+                      ( this.window().margin().left()  + this.window().border() + this.window().padding().left() ) -
+                      ( this.window().margin().right() + this.window().border() + this.window().padding().right() )
+                    ),
+                    ( height -
+                      ( this.window().margin().top()    + this.window().border() + this.window().padding().top() ) -
+                      ( this.window().margin().bottom() + this.window().border() + this.window().padding().bottom() )
+                    )
+                )
+                               );
+                this.plotBox( new Box(
+                    ( this.paddingBox().width() -
+                      ( this.plotarea().margin().left() + this.plotarea().margin().right() + (2 * this.plotarea().border()))
+                    ),
+                    (
+                        this.paddingBox().height() -
+                            ( this.plotarea().margin().top() + this.plotarea().margin().bottom() + (2 * this.plotarea().border()))
+                    )
+                )
+                            );
+                for (i = 0; i &lt; this.axes().size(); ++i) {
+                    this.axes().at(i).initializeGeometry(this);
+                }
+                if (this.legend()) {
+                    this.legend().initializeGeometry(this, graphicsContext);
+                }
+            });
+
+            &#x2F;**
+             * Convience function for registering callback functions on the Graph&#x27;s &#x60;Data&#x60; models. Adds
+             * &#x60;dataReady&#x60; event listeners to each of the Graph&#x27;s &#x60;Data&#x60; models.
+             *
+             * @method registerCommonDataCallback
+             * @param {Function} callback
+             * @author jrfrimme
+             *&#x2F;
+            this.respondsTo(&quot;registerCommonDataCallback&quot;, function (callback) {
+                var i;
+                for (i=0; i&lt;this.data().size(); ++i) {
+                    this.data().at(i).addListener(&quot;dataReady&quot;, callback);
+                }
+            });
+
+            &#x2F;**
+             * 
+             *
+             * @method pauseAllData
+             * @author jrfrimme
+             *&#x2F;
+            this.respondsTo(&quot;pauseAllData&quot;, function () {
+                var i;
+                &#x2F;&#x2F; pause all this graph&#x27;s data sources:
+                for (i=0; i&lt;this.data().size(); ++i) {
+                    this.data().at(i).pause();
+                }
+            });
+
+            &#x2F;**
+             * 
+             *
+             * @method resumeAllData
+             * @author jrfrimme
+             *&#x2F;
+            this.respondsTo(&quot;resumeAllData&quot;, function () {
+                var i;
+                &#x2F;&#x2F; resume all this graph&#x27;s data sources:
+                for (i=0; i&lt;this.data().size(); ++i) {
+                    this.data().at(i).resume();
+                }
+            });
+
+            &#x2F;**
+             * 
+             *
+             * @method findNearestAxis
+             * @param {} x
+             * @param {} y
+             * @param {} orientation
+             * @author jrfrimme
+             *&#x2F;
+            this.respondsTo(&quot;findNearestAxis&quot;, function (x, y, orientation) {
+                var foundAxis = null,
+                    mindist = 9999,
+                    i,
+                    axes = this.axes(),
+                    naxes = this.axes().size(),
+                    axis,
+                    d;
+                for (i = 0; i &lt; naxes; ++i) {
+                    axis = axes.at(i);
+                    if ((orientation === undefined) ||
+                        (orientation === null) ||
+                        (axis.orientation() === orientation)) {
+                        d = axis.distanceToPoint(x, y);
+                        if (foundAxis===null || d &lt; mindist) {
+                            foundAxis = axis;
+                            mindist = d;
+                        }
+                    }
+                }
+                return foundAxis;
+            });
+
+            window.multigraph.utilityFunctions.insertDefaults(this, defaultValues, attributes);
+        });
+
+    &#x2F;&#x2F;TODO: convert to &quot;respondsTo&quot; ???
+    Graph.prototype.axisById = function (id) {
+      &#x2F;&#x2F; return a pointer to the axis for this graph that has the given id, if any
+        var axes = this.axes(),
+            i;
+        for (i = 0; i &lt; axes.size(); ++i) {
+            if (axes.at(i).id() === id) {
+                return axes.at(i);
+            }
+        }
+        return undefined;
+    };
+
+    &#x2F;&#x2F;TODO: convert to &quot;respondsTo&quot; ???
+    Graph.prototype.variableById = function (id) {
+      &#x2F;&#x2F; return a pointer to the variable for this graph that has the given id, if any
+        var data = this.data(),
+            i,
+            j;
+        for (i = 0; i &lt; data.size(); ++i) {
+            for (j = 0; j &lt; data.at(i).columns().size(); ++j) {
+                if (data.at(i).columns().at(j).id() === id) {
+                    return data.at(i).columns().at(j);
+                }
+            }
+        }
+        return undefined;
+    };
+
+    ns.Graph = Graph;
+
+});
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="..&#x2F;assets/js/yui-prettify.js"></script>
+<script src="..&#x2F;assets/../api.js"></script>
+<script src="..&#x2F;assets/js/api-filter.js"></script>
+<script src="..&#x2F;assets/js/api-list.js"></script>
+<script src="..&#x2F;assets/js/api-search.js"></script>
+<script src="..&#x2F;assets/js/apidocs.js"></script>
+</body>
+</html>

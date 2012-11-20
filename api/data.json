@@ -1,0 +1,2686 @@
+{
+    "project": {
+        "name": "js-Multigraph",
+        "description": "Multigraph's JavaScript Implementation",
+        "url": "http://www.multigraph.org/"
+    },
+    "files": {
+        "src/core/array_data.js": {
+            "name": "src/core/array_data.js",
+            "modules": {
+                "core": 1
+            },
+            "classes": {
+                "ArrayData": 1
+            },
+            "fors": {
+                "ArrayData": 1
+            },
+            "namespaces": {}
+        },
+        "src/core/axis.js": {
+            "name": "src/core/axis.js",
+            "modules": {},
+            "classes": {
+                "Axis": 1
+            },
+            "fors": {
+                "Axis": 1
+            },
+            "namespaces": {}
+        },
+        "src/core/axis_binding.js": {
+            "name": "src/core/axis_binding.js",
+            "modules": {},
+            "classes": {
+                "axisBinding": 1
+            },
+            "fors": {
+                "axisBinding": 1
+            },
+            "namespaces": {}
+        },
+        "src/core/data.js": {
+            "name": "src/core/data.js",
+            "modules": {},
+            "classes": {
+                "Data": 1
+            },
+            "fors": {
+                "Data": 1
+            },
+            "namespaces": {}
+        },
+        "src/core/event_emitter.js": {
+            "name": "src/core/event_emitter.js",
+            "modules": {},
+            "classes": {
+                "EventEmitter": 1
+            },
+            "fors": {
+                "EventEmitter": 1
+            },
+            "namespaces": {}
+        },
+        "src/core/graph.js": {
+            "name": "src/core/graph.js",
+            "modules": {},
+            "classes": {
+                "Graph": 1
+            },
+            "fors": {
+                "Graph": 1
+            },
+            "namespaces": {}
+        },
+        "src/core/legend.js": {
+            "name": "src/core/legend.js",
+            "modules": {},
+            "classes": {
+                "Legend": 1
+            },
+            "fors": {
+                "Legend": 1
+            },
+            "namespaces": {}
+        },
+        "src/core/mixin.js": {
+            "name": "src/core/mixin.js",
+            "modules": {},
+            "classes": {
+                "Mixin": 1
+            },
+            "fors": {
+                "Mixin": 1
+            },
+            "namespaces": {}
+        },
+        "src/core/multigraph.js": {
+            "name": "src/core/multigraph.js",
+            "modules": {},
+            "classes": {
+                "Multigraph": 1
+            },
+            "fors": {
+                "Multigraph": 1
+            },
+            "namespaces": {}
+        },
+        "src/core/text.js": {
+            "name": "src/core/text.js",
+            "modules": {},
+            "classes": {
+                "Text": 1
+            },
+            "fors": {
+                "Text": 1
+            },
+            "namespaces": {}
+        },
+        "src/core/web_service_data.js": {
+            "name": "src/core/web_service_data.js",
+            "modules": {},
+            "classes": {
+                "WebServiceData": 1
+            },
+            "fors": {
+                "WebServiceData": 1
+            },
+            "namespaces": {}
+        },
+        "src/core/web_service_data_cache_node.js": {
+            "name": "src/core/web_service_data_cache_node.js",
+            "modules": {},
+            "classes": {
+                "WebServiceDataCacheNode": 1
+            },
+            "fors": {
+                "WebServiceDataCacheNode": 1
+            },
+            "namespaces": {}
+        },
+        "src/core/web_service_data_iterator.js": {
+            "name": "src/core/web_service_data_iterator.js",
+            "modules": {},
+            "classes": {
+                "WebServiceDataIterator": 1
+            },
+            "fors": {
+                "WebServiceDataIterator": 1
+            },
+            "namespaces": {}
+        },
+        "src/graphics/canvas/canvas_mixin.js": {
+            "name": "src/graphics/canvas/canvas_mixin.js",
+            "modules": {
+                "canvas": 1
+            },
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/graphics/canvas/text.js": {
+            "name": "src/graphics/canvas/text.js",
+            "modules": {},
+            "classes": {},
+            "fors": {
+                "Text": 1
+            },
+            "namespaces": {}
+        },
+        "src/graphics/raphael/raphael_mixin.js": {
+            "name": "src/graphics/raphael/raphael_mixin.js",
+            "modules": {
+                "raphael": 1
+            },
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/graphics/raphael/text.js": {
+            "name": "src/graphics/raphael/text.js",
+            "modules": {},
+            "classes": {},
+            "fors": {
+                "Text": 1
+            },
+            "namespaces": {}
+        },
+        "src/math/displacement.js": {
+            "name": "src/math/displacement.js",
+            "modules": {
+                "math": 1
+            },
+            "classes": {
+                "Displacement": 1
+            },
+            "fors": {
+                "Displacement": 1
+            },
+            "namespaces": {}
+        }
+    },
+    "modules": {
+        "multigraph": {
+            "name": "multigraph",
+            "submodules": {
+                "core": 1,
+                "canvas": 1,
+                "raphael": 1,
+                "math": 1
+            },
+            "classes": {
+                "ArrayData": 1,
+                "Axis": 1,
+                "axisBinding": 1,
+                "Data": 1,
+                "EventEmitter": 1,
+                "Graph": 1,
+                "Legend": 1,
+                "Mixin": 1,
+                "Multigraph": 1,
+                "Text": 1,
+                "WebServiceData": 1,
+                "WebServiceDataCacheNode": 1,
+                "WebServiceDataIterator": 1,
+                "Displacement": 1
+            },
+            "fors": {
+                "ArrayData": 1,
+                "Axis": 1,
+                "axisBinding": 1,
+                "Data": 1,
+                "EventEmitter": 1,
+                "Graph": 1,
+                "Legend": 1,
+                "Mixin": 1,
+                "Multigraph": 1,
+                "Text": 1,
+                "WebServiceData": 1,
+                "WebServiceDataCacheNode": 1,
+                "WebServiceDataIterator": 1,
+                "Displacement": 1
+            },
+            "namespaces": {},
+            "file": "src/math/displacement.js",
+            "line": 12
+        },
+        "core": {
+            "name": "core",
+            "submodules": {},
+            "classes": {
+                "ArrayData": 1,
+                "Axis": 1,
+                "axisBinding": 1,
+                "Data": 1,
+                "EventEmitter": 1,
+                "Graph": 1,
+                "Legend": 1,
+                "Mixin": 1,
+                "Multigraph": 1,
+                "Text": 1,
+                "WebServiceData": 1,
+                "WebServiceDataCacheNode": 1,
+                "WebServiceDataIterator": 1
+            },
+            "fors": {},
+            "is_submodule": 1,
+            "namespaces": {},
+            "module": "multigraph",
+            "namespace": "",
+            "file": "src/core/web_service_data_iterator.js",
+            "line": 11,
+            "description": "Core functionality for the javascript implementation of multigraph.",
+            "tag": "main",
+            "itemtype": "main"
+        },
+        "canvas": {
+            "name": "canvas",
+            "submodules": {},
+            "classes": {},
+            "fors": {},
+            "is_submodule": 1,
+            "namespaces": {},
+            "module": "multigraph",
+            "namespace": "",
+            "file": "src/graphics/canvas/canvas_mixin.js",
+            "line": 4,
+            "description": "Mixin functions for canvas driver.",
+            "tag": "main",
+            "itemtype": "main"
+        },
+        "raphael": {
+            "name": "raphael",
+            "submodules": {},
+            "classes": {},
+            "fors": {},
+            "is_submodule": 1,
+            "namespaces": {},
+            "module": "multigraph",
+            "namespace": "",
+            "file": "src/graphics/raphael/raphael_mixin.js",
+            "line": 4,
+            "description": "Mixin functions for the raphael driver."
+        },
+        "math": {
+            "name": "math",
+            "submodules": {},
+            "classes": {
+                "Displacement": 1
+            },
+            "fors": {},
+            "is_submodule": 1,
+            "namespaces": {},
+            "module": "multigraph",
+            "namespace": "",
+            "file": "src/math/displacement.js",
+            "line": 12,
+            "description": "The Math module provides utility models and functions which correspond to mathematical concepts.",
+            "tag": "main",
+            "itemtype": "main"
+        }
+    },
+    "classes": {
+        "ArrayData": {
+            "name": "ArrayData",
+            "shortname": "ArrayData",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "multigraph",
+            "submodule": "core",
+            "namespace": "",
+            "file": "src/core/array_data.js",
+            "line": 9,
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "columns",
+                    "description": "A array of DataVariables",
+                    "type": "Array"
+                },
+                {
+                    "name": "stringArray",
+                    "description": "A array of the preparsed DataValues",
+                    "type": "Array"
+                }
+            ]
+        },
+        "Axis": {
+            "name": "Axis",
+            "shortname": "Axis",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "multigraph",
+            "submodule": "core",
+            "namespace": "",
+            "file": "src/core/axis.js",
+            "line": 14,
+            "description": "Axis is a Jermaine model that controls Multigraph axes.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "Orientation",
+                    "description": "",
+                    "type": "AxisOrientation"
+                }
+            ]
+        },
+        "axisBinding": {
+            "name": "axisBinding",
+            "shortname": "axisBinding",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "multigraph",
+            "submodule": "core",
+            "namespace": "",
+            "file": "src/core/axis_binding.js",
+            "line": 9,
+            "is_constructor": 1
+        },
+        "Data": {
+            "name": "Data",
+            "shortname": "Data",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "multigraph",
+            "submodule": "core",
+            "namespace": "",
+            "file": "src/core/data.js",
+            "line": 13,
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "columns",
+                    "description": "",
+                    "type": "DataVariable"
+                }
+            ]
+        },
+        "EventEmitter": {
+            "name": "EventEmitter",
+            "shortname": "EventEmitter",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "multigraph",
+            "submodule": "core",
+            "namespace": "",
+            "file": "src/core/event_emitter.js",
+            "line": 10,
+            "description": "EventEmitter is a Jermaine model that supports basic event emitting /\nhandling for Jermaine objects.\n\nEvents are represented as plain old JavaScript objects with at least\nthe following two properties:\n\n  **type**\n\n  > a string giving the type of the event; this can be any\n    arbitrary string.  The event type is not restricted to be\n    from some predetermined list; applications are free to\n    use whatever strings they want for their event types.\n\n  **target**\n\n  > a reference to the object that emitted the event\n\nEvent objects may also contain arbitrary other properties that are specific to\na particular event type.\n\nAny Jermaine model can declare itself to be an event emitter by saying\n\"this.isA(EventEmitter)\" in its model declaration.\n\nThis adds three methods to the model:\n \n  **addListener(eventType, listenerFunction)**\n\n  > Registers listenerFunction as a listener for events of type\n    eventType (a string).  listenerFunction should be a function\n    that accepts a single argument which will be a reference to an\n    event object as described above.  When the object emits the\n    event, the listener function will be invoked in the context\n    where its \"this\" keyword refers to the object that emitted the\n    event (the event target).  If listenerFunction is already\n    registered as a listener for eventType, this function does\n    nothing --- each listener function can be registered only once.\n\n  **removeListener(eventType, listenerFunction)**\n\n  > Removes the given listenerFunction from the list of listeners\n    for this object for events of type eventType.\n\n  **emit(event)**\n\n  > Causes the object to emit the given event.  The argument can be\n    either a string, in which case it is assumed to be an event type\n    and is converted to an event object with the given 'type'\n    property, or an event object with a 'type' property and any\n    other desired properties.  The emit() method automatically adds\n    a 'target' property to the event object, whose value is a\n    reference to the object emitting the event.\n\nIn most cases the emit() method is only called from within the\nimplementation of an EventEmitter object, and code external to the\nobject's model will use its addListener() and removeListener() methods\nto process events that the object emits.  All three of these methods\nare public methods, though, so it's also possible for code outside of\nan object's implementation to cause it to emit an event, or for the\nobject's own code to listen for and process its own events.\n\nTwo special types of events are always present for every EventEmitter\nobject: the \"listenerAdded\" and \"listenerRemoved\" events.  These\nevents make it possible to monitor the addition or removal of event\nlisteners.  The \"listenerAdded\" event is emitted whenever a new\nlistener function is added, and the \"listenerRemoved\" event is emitted\nwhenever a listener is removed.  Each of these events contain the\nfollowing properties:\n\n  **targetType**\n\n  > the event type associated with the listener\n    being added or removed\n\n  **listener**\n\n  > the listener function being added or removed",
+            "is_constructor": 1,
+            "example": [
+                "\n    var Person = new window.jermaine.Model(function() {\n        this.isA(EventEmitter);\n        this.hasA(\"name\").which.isA(\"string\");\n        this.respondsTo(\"say\", function(something) {\n            console.log(this.name() + ' says ' + something);\n            this.emit({type : \"say\", message : something});\n        });\n    });\n    var person = new Person().name(\"Mark\");\n\n    var sayListener = function(event) {\n        console.log(event.target.name() + ' said ' + event.message);\n    };\n\n    person.say('Hello');\n    person.addListener(\"say\", sayListener);\n    person.say('Alright');\n    person.removeListener(\"say\", sayListener);\n    person.say('Goodbye');\n\n\n    OUTPUT:\n\n        Mark says Hello\n        Mark says Alright\n        Mark said Alright\n        Mark said Goodbye"
+            ]
+        },
+        "Graph": {
+            "name": "Graph",
+            "shortname": "Graph",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "multigraph",
+            "submodule": "core",
+            "namespace": "",
+            "file": "src/core/graph.js",
+            "line": 10,
+            "description": "The Graph Jermaine model controls the properties for an individual Graph.",
+            "is_constructor": 1
+        },
+        "Legend": {
+            "name": "Legend",
+            "shortname": "Legend",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "multigraph",
+            "submodule": "core",
+            "namespace": "",
+            "file": "src/core/legend.js",
+            "line": 14,
+            "description": "Legend is a Jermaine model that supports the rendering of Multigraph Legends.\n\nThe methods for this object take a parameter called `graphicsContext`, which is a\ndriver-specific object that stores whatever state/configuration is needed by the\ndriver.  Each driver is responsible for creating its own graphicsContext object and\npassing it to these methods, which in turn pass that object on to the driver-specific\nmethods that they call.",
+            "is_constructor": 1,
+            "requires": [
+                "Point",
+                "RGBColor",
+                "Plot",
+                "Icon"
+            ]
+        },
+        "Mixin": {
+            "name": "Mixin",
+            "shortname": "Mixin",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "multigraph",
+            "submodule": "core",
+            "namespace": "",
+            "file": "src/core/mixin.js",
+            "line": 9,
+            "description": "The Mixin model provides a convenient way for Jermaine\napplications to \"mix in\" additional functionality to a model,\nfrom outside the model's initial definition.\n\nThe ability to add features (methods and/or attributes) to a\nJermaine model outside its initial definition already exists in\nJermaine -- this Mixin model does not actually add new\nfunctionality to Jermaine; it just provides a convenient\npattern for grouping additional features together and applying\nthem to a model as a group.\n\nThe Mixin model maintains an internal list of functions, called\nmixin functions, and provides an add() method for adding a\nfunction to that list.\n\nThe apply() method calls all of the mixinfunctions that have been\nadded to the list, passing each one the same arguments\nthat were passed to the apply() function itself.\n\nThat's it.  That's all the Mixin class does.  It's up to you to\nput whatever jermaine-model-extending code you want in the\nmixin functions you add to the Mixin; the Mixin simply serves\nas a place to hold them all, and a convenient way to execute\nthem all at once.",
+            "author": "mbp"
+        },
+        "Multigraph": {
+            "name": "Multigraph",
+            "shortname": "Multigraph",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "multigraph",
+            "submodule": "core",
+            "namespace": "",
+            "file": "src/core/multigraph.js",
+            "line": 14,
+            "description": "The Multigraph Jermaine model is the root class for the js-multigraph project.",
+            "is_constructor": 1
+        },
+        "Text": {
+            "name": "Text",
+            "shortname": "Text",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "multigraph",
+            "submodule": "core",
+            "namespace": "",
+            "file": "src/core/text.js",
+            "line": 8,
+            "description": "Text is a Jermaine model that supports storing and determining metrics of\nstrings in different graphics contexts.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "string",
+                    "description": "The string stored in the Text model",
+                    "type": "String"
+                }
+            ]
+        },
+        "WebServiceData": {
+            "name": "WebServiceData",
+            "shortname": "WebServiceData",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "multigraph",
+            "submodule": "core",
+            "namespace": "",
+            "file": "src/core/web_service_data.js",
+            "line": 9,
+            "is_constructor": 1,
+            "extends": "Data"
+        },
+        "WebServiceDataCacheNode": {
+            "name": "WebServiceDataCacheNode",
+            "shortname": "WebServiceDataCacheNode",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "multigraph",
+            "submodule": "core",
+            "namespace": "",
+            "file": "src/core/web_service_data_cache_node.js",
+            "line": 11,
+            "description": "A WebServiceDataCacheNode represents a single node in the\ndoubly-linked list holding the data for a WebServiceDataCache.\nThe WebServiceDataCacheNode has an array of data (which may\nactually be null, if the node's data has not yet been loaded),\nnext and prev pointers to the next and previous nodes in the\nlinked list, and coveredMin and coveredMax values that indicate\nthe min and max values of the \"covered\" range of data for this\nnode.\n\nThe \"covered\" range is the interval of the data number line for\nwhich this node is responsible for storing data; Multigraph\nuses range this to avoid requesting the same data twice --- it\nnever requests data for a range already covered by an existing\ncache node.\n\nInitially, when the WebServiceDataCacheNode is created, the\nlimits of the covered range are specified in the constructor.\nLater on, when the node's data is actually populated, the\nlimits are potentially adjusted outward, if the range of data\nreceived is larger than the initially specified covered range.\nSo in all cases, the covered range indicates the range for\nwhich no more data is needed, because it's covered by this\nnode.\n\nNote that the covered range is never adjusted to be smaller.\n\nThe WebServiceDataCacheNode does not actually fetch any data\n--- it is simply a storage container for fetched data; it's up\nto other code outside of this object to fetch and populate the\ndata.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "coveredMin",
+                    "description": "",
+                    "type": "DataValue"
+                },
+                {
+                    "name": "coveredMax",
+                    "description": "",
+                    "type": "DataValue"
+                }
+            ]
+        },
+        "WebServiceDataIterator": {
+            "name": "WebServiceDataIterator",
+            "shortname": "WebServiceDataIterator",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "multigraph",
+            "submodule": "core",
+            "namespace": "",
+            "file": "src/core/web_service_data_iterator.js",
+            "line": 11,
+            "description": "An iterator for stepping through data values stored in a linked list of\nWebServiceDataCacheNodes.  The constructor takes 5 arguments:",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "columnIndices!~YUIDOC_LINE~!",
+                    "description": "JavaScript array of the indices of the columns\n    of data to return",
+                    "type": "Array"
+                },
+                {
+                    "name": "initialNode!~YUIDOC_LINE~!",
+                    "description": "Pointer to the WebServiceDataCacheNode containing the first\n    value to iterate over",
+                    "type": "WebServiceDataCacheNode"
+                },
+                {
+                    "name": "initialIndex!~YUIDOC_LINE~!",
+                    "description": "Index, within initialNode, of the first value to iterate over",
+                    "type": "Integer"
+                },
+                {
+                    "name": "finalNode!~YUIDOC_LINE~!",
+                    "description": "Pointer to the WebServiceDataCacheNode containing the last\n    value to iterate over",
+                    "type": "WebServiceDataCacheNode"
+                },
+                {
+                    "name": "finalIndex!~YUIDOC_LINE~!",
+                    "description": "Index, within finalNode, of the last value to iterate over",
+                    "type": "Integer"
+                }
+            ]
+        },
+        "Displacement": {
+            "name": "Displacement",
+            "shortname": "Displacement",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "multigraph",
+            "submodule": "math",
+            "namespace": "",
+            "file": "src/math/displacement.js",
+            "line": 12,
+            "description": "A Displacement represents a geometric position along a line\nsegment, expressed in terms of two quantities: a relative\nposition called `a`, and an absolute offset called `b`.  The\nlength of the line segment is not known in advance --- the idea\nis that the Displacement object encapsulates a rule for\ndetermining a location along ANY line segment.  The Displacement\nhas methods which take the line segment length as an argument\nand return the computed final position.\n\nThere are two different position-calcuating methods,\ncorresponding to two different interpretations of the relative\nvalue `a`:\n\n**relative length**:\n    `a` is a number between 0 and 1, representing a fraction of\n      the total length of the line segment; the relative\n      position determined by `a` is the fraction `a` of the\n      total length of the segment.\n    In this case, the position-calculating method\n      `calculateLength(L)` returns the number `a * L + b`, which\n      corresponds to moving `a` of the way along the length L,\n      then adding `b`:\n\n            [--------------------------------X------------]\n            |<---- a * L --->|<---- b ------>|\n            |<------------------  L  -------------------->|\n\n**relative coordinate**:\n    `a` is a number between -1 and 1, representing a coordinate\n      value in a [-1,1] coordinate system along the line\n      segment.\n    In this case, the position-calculating method\n      `calculateCoordinate(L)` returns the number `(a+1) * L/2 +\n      b`.  which corresponds to moving to the position\n      determined by the `a` coordinate, then adding `b`:\n\n            [------------------------------------X--------]\n            |<--- (a+1) * L/2 --->|<---- b ----->|\n            |<------------------  L  -------------------->|",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "a",
+                    "description": "",
+                    "type": "Number"
+                },
+                {
+                    "name": "b",
+                    "description": "(OPTIONAL)",
+                    "type": "Integer"
+                }
+            ]
+        }
+    },
+    "classitems": [
+        {
+            "file": "src/core/array_data.js",
+            "line": 31,
+            "itemtype": "method",
+            "name": "getIterator",
+            "params": [
+                {
+                    "name": "columnIDs",
+                    "description": "",
+                    "type": "String array"
+                },
+                {
+                    "name": "min",
+                    "description": "",
+                    "type": "DataValue"
+                },
+                {
+                    "name": "max",
+                    "description": "",
+                    "type": "DataValue"
+                },
+                {
+                    "name": "buffer",
+                    "description": "",
+                    "type": "Integer"
+                }
+            ],
+            "return": {
+                "description": "ArrayData"
+            },
+            "author": "jrfrimme",
+            "class": "ArrayData",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/array_data.js",
+            "line": 46,
+            "description": "Determines the upper and lower bounds of a column in a dataset.",
+            "itemtype": "method",
+            "name": "getBounds",
+            "params": [
+                {
+                    "name": "columnNumber",
+                    "description": "Column in the dataset to have its bounds determined.",
+                    "type": "Integer"
+                }
+            ],
+            "return": {
+                "description": "Array in the form: [lowerBound, upperBound].",
+                "type": "Array"
+            },
+            "author": "jrfrimme",
+            "class": "ArrayData",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/array_data.js",
+            "line": 71,
+            "itemtype": "method",
+            "name": "onReady",
+            "params": [
+                {
+                    "name": "callback",
+                    "description": ""
+                }
+            ],
+            "class": "ArrayData",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/array_data.js",
+            "line": 76,
+            "itemtype": "method",
+            "name": "getArrayDataIterator",
+            "static": 1,
+            "params": [
+                {
+                    "name": "arrayData",
+                    "description": "",
+                    "type": "ArrayData"
+                },
+                {
+                    "name": "columnIDs",
+                    "description": "",
+                    "type": "String array"
+                },
+                {
+                    "name": "min",
+                    "description": "",
+                    "type": "DataValue"
+                },
+                {
+                    "name": "max",
+                    "description": "",
+                    "type": "DataValue"
+                },
+                {
+                    "name": "buffer",
+                    "description": "",
+                    "type": "Integer"
+                }
+            ],
+            "throws": [
+                "{error} Throws error if arrayData is not an array of strings"
+            ],
+            "return": {
+                "description": "iter"
+            },
+            "author": "jrfrimme",
+            "class": "ArrayData",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/array_data.js",
+            "line": 187,
+            "itemtype": "method",
+            "name": "textToDataValuesArray",
+            "static": 1,
+            "params": [
+                {
+                    "name": "dataVariableArray",
+                    "description": "",
+                    "type": "Array"
+                },
+                {
+                    "name": "text",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "dataValues",
+                "type": "Array"
+            },
+            "author": "jrfrimme",
+            "todo": [
+                "If the number of comma-separated values on the current line is not the same as the number of columns in the metadata",
+                "should throw an error."
+            ],
+            "class": "ArrayData",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/array_data.js",
+            "line": 224,
+            "itemtype": "method",
+            "name": "textToStringArray",
+            "static": 1,
+            "params": [
+                {
+                    "name": "text",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "stringValues",
+                "type": "Array"
+            },
+            "author": "jrfrimme",
+            "class": "ArrayData",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/array_data.js",
+            "line": 258,
+            "description": "Parses an array of strings into an array of DataValues.",
+            "itemtype": "method",
+            "name": "textToStringArray",
+            "static": 1,
+            "params": [
+                {
+                    "name": "dataVariableArray",
+                    "description": "Plain javascript array of DataVariables",
+                    "type": "Array"
+                },
+                {
+                    "name": "stringArray",
+                    "description": "Array of values in string form",
+                    "type": "Array"
+                }
+            ],
+            "return": {
+                "description": "dataValues",
+                "type": "Array"
+            },
+            "author": "jrfrimme",
+            "class": "ArrayData",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/axis.js",
+            "line": 58,
+            "description": "Stores the \"min\" value from the mugl file as a string, if there was one.",
+            "itemtype": "property",
+            "name": "min",
+            "type": "{String}",
+            "author": "jrfrimme",
+            "class": "Axis",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/axis.js",
+            "line": 67,
+            "description": "The current min DataValue for the axis.",
+            "itemtype": "property",
+            "name": "dataMin",
+            "type": "{DataValue}",
+            "author": "jrfrimme",
+            "class": "Axis",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/axis.js",
+            "line": 77,
+            "description": "Convenience method for checking to see if dataMin has been set or not",
+            "itemtype": "method",
+            "name": "hasDataMin",
+            "author": "jrfrimme",
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "Axis",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/axis.js",
+            "line": 94,
+            "description": "Stores the \"max\" value from the mugl file as a string, if there was one.",
+            "itemtype": "property",
+            "name": "max",
+            "type": "{String}",
+            "author": "jrfrimme",
+            "class": "Axis",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/axis.js",
+            "line": 103,
+            "description": "The current max DataValue for the axis.",
+            "itemtype": "property",
+            "name": "dataMax",
+            "type": "{DataValue}",
+            "author": "jrfrimme",
+            "class": "Axis",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/axis.js",
+            "line": 113,
+            "description": "Convenience method for checking to see if dataMax has been set or not.",
+            "itemtype": "method",
+            "name": "hasDataMax",
+            "author": "jrfrimme",
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "Axis",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/axis.js",
+            "line": 210,
+            "description": "Decides which labeler to use: take the one with the largest density <= 0.8.\nUnless all have density > 0.8, in which case we take the first one.  This assumes\nthat the labelers list is ordered in increasing order of label density.\nThis function sets the `currentLabeler` and `currentLabelDensity` attributes.",
+            "itemtype": "method",
+            "name": "prepareRender",
+            "params": [
+                {
+                    "name": "graphicsContext",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "author": "jrfrimme",
+            "class": "Axis",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/axis.js",
+            "line": 374,
+            "description": "Compute the distance from an axis to a point.  The point\n(x,y) is expressed in pixel coordinates in the same\ncoordinate system as the axis.\n\nWe use two different kinds of computations depending on\nwhether the point lies inside or outside the region bounded\nby the two lines perpendicular to the axis through its\nendpoints.  If the point lies inside this region, the\ndistance is simply the difference in the perpendicular\ncoordinate of the point and the perpendicular coordinate of\nthe axis.\n\nIf the point lies outside the region, then the distance is\nthe L2 distance between the point and the closest endpoint\nof the axis.",
+            "itemtype": "method",
+            "name": "distanceToPoint",
+            "params": [
+                {
+                    "name": "x",
+                    "description": ""
+                },
+                {
+                    "name": "y",
+                    "description": ""
+                }
+            ],
+            "author": "jrfrimme",
+            "class": "Axis",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/axis_binding.js",
+            "line": 19,
+            "itemtype": "property",
+            "name": "id",
+            "type": "{String}",
+            "author": "jrfrimme",
+            "class": "axisBinding",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/axis_binding.js",
+            "line": 28,
+            "itemtype": "property",
+            "name": "axes",
+            "type": "{Array}",
+            "author": "jrfrimme",
+            "class": "axisBinding",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/axis_binding.js",
+            "line": 42,
+            "itemtype": "method",
+            "name": "addAxis",
+            "params": [
+                {
+                    "name": "axis",
+                    "description": "",
+                    "type": "Axis"
+                },
+                {
+                    "name": "min",
+                    "description": "",
+                    "type": "Number|DataValue"
+                },
+                {
+                    "name": "max",
+                    "description": "",
+                    "type": "Number|DataValue"
+                }
+            ],
+            "author": "jrfrimme",
+            "class": "axisBinding",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/axis_binding.js",
+            "line": 73,
+            "itemtype": "method",
+            "name": "removeAxis",
+            "params": [
+                {
+                    "name": "axis",
+                    "description": "",
+                    "type": "Axis"
+                }
+            ],
+            "author": "jrfrimme",
+            "class": "axisBinding",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/axis_binding.js",
+            "line": 91,
+            "description": "Force all the axes in this binding to sync up with each\nother, if possible.\n\nThis is done by looking for an axis in this binding which\nhas its dataMin and dataMax values set, and then calling\nits setDataRange() method with those values.  The main\npurpose of this method is to facilitate the initial setting\nof dataMin/dataMax values for axes in a binding that do not\nalready have dataMin/dataMax values set; this forces them\nto be set based on the binding, as determined by another\naxis in the binding.\n\nNote that this method is NOT the normal way for bound axes\nto interact with each other once initialization is\ncomplete; that is done via the axes' own setDataRange()\nmethod.",
+            "itemtype": "method",
+            "name": "sync",
+            "return": {
+                "description": "a value indicating whether the sync was\n                  done; this will be true if and only if\n                  there is at least one axis in the binding\n                  having both its dataMin and dataMax\n                  values set.",
+                "type": "Boolean"
+            },
+            "class": "axisBinding",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/axis_binding.js",
+            "line": 132,
+            "itemtype": "method",
+            "name": "setDataRange",
+            "params": [
+                {
+                    "name": "initiatingAxis",
+                    "description": "",
+                    "type": "Axis"
+                },
+                {
+                    "name": "min",
+                    "description": "",
+                    "type": "Number|DataValue"
+                },
+                {
+                    "name": "max",
+                    "description": "",
+                    "type": "Number|DataValue"
+                },
+                {
+                    "name": "dispatch",
+                    "description": "",
+                    "type": "Boolean"
+                }
+            ],
+            "author": "jrfrimme",
+            "class": "axisBinding",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/axis_binding.js",
+            "line": 208,
+            "itemtype": "method",
+            "name": "getInstanceById",
+            "static": 1,
+            "params": [
+                {
+                    "name": "id",
+                    "description": ""
+                }
+            ],
+            "author": "jrfrimme",
+            "class": "axisBinding",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/axis_binding.js",
+            "line": 220,
+            "itemtype": "method",
+            "name": "findByIdOrCreateNew",
+            "static": 1,
+            "params": [
+                {
+                    "name": "id",
+                    "description": ""
+                }
+            ],
+            "author": "jrfrimme",
+            "class": "axisBinding",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/axis_binding.js",
+            "line": 236,
+            "itemtype": "method",
+            "name": "syncAllBindings",
+            "static": 1,
+            "author": "jrfrimme",
+            "class": "axisBinding",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/axis_binding.js",
+            "line": 250,
+            "itemtype": "method",
+            "name": "forgetAllBindings",
+            "static": 1,
+            "author": "jrfrimme",
+            "class": "axisBinding",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/data.js",
+            "line": 24,
+            "description": "Searches through a jermaine attr_list of DataVariables (columns) for\nan entry having a given id or column number.",
+            "itemtype": "method",
+            "name": "find",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "attrName",
+                    "description": "The name of the attribute to search on;\n    should be either \"id\" or \"column\".",
+                    "type": "String"
+                },
+                {
+                    "name": "attrValue",
+                    "description": "The value to search for. If attrName\n    is \"id\", this value should be a string.  If attrName is \"column\",\n    this value should be an int.",
+                    "type": "String|Integer"
+                },
+                {
+                    "name": "columns",
+                    "description": "The attr_list to search through.",
+                    "type": "DataVariable Attr_List"
+                }
+            ],
+            "static": 1,
+            "return": {
+                "description": "The index (an int) of the DataVariable entry having\n    the given attribute value, if any, or -1 if none was found",
+                "type": "Integer"
+            },
+            "author": "jrfrimme",
+            "example": [
+                "\n\n    find(\"id\", \"x\", columns)\n\n        finds the index of the DataVariable in the columns attr_list\n        having an id of \"x\"\n\n    find(\"column\", 1, columns)\n\n        finds the index of the DataVariable in the columns attr_list\n        having a \"column\" attribute of 1"
+            ],
+            "class": "Data",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/data.js",
+            "line": 63,
+            "description": "Set the `data` attribute of each of this data object's columns\nto point to the data object itself.",
+            "itemtype": "method",
+            "name": "initializeColumns",
+            "author": "jrfrimme",
+            "class": "Data",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/data.js",
+            "line": 85,
+            "description": "Initialization function --- should be called from isBuiltWith initializer.  This is split\noff into a separate function so that it can be called from submodel's isBuiltWith initializers\nas well, since Jermaine does not provide a way to call the parent models' isBuiltWith initializer\nfunction.",
+            "itemtype": "method",
+            "name": "init",
+            "author": "jrfrimme",
+            "class": "Data",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/event_emitter.js",
+            "line": 131,
+            "description": "Adds a listener function for events of a specific type\nemitted by this object.",
+            "itemtype": "method",
+            "name": "addListener",
+            "params": [
+                {
+                    "name": "eventType",
+                    "description": "the type of event",
+                    "type": "String"
+                },
+                {
+                    "name": "listener",
+                    "description": "a listener function",
+                    "type": "Function"
+                }
+            ],
+            "return": {
+                "description": "a value indicating whether the listener\n        was actually added (a listener is not added if it\n        is already registered for the eventType)",
+                "type": "Boolean"
+            },
+            "class": "EventEmitter",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/event_emitter.js",
+            "line": 161,
+            "description": "Removes a listener function for events of a specific type\nemitted by this object.",
+            "itemtype": "method",
+            "name": "removeListener",
+            "params": [
+                {
+                    "name": "eventType",
+                    "description": "the type of event",
+                    "type": "String"
+                },
+                {
+                    "name": "listener",
+                    "description": "the listener function to remove",
+                    "type": "Function"
+                }
+            ],
+            "return": {
+                "description": "a value indicating whether the listener\n        was actually removed.",
+                "type": "Boolean"
+            },
+            "class": "EventEmitter",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/event_emitter.js",
+            "line": 189,
+            "description": "Call this objects listeners for a specific event.  If the \"event\"\nargument is a string, it is converted to an Object having\nthat string as the value of its \"type\" attribute; otherwise\nthe \"event\" argument should be an event Object having a\n\"type\" attribute and any other attributes approriate for\nthat event type.  In either case, all (if there are any) of\nthe current listeners on this object for events of the\ngiven type will be invoked, being passed an event object.",
+            "itemtype": "method",
+            "name": "emit",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "either a string representing an event type, or an event\n                                object with a 'type' attribute.",
+                    "type": "Object|string"
+                }
+            ],
+            "return": {
+                "description": "(nothing)"
+            },
+            "class": "EventEmitter",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph.js",
+            "line": 20,
+            "description": "Child model which controls the properties of the Graph's Window.",
+            "itemtype": "property",
+            "name": "window",
+            "type": "{Window}",
+            "author": "jrfrimme",
+            "class": "Graph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph.js",
+            "line": 30,
+            "description": "Child model which controls the properties of the Graph's Plotarea.",
+            "itemtype": "property",
+            "name": "plotarea",
+            "type": "{Plotarea}",
+            "author": "jrfrimme",
+            "class": "Graph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph.js",
+            "line": 42,
+            "description": "Child model which controls the properties of the Graph's Legend.",
+            "itemtype": "property",
+            "name": "legend",
+            "type": "{Legend}",
+            "author": "jrfrimme",
+            "class": "Graph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph.js",
+            "line": 52,
+            "description": "Child model which controls the properties of the Graph's Background.",
+            "itemtype": "property",
+            "name": "background",
+            "type": "{Background}",
+            "author": "jrfrimme",
+            "class": "Graph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph.js",
+            "line": 63,
+            "description": "Child model which controls the properties of the Graph's Title.",
+            "itemtype": "property",
+            "name": "title",
+            "type": "{Title}",
+            "author": "jrfrimme",
+            "class": "Graph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph.js",
+            "line": 73,
+            "description": "Jermaine Attr_List of the Graph's Axes.",
+            "itemtype": "property",
+            "name": "axes",
+            "type": "{Axis}",
+            "author": "jrfrimme",
+            "class": "Graph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph.js",
+            "line": 83,
+            "description": "Jermiane Attr_List of the Graph's Plots.",
+            "itemtype": "property",
+            "name": "plots",
+            "type": "{Plot}",
+            "author": "jrfrimme",
+            "class": "Graph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph.js",
+            "line": 93,
+            "description": "Jermiane Attr_List of the Graph's Data sets.",
+            "itemtype": "property",
+            "name": "data",
+            "type": "{Data}",
+            "author": "jrfrimme",
+            "class": "Graph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph.js",
+            "line": 104,
+            "description": "Stores the computed width and height of the Graph's windowBox.",
+            "itemtype": "property",
+            "name": "windowBox",
+            "type": "{}",
+            "author": "jrfrimme",
+            "class": "Graph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph.js",
+            "line": 114,
+            "description": "Stores the computed width and height of the Graph's paddingBox.",
+            "itemtype": "property",
+            "name": "paddingBox",
+            "type": "{}",
+            "author": "jrfrimme",
+            "class": "Graph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph.js",
+            "line": 124,
+            "description": "Stroes the computed width and height of the Graph's plotBox.",
+            "itemtype": "property",
+            "name": "plotBox",
+            "type": "{}",
+            "author": "jrfrimme",
+            "class": "Graph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph.js",
+            "line": 144,
+            "description": "Initializes the Graph's geometry. Determines the width and height of the Graph's `windowBox`,\n`paddingBox` and `plotBox`; calls its Axes' and Legend's implementations of\n`initializeGeometry`.",
+            "itemtype": "method",
+            "name": "initializeGeometry",
+            "params": [
+                {
+                    "name": "width",
+                    "description": "Width of the multigraph's div",
+                    "type": "Integer"
+                },
+                {
+                    "name": "height",
+                    "description": "Height of the multigraph's div",
+                    "type": "Integer"
+                },
+                {
+                    "name": "graphicsContext",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "author": "jrfrimme",
+            "class": "Graph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph.js",
+            "line": 187,
+            "description": "Convience function for registering callback functions on the Graph's `Data` models. Adds\n`dataReady` event listeners to each of the Graph's `Data` models.",
+            "itemtype": "method",
+            "name": "registerCommonDataCallback",
+            "params": [
+                {
+                    "name": "callback",
+                    "description": "",
+                    "type": "Function"
+                }
+            ],
+            "author": "jrfrimme",
+            "class": "Graph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph.js",
+            "line": 202,
+            "itemtype": "method",
+            "name": "pauseAllData",
+            "author": "jrfrimme",
+            "class": "Graph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph.js",
+            "line": 216,
+            "itemtype": "method",
+            "name": "resumeAllData",
+            "author": "jrfrimme",
+            "class": "Graph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph.js",
+            "line": 230,
+            "itemtype": "method",
+            "name": "findNearestAxis",
+            "params": [
+                {
+                    "name": "x",
+                    "description": ""
+                },
+                {
+                    "name": "y",
+                    "description": ""
+                },
+                {
+                    "name": "orientation",
+                    "description": ""
+                }
+            ],
+            "author": "jrfrimme",
+            "class": "Graph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 29,
+            "description": "The value which determines if the legend will be rendered; a value of `true` means the Legend will\nbe drawn while `false` means that it will not.",
+            "itemtype": "property",
+            "name": "visible",
+            "type": "{boolean}",
+            "author": "jrfrimme",
+            "class": "Legend",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 39,
+            "description": "The value which gives the location of the base point relative to the Legend's frame.",
+            "itemtype": "property",
+            "name": "base",
+            "type": "{Point}",
+            "author": "jrfrimme",
+            "class": "Legend",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 50,
+            "description": "The value which gives the location of the Legend's anchor point to be attached to the base point.",
+            "itemtype": "property",
+            "name": "anchor",
+            "type": "{Point}",
+            "author": "jrfrimme",
+            "class": "Legend",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 61,
+            "description": "A coordinate pair of pixel offsets for the base point.",
+            "itemtype": "property",
+            "name": "position",
+            "type": "{Point}",
+            "author": "jrfrimme",
+            "class": "Legend",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 72,
+            "description": "The value which determines whether the legend is positioned relative to the plot area or the padding\nbox. A value of `plot` means the Legend will be drawn relative to the plot area while `padding` means\nthat it will the padding box.",
+            "itemtype": "property",
+            "name": "frame",
+            "type": "{String}",
+            "author": "jrfrimme",
+            "class": "Legend",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 85,
+            "description": "The value which determines the background color of the Legend.",
+            "itemtype": "property",
+            "name": "color",
+            "type": "{RGBColor}",
+            "author": "jrfrimme",
+            "class": "Legend",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 96,
+            "description": "The value which determines the bordercolor of the Legend.",
+            "itemtype": "property",
+            "name": "bordercolor",
+            "type": "{RGBColor}",
+            "author": "jrfrimme",
+            "class": "Legend",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 107,
+            "description": "The value which determines the opacity of the Legend; depending on where the Legend is positioned it\nmay obscure parts of the plot data.",
+            "itemtype": "property",
+            "name": "opacity",
+            "type": "{Float}",
+            "author": "jrfrimme",
+            "class": "Legend",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 119,
+            "description": "The value which determines the thickness of the border drawn around the Legend; a value of `0` turns\nthe border off.",
+            "itemtype": "property",
+            "name": "border",
+            "type": "{Integer}",
+            "author": "jrfrimme",
+            "class": "Legend",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 129,
+            "description": "The value which determines the number of rows to be used for Plot entries in the Legend. If left\nunspecified then rows will be inserted to account for each Plot entry.",
+            "itemtype": "property",
+            "name": "rows",
+            "type": "{Integer}",
+            "author": "jrfrimme",
+            "class": "Legend",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 139,
+            "description": "The value which determines the number of columns to be used for Plot entries in the Legend. If rows\nis set while columns is left unspecified then columns will be inserted to account for each Plot\nentry.",
+            "itemtype": "property",
+            "name": "columns",
+            "type": "{Integer}",
+            "author": "jrfrimme",
+            "class": "Legend",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 150,
+            "description": "The value which determines whether the corners of the legend box are rounded when drawn. A value of\n`0` means that the corners will be drawn square while values greater than `0` mean that the corners\nare rounded off with circles whose radius in pixels is this value.",
+            "itemtype": "property",
+            "name": "cornerradius",
+            "type": "{Integer}",
+            "author": "jrfrimme",
+            "class": "Legend",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 161,
+            "description": "The value which determines the pixel width of the padding between the Legend border and its entries.",
+            "itemtype": "property",
+            "name": "padding",
+            "type": "{Integer}",
+            "author": "jrfrimme",
+            "class": "Legend",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 170,
+            "description": "A optional sub-model which determines the appearance of the Icons for the Plot entries.",
+            "itemtype": "property",
+            "name": "icon",
+            "type": "{Icon}",
+            "author": "jrfrimme",
+            "class": "Legend",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 181,
+            "description": "Pointers to Plot models that have entries in the Legend.",
+            "itemtype": "property",
+            "name": "plots",
+            "type": "{Plot}",
+            "author": "jrfrimme",
+            "class": "Legend",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 192,
+            "description": "Internal value which determines the number of pixels between an entries icon and its border.",
+            "itemtype": "property",
+            "name": "iconOffset",
+            "type": "{Integer}",
+            "default": "5",
+            "access": "private",
+            "tagname": "",
+            "final": 1,
+            "author": "jrfrimme",
+            "class": "Legend",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 204,
+            "description": "Internal value which determines the number of pixels between an entries label and its icon.",
+            "itemtype": "property",
+            "name": "labelOffset",
+            "type": "{}",
+            "default": "5",
+            "access": "private",
+            "tagname": "",
+            "final": 1,
+            "author": "jrfrimme",
+            "class": "Legend",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 217,
+            "description": "Internal value which determines the number of pixels between the right end of an entries label and\nits border",
+            "itemtype": "property",
+            "name": "labelEnding",
+            "type": "{Integer}",
+            "default": "15",
+            "access": "private",
+            "tagname": "",
+            "final": 1,
+            "author": "jrfrimme",
+            "class": "Legend",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 230,
+            "description": "Computed value of the width of the Legend.",
+            "itemtype": "property",
+            "name": "width",
+            "type": "{Float}",
+            "access": "private",
+            "tagname": "",
+            "final": 1,
+            "author": "jrfrimme",
+            "class": "Legend",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 241,
+            "description": "Computed value of the height of the Legend.",
+            "itemtype": "property",
+            "name": "height",
+            "type": "{Float}",
+            "access": "private",
+            "tagname": "",
+            "final": 1,
+            "author": "jrfrimme",
+            "class": "Legend",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 252,
+            "description": "Computed `x` value of the Legend's lower left corner relative to its frame.",
+            "itemtype": "property",
+            "name": "x",
+            "type": "{Float}",
+            "access": "private",
+            "tagname": "",
+            "final": 1,
+            "author": "jrfrimme",
+            "class": "Legend",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 263,
+            "description": "Computed `y` value of the Legend's lower left corner relative to its frame.",
+            "itemtype": "property",
+            "name": "y",
+            "type": "{Float}",
+            "access": "private",
+            "tagname": "",
+            "final": 1,
+            "author": "jrfrimme",
+            "class": "Legend",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 274,
+            "description": "Computed width of an individual plot entry.",
+            "itemtype": "property",
+            "name": "blockWidth",
+            "type": "{Float}",
+            "access": "private",
+            "tagname": "",
+            "final": 1,
+            "author": "jrfrimme",
+            "class": "Legend",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 285,
+            "description": "Computed height of an individual plot entry.",
+            "itemtype": "property",
+            "name": "blockHeight",
+            "type": "{Float}",
+            "access": "private",
+            "tagname": "",
+            "final": 1,
+            "author": "jrfrimme",
+            "class": "Legend",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 296,
+            "description": "Computed width of the longest label of all plot entries.",
+            "itemtype": "property",
+            "name": "maxLabelWidth",
+            "type": "{Float}",
+            "access": "private",
+            "tagname": "",
+            "final": 1,
+            "author": "jrfrimme",
+            "class": "Legend",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 307,
+            "description": "Maximum value of the Icon's height and the computed height of the tallest label of all plot entries.",
+            "itemtype": "property",
+            "name": "maxLabelHeight",
+            "type": "{Float}",
+            "access": "private",
+            "tagname": "",
+            "final": 1,
+            "author": "jrfrimme",
+            "class": "Legend",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 318,
+            "description": "Initializes the Legend's geometry. Determines values for the internal attributes `maxLabelWidth`,\n`maxLabelHeight`, `blockWidth`, `blockHeight`, `width`, `height`, `x` and `y`; these values\ndetermine the size and position of the legend and its various internal components, and need\nto be recomputed whenever the geometry of the containing graph changes;  this method is\ncalled by Graph.initializeGeometry().",
+            "itemtype": "method",
+            "name": "initializeGeometry",
+            "chainable": 1,
+            "params": [
+                {
+                    "name": "graph",
+                    "description": "Jermaine Graph model",
+                    "type": "Graph"
+                },
+                {
+                    "name": "graphicsContext",
+                    "description": "driver-specific graphics context object",
+                    "type": "Object"
+                }
+            ],
+            "author": "jrfrimme",
+            "todo": [
+                "Find out whether or not padding needs to be taken into consideration."
+            ],
+            "class": "Legend",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/legend.js",
+            "line": 405,
+            "description": "Renders the legend; calls various driver-specific graphics functions to do the\nactual drawing of the various parts of the legend (background, borders, icons,\ntext).",
+            "itemtype": "method",
+            "name": "render",
+            "chainable": 1,
+            "params": [
+                {
+                    "name": "graphicsContext",
+                    "description": "driver-specific graphics context object",
+                    "type": "Object"
+                }
+            ],
+            "author": "jrfrimme",
+            "class": "Legend",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/mixin.js",
+            "line": 41,
+            "description": "The internal list of functions to be applied.",
+            "itemtype": "property",
+            "name": "mixinfuncs",
+            "access": "private",
+            "tagname": "",
+            "type": "{}",
+            "author": "mbp",
+            "class": "Mixin",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/mixin.js",
+            "line": 51,
+            "description": "Internal value for tracking whether apply() has been called\nfor this Mixin.",
+            "itemtype": "property",
+            "name": "applied",
+            "type": "{}",
+            "access": "private",
+            "tagname": "",
+            "author": "mbp",
+            "class": "Mixin",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/mixin.js",
+            "line": 62,
+            "description": "Adds a function to this Mixin's mixin list.  Does not check\nto see if the function is already on the list -- just blindly\nappends the given function to the list.",
+            "itemtype": "method",
+            "name": "add",
+            "params": [
+                {
+                    "name": "func",
+                    "description": ""
+                }
+            ],
+            "author": "mbp",
+            "class": "Mixin",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/mixin.js",
+            "line": 75,
+            "description": "Call each of this Mixin's mixin functions.  Any\narguments passed to apply() will be passed through to each\nmixin function called.\n\napply() checks to see whether it has ever been called\nbefore for this Mixin, and only executes the mixin\nfunctions if this is the first call to apply(); calls to\napply() after the first one will have no effect.  (This is\ntrue even if additional mixin functions are added after\napply() is called; the Mixin maintains a single internal\nBoolean value that tracks whether apply() has been called.)",
+            "itemtype": "method",
+            "name": "apply",
+            "author": "mbp",
+            "class": "Mixin",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/mixin.js",
+            "line": 102,
+            "description": "Just like apply(), but forces the mixin functions to be called\nregardless of whether apply() was previously called for this\nMixin.",
+            "itemtype": "method",
+            "name": "reapply",
+            "author": "mbp",
+            "class": "Mixin",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/multigraph.js",
+            "line": 23,
+            "description": "Jermiane Attr_List of all the graphs in a Multigraph.",
+            "itemtype": "property",
+            "name": "graphs",
+            "type": "{Graph}",
+            "author": "jrfrimme",
+            "class": "Multigraph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/multigraph.js",
+            "line": 34,
+            "description": "The div the multigraph is rendered in.",
+            "itemtype": "property",
+            "name": "div",
+            "type": "{HTML Element}",
+            "author": "jrfrimme",
+            "class": "Multigraph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/multigraph.js",
+            "line": 43,
+            "description": "Initializes the Multigraph's geometry by calling the `initializeGeometry` function of\neach of its graph children.",
+            "itemtype": "method",
+            "name": "initializeGeometry",
+            "params": [
+                {
+                    "name": "width",
+                    "description": "Width of the multigraph's div.",
+                    "type": "Integer"
+                },
+                {
+                    "name": "height",
+                    "description": "Height of the multigraph's div.",
+                    "type": "Integer"
+                },
+                {
+                    "name": "graphicsContext",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "author": "jrfrimme",
+            "class": "Multigraph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/multigraph.js",
+            "line": 60,
+            "description": "Convience function for registering callback functions for data becoming ready.",
+            "itemtype": "method",
+            "name": "registerCommonDataCallback",
+            "params": [
+                {
+                    "name": "callback",
+                    "description": "Callback function to be registered.",
+                    "type": "Function"
+                }
+            ],
+            "author": "jrfrimme",
+            "class": "Multigraph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/multigraph.js",
+            "line": 76,
+            "description": "Determines if the browser supports canvas elements.",
+            "itemtype": "method",
+            "name": "browserHasCanvasSupport",
+            "access": "private",
+            "tagname": "",
+            "static": 1,
+            "author": "jrfrimme",
+            "class": "Multigraph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/multigraph.js",
+            "line": 96,
+            "description": "Creates a Multigraph according to specified options. Returns a\njQuery `promise` which interacts with the multigraph through its\n`done` function.",
+            "itemtype": "method",
+            "name": "createGraph",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "div",
+                            "description": "(REQUIRED)\n     The DOM element div into which the multigraph should be\n     placed; this value may be either (a) a string which is taken\n     to be the id attribute of a div in the page, (b) a reference\n     to the div DOM element itself, or (c) a jQuery object\n     corresponding to the div DOM element.",
+                            "type": "String|HTML Element|jQuery Object"
+                        },
+                        {
+                            "name": "mugl",
+                            "description": "(REQUIRED) the URL from which the MUGL\n      file for the Multigraph can be loaded",
+                            "type": "URI"
+                        },
+                        {
+                            "name": "driver",
+                            "description": "(OPTIONAL) Indicates which\n      graphics driver to use; should be one of the strings\n      \"canvas\", \"raphael\", \"logger\", or \"auto\".  The default\n      (which is used if the 'driver' tag is absent) is \"auto\",\n      which causes Multigraph to check the features of the\n      browser it is running in and choose the most appropriate\n      driver.",
+                            "type": "String"
+                        },
+                        {
+                            "name": "error",
+                            "description": "(OPTIONAL) A function for\n      displaying error messages to the user.  Multigraph will\n      call this function if and when it encounters an error.  The\n      function should receive a single argument which is an\n      instance of the JavaScrip Error object.  The default is to\n      use Multigraph's own internal mechanism for displaying user\n      messages.",
+                            "type": "Function"
+                        },
+                        {
+                            "name": "warning",
+                            "description": "(OPTIONAL) A function for\n      displaying warning messages to the user.  Multigraph will\n      call this function if and when it needs to display a\n      warning message. The function should receive a single\n      argument which is an instance of the JavaScript Error\n      object.  The default is to use Multigraph's own internal\n      mechanism for displaying user messages.",
+                            "type": "Function"
+                        }
+                    ]
+                }
+            ],
+            "return": {
+                "description": "jQuery promise which provides interaction with\n    the graph through its `done` function.",
+                "type": "Promise"
+            },
+            "author": "mbp",
+            "class": "Multigraph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/multigraph.js",
+            "line": 213,
+            "description": "`window.multigraph.create` is an alias for `window.multigraph.core.Multigraph.createGraph`.",
+            "itemtype": "method",
+            "name": "window.multigraph.create",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "div",
+                            "description": "(REQUIRED)\n     The DOM element div into which the multigraph should be\n     placed; this value may be either (a) a string which is taken\n     to be the id attribute of a div in the page, (b) a reference\n     to the div DOM element itself, or (c) a jQuery object\n     corresponding to the div DOM element.",
+                            "type": "String|HTML Element|jQuery Object"
+                        },
+                        {
+                            "name": "mugl",
+                            "description": "(REQUIRED) the URL from which the MUGL\n      file for the Multigraph can be loaded",
+                            "type": "URI"
+                        },
+                        {
+                            "name": "driver",
+                            "description": "(OPTIONAL) Indicates which\n      graphics driver to use; should be one of the strings\n      \"canvas\", \"raphael\", \"logger\", or \"auto\".  The default\n      (which is used if the 'driver' tag is absent) is \"auto\",\n      which causes Multigraph to check the features of the\n      browser it is running in and choose the most appropriate\n      driver.",
+                            "type": "String"
+                        },
+                        {
+                            "name": "error",
+                            "description": "(OPTIONAL) A function for\n      displaying error messages to the user.  Multigraph will\n      call this function if and when it encounters an error.  The\n      function should receive a single argument which is an\n      instance of the JavaScrip Error object.  The default is to\n      use Multigraph's own internal mechanism for displaying user\n      messages.",
+                            "type": "Function"
+                        },
+                        {
+                            "name": "warning",
+                            "description": "(OPTIONAL) A function for\n      displaying warning messages to the user.  Multigraph will\n      call this function if and when it needs to display a\n      warning message. The function should receive a single\n      argument which is an instance of the JavaScript Error\n      object.  The default is to use Multigraph's own internal\n      mechanism for displaying user messages.",
+                            "type": "Function"
+                        }
+                    ]
+                }
+            ],
+            "return": {
+                "description": "jQuery promise which provides interaction with\n    the graph through its `done` function.",
+                "type": "Promise"
+            },
+            "static": 1,
+            "author": "jrfrimme",
+            "class": "Multigraph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/multigraph.js",
+            "line": 259,
+            "description": "Creates default error and warning functions for multigraph.",
+            "itemtype": "method",
+            "name": "createDefaultMessageHandlers",
+            "params": [
+                {
+                    "name": "div",
+                    "description": "",
+                    "type": "HTML Element"
+                }
+            ],
+            "static": 1,
+            "return": {
+                "description": "Object keyed by `error` and `warning` which respectively point to\n    the generated default error and warning functions.",
+                "type": "Object"
+            },
+            "author": "jrfrimme",
+            "class": "Multigraph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/text.js",
+            "line": 20,
+            "description": "The string stored in the Text model",
+            "itemtype": "property",
+            "name": "string",
+            "type": "{String}",
+            "class": "Text",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/text.js",
+            "line": 28,
+            "description": "The unrotated width of the string",
+            "itemtype": "property",
+            "name": "origWidth",
+            "type": "{float}",
+            "final": 1,
+            "class": "Text",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/text.js",
+            "line": 37,
+            "description": "The unrotated height of the string",
+            "itemtype": "property",
+            "name": "origHeight",
+            "type": "{float}",
+            "final": 1,
+            "class": "Text",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/text.js",
+            "line": 46,
+            "description": "The rotated width of the string",
+            "itemtype": "property",
+            "name": "rotatedWidth",
+            "type": "{float}",
+            "final": 1,
+            "class": "Text",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/text.js",
+            "line": 55,
+            "description": "The rotated height of the string",
+            "itemtype": "property",
+            "name": "rotatedHeight",
+            "type": "{float}",
+            "final": 1,
+            "class": "Text",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/text.js",
+            "line": 64,
+            "description": "Determines unrotated and rotated widths and heights for the stored string. Overridden by\nimplementations in graphics drivers.",
+            "itemtype": "method",
+            "name": "initializeGeometry",
+            "chainable": 1,
+            "params": [
+                {
+                    "name": "graphicsContext",
+                    "description": "",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "angle",
+                            "description": "",
+                            "type": "Float"
+                        }
+                    ]
+                }
+            ],
+            "class": "Text",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/text.js",
+            "line": 98,
+            "description": "Determines unrotated width for the stored string. Overridden by implementations in graphics\ndrivers.",
+            "itemtype": "method",
+            "name": "measureStringWidth",
+            "access": "private",
+            "tagname": "",
+            "return": {
+                "description": "Unrotated width of string.",
+                "type": "Float"
+            },
+            "params": [
+                {
+                    "name": "graphicsContext",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "class": "Text",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/text.js",
+            "line": 134,
+            "description": "Determines unrotated height for the stored string. Overridden by implementations in graphics\ndrivers.",
+            "itemtype": "method",
+            "name": "measureStringHeight",
+            "access": "private",
+            "tagname": "",
+            "return": {
+                "description": "Unrotated height of string.",
+                "type": "Float"
+            },
+            "params": [
+                {
+                    "name": "graphicsContext",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "class": "Text",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/web_service_data.js",
+            "line": 43,
+            "description": "A pointer to the head WebServiceDataCacheNode in this WebServieData's cache.",
+            "itemtype": "property",
+            "name": "cacheHead",
+            "type": "{null|WebServiceDataCacheNode}",
+            "author": "jrfrimme",
+            "class": "WebServiceData",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/web_service_data.js",
+            "line": 56,
+            "description": "A pointer to the tail WebServiceDataCacheNode in this WebServieData's cache.",
+            "itemtype": "property",
+            "name": "cacheTail",
+            "type": "{null|WebServiceDataCacheNode}",
+            "author": "jrfrimme",
+            "class": "WebServiceData",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/web_service_data.js",
+            "line": 69,
+            "description": "Return a pointer to the first WebServiceDataCacheNode in this WebServieData's cache\nthat actually contains data, if any.  If the cache doesn't contain any data, return null.",
+            "itemtype": "method",
+            "name": "dataHead",
+            "author": "jrfrimme",
+            "return": {
+                "description": "",
+                "type": "Null|WebServiceDataCacheNode"
+            },
+            "class": "WebServiceData",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/web_service_data.js",
+            "line": 84,
+            "description": "Return a pointer to the last WebServiceDataCacheNode in this WebServieData's cache\nthat actually contains data, if any.  If the cache doesn't contain any data, return null.",
+            "itemtype": "method",
+            "name": "dataTail",
+            "author": "jrfrimme",
+            "return": {
+                "description": "",
+                "type": "Null|WebServiceDataCacheNode"
+            },
+            "class": "WebServiceData",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/web_service_data.js",
+            "line": 99,
+            "description": "Insert a WebServiceCacheNode into this WebService's cache.\nIf this node's coveredMin is less than the cache head's\ncoveredMin, insert it at the head; otherwise insert it at\nthe tail.  Note that nodes are only inserted either at the\nhead or at the tail of the cache --- not in the middle.",
+            "itemtype": "method",
+            "name": "insertCacheNode",
+            "params": [
+                {
+                    "name": "node",
+                    "description": "",
+                    "type": "WebServiceCacheNode"
+                }
+            ],
+            "author": "jrfrimme",
+            "class": "WebServiceData",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/web_service_data.js",
+            "line": 156,
+            "description": "Initiate requests needed to fetch data between coveredMin and coveredMax, if any.",
+            "itemtype": "method",
+            "name": "insureCoveredRange",
+            "author": "jrfrimme",
+            "class": "WebServiceData",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/web_service_data_cache_node.js",
+            "line": 51,
+            "description": "The actual data for this node.",
+            "itemtype": "property",
+            "name": "data",
+            "type": "{Array|null}",
+            "author": "jrfrimme",
+            "class": "WebServiceDataCacheNode",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/web_service_data_cache_node.js",
+            "line": 85,
+            "description": "The next node in the cache's linked list",
+            "itemtype": "property",
+            "name": "next",
+            "type": "{WebServiceDataCacheNode|null}",
+            "author": "jrfrimme",
+            "class": "WebServiceDataCacheNode",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/web_service_data_cache_node.js",
+            "line": 96,
+            "description": "The previous node in the cache's linked list",
+            "itemtype": "property",
+            "name": "prev",
+            "type": "{WebServiceDataCacheNode|null}",
+            "author": "jrfrimme",
+            "class": "WebServiceDataCacheNode",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/web_service_data_cache_node.js",
+            "line": 107,
+            "description": "The min of the covered value range",
+            "itemtype": "property",
+            "name": "coveredMin",
+            "type": "{DataValue}",
+            "author": "jrfrimme",
+            "class": "WebServiceDataCacheNode",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/web_service_data_cache_node.js",
+            "line": 116,
+            "description": "The max of the covered value range",
+            "itemtype": "property",
+            "name": "coveredMax",
+            "type": "{DataValue}",
+            "author": "jrfrimme",
+            "class": "WebServiceDataCacheNode",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/web_service_data_cache_node.js",
+            "line": 125,
+            "description": "Return the next node in the cache that actually has data,\nor null if none exists.",
+            "itemtype": "method",
+            "name": "dataNext",
+            "author": "jrfrimme",
+            "return": {
+                "description": "",
+                "type": "WebServiceDataCacheNode|null"
+            },
+            "class": "WebServiceDataCacheNode",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/web_service_data_cache_node.js",
+            "line": 141,
+            "description": "Return the previous node in the cache that actually has data,\nor null if none exists.",
+            "itemtype": "method",
+            "name": "dataPrev",
+            "author": "jrfrimme",
+            "return": {
+                "description": "",
+                "type": "WebServiceDataCacheNode|null"
+            },
+            "class": "WebServiceDataCacheNode",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/web_service_data_cache_node.js",
+            "line": 157,
+            "description": "Return the minimum (column 0) data value for this node.  Returns null\nif the node has no data yet.",
+            "itemtype": "method",
+            "name": "dataMin",
+            "author": "jrfrimme",
+            "return": {
+                "description": "",
+                "type": "DataValue|null"
+            },
+            "class": "WebServiceDataCacheNode",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/web_service_data_cache_node.js",
+            "line": 174,
+            "description": "Return the maximum (column 0) data value for this node.    Returns null\nif the node has no data yet.",
+            "itemtype": "method",
+            "name": "dataMax",
+            "author": "jrfrimme",
+            "return": {
+                "description": "",
+                "type": "DataValue|null"
+            },
+            "class": "WebServiceDataCacheNode",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/web_service_data_cache_node.js",
+            "line": 191,
+            "description": "Return true if this node has data; false if not.",
+            "itemtype": "method",
+            "name": "hasData",
+            "author": "jrfrimme",
+            "return": {
+                "description": "Boolean"
+            },
+            "class": "WebServiceDataCacheNode",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/web_service_data_cache_node.js",
+            "line": 204,
+            "description": "Populate this node's data array by parsing the values\ncontained in the 'dataText' string, which should be a\nstring of comma-separated values of the same sort expected\nby ArrayData and CSVData.  The first argument, `columns`,\nshould be a plain javascript array of DataVariable instances,\nof the sort returned by `Data.getColumns()`.\n\nThis method examines other nodes in the cache in order\ninsure that values included in this node's data array\nare (a) strictly greater than the maximum value present in the\ncache prior to this node, and (b) strictly less than the\nminimum value present in the cache after this node.\nThis guarantees that there is no overlap between the\ndata in this node and other nodes in the cache.",
+            "itemtype": "method",
+            "name": "parseData",
+            "params": [
+                {
+                    "name": "columns",
+                    "description": "",
+                    "type": "DataVariable Attr_List"
+                },
+                {
+                    "name": "dataText",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "author": "jrfrimme",
+            "class": "WebServiceDataCacheNode",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/graphics/canvas/text.js",
+            "line": 12,
+            "description": "Determines unrotated and rotated widths and heights for the stored string in the canvas\nenvironment",
+            "itemtype": "method",
+            "name": "initializeGeometry",
+            "chainable": 1,
+            "params": [
+                {
+                    "name": "graphicsContext",
+                    "description": "",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "context",
+                            "description": "",
+                            "type": "Context"
+                        },
+                        {
+                            "name": "angle",
+                            "description": "",
+                            "type": "Float"
+                        }
+                    ]
+                }
+            ],
+            "class": "Text",
+            "module": "multigraph",
+            "submodule": "canvas"
+        },
+        {
+            "file": "src/graphics/canvas/text.js",
+            "line": 49,
+            "description": "Determines unrotated width for the stored string in the canvas environment.",
+            "itemtype": "method",
+            "name": "measureStringWidth",
+            "access": "private",
+            "tagname": "",
+            "return": {
+                "description": "Unrotated width of string.",
+                "type": "Float"
+            },
+            "params": [
+                {
+                    "name": "context",
+                    "description": "",
+                    "type": "Context"
+                }
+            ],
+            "class": "Text",
+            "module": "multigraph",
+            "submodule": "canvas"
+        },
+        {
+            "file": "src/graphics/canvas/text.js",
+            "line": 67,
+            "description": "Determines unrotated height for the stored string in the canvas environment.",
+            "itemtype": "method",
+            "name": "measureStringHeight",
+            "access": "private",
+            "tagname": "",
+            "return": {
+                "description": "Unrotated height of string.",
+                "type": "Float"
+            },
+            "params": [
+                {
+                    "name": "context",
+                    "description": "",
+                    "type": "Context"
+                }
+            ],
+            "class": "Text",
+            "module": "multigraph",
+            "submodule": "canvas"
+        },
+        {
+            "file": "src/graphics/raphael/text.js",
+            "line": 12,
+            "description": "Determines unrotated and rotated widths and heights for the stored string in the raphael\nenvironment",
+            "itemtype": "method",
+            "name": "initializeGeometry",
+            "chainable": 1,
+            "params": [
+                {
+                    "name": "graphicsContext",
+                    "description": "",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "elem",
+                            "description": "",
+                            "type": "TextElem"
+                        },
+                        {
+                            "name": "angle",
+                            "description": "",
+                            "type": "Float"
+                        }
+                    ]
+                }
+            ],
+            "class": "Text",
+            "module": "multigraph",
+            "submodule": "raphael"
+        },
+        {
+            "file": "src/graphics/raphael/text.js",
+            "line": 51,
+            "description": "Determines unrotated width for the stored string in the raphael environment.",
+            "itemtype": "method",
+            "name": "measureStringWidth",
+            "access": "private",
+            "tagname": "",
+            "return": {
+                "description": "Unrotated width of string.",
+                "type": "Float"
+            },
+            "params": [
+                {
+                    "name": "elem",
+                    "description": "",
+                    "type": "TextElem"
+                }
+            ],
+            "class": "Text",
+            "module": "multigraph",
+            "submodule": "raphael"
+        },
+        {
+            "file": "src/graphics/raphael/text.js",
+            "line": 69,
+            "description": "Determines unrotated height for the stored string in the raphael environment.",
+            "itemtype": "method",
+            "name": "measureStringHeight",
+            "access": "private",
+            "tagname": "",
+            "return": {
+                "description": "Unrotated height of string.",
+                "type": "Float"
+            },
+            "params": [
+                {
+                    "name": "text",
+                    "description": "",
+                    "type": "TextElem"
+                }
+            ],
+            "class": "Text",
+            "module": "multigraph",
+            "submodule": "raphael"
+        },
+        {
+            "file": "src/math/displacement.js",
+            "line": 90,
+            "description": "Parses a string into a Displacement.  The string should be of one of the following forms:\n\n    \"A+B\"  ==>  a=A  b=B\n    \"A-B\"  ==>  a=A  b=-B\n    \"A\"    ==>  a=A  b=0\n    \"+A\"   ==>  a=A  b=0\n    \"-A\"   ==>  a=-A b=0",
+            "itemtype": "method",
+            "name": "parse",
+            "params": [
+                {
+                    "name": "string",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "static": 1,
+            "author": "jrfrimme",
+            "class": "Displacement",
+            "module": "multigraph",
+            "submodule": "math"
+        }
+    ],
+    "warnings": []
+}
