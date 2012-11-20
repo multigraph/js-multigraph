@@ -4,3 +4,6 @@
 [submodule "lib/error-display"]
 	path = lib/error-display
 	url = https://github.com/nemac/error-display.git
+[submodule "mugl-schema"]
+	path = mugl-schema
+	url = https://github.com/multigraph/mugl-schema.git

@@ -289,4 +289,14 @@
     <exec executable="yuidoc"/>
   </target>
 
+  <target name="validate">
+    <apply executable="xmllint"> 
+      <arg line="--noout"/>
+      <arg line="--schema"/>
+      <arg line="mugl-schema/mugl.xsd"/>
+      <srcfile/> 
+      <fileset dir="spec/mugl" includes="**/*.xml"/> 
+    </apply> 
+  </target>
+
 </project>
