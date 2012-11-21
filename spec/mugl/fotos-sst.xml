@@ -4,7 +4,7 @@
     <img anchor="0 0" base="0 0" frame="plot" src="NOAA100-transparent.png"/>
   </background>
   <plotarea marginbottom="75" marginleft="50" marginright="25" margintop="50"/>
-  <title fontszie="10">Sea Surface Temperature  Lon: -158.91, Lat: -17.05</title>
+  <title fontsize="10">Sea Surface Temperature  Lon: -158.91, Lat: -17.05</title>
   <horizontalaxis id="haxis" max="2008" min="2006" type="datetime">
 <!--    <labels anchor="1 0" angle="90" format="%Y %M %D" spacing="1M 1D"/> -->
     <labels angle="90" format="%Y %M %D" spacing="10Y 5Y 1Y 6M 1M 1D"/>

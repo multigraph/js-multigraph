@@ -1,7 +1,4 @@
 <mugl>
-  <debug>
-(x,y) = (15691,8244)
-  </debug>
   <horizontalaxis id="datetime" type="datetime" min="20000101" max="20110101">
     <labels format="%m/%d/%y" spacing="1Y 6M 4M 2M 1M 16D 8D"/>
     <title>Date/Time</title>

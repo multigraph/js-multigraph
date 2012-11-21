@@ -20,7 +20,7 @@
     <title anchor="0 -1" angle="90" position="28 0">Temperature Change from 1971-1999 Average (°C)</title>
     <pan max="6" min="-2"/>
     <binding id="ProjTempBinding" max="1" min="0"/>
-    <labels fontcolor="0x666666"/>
+    <labels color="0x666666"/>
   </verticalaxis>
 
   <plot>

@@ -295,7 +295,7 @@
       <arg line="--schema"/>
       <arg line="mugl-schema/mugl.xsd"/>
       <srcfile/> 
-      <fileset dir="spec/mugl" includes="**/*.xml"/> 
+      <fileset dir="spec/mugl" includes="**/*.xml"/>
     </apply> 
   </target>
 
