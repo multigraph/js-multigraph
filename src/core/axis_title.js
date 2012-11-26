@@ -78,7 +78,65 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasA("angle").which.isA("number");
 
         this.isBuiltWith("axis");
-        
+
+        /**
+         * Determines values for the `position` and `anchor` attributes if they were not set; determines the
+         * geometry of the `content` attribute. Called by `Axis.initializeGeometry()`.
+         *
+         * @method initializeGeometry
+         * @param {Graph} graph
+         * @param {Object} graphicsContext
+         * @chainable
+         * @author jrfrimme
+         */
+        this.respondsTo("initializeGeometry", function (graph, graphicsContext) {
+            var titleDefaults = defaultValues.horizontalaxis.title;
+
+            var getValue = function (valueOrFunction) {
+                if (typeof(valueOrFunction) === "function") {
+                    return valueOrFunction();
+                } else {
+                    return valueOrFunction;
+                }
+            };
+
+            if (this.position() === undefined) {
+                if (this.axis().orientation() === ns.Axis.HORIZONTAL) {
+                    if (this.axis().perpOffset() > graph.plotBox().height()/2) {
+                        this.position( getValue(titleDefaults["position-horizontal-top"]) );
+                    } else {
+                        this.position( getValue(titleDefaults["position-horizontal-bottom"]) );
+                    }
+                } else {
+                    if (this.axis().perpOffset() > graph.plotBox().width()/2) {
+                        this.position( getValue(titleDefaults["position-vertical-right"]) );
+                    } else {
+                        this.position( getValue(titleDefaults["position-vertical-left"]) );
+                    }
+                }
+            }
+
+            if (this.anchor() === undefined) {
+                if (this.axis().orientation() === ns.Axis.HORIZONTAL) {
+                    if (this.axis().perpOffset() > graph.plotBox().height()/2) {
+                        this.anchor( getValue(titleDefaults["anchor-horizontal-top"]) );
+                    } else {
+                        this.anchor( getValue(titleDefaults["anchor-horizontal-bottom"]) );
+                    }
+                } else {
+                    if (this.axis().perpOffset() > graph.plotBox().width()/2) {
+                        this.anchor( getValue(titleDefaults["anchor-vertical-right"]) );
+                    } else {
+                        this.anchor( getValue(titleDefaults["anchor-vertical-left"]) );
+                    }
+                }
+            }
+
+            this.content().initializeGeometry(graphicsContext);
+
+            return this;
+        });
+
         window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis.title, attributes);
     });
 

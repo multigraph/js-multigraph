@@ -184,6 +184,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             for (i=0; i<this.labelers().size(); ++i) {
                 this.labelers().at(i).initializeGeometry(graph);
             }
+            if (this.title() !== undefined) {
+                this.title().initializeGeometry();
+            }
         });
 
         this.respondsTo("computeAxisToDataRatio", function () {
