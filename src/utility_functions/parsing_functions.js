@@ -108,8 +108,20 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
 //                    "fontname": "default",
 //                    "fontsize": "12",
 //                    "fontcolor": "0x000000",
-                    "anchor": function () { return new window.multigraph.math.Point(0,-20); },
-                    "position": function () { return new window.multigraph.math.Point(0,1); },
+                    "anchor": undefined,
+                    "base" : 0,
+                    "position": undefined,
+
+                    "position-horizontal-top"    : function () { return new window.multigraph.math.Point(0, 15); },
+                    "position-horizontal-bottom" : function () { return new window.multigraph.math.Point(0, -18); },
+                    "position-vertical-right"    : function () { return new window.multigraph.math.Point(33, 0); },
+                    "position-vertical-left"     : function () { return new window.multigraph.math.Point(-25, 0); },
+
+                    "anchor-horizontal-top"      : function () { return new window.multigraph.math.Point(0, -1); },
+                    "anchor-horizontal-bottom"   : function () { return new window.multigraph.math.Point(0, 1); },
+                    "anchor-vertical-right"      : function () { return new window.multigraph.math.Point(-1, 0); },
+                    "anchor-vertical-left"       : function () { return new window.multigraph.math.Point(1, 0); },
+
                     "angle": 0
                 },
                 "labels": {
