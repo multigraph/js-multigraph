@@ -165,7 +165,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
         this.hasA("axisToDataRatio").which.isA("number");
 
-        this.respondsTo("initializeGeometry", function (graph) {
+        this.respondsTo("initializeGeometry", function (graph, graphicsContext) {
             var i;
             if (this.orientation() === Axis.HORIZONTAL) {
                 this.pixelLength(this.length().calculateLength( graph.plotBox().width() ));
@@ -185,7 +185,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 this.labelers().at(i).initializeGeometry(graph);
             }
             if (this.title() !== undefined) {
-                this.title().initializeGeometry();
+                this.title().initializeGeometry(graph, graphicsContext);
             }
         });
 

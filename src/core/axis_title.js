@@ -132,6 +132,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 }
             }
 
+            graphicsContext.angle = this.angle();
             this.content().initializeGeometry(graphicsContext);
 
             return this;

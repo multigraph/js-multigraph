@@ -177,7 +177,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 )
                             );
                 for (i = 0; i < this.axes().size(); ++i) {
-                    this.axes().at(i).initializeGeometry(this);
+                    this.axes().at(i).initializeGeometry(this, graphicsContext);
                 }
                 if (this.legend()) {
                     this.legend().initializeGeometry(this, graphicsContext);
