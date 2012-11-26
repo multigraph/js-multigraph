@@ -138,6 +138,15 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return this;
         });
 
+        /**
+         * Renders the Axis Title. Overridden by implementations in graphics drivers.
+         *
+         * @method render
+         * @private
+         * @author jrfrimme
+         */
+        this.respondsTo("render", function () {});
+
         window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis.title, attributes);
     });
 

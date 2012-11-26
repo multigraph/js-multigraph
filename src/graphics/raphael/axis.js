@@ -89,6 +89,13 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 }
             }
 
+            //
+            // Render the title
+            //
+            if (this.title()) {
+                this.title().render(paper, set);
+            }
+
             text.remove();
 
         });

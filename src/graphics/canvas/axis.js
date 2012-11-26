@@ -82,6 +82,13 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                 }
             }
 
+            //
+            // Render the title
+            //
+            if (this.title()) {
+                this.title().render(context);
+            }
+
         });
 
     });
