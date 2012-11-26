@@ -142,7 +142,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     axis.linewidth(parseInt(xml.attr("linewidth"), 10));
                 }
 
-                if (xml.find("title").length > 0)        { axis.title(ns.core.AxisTitle[parse](xml.find("title")));                  }
+                if (xml.find("title").length > 0)        { axis.title(ns.core.AxisTitle[parse](xml.find("title"), axis));            }
                 if (xml.find("grid").length > 0)         { axis.grid(ns.core.Grid[parse](xml.find("grid")));                         }
                 if (xml.find("pan").length > 0)          { axis.pan(ns.core.Pan[parse](xml.find("pan"), axis.type()));               }
                 if (xml.find("zoom").length > 0)         { axis.zoom(ns.core.Zoom[parse](xml.find("zoom"), axis.type()));            }
