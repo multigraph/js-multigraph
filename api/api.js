@@ -3,6 +3,7 @@ YUI.add("yuidoc-meta", function(Y) {
     "classes": [
         "ArrayData",
         "Axis",
+        "AxisTitle",
         "Data",
         "Displacement",
         "EventEmitter",

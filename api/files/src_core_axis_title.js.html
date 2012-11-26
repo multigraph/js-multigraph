@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src&#x2F;core&#x2F;text.js - js-Multigraph</title>
+    <title>src&#x2F;core&#x2F;axis_title.js - js-Multigraph</title>
     <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.7.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
@@ -120,166 +120,164 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: src&#x2F;core&#x2F;text.js</h1>
+                        <h1 class="file-heading">File: src&#x2F;core&#x2F;axis_title.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
 window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (ns) {
     &quot;use strict&quot;;
+
     &#x2F;**
      * @module multigraph
      * @submodule core
      *&#x2F;
 
+    var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.horizontalaxis.title),
+        AxisTitle;
+
     &#x2F;**
-     * Text is a Jermaine model that supports storing and determining metrics of
-     * strings in different graphics contexts.
+     * Axis Title is a Jermaine model that supports the rendering of Axis Titles.
      *
-     * @class Text
-     * @for Text
+     * @class AxisTitle
+     * @for AxisTitle
      * @constructor
-     * @param string {String} The string stored in the Text model
+     * @param {Axis} axis
      *&#x2F;
-    ns.Text = new window.jermaine.Model( &quot;Text&quot;, function () {
-        this.isBuiltWith(&quot;string&quot;);
-
+    AxisTitle = new window.jermaine.Model( &quot;AxisTitle&quot;, function () {
         &#x2F;**
-         * The string stored in the Text model
+         * Pointer to the Title&#x27;s parent Axis jermiane model.
          *
-         * @property string
-         * @type {String}
+         * @property axis
+         * @type {Axis}
+         * @author jrfrimme
          *&#x2F;
-        this.hasA(&quot;string&quot;).which.isA(&quot;string&quot;);
-
+        this.hasA(&quot;axis&quot;).which.validatesWith(function (axis) {
+            return axis instanceof window.multigraph.core.Axis;
+        });
         &#x2F;**
-         * The unrotated width of the string
+         * The value which is used as the title string.
          *
-         * @property origWidth
-         * @type {float}
-         * @final
+         * @property content
+         * @type {Text}
+         * @author jrfrimme
          *&#x2F;
-        this.hasA(&quot;origWidth&quot;).which.isA(&quot;number&quot;);
-
+        this.hasA(&quot;content&quot;).which.validatesWith(function (content) {
+            return content instanceof window.multigraph.core.Text;
+        });
         &#x2F;**
-         * The unrotated height of the string
+         * The value which gives the location of the Title&#x27;s anchor point to be attached to the
+         * base point.
          *
-         * @property origHeight
-         * @type {float}
-         * @final
+         * @property anchor
+         * @type {Point}
+         * @author jrfrimme
          *&#x2F;
-        this.hasA(&quot;origHeight&quot;).which.isA(&quot;number&quot;);
-
+        this.hasA(&quot;anchor&quot;).which.validatesWith(function (anchor) {
+            return anchor instanceof window.multigraph.math.Point;
+        });
         &#x2F;**
-         * The rotated width of the string
+         * The value which gives the location of the base point relative to the Title&#x27;s Axis.
          *
-         * @property rotatedWidth
-         * @type {float}
-         * @final
+         * @property base
+         * @type {Number}
+         * @author jrfrimme
          *&#x2F;
-        this.hasA(&quot;rotatedWidth&quot;).which.isA(&quot;number&quot;);
-
+        this.hasA(&quot;base&quot;).which.isA(&quot;number&quot;);
         &#x2F;**
-         * The rotated height of the string
+         * A coordinate pair of pixel offsets for the base point.
          *
-         * @property rotatedHeight
-         * @type {float}
-         * @final
+         * @property position
+         * @type {Point}
+         * @author jrfrimme
          *&#x2F;
-        this.hasA(&quot;rotatedHeight&quot;).which.isA(&quot;number&quot;);
+        this.hasA(&quot;position&quot;).which.validatesWith(function (position) {
+            return position instanceof window.multigraph.math.Point;
+        });
+        &#x2F;**
+         * The value which determines the rotation of the Title in degrees.
+         *
+         * @property angle
+         * @type {Number}
+         * @author jrfrimme
+         *&#x2F;
+        this.hasA(&quot;angle&quot;).which.isA(&quot;number&quot;);
+
+        this.isBuiltWith(&quot;axis&quot;);
 
         &#x2F;**
-         * Determines unrotated and rotated widths and heights for the stored string. Overridden by
-         * implementations in graphics drivers.
+         * Determines values for the &#x60;position&#x60; and &#x60;anchor&#x60; attributes if they were not set; determines the
+         * geometry of the &#x60;content&#x60; attribute. Called by &#x60;Axis.initializeGeometry()&#x60;.
          *
          * @method initializeGeometry
-         * @chainable
+         * @param {Graph} graph
          * @param {Object} graphicsContext
-         *   @param {Float} graphicsContext.angle
+         * @chainable
+         * @author jrfrimme
          *&#x2F;
-        this.respondsTo(&quot;initializeGeometry&quot;, function (graphicsContext) {
-            var origWidth,
-                origHeight,
-                rotatedWidth,
-                rotatedHeight;
+        this.respondsTo(&quot;initializeGeometry&quot;, function (graph, graphicsContext) {
+            var titleDefaults = defaultValues.horizontalaxis.title;
 
-            origWidth  = this.measureStringWidth(graphicsContext);
-            origHeight = this.measureStringHeight(graphicsContext);
-            rotatedWidth = origWidth;
-            rotatedHeight = origHeight;
+            var getValue = function (valueOrFunction) {
+                if (typeof(valueOrFunction) === &quot;function&quot;) {
+                    return valueOrFunction();
+                } else {
+                    return valueOrFunction;
+                }
+            };
 
-            if (graphicsContext &amp;&amp; graphicsContext.angle !== undefined) {
-                var angle = graphicsContext.angle&#x2F;180 * Math.PI;
-                rotatedWidth = Math.abs(Math.cos(angle)) * origWidth + Math.abs(Math.sin(angle)) * origHeight;
-                rotatedHeight = Math.abs(Math.sin(angle)) * origWidth + Math.abs(Math.cos(angle)) * origHeight;
+            if (this.position() === undefined) {
+                if (this.axis().orientation() === ns.Axis.HORIZONTAL) {
+                    if (this.axis().perpOffset() &gt; graph.plotBox().height()&#x2F;2) {
+                        this.position( getValue(titleDefaults[&quot;position-horizontal-top&quot;]) );
+                    } else {
+                        this.position( getValue(titleDefaults[&quot;position-horizontal-bottom&quot;]) );
+                    }
+                } else {
+                    if (this.axis().perpOffset() &gt; graph.plotBox().width()&#x2F;2) {
+                        this.position( getValue(titleDefaults[&quot;position-vertical-right&quot;]) );
+                    } else {
+                        this.position( getValue(titleDefaults[&quot;position-vertical-left&quot;]) );
+                    }
+                }
             }
 
-            this.origWidth(origWidth);
-            this.origHeight(origHeight);
-            this.rotatedWidth(rotatedWidth);
-            this.rotatedHeight(rotatedHeight);
+            if (this.anchor() === undefined) {
+                if (this.axis().orientation() === ns.Axis.HORIZONTAL) {
+                    if (this.axis().perpOffset() &gt; graph.plotBox().height()&#x2F;2) {
+                        this.anchor( getValue(titleDefaults[&quot;anchor-horizontal-top&quot;]) );
+                    } else {
+                        this.anchor( getValue(titleDefaults[&quot;anchor-horizontal-bottom&quot;]) );
+                    }
+                } else {
+                    if (this.axis().perpOffset() &gt; graph.plotBox().width()&#x2F;2) {
+                        this.anchor( getValue(titleDefaults[&quot;anchor-vertical-right&quot;]) );
+                    } else {
+                        this.anchor( getValue(titleDefaults[&quot;anchor-vertical-left&quot;]) );
+                    }
+                }
+            }
+
+            graphicsContext.angle = this.angle();
+            this.content().initializeGeometry(graphicsContext);
 
             return this;
         });
 
         &#x2F;**
-         * Determines unrotated width for the stored string. Overridden by implementations in graphics
-         * drivers.
+         * Renders the Axis Title. Overridden by implementations in graphics drivers.
          *
-         * @method measureStringWidth
+         * @method render
          * @private
-         * @return {Float} Unrotated width of string.
-         * @param {Object} graphicsContext
+         * @author jrfrimme
          *&#x2F;
-        this.respondsTo(&quot;measureStringWidth&quot;, function (graphicsContext) {
-            &#x2F;&#x2F; Graphics drivers should replace this method with an actual implementation; this
-            &#x2F;&#x2F; is just a placeholder.  The implementation should return the width, in pixels,
-            &#x2F;&#x2F; of the given string.  Of course this is dependent on font choice, size, etc,
-            &#x2F;&#x2F; but we gloss over that at the moment.  Just return the width of the string
-            &#x2F;&#x2F; using some reasonable default font for now.  Later on, we&#x27;ll modify this
-            &#x2F;&#x2F; function to use font information.
-            var lines,
-                maxLength = 1,
-                testLength,
-                i;
+        this.respondsTo(&quot;render&quot;, function () {});
 
-            if (this.string() === undefined) {
-                throw new Error(&quot;measureStringWidth requires the string attr to be set.&quot;);
-            }
-
-            lines = this.string().split(&#x2F;\n&#x2F;);
-            for (i = 0; i &lt; lines.length; i++) {
-                testLength = lines[i].length;
-                if (testLength &gt; maxLength) {
-                    maxLength = testLength;
-                }
-            }
-            
-            return maxLength * 15;
-        });
-
-        &#x2F;**
-         * Determines unrotated height for the stored string. Overridden by implementations in graphics
-         * drivers.
-         *
-         * @method measureStringHeight
-         * @private
-         * @return {Float} Unrotated height of string.
-         * @param {Object} graphicsContext
-         *&#x2F;
-        this.respondsTo(&quot;measureStringHeight&quot;, function (graphicsContext) {
-            &#x2F;&#x2F; Graphics drivers should replace this method with an actual implementation; this
-            &#x2F;&#x2F; is just a placeholder.  The implementation should return the height, in pixels,
-            &#x2F;&#x2F; of the given string.  Of course this is dependent on font choice, size, etc,
-            &#x2F;&#x2F; but we gloss over that at the moment.  Just return the height of the string
-            &#x2F;&#x2F; using some reasonable default font for now.  Later on, we&#x27;ll modify this
-            &#x2F;&#x2F; function to use font information.
-            if (this.string() === undefined) {
-                throw new Error(&quot;measureStringHeight requires the string attr to be set.&quot;);
-            }
-            var newlineCount = this.string().match(&#x2F;\n&#x2F;g);
-            return (newlineCount !== null ? (newlineCount.length + 1) : 1) * 12;
-        });
+        window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis.title, attributes);
     });
+
+    ns.AxisTitle = AxisTitle;
+
 });
 
     </pre>

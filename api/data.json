@@ -40,6 +40,17 @@
             },
             "namespaces": {}
         },
+        "src/core/axis_title.js": {
+            "name": "src/core/axis_title.js",
+            "modules": {},
+            "classes": {
+                "AxisTitle": 1
+            },
+            "fors": {
+                "AxisTitle": 1
+            },
+            "namespaces": {}
+        },
         "src/core/data.js": {
             "name": "src/core/data.js",
             "modules": {},
@@ -150,11 +161,20 @@
             },
             "namespaces": {}
         },
-        "src/graphics/canvas/canvas_mixin.js": {
-            "name": "src/graphics/canvas/canvas_mixin.js",
+        "src/graphics/canvas/axis_title.js": {
+            "name": "src/graphics/canvas/axis_title.js",
             "modules": {
                 "canvas": 1
             },
+            "classes": {},
+            "fors": {
+                "AxisTitle": 1
+            },
+            "namespaces": {}
+        },
+        "src/graphics/canvas/canvas_mixin.js": {
+            "name": "src/graphics/canvas/canvas_mixin.js",
+            "modules": {},
             "classes": {},
             "fors": {},
             "namespaces": {}
@@ -168,11 +188,20 @@
             },
             "namespaces": {}
         },
-        "src/graphics/raphael/raphael_mixin.js": {
-            "name": "src/graphics/raphael/raphael_mixin.js",
+        "src/graphics/raphael/axis_title.js": {
+            "name": "src/graphics/raphael/axis_title.js",
             "modules": {
                 "raphael": 1
             },
+            "classes": {},
+            "fors": {
+                "AxisTitle": 1
+            },
+            "namespaces": {}
+        },
+        "src/graphics/raphael/raphael_mixin.js": {
+            "name": "src/graphics/raphael/raphael_mixin.js",
+            "modules": {},
             "classes": {},
             "fors": {},
             "namespaces": {}
@@ -213,6 +242,7 @@
                 "ArrayData": 1,
                 "Axis": 1,
                 "axisBinding": 1,
+                "AxisTitle": 1,
                 "Data": 1,
                 "EventEmitter": 1,
                 "Graph": 1,
@@ -229,6 +259,7 @@
                 "ArrayData": 1,
                 "Axis": 1,
                 "axisBinding": 1,
+                "AxisTitle": 1,
                 "Data": 1,
                 "EventEmitter": 1,
                 "Graph": 1,
@@ -252,6 +283,7 @@
                 "ArrayData": 1,
                 "Axis": 1,
                 "axisBinding": 1,
+                "AxisTitle": 1,
                 "Data": 1,
                 "EventEmitter": 1,
                 "Graph": 1,
@@ -283,7 +315,7 @@
             "namespaces": {},
             "module": "multigraph",
             "namespace": "",
-            "file": "src/graphics/canvas/canvas_mixin.js",
+            "file": "src/graphics/canvas/axis_title.js",
             "line": 4,
             "description": "Mixin functions for canvas driver.",
             "tag": "main",
@@ -298,7 +330,7 @@
             "namespaces": {},
             "module": "multigraph",
             "namespace": "",
-            "file": "src/graphics/raphael/raphael_mixin.js",
+            "file": "src/graphics/raphael/axis_title.js",
             "line": 4,
             "description": "Mixin functions for the raphael driver."
         },
@@ -385,6 +417,29 @@
             "file": "src/core/axis_binding.js",
             "line": 9,
             "is_constructor": 1
+        },
+        "AxisTitle": {
+            "name": "AxisTitle",
+            "shortname": "AxisTitle",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "multigraph",
+            "submodule": "core",
+            "namespace": "",
+            "file": "src/core/axis_title.js",
+            "line": 13,
+            "description": "Axis Title is a Jermaine model that supports the rendering of Axis Titles.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "axis",
+                    "description": "",
+                    "type": "Axis"
+                }
+            ]
         },
         "Data": {
             "name": "Data",
@@ -914,7 +969,7 @@
         },
         {
             "file": "src/core/axis.js",
-            "line": 210,
+            "line": 213,
             "description": "Decides which labeler to use: take the one with the largest density <= 0.8.\nUnless all have density > 0.8, in which case we take the first one.  This assumes\nthat the labelers list is ordered in increasing order of label density.\nThis function sets the `currentLabeler` and `currentLabelDensity` attributes.",
             "itemtype": "method",
             "name": "prepareRender",
@@ -932,7 +987,7 @@
         },
         {
             "file": "src/core/axis.js",
-            "line": 374,
+            "line": 377,
             "description": "Compute the distance from an axis to a point.  The point\n(x,y) is expressed in pixel coordinates in the same\ncoordinate system as the axis.\n\nWe use two different kinds of computations depending on\nwhether the point lies inside or outside the region bounded\nby the two lines perpendicular to the axis through its\nendpoints.  If the point lies inside this region, the\ndistance is simply the difference in the perpendicular\ncoordinate of the point and the perpendicular coordinate of\nthe axis.\n\nIf the point lies outside the region, then the distance is\nthe L2 distance between the point and the closest endpoint\nof the axis.",
             "itemtype": "method",
             "name": "distanceToPoint",
@@ -1116,6 +1171,115 @@
             "static": 1,
             "author": "jrfrimme",
             "class": "axisBinding",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/axis_title.js",
+            "line": 22,
+            "description": "Pointer to the Title's parent Axis jermiane model.",
+            "itemtype": "property",
+            "name": "axis",
+            "type": "{Axis}",
+            "author": "jrfrimme",
+            "class": "AxisTitle",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/axis_title.js",
+            "line": 32,
+            "description": "The value which is used as the title string.",
+            "itemtype": "property",
+            "name": "content",
+            "type": "{Text}",
+            "author": "jrfrimme",
+            "class": "AxisTitle",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/axis_title.js",
+            "line": 42,
+            "description": "The value which gives the location of the Title's anchor point to be attached to the\nbase point.",
+            "itemtype": "property",
+            "name": "anchor",
+            "type": "{Point}",
+            "author": "jrfrimme",
+            "class": "AxisTitle",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/axis_title.js",
+            "line": 53,
+            "description": "The value which gives the location of the base point relative to the Title's Axis.",
+            "itemtype": "property",
+            "name": "base",
+            "type": "{Number}",
+            "author": "jrfrimme",
+            "class": "AxisTitle",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/axis_title.js",
+            "line": 61,
+            "description": "A coordinate pair of pixel offsets for the base point.",
+            "itemtype": "property",
+            "name": "position",
+            "type": "{Point}",
+            "author": "jrfrimme",
+            "class": "AxisTitle",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/axis_title.js",
+            "line": 71,
+            "description": "The value which determines the rotation of the Title in degrees.",
+            "itemtype": "property",
+            "name": "angle",
+            "type": "{Number}",
+            "author": "jrfrimme",
+            "class": "AxisTitle",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/axis_title.js",
+            "line": 82,
+            "description": "Determines values for the `position` and `anchor` attributes if they were not set; determines the\ngeometry of the `content` attribute. Called by `Axis.initializeGeometry()`.",
+            "itemtype": "method",
+            "name": "initializeGeometry",
+            "params": [
+                {
+                    "name": "graph",
+                    "description": "",
+                    "type": "Graph"
+                },
+                {
+                    "name": "graphicsContext",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "chainable": 1,
+            "author": "jrfrimme",
+            "class": "AxisTitle",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/axis_title.js",
+            "line": 141,
+            "description": "Renders the Axis Title. Overridden by implementations in graphics drivers.",
+            "itemtype": "method",
+            "name": "render",
+            "access": "private",
+            "tagname": "",
+            "author": "jrfrimme",
+            "class": "AxisTitle",
             "module": "multigraph",
             "submodule": "core"
         },
@@ -2511,6 +2675,25 @@
             "submodule": "core"
         },
         {
+            "file": "src/graphics/canvas/axis_title.js",
+            "line": 11,
+            "description": "Renders the axis title using the Canvas driver.",
+            "itemtype": "method",
+            "name": "render",
+            "chainable": 1,
+            "params": [
+                {
+                    "name": "context",
+                    "description": "",
+                    "type": "HTMLCanvasObject"
+                }
+            ],
+            "author": "jrfrimme",
+            "class": "AxisTitle",
+            "module": "multigraph",
+            "submodule": "canvas"
+        },
+        {
             "file": "src/graphics/canvas/text.js",
             "line": 12,
             "description": "Determines unrotated and rotated widths and heights for the stored string in the canvas\nenvironment",
@@ -2585,6 +2768,30 @@
             "class": "Text",
             "module": "multigraph",
             "submodule": "canvas"
+        },
+        {
+            "file": "src/graphics/raphael/axis_title.js",
+            "line": 11,
+            "description": "Renders the axis title using the Raphael driver.",
+            "itemtype": "method",
+            "name": "render",
+            "chainable": 1,
+            "params": [
+                {
+                    "name": "paper",
+                    "description": "",
+                    "type": "Paper"
+                },
+                {
+                    "name": "set",
+                    "description": "",
+                    "type": "Set"
+                }
+            ],
+            "author": "jrfrimme",
+            "class": "AxisTitle",
+            "module": "multigraph",
+            "submodule": "raphael"
         },
         {
             "file": "src/graphics/raphael/text.js",

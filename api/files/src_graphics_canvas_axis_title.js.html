@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>core - js-Multigraph</title>
+    <title>src&#x2F;graphics&#x2F;canvas&#x2F;axis_title.js - js-Multigraph</title>
     <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.7.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
@@ -120,127 +120,59 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>core Module</h1>
-<div class="box clearfix meta">
-    
+                        <h1 class="file-heading">File: src&#x2F;graphics&#x2F;canvas&#x2F;axis_title.js</h1>
 
-    
+<div class="file">
+    <pre class="code prettyprint linenums">
+window.multigraph.util.namespace(&quot;window.multigraph.graphics.canvas&quot;, function (ns) {
+    &quot;use strict&quot;;
 
-    
-        <div class="foundat">
-            Defined in: <a href="..&#x2F;files&#x2F;src_core_web_service_data_iterator.js.html#l11"><code>src&#x2F;core&#x2F;web_service_data_iterator.js:11</code></a>
-        </div>
-    
+    &#x2F;**
+     * @module multigraph
+     * @submodule canvas
+     *&#x2F;
 
-    
-</div>
+    ns.mixin.add(function (ns) {
 
+        &#x2F;**
+         * Renders the axis title using the Canvas driver.
+         *
+         * @method render
+         * @for AxisTitle
+         * @chainable
+         * @param {HTMLCanvasObject} context
+         * @author jrfrimme
+         *&#x2F;
+        ns.AxisTitle.respondsTo(&quot;render&quot;, function (context) {
+            var h = this.content().origHeight();
+            var w = this.content().origWidth();
+            var ax = 0.5 * w * (this.anchor().x() + 1);
+            var ay = 0.5 * h * (this.anchor().y() + 1);
+            var storedBase = (this.base() + 1) * (this.axis().pixelLength() &#x2F; 2) + this.axis().minoffset() + this.axis().parallelOffset();
+            var base;
 
+            if (this.axis().orientation() === ns.Axis.HORIZONTAL) {
+                base = new window.multigraph.math.Point(storedBase, this.axis().perpOffset());
+            } else {
+                base = new window.multigraph.math.Point(this.axis().perpOffset(), storedBase);
+            }
 
-<div class="box intro">
-    <p>Core functionality for the javascript implementation of multigraph.</p>
-</div>
+            context.save();
+            context.fillStyle = &quot;rgba(0, 0, 0, 1)&quot;;
+            context.transform(1, 0, 0, -1, 0, 2 * base.y());
+            context.transform(1, 0, 0, 1, base.x(), base.y());
+            context.transform(1, 0, 0, 1, this.position().x(), -this.position().y());
+            context.rotate(-this.angle() * Math.PI&#x2F;180.0);
+            context.transform(1, 0, 0, 1, -ax, ay);
+            context.fillText(this.content().string(), 0, 0);
+            context.restore();
+        });
 
+    });
 
+});
 
-<div class="yui3-g">
-    <div class="yui3-u-1-2">
-        
-            <p>This module provides the following classes:</p>
-
-            <ul class="module-classes">
-            
-                <li class="module-class">
-                    <a href="..&#x2F;classes/ArrayData.html">
-                        ArrayData
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="..&#x2F;classes/Axis.html">
-                        Axis
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="..&#x2F;classes/axisBinding.html">
-                        axisBinding
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="..&#x2F;classes/AxisTitle.html">
-                        AxisTitle
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="..&#x2F;classes/Data.html">
-                        Data
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="..&#x2F;classes/EventEmitter.html">
-                        EventEmitter
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="..&#x2F;classes/Graph.html">
-                        Graph
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="..&#x2F;classes/Legend.html">
-                        Legend
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="..&#x2F;classes/Mixin.html">
-                        Mixin
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="..&#x2F;classes/Multigraph.html">
-                        Multigraph
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="..&#x2F;classes/Text.html">
-                        Text
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="..&#x2F;classes/WebServiceData.html">
-                        WebServiceData
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="..&#x2F;classes/WebServiceDataCacheNode.html">
-                        WebServiceDataCacheNode
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="..&#x2F;classes/WebServiceDataIterator.html">
-                        WebServiceDataIterator
-                    </a>
-                </li>
-            
-            </ul>
-        
-    </div>
-
-    <div class="yui3-u-1-2">
-        
-    </div>
+    </pre>
 </div>
 
                     </div>

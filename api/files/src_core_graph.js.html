@@ -47,6 +47,8 @@
             
                 <li><a href="..&#x2F;classes/axisBinding.html">axisBinding</a></li>
             
+                <li><a href="..&#x2F;classes/AxisTitle.html">AxisTitle</a></li>
+            
                 <li><a href="..&#x2F;classes/Data.html">Data</a></li>
             
                 <li><a href="..&#x2F;classes/Displacement.html">Displacement</a></li>
@@ -301,7 +303,7 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
                 )
                             );
                 for (i = 0; i &lt; this.axes().size(); ++i) {
-                    this.axes().at(i).initializeGeometry(this);
+                    this.axes().at(i).initializeGeometry(this, graphicsContext);
                 }
                 if (this.legend()) {
                     this.legend().initializeGeometry(this, graphicsContext);

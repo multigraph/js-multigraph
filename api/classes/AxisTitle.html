@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>WebServiceDataCacheNode - js-Multigraph</title>
+    <title>AxisTitle - js-Multigraph</title>
     <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.7.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
@@ -120,7 +120,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>WebServiceDataCacheNode Class</h1>
+                        <h1>AxisTitle Class</h1>
 <div class="box meta">
     
 
@@ -128,7 +128,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="..&#x2F;files&#x2F;src_core_web_service_data_cache_node.js.html#l11"><code>src&#x2F;core&#x2F;web_service_data_cache_node.js:11</code></a>
+            Defined in: <a href="..&#x2F;files&#x2F;src_core_axis_title.js.html#l13"><code>src&#x2F;core&#x2F;axis_title.js:13</code></a>
         </div>
     
 
@@ -145,43 +145,14 @@
 
 
 <div class="box intro">
-    <p>A WebServiceDataCacheNode represents a single node in the
-doubly-linked list holding the data for a WebServiceDataCache.
-The WebServiceDataCacheNode has an array of data (which may
-actually be null, if the node's data has not yet been loaded),
-next and prev pointers to the next and previous nodes in the
-linked list, and coveredMin and coveredMax values that indicate
-the min and max values of the "covered" range of data for this
-node.</p>
-
-<p>The "covered" range is the interval of the data number line for
-which this node is responsible for storing data; Multigraph
-uses range this to avoid requesting the same data twice --- it
-never requests data for a range already covered by an existing
-cache node.</p>
-
-<p>Initially, when the WebServiceDataCacheNode is created, the
-limits of the covered range are specified in the constructor.
-Later on, when the node's data is actually populated, the
-limits are potentially adjusted outward, if the range of data
-received is larger than the initially specified covered range.
-So in all cases, the covered range indicates the range for
-which no more data is needed, because it's covered by this
-node.</p>
-
-<p>Note that the covered range is never adjusted to be smaller.</p>
-
-<p>The WebServiceDataCacheNode does not actually fetch any data
---- it is simply a storage container for fetched data; it's up
-to other code outside of this object to fetch and populate the
-data.</p>
+    <p>Axis Title is a Jermaine model that supports the rendering of Axis Titles.</p>
 </div>
 
 
     <div class="constructor">
         <h2>Constructor</h2>
-        <div id="method_WebServiceDataCacheNode" class="method item">
-    <h3 class="name"><code>WebServiceDataCacheNode</code></h3>
+        <div id="method_AxisTitle" class="method item">
+    <h3 class="name"><code>AxisTitle</code></h3>
 
     
         <div class="args">
@@ -189,13 +160,7 @@ data.</p>
             
                 <li class="arg">
                     
-                        <code>coveredMin</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>coveredMax</code>
+                        <code>axis</code>
                     
                 </li>
             
@@ -228,7 +193,7 @@ data.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_web_service_data_cache_node.js.html#l11"><code>src&#x2F;core&#x2F;web_service_data_cache_node.js:11</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_axis_title.js.html#l13"><code>src&#x2F;core&#x2F;axis_title.js:13</code></a>
         
         </p>
 
@@ -250,23 +215,8 @@ data.</p>
             
                 <li class="param">
                     
-                        <code class="param-name">coveredMin</code>
-                        <span class="type">DataValue</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">coveredMax</code>
-                        <span class="type">DataValue</span>
+                        <code class="param-name">axis</code>
+                        <span class="type"><a href="../classes/Axis.html" class="crosslink">Axis</a></span>
                     
 
                     
@@ -315,42 +265,28 @@ data.</p>
                     <ul class="index-list methods">
                         
                             <li class="index-item method">
-                                <a href="#method_dataMax">dataMax</a>
+                                <a href="#method_initializeGeometry">initializeGeometry</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
+                                <a href="#method_render">render</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_dataMin">dataMin</a>
+                                <a href="#method_render">render</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_dataNext">dataNext</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_dataPrev">dataPrev</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_hasData">hasData</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_parseData">parseData</a>
+                                <a href="#method_render">render</a>
 
                                 
                                 
@@ -367,35 +303,42 @@ data.</p>
                     <ul class="index-list properties">
                         
                             <li class="index-item property">
-                                <a href="#property_coveredMax">coveredMax</a>
+                                <a href="#property_anchor">anchor</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_coveredMin">coveredMin</a>
+                                <a href="#property_angle">angle</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_data">data</a>
+                                <a href="#property_axis">axis</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_next">next</a>
+                                <a href="#property_base">base</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_prev">prev</a>
+                                <a href="#property_content">content</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_position">position</a>
 
                                 
                                 
@@ -415,361 +358,8 @@ data.</p>
                 <h2 class="off-left">Methods</h2>
 
                 
-                    <div id="method_dataMax" class="method item">
-    <h3 class="name"><code>dataMax</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type">DataValue | Null</span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;src_core_web_service_data_cache_node.js.html#l174"><code>src&#x2F;core&#x2F;web_service_data_cache_node.js:174</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Return the maximum (column 0) data value for this node.    Returns null
-if the node has no data yet.</p>
-    </div>
-
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type">DataValue | Null</span>:
-                    
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
-                    <div id="method_dataMin" class="method item">
-    <h3 class="name"><code>dataMin</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type">DataValue | Null</span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;src_core_web_service_data_cache_node.js.html#l157"><code>src&#x2F;core&#x2F;web_service_data_cache_node.js:157</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Return the minimum (column 0) data value for this node.  Returns null
-if the node has no data yet.</p>
-    </div>
-
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type">DataValue | Null</span>:
-                    
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
-                    <div id="method_dataNext" class="method item">
-    <h3 class="name"><code>dataNext</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type"><a href="../classes/WebServiceDataCacheNode.html" class="crosslink">WebServiceDataCacheNode</a> | Null</span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;src_core_web_service_data_cache_node.js.html#l125"><code>src&#x2F;core&#x2F;web_service_data_cache_node.js:125</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Return the next node in the cache that actually has data,
-or null if none exists.</p>
-    </div>
-
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type"><a href="../classes/WebServiceDataCacheNode.html" class="crosslink">WebServiceDataCacheNode</a> | Null</span>:
-                    
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
-                    <div id="method_dataPrev" class="method item">
-    <h3 class="name"><code>dataPrev</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type"><a href="../classes/WebServiceDataCacheNode.html" class="crosslink">WebServiceDataCacheNode</a> | Null</span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;src_core_web_service_data_cache_node.js.html#l141"><code>src&#x2F;core&#x2F;web_service_data_cache_node.js:141</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Return the previous node in the cache that actually has data,
-or null if none exists.</p>
-    </div>
-
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type"><a href="../classes/WebServiceDataCacheNode.html" class="crosslink">WebServiceDataCacheNode</a> | Null</span>:
-                    
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
-                    <div id="method_hasData" class="method item">
-    <h3 class="name"><code>hasData</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type"></span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;src_core_web_service_data_cache_node.js.html#l191"><code>src&#x2F;core&#x2F;web_service_data_cache_node.js:191</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Return true if this node has data; false if not.</p>
-    </div>
-
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                    Boolean
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
-                    <div id="method_parseData" class="method item">
-    <h3 class="name"><code>parseData</code></h3>
+                    <div id="method_initializeGeometry" class="method item">
+    <h3 class="name"><code>initializeGeometry</code></h3>
 
     
         <div class="args">
@@ -777,13 +367,13 @@ or null if none exists.</p>
             
                 <li class="arg">
                     
-                        <code>columns</code>
+                        <code>graph</code>
                     
                 </li>
             
                 <li class="arg">
                     
-                        <code>dataText</code>
+                        <code>graphicsContext</code>
                     
                 </li>
             
@@ -802,6 +392,8 @@ or null if none exists.</p>
     
 
     
+        <span class="flag chainable">chainable</span>
+    
 
     
 
@@ -816,7 +408,7 @@ or null if none exists.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_web_service_data_cache_node.js.html#l204"><code>src&#x2F;core&#x2F;web_service_data_cache_node.js:204</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_axis_title.js.html#l82"><code>src&#x2F;core&#x2F;axis_title.js:82</code></a>
         
         </p>
 
@@ -827,20 +419,8 @@ or null if none exists.</p>
     </div>
 
     <div class="description">
-        <p>Populate this node's data array by parsing the values
-contained in the 'dataText' string, which should be a
-string of comma-separated values of the same sort expected
-by ArrayData and CSVData.  The first argument, <code>columns</code>,
-should be a plain javascript array of DataVariable instances,
-of the sort returned by <code>Data.getColumns()</code>.</p>
-
-<p>This method examines other nodes in the cache in order
-insure that values included in this node's data array
-are (a) strictly greater than the maximum value present in the
-cache prior to this node, and (b) strictly less than the
-minimum value present in the cache after this node.
-This guarantees that there is no overlap between the
-data in this node and other nodes in the cache.</p>
+        <p>Determines values for the <code>position</code> and <code>anchor</code> attributes if they were not set; determines the
+geometry of the <code>content</code> attribute. Called by <code>Axis.initializeGeometry()</code>.</p>
     </div>
 
     
@@ -851,8 +431,8 @@ data in this node and other nodes in the cache.</p>
             
                 <li class="param">
                     
-                        <code class="param-name">columns</code>
-                        <span class="type">DataVariable Attr_List</span>
+                        <code class="param-name">graph</code>
+                        <span class="type"><a href="../classes/Graph.html" class="crosslink">Graph</a></span>
                     
 
                     
@@ -866,8 +446,267 @@ data in this node and other nodes in the cache.</p>
             
                 <li class="param">
                     
-                        <code class="param-name">dataText</code>
-                        <span class="type">String</span>
+                        <code class="param-name">graphicsContext</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_render" class="method item private">
+    <h3 class="name"><code>render</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_core_axis_title.js.html#l141"><code>src&#x2F;core&#x2F;axis_title.js:141</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Renders the Axis Title. Overridden by implementations in graphics drivers.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_render" class="method item">
+    <h3 class="name"><code>render</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>context</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag chainable">chainable</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                    <p>Provided by the <a href="../modules/canvas.html">canvas</a> module.</p>
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_graphics_canvas_axis_title.js.html#l11"><code>src&#x2F;graphics&#x2F;canvas&#x2F;axis_title.js:11</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Renders the axis title using the Canvas driver.</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">context</code>
+                        <span class="type">HTMLCanvasObject</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_render" class="method item">
+    <h3 class="name"><code>render</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>paper</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>set</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag chainable">chainable</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                    <p>Provided by the <a href="../modules/raphael.html">raphael</a> module.</p>
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_graphics_raphael_axis_title.js.html#l11"><code>src&#x2F;graphics&#x2F;raphael&#x2F;axis_title.js:11</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Renders the axis title using the Raphael driver.</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">paper</code>
+                        <span class="type">Paper</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">set</code>
+                        <span class="type">Set</span>
                     
 
                     
@@ -897,9 +736,9 @@ data in this node and other nodes in the cache.</p>
                 <h2 class="off-left">Properties</h2>
 
                 
-                    <div id="property_coveredMax" class="property item">
-    <h3 class="name"><code>coveredMax</code></h3>
-    <span class="type">DataValue</span>
+                    <div id="property_anchor" class="property item">
+    <h3 class="name"><code>anchor</code></h3>
+    <span class="type">Point</span>
 
     
 
@@ -920,7 +759,7 @@ data in this node and other nodes in the cache.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_web_service_data_cache_node.js.html#l116"><code>src&#x2F;core&#x2F;web_service_data_cache_node.js:116</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_axis_title.js.html#l42"><code>src&#x2F;core&#x2F;axis_title.js:42</code></a>
         
         </p>
 
@@ -930,7 +769,8 @@ data in this node and other nodes in the cache.</p>
     </div>
 
     <div class="description">
-        <p>The max of the covered value range</p>
+        <p>The value which gives the location of the Title's anchor point to be attached to the
+base point.</p>
     </div>
 
     
@@ -941,9 +781,9 @@ data in this node and other nodes in the cache.</p>
 </div>
 
                 
-                    <div id="property_coveredMin" class="property item">
-    <h3 class="name"><code>coveredMin</code></h3>
-    <span class="type">DataValue</span>
+                    <div id="property_angle" class="property item">
+    <h3 class="name"><code>angle</code></h3>
+    <span class="type">Number</span>
 
     
 
@@ -964,7 +804,7 @@ data in this node and other nodes in the cache.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_web_service_data_cache_node.js.html#l107"><code>src&#x2F;core&#x2F;web_service_data_cache_node.js:107</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_axis_title.js.html#l71"><code>src&#x2F;core&#x2F;axis_title.js:71</code></a>
         
         </p>
 
@@ -974,7 +814,7 @@ data in this node and other nodes in the cache.</p>
     </div>
 
     <div class="description">
-        <p>The min of the covered value range</p>
+        <p>The value which determines the rotation of the Title in degrees.</p>
     </div>
 
     
@@ -985,9 +825,9 @@ data in this node and other nodes in the cache.</p>
 </div>
 
                 
-                    <div id="property_data" class="property item">
-    <h3 class="name"><code>data</code></h3>
-    <span class="type">Array | Null</span>
+                    <div id="property_axis" class="property item">
+    <h3 class="name"><code>axis</code></h3>
+    <span class="type"><a href="../classes/Axis.html" class="crosslink">Axis</a></span>
 
     
 
@@ -1008,7 +848,7 @@ data in this node and other nodes in the cache.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_web_service_data_cache_node.js.html#l51"><code>src&#x2F;core&#x2F;web_service_data_cache_node.js:51</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_axis_title.js.html#l22"><code>src&#x2F;core&#x2F;axis_title.js:22</code></a>
         
         </p>
 
@@ -1018,7 +858,7 @@ data in this node and other nodes in the cache.</p>
     </div>
 
     <div class="description">
-        <p>The actual data for this node.</p>
+        <p>Pointer to the Title's parent Axis jermiane model.</p>
     </div>
 
     
@@ -1029,9 +869,9 @@ data in this node and other nodes in the cache.</p>
 </div>
 
                 
-                    <div id="property_next" class="property item">
-    <h3 class="name"><code>next</code></h3>
-    <span class="type"><a href="../classes/WebServiceDataCacheNode.html" class="crosslink">WebServiceDataCacheNode</a> | Null</span>
+                    <div id="property_base" class="property item">
+    <h3 class="name"><code>base</code></h3>
+    <span class="type">Number</span>
 
     
 
@@ -1052,7 +892,7 @@ data in this node and other nodes in the cache.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_web_service_data_cache_node.js.html#l85"><code>src&#x2F;core&#x2F;web_service_data_cache_node.js:85</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_axis_title.js.html#l53"><code>src&#x2F;core&#x2F;axis_title.js:53</code></a>
         
         </p>
 
@@ -1062,7 +902,7 @@ data in this node and other nodes in the cache.</p>
     </div>
 
     <div class="description">
-        <p>The next node in the cache's linked list</p>
+        <p>The value which gives the location of the base point relative to the Title's Axis.</p>
     </div>
 
     
@@ -1073,9 +913,9 @@ data in this node and other nodes in the cache.</p>
 </div>
 
                 
-                    <div id="property_prev" class="property item">
-    <h3 class="name"><code>prev</code></h3>
-    <span class="type"><a href="../classes/WebServiceDataCacheNode.html" class="crosslink">WebServiceDataCacheNode</a> | Null</span>
+                    <div id="property_content" class="property item">
+    <h3 class="name"><code>content</code></h3>
+    <span class="type"><a href="../classes/Text.html" class="crosslink">Text</a></span>
 
     
 
@@ -1096,7 +936,7 @@ data in this node and other nodes in the cache.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_web_service_data_cache_node.js.html#l96"><code>src&#x2F;core&#x2F;web_service_data_cache_node.js:96</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_axis_title.js.html#l32"><code>src&#x2F;core&#x2F;axis_title.js:32</code></a>
         
         </p>
 
@@ -1106,7 +946,51 @@ data in this node and other nodes in the cache.</p>
     </div>
 
     <div class="description">
-        <p>The previous node in the cache's linked list</p>
+        <p>The value which is used as the title string.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_position" class="property item">
+    <h3 class="name"><code>position</code></h3>
+    <span class="type">Point</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_core_axis_title.js.html#l61"><code>src&#x2F;core&#x2F;axis_title.js:61</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>A coordinate pair of pixel offsets for the base point.</p>
     </div>
 
     
