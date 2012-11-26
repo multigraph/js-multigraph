@@ -1,7 +1,7 @@
 window.multigraph.util.namespace("window.multigraph.serializer", function (ns) {
     "use strict";
 
-    var scalarAttributes = ["angle"];
+    var scalarAttributes = ["angle", "base"];
 
     ns.mixin.add(function (ns, serialize) {
         
@@ -20,8 +20,8 @@ window.multigraph.util.namespace("window.multigraph.serializer", function (ns) {
 
             output += attributeStrings.join(' ');
 
-            if (this.content() !== undefined && this.content() !== '') {
-                output += '>' + this.content() + '</title>';
+            if (this.content() !== undefined && this.content().string() !== '') {
+                output += '>' + this.content().string() + '</title>';
             } else {
                 output += '/>';
             }

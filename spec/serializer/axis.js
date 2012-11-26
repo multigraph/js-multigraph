@@ -14,6 +14,7 @@ describe("Axis Serialization", function () {
         DataFormatter = window.multigraph.core.DataFormatter,
         DataMeasure = window.multigraph.core.DataMeasure,
         DataValue = window.multigraph.core.DataValue,
+        Text = window.multigraph.core.Text,
         Displacement = window.multigraph.math.Displacement,
         Point = window.multigraph.math.Point,
         RGBColor = window.multigraph.math.RGBColor,
@@ -129,6 +130,7 @@ describe("Axis Serialization", function () {
                 +    '>'
                 +   '<title'
                 +      ' angle="70"'
+                +      ' base="1"'
                 +      ' anchor="1,1"'
                 +      ' position="-1,1"'
                 +       '>'
@@ -162,8 +164,9 @@ describe("Axis Serialization", function () {
             axis.title(new AxisTitle());
             axis.title().angle(70);
             axis.title().anchor(Point.parse("1,1"));
+            axis.title().base(1);
             axis.title().position(Point.parse("-1,1"));
-            axis.title().content("A Title");
+            axis.title().content(new Text("A Title"));
 
             expect(axis.serialize()).toBe(xmlString);
         });
@@ -607,6 +610,7 @@ describe("Axis Serialization", function () {
                 +    '>'
                 +    '<title'
                 +       ' angle="70"'
+                +       ' base="-1"'
                 +       ' anchor="1,1"'
                 +       ' position="-1,1"'
                 +       '>'
@@ -676,9 +680,10 @@ describe("Axis Serialization", function () {
 
             axis.title(new AxisTitle());
             axis.title().angle(70);
+            axis.title().base(-1);
             axis.title().anchor(Point.parse("1,1"));
             axis.title().position(Point.parse("-1,1"));
-            axis.title().content("A Title");
+            axis.title().content(new Text("A Title"));
 
             spacingStrings = "200 100 50 10".split(/\s+/);
             for (i = 0; i < spacingStrings.length; i++) {
