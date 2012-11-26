@@ -3,7 +3,9 @@
 describe("Axis Title", function () {
     "use strict";
 
-    var AxisTitle = window.multigraph.core.AxisTitle,
+    var Axis = window.multigraph.core.Axis,
+        AxisTitle = window.multigraph.core.AxisTitle,
+        Text = window.multigraph.core.Text,
         Point = window.multigraph.math.Point,
         title;
 
@@ -15,19 +17,18 @@ describe("Axis Title", function () {
         expect(title instanceof AxisTitle).toBe(true);
     });
 
-    describe("content attribute", function () {
-        it("should be able to set/get the content attribute", function () {
-            title.content("This axis plots cats");
-            expect(title.content()).toBe("This axis plots cats");
+    describe("axis pointer", function () {
+        it("should be able to set/get the axis pointer", function () {
+            var axis = new Axis(Axis.HORIZONTAL);
+            title.axis(axis);
+            expect(title.axis()).toBe(axis);
         });
-
     });
 
-    describe("position attribute", function () {
-        it("should be able to set/get the position attribute", function () {
-            title.position(new Point(0, 1));
-            expect(title.position().x()).toBe(0);
-            expect(title.position().y()).toBe(1);
+    describe("content attribute", function () {
+        it("should be able to set/get the content attribute", function () {
+            title.content(new Text("Test Axis Title"));
+            expect(title.content().string()).toEqual("Test Axis Title");
         });
 
     });
@@ -37,6 +38,22 @@ describe("Axis Title", function () {
             title.anchor(new Point(-1, 1));
             expect(title.anchor().x()).toBe(-1);
             expect(title.anchor().y()).toBe(1);
+        });
+
+    });
+
+    describe("base attribute", function () {
+        it("should be able to set/get the base attribute", function () {
+            title.base(-1);
+            expect(title.base()).toBe(-1);
+        });
+    });
+
+    describe("position attribute", function () {
+        it("should be able to set/get the position attribute", function () {
+            title.position(new Point(0, 1));
+            expect(title.position().x()).toBe(0);
+            expect(title.position().y()).toBe(1);
         });
 
     });

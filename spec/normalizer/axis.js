@@ -38,8 +38,8 @@ describe("Axis Normalizer", function () {
             haxis.normalize();
             vaxis.normalize();
 
-            expect(haxis.title().content()).toBe("x");
-            expect(vaxis.title().content()).toBe("y");
+            expect(haxis.title().content().string()).toEqual("x");
+            expect(vaxis.title().content().string()).toEqual("y");
         });
 
         it("should not insert a title if one exists", function () {

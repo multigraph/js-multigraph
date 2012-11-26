@@ -15,6 +15,7 @@ describe("Axis parsing", function () {
         DataFormatter = window.multigraph.core.DataFormatter,
         DataMeasure = window.multigraph.core.DataMeasure,
         DataValue = window.multigraph.core.DataValue,
+        Text = window.multigraph.core.Text,
         Displacement = window.multigraph.math.Displacement,
         Point = window.multigraph.math.Point,
         RGBColor = window.multigraph.math.RGBColor,
@@ -171,6 +172,7 @@ describe("Axis parsing", function () {
     describe("AxisTitle parsing", function () {
         var angleString = "70",
             anchorString = "1,1",
+            baseString = "0",
             positionString = "-1,1",
             contentString = "A Title";
 
@@ -199,6 +201,7 @@ describe("Axis parsing", function () {
                 +   '<title'
                 +      ' angle="' + angleString + '"'
                 +      ' anchor="' + anchorString + '"'
+                +      ' base="' + baseString + '"'
                 +      ' position="' + positionString + '"'
                 +       '>'
                 +     contentString
@@ -216,12 +219,16 @@ describe("Axis parsing", function () {
         });
 
         it("should properly parse axis models from XML with axistitle child tags", function () {
-            expect(axis.title().content()).toEqual(contentString);
+            expect(axis.title().axis()).toEqual(axis);
+
+            expect(axis.title().content().string()).toEqual(new Text(contentString).string());
 
             expect(axis.title().angle()).toEqual(parseFloat(angleString));
 
             expect(axis.title().anchor().x()).toEqual((Point.parse(anchorString)).x());
             expect(axis.title().anchor().y()).toEqual((Point.parse(anchorString)).y());
+
+            expect(axis.title().base()).toEqual(parseFloat(baseString));
 
             expect(axis.title().position().x()).toEqual((Point.parse(positionString)).x());
             expect(axis.title().position().y()).toEqual((Point.parse(positionString)).y());
@@ -614,6 +621,7 @@ describe("Axis parsing", function () {
     describe("with multiple children", function () {
         var titleAngleString = "70",
             titleAnchorString = "1,1",
+            titleBaseString = "1",
             titlePositionString = "-1,1",
             titleContentString = "A Title",
             labelsSpacingStrings = ["100", "75", "50", "25", "10", "5", "2", "1", "0.5", "0.1"],
@@ -666,6 +674,7 @@ describe("Axis parsing", function () {
                          +  '<title'
                          +     ' angle="' + titleAngleString + '"'
                          +     ' anchor="' + titleAnchorString + '"'
+                         +     ' base="' + titleBaseString + '"'
                          +     ' position="' + titlePositionString + '"'
                          +      '>'
                          +     titleContentString
@@ -723,10 +732,12 @@ describe("Axis parsing", function () {
 
         it("should properly parse axis models from XML with all child tags", function () {
             // title
-            expect(axis.title().content()).toEqual(titleContentString);
+            expect(axis.title().axis()).toEqual(axis);
+            expect(axis.title().content().string()).toEqual(new Text(titleContentString).string());
             expect(axis.title().angle()).toEqual(parseFloat(titleAngleString));
             expect(axis.title().anchor().x()).toEqual((Point.parse(titleAnchorString)).x());
             expect(axis.title().anchor().y()).toEqual((Point.parse(titleAnchorString)).y());
+            expect(axis.title().base()).toEqual(parseFloat(titleBaseString));
             expect(axis.title().position().x()).toEqual((Point.parse(titlePositionString)).x());
             expect(axis.title().position().y()).toEqual((Point.parse(titlePositionString)).y());
 

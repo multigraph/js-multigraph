@@ -12,6 +12,7 @@ describe("Axis", function () {
         Zoom = window.multigraph.core.Zoom,
         DataValue = window.multigraph.core.DataValue,
         NumberValue = window.multigraph.core.NumberValue,
+        Text = window.multigraph.core.Text,
         a;
 
     beforeEach(function () {
@@ -247,7 +248,7 @@ describe("Axis", function () {
         var title;
 
         beforeEach(function () {
-            title = new AxisTitle();
+            title = new AxisTitle(a);
         });
 
         it("should be able to add a AxisTitle to a Axis", function () {
@@ -257,17 +258,17 @@ describe("Axis", function () {
 
         it("should be able to add a AxisTitle with attributes to a Axis", function () {
             title.position(new Point(0, 0));
-            title.content("time");
+            title.content(new Text("time"));
             a.title(title);
             expect(a.title()).toBe(title);
         });
 
         it("should be able to set/get attributes from a title added to a Axis", function () {
             a.title(title);
-            a.title().content("Time");
-            expect(a.title().content()).toBe("Time");
-            a.title().content("money");
-            expect(a.title().content()).toBe("money");
+            a.title().content(new Text("Time"));
+            expect(a.title().content().string()).toEqual("Time");
+            a.title().content(new Text("money"));
+            expect(a.title().content().string()).toEqual("money");
         });
 
     });
