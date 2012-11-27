@@ -16,6 +16,7 @@ describe("Graph serialization", function () {
         Title = window.multigraph.core.Title,
         Window = window.multigraph.core.Window,
         DataValue = window.multigraph.core.DataValue,
+        Text = window.multigraph.core.Text,
         Displacement = window.multigraph.math.Displacement,
         Point = window.multigraph.math.Point,
         RGBColor = window.multigraph.math.RGBColor,
@@ -172,6 +173,7 @@ describe("Graph serialization", function () {
             +     '<title'
             +         ' color="0xfffaab"'
             +         ' bordercolor="0x127752"'
+            +         ' frame="padding"'
             +         ' border="2"'
             +         ' opacity="0"'
             +         ' padding="4"'
@@ -350,14 +352,15 @@ describe("Graph serialization", function () {
         graph.title(new Title());
         graph.title().color(RGBColor.parse("0xfffaab"));
         graph.title().bordercolor(RGBColor.parse("0x127752"));
-        graph.title().border("2");
+        graph.title().frame("padding");
+        graph.title().border(2);
         graph.title().opacity(0);
-        graph.title().padding("4");
-        graph.title().cornerradius("10");
+        graph.title().padding(4);
+        graph.title().cornerradius(10);
         graph.title().anchor(Point.parse("1,1"));
         graph.title().base(Point.parse("0,0"));
         graph.title().position(Point.parse("-1,1"));
-        graph.title().content("Graph Title");
+        graph.title().text(new Text("Graph Title"));
 
         graph.plots().add(new DataPlot());
         graph.plots().at(0).horizontalaxis(new Axis(Axis.HORIZONTAL));

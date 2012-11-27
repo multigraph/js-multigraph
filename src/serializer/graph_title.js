@@ -1,7 +1,7 @@
 window.multigraph.util.namespace("window.multigraph.serializer", function (ns) {
     "use strict";
 
-    var scalarAttributes = ["border", "opacity", "padding", "cornerradius"];
+    var scalarAttributes = ["frame", "border", "opacity", "padding", "cornerradius"];
 
     ns.mixin.add(function (ns, serialize) {
 
@@ -31,8 +31,8 @@ window.multigraph.util.namespace("window.multigraph.serializer", function (ns) {
 
             output += attributeStrings.join(' ');
 
-            if (this.content() !== undefined && this.content() !== '') {
-                output += '>' + this.content() + '</title>';
+            if (this.text() !== undefined && this.text() !== '') {
+                output += '>' + this.text().string() + '</title>';
             } else {
                 output += '/>';
             }

@@ -17,6 +17,7 @@ describe("Multigraph serialization", function () {
         Title = window.multigraph.core.Title,
         Window = window.multigraph.core.Window,
         DataValue = window.multigraph.core.DataValue,
+        Text = window.multigraph.core.Text,
         Displacement = window.multigraph.math.Displacement,
         Point = window.multigraph.math.Point,
         RGBColor = window.multigraph.math.RGBColor,
@@ -181,6 +182,7 @@ describe("Multigraph serialization", function () {
             +         '<title'
             +             ' color="0xfffaab"'
             +             ' bordercolor="0x127752"'
+            +             ' frame="padding"'
             +             ' border="2"'
             +             ' opacity="0"'
             +             ' padding="4"'
@@ -359,6 +361,7 @@ describe("Multigraph serialization", function () {
             +         '<title'
             +             ' color="0xfffaab"'
             +             ' bordercolor="0x127752"'
+            +             ' frame="padding"'
             +             ' border="2"'
             +             ' opacity="0"'
             +             ' padding="4"'
@@ -540,14 +543,15 @@ describe("Multigraph serialization", function () {
         multigraph.graphs().at(0).title(new Title());
         multigraph.graphs().at(0).title().color(RGBColor.parse("0xfffaab"));
         multigraph.graphs().at(0).title().bordercolor(RGBColor.parse("0x127752"));
-        multigraph.graphs().at(0).title().border("2");
+        multigraph.graphs().at(0).title().frame("padding");
+        multigraph.graphs().at(0).title().border(2);
         multigraph.graphs().at(0).title().opacity(0);
-        multigraph.graphs().at(0).title().padding("4");
-        multigraph.graphs().at(0).title().cornerradius("10");
+        multigraph.graphs().at(0).title().padding(4);
+        multigraph.graphs().at(0).title().cornerradius(10);
         multigraph.graphs().at(0).title().anchor(Point.parse("1,1"));
         multigraph.graphs().at(0).title().base(Point.parse("0,0"));
         multigraph.graphs().at(0).title().position(Point.parse("-1,1"));
-        multigraph.graphs().at(0).title().content("Graph Title");
+        multigraph.graphs().at(0).title().text(new Text("Graph Title"));
 
         multigraph.graphs().at(0).plots().add(new DataPlot());
         multigraph.graphs().at(0).plots().at(0).horizontalaxis(new Axis(Axis.HORIZONTAL));
@@ -705,14 +709,15 @@ describe("Multigraph serialization", function () {
         multigraph.graphs().at(1).title(new Title());
         multigraph.graphs().at(1).title().color(RGBColor.parse("0xfffaab"));
         multigraph.graphs().at(1).title().bordercolor(RGBColor.parse("0x127752"));
-        multigraph.graphs().at(1).title().border("2");
+        multigraph.graphs().at(1).title().border(2);
+        multigraph.graphs().at(1).title().frame("padding");
         multigraph.graphs().at(1).title().opacity(0);
-        multigraph.graphs().at(1).title().padding("4");
-        multigraph.graphs().at(1).title().cornerradius("10");
+        multigraph.graphs().at(1).title().padding(4);
+        multigraph.graphs().at(1).title().cornerradius(10);
         multigraph.graphs().at(1).title().anchor(Point.parse("1,1"));
         multigraph.graphs().at(1).title().base(Point.parse("0,0"));
         multigraph.graphs().at(1).title().position(Point.parse("-1,1"));
-        multigraph.graphs().at(1).title().content("Graph Title");
+        multigraph.graphs().at(1).title().text(new Text("Graph Title"));
 
         multigraph.graphs().at(1).plots().add(new DataPlot());
         multigraph.graphs().at(1).plots().at(0).horizontalaxis(new Axis(Axis.HORIZONTAL));
