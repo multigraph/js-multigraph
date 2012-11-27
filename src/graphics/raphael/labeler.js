@@ -3,18 +3,6 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
     ns.mixin.add(function (ns) {
 
-/*
-        var measureTextWidth = function (elem, string) {
-            elem.attr("text", string);
-            return elem.getBBox().width; 
-        };
-
-        var measureTextHeight = function (elem, string) {
-            elem.attr("text", string);
-            return elem.getBBox().height; 
-        };
-*/
-
         var drawText = function (text, graphicsContext, base, anchor, position, angle, color) {
             var h = text.origHeight(),
                 w = text.origWidth(),
@@ -65,7 +53,6 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 drawText(formattedString, graphicsContext, new window.multigraph.math.Point(this.axis().perpOffset(), a), this.anchor(), this.position(), this.angle(), this.color());
             }
         });
-
 
     });
 
