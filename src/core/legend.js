@@ -370,8 +370,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 label = this.plots().at(i).legend().label();
                 if (label !== undefined) {
                     label.initializeGeometry(graphicsContext);
-                    widths.push(label.rotatedWidth());
-                    heights.push(label.rotatedHeight());
+                    widths.push(label.origWidth());
+                    heights.push(label.origHeight());
                 }
             }
 

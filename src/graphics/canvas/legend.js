@@ -24,7 +24,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         ns.Legend.respondsTo("renderLabel", function (label, context, x, y) {
             context.save();
             context.fillStyle = "rgba(0, 0, 0, " + this.opacity() + ")";
-            context.transform(1, 0, 0, -1, 0, y + this.maxLabelHeight()/2 - label.rotatedHeight()/2);
+            context.transform(1, 0, 0, -1, 0, y + this.maxLabelHeight()/2 - label.origHeight()/2);
             context.fillText(label.string(), x, 0);
             context.restore();
         });
