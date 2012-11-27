@@ -184,7 +184,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             for (i=0; i<this.labelers().size(); ++i) {
                 this.labelers().at(i).initializeGeometry(graph);
             }
-            if (this.title() !== undefined) {
+            if (this.title()) {
                 this.title().initializeGeometry(graph, graphicsContext);
             }
         });

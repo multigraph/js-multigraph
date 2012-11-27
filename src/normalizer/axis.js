@@ -14,12 +14,8 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
             //
             // Handles title tags
             //
-            if (this.title() === undefined) {
-                // TODO: once axis title stuff has been merged in then the axis title
-                // will require a pointer to the axis.
-                title = new ns.AxisTitle(this);
-                title.content(new ns.Text(this.id()));
-                this.title(title);
+            if (this.title() && this.title().content() === undefined) {
+                this.title().content(new ns.Text(this.id()));
             }
 
             //
