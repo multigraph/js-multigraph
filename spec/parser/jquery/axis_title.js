@@ -66,4 +66,10 @@ describe("Axis Title parsing", function () {
         expect(title.content().string()).toEqual((new Text(contentString)).string());
     });
 
+    it("should return `undefined` when parsing an empty title tag, ie `<title/>`", function () {
+        xmlString = '<title/>';
+        $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+        title = AxisTitle.parseXML($xml, axis);
+        expect(title).toBe(undefined);
+    });
 });
