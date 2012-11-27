@@ -26,7 +26,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     graph.plotarea( ns.core.Plotarea[parse](xml.find(">plotarea")) );
                 }
                 if (xml.find(">title").length > 0) {
-                    graph.title( ns.core.Title[parse](xml.find(">title")) );
+                    graph.title( ns.core.Title[parse](xml.find(">title"), graph) );
                 }
                 window.multigraph.jQuery.each(xml.find(">horizontalaxis"), function (i,e) {
                     graph.axes().add( ns.core.Axis[parse](window.multigraph.jQuery(e), ns.core.Axis.HORIZONTAL, messageHandler) );

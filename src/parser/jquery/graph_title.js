@@ -3,18 +3,35 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
 
     ns.mixin.add(function (ns, parse) {
         
-        ns.core.Title[parse] = function (xml) {
-            var title = new ns.core.Title();
+        ns.core.Title[parse] = function (xml, graph) {
+            var title;
             if (xml) {
-                title.content(xml.text());
-                title.border(xml.attr("border"));
-                title.color(window.multigraph.math.RGBColor.parse(xml.attr("color")));
-                title.bordercolor(window.multigraph.math.RGBColor.parse(xml.attr("bordercolor")));
+                if (xml.text() !== "") {
+                    title = new ns.core.Title(new window.multigraph.core.Text(xml.text()), graph);
+                } else {
+                    return undefined;
+                }                
+                if (xml.attr("frame") !== undefined) {
+                    title.frame(xml.attr("frame").toLowerCase());
+                }
+                if (xml.attr("border") !== undefined) {
+                    title.border(parseInt(xml.attr("border"), 10));
+                }
+                if (xml.attr("color") !== undefined) {
+                    title.color(window.multigraph.math.RGBColor.parse(xml.attr("color")));
+                }
+                if (xml.attr("bordercolor") !== undefined) {
+                    title.bordercolor(window.multigraph.math.RGBColor.parse(xml.attr("bordercolor")));
+                }
                 if (xml.attr("opacity") !== undefined) {
                     title.opacity(parseFloat(xml.attr("opacity")));
                 }
-                title.padding(xml.attr("padding"));
-                title.cornerradius(xml.attr("cornerradius"));
+                if (xml.attr("padding") !== undefined) {
+                    title.padding(parseInt(xml.attr("padding"), 10));
+                }
+                if (xml.attr("cornerradius") !== undefined) {
+                    title.cornerradius(parseInt(xml.attr("cornerradius"), 10));
+                }
                 if (xml.attr("anchor") !== undefined) {
                     title.anchor(window.multigraph.math.Point.parse(xml.attr("anchor")));
                 }

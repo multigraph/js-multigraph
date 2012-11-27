@@ -91,16 +91,17 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
                 "bordercolor": "0xeeeeee"
             },
             "title": {
-                "content": undefined,
-                "anchor": function () { return new window.multigraph.math.Point(0,1); },
-                "base": function () { return new window.multigraph.math.Point(0,1); },
-                "position": function () { return new window.multigraph.math.Point(0,0); },
-                "border": "0",
-//                "color": "0xffffff",
-//                "bordercolor": "0x000000",
-                "opacity": 1.0,
-                "padding": "0",
-                "cornerradius": undefined
+                "text"         : undefined,
+                "frame"        : "padding",
+                "border"       : 0,
+                "color"        : function () { return new window.multigraph.math.RGBColor.parse("0xffffff"); },
+                "bordercolor"  : function () { return new window.multigraph.math.RGBColor.parse("0x000000"); },
+                "opacity"      : 1.0,
+                "padding"      : 0,
+                "cornerradius" : 15,
+                "anchor"       : function () { return new window.multigraph.math.Point(0,1); },
+                "base"         : function () { return new window.multigraph.math.Point(0,1); },
+                "position"     : function () { return new window.multigraph.math.Point(0,0); }
             },
             "horizontalaxis": {
                 "title": {
