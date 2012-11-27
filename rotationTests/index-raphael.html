@@ -100,7 +100,6 @@
 <script type="text/javascript" src="../src/core/renderers/fill_renderer.js"></script>
 <script type="text/javascript" src="../src/core/renderers/pointline_renderer.js"></script>
 <script type="text/javascript" src="../src/core/renderers/rangebar_renderer.js"></script>
-<script type="text/javascript" src="../src/core/service.js"></script>
 <script type="text/javascript" src="../src/core/text.js"></script>
 <script type="text/javascript" src="../src/core/web_service_data.js"></script>
 <script type="text/javascript" src="../src/core/web_service_data_cache_node.js"></script>
@@ -189,7 +188,7 @@
                   div = window.multigraph.jQuery("#" + div)[0];
               }
               if (!obj.errorHandler || typeof(obj.errorHandler) !== "function") {
-                  obj.errorHandler = window.multigraph.core.Multigraph.createDefaultErrorHandler(div);
+                  obj.errorHandler = function (e) {throw e;}
               }
               if (obj.driver === "canvas") {
                   createCanvasGraph(div, obj.mugl, obj.errorHandler);
@@ -288,7 +287,7 @@
 </head>
 <body>
 
-  <div id="dashboard-soi" class="multigraph-rotation" data-src="../spec/mugl/dashboard-soi.xml" data-width="800" data-height="400" data-driver="raphael"></div>
+  <div id="dashboard-soi" class="multigraph-rotation" data-src="rotationTest.xml" data-width="800" data-height="400" data-driver="raphael"></div>
 
 <div class="slider-wrapper">
   <div class="slider-label">Labeler 0: </div>
