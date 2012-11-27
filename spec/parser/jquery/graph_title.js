@@ -5,11 +5,15 @@ describe("Graph Title parsing", function () {
     "use strict";
 
     var Title = window.multigraph.core.Title,
+        Graph = window.multigraph.core.Graph,
+        Text = window.multigraph.core.Text,
         Point = window.multigraph.math.Point,
         RGBColor = window.multigraph.math.RGBColor,
         xmlString,
         $xml,
         title,
+        graph = new Graph(),
+        frameString = "padding",
         colorString = "0xfffaab",
         bordercolorString = "0x127752",
         borderString = "2",
@@ -19,7 +23,7 @@ describe("Graph Title parsing", function () {
         anchorString = "1,1",
         baseString = "0,0",
         positionString ="-1,1",
-        contentString = "Graph Title";
+        text = "Graph Title";
 
     beforeEach(function () {
         window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
@@ -34,11 +38,12 @@ describe("Graph Title parsing", function () {
             +     ' anchor="' + anchorString + '"'
             +     ' base="' + baseString + '"'
             +     ' position="' + positionString + '"'
+            +     ' frame="' + frameString + '"'
             +     '>'
-            +       contentString
+            +       text
             + '</title>',
         $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
-        title = Title.parseXML($xml);
+        title = Title.parseXML($xml, graph);
     });
 
     it("should be able to parse a Title from XML", function () {
@@ -46,8 +51,16 @@ describe("Graph Title parsing", function () {
         expect(title instanceof Title).toBe(true);
     });
 
+    it("should parse a title from XML and properly store its 'graph' pointer", function () {
+        expect(title.graph()).toBe(graph);
+    });
+
+    it("should be able to parse a title from XML and read its 'frame' attribute", function () {
+        expect(title.frame()).toEqual(frameString.toLowerCase());
+    });
+
     it("should be able to parse a title from XML and read its 'border' attribute", function () {
-        expect(title.border()).toEqual(borderString);
+        expect(title.border()).toEqual(parseInt(borderString, 10));
     });
 
     it("should be able to parse a title from XML and read its 'color' attribute", function () {
@@ -63,11 +76,11 @@ describe("Graph Title parsing", function () {
     });
 
     it("should be able to parse a title from XML and read its 'padding' attribute", function () {
-        expect(title.padding()).toEqual(paddingString);
+        expect(title.padding()).toEqual(parseInt(paddingString, 10));
     });
 
     it("should be able to parse a title from XML and read its 'cornerradius' attribute", function () {
-        expect(title.cornerradius()).toEqual(cornerradiusString);
+        expect(title.cornerradius()).toEqual(parseInt(cornerradiusString, 10));
     });
 
     it("should be able to parse a title from XML and read its 'anchor' attribute", function () {
@@ -86,7 +99,7 @@ describe("Graph Title parsing", function () {
     });
 
     it("should be able to parse a title from XML and read its 'content'", function () {
-        expect(title.content()).toEqual(contentString);
+        expect(title.text().string()).toEqual(new Text(text).string());
     });
 
 });

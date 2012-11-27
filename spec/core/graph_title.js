@@ -4,96 +4,91 @@ describe("Graph Title", function () {
     "use strict";
 
     var Title = window.multigraph.core.Title,
+        Graph = window.multigraph.core.Graph,
+        Text = window.multigraph.core.Text,
         Point = window.multigraph.math.Point,
         title;
 
     beforeEach(function () {
-        title = new Title();
+        title = new Title(new Text("foobar"), new Graph());
     });
 
     it("should be able to create a Title", function () {
         expect(title instanceof Title).toBe(true);
     });
 
-    describe("content attribute", function () {
-        it("should be able to set/get the content attribute", function () {
-            title.content("This graph plots cats");
-            expect(title.content()).toBe("This graph plots cats");
+    describe("attributes", function () {
+
+        it("should be able to set/get the graph pointer", function () {
+            var graph = new Graph();
+            title = new Title(new Text("foobar"), graph);
+            expect(title.graph()).toBe(graph);
         });
 
-    });
+        it("should be able to set/get the text attribute", function () {
+            var text = new Text("Graph Title");
+            title = new Title(text, new Graph());
+            expect(title.text()).toBe(text);
+        });
 
-    describe("border attribute", function () {
+        it("should be able to set/get the frame attribute", function () {
+            var frame = "plot";
+            title.frame(frame);
+            expect(title.frame()).toEqual(frame);
+        });
+
         it("should be able to set/get the border attribute", function () {
-            title.border("2");
-            expect(title.border()).toBe("2");
+            var border = 2;
+            title.border(border);
+            expect(title.border()).toEqual(border);
         });
 
-    });
-
-    describe("color attribute", function () {
         it("should be able to set/get the color attribute", function () {
-            title.color(window.multigraph.math.RGBColor.parse("0x12ffa8"));
-            expect(title.color().getHexString()).toBe("0x12ffa8");
+            var color = window.multigraph.math.RGBColor.parse("0x12ffa8");
+            title.color(color);
+            expect(title.color()).toBe(color);
         });
 
-    });
-
-    describe("bordercolor attribute", function () {
         it("should be able to set/get the bordercolor attribute", function () {
-            title.bordercolor(window.multigraph.math.RGBColor.parse("0xadd728"));
-            expect(title.bordercolor().getHexString()).toBe("0xadd728");
+            var bordercolor = window.multigraph.math.RGBColor.parse("0xadd728");
+            title.bordercolor(bordercolor);
+            expect(title.bordercolor()).toBe(bordercolor);
         });
 
-    });
-
-    describe("opacity attribute", function () {
         it("should be able to set/get the opacity attribute", function () {
-            title.opacity(1);
-            expect(title.opacity()).toBe(1);
+            var opacity = 1;
+            title.opacity(opacity);
+            expect(title.opacity()).toEqual(opacity);
         });
 
-    });
-
-    describe("padding attribute", function () {
         it("should be able to set/get the padding attribute", function () {
-            title.padding("4");
-            expect(title.padding()).toBe("4");
+            var padding = 4;
+            title.padding(padding);
+            expect(title.padding()).toEqual(padding);
         });
 
-    });
-
-    describe("cornerradius attribute", function () {
         it("should be able to set/get the cornerradius attribute", function () {
-            title.cornerradius("5");
-            expect(title.cornerradius()).toBe("5");
+            var cornerradius = 5;
+            title.cornerradius(cornerradius);
+            expect(title.cornerradius()).toEqual(cornerradius);
         });
 
-    });
-
-    describe("base attribute", function () {
         it("should be able to set/get the base attribute", function () {
-            title.base(new Point(1,1));
-            expect(title.base().x()).toBe(1);
-            expect(title.base().y()).toBe(1);
+            var base = new Point(1, 1);
+            title.base(base);
+            expect(title.base()).toBe(base);
         });
 
-    });
-
-    describe("position attribute", function () {
         it("should be able to set/get the position attribute", function () {
-            title.position(new Point(0,1));
-            expect(title.position().x()).toBe(0);
-            expect(title.position().y()).toBe(1);
+            var position = new Point(0, 1);
+            title.position(position);
+            expect(title.position()).toBe(position);
         });
 
-    });
-
-    describe("anchor attribute", function () {
         it("should be able to set/get the anchor attribute", function () {
-            title.anchor(new Point(-1,1));
-            expect(title.anchor().x()).toBe(-1);
-            expect(title.anchor().y()).toBe(1);
+            var anchor = new Point(-1, 1);
+            title.anchor(anchor);
+            expect(title.anchor()).toBe(anchor);
         });
 
     });
