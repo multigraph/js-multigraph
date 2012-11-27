@@ -8,6 +8,7 @@ describe("Axis Normalizer", function () {
         Labeler = window.multigraph.core.Labeler,
         NumberMeasure = window.multigraph.core.NumberMeasure,
         DatetimeMeasure = window.multigraph.core.DatetimeMeasure,
+        Text = window.multigraph.core.Text,
         haxis,
         vaxis;
     
@@ -17,35 +18,28 @@ describe("Axis Normalizer", function () {
         vaxis = (new Axis(Axis.VERTICAL)).id("y");
     });
 
-    describe("handling missing titles", function () {
-        it("should insert a title if one does not exist", function () {
-            expect(haxis.title()).toBe(undefined);
-            expect(vaxis.title()).toBe(undefined);
+    describe("handling titles", function () {
+            var htitle,
+                vtitle;
 
-            haxis.normalize();
-            vaxis.normalize();
-
-            expect(haxis.title()).not.toBe(undefined);
-            expect(vaxis.title()).not.toBe(undefined);
-            expect(haxis.title() instanceof Title).toBe(true);
-            expect(vaxis.title() instanceof Title).toBe(true);
+        beforeEach(function () {
+            htitle = new Title(haxis);
+            vtitle = new Title(vaxis);
         });
 
-        it("should insert a title with it's content being the id of the axis if a title does not exist", function () {
-            expect(haxis.title()).toBe(undefined);
-            expect(vaxis.title()).toBe(undefined);
-
+        it("should set a title's content to the id of its axis if the title does not have a 'content' attribute", function () {
+            haxis.title(htitle);
             haxis.normalize();
-            vaxis.normalize();
-
             expect(haxis.title().content().string()).toEqual("x");
-            expect(vaxis.title().content().string()).toEqual("y");
+
+            var text = new Text("foobar");
+            vtitle.content(text);
+            vaxis.title(vtitle);
+            vaxis.normalize();
+            expect(vaxis.title().content()).toBe(text);
         });
 
         it("should not insert a title if one exists", function () {
-            var htitle = new Title(),
-                vtitle = new Title();
-    
             expect(haxis.title()).toBe(undefined);
             expect(vaxis.title()).toBe(undefined);
 
