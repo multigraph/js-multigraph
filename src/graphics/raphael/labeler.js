@@ -18,20 +18,21 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         var drawText = function (text, graphicsContext, base, anchor, position, angle, color) {
             var h = text.origHeight(),
                 w = text.origWidth(),
-                ax = 0.5 * w * (anchor.x() + 1),
-                ay = 0.5 * h * (anchor.y() + 1),
-                dx = base.x() + (0.5 * w) + position.x() - ax,
-                dy = base.y() - (0.5 * h) - position.y() + ay,
+                ax = 0.5 * w * anchor.x(),
+                ay = 0.5 * h * anchor.y(),
                 transformString = "",
                 textAttrs = {};
 
-            transformString += "s1,-1," + dx + "," + base.y();
-            transformString += "r" + (-angle) + "," + (dx - w/2) + "," + dy;
+            transformString += "t" + base.x() + "," + base.y();
+            transformString += "s1,-1";
+            transformString += "t" + position.x() + "," + (-position.y());
+            transformString += "r" + (-angle);
+            transformString += "t" + (-ax) + "," + ay;
 
             textAttrs.fill = color.getHexString("#");
 
             graphicsContext.set.push(
-                graphicsContext.paper.text(dx, dy, text.string()).transform(transformString).attr(textAttrs)
+                graphicsContext.paper.text(0, 0, text.string()).transform(transformString).attr(textAttrs)
             );
 
         };
