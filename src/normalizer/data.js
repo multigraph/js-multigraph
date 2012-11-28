@@ -110,9 +110,20 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
 
             // parses string values into the proper data types if the data tag has a 'values' tag
             if (this instanceof ns.ArrayData === true && this instanceof ns.CSVData === false && this instanceof ns.WebServiceData === false) {
+                // If there was actual data, validate that the number of values found in stringArray
+                // as large as the the number of variables declared.  ArrayData.textToStringArray(),
+                // which is the function that constructed stringArray, has already guaranteed that
+                // every row in stringArray is of the same length, so we can use the length of the
+                // first row as the number of variables.
+                if (this.stringArray().length > 0) {
+                    if (this.stringArray()[0].length < sortedVariables.length) {
+                        throw new Error("<value> data contains only " + this.stringArray()[0].length + " column(s), but should contain " + sortedVariables.length);
+                    }
+                }
+
                 var dataValues = ns.ArrayData.stringArrayToDataValuesArray(sortedVariables, this.stringArray());
+
                 this.array(dataValues);
-//                console.log(                this.array());
                 this.stringArray([]);
             }
 

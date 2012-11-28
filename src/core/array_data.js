@@ -235,16 +235,25 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 numColumns,
                 i;
 
+            // clean up each line
+            for (i = 0; i < lines.length; ++i) {
+                lines[i] = lines[i].replace(/^\s+/,     "");  // remove leading whitespace
+                lines[i] = lines[i].replace(/\s+$/,     "");  // remove trailing whitespace
+                lines[i] = lines[i].replace(/\s*,\s*/g, ","); // remove any whitespace next to commas
+                lines[i] = lines[i].replace(/\s+/g,     ","); // replace any remaining whitespace runs with a comma
+                // now line consists of comma-separated values, with no whitespace
+            }
+
             for (i = 0; i < lines.length; ++i) {
                 if (/\d/.test(lines[i])) { // skip line unless it contains a digit
-                    numColumns = lines[i].split(/\s*,\s*/).length;
+                    numColumns = lines[i].split(/,/).length;
                     break;
                 }
             }
 
             for (i = 0; i < lines.length; ++i) {
                 if (/\d/.test(lines[i])) { // skip line unless it contains a digit
-                    stringValuesThisRow = lines[i].split(/\s*,\s*/);
+                    stringValuesThisRow = lines[i].split(/,/);
                     if (stringValuesThisRow.length === numColumns) {
                         stringValues.push( stringValuesThisRow );
                     } else {
@@ -260,14 +269,15 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * 
          * @method textToStringArray
          * @static
-         * @param {array} dataVariableArray Plain javascript array of DataVariables
-         * @param {array} stringArray Array of values in string form
-         * @return {array} dataValues 
+         * @param {array} dataVariableArray plain javascript array of DataVariables
+         * @param {array} stringArray plain javascript array of strings
+         * @return {array} plain javascript array of DataValue instances
          * @author jrfrimme
          */
         ArrayData.stringArrayToDataValuesArray = function (dataVariableArray, stringArray) {
             //IMPORTANT NOTE: dataVariableArray is a plain javascript array of DataVariable instances; it
             //is NOT a jermaine attr_list.
+
             var dataValues = [],
                 dataValuesThisRow,
                 i,
