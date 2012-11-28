@@ -12,6 +12,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "Mixin",
         "Multigraph",
         "Text",
+        "Title",
         "WebServiceData",
         "WebServiceDataCacheNode",
         "WebServiceDataIterator",

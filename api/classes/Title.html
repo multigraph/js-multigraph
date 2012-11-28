@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Graph - js-Multigraph</title>
+    <title>Title - js-Multigraph</title>
     <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.7.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
@@ -122,7 +122,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>Graph Class</h1>
+                        <h1>Title Class</h1>
 <div class="box meta">
     
 
@@ -130,7 +130,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="..&#x2F;files&#x2F;src_core_graph.js.html#l10"><code>src&#x2F;core&#x2F;graph.js:10</code></a>
+            Defined in: <a href="..&#x2F;files&#x2F;src_core_graph_title.js.html#l13"><code>src&#x2F;core&#x2F;graph_title.js:13</code></a>
         </div>
     
 
@@ -147,17 +147,33 @@
 
 
 <div class="box intro">
-    <p>The Graph Jermaine model controls the properties for an individual Graph.</p>
+    <p>Title is a Jermiane model that controls Graph Titles.</p>
 </div>
 
 
     <div class="constructor">
         <h2>Constructor</h2>
-        <div id="method_Graph" class="method item">
-    <h3 class="name"><code>Graph</code></h3>
+        <div id="method_Title" class="method item">
+    <h3 class="name"><code>Title</code></h3>
 
     
-        <span class="paren">()</span>
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>text</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>graph</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
     
 
     
@@ -185,7 +201,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_graph.js.html#l10"><code>src&#x2F;core&#x2F;graph.js:10</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_graph_title.js.html#l13"><code>src&#x2F;core&#x2F;graph_title.js:13</code></a>
         
         </p>
 
@@ -199,6 +215,44 @@
         
     </div>
 
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">text</code>
+                        <span class="type"><a href="../classes/Text.html" class="crosslink">Text</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">graph</code>
+                        <span class="type"><a href="../classes/Graph.html" class="crosslink">Graph</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
     
 
     
@@ -234,35 +288,28 @@
                     <ul class="index-list methods">
                         
                             <li class="index-item method">
-                                <a href="#method_findNearestAxis">findNearestAxis</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
                                 <a href="#method_initializeGeometry">initializeGeometry</a>
 
                                 
                                 
                             </li>
                         
-                            <li class="index-item method">
-                                <a href="#method_pauseAllData">pauseAllData</a>
+                            <li class="index-item method private">
+                                <a href="#method_render">render</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_registerCommonDataCallback">registerCommonDataCallback</a>
+                                <a href="#method_render">render</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_resumeAllData">resumeAllData</a>
+                                <a href="#method_render">render</a>
 
                                 
                                 
@@ -279,77 +326,86 @@
                     <ul class="index-list properties">
                         
                             <li class="index-item property">
-                                <a href="#property_axes">axes</a>
+                                <a href="#property_anchor">anchor</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_background">background</a>
+                                <a href="#property_base">base</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_data">data</a>
+                                <a href="#property_border">border</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_legend">legend</a>
+                                <a href="#property_bordercolor">bordercolor</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_paddingBox">paddingBox</a>
+                                <a href="#property_color">color</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property deprecated">
+                                <a href="#property_cornerradius">cornerradius</a>
+
+                                
+                                
+                                    <span class="flag deprecated">deprecated</span>
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_frame">frame</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_plotarea">plotarea</a>
+                                <a href="#property_graph">graph</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_plotBox">plotBox</a>
+                                <a href="#property_opacity">opacity</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_plots">plots</a>
+                                <a href="#property_padding">padding</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_title">title</a>
+                                <a href="#property_position">position</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_window">window</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_windowBox">windowBox</a>
+                                <a href="#property_text">text</a>
 
                                 
                                 
@@ -369,153 +425,12 @@
                 <h2 class="off-left">Methods</h2>
 
                 
-                    <div id="method_findNearestAxis" class="method item">
-    <h3 class="name"><code>findNearestAxis</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>x</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>y</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>orientation</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;src_core_graph.js.html#l233"><code>src&#x2F;core&#x2F;graph.js:233</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">x</code>
-                        <span class="type">Object</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">y</code>
-                        <span class="type">Object</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">orientation</code>
-                        <span class="type">Object</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-
-    
-</div>
-
-                
                     <div id="method_initializeGeometry" class="method item">
     <h3 class="name"><code>initializeGeometry</code></h3>
 
     
         <div class="args">
             <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>width</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>height</code>
-                    
-                </li>
             
                 <li class="arg">
                     
@@ -538,6 +453,8 @@
     
 
     
+        <span class="flag chainable">chainable</span>
+    
 
     
 
@@ -552,7 +469,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_graph.js.html#l144"><code>src&#x2F;core&#x2F;graph.js:144</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_graph_title.js.html#l142"><code>src&#x2F;core&#x2F;graph_title.js:142</code></a>
         
         </p>
 
@@ -563,9 +480,7 @@
     </div>
 
     <div class="description">
-        <p>Initializes the Graph's geometry. Determines the width and height of the Graph's <code>windowBox</code>,
-<code>paddingBox</code> and <code>plotBox</code>; calls its Axes' and Legend's implementations of
-<code>initializeGeometry</code>.</p>
+        <p>Determines the geometry of the Title's text.</p>
     </div>
 
     
@@ -573,36 +488,6 @@
             <h4>Parameters:</h4>
 
             <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">width</code>
-                        <span class="type">Integer</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>Width of the multigraph's div</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">height</code>
-                        <span class="type">Integer</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>Height of the multigraph's div</p>
-                    </div>
-
-                    
-                </li>
             
                 <li class="param">
                     
@@ -629,8 +514,8 @@
 </div>
 
                 
-                    <div id="method_pauseAllData" class="method item">
-    <h3 class="name"><code>pauseAllData</code></h3>
+                    <div id="method_render" class="method item private">
+    <h3 class="name"><code>render</code></h3>
 
     
         <span class="paren">()</span>
@@ -640,6 +525,8 @@
 
     
 
+    
+        <span class="flag private">private</span>
     
 
     
@@ -661,7 +548,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_graph.js.html#l205"><code>src&#x2F;core&#x2F;graph.js:205</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_graph_title.js.html#l155"><code>src&#x2F;core&#x2F;graph_title.js:155</code></a>
         
         </p>
 
@@ -672,7 +559,7 @@
     </div>
 
     <div class="description">
-        
+        <p>Renders the Graph Title. Overridden by implementations in graphics drivers.</p>
     </div>
 
     
@@ -683,8 +570,8 @@
 </div>
 
                 
-                    <div id="method_registerCommonDataCallback" class="method item">
-    <h3 class="name"><code>registerCommonDataCallback</code></h3>
+                    <div id="method_render" class="method item">
+    <h3 class="name"><code>render</code></h3>
 
     
         <div class="args">
@@ -692,7 +579,7 @@
             
                 <li class="arg">
                     
-                        <code>callback</code>
+                        <code>context</code>
                     
                 </li>
             
@@ -711,12 +598,16 @@
     
 
     
+        <span class="flag chainable">chainable</span>
+    
 
     
 
     <div class="meta">
         
             
+                
+                    <p>Provided by the <a href="../modules/canvas.html">canvas</a> module.</p>
                 
                 <p>
                 
@@ -725,7 +616,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_graph.js.html#l190"><code>src&#x2F;core&#x2F;graph.js:190</code></a>
+        <a href="..&#x2F;files&#x2F;src_graphics_canvas_graph_title.js.html#l11"><code>src&#x2F;graphics&#x2F;canvas&#x2F;graph_title.js:11</code></a>
         
         </p>
 
@@ -736,8 +627,7 @@
     </div>
 
     <div class="description">
-        <p>Convience function for registering callback functions on the Graph's <code>Data</code> models. Adds
-<code>dataReady</code> event listeners to each of the Graph's <code>Data</code> models.</p>
+        <p>Renders the title using the Canvas driver.</p>
     </div>
 
     
@@ -748,8 +638,8 @@
             
                 <li class="param">
                     
-                        <code class="param-name">callback</code>
-                        <span class="type">Function</span>
+                        <code class="param-name">context</code>
+                        <span class="type">HTMLCanvasObject</span>
                     
 
                     
@@ -771,11 +661,27 @@
 </div>
 
                 
-                    <div id="method_resumeAllData" class="method item">
-    <h3 class="name"><code>resumeAllData</code></h3>
+                    <div id="method_render" class="method item">
+    <h3 class="name"><code>render</code></h3>
 
     
-        <span class="paren">()</span>
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>paper</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>set</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
     
 
     
@@ -788,6 +694,8 @@
 
     
 
+    
+        <span class="flag chainable">chainable</span>
     
 
     
@@ -796,6 +704,8 @@
         
             
                 
+                    <p>Provided by the <a href="../modules/raphael.html">raphael</a> module.</p>
+                
                 <p>
                 
                 Defined in
@@ -803,7 +713,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_graph.js.html#l219"><code>src&#x2F;core&#x2F;graph.js:219</code></a>
+        <a href="..&#x2F;files&#x2F;src_graphics_raphael_graph_title.js.html#l11"><code>src&#x2F;graphics&#x2F;raphael&#x2F;graph_title.js:11</code></a>
         
         </p>
 
@@ -814,9 +724,47 @@
     </div>
 
     <div class="description">
-        
+        <p>Renders the title using the Raphael driver.</p>
     </div>
 
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">paper</code>
+                        <span class="type">Paper</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">set</code>
+                        <span class="type">Set</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
     
 
     
@@ -833,9 +781,9 @@
                 <h2 class="off-left">Properties</h2>
 
                 
-                    <div id="property_axes" class="property item">
-    <h3 class="name"><code>axes</code></h3>
-    <span class="type"><a href="../classes/Axis.html" class="crosslink">Axis</a></span>
+                    <div id="property_anchor" class="property item">
+    <h3 class="name"><code>anchor</code></h3>
+    <span class="type">Point</span>
 
     
 
@@ -856,7 +804,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_graph.js.html#l73"><code>src&#x2F;core&#x2F;graph.js:73</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_graph_title.js.html#l110"><code>src&#x2F;core&#x2F;graph_title.js:110</code></a>
         
         </p>
 
@@ -866,7 +814,7 @@
     </div>
 
     <div class="description">
-        <p>Jermaine Attr_List of the Graph's Axes.</p>
+        <p>A coordinate pair which gives the relative location of the Title's anchor point.</p>
     </div>
 
     
@@ -877,9 +825,9 @@
 </div>
 
                 
-                    <div id="property_background" class="property item">
-    <h3 class="name"><code>background</code></h3>
-    <span class="type">Background</span>
+                    <div id="property_base" class="property item">
+    <h3 class="name"><code>base</code></h3>
+    <span class="type">Point</span>
 
     
 
@@ -900,7 +848,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_graph.js.html#l52"><code>src&#x2F;core&#x2F;graph.js:52</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_graph_title.js.html#l120"><code>src&#x2F;core&#x2F;graph_title.js:120</code></a>
         
         </p>
 
@@ -910,7 +858,8 @@
     </div>
 
     <div class="description">
-        <p>Child model which controls the properties of the Graph's Background.</p>
+        <p>A coordinate pair which gives the location of the Title's base point, relative to
+its Graph's plot or padding box - determined by the <code>frame</code> attribute.</p>
     </div>
 
     
@@ -921,9 +870,9 @@
 </div>
 
                 
-                    <div id="property_data" class="property item">
-    <h3 class="name"><code>data</code></h3>
-    <span class="type"><a href="../classes/Data.html" class="crosslink">Data</a></span>
+                    <div id="property_border" class="property item">
+    <h3 class="name"><code>border</code></h3>
+    <span class="type">Integer</span>
 
     
 
@@ -944,7 +893,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_graph.js.html#l93"><code>src&#x2F;core&#x2F;graph.js:93</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_graph_title.js.html#l53"><code>src&#x2F;core&#x2F;graph_title.js:53</code></a>
         
         </p>
 
@@ -954,7 +903,8 @@
     </div>
 
     <div class="description">
-        <p>Jermiane Attr_List of the Graph's Data sets.</p>
+        <p>The width of the border to be drawn around the title in pixel; use a value of <code>0</code>
+to not draw a border.</p>
     </div>
 
     
@@ -965,9 +915,9 @@
 </div>
 
                 
-                    <div id="property_legend" class="property item">
-    <h3 class="name"><code>legend</code></h3>
-    <span class="type"><a href="../classes/Legend.html" class="crosslink">Legend</a></span>
+                    <div id="property_bordercolor" class="property item">
+    <h3 class="name"><code>bordercolor</code></h3>
+    <span class="type">RGBColor</span>
 
     
 
@@ -988,7 +938,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_graph.js.html#l42"><code>src&#x2F;core&#x2F;graph.js:42</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_graph_title.js.html#l72"><code>src&#x2F;core&#x2F;graph_title.js:72</code></a>
         
         </p>
 
@@ -998,7 +948,7 @@
     </div>
 
     <div class="description">
-        <p>Child model which controls the properties of the Graph's Legend.</p>
+        <p>Color for the Title's border.</p>
     </div>
 
     
@@ -1009,9 +959,9 @@
 </div>
 
                 
-                    <div id="property_paddingBox" class="property item">
-    <h3 class="name"><code>paddingBox</code></h3>
-    <span class="type"></span>
+                    <div id="property_color" class="property item">
+    <h3 class="name"><code>color</code></h3>
+    <span class="type">RGBColor</span>
 
     
 
@@ -1032,7 +982,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_graph.js.html#l114"><code>src&#x2F;core&#x2F;graph.js:114</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_graph_title.js.html#l62"><code>src&#x2F;core&#x2F;graph_title.js:62</code></a>
         
         </p>
 
@@ -1042,7 +992,7 @@
     </div>
 
     <div class="description">
-        <p>Stores the computed width and height of the Graph's paddingBox.</p>
+        <p>Background color for the Title's region.</p>
     </div>
 
     
@@ -1053,10 +1003,12 @@
 </div>
 
                 
-                    <div id="property_plotarea" class="property item">
-    <h3 class="name"><code>plotarea</code></h3>
-    <span class="type">Plotarea</span>
+                    <div id="property_cornerradius" class="property item deprecated">
+    <h3 class="name"><code>cornerradius</code></h3>
+    <span class="type">Integer</span>
 
+    
+        <span class="flag deprecated">deprecated</span>
     
 
     
@@ -1076,7 +1028,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_graph.js.html#l30"><code>src&#x2F;core&#x2F;graph.js:30</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_graph_title.js.html#l99"><code>src&#x2F;core&#x2F;graph_title.js:99</code></a>
         
         </p>
 
@@ -1086,7 +1038,9 @@
     </div>
 
     <div class="description">
-        <p>Child model which controls the properties of the Graph's Plotarea.</p>
+        <p>Determines whether the corners of the title appear rounded. If cornerradius is 0,
+which is the default, the corners are drawn square. If cornerradius > 0, then the
+corners are rounded off using circles whose radius is cornerradius pixels.</p>
     </div>
 
     
@@ -1097,9 +1051,9 @@
 </div>
 
                 
-                    <div id="property_plotBox" class="property item">
-    <h3 class="name"><code>plotBox</code></h3>
-    <span class="type"></span>
+                    <div id="property_frame" class="property item">
+    <h3 class="name"><code>frame</code></h3>
+    <span class="type">String</span>
 
     
 
@@ -1120,7 +1074,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_graph.js.html#l124"><code>src&#x2F;core&#x2F;graph.js:124</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_graph_title.js.html#l44"><code>src&#x2F;core&#x2F;graph_title.js:44</code></a>
         
         </p>
 
@@ -1130,7 +1084,8 @@
     </div>
 
     <div class="description">
-        <p>Stroes the computed width and height of the Graph's plotBox.</p>
+        <p>Determines if the Title is positioned relative to the Graphs <code>plot</code> or <code>padding</code>
+box.</p>
     </div>
 
     
@@ -1141,9 +1096,9 @@
 </div>
 
                 
-                    <div id="property_plots" class="property item">
-    <h3 class="name"><code>plots</code></h3>
-    <span class="type">Plot</span>
+                    <div id="property_graph" class="property item">
+    <h3 class="name"><code>graph</code></h3>
+    <span class="type"><a href="../classes/Graph.html" class="crosslink">Graph</a></span>
 
     
 
@@ -1164,7 +1119,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_graph.js.html#l83"><code>src&#x2F;core&#x2F;graph.js:83</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_graph_title.js.html#l24"><code>src&#x2F;core&#x2F;graph_title.js:24</code></a>
         
         </p>
 
@@ -1174,7 +1129,7 @@
     </div>
 
     <div class="description">
-        <p>Jermiane Attr_List of the Graph's Plots.</p>
+        <p>Pointer to the Title's parent Graph Jermaine model.</p>
     </div>
 
     
@@ -1185,9 +1140,9 @@
 </div>
 
                 
-                    <div id="property_title" class="property item">
-    <h3 class="name"><code>title</code></h3>
-    <span class="type"><a href="../classes/Title.html" class="crosslink">Title</a></span>
+                    <div id="property_opacity" class="property item">
+    <h3 class="name"><code>opacity</code></h3>
+    <span class="type">Number</span>
 
     
 
@@ -1208,7 +1163,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_graph.js.html#l63"><code>src&#x2F;core&#x2F;graph.js:63</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_graph_title.js.html#l82"><code>src&#x2F;core&#x2F;graph_title.js:82</code></a>
         
         </p>
 
@@ -1218,7 +1173,7 @@
     </div>
 
     <div class="description">
-        <p>Child model which controls the properties of the Graph's Title.</p>
+        <p>Opacity of the Title's region.</p>
     </div>
 
     
@@ -1229,9 +1184,9 @@
 </div>
 
                 
-                    <div id="property_window" class="property item">
-    <h3 class="name"><code>window</code></h3>
-    <span class="type">Window</span>
+                    <div id="property_padding" class="property item">
+    <h3 class="name"><code>padding</code></h3>
+    <span class="type">Integer</span>
 
     
 
@@ -1252,7 +1207,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_graph.js.html#l20"><code>src&#x2F;core&#x2F;graph.js:20</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_graph_title.js.html#l90"><code>src&#x2F;core&#x2F;graph_title.js:90</code></a>
         
         </p>
 
@@ -1262,7 +1217,8 @@
     </div>
 
     <div class="description">
-        <p>Child model which controls the properties of the Graph's Window.</p>
+        <p>The width of the padding between the Title's text and its border in pixels; use a
+value of <code>0</code> to not draw the padding.</p>
     </div>
 
     
@@ -1273,9 +1229,9 @@
 </div>
 
                 
-                    <div id="property_windowBox" class="property item">
-    <h3 class="name"><code>windowBox</code></h3>
-    <span class="type"></span>
+                    <div id="property_position" class="property item">
+    <h3 class="name"><code>position</code></h3>
+    <span class="type">Point</span>
 
     
 
@@ -1296,7 +1252,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_graph.js.html#l104"><code>src&#x2F;core&#x2F;graph.js:104</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_graph_title.js.html#l131"><code>src&#x2F;core&#x2F;graph_title.js:131</code></a>
         
         </p>
 
@@ -1306,7 +1262,51 @@
     </div>
 
     <div class="description">
-        <p>Stores the computed width and height of the Graph's windowBox.</p>
+        <p>A coordinate pair of pixel offsets for the base point.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_text" class="property item">
+    <h3 class="name"><code>text</code></h3>
+    <span class="type"><a href="../classes/Text.html" class="crosslink">Text</a></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_core_graph_title.js.html#l34"><code>src&#x2F;core&#x2F;graph_title.js:34</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>The text of the title.</p>
     </div>
 
     

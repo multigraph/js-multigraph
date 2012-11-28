@@ -65,6 +65,8 @@
             
                 <li><a href="..&#x2F;classes/Text.html">Text</a></li>
             
+                <li><a href="..&#x2F;classes/Title.html">Title</a></li>
+            
                 <li><a href="..&#x2F;classes/WebServiceData.html">WebServiceData</a></li>
             
                 <li><a href="..&#x2F;classes/WebServiceDataCacheNode.html">WebServiceDataCacheNode</a></li>
@@ -310,7 +312,7 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
             for (i=0; i&lt;this.labelers().size(); ++i) {
                 this.labelers().at(i).initializeGeometry(graph);
             }
-            if (this.title() !== undefined) {
+            if (this.title()) {
                 this.title().initializeGeometry(graph, graphicsContext);
             }
         });

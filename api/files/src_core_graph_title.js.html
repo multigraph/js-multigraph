@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src&#x2F;core&#x2F;axis_title.js - js-Multigraph</title>
+    <title>src&#x2F;core&#x2F;graph_title.js - js-Multigraph</title>
     <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.7.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
@@ -122,7 +122,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: src&#x2F;core&#x2F;axis_title.js</h1>
+                        <h1 class="file-heading">File: src&#x2F;core&#x2F;graph_title.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
@@ -135,41 +135,108 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
      *&#x2F;
 
     var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
-        attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.horizontalaxis.title),
-        AxisTitle;
+        attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.title),
+        Title;
 
     &#x2F;**
-     * Axis Title is a Jermaine model that supports the rendering of Axis Titles.
+     * Title is a Jermiane model that controls Graph Titles.
      *
-     * @class AxisTitle
-     * @for AxisTitle
+     * @class Title
+     * @for Title
      * @constructor
-     * @param {Axis} axis
+     * @param {Text} text
+     * @param {Graph} graph
+     * @author jrfrimme
      *&#x2F;
-    AxisTitle = new window.jermaine.Model( &quot;AxisTitle&quot;, function () {
+    Title = new window.jermaine.Model( &quot;GraphTitle&quot;, function () {
         &#x2F;**
-         * Pointer to the Title&#x27;s parent Axis jermiane model.
+         * Pointer to the Title&#x27;s parent Graph Jermaine model.
          *
-         * @property axis
-         * @type {Axis}
+         * @property graph
+         * @type {Graph}
          * @author jrfrimme
          *&#x2F;
-        this.hasA(&quot;axis&quot;).which.validatesWith(function (axis) {
-            return axis instanceof window.multigraph.core.Axis;
+        this.hasA(&quot;graph&quot;).which.validatesWith(function (graph) {
+            return graph instanceof window.multigraph.core.Graph;
         });
         &#x2F;**
-         * The value which is used as the title string.
+         * The text of the title.
          *
-         * @property content
+         * @property text
          * @type {Text}
          * @author jrfrimme
          *&#x2F;
-        this.hasA(&quot;content&quot;).which.validatesWith(function (content) {
-            return content instanceof window.multigraph.core.Text;
+        this.hasA(&quot;text&quot;).which.validatesWith(function (text) {
+            return text instanceof window.multigraph.core.Text;
         });
         &#x2F;**
-         * The value which gives the location of the Title&#x27;s anchor point to be attached to the
-         * base point.
+         * Determines if the Title is positioned relative to the Graphs &#x60;plot&#x60; or &#x60;padding&#x60;
+         * box.
+         *
+         * @property frame
+         * @type {String}
+         * @author jrfrimme
+         *&#x2F;
+        this.hasA(&quot;frame&quot;).which.isA(&quot;string&quot;);
+        &#x2F;**
+         * The width of the border to be drawn around the title in pixel; use a value of &#x60;0&#x60;
+         * to not draw a border.
+         *
+         * @property border
+         * @type {Integer}
+         * @author jrfrimme
+         *&#x2F;
+        this.hasA(&quot;border&quot;).which.isAn(&quot;integer&quot;);
+        &#x2F;**
+         * Background color for the Title&#x27;s region.
+         *
+         * @property color
+         * @type {RGBColor}
+         * @author jrfrimme
+         *&#x2F;
+        this.hasA(&quot;color&quot;).which.validatesWith(function (color) {
+            return color instanceof window.multigraph.math.RGBColor;
+        });
+        &#x2F;**
+         * Color for the Title&#x27;s border.
+         *
+         * @property bordercolor
+         * @type {RGBColor}
+         * @author jrfrimme
+         *&#x2F;
+        this.hasA(&quot;bordercolor&quot;).which.validatesWith(function (bordercolor) {
+            return bordercolor instanceof window.multigraph.math.RGBColor;
+        });
+        &#x2F;**
+         * Opacity of the Title&#x27;s region.
+         *
+         * @property opacity
+         * @type {Number}
+         * @author jrfrimme
+         *&#x2F;
+        this.hasA(&quot;opacity&quot;).which.isA(&quot;number&quot;);
+        &#x2F;**
+         * The width of the padding between the Title&#x27;s text and its border in pixels; use a
+         * value of &#x60;0&#x60; to not draw the padding.
+         *
+         * @property padding
+         * @type {Integer}
+         * @author jrfrimme
+         *&#x2F;
+        this.hasA(&quot;padding&quot;).which.isAn(&quot;integer&quot;);
+        &#x2F;**
+         * Determines whether the corners of the title appear rounded. If cornerradius is 0,
+         * which is the default, the corners are drawn square. If cornerradius &gt; 0, then the
+         * corners are rounded off using circles whose radius is cornerradius pixels.
+         *
+         * @property cornerradius
+         * @deprecated
+         * @type {Integer}
+         * @author jrfrimme
+         *&#x2F;
+        this.hasA(&quot;cornerradius&quot;).which.isAn(&quot;integer&quot;);
+        &#x2F;**
+         * A coordinate pair which gives the relative location of the Title&#x27;s anchor point.
          *
          * @property anchor
          * @type {Point}
@@ -179,13 +246,16 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
             return anchor instanceof window.multigraph.math.Point;
         });
         &#x2F;**
-         * The value which gives the location of the base point relative to the Title&#x27;s Axis.
+         * A coordinate pair which gives the location of the Title&#x27;s base point, relative to
+         * its Graph&#x27;s plot or padding box - determined by the &#x60;frame&#x60; attribute.
          *
          * @property base
-         * @type {Number}
+         * @type {Point}
          * @author jrfrimme
          *&#x2F;
-        this.hasA(&quot;base&quot;).which.isA(&quot;number&quot;);
+        this.hasA(&quot;base&quot;).which.validatesWith(function (base) {
+            return base instanceof window.multigraph.math.Point;
+        });
         &#x2F;**
          * A coordinate pair of pixel offsets for the base point.
          *
@@ -196,78 +266,22 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
         this.hasA(&quot;position&quot;).which.validatesWith(function (position) {
             return position instanceof window.multigraph.math.Point;
         });
-        &#x2F;**
-         * The value which determines the rotation of the Title in degrees.
-         *
-         * @property angle
-         * @type {Number}
-         * @author jrfrimme
-         *&#x2F;
-        this.hasA(&quot;angle&quot;).which.isA(&quot;number&quot;);
-
-        this.isBuiltWith(&quot;axis&quot;);
 
         &#x2F;**
-         * Determines values for the &#x60;position&#x60; and &#x60;anchor&#x60; attributes if they were not set; determines the
-         * geometry of the &#x60;content&#x60; attribute. Called by &#x60;Axis.initializeGeometry()&#x60;.
+         * Determines the geometry of the Title&#x27;s text.
          *
          * @method initializeGeometry
-         * @param {Graph} graph
-         * @param {Object} graphicsContext
          * @chainable
+         * @param {Object} graphicsContext
          * @author jrfrimme
          *&#x2F;
-        this.respondsTo(&quot;initializeGeometry&quot;, function (graph, graphicsContext) {
-            var titleDefaults = defaultValues.horizontalaxis.title;
-
-            var getValue = function (valueOrFunction) {
-                if (typeof(valueOrFunction) === &quot;function&quot;) {
-                    return valueOrFunction();
-                } else {
-                    return valueOrFunction;
-                }
-            };
-
-            if (this.position() === undefined) {
-                if (this.axis().orientation() === ns.Axis.HORIZONTAL) {
-                    if (this.axis().perpOffset() &gt; graph.plotBox().height()&#x2F;2) {
-                        this.position( getValue(titleDefaults[&quot;position-horizontal-top&quot;]) );
-                    } else {
-                        this.position( getValue(titleDefaults[&quot;position-horizontal-bottom&quot;]) );
-                    }
-                } else {
-                    if (this.axis().perpOffset() &gt; graph.plotBox().width()&#x2F;2) {
-                        this.position( getValue(titleDefaults[&quot;position-vertical-right&quot;]) );
-                    } else {
-                        this.position( getValue(titleDefaults[&quot;position-vertical-left&quot;]) );
-                    }
-                }
-            }
-
-            if (this.anchor() === undefined) {
-                if (this.axis().orientation() === ns.Axis.HORIZONTAL) {
-                    if (this.axis().perpOffset() &gt; graph.plotBox().height()&#x2F;2) {
-                        this.anchor( getValue(titleDefaults[&quot;anchor-horizontal-top&quot;]) );
-                    } else {
-                        this.anchor( getValue(titleDefaults[&quot;anchor-horizontal-bottom&quot;]) );
-                    }
-                } else {
-                    if (this.axis().perpOffset() &gt; graph.plotBox().width()&#x2F;2) {
-                        this.anchor( getValue(titleDefaults[&quot;anchor-vertical-right&quot;]) );
-                    } else {
-                        this.anchor( getValue(titleDefaults[&quot;anchor-vertical-left&quot;]) );
-                    }
-                }
-            }
-
-            graphicsContext.angle = this.angle();
-            this.content().initializeGeometry(graphicsContext);
-
+        this.respondsTo(&quot;initializeGeometry&quot;, function (graphicsContext) {
+            this.text().initializeGeometry(graphicsContext);
             return this;
         });
 
         &#x2F;**
-         * Renders the Axis Title. Overridden by implementations in graphics drivers.
+         * Renders the Graph Title. Overridden by implementations in graphics drivers.
          *
          * @method render
          * @private
@@ -275,10 +289,13 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
          *&#x2F;
         this.respondsTo(&quot;render&quot;, function () {});
 
-        window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis.title, attributes);
+        this.isBuiltWith(&quot;text&quot;, &quot;graph&quot;);
+
+        window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.title, attributes);
+
     });
 
-    ns.AxisTitle = AxisTitle;
+    ns.Title = Title;
 
 });
 

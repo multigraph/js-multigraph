@@ -65,6 +65,8 @@
             
                 <li><a href="..&#x2F;classes/Text.html">Text</a></li>
             
+                <li><a href="..&#x2F;classes/Title.html">Title</a></li>
+            
                 <li><a href="..&#x2F;classes/WebServiceData.html">WebServiceData</a></li>
             
                 <li><a href="..&#x2F;classes/WebServiceDataCacheNode.html">WebServiceDataCacheNode</a></li>
@@ -361,16 +363,25 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
                 numColumns,
                 i;
 
+            &#x2F;&#x2F; clean up each line
+            for (i = 0; i &lt; lines.length; ++i) {
+                lines[i] = lines[i].replace(&#x2F;^\s+&#x2F;,     &quot;&quot;);  &#x2F;&#x2F; remove leading whitespace
+                lines[i] = lines[i].replace(&#x2F;\s+$&#x2F;,     &quot;&quot;);  &#x2F;&#x2F; remove trailing whitespace
+                lines[i] = lines[i].replace(&#x2F;\s*,\s*&#x2F;g, &quot;,&quot;); &#x2F;&#x2F; remove any whitespace next to commas
+                lines[i] = lines[i].replace(&#x2F;\s+&#x2F;g,     &quot;,&quot;); &#x2F;&#x2F; replace any remaining whitespace runs with a comma
+                &#x2F;&#x2F; now line consists of comma-separated values, with no whitespace
+            }
+
             for (i = 0; i &lt; lines.length; ++i) {
                 if (&#x2F;\d&#x2F;.test(lines[i])) { &#x2F;&#x2F; skip line unless it contains a digit
-                    numColumns = lines[i].split(&#x2F;\s*,\s*&#x2F;).length;
+                    numColumns = lines[i].split(&#x2F;,&#x2F;).length;
                     break;
                 }
             }
 
             for (i = 0; i &lt; lines.length; ++i) {
                 if (&#x2F;\d&#x2F;.test(lines[i])) { &#x2F;&#x2F; skip line unless it contains a digit
-                    stringValuesThisRow = lines[i].split(&#x2F;\s*,\s*&#x2F;);
+                    stringValuesThisRow = lines[i].split(&#x2F;,&#x2F;);
                     if (stringValuesThisRow.length === numColumns) {
                         stringValues.push( stringValuesThisRow );
                     } else {
@@ -386,14 +397,15 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
          * 
          * @method textToStringArray
          * @static
-         * @param {array} dataVariableArray Plain javascript array of DataVariables
-         * @param {array} stringArray Array of values in string form
-         * @return {array} dataValues 
+         * @param {array} dataVariableArray plain javascript array of DataVariables
+         * @param {array} stringArray plain javascript array of strings
+         * @return {array} plain javascript array of DataValue instances
          * @author jrfrimme
          *&#x2F;
         ArrayData.stringArrayToDataValuesArray = function (dataVariableArray, stringArray) {
             &#x2F;&#x2F;IMPORTANT NOTE: dataVariableArray is a plain javascript array of DataVariable instances; it
             &#x2F;&#x2F;is NOT a jermaine attr_list.
+
             var dataValues = [],
                 dataValuesThisRow,
                 i,

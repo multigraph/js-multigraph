@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src&#x2F;graphics&#x2F;canvas&#x2F;canvas_mixin.js - js-Multigraph</title>
+    <title>src&#x2F;graphics&#x2F;canvas&#x2F;graph_title.js - js-Multigraph</title>
     <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.7.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
@@ -122,7 +122,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: src&#x2F;graphics&#x2F;canvas&#x2F;canvas_mixin.js</h1>
+                        <h1 class="file-heading">File: src&#x2F;graphics&#x2F;canvas&#x2F;graph_title.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
@@ -130,17 +130,80 @@ window.multigraph.util.namespace(&quot;window.multigraph.graphics.canvas&quot;, 
     &quot;use strict&quot;;
 
     &#x2F;**
-     * Mixin functions for canvas driver.
-     *
      * @module multigraph
      * @submodule canvas
-     * @main canvas
      *&#x2F;
 
-    ns.mixin = new window.multigraph.core.Mixin();
-
     ns.mixin.add(function (ns) {
-        window.multigraph.driver = &quot;canvas&quot;;
+
+        &#x2F;**
+         * Renders the title using the Canvas driver.
+         *
+         * @method render
+         * @for Title
+         * @chainable
+         * @param {HTMLCanvasObject} context
+         * @author jrfrimme
+         *&#x2F;
+        ns.Title.respondsTo(&quot;render&quot;, function (context) {
+            var h = this.text().origHeight();
+            var w = this.text().origWidth();
+            var ax = (0.5 * w + this.padding() + this.border()) * (this.anchor().x() + 1);
+            var ay = (0.5 * h + this.padding() + this.border()) * (this.anchor().y() + 1);
+            var base;
+
+            if (this.frame() === &quot;padding&quot;) {
+                base = new window.multigraph.math.Point(
+                    (this.base().x() + 1) * (this.graph().paddingBox().width() &#x2F; 2) - this.graph().plotarea().margin().left(),
+                    (this.base().y() + 1) * (this.graph().paddingBox().height() &#x2F; 2) - this.graph().plotarea().margin().bottom()
+                );
+            } else {
+                base = new window.multigraph.math.Point(
+                    (this.base().x() + 1) * (this.graph().plotBox().width() &#x2F; 2),
+                    (this.base().y() + 1) * (this.graph().plotBox().height() &#x2F; 2)
+                );
+            }
+
+            context.save();
+            context.fillStyle = &quot;rgba(0, 0, 0, 1)&quot;;
+            context.transform(1, 0, 0, -1, 0, 2 * base.y());
+            context.transform(1, 0, 0, 1, base.x(), base.y());
+            context.transform(1, 0, 0, 1, this.position().x(), -this.position().y());
+            context.transform(1, 0, 0, 1, -ax, ay);
+
+            &#x2F;&#x2F; border
+            if (this.border() &gt; 0) {
+                context.save();
+                context.transform(1, 0, 0, -1, 0, 0);
+                context.strokeStyle = this.bordercolor().toRGBA();
+                context.lineWidth = this.border();
+                context.strokeRect(
+                    this.border() &#x2F; 2,
+                    this.border() &#x2F; 2,
+                    w + (2 * this.padding()) + this.border(),
+                    h + (2 * this.padding()) + this.border()
+                );
+                context.restore();
+            }
+
+            &#x2F;&#x2F; background
+            context.save();
+            context.transform(1, 0, 0, -1, 0, 0);
+            context.strokeStyle = this.color().toRGBA(this.opacity());
+            context.fillStyle = this.color().toRGBA(this.opacity());
+            context.fillRect(
+                this.border(),
+                this.border(),
+                w + (2 * this.padding()),
+                h + (2 * this.padding())
+            );
+            context.restore();
+
+            &#x2F;&#x2F; text
+            context.fillText(this.text().string(), this.border() + this.padding(), -(this.border() + this.padding()));
+            context.restore();
+        });
+
     });
 
 });

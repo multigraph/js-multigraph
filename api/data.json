@@ -84,6 +84,17 @@
             },
             "namespaces": {}
         },
+        "src/core/graph_title.js": {
+            "name": "src/core/graph_title.js",
+            "modules": {},
+            "classes": {
+                "Title": 1
+            },
+            "fors": {
+                "Title": 1
+            },
+            "namespaces": {}
+        },
         "src/core/legend.js": {
             "name": "src/core/legend.js",
             "modules": {},
@@ -179,6 +190,15 @@
             "fors": {},
             "namespaces": {}
         },
+        "src/graphics/canvas/graph_title.js": {
+            "name": "src/graphics/canvas/graph_title.js",
+            "modules": {},
+            "classes": {},
+            "fors": {
+                "Title": 1
+            },
+            "namespaces": {}
+        },
         "src/graphics/canvas/text.js": {
             "name": "src/graphics/canvas/text.js",
             "modules": {},
@@ -196,6 +216,15 @@
             "classes": {},
             "fors": {
                 "AxisTitle": 1
+            },
+            "namespaces": {}
+        },
+        "src/graphics/raphael/graph_title.js": {
+            "name": "src/graphics/raphael/graph_title.js",
+            "modules": {},
+            "classes": {},
+            "fors": {
+                "Title": 1
             },
             "namespaces": {}
         },
@@ -246,6 +275,7 @@
                 "Data": 1,
                 "EventEmitter": 1,
                 "Graph": 1,
+                "Title": 1,
                 "Legend": 1,
                 "Mixin": 1,
                 "Multigraph": 1,
@@ -263,6 +293,7 @@
                 "Data": 1,
                 "EventEmitter": 1,
                 "Graph": 1,
+                "Title": 1,
                 "Legend": 1,
                 "Mixin": 1,
                 "Multigraph": 1,
@@ -287,6 +318,7 @@
                 "Data": 1,
                 "EventEmitter": 1,
                 "Graph": 1,
+                "Title": 1,
                 "Legend": 1,
                 "Mixin": 1,
                 "Multigraph": 1,
@@ -497,6 +529,35 @@
             "line": 10,
             "description": "The Graph Jermaine model controls the properties for an individual Graph.",
             "is_constructor": 1
+        },
+        "Title": {
+            "name": "Title",
+            "shortname": "Title",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "multigraph",
+            "submodule": "core",
+            "namespace": "",
+            "file": "src/core/graph_title.js",
+            "line": 13,
+            "description": "Title is a Jermiane model that controls Graph Titles.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "text",
+                    "description": "",
+                    "type": "Text"
+                },
+                {
+                    "name": "graph",
+                    "description": "",
+                    "type": "Graph"
+                }
+            ],
+            "author": "jrfrimme"
         },
         "Legend": {
             "name": "Legend",
@@ -863,7 +924,7 @@
         },
         {
             "file": "src/core/array_data.js",
-            "line": 258,
+            "line": 267,
             "description": "Parses an array of strings into an array of DataValues.",
             "itemtype": "method",
             "name": "textToStringArray",
@@ -871,17 +932,17 @@
             "params": [
                 {
                     "name": "dataVariableArray",
-                    "description": "Plain javascript array of DataVariables",
+                    "description": "plain javascript array of DataVariables",
                     "type": "Array"
                 },
                 {
                     "name": "stringArray",
-                    "description": "Array of values in string form",
+                    "description": "plain javascript array of strings",
                     "type": "Array"
                 }
             ],
             "return": {
-                "description": "dataValues",
+                "description": "plain javascript array of DataValue instances",
                 "type": "Array"
             },
             "author": "jrfrimme",
@@ -1577,7 +1638,7 @@
         },
         {
             "file": "src/core/graph.js",
-            "line": 187,
+            "line": 190,
             "description": "Convience function for registering callback functions on the Graph's `Data` models. Adds\n`dataReady` event listeners to each of the Graph's `Data` models.",
             "itemtype": "method",
             "name": "registerCommonDataCallback",
@@ -1595,7 +1656,7 @@
         },
         {
             "file": "src/core/graph.js",
-            "line": 202,
+            "line": 205,
             "itemtype": "method",
             "name": "pauseAllData",
             "author": "jrfrimme",
@@ -1605,7 +1666,7 @@
         },
         {
             "file": "src/core/graph.js",
-            "line": 216,
+            "line": 219,
             "itemtype": "method",
             "name": "resumeAllData",
             "author": "jrfrimme",
@@ -1615,7 +1676,7 @@
         },
         {
             "file": "src/core/graph.js",
-            "line": 230,
+            "line": 233,
             "itemtype": "method",
             "name": "findNearestAxis",
             "params": [
@@ -1634,6 +1695,183 @@
             ],
             "author": "jrfrimme",
             "class": "Graph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph_title.js",
+            "line": 24,
+            "description": "Pointer to the Title's parent Graph Jermaine model.",
+            "itemtype": "property",
+            "name": "graph",
+            "type": "{Graph}",
+            "author": "jrfrimme",
+            "class": "Title",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph_title.js",
+            "line": 34,
+            "description": "The text of the title.",
+            "itemtype": "property",
+            "name": "text",
+            "type": "{Text}",
+            "author": "jrfrimme",
+            "class": "Title",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph_title.js",
+            "line": 44,
+            "description": "Determines if the Title is positioned relative to the Graphs `plot` or `padding`\nbox.",
+            "itemtype": "property",
+            "name": "frame",
+            "type": "{String}",
+            "author": "jrfrimme",
+            "class": "Title",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph_title.js",
+            "line": 53,
+            "description": "The width of the border to be drawn around the title in pixel; use a value of `0`\nto not draw a border.",
+            "itemtype": "property",
+            "name": "border",
+            "type": "{Integer}",
+            "author": "jrfrimme",
+            "class": "Title",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph_title.js",
+            "line": 62,
+            "description": "Background color for the Title's region.",
+            "itemtype": "property",
+            "name": "color",
+            "type": "{RGBColor}",
+            "author": "jrfrimme",
+            "class": "Title",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph_title.js",
+            "line": 72,
+            "description": "Color for the Title's border.",
+            "itemtype": "property",
+            "name": "bordercolor",
+            "type": "{RGBColor}",
+            "author": "jrfrimme",
+            "class": "Title",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph_title.js",
+            "line": 82,
+            "description": "Opacity of the Title's region.",
+            "itemtype": "property",
+            "name": "opacity",
+            "type": "{Number}",
+            "author": "jrfrimme",
+            "class": "Title",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph_title.js",
+            "line": 90,
+            "description": "The width of the padding between the Title's text and its border in pixels; use a\nvalue of `0` to not draw the padding.",
+            "itemtype": "property",
+            "name": "padding",
+            "type": "{Integer}",
+            "author": "jrfrimme",
+            "class": "Title",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph_title.js",
+            "line": 99,
+            "description": "Determines whether the corners of the title appear rounded. If cornerradius is 0,\nwhich is the default, the corners are drawn square. If cornerradius > 0, then the\ncorners are rounded off using circles whose radius is cornerradius pixels.",
+            "itemtype": "property",
+            "name": "cornerradius",
+            "deprecated": true,
+            "type": "{Integer}",
+            "author": "jrfrimme",
+            "class": "Title",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph_title.js",
+            "line": 110,
+            "description": "A coordinate pair which gives the relative location of the Title's anchor point.",
+            "itemtype": "property",
+            "name": "anchor",
+            "type": "{Point}",
+            "author": "jrfrimme",
+            "class": "Title",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph_title.js",
+            "line": 120,
+            "description": "A coordinate pair which gives the location of the Title's base point, relative to\nits Graph's plot or padding box - determined by the `frame` attribute.",
+            "itemtype": "property",
+            "name": "base",
+            "type": "{Point}",
+            "author": "jrfrimme",
+            "class": "Title",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph_title.js",
+            "line": 131,
+            "description": "A coordinate pair of pixel offsets for the base point.",
+            "itemtype": "property",
+            "name": "position",
+            "type": "{Point}",
+            "author": "jrfrimme",
+            "class": "Title",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph_title.js",
+            "line": 142,
+            "description": "Determines the geometry of the Title's text.",
+            "itemtype": "method",
+            "name": "initializeGeometry",
+            "chainable": 1,
+            "params": [
+                {
+                    "name": "graphicsContext",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "author": "jrfrimme",
+            "class": "Title",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph_title.js",
+            "line": 155,
+            "description": "Renders the Graph Title. Overridden by implementations in graphics drivers.",
+            "itemtype": "method",
+            "name": "render",
+            "access": "private",
+            "tagname": "",
+            "author": "jrfrimme",
+            "class": "Title",
             "module": "multigraph",
             "submodule": "core"
         },
@@ -2694,6 +2932,25 @@
             "submodule": "canvas"
         },
         {
+            "file": "src/graphics/canvas/graph_title.js",
+            "line": 11,
+            "description": "Renders the title using the Canvas driver.",
+            "itemtype": "method",
+            "name": "render",
+            "chainable": 1,
+            "params": [
+                {
+                    "name": "context",
+                    "description": "",
+                    "type": "HTMLCanvasObject"
+                }
+            ],
+            "author": "jrfrimme",
+            "class": "Title",
+            "module": "multigraph",
+            "submodule": "canvas"
+        },
+        {
             "file": "src/graphics/canvas/text.js",
             "line": 12,
             "description": "Determines unrotated and rotated widths and heights for the stored string in the canvas\nenvironment",
@@ -2790,6 +3047,30 @@
             ],
             "author": "jrfrimme",
             "class": "AxisTitle",
+            "module": "multigraph",
+            "submodule": "raphael"
+        },
+        {
+            "file": "src/graphics/raphael/graph_title.js",
+            "line": 11,
+            "description": "Renders the title using the Raphael driver.",
+            "itemtype": "method",
+            "name": "render",
+            "chainable": 1,
+            "params": [
+                {
+                    "name": "paper",
+                    "description": "",
+                    "type": "Paper"
+                },
+                {
+                    "name": "set",
+                    "description": "",
+                    "type": "Set"
+                }
+            ],
+            "author": "jrfrimme",
+            "class": "Title",
             "module": "multigraph",
             "submodule": "raphael"
         },
