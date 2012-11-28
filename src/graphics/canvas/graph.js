@@ -63,6 +63,9 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 
             this.legend().render(context);
 
+            if (this.title()) {
+                this.title().render(context);
+            }
         });
 
     });

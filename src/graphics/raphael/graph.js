@@ -15,6 +15,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 axesSet = paper.set(),
                 plotsSet = paper.set(),
                 legendSet = paper.set(),
+                titleSet = paper.set(),
                 i;
 
             this.x0( this.window().margin().left() + windowBorder + this.window().padding().left() + this.plotarea().margin().left() + this.plotarea().border() );
@@ -43,12 +44,16 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             this.legend().render({ "paper" : paper,
                                    "set"   : legendSet});
 
-            this.transformSets(height, this.x0(), this.y0(), backgroundSet, axesSet, plotsSet, legendSet);
+            if (this.title()) {
+                this.title().render(paper, titleSet);
+            }
+
+            this.transformSets(height, this.x0(), this.y0(), backgroundSet, axesSet, plotsSet, legendSet, titleSet);
             this.fixLayers(backgroundSet, axesSet, plotsSet);
 
         });
 
-        Graph.respondsTo("transformSets", function (height, x0, y0, backgroundSet, axesSet, plotsSet, legendSet) {
+        Graph.respondsTo("transformSets", function (height, x0, y0, backgroundSet, axesSet, plotsSet, legendSet, titleSet) {
             var i;
             for (i = 0; i < backgroundSet.length; i++) {
                 if (backgroundSet[i].type !== "image") {
@@ -58,6 +63,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             axesSet.transform(this.transformString() + "...");
             plotsSet.transform(this.transformString());
             legendSet.transform(this.transformString() + "...");
+            titleSet.transform(this.transformString() + "...");
 
             plotsSet.attr("clip-rect", "1,1," + (this.plotBox().width()-2) + "," + (this.plotBox().height()-2));
         });
