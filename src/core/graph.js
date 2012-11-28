@@ -182,6 +182,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 if (this.legend()) {
                     this.legend().initializeGeometry(this, graphicsContext);
                 }
+                if (this.title()) {
+                    this.title().initializeGeometry(graphicsContext);
+                }
             });
 
             /**

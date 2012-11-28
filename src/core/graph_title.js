@@ -139,6 +139,19 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return position instanceof window.multigraph.math.Point;
         });
 
+        /**
+         * Determines the geometry of the Title's text.
+         *
+         * @method initializeGeometry
+         * @chainable
+         * @param {Object} graphicsContext
+         * @author jrfrimme
+         */
+        this.respondsTo("initializeGeometry", function (graphicsContext) {
+            this.text().initializeGeometry(graphicsContext);
+            return this;
+        });
+
         this.isBuiltWith("text", "graph");
 
         window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.title, attributes);
