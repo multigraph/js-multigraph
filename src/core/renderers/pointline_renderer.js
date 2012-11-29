@@ -191,6 +191,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                          "model" : PointlineRenderer});
     ns.Renderer.addType({"type"  : ns.Renderer.Type.parse("line"),
                          "model" : PointlineRenderer});
+    ns.Renderer.addType({"type"  : ns.Renderer.Type.parse("point"),
+                         "model" : PointlineRenderer});
 
     ns.PointlineRenderer = PointlineRenderer;
 });
