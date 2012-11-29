@@ -28,6 +28,11 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
             graphicsContext.elem.transform("");
 
+            var defaultFontSize;
+            if (graphicsContext.fontSize !== undefined) {
+                defaultFontSize = graphicsContext.elem.attr("font-size");
+                graphicsContext.elem.attr("font-size", graphicsContext.fontSize);
+            }
             origWidth  = this.measureStringWidth(graphicsContext.elem);
             origHeight = this.measureStringHeight(graphicsContext.elem);
 
@@ -38,6 +43,10 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             } else {
                 rotatedWidth  = origWidth;
                 rotatedHeight = origHeight;
+            }
+
+            if (graphicsContext.fontSize !== undefined) {
+                graphicsContext.elem.attr("font-size", defaultFontSize);
             }
 
             this.origWidth(origWidth);

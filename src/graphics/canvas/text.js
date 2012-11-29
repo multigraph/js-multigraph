@@ -19,6 +19,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
          * @param {Object} graphicsContext
          *   @param {Context} graphicsContext.context
          *   @param {Float} graphicsContext.angle
+         *   @param {String} graphicsContext.fontSize
          */
         Text.respondsTo("initializeGeometry", function (graphicsContext) {
             var origWidth,
@@ -26,10 +27,17 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                 rotatedWidth,
                 rotatedHeight;
 
+            graphicsContext.context.save();
+            if (graphicsContext.fontSize !== undefined) {
+                graphicsContext.context.font = graphicsContext.fontSize + " sans-serif";
+            }
+
             origWidth  = this.measureStringWidth(graphicsContext.context);
             origHeight = this.measureStringHeight(graphicsContext.context);
 
-            if (graphicsContext && graphicsContext.angle !== undefined) {
+            graphicsContext.context.restore();
+
+            if (graphicsContext.angle !== undefined) {
                 var angle = graphicsContext.angle/180 * Math.PI;
                 rotatedWidth = Math.abs(Math.cos(angle)) * origWidth + Math.abs(Math.sin(angle)) * origHeight;
                 rotatedHeight = Math.abs(Math.sin(angle)) * origWidth + Math.abs(Math.cos(angle)) * origHeight;
