@@ -1845,7 +1845,19 @@
         },
         {
             "file": "src/core/graph_title.js",
-            "line": 142,
+            "line": 141,
+            "description": "The font-size of the title. Currently is a constant.",
+            "itemtype": "property",
+            "name": "font-size",
+            "type": "{String}",
+            "author": "jrfrimme",
+            "class": "Title",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph_title.js",
+            "line": 150,
             "description": "Determines the geometry of the Title's text.",
             "itemtype": "method",
             "name": "initializeGeometry",
@@ -1864,7 +1876,7 @@
         },
         {
             "file": "src/core/graph_title.js",
-            "line": 155,
+            "line": 164,
             "description": "Renders the Graph Title. Overridden by implementations in graphics drivers.",
             "itemtype": "method",
             "name": "render",
@@ -2972,6 +2984,11 @@
                             "name": "angle",
                             "description": "",
                             "type": "Float"
+                        },
+                        {
+                            "name": "fontSize",
+                            "description": "",
+                            "type": "String"
                         }
                     ]
                 }
@@ -2982,7 +2999,7 @@
         },
         {
             "file": "src/graphics/canvas/text.js",
-            "line": 49,
+            "line": 57,
             "description": "Determines unrotated width for the stored string in the canvas environment.",
             "itemtype": "method",
             "name": "measureStringWidth",
@@ -3005,7 +3022,7 @@
         },
         {
             "file": "src/graphics/canvas/text.js",
-            "line": 67,
+            "line": 75,
             "description": "Determines unrotated height for the stored string in the canvas environment.",
             "itemtype": "method",
             "name": "measureStringHeight",
@@ -3096,6 +3113,11 @@
                             "name": "angle",
                             "description": "",
                             "type": "Float"
+                        },
+                        {
+                            "name": "fontSize",
+                            "description": "",
+                            "type": "String"
                         }
                     ]
                 }
@@ -3106,7 +3128,7 @@
         },
         {
             "file": "src/graphics/raphael/text.js",
-            "line": 51,
+            "line": 61,
             "description": "Determines unrotated width for the stored string in the raphael environment.",
             "itemtype": "method",
             "name": "measureStringWidth",
@@ -3129,7 +3151,7 @@
         },
         {
             "file": "src/graphics/raphael/text.js",
-            "line": 69,
+            "line": 79,
             "description": "Determines unrotated height for the stored string in the raphael environment.",
             "itemtype": "method",
             "name": "measureStringHeight",

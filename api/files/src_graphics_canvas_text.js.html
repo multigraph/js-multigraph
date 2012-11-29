@@ -147,6 +147,7 @@ window.multigraph.util.namespace(&quot;window.multigraph.graphics.canvas&quot;, 
          * @param {Object} graphicsContext
          *   @param {Context} graphicsContext.context
          *   @param {Float} graphicsContext.angle
+         *   @param {String} graphicsContext.fontSize
          *&#x2F;
         Text.respondsTo(&quot;initializeGeometry&quot;, function (graphicsContext) {
             var origWidth,
@@ -154,10 +155,17 @@ window.multigraph.util.namespace(&quot;window.multigraph.graphics.canvas&quot;, 
                 rotatedWidth,
                 rotatedHeight;
 
+            graphicsContext.context.save();
+            if (graphicsContext.fontSize !== undefined) {
+                graphicsContext.context.font = graphicsContext.fontSize + &quot; sans-serif&quot;;
+            }
+
             origWidth  = this.measureStringWidth(graphicsContext.context);
             origHeight = this.measureStringHeight(graphicsContext.context);
 
-            if (graphicsContext &amp;&amp; graphicsContext.angle !== undefined) {
+            graphicsContext.context.restore();
+
+            if (graphicsContext.angle !== undefined) {
                 var angle = graphicsContext.angle&#x2F;180 * Math.PI;
                 rotatedWidth = Math.abs(Math.cos(angle)) * origWidth + Math.abs(Math.sin(angle)) * origHeight;
                 rotatedHeight = Math.abs(Math.sin(angle)) * origWidth + Math.abs(Math.cos(angle)) * origHeight;

@@ -147,6 +147,7 @@ window.multigraph.util.namespace(&quot;window.multigraph.graphics.raphael&quot;,
          * @param {Object} graphicsContext
          *   @param {TextElem} graphicsContext.elem
          *   @param {Float} graphicsContext.angle
+         *   @param {String} graphicsContext.fontSize
          *&#x2F;
         Text.respondsTo(&quot;initializeGeometry&quot;, function (graphicsContext) {
             var origWidth,
@@ -156,6 +157,11 @@ window.multigraph.util.namespace(&quot;window.multigraph.graphics.raphael&quot;,
 
             graphicsContext.elem.transform(&quot;&quot;);
 
+            var defaultFontSize;
+            if (graphicsContext.fontSize !== undefined) {
+                defaultFontSize = graphicsContext.elem.attr(&quot;font-size&quot;);
+                graphicsContext.elem.attr(&quot;font-size&quot;, graphicsContext.fontSize);
+            }
             origWidth  = this.measureStringWidth(graphicsContext.elem);
             origHeight = this.measureStringHeight(graphicsContext.elem);
 
@@ -166,6 +172,10 @@ window.multigraph.util.namespace(&quot;window.multigraph.graphics.raphael&quot;,
             } else {
                 rotatedWidth  = origWidth;
                 rotatedHeight = origHeight;
+            }
+
+            if (graphicsContext.fontSize !== undefined) {
+                graphicsContext.elem.attr(&quot;font-size&quot;, defaultFontSize);
             }
 
             this.origWidth(origWidth);

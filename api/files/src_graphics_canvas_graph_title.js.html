@@ -200,6 +200,7 @@ window.multigraph.util.namespace(&quot;window.multigraph.graphics.canvas&quot;, 
             context.restore();
 
             &#x2F;&#x2F; text
+            context.font = this.fontSize() + &quot; sans-serif&quot;;
             context.fillText(this.text().string(), this.border() + this.padding(), -(this.border() + this.padding()));
             context.restore();
         });
