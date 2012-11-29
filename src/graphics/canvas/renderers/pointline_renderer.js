@@ -20,6 +20,15 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                 "linecolor"          : this.getOptionValue("linecolor"),
                 "linewidth"          : this.getOptionValue("linewidth")
             };
+
+            // turns off points for line renderers
+            if (this.type() === ns.Renderer.LINE) {
+                settings.pointsize = 0;
+            }
+            // turns off lines for point renderers
+            if (this.type() === ns.Renderer.POINT) {
+                settings.linewidth = 0;
+            }
             this.settings(settings);
 
             context.strokeStyle = settings.linecolor.getHexString("#");
