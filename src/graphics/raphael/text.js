@@ -19,6 +19,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
          * @param {Object} graphicsContext
          *   @param {TextElem} graphicsContext.elem
          *   @param {Float} graphicsContext.angle
+         *   @param {String} graphicsContext.fontSize
          */
         Text.respondsTo("initializeGeometry", function (graphicsContext) {
             var origWidth,

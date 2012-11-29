@@ -72,6 +72,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             context.restore();
 
             // text
+            context.font = this.fontSize() + " sans-serif";
             context.fillText(this.text().string(), this.border() + this.padding(), -(this.border() + this.padding()));
             context.restore();
         });

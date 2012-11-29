@@ -138,6 +138,14 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasA("position").which.validatesWith(function (position) {
             return position instanceof window.multigraph.math.Point;
         });
+        /**
+         * The font-size of the title. Currently is a constant.
+         *
+         * @property font-size
+         * @type {String}
+         * @author jrfrimme
+         */
+        this.hasA("fontSize").which.isA("string").and.defaultsTo("18px");
 
         /**
          * Determines the geometry of the Title's text.
@@ -148,6 +156,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @author jrfrimme
          */
         this.respondsTo("initializeGeometry", function (graphicsContext) {
+            graphicsContext.fontSize = this.fontSize();
             this.text().initializeGeometry(graphicsContext);
             return this;
         });

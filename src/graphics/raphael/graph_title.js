@@ -79,6 +79,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             set.push(
                 paper.text(this.border() + this.padding() + w/2, this.border() + this.padding() + h/2, this.text().string())
                     .transform(transformString)
+                    .attr({"font-size" : this.fontSize()})
             );
 
             return this;
