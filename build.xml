@@ -245,16 +245,18 @@
   </target>
 
   <target name="minify" depends="concatenate">
-    <apply executable="java" failonerror="true">
-      <fileset dir="${build.dir}" includes="multigraph.js" />
-      <mapper type="glob" from="*.js" to="${build.dir}/*-min.js" />
+    <copy file="build/multigraph.js" tofile="build/stripped-multigraph.js"/>
+    <!-- replace /*! with /* so ALL comments are removed -->
+    <replace file="build/stripped-multigraph.js" token="/*!" value="/*"/>
+    <exec executable="java" failonerror="true">
       <arg line="-jar" />
       <arg path="${yuicompressor}" />
       <arg line="${yuicompressor.options}" />
-      <srcfile />
+      <arg line="build/stripped-multigraph.js" />
       <arg line="-o" />
-      <targetfile />
-    </apply>
+      <arg line="build/multigraph-min.js" />
+    </exec>
+    <delete file="build/stripped-multigraph.js" />
   </target>
 
   <target name="lint">
