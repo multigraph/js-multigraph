@@ -37,6 +37,16 @@ describe("Logger Graphics Tests", function () {
         window.multigraph.graphics.logger.mixin.apply(window.multigraph.core);
         window.multigraph.normalizer.mixin.apply(window.multigraph.core);
     });
+    xit("acis-static.xml should match with a width of '800' and a height of '500'", function () {
+        var loggerOutput = getLoggerOutput("./mugl/acis-static.xml", 800, 500);
+        var savedOutput = getFileContents("./graphics/logger/fixtures/acis-static-800x500.log");
+        waitsFor(function () {
+            return savedOutput.haveData && loggerOutput.haveData;
+        });
+        runs(function () {
+            expect(loggerOutput.contents).toEqual(savedOutput.contents);
+        });
+    });
     xit("acis-webservice.xml should match with a width of '1000' and a height of '400'", function () {
         var loggerOutput = getLoggerOutput("./mugl/acis-webservice.xml", 1000, 400);
         var savedOutput = getFileContents("./graphics/logger/fixtures/acis-webservice-1000x400.log");
