@@ -367,6 +367,16 @@ describe("Logger Graphics Tests", function () {
             expect(loggerOutput.contents).toEqual(savedOutput.contents);
         });
     });
+    xit("line-graph.xml should match with a width of '800' and a height of '500'", function () {
+        var loggerOutput = getLoggerOutput("./mugl/line-graph.xml", 800, 500);
+        var savedOutput = getFileContents("./graphics/logger/fixtures/line-graph-800x500.log");
+        waitsFor(function () {
+            return savedOutput.haveData && loggerOutput.haveData;
+        });
+        runs(function () {
+            expect(loggerOutput.contents).toEqual(savedOutput.contents);
+        });
+    });
     xit("minimal_graph.xml should match with a width of '800' and a height of '500'", function () {
         var loggerOutput = getLoggerOutput("./mugl/minimal_graph.xml", 800, 500);
         var savedOutput = getFileContents("./graphics/logger/fixtures/minimal_graph-800x500.log");
@@ -400,6 +410,16 @@ describe("Logger Graphics Tests", function () {
     xit("plotarea-background-color.xml should match with a width of '800' and a height of '500'", function () {
         var loggerOutput = getLoggerOutput("./mugl/plotarea-background-color.xml", 800, 500);
         var savedOutput = getFileContents("./graphics/logger/fixtures/plotarea-background-color-800x500.log");
+        waitsFor(function () {
+            return savedOutput.haveData && loggerOutput.haveData;
+        });
+        runs(function () {
+            expect(loggerOutput.contents).toEqual(savedOutput.contents);
+        });
+    });
+    xit("point-graph.xml should match with a width of '800' and a height of '500'", function () {
+        var loggerOutput = getLoggerOutput("./mugl/point-graph.xml", 800, 500);
+        var savedOutput = getFileContents("./graphics/logger/fixtures/point-graph-800x500.log");
         waitsFor(function () {
             return savedOutput.haveData && loggerOutput.haveData;
         });
