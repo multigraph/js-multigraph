@@ -14,13 +14,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             graphicsContext.set.push(
                 graphicsContext.paper.rect(0, 0, this.width(), this.height())
                     .attr({
-                        "stroke" : this.bordercolor().toRGBA(this.opacity()),
-                        "fill"   : this.bordercolor().toRGBA(this.opacity())
-                    }),
-
-                graphicsContext.paper.rect(this.border(), this.border(), this.width() - (2 * this.border()), this.height() - (2 * this.border()))
-                    .attr({
-                        "stroke" : this.color().toRGBA(this.opacity()),
+                        "stroke" : this.bordercolor().toRGBA(),
+                        "stroke-width" : this.border(),
                         "fill"   : this.color().toRGBA(this.opacity())
                     })
             );
@@ -30,7 +25,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             graphicsContext.set.push(
                 graphicsContext.paper.text(x, y, label.string())
                     .attr({
-                        "fill" : "rgba(0, 0, 0, " + this.opacity() + ")",
+                        "fill" : "rgba(0, 0, 0, 1)",
                         "text-anchor" : "start"
                     })
                     .transform("t0," + (this.maxLabelHeight()/2) + "s1,-1")

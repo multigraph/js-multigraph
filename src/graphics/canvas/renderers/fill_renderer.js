@@ -153,16 +153,16 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             context.save();
             // Draw icon background (with opacity)
             if (icon.width() < 10 || icon.height() < 10) {
-                context.fillStyle = state.fillcolor.toRGBA(opacity);
+                context.fillStyle = state.fillcolor.toRGBA();
             } else {
-                context.fillStyle = "rgba(255, 255, 255, " + opacity + ")";
+                context.fillStyle = "rgba(255, 255, 255, 1)";
             }
             context.fillRect(0, 0, icon.width(), icon.height());
             context.restore();
 
-            context.strokeStyle = state.linecolor.toRGBA(opacity);
+            context.strokeStyle = state.linecolor.toRGBA();
             context.lineWidth   = state.linewidth;
-            context.fillStyle   = state.fillcolor.toRGBA(opacity * state.fillopacity);
+            context.fillStyle   = state.fillcolor.toRGBA(state.fillopacity);
 
             context.beginPath();
             context.moveTo(0, 0);

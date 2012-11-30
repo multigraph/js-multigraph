@@ -164,11 +164,11 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 
             context.save();
             // Draw icon background (with opacity)
-            context.fillStyle = "rgba(255, 255, 255, " + opacity + ")";
+            context.fillStyle = "rgba(255, 255, 255, 1)";
             context.fillRect(x, y, icon.width(), icon.height());
 
             if (settings.linewidth > 0) {
-                context.strokeStyle = settings.linecolor.toRGBA(opacity);
+                context.strokeStyle = settings.linecolor.toRGBA();
                 context.lineWidth   = settings.linewidth;
                 context.beginPath();
                 context.moveTo(x, y + icon.height()/2);
@@ -178,12 +178,12 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             }
             if (settings.pointsize > 0) {
                 if ((settings.pointshape === ns.PointlineRenderer.PLUS) || (settings.pointshape === ns.PointlineRenderer.X)) {
-                    context.strokeStyle = settings.pointcolor.toRGBA(opacity);
+                    context.strokeStyle = settings.pointcolor.toRGBA();
                     context.lineWidth   = settings.pointoutlinewidth;
                     context.beginPath();
                 } else {
-                    context.fillStyle   = settings.pointcolor.toRGBA(opacity * settings.pointopacity);
-                    context.strokeStyle = settings.pointoutlinecolor.toRGBA(opacity);
+                    context.fillStyle   = settings.pointcolor.toRGBA(settings.pointopacity);
+                    context.strokeStyle = settings.pointoutlinecolor.toRGBA();
                     context.lineWidth   = settings.pointoutlinewidth;
                 }
 

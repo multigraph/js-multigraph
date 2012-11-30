@@ -188,16 +188,16 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             context.transform(1, 0, 0, 1, x, y);
 
             // Draw icon background (with opacity)
-            context.fillStyle = "rgba(255, 255, 255, " + opacity + ")";
+            context.fillStyle = "rgba(255, 255, 255, 1)";
             context.fillRect(0, 0, icon.width(), icon.height());
 
             context.lineWidth = 1;
             context.fillStyle = rendererFillColor.toRGBA(opacity * rendererOpacity);
 
             if (settings.barpixelwidth < settings.hidelines) {
-                context.strokeStyle = rendererFillColor.toRGBA(opacity * rendererOpacity);
+                context.strokeStyle = rendererFillColor.toRGBA(rendererOpacity);
             } else {
-                context.strokeStyle = this.getOptionValue("linecolor", 0).toRGBA(opacity);
+                context.strokeStyle = this.getOptionValue("linecolor", 0).toRGBA();
             }
 
             // Adjust the width of the icons bars based upon the width and height of the icon Ranges: {20, 10, 0}

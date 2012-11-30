@@ -91,11 +91,11 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 path = "";
             
             // Draw icon background (with opacity)
-            iconBackgroundAttrs.stroke = "rgba(255, 255, 255, " + opacity + ")";
+            iconBackgroundAttrs.stroke = "rgba(255, 255, 255, 1)";
             if (icon.width() < 10 || icon.height() < 10) {
-                iconBackgroundAttrs.fill = settings.fillcolor.toRGBA(opacity);
+                iconBackgroundAttrs.fill = settings.fillcolor.toRGBA(settings.fillopacity);
             } else {
-                iconBackgroundAttrs.fill = "rgba(255, 255, 255, " + opacity + ")";
+                iconBackgroundAttrs.fill = "rgba(255, 255, 255, 1)";
             }
 
             graphicsContext.set.push(
@@ -125,9 +125,9 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             graphicsContext.set.push(
                 graphicsContext.paper.path(path)
                     .attr({
-                        "stroke"       : settings.linecolor.toRGBA(opacity),
+                        "stroke"       : settings.linecolor.toRGBA(settings.fillopacity),
                         "stroke-width" : settings.linewidth,
-                        "fill"         : settings.fillcolor.toRGBA(opacity * settings.fillopacity)
+                        "fill"         : settings.fillcolor.toRGBA(settings.fillopacity)
                     })
                     .transform("t" + x + "," + y)
             );

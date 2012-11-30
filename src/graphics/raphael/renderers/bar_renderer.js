@@ -192,20 +192,20 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             graphicsContext.set.push(
                 graphicsContext.paper.rect(x, y, icon.width(), icon.height())
                     .attr({                    
-                        "stroke" : "rgba(255, 255, 255, " + opacity + ")",
-                        "fill"   : "rgba(255, 255, 255, " + opacity + ")"
+                        "stroke" : "rgba(255, 255, 255, 1)",
+                        "fill"   : "rgba(255, 255, 255, 1)"
                     })
             );
 
             iconAttrs = {
                 "stroke-width" : 1,
-                "fill"         : rendererFillColor.toRGBA(opacity * rendererOpacity)
+                "fill"         : rendererFillColor.toRGBA(rendererOpacity)
             };
 
             if (settings.barpixelwidth < settings.hidelines) {
-                iconAttrs.stroke = rendererFillColor.toRGBA(opacity * rendererOpacity);
+                iconAttrs.stroke = rendererFillColor.toRGBA(rendererOpacity);
             } else {
-                iconAttrs.stroke = this.getOptionValue("linecolor", 0).toRGBA(opacity);
+                iconAttrs.stroke = this.getOptionValue("linecolor", 0).toRGBA(rendererOpacity);
             }
 
             // Adjust the width of the icons bars based upon the width and height of the icon Ranges: {20, 10, 0}

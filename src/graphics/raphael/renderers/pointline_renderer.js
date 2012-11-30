@@ -186,8 +186,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             graphicsContext.set.push(
                 graphicsContext.paper.rect(x, y, icon.width(), icon.height())
                     .attr({
-                        "stroke" : "rgba(255, 255, 255, " + opacity + ")",
-                        "fill"   : "rgba(255, 255, 255, " + opacity + ")"
+                        "stroke" : "rgba(255, 255, 255, 1)",
+                        "fill"   : "rgba(255, 255, 255, 1)"
                     })
             );
 
@@ -197,7 +197,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 graphicsContext.set.push(
                     graphicsContext.paper.path(path)
                         .attr({
-                            "stroke"       : settings.linecolor.toRGBA(opacity),
+                            "stroke"       : settings.linecolor.toRGBA(),
                             "stroke-width" : settings.linewidth
                         })
                     );
@@ -205,13 +205,13 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             if (settings.pointsize > 0) {
                 if ((settings.pointshape === ns.PointlineRenderer.PLUS) || (settings.pointshape === ns.PointlineRenderer.X)) {
                     pointAttrs = {
-                        "stroke"       : settings.pointcolor.toRGBA(opacity),
+                        "stroke"       : settings.pointcolor.toRGBA(),
                         "stroke-width" : settings.pointoutlinewidth
                     };
                 } else {
                     pointAttrs = {
-                        "fill"         : settings.pointcolor.toRGBA(opacity * settings.pointopacity),
-                        "stroke"       : settings.pointoutlinecolor.toRGBA(opacity),
+                        "fill"         : settings.pointcolor.toRGBA(settings.pointopacity),
+                        "stroke"       : settings.pointoutlinecolor.toRGBA(),
                         "stroke-width" : settings.pointoutlinewidth
                     };
                 }
