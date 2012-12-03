@@ -97,6 +97,16 @@ describe("Logger Graphics Tests", function () {
             expect(loggerOutput.contents).toEqual(savedOutput.contents);
         });
     });
+    xit("band_legend.xml should match with a width of '800' and a height of '500'", function () {
+        var loggerOutput = getLoggerOutput("./mugl/band_legend.xml", 800, 500);
+        var savedOutput = getFileContents("./graphics/logger/fixtures/band_legend-800x500.log");
+        waitsFor(function () {
+            return savedOutput.haveData && loggerOutput.haveData;
+        });
+        runs(function () {
+            expect(loggerOutput.contents).toEqual(savedOutput.contents);
+        });
+    });
     it("bar_graph.xml should match with a width of '800' and a height of '500'", function () {
         var loggerOutput = getLoggerOutput("./mugl/bar_graph.xml", 800, 500);
         var savedOutput = getFileContents("./graphics/logger/fixtures/bar_graph-800x500.log");
@@ -440,6 +450,16 @@ describe("Logger Graphics Tests", function () {
     xit("rangebar_graph.xml should match with a width of '800' and a height of '500'", function () {
         var loggerOutput = getLoggerOutput("./mugl/rangebar_graph.xml", 800, 500);
         var savedOutput = getFileContents("./graphics/logger/fixtures/rangebar_graph-800x500.log");
+        waitsFor(function () {
+            return savedOutput.haveData && loggerOutput.haveData;
+        });
+        runs(function () {
+            expect(loggerOutput.contents).toEqual(savedOutput.contents);
+        });
+    });
+    xit("rangebar_legend.xml should match with a width of '800' and a height of '500'", function () {
+        var loggerOutput = getLoggerOutput("./mugl/rangebar_legend.xml", 800, 500);
+        var savedOutput = getFileContents("./graphics/logger/fixtures/rangebar_legend-800x500.log");
         waitsFor(function () {
             return savedOutput.haveData && loggerOutput.haveData;
         });
