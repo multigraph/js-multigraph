@@ -112,8 +112,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             strokeRunLine(context, run, 2, state.line2color, state.linecolor, state.line2width, state.linewidth);
         });
 
-        ns.BandRenderer.respondsTo("renderLegendIcon", function (context, x, y, icon, opacity) {
-/*
+        ns.BandRenderer.respondsTo("renderLegendIcon", function (context, x, y, icon) {
             var state = this.state();
 
             context.save();
@@ -122,40 +121,31 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             context.save();
             // Draw icon background (with opacity)
             if (icon.width() < 10 || icon.height() < 10) {
-                context.fillStyle = state.fillcolor.toRGBA(opacity);
+                context.fillStyle = state.fillcolor.toRGBA();
             } else {
-                context.fillStyle = "rgba(255, 255, 255, " + opacity + ")";
+                context.fillStyle = "#FFFFFF";
             }
             context.fillRect(0, 0, icon.width(), icon.height());
             context.restore();
 
-            context.strokeStyle = state.linecolor.toRGBA(opacity);
-            context.lineWidth   = state.linewidth;
-            context.fillStyle   = state.fillcolor.toRGBA(opacity * state.fillopacity);
+            // Draw icon graphics
+            context.strokeStyle = (state.line2color !== null) ? state.line2color : state.linecolor;
+            context.lineWidth   = (state.line2width >= 0) ? state.line2width : state.linewidth;
+            context.fillStyle   = state.fillcolor.toRGBA(state.fillopacity);
 
             context.beginPath();
-            context.moveTo(0, 0);
-            // Draw the middle range icon or the large range icon if the width and height allow it
-            if (icon.width() > 10 || icon.height() > 10) {
-                // Draw a more complex icon if the icons width and height are large enough
-                if (icon.width() > 20 || icon.height() > 20) {
-                    context.lineTo(icon.width() / 6, icon.height() / 2);
-                    context.lineTo(icon.width() / 3, icon.height() / 4);
-                }
-                context.lineTo(icon.width() / 2, icon.height() - icon.height() / 4);
 
-                if (icon.width() > 20 || icon.height() > 20) {
-                    context.lineTo(icon.width() - icon.width() / 3, icon.height() / 4);
-                    context.lineTo(icon.width() - icon.width() / 6, icon.height() / 2);
-                }
-            }
-            context.lineTo(icon.width(), 0);
+            context.moveTo(0,            2*icon.height()/8);
+            context.lineTo(0,            6*icon.height()/8);
+            context.lineTo(icon.width(), 7*icon.height()/8);
+            context.lineTo(icon.width(), 3*icon.height()/8);
+            context.lineTo(0,            2*icon.height()/8);
+            
             context.stroke();
             context.fill();
             context.closePath();
 
             context.restore();
-*/
         });
 
     });

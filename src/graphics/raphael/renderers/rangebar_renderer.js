@@ -70,7 +70,66 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
         });
 
-        ns.RangeBarRenderer.respondsTo("renderLegendIcon", function (context, x, y, icon, opacity) {
+        ns.RangeBarRenderer.respondsTo("generateBar", function (x, y, width, height) {
+            var path = "M" + x + "," + y;
+            path    += "L" + x + "," + (y + height);
+            path    += "L" + (x + width) + "," + (y + height);
+            path    += "L" + (x + width) + "," + y;
+            path    += "Z";
+            return path;
+        });
+
+        ns.RangeBarRenderer.respondsTo("renderLegendIcon", function (graphicsContext, x, y, icon) {
+            var state = this.state(),
+                paper = graphicsContext.paper,
+                set = graphicsContext.set,
+                path = "";
+
+            // Draw icon background
+            set.push(
+                paper.rect(x, y, icon.width(), icon.height())
+                    .attr({
+                        "stroke" : "#FFFFFF",
+                        "fill"   : "#FFFFFF"
+                    })
+            );
+
+            // Draw icon graphics
+            var attrs = {
+                "fill"         : state.fillcolor.toRGBA(state.fillopacity),
+                "stroke-width" : state.linewidth
+            };
+
+            if (state.barpixelwidth < 10) {
+                attrs.stroke = state.fillcolor.toRGBA(state.fillopacity);
+            } else {
+                attrs.stroke = state.linecolor.getHexString("#");
+            }
+
+            // Adjust the width of the icons bars based upon the width and height of the icon Ranges: {20, 10, 0}
+            var barwidth;
+            if (icon.width() > 20 || icon.height() > 20) {
+                barwidth = icon.width() / 6;
+            } else if(icon.width() > 10 || icon.height() > 10) {
+                barwidth = icon.width() / 4;
+            } else {
+                barwidth = icon.width() / 4;
+            }
+
+            // If the icon is large enough draw extra bars
+            if (icon.width() > 20 && icon.height() > 20) {
+                path += this.generateBar(x + icon.width()/4 - barwidth/2,                y + icon.height()/8, barwidth, icon.height()/2);
+
+                path += this.generateBar(x + icon.width() - icon.width()/4 - barwidth/2, y + icon.height()/4, barwidth, icon.height()/3);
+            }
+            path += this.generateBar(x + icon.width()/2 - barwidth/2, y, barwidth, icon.height()-icon.height()/4);
+
+            set.push(
+                paper.path(path)
+                    .attr(attrs)
+            );
+
+            return this;
         });
 
     });

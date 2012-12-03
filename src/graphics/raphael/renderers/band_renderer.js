@@ -149,7 +149,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             state.line2Path = line2Path;
         });
 
-        ns.BandRenderer.respondsTo("renderLegendIcon", function (graphicsContext, x, y, icon, opacity) {
+        ns.BandRenderer.respondsTo("renderLegendIcon", function (graphicsContext, x, y, icon) {
             var state = this.state(),
                 backgroundColor,
                 linewidth,
@@ -158,33 +158,34 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
             // Draw icon background (with opacity)
             if (icon.width() < 10 || icon.height() < 10) {
-                backgroundColor = state.fillcolor.toRGBA(opacity);
+                backgroundColor = state.fillcolor.toRGBA();
             } else {
-                backgroundColor = "rgba(255, 255, 255, " + opacity + ")";
+                backgroundColor = "#FFFFFF";
             }
 
             graphicsContext.set.push(
                 graphicsContext.paper.rect(x, y, icon.width(), icon.height())
                     .attr({
-                        "stroke" : "rgba(255, 255, 255, " + opacity + ")",
                         "fill"   : backgroundColor
                     })
             );
             
+            // Draw icon graphics
+            linewidth = (state.line2width >= 0) ? state.line2width : state.linewidth;
+            linecolor = (state.line2color !== null) ? state.line2color : state.linecolor;
+
             path += "M" + 0 + "," + (2*icon.height()/8);
             path += "L" + 0 + "," + (6*icon.height()/8);
             path += "L" + icon.width() + "," + (7*icon.height()/8);
             path += "L" + icon.width() + "," + (3*icon.height()/8);
             path += "L" + 0 + "," + (2*icon.height()/8);
 
-            linewidth = (state.line2width >= 0) ? state.line2width : state.linewidth;
-            linecolor = (state.line2color !== null) ? state.line2color : state.linecolor;
             graphicsContext.set.push(
                 graphicsContext.paper.path(path)
                     .attr({
                         "stroke-width" : linewidth,
-                        "stroke"       : linecolor.toRGBA(opacity),
-                        "fill"         : state.fillcolor.toRGBA(opacity * state.fillopacity)
+                        "stroke"       : linecolor.toRGBA(),
+                        "fill"         : state.fillcolor.toRGBA(state.fillopacity)
                     })
                     .transform("t" + x + "," + y)
             );
