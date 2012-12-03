@@ -1,0 +1,42 @@
+<mugl>
+  <legend visible="true"/>
+  <background color="0xffffff"/>
+  <window margin="0" padding="5" border="5" bordercolor="0x000000"/>
+  <plotarea margintop="10" marginleft="38" marginbottom="35" marginright="35"/>
+  <horizontalaxis id="x"  min="0" max="10" length="1"/>
+  <verticalaxis   id="y"  min="0" max="10" length="1"/>
+  <plot>
+    <horizontalaxis ref="x">
+      <variable ref="x"/>
+    </horizontalaxis>
+    <verticalaxis ref="y">
+      <variable ref="y"/>
+      <variable ref="z"/>
+    </verticalaxis>
+    <renderer type="rangebar">
+      <option name="barwidth" value="0.8"/>
+      <option name="linecolor" value="0x000000"/>
+      <option name="linewidth" value="2"/>
+      <option name="fillcolor" value="0x0000ff"/>
+      <option name="fillopacity" value="0.5"/>
+      <option name="hidelines" value="4"/>
+    </renderer>
+  </plot>
+  <data>
+    <variables>
+      <variable column="0" id="x"/>
+      <variable column="1" id="y" missingvalue="-9000" missingop="le"/>
+      <variable column="2" id="z" missingvalue="-9000" missingop="le"/>
+    </variables>
+    <values>
+      0,2,4
+      1,4,5
+      3,5,7
+      4,-9000,-9000
+      5,4,6
+      6,4,5
+      7,6,4
+      8,6,4
+    </values>
+  </data>
+</mugl>
