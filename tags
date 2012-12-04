@@ -1,5 +1,34 @@
 #! /usr/bin/perl
 
+# Print a list of "non-bad release" tags from the git repo, along with the
+# date each one was created.
+#
+# A "release" tag is defined as a tag of the form "vN.M", where N and
+# M are nonnegative integers.
+#
+# A "bad release" tag is a release tag "vN.M" for which there is a
+# separate tag on the same commit named "vN.M-bad".
+#
+# Usage:
+#
+#     tags [-a]
+#
+#     If "-a" is present, show all tags, including even bad ones.
+
+$options = {};
+while ($arg = shift) {
+    if ($arg eq "-a") {
+        $options->{all} = 1;
+    } else {
+        die "unrecognized option: $arg\n";
+    }
+}
+
+my @releases = get_release_tags($options);
+foreach $release (@releases) {
+    printf("%10s    %s\n", $release->{tag}, $release->{date});
+}
+
 sub get_release_tags {
     #
     # This function returns a list giving the tag name and release date of
@@ -24,6 +53,8 @@ sub get_release_tags {
     #         printf("%10s    %s\n", $release->{tag}, $release->{date});
     #     }
     #
+    my $options = shift;
+    my $all = ($options && $options->{all});
     my $ts, $tags;
     @releases = ();
     open(GIT, "git log --tags --simplify-by-decoration --pretty=\"format:\%ai \%d\" | sort |");
@@ -35,9 +66,10 @@ sub get_release_tags {
                 $tags{$tag} = 1;
             }
             # run though all the tags in the %tags hash, looking for ones
-            # of the form vN.M, for which there isn't also one of the form vN.M-bad
+            # of the form vN.M, for which there isn't also one of the form vN.M-bad,
+            # unless $options->{all} was specified, in which we do include it
             foreach $tag (keys(%tags)) {
-                if ($tag =~ m|^v\d+\.\d+$| && !$tags{"${tag}-bad"}) {
+                if ($tag =~ m|^v\d+\.\d+$| && ($all || !$tags{"${tag}-bad"})) {
                     push(@releases, { 'tag' => $tag, 'date' => $ts });
                 }
             }
@@ -47,7 +79,3 @@ sub get_release_tags {
     return @releases;
 }
 
-my @releases = get_release_tags();
-foreach $release (@releases) {
-    printf("%10s    %s\n", $release->{tag}, $release->{date});
-}
