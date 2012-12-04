@@ -1,0 +1,45 @@
+#! /usr/bin/perl
+
+sub get_release_tags {
+    #
+    # This function returns a list giving the tag name and release date of
+    # every release in the repository, where by a "release", we mean a
+    # commit tagged with a tag of the form vN.M, where N and M are integers.
+    # 
+    # This function works by running a git command that generates output like
+    # the following, and scanning that output for tags of the form vN.M:
+    # 
+    # 2012-12-03 22:10:36 -0500  (HEAD, v1.3, origin/master, origin/HEAD, master)
+    # 2012-11-15 16:56:52 -0500  (v1.2)
+    # 2012-10-12 16:14:30 -0400  (v1.1)
+    # 2012-09-26 08:53:47 -0400  (v1.0)
+    # 2012-05-04 15:48:24 -0400 
+    #
+    # This function returns a list of hashrefs; each hash has the keys 'tag'
+    # and 'time'.  Example usage:
+    #
+    #     my @releases = get_release_tags();
+    #     foreach $release (@releases) {
+    #         printf("%10s    %s\n", $release->{tag}, $release->{time});
+    #     }
+    #
+    my $ts, $tags;
+    @releases = ();
+    open(GIT, "git log --tags --simplify-by-decoration --pretty=\"format:\%ai \%d\" | sort |");
+    while (chomp(my $line = <GIT>)) {
+        if ( ($ts, $tags) = ($line =~ m|^\s*([^\(]+)\s+\((.*)\)$|) ) {
+            foreach my $tag (split(/\s*,\s*/, $tags)) {
+                if ($tag =~ /^v\d+\.\d+$/) {
+                    push(@releases, { 'tag' => $tag, 'time' => $ts });
+                }
+            }
+        }
+    }
+    close(GIT);
+    return @releases;
+}
+
+my @releases = get_release_tags();
+foreach $release (@releases) {
+    printf("%10s    %s\n", $release->{tag}, $release->{time});
+}
