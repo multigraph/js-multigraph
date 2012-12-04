@@ -26,7 +26,11 @@ while ($arg = shift) {
 
 my @releases = get_release_tags($options);
 foreach $release (@releases) {
-    printf("%10s    %s\n", $release->{tag}, $release->{date});
+    printf("%5s %10s    %-30s\n",
+           $release->{bad} ? "(BAD)" : "",
+           $release->{tag},
+           $release->{date}
+        );
 }
 
 sub get_release_tags {
@@ -70,7 +74,7 @@ sub get_release_tags {
             # unless $options->{all} was specified, in which we do include it
             foreach $tag (keys(%tags)) {
                 if ($tag =~ m|^v\d+\.\d+$| && ($all || !$tags{"${tag}-bad"})) {
-                    push(@releases, { 'tag' => $tag, 'date' => $ts });
+                    push(@releases, { 'tag' => $tag, 'date' => $ts, 'bad' => $tags{"${tag}-bad"} });
                 }
             }
         }
