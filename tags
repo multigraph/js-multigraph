@@ -4,7 +4,8 @@ sub get_release_tags {
     #
     # This function returns a list giving the tag name and release date of
     # every release in the repository, where by a "release", we mean a
-    # commit tagged with a tag of the form vN.M, where N and M are integers.
+    # commit tagged with a tag of the form vN.M, where N and M are integers,
+    # and which is not also tagged with a tag of the form vN.M-bad.
     # 
     # This function works by running a git command that generates output like
     # the following, and scanning that output for tags of the form vN.M:
@@ -16,21 +17,28 @@ sub get_release_tags {
     # 2012-05-04 15:48:24 -0400 
     #
     # This function returns a list of hashrefs; each hash has the keys 'tag'
-    # and 'time'.  Example usage:
+    # and 'date'.  Example usage:
     #
     #     my @releases = get_release_tags();
     #     foreach $release (@releases) {
-    #         printf("%10s    %s\n", $release->{tag}, $release->{time});
+    #         printf("%10s    %s\n", $release->{tag}, $release->{date});
     #     }
     #
     my $ts, $tags;
     @releases = ();
     open(GIT, "git log --tags --simplify-by-decoration --pretty=\"format:\%ai \%d\" | sort |");
     while (chomp(my $line = <GIT>)) {
-        if ( ($ts, $tags) = ($line =~ m|^\s*([^\(]+)\s+\((.*)\)$|) ) {
-            foreach my $tag (split(/\s*,\s*/, $tags)) {
-                if ($tag =~ /^v\d+\.\d+$/) {
-                    push(@releases, { 'tag' => $tag, 'time' => $ts });
+        if ( ($ts, $tagstring) = ($line =~ m|^\s*([^\(]+)\s+\((.*)\)$|) ) {
+            # store all the tags for this commit in the %tags hash
+            my %tags = ();
+            foreach my $tag (split(/\s*,\s*/, $tagstring)) {
+                $tags{$tag} = 1;
+            }
+            # run though all the tags in the %tags hash, looking for ones
+            # of the form vN.M, for which there isn't also one of the form vN.M-bad
+            foreach $tag (keys(%tags)) {
+                if ($tag =~ m|^v\d+\.\d+$| && !$tags{"${tag}-bad"}) {
+                    push(@releases, { 'tag' => $tag, 'date' => $ts });
                 }
             }
         }
@@ -41,5 +49,5 @@ sub get_release_tags {
 
 my @releases = get_release_tags();
 foreach $release (@releases) {
-    printf("%10s    %s\n", $release->{tag}, $release->{time});
+    printf("%10s    %s\n", $release->{tag}, $release->{date});
 }
