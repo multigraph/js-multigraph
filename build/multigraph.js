@@ -1399,16 +1399,17 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
                 "bordercolor": "0xeeeeee"
             },
             "title": {
-                "content": undefined,
-                "anchor": function () { return new window.multigraph.math.Point(0,1); },
-                "base": function () { return new window.multigraph.math.Point(0,1); },
-                "position": function () { return new window.multigraph.math.Point(0,0); },
-                "border": "0",
-//                "color": "0xffffff",
-//                "bordercolor": "0x000000",
-                "opacity": 1.0,
-                "padding": "0",
-                "cornerradius": undefined
+                "text"         : undefined,
+                "frame"        : "padding",
+                "border"       : 0,
+                "color"        : function () { return new window.multigraph.math.RGBColor.parse("0xffffff"); },
+                "bordercolor"  : function () { return new window.multigraph.math.RGBColor.parse("0x000000"); },
+                "opacity"      : 1.0,
+                "padding"      : 0,
+                "cornerradius" : 15,
+                "anchor"       : function () { return new window.multigraph.math.Point(0,1); },
+                "base"         : function () { return new window.multigraph.math.Point(0,1); },
+                "position"     : function () { return new window.multigraph.math.Point(0,0); }
             },
             "horizontalaxis": {
                 "title": {
@@ -5298,6 +5299,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 if (this.legend()) {
                     this.legend().initializeGeometry(this, graphicsContext);
                 }
+                if (this.title()) {
+                    this.title().initializeGeometry(graphicsContext);
+                }
             });
 
             /**
@@ -5413,41 +5417,183 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
+    /**
+     * @module multigraph
+     * @submodule core
+     */
+
     var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.title),
-        Title = new window.jermaine.Model( "GraphTitle", function () {
-            this.hasA("content").which.isA("string");
-            this.hasA("border").which.validatesWith(function (border) {
-                return typeof(border) === "string";
-            });
-            this.hasA("color").which.validatesWith(function (color) {
-                return color instanceof window.multigraph.math.RGBColor;
-            });
-            this.hasA("bordercolor").which.validatesWith(function (bordercolor) {
-                return bordercolor instanceof window.multigraph.math.RGBColor;
-            });
-            this.hasA("opacity").which.isA("number");
-            this.hasA("padding").which.validatesWith(function (padding) {
-                return typeof(padding) === "string";
-            });
-            this.hasA("cornerradius").which.validatesWith(function (cornerradius) {
-                return typeof(cornerradius) === "string";
-            });
-            this.hasA("anchor").which.validatesWith(function (anchor) {
-                return anchor instanceof window.multigraph.math.Point;
-            });
-            this.hasA("base").which.validatesWith(function (base) {
-                return base instanceof window.multigraph.math.Point;
-            });
-            this.hasA("position").which.validatesWith(function (position) {
-                return position instanceof window.multigraph.math.Point;
-            });
+        Title;
 
-            window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.title, attributes);
+    /**
+     * Title is a Jermiane model that controls Graph Titles.
+     *
+     * @class Title
+     * @for Title
+     * @constructor
+     * @param {Text} text
+     * @param {Graph} graph
+     * @author jrfrimme
+     */
+    Title = new window.jermaine.Model( "GraphTitle", function () {
+        /**
+         * Pointer to the Title's parent Graph Jermaine model.
+         *
+         * @property graph
+         * @type {Graph}
+         * @author jrfrimme
+         */
+        this.hasA("graph").which.validatesWith(function (graph) {
+            return graph instanceof window.multigraph.core.Graph;
+        });
+        /**
+         * The text of the title.
+         *
+         * @property text
+         * @type {Text}
+         * @author jrfrimme
+         */
+        this.hasA("text").which.validatesWith(function (text) {
+            return text instanceof window.multigraph.core.Text;
+        });
+        /**
+         * Determines if the Title is positioned relative to the Graphs `plot` or `padding`
+         * box.
+         *
+         * @property frame
+         * @type {String}
+         * @author jrfrimme
+         */
+        this.hasA("frame").which.isA("string");
+        /**
+         * The width of the border to be drawn around the title in pixel; use a value of `0`
+         * to not draw a border.
+         *
+         * @property border
+         * @type {Integer}
+         * @author jrfrimme
+         */
+        this.hasA("border").which.isAn("integer");
+        /**
+         * Background color for the Title's region.
+         *
+         * @property color
+         * @type {RGBColor}
+         * @author jrfrimme
+         */
+        this.hasA("color").which.validatesWith(function (color) {
+            return color instanceof window.multigraph.math.RGBColor;
+        });
+        /**
+         * Color for the Title's border.
+         *
+         * @property bordercolor
+         * @type {RGBColor}
+         * @author jrfrimme
+         */
+        this.hasA("bordercolor").which.validatesWith(function (bordercolor) {
+            return bordercolor instanceof window.multigraph.math.RGBColor;
+        });
+        /**
+         * Opacity of the Title's region.
+         *
+         * @property opacity
+         * @type {Number}
+         * @author jrfrimme
+         */
+        this.hasA("opacity").which.isA("number");
+        /**
+         * The width of the padding between the Title's text and its border in pixels; use a
+         * value of `0` to not draw the padding.
+         *
+         * @property padding
+         * @type {Integer}
+         * @author jrfrimme
+         */
+        this.hasA("padding").which.isAn("integer");
+        /**
+         * Determines whether the corners of the title appear rounded. If cornerradius is 0,
+         * which is the default, the corners are drawn square. If cornerradius > 0, then the
+         * corners are rounded off using circles whose radius is cornerradius pixels.
+         *
+         * @property cornerradius
+         * @deprecated
+         * @type {Integer}
+         * @author jrfrimme
+         */
+        this.hasA("cornerradius").which.isAn("integer");
+        /**
+         * A coordinate pair which gives the relative location of the Title's anchor point.
+         *
+         * @property anchor
+         * @type {Point}
+         * @author jrfrimme
+         */
+        this.hasA("anchor").which.validatesWith(function (anchor) {
+            return anchor instanceof window.multigraph.math.Point;
+        });
+        /**
+         * A coordinate pair which gives the location of the Title's base point, relative to
+         * its Graph's plot or padding box - determined by the `frame` attribute.
+         *
+         * @property base
+         * @type {Point}
+         * @author jrfrimme
+         */
+        this.hasA("base").which.validatesWith(function (base) {
+            return base instanceof window.multigraph.math.Point;
+        });
+        /**
+         * A coordinate pair of pixel offsets for the base point.
+         *
+         * @property position
+         * @type {Point}
+         * @author jrfrimme
+         */
+        this.hasA("position").which.validatesWith(function (position) {
+            return position instanceof window.multigraph.math.Point;
+        });
+        /**
+         * The font-size of the title. Currently is a constant.
+         *
+         * @property font-size
+         * @type {String}
+         * @author jrfrimme
+         */
+        this.hasA("fontSize").which.isA("string").and.defaultsTo("18px");
 
+        /**
+         * Determines the geometry of the Title's text.
+         *
+         * @method initializeGeometry
+         * @chainable
+         * @param {Object} graphicsContext
+         * @author jrfrimme
+         */
+        this.respondsTo("initializeGeometry", function (graphicsContext) {
+            graphicsContext.fontSize = this.fontSize();
+            this.text().initializeGeometry(graphicsContext);
+            return this;
         });
 
+        /**
+         * Renders the Graph Title. Overridden by implementations in graphics drivers.
+         *
+         * @method render
+         * @private
+         * @author jrfrimme
+         */
+        this.respondsTo("render", function () {});
+
+        this.isBuiltWith("text", "graph");
+
+        window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.title, attributes);
+
+    });
+
     ns.Title = Title;
+
 });
 window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
@@ -7312,6 +7458,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                          "model" : PointlineRenderer});
     ns.Renderer.addType({"type"  : ns.Renderer.Type.parse("line"),
                          "model" : PointlineRenderer});
+    ns.Renderer.addType({"type"  : ns.Renderer.Type.parse("point"),
+                         "model" : PointlineRenderer});
 
     ns.PointlineRenderer = PointlineRenderer;
 });
@@ -8835,7 +8983,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     graph.plotarea( ns.core.Plotarea[parse](xml.find(">plotarea")) );
                 }
                 if (xml.find(">title").length > 0) {
-                    graph.title( ns.core.Title[parse](xml.find(">title")) );
+                    graph.title( ns.core.Title[parse](xml.find(">title"), graph) );
                 }
                 window.multigraph.jQuery.each(xml.find(">horizontalaxis"), function (i,e) {
                     graph.axes().add( ns.core.Axis[parse](window.multigraph.jQuery(e), ns.core.Axis.HORIZONTAL, messageHandler) );
@@ -8873,18 +9021,35 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
 
     ns.mixin.add(function (ns, parse) {
         
-        ns.core.Title[parse] = function (xml) {
-            var title = new ns.core.Title();
+        ns.core.Title[parse] = function (xml, graph) {
+            var title;
             if (xml) {
-                title.content(xml.text());
-                title.border(xml.attr("border"));
-                title.color(window.multigraph.math.RGBColor.parse(xml.attr("color")));
-                title.bordercolor(window.multigraph.math.RGBColor.parse(xml.attr("bordercolor")));
+                if (xml.text() !== "") {
+                    title = new ns.core.Title(new window.multigraph.core.Text(xml.text()), graph);
+                } else {
+                    return undefined;
+                }                
+                if (xml.attr("frame") !== undefined) {
+                    title.frame(xml.attr("frame").toLowerCase());
+                }
+                if (xml.attr("border") !== undefined) {
+                    title.border(parseInt(xml.attr("border"), 10));
+                }
+                if (xml.attr("color") !== undefined) {
+                    title.color(window.multigraph.math.RGBColor.parse(xml.attr("color")));
+                }
+                if (xml.attr("bordercolor") !== undefined) {
+                    title.bordercolor(window.multigraph.math.RGBColor.parse(xml.attr("bordercolor")));
+                }
                 if (xml.attr("opacity") !== undefined) {
                     title.opacity(parseFloat(xml.attr("opacity")));
                 }
-                title.padding(xml.attr("padding"));
-                title.cornerradius(xml.attr("cornerradius"));
+                if (xml.attr("padding") !== undefined) {
+                    title.padding(parseInt(xml.attr("padding"), 10));
+                }
+                if (xml.attr("cornerradius") !== undefined) {
+                    title.cornerradius(parseInt(xml.attr("cornerradius"), 10));
+                }
                 if (xml.attr("anchor") !== undefined) {
                     title.anchor(window.multigraph.math.Point.parse(xml.attr("anchor")));
                 }
@@ -16710,6 +16875,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 axesSet = paper.set(),
                 plotsSet = paper.set(),
                 legendSet = paper.set(),
+                titleSet = paper.set(),
                 i;
 
             this.x0( this.window().margin().left() + windowBorder + this.window().padding().left() + this.plotarea().margin().left() + this.plotarea().border() );
@@ -16738,12 +16904,16 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             this.legend().render({ "paper" : paper,
                                    "set"   : legendSet});
 
-            this.transformSets(height, this.x0(), this.y0(), backgroundSet, axesSet, plotsSet, legendSet);
+            if (this.title()) {
+                this.title().render(paper, titleSet);
+            }
+
+            this.transformSets(height, this.x0(), this.y0(), backgroundSet, axesSet, plotsSet, legendSet, titleSet);
             this.fixLayers(backgroundSet, axesSet, plotsSet);
 
         });
 
-        Graph.respondsTo("transformSets", function (height, x0, y0, backgroundSet, axesSet, plotsSet, legendSet) {
+        Graph.respondsTo("transformSets", function (height, x0, y0, backgroundSet, axesSet, plotsSet, legendSet, titleSet) {
             var i;
             for (i = 0; i < backgroundSet.length; i++) {
                 if (backgroundSet[i].type !== "image") {
@@ -16753,6 +16923,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             axesSet.transform(this.transformString() + "...");
             plotsSet.transform(this.transformString());
             legendSet.transform(this.transformString() + "...");
+            titleSet.transform(this.transformString() + "...");
 
             plotsSet.attr("clip-rect", "1,1," + (this.plotBox().width()-2) + "," + (this.plotBox().height()-2));
         });
@@ -16769,11 +16940,101 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 window.multigraph.util.namespace("window.multigraph.graphics.raphael", function (ns) {
     "use strict";
 
+    /**
+     * @module multigraph
+     * @submodule raphael
+     */
+
+    ns.mixin.add(function (ns) {
+
+        /**
+         * Renders the title using the Raphael driver.
+         *
+         * @method render
+         * @for Title
+         * @chainable
+         * @param {Paper} paper
+         * @param {Set} set
+         * @author jrfrimme
+         */
+        ns.Title.respondsTo("render", function (paper, set) {
+            var h = this.text().origHeight();
+            var w = this.text().origWidth();
+            var ax = (0.5 * w + this.padding() + this.border()) * (this.anchor().x() + 1);
+            var ay = (0.5 * h + this.padding() + this.border()) * (this.anchor().y() + 1);
+            var base;
+            var transformString = "";
+
+            if (this.frame() === "padding") {
+                base = new window.multigraph.math.Point(
+                    (this.base().x() + 1) * (this.graph().paddingBox().width() / 2) - this.graph().plotarea().margin().left(),
+                    (this.base().y() + 1) * (this.graph().paddingBox().height() / 2) - this.graph().plotarea().margin().bottom()
+                );
+            } else {
+                base = new window.multigraph.math.Point(
+                    (this.base().x() + 1) * (this.graph().plotBox().width() / 2),
+                    (this.base().y() + 1) * (this.graph().plotBox().height() / 2)
+                );
+            }
+
+            transformString += "t" + base.x() + "," + base.y();
+            transformString += "s1,-1";
+            transformString += "t" + this.position().x() + "," + (-this.position().y());
+            transformString += "t" + (-ax) + "," + ay;
+
+            // border
+            if (this.border() > 0) {
+                set.push(
+                    paper.rect(
+                        this.border()/2,
+                        this.border()/2,
+                        w + (2 * this.padding()) + this.border(),
+                        h + (2 * this.padding()) + this.border()
+                    )
+                        .transform(transformString)
+                        .attr({
+                            "stroke"       : this.bordercolor().toRGBA(),
+                            "stroke-width" : this.border()
+                        })
+                );
+            }
+
+            // background
+            set.push(
+                paper.rect(
+                    this.border(),
+                    this.border(),
+                    w + (2 * this.padding()),
+                    h + (2 * this.padding())
+                )
+                    .transform(transformString)
+                    .attr({
+                        "stroke" : this.color().toRGBA(this.opacity()),
+                        "fill"   : this.color().toRGBA(this.opacity())
+                    })
+            );
+
+            // text
+            set.push(
+                paper.text(this.border() + this.padding() + w/2, this.border() + this.padding() + h/2, this.text().string())
+                    .transform(transformString)
+                    .attr({"font-size" : this.fontSize()})
+            );
+
+            return this;
+        });
+
+    });
+
+});
+window.multigraph.util.namespace("window.multigraph.graphics.raphael", function (ns) {
+    "use strict";
+
     ns.mixin.add(function (ns) {
         ns.Icon.respondsTo("renderBorder", function (graphicsContext, x, y, opacity) {
             graphicsContext.set.push(
                 graphicsContext.paper.rect(x, y, this.width(), this.height())
-                    .attr({"stroke": "rgba(0, 0, 0, " + opacity + ")"})
+                    .attr({"stroke": "rgba(0, 0, 0, 1)"})
             );
         });
     });
@@ -16903,13 +17164,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             graphicsContext.set.push(
                 graphicsContext.paper.rect(0, 0, this.width(), this.height())
                     .attr({
-                        "stroke" : this.bordercolor().toRGBA(this.opacity()),
-                        "fill"   : this.bordercolor().toRGBA(this.opacity())
-                    }),
-
-                graphicsContext.paper.rect(this.border(), this.border(), this.width() - (2 * this.border()), this.height() - (2 * this.border()))
-                    .attr({
-                        "stroke" : this.color().toRGBA(this.opacity()),
+                        "stroke" : this.bordercolor().toRGBA(),
+                        "stroke-width" : this.border(),
                         "fill"   : this.color().toRGBA(this.opacity())
                     })
             );
@@ -16919,7 +17175,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             graphicsContext.set.push(
                 graphicsContext.paper.text(x, y, label.string())
                     .attr({
-                        "fill" : "rgba(0, 0, 0, " + this.opacity() + ")",
+                        "fill" : "rgba(0, 0, 0, 1)",
                         "text-anchor" : "start"
                     })
                     .transform("t0," + (this.maxLabelHeight()/2) + "s1,-1")
@@ -17254,7 +17510,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             state.line2Path = line2Path;
         });
 
-        ns.BandRenderer.respondsTo("renderLegendIcon", function (graphicsContext, x, y, icon, opacity) {
+        ns.BandRenderer.respondsTo("renderLegendIcon", function (graphicsContext, x, y, icon) {
             var state = this.state(),
                 backgroundColor,
                 linewidth,
@@ -17263,33 +17519,34 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
             // Draw icon background (with opacity)
             if (icon.width() < 10 || icon.height() < 10) {
-                backgroundColor = state.fillcolor.toRGBA(opacity);
+                backgroundColor = state.fillcolor.toRGBA();
             } else {
-                backgroundColor = "rgba(255, 255, 255, " + opacity + ")";
+                backgroundColor = "#FFFFFF";
             }
 
             graphicsContext.set.push(
                 graphicsContext.paper.rect(x, y, icon.width(), icon.height())
                     .attr({
-                        "stroke" : "rgba(255, 255, 255, " + opacity + ")",
                         "fill"   : backgroundColor
                     })
             );
             
+            // Draw icon graphics
+            linewidth = (state.line2width >= 0) ? state.line2width : state.linewidth;
+            linecolor = (state.line2color !== null) ? state.line2color : state.linecolor;
+
             path += "M" + 0 + "," + (2*icon.height()/8);
             path += "L" + 0 + "," + (6*icon.height()/8);
             path += "L" + icon.width() + "," + (7*icon.height()/8);
             path += "L" + icon.width() + "," + (3*icon.height()/8);
             path += "L" + 0 + "," + (2*icon.height()/8);
 
-            linewidth = (state.line2width >= 0) ? state.line2width : state.linewidth;
-            linecolor = (state.line2color !== null) ? state.line2color : state.linecolor;
             graphicsContext.set.push(
                 graphicsContext.paper.path(path)
                     .attr({
                         "stroke-width" : linewidth,
-                        "stroke"       : linecolor.toRGBA(opacity),
-                        "fill"         : state.fillcolor.toRGBA(opacity * state.fillopacity)
+                        "stroke"       : linecolor.toRGBA(),
+                        "fill"         : state.fillcolor.toRGBA(state.fillopacity)
                     })
                     .transform("t" + x + "," + y)
             );
@@ -17493,20 +17750,20 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             graphicsContext.set.push(
                 graphicsContext.paper.rect(x, y, icon.width(), icon.height())
                     .attr({                    
-                        "stroke" : "rgba(255, 255, 255, " + opacity + ")",
-                        "fill"   : "rgba(255, 255, 255, " + opacity + ")"
+                        "stroke" : "rgba(255, 255, 255, 1)",
+                        "fill"   : "rgba(255, 255, 255, 1)"
                     })
             );
 
             iconAttrs = {
                 "stroke-width" : 1,
-                "fill"         : rendererFillColor.toRGBA(opacity * rendererOpacity)
+                "fill"         : rendererFillColor.toRGBA(rendererOpacity)
             };
 
             if (settings.barpixelwidth < settings.hidelines) {
-                iconAttrs.stroke = rendererFillColor.toRGBA(opacity * rendererOpacity);
+                iconAttrs.stroke = rendererFillColor.toRGBA(rendererOpacity);
             } else {
-                iconAttrs.stroke = this.getOptionValue("linecolor", 0).toRGBA(opacity);
+                iconAttrs.stroke = this.getOptionValue("linecolor", 0).toRGBA(rendererOpacity);
             }
 
             // Adjust the width of the icons bars based upon the width and height of the icon Ranges: {20, 10, 0}
@@ -17629,11 +17886,11 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 path = "";
             
             // Draw icon background (with opacity)
-            iconBackgroundAttrs.stroke = "rgba(255, 255, 255, " + opacity + ")";
+            iconBackgroundAttrs.stroke = "rgba(255, 255, 255, 1)";
             if (icon.width() < 10 || icon.height() < 10) {
-                iconBackgroundAttrs.fill = settings.fillcolor.toRGBA(opacity);
+                iconBackgroundAttrs.fill = settings.fillcolor.toRGBA(settings.fillopacity);
             } else {
-                iconBackgroundAttrs.fill = "rgba(255, 255, 255, " + opacity + ")";
+                iconBackgroundAttrs.fill = "rgba(255, 255, 255, 1)";
             }
 
             graphicsContext.set.push(
@@ -17663,9 +17920,9 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             graphicsContext.set.push(
                 graphicsContext.paper.path(path)
                     .attr({
-                        "stroke"       : settings.linecolor.toRGBA(opacity),
+                        "stroke"       : settings.linecolor.toRGBA(settings.fillopacity),
                         "stroke-width" : settings.linewidth,
-                        "fill"         : settings.fillcolor.toRGBA(opacity * settings.fillopacity)
+                        "fill"         : settings.fillcolor.toRGBA(settings.fillopacity)
                     })
                     .transform("t" + x + "," + y)
             );
@@ -17698,6 +17955,16 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 "linecolor"          : this.getOptionValue("linecolor"),
                 "linewidth"          : this.getOptionValue("linewidth")
             };
+
+            // turns off points for line renderers
+            if (this.type() === ns.Renderer.LINE) {
+                settings.pointsize = 0;
+            }
+            // turns off lines for point renderers
+            if (this.type() === ns.Renderer.POINT) {
+                settings.linewidth = 0;
+            }
+
             this.settings(settings);
         });
 
@@ -17852,8 +18119,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             graphicsContext.set.push(
                 graphicsContext.paper.rect(x, y, icon.width(), icon.height())
                     .attr({
-                        "stroke" : "rgba(255, 255, 255, " + opacity + ")",
-                        "fill"   : "rgba(255, 255, 255, " + opacity + ")"
+                        "stroke" : "rgba(255, 255, 255, 1)",
+                        "fill"   : "rgba(255, 255, 255, 1)"
                     })
             );
 
@@ -17863,7 +18130,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 graphicsContext.set.push(
                     graphicsContext.paper.path(path)
                         .attr({
-                            "stroke"       : settings.linecolor.toRGBA(opacity),
+                            "stroke"       : settings.linecolor.toRGBA(),
                             "stroke-width" : settings.linewidth
                         })
                     );
@@ -17871,13 +18138,13 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             if (settings.pointsize > 0) {
                 if ((settings.pointshape === ns.PointlineRenderer.PLUS) || (settings.pointshape === ns.PointlineRenderer.X)) {
                     pointAttrs = {
-                        "stroke"       : settings.pointcolor.toRGBA(opacity),
+                        "stroke"       : settings.pointcolor.toRGBA(),
                         "stroke-width" : settings.pointoutlinewidth
                     };
                 } else {
                     pointAttrs = {
-                        "fill"         : settings.pointcolor.toRGBA(opacity * settings.pointopacity),
-                        "stroke"       : settings.pointoutlinecolor.toRGBA(opacity),
+                        "fill"         : settings.pointcolor.toRGBA(settings.pointopacity),
+                        "stroke"       : settings.pointoutlinecolor.toRGBA(),
                         "stroke-width" : settings.pointoutlinewidth
                     };
                 }
@@ -17964,7 +18231,66 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
         });
 
-        ns.RangeBarRenderer.respondsTo("renderLegendIcon", function (context, x, y, icon, opacity) {
+        ns.RangeBarRenderer.respondsTo("generateBar", function (x, y, width, height) {
+            var path = "M" + x + "," + y;
+            path    += "L" + x + "," + (y + height);
+            path    += "L" + (x + width) + "," + (y + height);
+            path    += "L" + (x + width) + "," + y;
+            path    += "Z";
+            return path;
+        });
+
+        ns.RangeBarRenderer.respondsTo("renderLegendIcon", function (graphicsContext, x, y, icon) {
+            var state = this.state(),
+                paper = graphicsContext.paper,
+                set = graphicsContext.set,
+                path = "";
+
+            // Draw icon background
+            set.push(
+                paper.rect(x, y, icon.width(), icon.height())
+                    .attr({
+                        "stroke" : "#FFFFFF",
+                        "fill"   : "#FFFFFF"
+                    })
+            );
+
+            // Draw icon graphics
+            var attrs = {
+                "fill"         : state.fillcolor.toRGBA(state.fillopacity),
+                "stroke-width" : state.linewidth
+            };
+
+            if (state.barpixelwidth < 10) {
+                attrs.stroke = state.fillcolor.toRGBA(state.fillopacity);
+            } else {
+                attrs.stroke = state.linecolor.getHexString("#");
+            }
+
+            // Adjust the width of the icons bars based upon the width and height of the icon Ranges: {20, 10, 0}
+            var barwidth;
+            if (icon.width() > 20 || icon.height() > 20) {
+                barwidth = icon.width() / 6;
+            } else if(icon.width() > 10 || icon.height() > 10) {
+                barwidth = icon.width() / 4;
+            } else {
+                barwidth = icon.width() / 4;
+            }
+
+            // If the icon is large enough draw extra bars
+            if (icon.width() > 20 && icon.height() > 20) {
+                path += this.generateBar(x + icon.width()/4 - barwidth/2,                y + icon.height()/8, barwidth, icon.height()/2);
+
+                path += this.generateBar(x + icon.width() - icon.width()/4 - barwidth/2, y + icon.height()/4, barwidth, icon.height()/3);
+            }
+            path += this.generateBar(x + icon.width()/2 - barwidth/2, y, barwidth, icon.height()-icon.height()/4);
+
+            set.push(
+                paper.path(path)
+                    .attr(attrs)
+            );
+
+            return this;
         });
 
     });
@@ -17991,6 +18317,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
          * @param {Object} graphicsContext
          *   @param {TextElem} graphicsContext.elem
          *   @param {Float} graphicsContext.angle
+         *   @param {String} graphicsContext.fontSize
          */
         Text.respondsTo("initializeGeometry", function (graphicsContext) {
             var origWidth,
@@ -18000,6 +18327,11 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
             graphicsContext.elem.transform("");
 
+            var defaultFontSize;
+            if (graphicsContext.fontSize !== undefined) {
+                defaultFontSize = graphicsContext.elem.attr("font-size");
+                graphicsContext.elem.attr("font-size", graphicsContext.fontSize);
+            }
             origWidth  = this.measureStringWidth(graphicsContext.elem);
             origHeight = this.measureStringHeight(graphicsContext.elem);
 
@@ -18010,6 +18342,10 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             } else {
                 rotatedWidth  = origWidth;
                 rotatedHeight = origHeight;
+            }
+
+            if (graphicsContext.fontSize !== undefined) {
+                graphicsContext.elem.attr("font-size", defaultFontSize);
             }
 
             this.origWidth(origWidth);
@@ -18300,6 +18636,91 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 
             this.legend().render(context);
 
+            if (this.title()) {
+                this.title().render(context);
+            }
+        });
+
+    });
+
+});
+window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (ns) {
+    "use strict";
+
+    /**
+     * @module multigraph
+     * @submodule canvas
+     */
+
+    ns.mixin.add(function (ns) {
+
+        /**
+         * Renders the title using the Canvas driver.
+         *
+         * @method render
+         * @for Title
+         * @chainable
+         * @param {HTMLCanvasObject} context
+         * @author jrfrimme
+         */
+        ns.Title.respondsTo("render", function (context) {
+            var h = this.text().origHeight();
+            var w = this.text().origWidth();
+            var ax = (0.5 * w + this.padding() + this.border()) * (this.anchor().x() + 1);
+            var ay = (0.5 * h + this.padding() + this.border()) * (this.anchor().y() + 1);
+            var base;
+
+            if (this.frame() === "padding") {
+                base = new window.multigraph.math.Point(
+                    (this.base().x() + 1) * (this.graph().paddingBox().width() / 2) - this.graph().plotarea().margin().left(),
+                    (this.base().y() + 1) * (this.graph().paddingBox().height() / 2) - this.graph().plotarea().margin().bottom()
+                );
+            } else {
+                base = new window.multigraph.math.Point(
+                    (this.base().x() + 1) * (this.graph().plotBox().width() / 2),
+                    (this.base().y() + 1) * (this.graph().plotBox().height() / 2)
+                );
+            }
+
+            context.save();
+            context.fillStyle = "rgba(0, 0, 0, 1)";
+            context.transform(1, 0, 0, -1, 0, 2 * base.y());
+            context.transform(1, 0, 0, 1, base.x(), base.y());
+            context.transform(1, 0, 0, 1, this.position().x(), -this.position().y());
+            context.transform(1, 0, 0, 1, -ax, ay);
+
+            // border
+            if (this.border() > 0) {
+                context.save();
+                context.transform(1, 0, 0, -1, 0, 0);
+                context.strokeStyle = this.bordercolor().toRGBA();
+                context.lineWidth = this.border();
+                context.strokeRect(
+                    this.border() / 2,
+                    this.border() / 2,
+                    w + (2 * this.padding()) + this.border(),
+                    h + (2 * this.padding()) + this.border()
+                );
+                context.restore();
+            }
+
+            // background
+            context.save();
+            context.transform(1, 0, 0, -1, 0, 0);
+            context.strokeStyle = this.color().toRGBA(this.opacity());
+            context.fillStyle = this.color().toRGBA(this.opacity());
+            context.fillRect(
+                this.border(),
+                this.border(),
+                w + (2 * this.padding()),
+                h + (2 * this.padding())
+            );
+            context.restore();
+
+            // text
+            context.font = this.fontSize() + " sans-serif";
+            context.fillText(this.text().string(), this.border() + this.padding(), -(this.border() + this.padding()));
+            context.restore();
         });
 
     });
@@ -18311,7 +18732,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
     ns.mixin.add(function (ns) {
         ns.Icon.respondsTo("renderBorder", function (context, x, y, opacity) {
             context.save();
-            context.strokeStyle = "rgba(0, 0, 0, " + opacity + ")";
+            context.strokeStyle = "rgba(0, 0, 0, 1)";
             context.strokeRect(x, y, this.width(), this.height());
             context.restore();
         });
@@ -18507,8 +18928,10 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 
         ns.Legend.respondsTo("renderLegend", function (context) {
             context.save();
-            context.fillStyle = this.bordercolor().toRGBA(this.opacity());
-            context.fillRect(0, 0, this.width(), this.height());
+            if (this.border() > 0) {
+                context.strokeStyle = this.bordercolor().toRGBA();
+                context.strokeRect(this.border()/2, this.border()/2, this.width() - this.border()/2, this.height() - this.border()/2);
+            }
 
             context.fillStyle = this.color().toRGBA(this.opacity());
             context.fillRect(this.border(), this.border(), this.width() - (2 * this.border()), this.height() - (2 * this.border()));
@@ -18517,7 +18940,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 
         ns.Legend.respondsTo("renderLabel", function (label, context, x, y) {
             context.save();
-            context.fillStyle = "rgba(0, 0, 0, " + this.opacity() + ")";
+            context.fillStyle = "rgba(0, 0, 0, 1)";
             context.transform(1, 0, 0, -1, 0, y + this.maxLabelHeight()/2 - label.origHeight()/2);
             context.fillText(label.string(), x, 0);
             context.restore();
@@ -18748,8 +19171,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             strokeRunLine(context, run, 2, state.line2color, state.linecolor, state.line2width, state.linewidth);
         });
 
-        ns.BandRenderer.respondsTo("renderLegendIcon", function (context, x, y, icon, opacity) {
-/*
+        ns.BandRenderer.respondsTo("renderLegendIcon", function (context, x, y, icon) {
             var state = this.state();
 
             context.save();
@@ -18758,40 +19180,31 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             context.save();
             // Draw icon background (with opacity)
             if (icon.width() < 10 || icon.height() < 10) {
-                context.fillStyle = state.fillcolor.toRGBA(opacity);
+                context.fillStyle = state.fillcolor.toRGBA();
             } else {
-                context.fillStyle = "rgba(255, 255, 255, " + opacity + ")";
+                context.fillStyle = "#FFFFFF";
             }
             context.fillRect(0, 0, icon.width(), icon.height());
             context.restore();
 
-            context.strokeStyle = state.linecolor.toRGBA(opacity);
-            context.lineWidth   = state.linewidth;
-            context.fillStyle   = state.fillcolor.toRGBA(opacity * state.fillopacity);
+            // Draw icon graphics
+            context.strokeStyle = (state.line2color !== null) ? state.line2color : state.linecolor;
+            context.lineWidth   = (state.line2width >= 0) ? state.line2width : state.linewidth;
+            context.fillStyle   = state.fillcolor.toRGBA(state.fillopacity);
 
             context.beginPath();
-            context.moveTo(0, 0);
-            // Draw the middle range icon or the large range icon if the width and height allow it
-            if (icon.width() > 10 || icon.height() > 10) {
-                // Draw a more complex icon if the icons width and height are large enough
-                if (icon.width() > 20 || icon.height() > 20) {
-                    context.lineTo(icon.width() / 6, icon.height() / 2);
-                    context.lineTo(icon.width() / 3, icon.height() / 4);
-                }
-                context.lineTo(icon.width() / 2, icon.height() - icon.height() / 4);
 
-                if (icon.width() > 20 || icon.height() > 20) {
-                    context.lineTo(icon.width() - icon.width() / 3, icon.height() / 4);
-                    context.lineTo(icon.width() - icon.width() / 6, icon.height() / 2);
-                }
-            }
-            context.lineTo(icon.width(), 0);
+            context.moveTo(0,            2*icon.height()/8);
+            context.lineTo(0,            6*icon.height()/8);
+            context.lineTo(icon.width(), 7*icon.height()/8);
+            context.lineTo(icon.width(), 3*icon.height()/8);
+            context.lineTo(0,            2*icon.height()/8);
+            
             context.stroke();
             context.fill();
             context.closePath();
 
             context.restore();
-*/
         });
 
     });
@@ -18987,16 +19400,16 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             context.transform(1, 0, 0, 1, x, y);
 
             // Draw icon background (with opacity)
-            context.fillStyle = "rgba(255, 255, 255, " + opacity + ")";
+            context.fillStyle = "rgba(255, 255, 255, 1)";
             context.fillRect(0, 0, icon.width(), icon.height());
 
             context.lineWidth = 1;
             context.fillStyle = rendererFillColor.toRGBA(opacity * rendererOpacity);
 
             if (settings.barpixelwidth < settings.hidelines) {
-                context.strokeStyle = rendererFillColor.toRGBA(opacity * rendererOpacity);
+                context.strokeStyle = rendererFillColor.toRGBA(rendererOpacity);
             } else {
-                context.strokeStyle = this.getOptionValue("linecolor", 0).toRGBA(opacity);
+                context.strokeStyle = this.getOptionValue("linecolor", 0).toRGBA();
             }
 
             // Adjust the width of the icons bars based upon the width and height of the icon Ranges: {20, 10, 0}
@@ -19181,16 +19594,16 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             context.save();
             // Draw icon background (with opacity)
             if (icon.width() < 10 || icon.height() < 10) {
-                context.fillStyle = state.fillcolor.toRGBA(opacity);
+                context.fillStyle = state.fillcolor.toRGBA();
             } else {
-                context.fillStyle = "rgba(255, 255, 255, " + opacity + ")";
+                context.fillStyle = "rgba(255, 255, 255, 1)";
             }
             context.fillRect(0, 0, icon.width(), icon.height());
             context.restore();
 
-            context.strokeStyle = state.linecolor.toRGBA(opacity);
+            context.strokeStyle = state.linecolor.toRGBA();
             context.lineWidth   = state.linewidth;
-            context.fillStyle   = state.fillcolor.toRGBA(opacity * state.fillopacity);
+            context.fillStyle   = state.fillcolor.toRGBA(state.fillopacity);
 
             context.beginPath();
             context.moveTo(0, 0);
@@ -19242,6 +19655,15 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                 "linecolor"          : this.getOptionValue("linecolor"),
                 "linewidth"          : this.getOptionValue("linewidth")
             };
+
+            // turns off points for line renderers
+            if (this.type() === ns.Renderer.LINE) {
+                settings.pointsize = 0;
+            }
+            // turns off lines for point renderers
+            if (this.type() === ns.Renderer.POINT) {
+                settings.linewidth = 0;
+            }
             this.settings(settings);
 
             context.strokeStyle = settings.linecolor.getHexString("#");
@@ -19377,11 +19799,11 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 
             context.save();
             // Draw icon background (with opacity)
-            context.fillStyle = "rgba(255, 255, 255, " + opacity + ")";
+            context.fillStyle = "rgba(255, 255, 255, 1)";
             context.fillRect(x, y, icon.width(), icon.height());
 
             if (settings.linewidth > 0) {
-                context.strokeStyle = settings.linecolor.toRGBA(opacity);
+                context.strokeStyle = settings.linecolor.toRGBA();
                 context.lineWidth   = settings.linewidth;
                 context.beginPath();
                 context.moveTo(x, y + icon.height()/2);
@@ -19391,12 +19813,12 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             }
             if (settings.pointsize > 0) {
                 if ((settings.pointshape === ns.PointlineRenderer.PLUS) || (settings.pointshape === ns.PointlineRenderer.X)) {
-                    context.strokeStyle = settings.pointcolor.toRGBA(opacity);
+                    context.strokeStyle = settings.pointcolor.toRGBA();
                     context.lineWidth   = settings.pointoutlinewidth;
                     context.beginPath();
                 } else {
-                    context.fillStyle   = settings.pointcolor.toRGBA(opacity * settings.pointopacity);
-                    context.strokeStyle = settings.pointoutlinecolor.toRGBA(opacity);
+                    context.fillStyle   = settings.pointcolor.toRGBA(settings.pointopacity);
+                    context.strokeStyle = settings.pointoutlinecolor.toRGBA();
                     context.lineWidth   = settings.pointoutlinewidth;
                 }
 
@@ -19485,7 +19907,51 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         ns.RangeBarRenderer.respondsTo("end", function () {
         });
 
-        ns.RangeBarRenderer.respondsTo("renderLegendIcon", function (context, x, y, icon, opacity) {
+        ns.RangeBarRenderer.respondsTo("renderLegendIcon", function (context, x, y, icon) {
+            var state = this.state();
+
+            context.save();
+            context.transform(1, 0, 0, 1, x, y);
+
+            // Draw icon background (with opacity)
+            context.save();
+            context.strokeStyle = "#FFFFFF";
+            context.fillStyle = "#FFFFFF";
+            context.fillRect(0, 0, icon.width(), icon.height());
+            context.restore();
+
+            // Draw icon graphics
+            context.fillStyle = state.fillcolor.toRGBA(state.fillopacity);
+            context.lineWidth = state.linewidth;
+            if (state.barpixelwidth < 10) {
+                context.strokeStyle = state.fillcolor.toRGBA(state.fillopacity);
+            } else {
+                context.strokeStyle = state.linecolor.getHexString("#");
+            }
+
+            // Adjust the width of the icons bars based upon the width and height of the icon Ranges: {20, 10, 0}
+            var barwidth;
+            if (icon.width() > 20 || icon.height() > 20) {
+                barwidth = icon.width() / 6;
+            } else if(icon.width() > 10 || icon.height() > 10) {
+                barwidth = icon.width() / 4;
+            } else {
+                barwidth = icon.width() / 4;
+            }
+
+            // If the icon is large enough draw extra bars
+            if (icon.width() > 20 && icon.height() > 20) {
+                context.fillRect(  icon.width()/4 - barwidth/2,                icon.height()/8, barwidth, icon.height()/2);
+                context.strokeRect(icon.width()/4 - barwidth/2,                icon.height()/8, barwidth, icon.height()/2);
+
+                context.fillRect(  icon.width() - icon.width()/4 - barwidth/2, icon.height()/4, barwidth, icon.height()/3);
+                context.strokeRect(icon.width() - icon.width()/4 - barwidth/2, icon.height()/4, barwidth, icon.height()/3);
+            }
+
+            context.fillRect(  icon.width()/2 - barwidth/2, 0, barwidth, icon.height()-icon.height()/4);
+            context.strokeRect(icon.width()/2 - barwidth/2, 0, barwidth, icon.height()-icon.height()/4);
+
+            context.restore();
         });
 
     });
@@ -19512,6 +19978,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
          * @param {Object} graphicsContext
          *   @param {Context} graphicsContext.context
          *   @param {Float} graphicsContext.angle
+         *   @param {String} graphicsContext.fontSize
          */
         Text.respondsTo("initializeGeometry", function (graphicsContext) {
             var origWidth,
@@ -19519,10 +19986,17 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                 rotatedWidth,
                 rotatedHeight;
 
+            graphicsContext.context.save();
+            if (graphicsContext.fontSize !== undefined) {
+                graphicsContext.context.font = graphicsContext.fontSize + " sans-serif";
+            }
+
             origWidth  = this.measureStringWidth(graphicsContext.context);
             origHeight = this.measureStringHeight(graphicsContext.context);
 
-            if (graphicsContext && graphicsContext.angle !== undefined) {
+            graphicsContext.context.restore();
+
+            if (graphicsContext.angle !== undefined) {
                 var angle = graphicsContext.angle/180 * Math.PI;
                 rotatedWidth = Math.abs(Math.cos(angle)) * origWidth + Math.abs(Math.sin(angle)) * origHeight;
                 rotatedHeight = Math.abs(Math.sin(angle)) * origWidth + Math.abs(Math.cos(angle)) * origHeight;
