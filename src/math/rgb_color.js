@@ -46,6 +46,28 @@ window.multigraph.util.namespace("window.multigraph.math", function (ns) {
 
     });
 
+
+    /*
+     * To remove support for deprecated color names, remove the following function,
+     * and find all references to it elsewhere in the source code, and remove them,
+     * along with accompanying code that generates warning message.  Also remove
+     * support for these 9 color names from RGBColor.parse below.
+     */
+    ns.RGBColor.colorNameIsDeprecated = function (colorName) {
+        switch (colorName) {
+            case "grey": return "0xeeeeee";
+            case "skyblue": return "0x87ceeb";
+            case "khaki": return "0xf0e68c";
+            case "orange": return "0xffa500";
+            case "salmon": return "0xfa8072";
+            case "olive": return "0x9acd32";
+            case "sienna": return "0xa0522d";
+            case "pink": return "0xffb5c5";
+            case "violet": return "0xee82ee";
+        }
+        return false;
+    };
+
     ns.RGBColor.parse = function (input) {
         var red,
             green,

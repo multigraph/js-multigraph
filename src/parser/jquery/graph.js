@@ -1,11 +1,64 @@
 window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
     "use strict";
 
+    var $ = window.multigraph.jQuery;
+
     ns.mixin.add(function (ns, parse) {
+
+        /*
+         * This function traverses an XML document looking for attributes values involving deprecated
+         * color names and issues a warning about each one found.  Remove this function when removing
+         * support for these names.  See src/math/rgb_color.js for a list of the deprecated colors.
+         */
+        var checkDeprecatedColorNames = function(xml, messageHandler) {
+            var $xml = $(xml),
+                attributes = $xml[0].attributes,
+                children = $xml.children(),
+                dep;
+            if (xml.nodeName === "option") {
+                if (/color/.test($xml.attr('name'))) {
+                    dep = ns.math.RGBColor.colorNameIsDeprecated($xml.attr('value'));
+                    if (dep) {
+                        messageHandler.warning('Warning: color string "' + $xml.attr('value') + '" is deprecated; use "' + dep + '" instead');
+                    }
+                }
+            }
+            if (attributes) {
+                $.each(attributes, function() {
+                    if (/color/.test(this.name)) {
+                    dep = ns.math.RGBColor.colorNameIsDeprecated(this.value);
+                        if (dep) {
+                            messageHandler.warning('Warning: color string "' + this.value + '" is deprecated; use "' + dep + '" instead');
+                        }
+                    }
+                });
+
+            }
+            if (children) {
+                children.each(function() {
+                    checkDeprecatedColorNames(this, messageHandler);
+                });
+            }
+        };
+        
 
         ns.core.Graph[parse] = function (xml, messageHandler) {
             var graph = new ns.core.Graph();
             if (xml) {
+
+                //
+                // Delete this try/catch block when removing support for deprecated color names.
+                //
+                try {
+                    checkDeprecatedColorNames(xml, messageHandler);
+                } catch (e) {
+                    // just ignore any errors here; the worst that will happen is that the user just
+                    // won't see the warnings
+                }
+                //
+                // end of block to delete when removing support for deprecated color names
+                //
+
                 // NOTE: 'OBJ.find(">TAG")' returns a list of JQuery objects corresponding to the immediate
                 // (1st generation) child nodes of OBJ corresponding to xml tag TAG
                 if (xml.find(">window").length > 0) {
