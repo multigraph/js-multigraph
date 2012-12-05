@@ -197,6 +197,18 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         }
         options.messageHandler = messageHandler;
 
+        if (options.muglString !== undefined) {
+            // delegate to the driver-specific create function
+            if (options.driver === "canvas") {
+                return Multigraph.createCanvasGraphFromString(options);
+            } else if (options.driver === "raphael") {
+                return Multigraph.createRaphaelGraphFromString(options);
+            } else {
+                options.messageHanlder.error(new Error("invalid graphic driver '" + options.driver + "' specified to Multigraph.createGraph"));
+                return undefined;
+            }
+        }
+
         // delegate to the driver-specific create function
         if (options.driver === "canvas") {
             return Multigraph.createCanvasGraph(options);
