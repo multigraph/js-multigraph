@@ -6636,6 +6636,18 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         }
         options.messageHandler = messageHandler;
 
+        if (options.muglString !== undefined) {
+            // delegate to the driver-specific create function
+            if (options.driver === "canvas") {
+                return Multigraph.createCanvasGraphFromString(options);
+            } else if (options.driver === "raphael") {
+                return Multigraph.createRaphaelGraphFromString(options);
+            } else {
+                options.messageHanlder.error(new Error("invalid graphic driver '" + options.driver + "' specified to Multigraph.createGraph"));
+                return undefined;
+            }
+        }
+
         // delegate to the driver-specific create function
         if (options.driver === "canvas") {
             return Multigraph.createCanvasGraph(options);
@@ -17277,18 +17289,33 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
     });
 
+    var applyMixins = function (options) {
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
+        ns.mixin.apply(window.multigraph.core);
+        window.multigraph.normalizer.mixin.apply(window.multigraph.core);
+        window.multigraph.events.jquery.draggable.mixin.apply(window.multigraph);
+        window.multigraph.events.jquery.mouse.mixin.apply(window.multigraph);
+        window.multigraph.events.jquery.touch.mixin.apply(window.multigraph);
+    };
+
+    var generateInitialGraph = function (mugl, options) {
+        var multigraph = window.multigraph.core.Multigraph.parseXML( window.multigraph.parser.jquery.stringToJQueryXMLObj(mugl), options.messageHandler );
+        multigraph.normalize();
+        multigraph.div(options.div);
+        window.multigraph.jQuery(options.div).css("cursor" , "pointer");
+        multigraph.init();
+        multigraph.registerCommonDataCallback(function () {
+            multigraph.redraw();
+        });
+        return multigraph;
+    };
+
     window.multigraph.core.Multigraph.createRaphaelGraph = function (options) {
         var muglPromise,
             deferred;
         
         try {
-            window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
-            ns.mixin.apply(window.multigraph.core);
-            window.multigraph.normalizer.mixin.apply(window.multigraph.core);
-            window.multigraph.events.jquery.draggable.mixin.apply(window.multigraph);
-            window.multigraph.events.jquery.mouse.mixin.apply(window.multigraph);
-            window.multigraph.events.jquery.touch.mixin.apply(window.multigraph);
-
+            applyMixins(options);
             muglPromise = window.multigraph.jQuery.ajax({
                 "url"      : options.mugl,
                 "dataType" : "text"
@@ -17301,20 +17328,29 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
         muglPromise.done(function (data) {
             try {
-                var multigraph = window.multigraph.core.Multigraph.parseXML( window.multigraph.parser.jquery.stringToJQueryXMLObj(data), options.messageHandler );
-                multigraph.normalize();
-                multigraph.div(options.div);
-                window.multigraph.jQuery(options.div).css('cursor' , 'pointer');
-                multigraph.init();
-                multigraph.registerCommonDataCallback(function () {
-                    multigraph.redraw();
-                });
+                var multigraph = generateInitialGraph(data, options);
                 deferred.resolve(multigraph);
             }
             catch (e) {
                 options.messageHandler.error(e);
             }
         });
+
+        return deferred.promise();
+
+    };
+
+    window.multigraph.core.Multigraph.createRaphaelGraphFromText = function (options) {
+        var deferred;
+        
+        try {
+            applyMixins(options);
+            deferred = window.multigraph.jQuery.Deferred();
+            var multigraph = generateInitialGraph(options.muglString, options);
+            deferred.resolve(multigraph);
+        } catch (e) {
+            options.messageHandler.error(e);
+        }
 
         return deferred.promise();
 
@@ -19009,19 +19045,35 @@ window.multigraph.jQuery(this.div()))[0]
 
     });
 
-//    window.multigraph.core.Multigraph.createCanvasGraph = function (div, muglurl, errorHandler) {
+    var applyMixins = function (options) {
+        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
+        ns.mixin.apply(window.multigraph.core);
+        window.multigraph.events.jquery.draggable.mixin.apply(window.multigraph, options.messageHandler.error);
+        window.multigraph.events.jquery.mouse.mixin.apply(window.multigraph, options.messageHandler.error);
+        window.multigraph.events.jquery.touch.mixin.apply(window.multigraph, options.messageHandler.error);
+        window.multigraph.normalizer.mixin.apply(window.multigraph.core);
+    };
+
+    var generateInitialGraph = function (mugl, options) {
+        var multigraph = window.multigraph.core.Multigraph.parseXML( window.multigraph.parser.jquery.stringToJQueryXMLObj(mugl), options.messageHandler );
+        multigraph.normalize();
+        multigraph.div(options.div);
+        window.multigraph.jQuery(options.div).css("cursor" , "pointer");
+        multigraph.init();
+        multigraph.registerMouseEvents(multigraph.canvas());
+        multigraph.registerTouchEvents(multigraph.canvas());
+        multigraph.registerCommonDataCallback(function (event) {
+            multigraph.redraw();
+        });
+        return multigraph;
+    };
+
     window.multigraph.core.Multigraph.createCanvasGraph = function (options) {
         var muglPromise,
             deferred;
         
         try {
-            window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
-            ns.mixin.apply(window.multigraph.core);
-            window.multigraph.events.jquery.draggable.mixin.apply(window.multigraph, options.messageHandler.error);
-            window.multigraph.events.jquery.mouse.mixin.apply(window.multigraph, options.messageHandler.error);
-            window.multigraph.events.jquery.touch.mixin.apply(window.multigraph, options.messageHandler.error);
-            window.multigraph.normalizer.mixin.apply(window.multigraph.core);
-
+            applyMixins(options);
             muglPromise = window.multigraph.jQuery.ajax({
                 "url"      : options.mugl,
                 "dataType" : "text"
@@ -19034,16 +19086,7 @@ window.multigraph.jQuery(this.div()))[0]
 
         muglPromise.done(function (data) {
             try {
-                var multigraph = window.multigraph.core.Multigraph.parseXML( window.multigraph.parser.jquery.stringToJQueryXMLObj(data), options.messageHandler );
-                multigraph.normalize();
-                multigraph.div(options.div);
-                window.multigraph.jQuery(options.div).css('cursor' , 'pointer');
-                multigraph.init();
-                multigraph.registerMouseEvents(multigraph.canvas());
-                multigraph.registerTouchEvents(multigraph.canvas());
-                multigraph.registerCommonDataCallback(function (event) {
-                    multigraph.redraw();
-                });
+                var multigraph = generateInitialGraph(data, options);
                 deferred.resolve(multigraph);
             } catch (e) {
                 options.messageHandler.error(e);
@@ -19054,7 +19097,21 @@ window.multigraph.jQuery(this.div()))[0]
 
     };
 
+    window.multigraph.core.Multigraph.createCanvasGraphFromText = function (options) {
+        var deferred;
+        
+        try {
+            applyMixins(options);
+            deferred = window.multigraph.jQuery.Deferred();
+            var multigraph = generateInitialGraph(options.muglString, options);
+            deferred.resolve(multigraph);
+        } catch (e) {
+            options.messageHandler.error(e);
+        }
 
+        return deferred.promise();
+
+    };
 
 });
 window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (ns) {
