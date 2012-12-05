@@ -140,7 +140,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
     };
 
-    window.multigraph.core.Multigraph.createRaphaelGraphFromText = function (options) {
+    window.multigraph.core.Multigraph.createRaphaelGraphFromString = function (options) {
         var deferred;
         
         try {
