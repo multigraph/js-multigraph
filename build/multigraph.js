@@ -17340,7 +17340,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
     };
 
-    window.multigraph.core.Multigraph.createRaphaelGraphFromText = function (options) {
+    window.multigraph.core.Multigraph.createRaphaelGraphFromString = function (options) {
         var deferred;
         
         try {
@@ -19097,7 +19097,7 @@ window.multigraph.jQuery(this.div()))[0]
 
     };
 
-    window.multigraph.core.Multigraph.createCanvasGraphFromText = function (options) {
+    window.multigraph.core.Multigraph.createCanvasGraphFromString = function (options) {
         var deferred;
         
         try {
