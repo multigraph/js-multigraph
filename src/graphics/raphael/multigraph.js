@@ -81,10 +81,14 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         });
 
         ns.Multigraph.respondsTo("unbindEvents", function (e) {
-            var mg = e.data.mg;
+            var mg = e.data.mg,
+                i;
             mg.$div().off("mousemove", mg.triggerEvents);
             mg.$div().off("mouseup", mg.unbindEvents);
             mg.$div().off("mouseleave", mg.unbindEvents);
+            for (i = 0; i < mg.graphs().size(); ++i) {
+                mg.graphs().at(i).doDragDone();
+            }
         });
 
     });
