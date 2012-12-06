@@ -325,6 +325,18 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
         }
         options.messageHandler = messageHandler;
 
+        if (options.muglString !== undefined) {
+            &#x2F;&#x2F; delegate to the driver-specific create function
+            if (options.driver === &quot;canvas&quot;) {
+                return Multigraph.createCanvasGraphFromString(options);
+            } else if (options.driver === &quot;raphael&quot;) {
+                return Multigraph.createRaphaelGraphFromString(options);
+            } else {
+                options.messageHanlder.error(new Error(&quot;invalid graphic driver &#x27;&quot; + options.driver + &quot;&#x27; specified to Multigraph.createGraph&quot;));
+                return undefined;
+            }
+        }
+
         &#x2F;&#x2F; delegate to the driver-specific create function
         if (options.driver === &quot;canvas&quot;) {
             return Multigraph.createCanvasGraph(options);

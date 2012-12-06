@@ -2483,7 +2483,7 @@
         },
         {
             "file": "src/core/multigraph.js",
-            "line": 213,
+            "line": 225,
             "description": "`window.multigraph.create` is an alias for `window.multigraph.core.Multigraph.createGraph`.",
             "itemtype": "method",
             "name": "window.multigraph.create",
@@ -2533,7 +2533,7 @@
         },
         {
             "file": "src/core/multigraph.js",
-            "line": 259,
+            "line": 271,
             "description": "Creates default error and warning functions for multigraph.",
             "itemtype": "method",
             "name": "createDefaultMessageHandlers",
