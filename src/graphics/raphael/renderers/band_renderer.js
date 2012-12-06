@@ -166,7 +166,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             graphicsContext.set.push(
                 graphicsContext.paper.rect(x, y, icon.width(), icon.height())
                     .attr({
-                        "fill"   : backgroundColor
+                        "fill"   : backgroundColor,
+                        "stroke" : backgroundColor
                     })
             );
             
