@@ -1,13 +1,24 @@
 #! /usr/bin/perl
 
-# Print a list of "non-bad release" tags from the git repo, along with the
+# Print a list of "non-bad" release tags from the git repo, along with the
 # date each one was created.
 #
-# A "release" tag is defined as a tag of the form "vN.M", where N and
-# M are nonnegative integers.
+# A release tag is defined as a tag of the form "vN.S", where N is nonnegative
+# integer and S is an abitrary string.  This allows for tags like the following:
+# 
+#     v4.0
+#     v4.0rc1
+#     v4.0.1
+#     v4.0alpha
+#     v4.0.alpha
+# 
+# but not the following
+# 
+#     alpha-4.0
+#     beta-2
 #
-# A "bad release" tag is a release tag "vN.M" for which there is a
-# separate tag on the same commit named "vN.M-bad".
+# A "bad" release tag is a release tag "vN.S" for which there is a
+# separate tag on the same commit named "vN.S-bad".
 #
 # Usage:
 #
@@ -35,13 +46,14 @@ foreach $release (@releases) {
 
 sub get_release_tags {
     #
-    # This function returns a list giving the tag name and release date of
-    # every release in the repository, where by a "release", we mean a
-    # commit tagged with a tag of the form vN.M, where N and M are integers,
-    # and which is not also tagged with a tag of the form vN.M-bad.
+    # This function returns a list giving the tag name and release
+    # date of every release in the repository, where by a "release",
+    # we mean a commit tagged with a tag of the form vN.S, where N is
+    # an integer and S is an arbitrary string, and which is not also
+    # tagged with a tag of the form vN.S-bad.
     # 
     # This function works by running a git command that generates output like
-    # the following, and scanning that output for tags of the form vN.M:
+    # the following, and scanning that output for tags of the form vN.S:
     # 
     # 2012-12-03 22:10:36 -0500  (HEAD, v1.3, origin/master, origin/HEAD, master)
     # 2012-11-15 16:56:52 -0500  (v1.2)
@@ -73,7 +85,7 @@ sub get_release_tags {
             # of the form vN.M, for which there isn't also one of the form vN.M-bad,
             # unless $options->{all} was specified, in which we do include it
             foreach $tag (keys(%tags)) {
-                if ($tag =~ m|^v\d+\.\d+$| && ($all || !$tags{"${tag}-bad"})) {
+                if ($tag =~ m|^v\d+\.\S+$| && ($all || !$tags{"${tag}-bad"})) {
                     push(@releases, { 'tag' => $tag, 'date' => $ts, 'bad' => $tags{"${tag}-bad"} });
                 }
             }
