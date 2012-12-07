@@ -17,13 +17,11 @@
         init : function(options) {
             return this.each(function() {
                 var $this = $(this),
-                    data = $this.data('multigraph'),
-                    settings = $.extend({
-                        'div' : this
-                    }, options);
+                    data = $this.data('multigraph');
+                options.div = this;
                 if ( ! data ) {
                     $this.data('multigraph', {
-                        multigraph : core.Multigraph.createGraph(settings)
+                        multigraph : core.Multigraph.createGraph(options)
                     });
                 }
                 return this;

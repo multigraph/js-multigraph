@@ -108,8 +108,12 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      *      to the div DOM element itself, or (c) a jQuery object
      *      corresponding to the div DOM element.
      * 
-     * @param {URI} options.mugl (REQUIRED) the URL from which the MUGL
+     * @param {URI} options.mugl (REQUIRED, unless muglString is present)
+     *       the URL from which the MUGL
      *       file for the Multigraph can be loaded
+     * 
+     * @param {String} options.muglString (REQUIRED, unless mugl is present)
+     *       a string containing the MUGL XML for the graph
      * 
      * @param {String} options.driver (OPTIONAL) Indicates which
      *       graphics driver to use; should be one of the strings
@@ -123,7 +127,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      *       displaying error messages to the user.  Multigraph will
      *       call this function if and when it encounters an error.  The
      *       function should receive a single argument which is an
-     *       instance of the JavaScrip Error object.  The default is to
+     *       instance of the JavaScript Error object.  The default is to
      *       use Multigraph's own internal mechanism for displaying user
      *       messages.
      *
