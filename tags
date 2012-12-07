@@ -82,10 +82,11 @@ sub get_release_tags {
                 $tags{$tag} = 1;
             }
             # run though all the tags in the %tags hash, looking for ones
-            # of the form vN.M, for which there isn't also one of the form vN.M-bad,
-            # unless $options->{all} was specified, in which we do include it
+            # of the form vN.S, where S is a string not ending in '-bad',
+            # and for which there isn't also a tag of the form vN.S-bad,
+            # unless $options->{all} was specified, in which we do include it.
             foreach $tag (keys(%tags)) {
-                if ($tag =~ m|^v\d+\.\S+$| && ($all || !$tags{"${tag}-bad"})) {
+                if ($tag =~ m|^v\d+\.\S+$| && $tag !~ /-bad$/ && ($all || !$tags{"${tag}-bad"})) {
                     push(@releases, { 'tag' => $tag, 'date' => $ts, 'bad' => $tags{"${tag}-bad"} });
                 }
             }
