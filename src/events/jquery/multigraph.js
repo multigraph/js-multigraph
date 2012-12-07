@@ -5,7 +5,13 @@
 
     var methods = {
         multigraph : function() {
-            return $(this).data('multigraph').multigraph;
+            return this.data('multigraph').multigraph;
+        },
+
+        done : function(func) {
+            return this.each(function() {
+                return $(this).data('multigraph').multigraph.done(func);
+            });
         },
 
         init : function(options) {
