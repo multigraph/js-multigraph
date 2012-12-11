@@ -934,6 +934,87 @@ window.jermaine.util.namespace("window.multigraph", function (ns) {
 (function ($) {
     "use strict";
 
+    var methods = {
+        on : function(on) {
+            if (on === undefined) {
+                return $(this).data('busy_spinner').on;
+            } else {
+                return this.each(function() {
+                    if (on) {
+                        $(this).data('busy_spinner').on    = true;
+                        $(this).data('busy_spinner').level = 1;
+                        $(this).show();
+                    } else {
+                        $(this).data('busy_spinner').on    = false;
+                        $(this).data('busy_spinner').level = 0;
+                        $(this).hide();
+                    }
+                    return this;
+                });
+            }            
+        },
+
+        level : function(delta) {
+            if (delta === undefined) {
+                return $(this).data('busy_spinner').level;
+            } else {
+                return this.each(function() {
+                    if ($(this).data('busy_spinner').level + delta >= 0) {
+                        $(this).data('busy_spinner').level = $(this).data('busy_spinner').level + delta;
+                        if ($(this).data('busy_spinner').level === 1) {
+                            $(this).busy_spinner('on', true);
+                        } else if ($(this).data('busy_spinner').level === 0) {
+                            $(this).busy_spinner('on', false);
+                        }
+                    }
+                    return this;
+                });
+            }
+        },
+
+        init : function(options) {
+            return this.each(function() {
+                var $this = $(this),
+                    data = $this.data('busy_spinner'),
+                    settings = $.extend({
+                        on : false
+                    }, options);
+                if ( ! data ) {
+                    $this.data('busy_spinner', {
+                        on    : settings.on,
+                        level : 0
+                    });
+                    if (settings.on) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                    $(this).css({
+                        width  : 32,
+                        height : 32
+                    }).append($('<img src="data:image/gif;base64,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" width="32" height="32" alt="ajax loading">'));
+                }
+
+                return this;
+            });
+        }
+    };
+
+    $.fn.busy_spinner = function( method ) {
+        if ( methods[method] ) {
+            return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
+        } else if ( typeof method === 'object' || ! method ) {
+            return methods.init.apply( this, arguments );
+        } else {
+            $.error( 'Method ' +  method + ' does not exist on jQuery.busy_spinner' );
+            return null;
+        }    
+    };
+    
+}(jQuery));
+(function ($) {
+    "use strict";
+
     var errorDisplayHtml = (
         ''
             + '<div class="errorDisplay">'
@@ -4511,6 +4592,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             this.init();
 
             if (that.filename() !== undefined) {
+                that.emit({type : 'ajaxEvent', action : 'start'});
                 window.multigraph.jQuery.ajax({
                     url : that.filename(),
 
@@ -4538,7 +4620,13 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                             }
                         }
                         that._displayError(new Error(message));
+                    },
+
+                    // 'complete' callback gets called after either 'success' or 'error', whichever:
+                    complete : function (jqXHR, textStatus) {
+                        that.emit({type : 'ajaxEvent', action : 'complete'});
                     }
+
 
                 });
             }
@@ -5156,6 +5244,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues),
         Graph = new window.jermaine.Model( "Graph", function () {
+
             /**
              * Child model which controls the properties of the Graph's Window.
              *
@@ -5261,7 +5350,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 return val instanceof Box;
             });
             /**
-             * Stroes the computed width and height of the Graph's plotBox.
+             * Stores the computed width and height of the Graph's plotBox.
              *
              * @property plotBox
              * @type {}
@@ -5269,6 +5358,17 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
              */
             this.hasA("plotBox").which.validatesWith(function (val) {
                 return val instanceof Box;
+            });
+
+            /**
+             * The containing Multigraph object
+             *
+             * @property multigraph
+             * @type {}
+             * @author mbp
+             */
+            this.hasA("multigraph").which.validatesWith(function (val) {
+                return val instanceof window.multigraph.core.Multigraph;
             });
             
             this.isBuiltWith(function () {
@@ -5278,6 +5378,23 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             });
 
             this.respondsTo("postParse", function () {
+                var i,
+                    that = this,
+                    handleAjaxEvent = function(event) {
+                        if (event.action === 'start') {
+                            if (that.multigraph()) {
+                                that.multigraph().busySpinnerLevel(1);
+                            }
+                        } else if (event.action === 'complete') {
+                            if (that.multigraph()) {
+                                that.multigraph().busySpinnerLevel(-1);
+                            }
+                        }
+                    };
+
+                for (i=0; i<this.data().size(); ++i) {
+                    this.data().at(i).addListener("ajaxEvent", handleAjaxEvent);
+                }
             });
 
             /**
@@ -6502,6 +6619,22 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasA("div"); // the actual div element
 
         /**
+         * The busy spinner
+         *
+         * @property busySpinner
+         * @type {HTML Element}
+         * @author mbp
+         */
+        this.hasA("busySpinner"); // the busy_spinner div
+
+        this.respondsTo("busySpinnerLevel", function (delta) {
+            if (this.busySpinner()) {
+                $(this.busySpinner()).busy_spinner('level', delta);
+            }
+        });
+
+
+        /**
          * Initializes the Multigraph's geometry by calling the `initializeGeometry` function of
          * each of its graph children.
          *
@@ -6569,8 +6702,12 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      *      to the div DOM element itself, or (c) a jQuery object
      *      corresponding to the div DOM element.
      * 
-     * @param {URI} options.mugl (REQUIRED) the URL from which the MUGL
+     * @param {URI} options.mugl (REQUIRED, unless muglString is present)
+     *       the URL from which the MUGL
      *       file for the Multigraph can be loaded
+     * 
+     * @param {String} options.muglString (REQUIRED, unless mugl is present)
+     *       a string containing the MUGL XML for the graph
      * 
      * @param {String} options.driver (OPTIONAL) Indicates which
      *       graphics driver to use; should be one of the strings
@@ -6584,7 +6721,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      *       displaying error messages to the user.  Multigraph will
      *       call this function if and when it encounters an error.  The
      *       function should receive a single argument which is an
-     *       instance of the JavaScrip Error object.  The default is to
+     *       instance of the JavaScript Error object.  The default is to
      *       use Multigraph's own internal mechanism for displaying user
      *       messages.
      *
@@ -7791,7 +7928,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasA("serviceaddresspattern").which.isA("string");
         this.hasA("format").which.isA("string");
         this.hasA("formatter").which.validatesWith(ns.DataFormatter.isInstance);
-        this.isBuiltWith("columns", "serviceaddress", function () {
+        this.hasA("messageHandler");
+        this.isBuiltWith("columns", "serviceaddress", "%messageHandler", function () {
             this.init();
             if (this.columns().size() > 0) {
                 var column0Type = this.columns().at(0).type();
@@ -7799,6 +7937,14 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                     this.format(column0Type===ns.DataValue.NUMBER ? "%f" : "%Y%M%D%H%i%s");
                 }
                 this.formatter(ns.DataFormatter.create(column0Type, this.format()));
+            }
+        });
+
+        this.respondsTo("_displayError", function (e) {
+            if (this.messageHandler()) {
+                this.messageHandler().error(e);
+            } else {
+                throw e;
             }
         });
 
@@ -7972,6 +8118,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             requestURL = this.constructRequestURL(min, max);
 
             // initiate the fetch request
+            that.emit({type : 'ajaxEvent', action : 'start'});
             window.multigraph.jQuery.ajax({
                 url      : requestURL,
                 dataType : "text",
@@ -7982,8 +8129,27 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                     }
                     node.parseData(that.getColumns(), data);
 
+                    that.emit({type : 'ajaxEvent', action : 'success'});
                     that.emit({type : 'dataReady'});
+                },
+
+                error : function (jqXHR, textStatus, errorThrown) {
+                    var message = errorThrown;
+                    if (jqXHR.statusCode().status === 404) {
+                        message = "URL not found: '" + requestURL + '"';
+                    } else {
+                        if (textStatus) {
+                            message = textStatus + ": " + message;
+                        }
+                    }
+                    that._displayError(new Error(message));
+                },
+
+                // 'complete' callback gets called after either 'success' or 'error', whichever:
+                complete : function (jqXHR, textStatus) {
+                    that.emit({type : 'ajaxEvent', action : 'complete'});
                 }
+
             });
         });
 
@@ -9033,8 +9199,9 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
         };
         
 
-        ns.core.Graph[parse] = function (xml, messageHandler) {
+        ns.core.Graph[parse] = function (xml, multigraph, messageHandler) {
             var graph = new ns.core.Graph();
+            graph.multigraph(multigraph);
             if (xml) {
 
                 //
@@ -9413,10 +9580,10 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
             if (xml) {
                 if (xml.find(">graph").length > 0) {
                     window.multigraph.jQuery.each(xml.find(">graph"), function (i,e) {
-                        multigraph.graphs().add( ns.core.Graph[parse](window.multigraph.jQuery(e), messageHandler) );
+                        multigraph.graphs().add( ns.core.Graph[parse](window.multigraph.jQuery(e), multigraph, messageHandler) );
                     });
                 } else if (xml.find(">graph").length === 0 && xml.children().length > 0) {
-                    multigraph.graphs().add( ns.core.Graph[parse](xml, messageHandler) );
+                    multigraph.graphs().add( ns.core.Graph[parse](xml, multigraph, messageHandler) );
                 }
             }
             return multigraph;
@@ -10544,19 +10711,23 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
 
     var methods = {
         multigraph : function() {
-            return $(this).data('multigraph').multigraph;
+            return this.data('multigraph').multigraph;
+        },
+
+        done : function(func) {
+            return this.each(function() {
+                return $(this).data('multigraph').multigraph.done(func);
+            });
         },
 
         init : function(options) {
             return this.each(function() {
                 var $this = $(this),
-                    data = $this.data('multigraph'),
-                    settings = $.extend({
-                        'div' : this
-                    }, options);
+                    data = $this.data('multigraph');
+                options.div = this;
                 if ( ! data ) {
                     $this.data('multigraph', {
-                        multigraph : core.Multigraph.createGraph(settings)
+                        multigraph : core.Multigraph.createGraph(options)
                     });
                 }
                 return this;
@@ -17318,6 +17489,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 window.multigraph.util.namespace("window.multigraph.graphics.raphael", function (ns) {
     "use strict";
 
+    var $ = window.multigraph.jQuery;
+
     ns.mixin.add(function (ns) {
 
         ns.Multigraph.hasA("paper"); // Raphael paper object
@@ -17349,6 +17522,9 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 this.paper().remove();
             }
             this.paper(new window.Raphael(this.div(), this.width(), this.height()));
+            this.busySpinner($('<div style="position: absolute; left:5px; top:5px;"></div>') .
+                             appendTo(this.$div()) .
+                             busy_spinner());
             this.render();
         });
 
@@ -19109,6 +19285,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (ns) {
     "use strict";
 
+    var $ = window.multigraph.jQuery;
+
     ns.mixin.add(function (ns) {
 
         ns.Multigraph.hasA("canvas");  // canvas object itself (the '<canvas>' tag itself)
@@ -19124,27 +19302,29 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         });
 
         ns.Multigraph.respondsTo("init", function () {
-            this.width(window.multigraph.jQuery(this.div()).width());
-            this.height(window.multigraph.jQuery(this.div()).height());
+            this.width($(this.div()).width());
+            this.height($(this.div()).height());
             if (this.width() > 0 && this.height() > 0) {
                 // create the canvas; store ref to the canvas object in this.canvas()
 
 /*
-                this.canvas(window.multigraph.jQuery(
+                this.canvas($(
 "<canvas width=\""+this.width()+"\" height=\""+this.height()+"\"/>"
 ).appendTo(
-window.multigraph.jQuery(this.div()).empty())[0]
+$(this.div()).empty())[0]
 );
 */
 
 
-                this.canvas(window.multigraph.jQuery(
+                this.canvas($(
 "<canvas width=\""+this.width()+"\" height=\""+this.height()+"\"/>"
 ).appendTo(
-window.multigraph.jQuery(this.div()))[0]
+$(this.div()))[0]
 );
 
-
+                this.busySpinner($('<div style="position: absolute; left:5px; top:5px;"></div>') .
+                                  appendTo($(this.div())) .
+                                  busy_spinner());
 
                 // get the canvas context; store ref to it in this.context()
                 this.context(this.canvas().getContext("2d"));
@@ -19178,7 +19358,7 @@ window.multigraph.jQuery(this.div()))[0]
         var multigraph = window.multigraph.core.Multigraph.parseXML( window.multigraph.parser.jquery.stringToJQueryXMLObj(mugl), options.messageHandler );
         multigraph.normalize();
         multigraph.div(options.div);
-        window.multigraph.jQuery(options.div).css("cursor" , "pointer");
+        $(options.div).css("cursor" , "pointer");
         multigraph.init();
         multigraph.registerMouseEvents(multigraph.canvas());
         multigraph.registerTouchEvents(multigraph.canvas());
@@ -19194,12 +19374,12 @@ window.multigraph.jQuery(this.div()))[0]
         
         try {
             applyMixins(options);
-            muglPromise = window.multigraph.jQuery.ajax({
+            muglPromise = $.ajax({
                 "url"      : options.mugl,
                 "dataType" : "text"
             });
 
-            deferred = window.multigraph.jQuery.Deferred();
+            deferred = $.Deferred();
         } catch (e) {
             options.messageHandler.error(e);
         }
@@ -19222,7 +19402,7 @@ window.multigraph.jQuery(this.div()))[0]
         
         try {
             applyMixins(options);
-            deferred = window.multigraph.jQuery.Deferred();
+            deferred = $.Deferred();
             var multigraph = generateInitialGraph(options.muglString, options);
             deferred.resolve(multigraph);
         } catch (e) {
