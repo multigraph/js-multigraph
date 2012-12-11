@@ -17,6 +17,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues),
         Graph = new window.jermaine.Model( "Graph", function () {
+
             /**
              * Child model which controls the properties of the Graph's Window.
              *
@@ -122,7 +123,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 return val instanceof Box;
             });
             /**
-             * Stroes the computed width and height of the Graph's plotBox.
+             * Stores the computed width and height of the Graph's plotBox.
              *
              * @property plotBox
              * @type {}
@@ -130,6 +131,17 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
              */
             this.hasA("plotBox").which.validatesWith(function (val) {
                 return val instanceof Box;
+            });
+
+            /**
+             * The containing Multigraph object
+             *
+             * @property multigraph
+             * @type {}
+             * @author mbp
+             */
+            this.hasA("multigraph").which.validatesWith(function (val) {
+                return val instanceof window.multigraph.core.Multigraph;
             });
             
             this.isBuiltWith(function () {
@@ -139,6 +151,23 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             });
 
             this.respondsTo("postParse", function () {
+                var i,
+                    that = this,
+                    handleAjaxEvent = function(event) {
+                        if (event.action === 'start') {
+                            if (that.multigraph()) {
+                                that.multigraph().busySpinnerLevel(1);
+                            }
+                        } else if (event.action === 'success') {
+                            if (that.multigraph()) {
+                                that.multigraph().busySpinnerLevel(-1);
+                            }
+                        }
+                    };
+
+                for (i=0; i<this.data().size(); ++i) {
+                    this.data().at(i).addListener("ajaxEvent", handleAjaxEvent);
+                }
             });
 
             /**

@@ -42,8 +42,9 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
         };
         
 
-        ns.core.Graph[parse] = function (xml, messageHandler) {
+        ns.core.Graph[parse] = function (xml, multigraph, messageHandler) {
             var graph = new ns.core.Graph();
+            graph.multigraph(multigraph);
             if (xml) {
 
                 //

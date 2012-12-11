@@ -1,6 +1,8 @@
 window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (ns) {
     "use strict";
 
+    var $ = window.multigraph.jQuery;
+
     ns.mixin.add(function (ns) {
 
         ns.Multigraph.hasA("canvas");  // canvas object itself (the '<canvas>' tag itself)
@@ -16,27 +18,29 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         });
 
         ns.Multigraph.respondsTo("init", function () {
-            this.width(window.multigraph.jQuery(this.div()).width());
-            this.height(window.multigraph.jQuery(this.div()).height());
+            this.width($(this.div()).width());
+            this.height($(this.div()).height());
             if (this.width() > 0 && this.height() > 0) {
                 // create the canvas; store ref to the canvas object in this.canvas()
 
 /*
-                this.canvas(window.multigraph.jQuery(
+                this.canvas($(
 "<canvas width=\""+this.width()+"\" height=\""+this.height()+"\"/>"
 ).appendTo(
-window.multigraph.jQuery(this.div()).empty())[0]
+$(this.div()).empty())[0]
 );
 */
 
 
-                this.canvas(window.multigraph.jQuery(
+                this.canvas($(
 "<canvas width=\""+this.width()+"\" height=\""+this.height()+"\"/>"
 ).appendTo(
-window.multigraph.jQuery(this.div()))[0]
+$(this.div()))[0]
 );
 
-
+                this.busySpinner($('<div style="position: absolute; left:5px; top:5px;"></div>') .
+                                  appendTo($(this.div())) .
+                                  busy_spinner());
 
                 // get the canvas context; store ref to it in this.context()
                 this.context(this.canvas().getContext("2d"));
@@ -70,7 +74,7 @@ window.multigraph.jQuery(this.div()))[0]
         var multigraph = window.multigraph.core.Multigraph.parseXML( window.multigraph.parser.jquery.stringToJQueryXMLObj(mugl), options.messageHandler );
         multigraph.normalize();
         multigraph.div(options.div);
-        window.multigraph.jQuery(options.div).css("cursor" , "pointer");
+        $(options.div).css("cursor" , "pointer");
         multigraph.init();
         multigraph.registerMouseEvents(multigraph.canvas());
         multigraph.registerTouchEvents(multigraph.canvas());
@@ -86,12 +90,12 @@ window.multigraph.jQuery(this.div()))[0]
         
         try {
             applyMixins(options);
-            muglPromise = window.multigraph.jQuery.ajax({
+            muglPromise = $.ajax({
                 "url"      : options.mugl,
                 "dataType" : "text"
             });
 
-            deferred = window.multigraph.jQuery.Deferred();
+            deferred = $.Deferred();
         } catch (e) {
             options.messageHandler.error(e);
         }
@@ -114,7 +118,7 @@ window.multigraph.jQuery(this.div()))[0]
         
         try {
             applyMixins(options);
-            deferred = window.multigraph.jQuery.Deferred();
+            deferred = $.Deferred();
             var multigraph = generateInitialGraph(options.muglString, options);
             deferred.resolve(multigraph);
         } catch (e) {

@@ -201,6 +201,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             requestURL = this.constructRequestURL(min, max);
 
             // initiate the fetch request
+            that.emit({type : 'ajaxEvent', action : 'start'});
             window.multigraph.jQuery.ajax({
                 url      : requestURL,
                 dataType : "text",
@@ -211,6 +212,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                     }
                     node.parseData(that.getColumns(), data);
 
+                    that.emit({type : 'ajaxEvent', action : 'success'});
                     that.emit({type : 'dataReady'});
                 }
             });

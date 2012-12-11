@@ -41,6 +41,22 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasA("div"); // the actual div element
 
         /**
+         * The busy spinner
+         *
+         * @property busySpinner
+         * @type {HTML Element}
+         * @author mbp
+         */
+        this.hasA("busySpinner"); // the busy_spinner div
+
+        this.respondsTo("busySpinnerLevel", function (delta) {
+            if (this.busySpinner()) {
+                $(this.busySpinner()).busy_spinner('level', delta);
+            }
+        });
+
+
+        /**
          * Initializes the Multigraph's geometry by calling the `initializeGeometry` function of
          * each of its graph children.
          *

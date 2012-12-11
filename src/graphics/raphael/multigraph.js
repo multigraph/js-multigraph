@@ -3,6 +3,8 @@
 window.multigraph.util.namespace("window.multigraph.graphics.raphael", function (ns) {
     "use strict";
 
+    var $ = window.multigraph.jQuery;
+
     ns.mixin.add(function (ns) {
 
         ns.Multigraph.hasA("paper"); // Raphael paper object
@@ -34,6 +36,9 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 this.paper().remove();
             }
             this.paper(new window.Raphael(this.div(), this.width(), this.height()));
+            this.busySpinner($('<div style="position: absolute; left:5px; top:5px;"></div>') .
+                             appendTo(this.$div()) .
+                             busy_spinner());
             this.render();
         });
 
