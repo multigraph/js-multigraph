@@ -40,6 +40,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             this.init();
 
             if (that.filename() !== undefined) {
+                that.emit({type : 'ajaxEvent', action : 'start'});
                 window.multigraph.jQuery.ajax({
                     url : that.filename(),
 
@@ -54,6 +55,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                         // populate array
                         that.array(dataValues);
                         that.dataIsReady(true);
+                        that.emit({type : 'ajaxEvent', action : 'success'});
                         that.emit({type : "dataReady"});
                     },
 
