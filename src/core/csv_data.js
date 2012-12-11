@@ -55,7 +55,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                         // populate array
                         that.array(dataValues);
                         that.dataIsReady(true);
-                        that.emit({type : 'ajaxEvent', action : 'success'});
                         that.emit({type : "dataReady"});
                     },
 
@@ -69,7 +68,13 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                             }
                         }
                         that._displayError(new Error(message));
+                    },
+
+                    // 'complete' callback gets called after either 'success' or 'error', whichever:
+                    complete : function (jqXHR, textStatus) {
+                        that.emit({type : 'ajaxEvent', action : 'complete'});
                     }
+
 
                 });
             }

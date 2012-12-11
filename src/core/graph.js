@@ -158,7 +158,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                             if (that.multigraph()) {
                                 that.multigraph().busySpinnerLevel(1);
                             }
-                        } else if (event.action === 'success') {
+                        } else if (event.action === 'complete') {
                             if (that.multigraph()) {
                                 that.multigraph().busySpinnerLevel(-1);
                             }

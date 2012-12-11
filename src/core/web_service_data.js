@@ -20,7 +20,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasA("serviceaddresspattern").which.isA("string");
         this.hasA("format").which.isA("string");
         this.hasA("formatter").which.validatesWith(ns.DataFormatter.isInstance);
-        this.isBuiltWith("columns", "serviceaddress", function () {
+        this.hasA("messageHandler");
+        this.isBuiltWith("columns", "serviceaddress", "%messageHandler", function () {
             this.init();
             if (this.columns().size() > 0) {
                 var column0Type = this.columns().at(0).type();
@@ -28,6 +29,14 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                     this.format(column0Type===ns.DataValue.NUMBER ? "%f" : "%Y%M%D%H%i%s");
                 }
                 this.formatter(ns.DataFormatter.create(column0Type, this.format()));
+            }
+        });
+
+        this.respondsTo("_displayError", function (e) {
+            if (this.messageHandler()) {
+                this.messageHandler().error(e);
+            } else {
+                throw e;
             }
         });
 
@@ -214,7 +223,25 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
                     that.emit({type : 'ajaxEvent', action : 'success'});
                     that.emit({type : 'dataReady'});
+                },
+
+                error : function (jqXHR, textStatus, errorThrown) {
+                    var message = errorThrown;
+                    if (jqXHR.statusCode().status === 404) {
+                        message = "URL not found: '" + requestURL + '"';
+                    } else {
+                        if (textStatus) {
+                            message = textStatus + ": " + message;
+                        }
+                    }
+                    that._displayError(new Error(message));
+                },
+
+                // 'complete' callback gets called after either 'success' or 'error', whichever:
+                complete : function (jqXHR, textStatus) {
+                    that.emit({type : 'ajaxEvent', action : 'complete'});
                 }
+
             });
         });
 
