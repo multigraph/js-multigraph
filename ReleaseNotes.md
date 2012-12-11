@@ -1,3 +1,9 @@
+Version 4.0rc3 (2012-12-10)
+---------------------------
+
+* minor enhancements to jQuery plugin
+* adds "busy spinner" in upper left corner to show when ajax request is outstanding
+
 Version 4.0rc2 (2012-12-06)
 ---------------------------
 
