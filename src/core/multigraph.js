@@ -41,6 +41,15 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasA("div"); // the actual div element
 
         /**
+         * The url for the mugl file this graph was created from, if any
+         *
+         * @property mugl
+         * @type {string}
+         * @author mbp
+         */
+        this.hasA("mugl");
+
+        /**
          * The busy spinner
          *
          * @property busySpinner

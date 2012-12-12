@@ -7,9 +7,41 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
         WebServiceData  = window.multigraph.core.WebServiceData,
         Data = window.multigraph.core.Data;
 
+    /*
+     * This function transforms a given url ('url') so that it
+     * is relative to the same base as another url ('baseurl').
+     * 
+     * If the url to be rebased ('url') is absolute (contains '://')
+     * or root-relative (starts with a '/'), it is left unmodified.
+     * 
+     * Otherise, it is rewritten to have a prefix which is the same
+     * prefix present in the given 'baseurl'.  By 'prefix' we mean
+     * everything up to and including the last '/' in the baseurl,
+     * excluding any '/' chars that might occur as part of arguments
+     * after a '?'.
+     */
+    var rebase_url = function(url, baseurl) {
+        if (! baseurl) {
+            return url;
+        }
+        if (/^\//.test(url)) {
+            // url is root-relative (starts with a '/'); return it unmodified
+            return url;
+        }
+        if (/:\/\//.test(url)) {
+            // url contains '://', so assume it's a full url, return it unmodified
+            return url;
+        }
+        // convert baseurl to a real base path, by eliminating any url args and
+        // everything after the final '/'
+        baseurl = baseurl.replace(/\?.*$/, ''); // remove everything after the first '?'
+        baseurl = baseurl.replace(/\/[^\/]*$/, '/'); // remove everything after the last '/'
+        return baseurl + url;
+    };
+
     ns.mixin.add(function (ns, parse) {
         
-        Data[parse] = function (xml, messageHandler) {
+        Data[parse] = function (xml, muglurl, messageHandler) {
 
             var variables_xml,
                 defaultMissingvalueString,
@@ -50,7 +82,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 if (csv_xml.length > 0) {
                     csv_xml = csv_xml[0];
                     var filename = window.multigraph.jQuery(csv_xml).attr("location");
-                    data = new CSVData(dataVariables, filename, messageHandler);
+                    data = new CSVData(dataVariables, rebase_url(filename, muglurl), messageHandler);
                 }
 
                 // if we have a <service> section, parse it and return a WebServiceData instance:
@@ -58,7 +90,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 if (service_xml.length > 0) {
                     service_xml = service_xml[0];
                     var location = window.multigraph.jQuery(service_xml).attr("location");
-                    data = new WebServiceData(dataVariables, location);
+                    data = new WebServiceData(dataVariables, rebase_url(location, muglurl));
                     var format = window.multigraph.jQuery(service_xml).attr("format");
                     if (format) {
                         data.format(format);

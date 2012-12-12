@@ -92,13 +92,28 @@ describe("Data Normalizer", function () {
             servicedata.normalize();
         }).toThrow("Data Normalization: Data gotten from csv and web service sources require variables to be specified in the mugl.");
 
-        csvdata = new CSVData([variable1,variable2], "http://example.com");
-        servicedata = new WebServiceData([variable1,variable2], "http://example.com");
 
+        /*
+         * NO - do not do this - do not create a CSVData() object by
+         * referencing a made-up URL.  The CSVData() constructor
+         * initiates a request to the given URL immediately, so the
+         * code below causes a request to go out to
+         * http://example.com.
+         * 
+        csvdata = new CSVData([variable1,variable2], "http://example.com");
         expect(function () {
             csvdata.normalize();
         }).not.toThrow("Data Normalization: Data gotten from csv and web service sources require variables to be specified in the mugl.");
+         *
+         */
 
+        /*
+         * It's OK to do it with a WebServiceData, though, as long as
+         * you don't actually try to fetch any data from the object,
+         * because WebServiceData doesn't actually initiate any
+         * requests until data is fetched from it.
+         */
+        servicedata = new WebServiceData([variable1,variable2], "http://example.com");
         expect(function () {
             servicedata.normalize();
         }).not.toThrow("Data Normalization: Data gotten from csv and web service sources require variables to be specified in the mugl.");        
