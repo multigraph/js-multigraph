@@ -1,3 +1,9 @@
+Version 4.0rc5 (2012-12-12)
+---------------------------
+
+* interpret relative URLs mentioned in MUGL files relative to the MUGL file URL itself
+* minor bugfixes
+
 Version 4.0rc4 (2012-12-11)
 ---------------------------
 
