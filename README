@@ -1,1 +1,6 @@
-This is the project directory for Javascript Multigraph.
+This is the source code repository for JavaScript Multigraph.
+
+Multigraph is free software, available under the terms of
+the MIT License; see the file LICENSE.txt for details.
+
+For more information about Multigraph, see multigraph.github.com.
