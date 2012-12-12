@@ -6619,6 +6619,15 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasA("div"); // the actual div element
 
         /**
+         * The url for the mugl file this graph was created from, if any
+         *
+         * @property mugl
+         * @type {string}
+         * @author mbp
+         */
+        this.hasA("mugl");
+
+        /**
          * The busy spinner
          *
          * @property busySpinner
@@ -8966,9 +8975,41 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
         WebServiceData  = window.multigraph.core.WebServiceData,
         Data = window.multigraph.core.Data;
 
+    /*
+     * This function transforms a given url ('url') so that it
+     * is relative to the same base as another url ('baseurl').
+     * 
+     * If the url to be rebased ('url') is absolute (contains '://')
+     * or root-relative (starts with a '/'), it is left unmodified.
+     * 
+     * Otherise, it is rewritten to have a prefix which is the same
+     * prefix present in the given 'baseurl'.  By 'prefix' we mean
+     * everything up to and including the last '/' in the baseurl,
+     * excluding any '/' chars that might occur as part of arguments
+     * after a '?'.
+     */
+    var rebase_url = function(url, baseurl) {
+        if (! baseurl) {
+            return url;
+        }
+        if (/^\//.test(url)) {
+            // url is root-relative (starts with a '/'); return it unmodified
+            return url;
+        }
+        if (/:\/\//.test(url)) {
+            // url contains '://', so assume it's a full url, return it unmodified
+            return url;
+        }
+        // convert baseurl to a real base path, by eliminating any url args and
+        // everything after the final '/'
+        baseurl = baseurl.replace(/\?.*$/, ''); // remove everything after the first '?'
+        baseurl = baseurl.replace(/\/[^\/]*$/, '/'); // remove everything after the last '/'
+        return baseurl + url;
+    };
+
     ns.mixin.add(function (ns, parse) {
         
-        Data[parse] = function (xml, messageHandler) {
+        Data[parse] = function (xml, muglurl, messageHandler) {
 
             var variables_xml,
                 defaultMissingvalueString,
@@ -9009,7 +9050,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 if (csv_xml.length > 0) {
                     csv_xml = csv_xml[0];
                     var filename = window.multigraph.jQuery(csv_xml).attr("location");
-                    data = new CSVData(dataVariables, filename, messageHandler);
+                    data = new CSVData(dataVariables, rebase_url(filename, muglurl), messageHandler);
                 }
 
                 // if we have a <service> section, parse it and return a WebServiceData instance:
@@ -9017,7 +9058,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 if (service_xml.length > 0) {
                     service_xml = service_xml[0];
                     var location = window.multigraph.jQuery(service_xml).attr("location");
-                    data = new WebServiceData(dataVariables, location);
+                    data = new WebServiceData(dataVariables, rebase_url(location, muglurl));
                     var format = window.multigraph.jQuery(service_xml).attr("format");
                     if (format) {
                         data.format(format);
@@ -9256,7 +9297,11 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     //throw new Error("Graph Data Error: No data tags specified");
                 }
                 window.multigraph.jQuery.each(xml.find(">data"), function (i,e) {
-                    graph.data().add( ns.core.Data[parse](window.multigraph.jQuery(e), messageHandler) );
+                    var mugl = undefined;
+                    if (graph.multigraph()) {
+                        mugl = graph.multigraph().mugl();
+                    }
+                    graph.data().add( ns.core.Data[parse](window.multigraph.jQuery(e), mugl, messageHandler) );
                 });
                 window.multigraph.jQuery.each(xml.find(">plot"), function (i,e) {
                     graph.plots().add( ns.core.Plot[parse](window.multigraph.jQuery(e), graph, messageHandler) );
@@ -9575,8 +9620,9 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
 
     ns.mixin.add(function (ns, parse) {
 
-        ns.core.Multigraph[parse] = function (xml, messageHandler) {
+        ns.core.Multigraph[parse] = function (xml, mugl, messageHandler) {
             var multigraph = new ns.core.Multigraph();
+            multigraph.mugl(mugl); // set the mugl url
             if (xml) {
                 if (xml.find(">graph").length > 0) {
                     window.multigraph.jQuery.each(xml.find(">graph"), function (i,e) {
@@ -10128,7 +10174,7 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
             var defaultid,
                 defaultMissingop = ns.DataValue.parseComparator(this.defaultMissingop());
             for (i = 0; i < sortedVariables.length; i++) {
-                if (sortedVariables[i] === null) {
+                if (!sortedVariables[i]) {
                     if (i === 0) {
                         defaultid = "x";
                     } else if (i === 1) {
@@ -17594,7 +17640,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
     };
 
     var generateInitialGraph = function (mugl, options) {
-        var multigraph = window.multigraph.core.Multigraph.parseXML( window.multigraph.parser.jquery.stringToJQueryXMLObj(mugl), options.messageHandler );
+        var multigraph = window.multigraph.core.Multigraph.parseXML( window.multigraph.parser.jquery.stringToJQueryXMLObj(mugl), options.mugl, options.messageHandler );
         multigraph.normalize();
         multigraph.div(options.div);
         window.multigraph.jQuery(options.div).css("cursor" , "pointer");
@@ -19355,7 +19401,7 @@ $(this.div()))[0]
     };
 
     var generateInitialGraph = function (mugl, options) {
-        var multigraph = window.multigraph.core.Multigraph.parseXML( window.multigraph.parser.jquery.stringToJQueryXMLObj(mugl), options.messageHandler );
+        var multigraph = window.multigraph.core.Multigraph.parseXML( window.multigraph.parser.jquery.stringToJQueryXMLObj(mugl), options.mugl, options.messageHandler );
         multigraph.normalize();
         multigraph.div(options.div);
         $(options.div).css("cursor" , "pointer");
