@@ -290,4 +290,76 @@ describe("Data Normalizer", function () {
 
     });
 
+    describe("'csv' tags", function () {
+        it("should create a variable for each column that doen't have one up to the last specified column. ie if columns 0, 1, and 3 are specified then a variable should be created for column 2", function () {
+            csvdata = new CSVData([variable1, variable4], "core/fixtures/csv_test1.csv", function (e) { throw e; });
+            expect(csvdata.columns().size()).toEqual(2);
+            csvdata.normalize();
+            expect(csvdata.columns().size()).toEqual(4);
+        });
+
+        it("should create a variable with the correct defaults for each column that doen't have one up to the last specified column", function () {
+            csvdata = new CSVData([variable1, variable4], "core/fixtures/csv_test1.csv", function (e) { throw e; });
+            expect(csvdata.columns().at(0)).toBe(variable1);
+            expect(csvdata.columns().at(1)).toBe(variable4);
+            csvdata.normalize();
+            expect(csvdata.columns().at(0)).toBe(variable1);
+            expect(csvdata.columns().at(1).id()).toEqual("y");
+            expect(csvdata.columns().at(1).column()).toEqual(1);
+            expect(csvdata.columns().at(2).id()).toEqual("y1");
+            expect(csvdata.columns().at(2).column()).toEqual(2);
+            expect(csvdata.columns().at(3)).toBe(variable4);
+        });
+
+        it("should properly sort the variables into column order", function () {
+            csvdata = new CSVData([variable3, variable1, variable4, variable2], "core/fixtures/csv_test1.csv", function (e) { throw e; });
+            expect(csvdata.columns().at(0)).toBe(variable3);
+            expect(csvdata.columns().at(1)).toBe(variable1);
+            expect(csvdata.columns().at(2)).toBe(variable4);
+            expect(csvdata.columns().at(3)).toBe(variable2);
+            csvdata.normalize();
+            expect(csvdata.columns().at(0)).toBe(variable1);
+            expect(csvdata.columns().at(1)).toBe(variable2);
+            expect(csvdata.columns().at(2)).toBe(variable3);
+            expect(csvdata.columns().at(3)).toBe(variable4);
+        });
+
+    });
+
+    describe("'service' tags", function () {
+        it("should create a variable for each column that doen't have one up to the last specified column. ie if columns 0, 1, and 3 are specified then a variable should be created for column 2", function () {
+            servicedata = new WebServiceData([variable1, variable4], "http://www.example.com/foo/bar");
+            expect(servicedata.columns().size()).toEqual(2);
+            servicedata.normalize();
+            expect(servicedata.columns().size()).toEqual(4);
+        });
+
+        it("should create a variable with the correct defaults for each column that doen't have one up to the last specified column", function () {
+            servicedata = new WebServiceData([variable1, variable4], "http://www.example.com/foo/bar");
+            expect(servicedata.columns().at(0)).toBe(variable1);
+            expect(servicedata.columns().at(1)).toBe(variable4);
+            servicedata.normalize();
+            expect(servicedata.columns().at(0)).toBe(variable1);
+            expect(servicedata.columns().at(1).id()).toEqual("y");
+            expect(servicedata.columns().at(1).column()).toEqual(1);
+            expect(servicedata.columns().at(2).id()).toEqual("y1");
+            expect(servicedata.columns().at(2).column()).toEqual(2);
+            expect(servicedata.columns().at(3)).toBe(variable4);
+        });
+
+        it("should properly sort the variables into column order", function () {
+            servicedata = new WebServiceData([variable3, variable1, variable4, variable2], "http://www.example.com/foo/bar");
+            expect(servicedata.columns().at(0)).toBe(variable3);
+            expect(servicedata.columns().at(1)).toBe(variable1);
+            expect(servicedata.columns().at(2)).toBe(variable4);
+            expect(servicedata.columns().at(3)).toBe(variable2);
+            servicedata.normalize();
+            expect(servicedata.columns().at(0)).toBe(variable1);
+            expect(servicedata.columns().at(1)).toBe(variable2);
+            expect(servicedata.columns().at(2)).toBe(variable3);
+            expect(servicedata.columns().at(3)).toBe(variable4);
+        });
+
+    });
+
 });

@@ -69,7 +69,7 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
             var defaultid,
                 defaultMissingop = ns.DataValue.parseComparator(this.defaultMissingop());
             for (i = 0; i < sortedVariables.length; i++) {
-                if (sortedVariables[i] === null) {
+                if (!sortedVariables[i]) {
                     if (i === 0) {
                         defaultid = "x";
                     } else if (i === 1) {
