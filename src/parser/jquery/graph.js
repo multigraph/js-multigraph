@@ -74,7 +74,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     graph.legend( ns.core.Legend[parse]() );
                 }
                 if (xml.find(">background").length > 0) {
-                    graph.background( ns.core.Background[parse](xml.find(">background")) );
+                    graph.background( ns.core.Background[parse](xml.find(">background"), graph.multigraph()) );
                 }
                 if (xml.find(">plotarea").length > 0) {
                     graph.plotarea( ns.core.Plotarea[parse](xml.find(">plotarea")) );
@@ -99,11 +99,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     //throw new Error("Graph Data Error: No data tags specified");
                 }
                 window.multigraph.jQuery.each(xml.find(">data"), function (i,e) {
-                    var mugl = undefined;
-                    if (graph.multigraph()) {
-                        mugl = graph.multigraph().mugl();
-                    }
-                    graph.data().add( ns.core.Data[parse](window.multigraph.jQuery(e), mugl, messageHandler) );
+                    graph.data().add( ns.core.Data[parse](window.multigraph.jQuery(e), graph.multigraph(), messageHandler) );
                 });
                 window.multigraph.jQuery.each(xml.find(">plot"), function (i,e) {
                     graph.plots().add( ns.core.Plot[parse](window.multigraph.jQuery(e), graph, messageHandler) );

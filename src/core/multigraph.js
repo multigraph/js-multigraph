@@ -49,6 +49,40 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          */
         this.hasA("mugl");
 
+        /*
+         * This function transforms a given URL so that it
+         * is relative to the same base as the URL from which the MUGL
+         * file was loaded.  If this graph was not created from a MUGL
+         * file (either it came from a MUGL string, or was created programmatically),
+         * the URL is returned unchanged.
+         * 
+         * If the URL to be rebased is absolute (contains '://')
+         * or root-relative (starts with a '/'), it is returned unchanged.
+         * 
+         * Otherise, the given URL is relative, and whhat is returned is a
+         * new URL obtained by interpreting it relative to the URL
+         * from which the MUGL was loaded. 
+         */
+        this.respondsTo("rebaseUrl", function(url) {
+            var baseurl = this.mugl();
+            if (! baseurl) {
+                return url;
+            }
+            if (/^\//.test(url)) {
+                // url is root-relative (starts with a '/'); return it unmodified
+                return url;
+            }
+            if (/:\/\//.test(url)) {
+                // url contains '://', so assume it's a full url, return it unmodified
+                return url;
+            }
+            // convert baseurl to a real base path, by eliminating any url args and
+            // everything after the final '/'
+            baseurl = baseurl.replace(/\?.*$/, ''); // remove everything after the first '?'
+            baseurl = baseurl.replace(/\/[^\/]*$/, '/'); // remove everything after the last '/'
+            return baseurl + url;
+        });
+
         /**
          * The busy spinner
          *
