@@ -147,7 +147,7 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
 
                         "angle": 0.0,
                         "spacing": undefined,
-                        "densityfactor": undefined,
+                        "densityfactor": 1.0,
                         "color" : function () { return new window.multigraph.math.RGBColor.parse("0x000000"); }
 //                        "fontname": undefined,
 //                        "fontsize": undefined,
