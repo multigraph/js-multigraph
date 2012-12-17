@@ -30,7 +30,7 @@
       <variable ref="f0d"/>
     </horizontalaxis>
     <verticalaxis ref="fahrenheit">
-      <variable ref="f0t" legendlabel="Current Forecast"/>
+      <variable ref="f0t"/>
     </verticalaxis>
     <renderer type="line">
       <option name="linecolor" value="green"/>
@@ -46,7 +46,7 @@
       <variable ref="datetime"/>
     </horizontalaxis>
     <verticalaxis ref="celsius">
-      <variable ref="livtemp" legendlabel="Living Room Temp"/>
+      <variable ref="livtemp"/>
     </verticalaxis>
     <renderer type="line">
       <option name="linecolor" value="red"/>
@@ -60,7 +60,7 @@
       <variable ref="datetime"/>
     </horizontalaxis>
     <verticalaxis ref="celsius">
-      <variable ref="intemp" legendlabel="Indoor Temp"/>
+      <variable ref="intemp"/>
     </verticalaxis>
     <renderer type="line">
       <option name="linecolor" value="black"/>
@@ -74,7 +74,7 @@
       <variable ref="datetime"/>
     </horizontalaxis>
     <verticalaxis ref="celsius">
-      <variable ref="outtemp" legendlabel="Outdoor Temp"/>
+      <variable ref="outtemp"/>
     </verticalaxis>
     <renderer type="line">
       <option name="linecolor" value="blue"/>
