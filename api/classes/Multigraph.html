@@ -3,11 +3,11 @@
 <head>
     <meta charset="utf-8">
     <title>Multigraph - js-Multigraph</title>
-    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.7.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
+    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0pr2&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
     <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
-    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.7.0&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.8.0pr2&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
 </head>
 <body class="yui3-skin-sam">
 
@@ -292,6 +292,20 @@
                     <ul class="index-list properties">
                         
                             <li class="index-item property">
+                                <a href="#property_ajaxthrottles">ajaxthrottles</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_busySpinner">busySpinner</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
                                 <a href="#property_div">div</a>
 
                                 
@@ -300,6 +314,13 @@
                         
                             <li class="index-item property">
                                 <a href="#property_graphs">graphs</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_mugl">mugl</a>
 
                                 
                                 
@@ -355,7 +376,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_multigraph.js.html#l76"><code>src&#x2F;core&#x2F;multigraph.js:76</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_multigraph.js.html#l170"><code>src&#x2F;core&#x2F;multigraph.js:170</code></a>
         
         </p>
 
@@ -425,7 +446,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_multigraph.js.html#l271"><code>src&#x2F;core&#x2F;multigraph.js:271</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_multigraph.js.html#l369"><code>src&#x2F;core&#x2F;multigraph.js:369</code></a>
         
         </p>
 
@@ -530,7 +551,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_multigraph.js.html#l96"><code>src&#x2F;core&#x2F;multigraph.js:96</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_multigraph.js.html#l190"><code>src&#x2F;core&#x2F;multigraph.js:190</code></a>
         
         </p>
 
@@ -592,8 +613,23 @@ jQuery <code>promise</code> which interacts with the multigraph through its
                                 
 
                                 <div class="param-description">
-                                    <p>(REQUIRED) the URL from which the MUGL
+                                    <p>(REQUIRED, unless muglString is present)
+      the URL from which the MUGL
       file for the Multigraph can be loaded</p>
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name">muglString</code>
+                                    <span class="type">String</span>
+                                
+
+                                <div class="param-description">
+                                    <p>(REQUIRED, unless mugl is present)
+      a string containing the MUGL XML for the graph</p>
                                 </div>
 
                                 
@@ -629,7 +665,7 @@ jQuery <code>promise</code> which interacts with the multigraph through its
       displaying error messages to the user.  Multigraph will
       call this function if and when it encounters an error.  The
       function should receive a single argument which is an
-      instance of the JavaScrip Error object.  The default is to
+      instance of the JavaScript Error object.  The default is to
       use Multigraph's own internal mechanism for displaying user
       messages.</p>
                                 </div>
@@ -738,7 +774,7 @@ jQuery <code>promise</code> which interacts with the multigraph through its
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_multigraph.js.html#l43"><code>src&#x2F;core&#x2F;multigraph.js:43</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_multigraph.js.html#l137"><code>src&#x2F;core&#x2F;multigraph.js:137</code></a>
         
         </p>
 
@@ -856,7 +892,7 @@ each of its graph children.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_multigraph.js.html#l60"><code>src&#x2F;core&#x2F;multigraph.js:60</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_multigraph.js.html#l154"><code>src&#x2F;core&#x2F;multigraph.js:154</code></a>
         
         </p>
 
@@ -949,7 +985,7 @@ each of its graph children.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_core_multigraph.js.html#l225"><code>src&#x2F;core&#x2F;multigraph.js:225</code></a>
+        <a href="..&#x2F;files&#x2F;src_core_multigraph.js.html#l323"><code>src&#x2F;core&#x2F;multigraph.js:323</code></a>
         
         </p>
 
@@ -1109,6 +1145,97 @@ each of its graph children.</p>
                 <h2 class="off-left">Properties</h2>
 
                 
+                    <div id="property_ajaxthrottles" class="property item">
+    <h3 class="name"><code>ajaxthrottles</code></h3>
+    <span class="type">Array</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_core_multigraph.js.html#l52"><code>src&#x2F;core&#x2F;multigraph.js:52</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>JavaScript array of ajax throttles; each entry in this array is an
+object with the following properties:
+   regex        : regular expression for matching URLs
+   ajaxthrottle : instance of $.ajaxthrottle</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_busySpinner" class="property item">
+    <h3 class="name"><code>busySpinner</code></h3>
+    <span class="type">HTML Element</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_core_multigraph.js.html#l121"><code>src&#x2F;core&#x2F;multigraph.js:121</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>The busy spinner</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
                     <div id="property_div" class="property item">
     <h3 class="name"><code>div</code></h3>
     <span class="type">HTML Element</span>
@@ -1187,6 +1314,50 @@ each of its graph children.</p>
 
     <div class="description">
         <p>Jermiane Attr_List of all the graphs in a Multigraph.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_mugl" class="property item">
+    <h3 class="name"><code>mugl</code></h3>
+    <span class="type">String</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_core_multigraph.js.html#l43"><code>src&#x2F;core&#x2F;multigraph.js:43</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>The url for the mugl file this graph was created from, if any</p>
     </div>
 
     

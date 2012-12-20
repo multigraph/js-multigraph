@@ -3,11 +3,11 @@
 <head>
     <meta charset="utf-8">
     <title>src&#x2F;core&#x2F;graph.js - js-Multigraph</title>
-    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.7.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
+    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0pr2&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
     <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
-    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.7.0&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.8.0pr2&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
 </head>
 <body class="yui3-skin-sam">
 
@@ -145,6 +145,7 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
     var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues),
         Graph = new window.jermaine.Model( &quot;Graph&quot;, function () {
+
             &#x2F;**
              * Child model which controls the properties of the Graph&#x27;s Window.
              *
@@ -250,7 +251,7 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
                 return val instanceof Box;
             });
             &#x2F;**
-             * Stroes the computed width and height of the Graph&#x27;s plotBox.
+             * Stores the computed width and height of the Graph&#x27;s plotBox.
              *
              * @property plotBox
              * @type {}
@@ -258,6 +259,17 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
              *&#x2F;
             this.hasA(&quot;plotBox&quot;).which.validatesWith(function (val) {
                 return val instanceof Box;
+            });
+
+            &#x2F;**
+             * The containing Multigraph object
+             *
+             * @property multigraph
+             * @type {}
+             * @author mbp
+             *&#x2F;
+            this.hasA(&quot;multigraph&quot;).which.validatesWith(function (val) {
+                return val instanceof window.multigraph.core.Multigraph;
             });
             
             this.isBuiltWith(function () {
@@ -267,6 +279,23 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
             });
 
             this.respondsTo(&quot;postParse&quot;, function () {
+                var i,
+                    that = this,
+                    handleAjaxEvent = function(event) {
+                        if (event.action === &#x27;start&#x27;) {
+                            if (that.multigraph()) {
+                                that.multigraph().busySpinnerLevel(1);
+                            }
+                        } else if (event.action === &#x27;complete&#x27;) {
+                            if (that.multigraph()) {
+                                that.multigraph().busySpinnerLevel(-1);
+                            }
+                        }
+                    };
+
+                for (i=0; i&lt;this.data().size(); ++i) {
+                    this.data().at(i).addListener(&quot;ajaxEvent&quot;, handleAjaxEvent);
+                }
             });
 
             &#x2F;**

@@ -1478,7 +1478,7 @@
         },
         {
             "file": "src/core/graph.js",
-            "line": 20,
+            "line": 21,
             "description": "Child model which controls the properties of the Graph's Window.",
             "itemtype": "property",
             "name": "window",
@@ -1490,7 +1490,7 @@
         },
         {
             "file": "src/core/graph.js",
-            "line": 30,
+            "line": 31,
             "description": "Child model which controls the properties of the Graph's Plotarea.",
             "itemtype": "property",
             "name": "plotarea",
@@ -1502,7 +1502,7 @@
         },
         {
             "file": "src/core/graph.js",
-            "line": 42,
+            "line": 43,
             "description": "Child model which controls the properties of the Graph's Legend.",
             "itemtype": "property",
             "name": "legend",
@@ -1514,7 +1514,7 @@
         },
         {
             "file": "src/core/graph.js",
-            "line": 52,
+            "line": 53,
             "description": "Child model which controls the properties of the Graph's Background.",
             "itemtype": "property",
             "name": "background",
@@ -1526,7 +1526,7 @@
         },
         {
             "file": "src/core/graph.js",
-            "line": 63,
+            "line": 64,
             "description": "Child model which controls the properties of the Graph's Title.",
             "itemtype": "property",
             "name": "title",
@@ -1538,7 +1538,7 @@
         },
         {
             "file": "src/core/graph.js",
-            "line": 73,
+            "line": 74,
             "description": "Jermaine Attr_List of the Graph's Axes.",
             "itemtype": "property",
             "name": "axes",
@@ -1550,7 +1550,7 @@
         },
         {
             "file": "src/core/graph.js",
-            "line": 83,
+            "line": 84,
             "description": "Jermiane Attr_List of the Graph's Plots.",
             "itemtype": "property",
             "name": "plots",
@@ -1562,7 +1562,7 @@
         },
         {
             "file": "src/core/graph.js",
-            "line": 93,
+            "line": 94,
             "description": "Jermiane Attr_List of the Graph's Data sets.",
             "itemtype": "property",
             "name": "data",
@@ -1574,7 +1574,7 @@
         },
         {
             "file": "src/core/graph.js",
-            "line": 104,
+            "line": 105,
             "description": "Stores the computed width and height of the Graph's windowBox.",
             "itemtype": "property",
             "name": "windowBox",
@@ -1586,7 +1586,7 @@
         },
         {
             "file": "src/core/graph.js",
-            "line": 114,
+            "line": 115,
             "description": "Stores the computed width and height of the Graph's paddingBox.",
             "itemtype": "property",
             "name": "paddingBox",
@@ -1598,8 +1598,8 @@
         },
         {
             "file": "src/core/graph.js",
-            "line": 124,
-            "description": "Stroes the computed width and height of the Graph's plotBox.",
+            "line": 125,
+            "description": "Stores the computed width and height of the Graph's plotBox.",
             "itemtype": "property",
             "name": "plotBox",
             "type": "{}",
@@ -1610,7 +1610,19 @@
         },
         {
             "file": "src/core/graph.js",
-            "line": 144,
+            "line": 136,
+            "description": "The containing Multigraph object",
+            "itemtype": "property",
+            "name": "multigraph",
+            "type": "{}",
+            "author": "mbp",
+            "class": "Graph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/graph.js",
+            "line": 173,
             "description": "Initializes the Graph's geometry. Determines the width and height of the Graph's `windowBox`,\n`paddingBox` and `plotBox`; calls its Axes' and Legend's implementations of\n`initializeGeometry`.",
             "itemtype": "method",
             "name": "initializeGeometry",
@@ -1638,7 +1650,7 @@
         },
         {
             "file": "src/core/graph.js",
-            "line": 190,
+            "line": 219,
             "description": "Convience function for registering callback functions on the Graph's `Data` models. Adds\n`dataReady` event listeners to each of the Graph's `Data` models.",
             "itemtype": "method",
             "name": "registerCommonDataCallback",
@@ -1656,7 +1668,7 @@
         },
         {
             "file": "src/core/graph.js",
-            "line": 205,
+            "line": 234,
             "itemtype": "method",
             "name": "pauseAllData",
             "author": "jrfrimme",
@@ -1666,7 +1678,7 @@
         },
         {
             "file": "src/core/graph.js",
-            "line": 219,
+            "line": 248,
             "itemtype": "method",
             "name": "resumeAllData",
             "author": "jrfrimme",
@@ -1676,7 +1688,7 @@
         },
         {
             "file": "src/core/graph.js",
-            "line": 233,
+            "line": 262,
             "itemtype": "method",
             "name": "findNearestAxis",
             "params": [
@@ -2375,6 +2387,42 @@
         {
             "file": "src/core/multigraph.js",
             "line": 43,
+            "description": "The url for the mugl file this graph was created from, if any",
+            "itemtype": "property",
+            "name": "mugl",
+            "type": "{string}",
+            "author": "mbp",
+            "class": "Multigraph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/multigraph.js",
+            "line": 52,
+            "description": "JavaScript array of ajax throttles; each entry in this array is an\nobject with the following properties:\n   regex        : regular expression for matching URLs\n   ajaxthrottle : instance of $.ajaxthrottle",
+            "itemtype": "property",
+            "name": "ajaxthrottles",
+            "type": "{Array}",
+            "author": "mbp",
+            "class": "Multigraph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/multigraph.js",
+            "line": 121,
+            "description": "The busy spinner",
+            "itemtype": "property",
+            "name": "busySpinner",
+            "type": "{HTML Element}",
+            "author": "mbp",
+            "class": "Multigraph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/multigraph.js",
+            "line": 137,
             "description": "Initializes the Multigraph's geometry by calling the `initializeGeometry` function of\neach of its graph children.",
             "itemtype": "method",
             "name": "initializeGeometry",
@@ -2402,7 +2450,7 @@
         },
         {
             "file": "src/core/multigraph.js",
-            "line": 60,
+            "line": 154,
             "description": "Convience function for registering callback functions for data becoming ready.",
             "itemtype": "method",
             "name": "registerCommonDataCallback",
@@ -2420,7 +2468,7 @@
         },
         {
             "file": "src/core/multigraph.js",
-            "line": 76,
+            "line": 170,
             "description": "Determines if the browser supports canvas elements.",
             "itemtype": "method",
             "name": "browserHasCanvasSupport",
@@ -2434,7 +2482,7 @@
         },
         {
             "file": "src/core/multigraph.js",
-            "line": 96,
+            "line": 190,
             "description": "Creates a Multigraph according to specified options. Returns a\njQuery `promise` which interacts with the multigraph through its\n`done` function.",
             "itemtype": "method",
             "name": "createGraph",
@@ -2451,8 +2499,13 @@
                         },
                         {
                             "name": "mugl",
-                            "description": "(REQUIRED) the URL from which the MUGL\n      file for the Multigraph can be loaded",
+                            "description": "(REQUIRED, unless muglString is present)\n      the URL from which the MUGL\n      file for the Multigraph can be loaded",
                             "type": "URI"
+                        },
+                        {
+                            "name": "muglString",
+                            "description": "(REQUIRED, unless mugl is present)\n      a string containing the MUGL XML for the graph",
+                            "type": "String"
                         },
                         {
                             "name": "driver",
@@ -2461,7 +2514,7 @@
                         },
                         {
                             "name": "error",
-                            "description": "(OPTIONAL) A function for\n      displaying error messages to the user.  Multigraph will\n      call this function if and when it encounters an error.  The\n      function should receive a single argument which is an\n      instance of the JavaScrip Error object.  The default is to\n      use Multigraph's own internal mechanism for displaying user\n      messages.",
+                            "description": "(OPTIONAL) A function for\n      displaying error messages to the user.  Multigraph will\n      call this function if and when it encounters an error.  The\n      function should receive a single argument which is an\n      instance of the JavaScript Error object.  The default is to\n      use Multigraph's own internal mechanism for displaying user\n      messages.",
                             "type": "Function"
                         },
                         {
@@ -2483,7 +2536,7 @@
         },
         {
             "file": "src/core/multigraph.js",
-            "line": 225,
+            "line": 323,
             "description": "`window.multigraph.create` is an alias for `window.multigraph.core.Multigraph.createGraph`.",
             "itemtype": "method",
             "name": "window.multigraph.create",
@@ -2533,7 +2586,7 @@
         },
         {
             "file": "src/core/multigraph.js",
-            "line": 271,
+            "line": 369,
             "description": "Creates default error and warning functions for multigraph.",
             "itemtype": "method",
             "name": "createDefaultMessageHandlers",
@@ -2686,7 +2739,7 @@
         },
         {
             "file": "src/core/web_service_data.js",
-            "line": 43,
+            "line": 56,
             "description": "A pointer to the head WebServiceDataCacheNode in this WebServieData's cache.",
             "itemtype": "property",
             "name": "cacheHead",
@@ -2698,7 +2751,7 @@
         },
         {
             "file": "src/core/web_service_data.js",
-            "line": 56,
+            "line": 69,
             "description": "A pointer to the tail WebServiceDataCacheNode in this WebServieData's cache.",
             "itemtype": "property",
             "name": "cacheTail",
@@ -2710,7 +2763,7 @@
         },
         {
             "file": "src/core/web_service_data.js",
-            "line": 69,
+            "line": 82,
             "description": "Return a pointer to the first WebServiceDataCacheNode in this WebServieData's cache\nthat actually contains data, if any.  If the cache doesn't contain any data, return null.",
             "itemtype": "method",
             "name": "dataHead",
@@ -2725,7 +2778,7 @@
         },
         {
             "file": "src/core/web_service_data.js",
-            "line": 84,
+            "line": 97,
             "description": "Return a pointer to the last WebServiceDataCacheNode in this WebServieData's cache\nthat actually contains data, if any.  If the cache doesn't contain any data, return null.",
             "itemtype": "method",
             "name": "dataTail",
@@ -2740,7 +2793,7 @@
         },
         {
             "file": "src/core/web_service_data.js",
-            "line": 99,
+            "line": 112,
             "description": "Insert a WebServiceCacheNode into this WebService's cache.\nIf this node's coveredMin is less than the cache head's\ncoveredMin, insert it at the head; otherwise insert it at\nthe tail.  Note that nodes are only inserted either at the\nhead or at the tail of the cache --- not in the middle.",
             "itemtype": "method",
             "name": "insertCacheNode",
@@ -2758,7 +2811,7 @@
         },
         {
             "file": "src/core/web_service_data.js",
-            "line": 156,
+            "line": 169,
             "description": "Initiate requests needed to fetch data between coveredMin and coveredMax, if any.",
             "itemtype": "method",
             "name": "insureCoveredRange",
