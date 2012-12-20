@@ -7,3 +7,6 @@
 [submodule "mugl-schema"]
 	path = mugl-schema
 	url = https://github.com/multigraph/mugl-schema.git
+[submodule "lib/ajaxthrottle"]
+	path = lib/ajaxthrottle
+	url = https://github.com/nemac/ajaxthrottle.git
