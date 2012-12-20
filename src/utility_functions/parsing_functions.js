@@ -349,6 +349,12 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
                     "pad": 2
                 }
             },
+            "throttle": {
+                "pattern"    : "",
+                "requests"   : 0,
+                "period"     : 0,
+                "concurrent" : 0
+            },
             "data": {
                 "variables": {
                     "variable": {

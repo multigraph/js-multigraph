@@ -96,4 +96,54 @@ describe("Multigraph", function () {
 
     });
 
+    describe("ajaxthrottles", function () {
+        it("should have an array of ajaxthrottles", function () {
+            expect(window.multigraph.utilityFunctions.typeOf(mg.ajaxthrottles())).toBe('array');
+        });
+        it("should be able to add an ajaxthrottle", function() {
+            mg.addAjaxThrottle("foo", 1,2,3);
+            expect(mg.ajaxthrottles().length).toEqual(1);
+            expect(typeof(mg.ajaxthrottles()[0].ajaxthrottle.ajax)).toBe('function');
+        });
+        it("should be able to add a single ajaxthrottle and retrieve it based on a url pattern",
+           function() {
+               mg.addAjaxThrottle("^http://www.example.com", 1,2,3);
+               var t = mg.getAjaxThrottle("http://www.example.com/foo/bar");
+               expect(t).not.toBeUndefined();
+               expect(typeof(t.ajax)).toBe('function');
+               t = mg.getAjaxThrottle("http://www.example.com/bat/bazr");
+               expect(t).not.toBeUndefined();
+               expect(typeof(t.ajax)).toBe('function');
+               t = mg.getAjaxThrottle("http://www.google.com/no/matching/pattern");
+               expect(t).toBeUndefined();
+        });
+        it("should be able to add two throttles with two different patterns and match on both of them",
+           function() {
+               mg.addAjaxThrottle("^http://www.example.com", 1,2,3);
+               mg.addAjaxThrottle("^http://www.google.com", 4,5,6);
+
+               var t1 = mg.getAjaxThrottle("http://www.example.com/foo/bar");
+               expect(t1).not.toBeUndefined();
+
+               var t2 = mg.getAjaxThrottle("http://www.google.com/foo/bar");
+               expect(t2).not.toBeUndefined();
+               expect(t2).not.toEqual(t1);
+
+               var t3 = mg.getAjaxThrottle("http://www.yahoo.com/foo/bar");
+               expect(t3).toBeUndefined();
+        });
+        it("should be able to add a throttle with an empty pattern and have it match everything",
+           function() {
+               mg.addAjaxThrottle("", 1,2,3);
+
+               var t1 = mg.getAjaxThrottle("http://www.example.com/foo/bar");
+               expect(t1).not.toBeUndefined();
+
+               mg.addAjaxThrottle("^http://www.example.com", 1,2,3);
+               var t2 = mg.getAjaxThrottle("http://www.example.com/foo/bar");
+               expect(t2).not.toBeUndefined();
+               expect(t2).toEqual(t1);
+        });
+    });
+
 });

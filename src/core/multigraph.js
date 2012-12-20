@@ -49,6 +49,41 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          */
         this.hasA("mugl");
 
+        /**
+         * JavaScript array of ajax throttles; each entry in this array is an
+         * object with the following properties:
+         *    regex        : regular expression for matching URLs
+         *    ajaxthrottle : instance of $.ajaxthrottle
+         * 
+         * @property ajaxthrottles
+         * @type {Array}
+         * @author mbp
+         */
+        this.hasA("ajaxthrottles");
+
+        this.isBuiltWith(function() {
+            this.ajaxthrottles([]);
+        });
+
+        this.respondsTo("addAjaxThrottle", function (pattern, requests, period, concurrent) {
+            this.ajaxthrottles().push({
+                regex        : pattern ? new RegExp(pattern) : undefined,
+                ajaxthrottle : window.multigraph.jQuery.ajaxthrottle(requests, period, concurrent)
+            });
+        });
+
+        this.respondsTo("getAjaxThrottle", function (url) {
+            var throttle = undefined;
+            window.multigraph.jQuery.each(this.ajaxthrottles(), function() {
+                if (!this.regex || this.regex.test(url)) {
+                    throttle = this.ajaxthrottle;
+                    return false;
+                }
+                return true;
+            });
+            return throttle;
+        });
+
         /*
          * This function transforms a given URL so that it
          * is relative to the same base as the URL from which the MUGL

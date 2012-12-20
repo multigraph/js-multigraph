@@ -52,7 +52,8 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     var filename = window.multigraph.jQuery(csv_xml).attr("location");
                     data = new CSVData(dataVariables,
                                        multigraph ? multigraph.rebaseUrl(filename) : filename,
-                                       messageHandler);
+                                       messageHandler,
+                                       multigraph ? multigraph.getAjaxThrottle(filename) : undefined);
                 }
 
                 // if we have a <service> section, parse it and return a WebServiceData instance:

@@ -13,6 +13,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.isA(ArrayData);
         this.hasA("filename").which.isA("string");
         this.hasA("messageHandler");
+        this.hasA("ajaxthrottle");
         this.hasA("dataIsReady").which.isA("boolean").and.defaultsTo(false);
 
         this.respondsTo("getIterator", function (columnIds, min, max, buffer) {
@@ -34,14 +35,19 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             }
         });
 
-        this.isBuiltWith("columns", "filename", "%messageHandler", function () {
-            var that = this;
+        this.isBuiltWith("columns", "filename", "%messageHandler", "%ajaxthrottle", function () {
+            var that         = this,
+                ajaxthrottle = this.ajaxthrottle();
+
+            if (ajaxthrottle === undefined) {
+                ajaxthrottle = window.multigraph.jQuery;
+            }
 
             this.init();
 
             if (that.filename() !== undefined) {
                 that.emit({type : 'ajaxEvent', action : 'start'});
-                window.multigraph.jQuery.ajax({
+                ajaxthrottle.ajax({
                     url : that.filename(),
 
                     success : function (data) {

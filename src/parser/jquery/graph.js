@@ -43,7 +43,9 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
         
 
         ns.core.Graph[parse] = function (xml, multigraph, messageHandler) {
-            var graph = new ns.core.Graph();
+            var graph = new ns.core.Graph(),
+                defaults = window.multigraph.utilityFunctions.getDefaultValuesFromXSD();
+
             graph.multigraph(multigraph);
             if (xml) {
 
@@ -98,6 +100,13 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     //    mbp Mon Nov 12 16:05:21 2012
                     //throw new Error("Graph Data Error: No data tags specified");
                 }
+                window.multigraph.jQuery.each(xml.find(">throttle"), function (i,e) {
+                    var pattern    = $(e).attr('pattern')    ? $(e).attr('pattern')    : defaults.throttle.pattern,
+                        requests   = $(e).attr('requests')   ? $(e).attr('requests')   : defaults.throttle.requests,
+                        period     = $(e).attr('period')     ? $(e).attr('period')     : defaults.throttle.period,
+                        concurrent = $(e).attr('concurrent') ? $(e).attr('concurrent') : defaults.throttle.concurrent;
+                    multigraph.addAjaxThrottle(pattern, requests, period, concurrent);
+                });
                 window.multigraph.jQuery.each(xml.find(">data"), function (i,e) {
                     graph.data().add( ns.core.Data[parse](window.multigraph.jQuery(e), graph.multigraph(), messageHandler) );
                 });
