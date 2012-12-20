@@ -150,7 +150,11 @@
   </plot>
   
 
-
+  <throttle
+      pattern="^http://www.multigraph.org"
+      requests="2"
+      period="5"
+      concurrent="2"/>
   
   <data>
     <variables>
