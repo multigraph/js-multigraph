@@ -1,3 +1,9 @@
+Version 4.0rc6 (2012-12-20)
+---------------------------
+
+* adds <throttle> mugl element for throttling ajax requests
+* a few very minor tweaks to MUGL spec and processing
+
 Version 4.0rc5 (2012-12-12)
 ---------------------------
 
