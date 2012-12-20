@@ -37,7 +37,7 @@ describe("Axis Label serialization", function () {
         labeler.densityfactor(0.9);
         expect(labeler.serialize()).toEqual(xmlString);
 
-        xmlString = '<label start="10" angle="-30" anchor="1,1" spacing="10"/>';
+        xmlString = '<label start="10" angle="-30" anchor="1,1" spacing="10" densityfactor="1"/>';
         labeler = new Labeler(new Axis(Axis.HORIZONTAL));
         labeler.start(DataValue.parse(DataValue.NUMBER, 10));
         labeler.angle(-30);
