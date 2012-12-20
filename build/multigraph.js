@@ -8177,7 +8177,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasA("format").which.isA("string");
         this.hasA("formatter").which.validatesWith(ns.DataFormatter.isInstance);
         this.hasA("messageHandler");
-        this.isBuiltWith("columns", "serviceaddress", "%messageHandler", function () {
+        this.hasA("ajaxthrottle");
+        this.isBuiltWith("columns", "serviceaddress", "%messageHandler", "%ajaxthrottle", function () {
             this.init();
             if (this.columns().size() > 0) {
                 var column0Type = this.columns().at(0).type();
@@ -8185,6 +8186,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                     this.format(column0Type===ns.DataValue.NUMBER ? "%f" : "%Y%M%D%H%i%s");
                 }
                 this.formatter(ns.DataFormatter.create(column0Type, this.format()));
+            }
+            if (this.ajaxthrottle() === undefined) {
+                this.ajaxthrottle(window.multigraph.jQuery);
             }
         });
 
@@ -8366,8 +8370,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             requestURL = this.constructRequestURL(min, max);
 
             // initiate the fetch request
-            that.emit({type : 'ajaxEvent', action : 'start'});
-            window.multigraph.jQuery.ajax({
+            this.emit({type : 'ajaxEvent', action : 'start'});
+            this.ajaxthrottle().ajax({
                 url      : requestURL,
                 dataType : "text",
                 success  : function(data) {
@@ -9269,7 +9273,9 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     service_xml = service_xml[0];
                     var location = window.multigraph.jQuery(service_xml).attr("location");
                     data = new WebServiceData(dataVariables,
-                                              multigraph ? multigraph.rebaseUrl(location) : location);
+                                              multigraph ? multigraph.rebaseUrl(location) : location,
+                                              messageHandler,
+                                              multigraph ? multigraph.getAjaxThrottle(filename) : undefined);
                     var format = window.multigraph.jQuery(service_xml).attr("format");
                     if (format) {
                         data.format(format);
