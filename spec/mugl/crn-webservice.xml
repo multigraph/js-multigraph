@@ -152,9 +152,9 @@
 
   <throttle
       pattern="^http://www.multigraph.org"
-      requests="2"
-      period="5"
-      concurrent="2"/>
+      requests="4"
+      period="5000"
+      concurrent="4"/>
   
   <data>
     <variables>

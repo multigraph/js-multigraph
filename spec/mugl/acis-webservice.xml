@@ -62,5 +62,11 @@
     <service location="http://acis.multigraph.org/acisdata/13881-1/maxt,mint,normal_maxt,normal_mint/"/>
   </data>
 
+  <throttle
+      pattern="^http://acis.multigraph.org"
+      requests="1"
+      period="5000"
+      concurrent="1"/>
+
 </mugl>
 

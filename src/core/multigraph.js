@@ -68,7 +68,11 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.respondsTo("addAjaxThrottle", function (pattern, requests, period, concurrent) {
             this.ajaxthrottles().push({
                 regex        : pattern ? new RegExp(pattern) : undefined,
-                ajaxthrottle : window.multigraph.jQuery.ajaxthrottle(requests, period, concurrent)
+                ajaxthrottle : window.multigraph.jQuery.ajaxthrottle({
+                    numRequestsPerTimePeriod : parseInt(requests,10),
+                    timePeriod               : parseInt(period, 10),
+                    maxConcurrent            : parseInt(concurrent, 10)
+                })
             });
         });
 
