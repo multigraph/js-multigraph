@@ -62,7 +62,9 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     service_xml = service_xml[0];
                     var location = window.multigraph.jQuery(service_xml).attr("location");
                     data = new WebServiceData(dataVariables,
-                                              multigraph ? multigraph.rebaseUrl(location) : location);
+                                              multigraph ? multigraph.rebaseUrl(location) : location,
+                                              messageHandler,
+                                              multigraph ? multigraph.getAjaxThrottle(filename) : undefined);
                     var format = window.multigraph.jQuery(service_xml).attr("format");
                     if (format) {
                         data.format(format);
