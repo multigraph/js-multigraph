@@ -6816,7 +6816,11 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.respondsTo("addAjaxThrottle", function (pattern, requests, period, concurrent) {
             this.ajaxthrottles().push({
                 regex        : pattern ? new RegExp(pattern) : undefined,
-                ajaxthrottle : window.multigraph.jQuery.ajaxthrottle(requests, period, concurrent)
+                ajaxthrottle : window.multigraph.jQuery.ajaxthrottle({
+                    numRequestsPerTimePeriod : parseInt(requests,10),
+                    timePeriod               : parseInt(period, 10),
+                    maxConcurrent            : parseInt(concurrent, 10)
+                })
             });
         });
 
@@ -9275,7 +9279,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     data = new WebServiceData(dataVariables,
                                               multigraph ? multigraph.rebaseUrl(location) : location,
                                               messageHandler,
-                                              multigraph ? multigraph.getAjaxThrottle(filename) : undefined);
+                                              multigraph ? multigraph.getAjaxThrottle(location) : undefined);
                     var format = window.multigraph.jQuery(service_xml).attr("format");
                     if (format) {
                         data.format(format);
