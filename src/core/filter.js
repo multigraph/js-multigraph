@@ -6,7 +6,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.plot.filter);
 
     Filter = new window.jermaine.Model( "Filter", function () {
-        this.hasMany("options").which.validatesWith(function (option) {
+        this.hasMany("options").eachOfWhich.validatesWith(function (option) {
             return option instanceof ns.FilterOption;
         });
         this.hasA("type").which.validatesWith(function (type) {

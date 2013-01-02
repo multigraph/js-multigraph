@@ -6,7 +6,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.plot.datatips);
 
     Datatips = new window.jermaine.Model( "Datatips", function () {
-        this.hasMany("variables").which.validatesWith(function (variable) {
+        this.hasMany("variables").eachOfWhich.validateWith(function (variable) {
             return variable instanceof ns.DatatipsVariable;
         });
         this.hasA("format").which.validatesWith(function (format) {

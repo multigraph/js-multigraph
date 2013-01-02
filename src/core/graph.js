@@ -78,7 +78,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
              * @type {Axis}
              * @author jrfrimme
              */
-            this.hasMany("axes").which.validatesWith(function (axis) {
+            this.hasMany("axes").eachOfWhich.validateWith(function (axis) {
                 return axis instanceof ns.Axis;
             });
             /**
@@ -88,7 +88,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
              * @type {Plot}
              * @author jrfrimme
              */
-            this.hasMany("plots").which.validatesWith(function (plot) {
+            this.hasMany("plots").eachOfWhich.validateWith(function (plot) {
                 return plot instanceof ns.Plot;
             });
             /**
@@ -98,7 +98,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
              * @type {Data}
              * @author jrfrimme
              */
-            this.hasMany("data").which.validatesWith(function (data) {
+            this.hasMany("data").eachOfWhich.validateWith(function (data) {
                 return data instanceof ns.Data;
             });
 

@@ -32,7 +32,7 @@ describe("Axis", function () {
         it("should throw an error if the parameter is not a string", function () {
             expect(function () {
                 a.id(5);
-            }).toThrow(new Error("validator failed with parameter 5"));
+            }).toThrow(new Error("5 should be a string"));
         });
     });
 

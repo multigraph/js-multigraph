@@ -240,7 +240,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 // function.  Otherwise, the validator captures the 'options' array and the
                 // local loop variable i instead, and evaluates options[i].type when validation
                 // is performed!
-                OptionsModel.hasMany(optionName).eachOfWhich.validatesWith(function (v) {
+                OptionsModel.hasMany(optionName).eachOfWhich.validateWith(function (v) {
                     return v instanceof optionType;
                 });
             };

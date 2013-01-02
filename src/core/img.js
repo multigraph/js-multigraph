@@ -4,9 +4,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.background.img),
         Img = new window.jermaine.Model( "Img", function () {
-            this.hasA("src").which.validatesWith(function (src) {
-                return typeof(src) === "string";
-            });
+            this.hasA("src").which.isA("string");
             this.hasA("anchor").which.validatesWith(function (anchor) {
                 return anchor instanceof window.multigraph.math.Point;
             });

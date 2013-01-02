@@ -23,7 +23,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasA("title").which.validatesWith(function (title) {
             return title instanceof ns.AxisTitle;
         });
-        this.hasMany("labelers").which.validatesWith(function (labelers) {
+        this.hasMany("labelers").eachOfWhich.validateWith(function (labelers) {
             return labelers instanceof ns.Labeler;
         });
         this.hasA("grid").which.validatesWith(function (grid) {
@@ -38,9 +38,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasA("binding").which.validatesWith(function (binding) {
             return binding === null || binding instanceof ns.AxisBinding;
         });
-        this.hasAn("id").which.validatesWith(function (id) {
-            return typeof(id) === "string";
-        });
+        this.hasAn("id").which.isA("string");
         this.hasA("type").which.isOneOf(ns.DataValue.types());
         this.hasA("length").which.validatesWith(function (length) {
             return length instanceof window.multigraph.math.Displacement;
@@ -129,10 +127,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
 
 
-        this.hasA("positionbase").which.validatesWith(function (positionbase) {
-            //deprecated
-            return typeof(positionbase) === "string";
-        });
+        this.hasA("positionbase").which.isA("string"); // deprecated
         this.hasA("color").which.validatesWith(function (color) {
             return color instanceof window.multigraph.math.RGBColor;
         });

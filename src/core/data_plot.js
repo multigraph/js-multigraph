@@ -7,7 +7,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     DataPlot = new window.jermaine.Model( "DataPlot", function () {
         this.isA(ns.Plot);
-        this.hasMany("variable").which.validatesWith(function (variable) {
+        this.hasMany("variable").eachOfWhich.validateWith(function (variable) {
             return variable instanceof ns.DataVariable || variable === null;
         });
         this.hasA("filter").which.validatesWith(function (filter) {
