@@ -178,33 +178,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             }
         });
 
-/*
-
-NOTE: Note sure why/if we need the two functions below; they're here
-because I copied/translated them from the Flash version.  If we do end
-up needing them, we need to first resolve the issue of converting
-to/from number values vs DataValue instances for min/max.
-
-    mbp Fri Nov 9 17:15:26 2012
-
-        this.respondsTo("setDataRangeNoBind", function (min, max, factor, offset) {
-            var axes = this.axes(),
-                j;
-            for (j=0; j<axes.length; ++j) {
-                axes[j].axis.setDataRangeNoBind((min * factor + offset - axes[j].offset) / axes[j].factor,
-                                                (max * factor + offset - axes[j].offset) / axes[j].factor);
-            }
-        });
-
-        AxisBinding.setAxisBindingDataRangeNoBind = function(bindingId, min, max, factor, offset) {
-            var binding = AxisBinding.getInstanceById(bindingId);
-            if (binding) {
-                binding.setDataRangeNoBind(min, max, factor, offset);
-            }
-        };
-*/
-
-
         /**
          * 
          *
