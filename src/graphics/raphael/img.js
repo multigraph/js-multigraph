@@ -26,7 +26,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 paddingTop = graph.window().margin().top() + graph.window().border();
                 plotLeft = paddingLeft + graph.window().padding().left() + graph.plotarea().margin().left() + graph.plotarea().border();
                 plotTop = paddingTop + graph.window().padding().top() + graph.plotarea().margin().top() + graph.plotarea().border();
-                if (this.frame() === "plot") {
+                if (this.frame() === ns.Img.PLOT) {
                     bx = plotLeft + window.multigraph.math.util.interp(this.base().x(), -1, 1, 0, graph.plotBox().width());
                     by = plotTop + window.multigraph.math.util.interp(this.base().y(), 1, -1, 0, graph.plotBox().height());
                 } else {
