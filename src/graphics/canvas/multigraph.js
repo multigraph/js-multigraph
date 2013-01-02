@@ -23,20 +23,10 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             if (this.width() > 0 && this.height() > 0) {
                 // create the canvas; store ref to the canvas object in this.canvas()
 
-/*
-                this.canvas($(
-"<canvas width=\""+this.width()+"\" height=\""+this.height()+"\"/>"
-).appendTo(
-$(this.div()).empty())[0]
-);
-*/
-
-
-                this.canvas($(
-"<canvas width=\""+this.width()+"\" height=\""+this.height()+"\"/>"
-).appendTo(
-$(this.div()))[0]
-);
+                this.canvas(
+                    $("<canvas width=\""+this.width()+"\" height=\""+this.height()+"\"/>")
+                        .appendTo($(this.div()))[0]
+                );
 
                 this.busySpinner($('<div style="position: absolute; left:5px; top:5px;"></div>') .
                                   appendTo($(this.div())) .

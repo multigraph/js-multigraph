@@ -7,35 +7,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             var h = text.origHeight();
             var w = text.origWidth();
 
-/*
-            var h = 8;
-            var w = 28;
-*/
-
             var ax = 0.5 * w * (anchor.x() + 1);
             var ay = 0.5 * h * (anchor.y() + 1);
-/*
-console.log('drawing text: ' + text.string());
-console.log('base = ' + base.serialize());
-console.log('anchor = ' + anchor.serialize());
-console.log('position = ' + position.serialize());
-console.log('angle = ' + angle);
-
-base.x(base.x() + 12);
-base.y(base.y() + 17);
-
-
-context.save();
-context.strokeStyle = '#ff0000';
-context.beginPath();
-context.moveTo(base.x()-50, base.y());
-context.lineTo(base.x()+50, base.y());
-context.moveTo(base.x(), base.y()-50);
-context.lineTo(base.x(), base.y()+50);
-context.closePath();
-context.stroke();
-context.restore();
-*/
 
             context.save();
             context.fillStyle = color.getHexString("#");
@@ -43,27 +16,10 @@ context.restore();
             //      into a single one for efficiency:
             context.transform(1,0,0,-1,0,2*base.y());
             context.transform(1,0,0,1,base.x(),base.y());
-/*
-context.save();
-context.beginPath();
-context.strokeStyle = '#0000ff';
-context.moveTo(0,0);
-context.lineTo(position.x(),-position.y());
-context.closePath();
-context.stroke();
-context.restore();
-*/
             context.transform(1,0,0,1,position.x(),-position.y());
             context.rotate(-angle*Math.PI/180.0);
             context.transform(1,0,0,1,-ax,ay);
             context.fillText(text.string(), 0, 0);
-/*
-            context.transform(1,0,0,-1,0,2*base.y());
-            context.transform(1,0,0,1,-ax+position.x(),ay-position.y());
-            context.transform(1,0,0,1,base.x(),base.y());
-            context.rotate(-angle*Math.PI/180.0);
-            context.fillText(text.string(), 0, 0);
-*/
             context.restore();
         };
 
