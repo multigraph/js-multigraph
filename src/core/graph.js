@@ -291,37 +291,35 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 return foundAxis;
             });
 
+            this.respondsTo("axisById", function (id) {
+                // return a pointer to the axis for this graph that has the given id, if any
+                var axes = this.axes(),
+                    i;
+                for (i = 0; i < axes.size(); ++i) {
+                    if (axes.at(i).id() === id) {
+                        return axes.at(i);
+                    }
+                }
+                return undefined;
+            });
+
+            this.respondsTo("variableById", function (id) {
+                // return a pointer to the variable for this graph that has the given id, if any
+                var data = this.data(),
+                    i,
+                    j;
+                for (i = 0; i < data.size(); ++i) {
+                    for (j = 0; j < data.at(i).columns().size(); ++j) {
+                        if (data.at(i).columns().at(j).id() === id) {
+                            return data.at(i).columns().at(j);
+                        }
+                    }
+                }
+                return undefined;
+            });
+
             window.multigraph.utilityFunctions.insertDefaults(this, defaultValues, attributes);
         });
-
-    //TODO: convert to "respondsTo" ???
-    Graph.prototype.axisById = function (id) {
-      // return a pointer to the axis for this graph that has the given id, if any
-        var axes = this.axes(),
-            i;
-        for (i = 0; i < axes.size(); ++i) {
-            if (axes.at(i).id() === id) {
-                return axes.at(i);
-            }
-        }
-        return undefined;
-    };
-
-    //TODO: convert to "respondsTo" ???
-    Graph.prototype.variableById = function (id) {
-      // return a pointer to the variable for this graph that has the given id, if any
-        var data = this.data(),
-            i,
-            j;
-        for (i = 0; i < data.size(); ++i) {
-            for (j = 0; j < data.at(i).columns().size(); ++j) {
-                if (data.at(i).columns().at(j).id() === id) {
-                    return data.at(i).columns().at(j);
-                }
-            }
-        }
-        return undefined;
-    };
 
     ns.Graph = Graph;
 
