@@ -3,21 +3,6 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 
     ns.mixin.add(function (ns) {
 
-/*
-        var measureTextWidth = function (context, string) {
-            var metrics = context.measureText(string);
-            return metrics.width;
-        };
-
-        var measureTextHeight = function (context, string) {
-            //NOTE: kludge: canvas cannot exactly measure text height, so we just return a value
-            //      estimated by using the width of an "M" as a substitute.  Maybe improve this
-            //      later by using a better workaround.
-            var metrics = context.measureText("M");
-            return metrics.width;
-        };
-*/
-
         var drawText = function (text, context, base, anchor, position, angle, color) {
             var h = text.origHeight();
             var w = text.origWidth();

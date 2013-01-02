@@ -5,10 +5,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         DataValue = ns.DataValue,
         Data = ns.Data;
 
-    /*var CSVData = function (filename) {
-
-    };*/
-
     var CSVData = window.jermaine.Model(function () {
         this.isA(ArrayData);
         this.hasA("filename").which.isA("string");

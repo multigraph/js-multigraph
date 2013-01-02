@@ -141,11 +141,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
         this.hasA("linewidth").which.isA("integer");
         this.hasA("orientation").which.validatesWith(Orientation.isInstance);
-/*
-        this.hasA("orientation").which.validatesWith(function (orientation) {
-            return (orientation === Axis.HORIZONTAL) || (orientation === Axis.VERTICAL);
-        });
-*/
         this.isBuiltWith("orientation", function () {
             if (this.grid() === undefined) {
                 this.grid(new ns.Grid());

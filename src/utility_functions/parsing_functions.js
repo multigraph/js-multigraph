@@ -24,26 +24,6 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
         return elem;
     };
 
-/*
-    ns.parseInteger = function (number) {
-        return parseInt(number, 10);
-    };
-
-    ns.parseIntegerOrUndefined = function (number) {
-        number = parseInt(number, 10);
-        return isNaN(number) === true ? undefined : number;
-    };
-
-    ns.parseDouble = function (number) {
-        return Number(number);
-    };
-
-    ns.parseDoubleOrUndefined = function (number) {
-        number = parseFloat(number);
-        return isNaN(number) === true ? undefined : number;
-    };
-*/
-
     ns.getDefaultValuesFromXSD = function () {
         
         return {
