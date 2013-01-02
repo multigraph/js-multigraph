@@ -13,15 +13,4 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
         return attributeStrings;
     };
 
-    ns.serializeChildModels = function (elem, children, childStrings, serialize) {
-        var i;
-
-        for (i = 0; i < children.length; i++) {
-            if (elem[children[i]]()) {
-                childStrings.push(elem[children[i]]()[serialize]());
-            }
-        }
-
-        return childStrings;
-    };
 });
