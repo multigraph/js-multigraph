@@ -18,7 +18,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * @for Multigraph
      * @constructor
      */
-    var Multigraph = new window.jermaine.Model( "Multigraph", function () {
+    var Multigraph = new window.jermaine.Model("Multigraph", function () {
 
         /**
          * Jermiane Attr_List of all the graphs in a Multigraph.

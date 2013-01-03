@@ -3,7 +3,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.horizontalaxis.zoom),
-        Zoom = new window.jermaine.Model( "Zoom", function () {
+        Zoom = new window.jermaine.Model("Zoom", function () {
 
             this.hasA("allowed").which.isA("boolean");
             this.hasA("min").which.validatesWith(function (min) {

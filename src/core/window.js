@@ -3,7 +3,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.window),
-        Window = new window.jermaine.Model( "Window", function () {
+        Window = new window.jermaine.Model("Window", function () {
 
             this.hasA("width").which.isA("integer");
 

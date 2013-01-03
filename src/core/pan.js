@@ -3,7 +3,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
     attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.horizontalaxis.pan),
-    Pan = new window.jermaine.Model( "Pan", function () {
+    Pan = new window.jermaine.Model("Pan", function () {
         this.hasA("allowed").which.isA("boolean");
         this.hasA("min").which.validatesWith(function (min) {
             return ns.DataValue.isInstance(min);

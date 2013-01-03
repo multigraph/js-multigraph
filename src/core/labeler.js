@@ -6,7 +6,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         Axis = ns.Axis,
         DataValue = ns.DataValue,
 
-        Labeler = new window.jermaine.Model( "Labeler", function () {
+        Labeler = new window.jermaine.Model("Labeler", function () {
 
             var getValue = function (valueOrFunction) {
                 if (typeof(valueOrFunction) === "function") {

@@ -16,7 +16,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      */
     var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues),
-        Graph = new window.jermaine.Model( "Graph", function () {
+        Graph = new window.jermaine.Model("Graph", function () {
 
             /**
              * Child model which controls the properties of the Graph's Window.

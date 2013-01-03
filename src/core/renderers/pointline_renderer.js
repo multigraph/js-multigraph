@@ -67,7 +67,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.plot.renderer);
 
-    PointlineRenderer = new window.jermaine.Model( "PointlineRenderer", function () {
+    PointlineRenderer = new window.jermaine.Model("PointlineRenderer", function () {
         this.isA(ns.Renderer);
         this.hasA("numberOfVariables").which.defaultsTo(2);
         //

@@ -66,7 +66,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     var BandRenderer;
 
-    BandRenderer = new window.jermaine.Model( "BandRenderer", function () {
+    BandRenderer = new window.jermaine.Model("BandRenderer", function () {
         this.isA(ns.Renderer);
         this.hasA("numberOfVariables").which.defaultsTo(3);
     });

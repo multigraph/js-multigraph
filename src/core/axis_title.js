@@ -18,7 +18,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * @constructor
      * @param {Axis} axis
      */
-    AxisTitle = new window.jermaine.Model( "AxisTitle", function () {
+    AxisTitle = new window.jermaine.Model("AxisTitle", function () {
         /**
          * Pointer to the Title's parent Axis jermiane model.
          *

@@ -14,7 +14,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * @constructor
      * @param string {String} The string stored in the Text model
      */
-    ns.Text = new window.jermaine.Model( "Text", function () {
+    ns.Text = new window.jermaine.Model("Text", function () {
         this.isBuiltWith("string");
 
         /**

@@ -3,7 +3,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.plot.datatips.variable),
-        DatatipsVariable = new window.jermaine.Model( "DatatipsVariable", function () {
+        DatatipsVariable = new window.jermaine.Model("DatatipsVariable", function () {
             this.hasA("format").which.validatesWith(function (format) {
                 return typeof(format) === "string";
             });

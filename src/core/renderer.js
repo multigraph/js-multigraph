@@ -8,7 +8,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.plot.renderer),
         Type = new window.multigraph.math.Enum("RendererType");
 
-    Renderer = new window.jermaine.Model( "Renderer", function () {
+    Renderer = new window.jermaine.Model("Renderer", function () {
         this.hasA("type").which.validatesWith(Type.isInstance);
         this.hasA("plot").which.validatesWith(function (plot) {
             return plot instanceof ns.Plot;

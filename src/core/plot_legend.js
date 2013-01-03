@@ -3,7 +3,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.plot.legend),
-        PlotLegend = new window.jermaine.Model( "PlotLegend", function () {
+        PlotLegend = new window.jermaine.Model("PlotLegend", function () {
             this.hasA("visible").which.isA("boolean");
             this.hasA("label").which.validatesWith(function (label) {
                 return label instanceof ns.Text;

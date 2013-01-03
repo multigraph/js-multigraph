@@ -5,7 +5,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.background);
 
-    Background = new window.jermaine.Model( "Background", function () {
+    Background = new window.jermaine.Model("Background", function () {
         this.hasA("color").which.validatesWith(function (color) {
             return color instanceof window.multigraph.math.RGBColor;
         }).defaultsTo(window.multigraph.math.RGBColor.parse(defaultValues.background.color));

@@ -25,7 +25,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * @constructor
      * @requires Point,RGBColor,Plot,Icon
     */
-    Legend = new window.jermaine.Model( "Legend", function () {
+    Legend = new window.jermaine.Model("Legend", function () {
         /**
          * The value which determines if the legend will be rendered; a value of `true` means the Legend will
          * be drawn while `false` means that it will not.

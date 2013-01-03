@@ -3,7 +3,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     var Plot;
 
-    Plot = new window.jermaine.Model( "Plot", function () {
+    Plot = new window.jermaine.Model("Plot", function () {
         this.hasA("legend").which.validatesWith(function (legend) {
             return legend instanceof ns.PlotLegend;
         });

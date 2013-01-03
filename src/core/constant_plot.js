@@ -4,7 +4,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.plot);
 
-    ns.ConstantPlot = new window.jermaine.Model( "ConstantPlot", function () {
+    ns.ConstantPlot = new window.jermaine.Model("ConstantPlot", function () {
         this.isA(ns.Plot);
         this.hasA("constantValue").which.validatesWith(ns.DataValue.isInstance);
 

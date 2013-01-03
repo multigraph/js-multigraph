@@ -3,7 +3,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.horizontalaxis.grid),
-        Grid = new window.jermaine.Model( "Grid", function () {
+        Grid = new window.jermaine.Model("Grid", function () {
             this.hasA("color").which.validatesWith(function (color) {
                 return color instanceof window.multigraph.math.RGBColor;
             });

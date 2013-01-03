@@ -54,7 +54,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     var RangeBarRenderer;
 
-    RangeBarRenderer = new window.jermaine.Model( "RangeBarRenderer", function () {
+    RangeBarRenderer = new window.jermaine.Model("RangeBarRenderer", function () {
         this.isA(ns.Renderer);
         this.hasA("numberOfVariables").which.defaultsTo(3);
     });

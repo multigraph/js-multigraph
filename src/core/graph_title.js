@@ -20,7 +20,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * @param {Graph} graph
      * @author jrfrimme
      */
-    Title = new window.jermaine.Model( "GraphTitle", function () {
+    Title = new window.jermaine.Model("GraphTitle", function () {
         /**
          * Pointer to the Title's parent Graph Jermaine model.
          *

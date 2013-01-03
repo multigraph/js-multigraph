@@ -19,7 +19,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * @constructor
      * @param {AxisOrientation} Orientation
      */
-    Axis = new window.jermaine.Model( "Axis", function () {
+    Axis = new window.jermaine.Model("Axis", function () {
         this.hasA("title").which.validatesWith(function (title) {
             return title instanceof ns.AxisTitle;
         });

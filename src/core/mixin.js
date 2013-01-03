@@ -36,7 +36,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * @for Mixin
      * @author mbp
      */
-    var Mixin = new window.jermaine.Model( "Mixin", function () {
+    var Mixin = new window.jermaine.Model("Mixin", function () {
 
         /**
          * The internal list of functions to be applied.
