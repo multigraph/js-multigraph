@@ -1571,26 +1571,6 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
         return elem;
     };
 
-/*
-    ns.parseInteger = function (number) {
-        return parseInt(number, 10);
-    };
-
-    ns.parseIntegerOrUndefined = function (number) {
-        number = parseInt(number, 10);
-        return isNaN(number) === true ? undefined : number;
-    };
-
-    ns.parseDouble = function (number) {
-        return Number(number);
-    };
-
-    ns.parseDoubleOrUndefined = function (number) {
-        number = parseFloat(number);
-        return isNaN(number) === true ? undefined : number;
-    };
-*/
-
     ns.getDefaultValuesFromXSD = function () {
         
         return {
@@ -1943,17 +1923,6 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
         return attributeStrings;
     };
 
-    ns.serializeChildModels = function (elem, children, childStrings, serialize) {
-        var i;
-
-        for (i = 0; i < children.length; i++) {
-            if (elem[children[i]]()) {
-                childStrings.push(elem[children[i]]()[serialize]());
-            }
-        }
-
-        return childStrings;
-    };
 });
 window.multigraph.util.namespace("window.multigraph.utilityFunctions", function (ns) {
     "use strict";
@@ -2858,7 +2827,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 // function.  Otherwise, the validator captures the 'options' array and the
                 // local loop variable i instead, and evaluates options[i].type when validation
                 // is performed!
-                OptionsModel.hasMany(optionName).eachOfWhich.validatesWith(function (v) {
+                OptionsModel.hasMany(optionName).eachOfWhich.validateWith(function (v) {
                     return v instanceof optionType;
                 });
             };
@@ -3824,7 +3793,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasA("title").which.validatesWith(function (title) {
             return title instanceof ns.AxisTitle;
         });
-        this.hasMany("labelers").which.validatesWith(function (labelers) {
+        this.hasMany("labelers").eachOfWhich.validateWith(function (labelers) {
             return labelers instanceof ns.Labeler;
         });
         this.hasA("grid").which.validatesWith(function (grid) {
@@ -3839,9 +3808,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasA("binding").which.validatesWith(function (binding) {
             return binding === null || binding instanceof ns.AxisBinding;
         });
-        this.hasAn("id").which.validatesWith(function (id) {
-            return typeof(id) === "string";
-        });
+        this.hasAn("id").which.isA("string");
         this.hasA("type").which.isOneOf(ns.DataValue.types());
         this.hasA("length").which.validatesWith(function (length) {
             return length instanceof window.multigraph.math.Displacement;
@@ -3930,10 +3897,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
 
 
-        this.hasA("positionbase").which.validatesWith(function (positionbase) {
-            //deprecated
-            return typeof(positionbase) === "string";
-        });
+        this.hasA("positionbase").which.isA("string"); // deprecated
         this.hasA("color").which.validatesWith(function (color) {
             return color instanceof window.multigraph.math.RGBColor;
         });
@@ -3947,11 +3911,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
         this.hasA("linewidth").which.isA("integer");
         this.hasA("orientation").which.validatesWith(Orientation.isInstance);
-/*
-        this.hasA("orientation").which.validatesWith(function (orientation) {
-            return (orientation === Axis.HORIZONTAL) || (orientation === Axis.VERTICAL);
-        });
-*/
         this.isBuiltWith("orientation", function () {
             if (this.grid() === undefined) {
                 this.grid(new ns.Grid());
@@ -4402,33 +4361,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             }
         });
 
-/*
-
-NOTE: Note sure why/if we need the two functions below; they're here
-because I copied/translated them from the Flash version.  If we do end
-up needing them, we need to first resolve the issue of converting
-to/from number values vs DataValue instances for min/max.
-
-    mbp Fri Nov 9 17:15:26 2012
-
-        this.respondsTo("setDataRangeNoBind", function (min, max, factor, offset) {
-            var axes = this.axes(),
-                j;
-            for (j=0; j<axes.length; ++j) {
-                axes[j].axis.setDataRangeNoBind((min * factor + offset - axes[j].offset) / axes[j].factor,
-                                                (max * factor + offset - axes[j].offset) / axes[j].factor);
-            }
-        });
-
-        AxisBinding.setAxisBindingDataRangeNoBind = function(bindingId, min, max, factor, offset) {
-            var binding = AxisBinding.getInstanceById(bindingId);
-            if (binding) {
-                binding.setDataRangeNoBind(min, max, factor, offset);
-            }
-        };
-*/
-
-
         /**
          * 
          *
@@ -4691,9 +4623,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.respondsTo("render", function (graph, graphicsContext) {
             // graphicsContext is an optional argument passed to ConstantPlot.render() by the
             // graphics driver, and used by that driver's implementation of Renderer.begin().
-            // It can be any objectded by the driver -- usually some kind of graphics
+            // It can be any object used by the driver -- usually some kind of graphics
             // context object.  It can also be omitted if a driver does not need it.
-            //var data = this.data().arraydata();
 
             var haxis = this.horizontalaxis();
             var renderer = this.renderer();
@@ -4720,10 +4651,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     var ArrayData = ns.ArrayData,
         DataValue = ns.DataValue,
         Data = ns.Data;
-
-    /*var CSVData = function (filename) {
-
-    };*/
 
     var CSVData = window.jermaine.Model(function () {
         this.isA(ArrayData);
@@ -4814,7 +4741,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     DataPlot = new window.jermaine.Model( "DataPlot", function () {
         this.isA(ns.Plot);
-        this.hasMany("variable").which.validatesWith(function (variable) {
+        this.hasMany("variable").eachOfWhich.validateWith(function (variable) {
             return variable instanceof ns.DataVariable || variable === null;
         });
         this.hasA("filter").which.validatesWith(function (filter) {
@@ -4879,7 +4806,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.plot.datatips);
 
     Datatips = new window.jermaine.Model( "Datatips", function () {
-        this.hasMany("variables").which.validatesWith(function (variable) {
+        this.hasMany("variables").eachOfWhich.validateWith(function (variable) {
             return variable instanceof ns.DatatipsVariable;
         });
         this.hasA("format").which.validatesWith(function (format) {
@@ -5364,7 +5291,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.plot.filter);
 
     Filter = new window.jermaine.Model( "Filter", function () {
-        this.hasMany("options").which.validatesWith(function (option) {
+        this.hasMany("options").eachOfWhich.validatesWith(function (option) {
             return option instanceof ns.FilterOption;
         });
         this.hasA("type").which.validatesWith(function (type) {
@@ -5475,7 +5402,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
              * @type {Axis}
              * @author jrfrimme
              */
-            this.hasMany("axes").which.validatesWith(function (axis) {
+            this.hasMany("axes").eachOfWhich.validateWith(function (axis) {
                 return axis instanceof ns.Axis;
             });
             /**
@@ -5485,7 +5412,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
              * @type {Plot}
              * @author jrfrimme
              */
-            this.hasMany("plots").which.validatesWith(function (plot) {
+            this.hasMany("plots").eachOfWhich.validateWith(function (plot) {
                 return plot instanceof ns.Plot;
             });
             /**
@@ -5495,7 +5422,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
              * @type {Data}
              * @author jrfrimme
              */
-            this.hasMany("data").which.validatesWith(function (data) {
+            this.hasMany("data").eachOfWhich.validateWith(function (data) {
                 return data instanceof ns.Data;
             });
 
@@ -5688,37 +5615,35 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 return foundAxis;
             });
 
+            this.respondsTo("axisById", function (id) {
+                // return a pointer to the axis for this graph that has the given id, if any
+                var axes = this.axes(),
+                    i;
+                for (i = 0; i < axes.size(); ++i) {
+                    if (axes.at(i).id() === id) {
+                        return axes.at(i);
+                    }
+                }
+                return undefined;
+            });
+
+            this.respondsTo("variableById", function (id) {
+                // return a pointer to the variable for this graph that has the given id, if any
+                var data = this.data(),
+                    i,
+                    j;
+                for (i = 0; i < data.size(); ++i) {
+                    for (j = 0; j < data.at(i).columns().size(); ++j) {
+                        if (data.at(i).columns().at(j).id() === id) {
+                            return data.at(i).columns().at(j);
+                        }
+                    }
+                }
+                return undefined;
+            });
+
             window.multigraph.utilityFunctions.insertDefaults(this, defaultValues, attributes);
         });
-
-    //TODO: convert to "respondsTo" ???
-    Graph.prototype.axisById = function (id) {
-      // return a pointer to the axis for this graph that has the given id, if any
-        var axes = this.axes(),
-            i;
-        for (i = 0; i < axes.size(); ++i) {
-            if (axes.at(i).id() === id) {
-                return axes.at(i);
-            }
-        }
-        return undefined;
-    };
-
-    //TODO: convert to "respondsTo" ???
-    Graph.prototype.variableById = function (id) {
-      // return a pointer to the variable for this graph that has the given id, if any
-        var data = this.data(),
-            i,
-            j;
-        for (i = 0; i < data.size(); ++i) {
-            for (j = 0; j < data.at(i).columns().size(); ++j) {
-                if (data.at(i).columns().at(j).id() === id) {
-                    return data.at(i).columns().at(j);
-                }
-            }
-        }
-        return undefined;
-    };
 
     ns.Graph = Graph;
 
@@ -5944,9 +5869,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.background.img),
         Img = new window.jermaine.Model( "Img", function () {
-            this.hasA("src").which.validatesWith(function (src) {
-                return typeof(src) === "string";
-            });
+            this.hasA("src").which.isA("string");
             this.hasA("anchor").which.validatesWith(function (anchor) {
                 return anchor instanceof window.multigraph.math.Point;
             });
@@ -6338,7 +6261,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @type {Plot}
          * @author jrfrimme
          */
-        this.hasMany("plots").which.validatesWith(function (plot) {
+        this.hasMany("plots").eachOfWhich.validateWith(function (plot) {
             return plot instanceof ns.Plot;
         });
 
@@ -6775,7 +6698,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @type {Graph}
          * @author jrfrimme
          */
-        this.hasMany("graphs").which.validatesWith(function (graph) {
+        this.hasMany("graphs").eachOfWhich.validateWith(function (graph) {
             return graph instanceof ns.Graph;
         });
 
@@ -9744,47 +9667,6 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
             return labeler;
         };
 
-/*
-        ns.core.Labeler[parse] = function (xml, axis, labels) {
-            var labeler;
-            if (xml && xml.attr("spacing") !== undefined) {
-                labeler = new ns.core.Labeler(axis);
-                labeler.spacing(xml.attr("spacing"));
-                if (xml.attr("format") !== undefined) {
-                    labeler.formatter(ns.core.DataFormatter.create(axis.type(), xml.attr("format")));
-                } else if (labels !== undefined) {
-                    labeler.formatter(labels.formatter());
-                }
-                if (xml.attr("start") !== undefined) {
-                    labeler.start(ns.core.DataValue.parse(axis.type(), xml.attr("start")));
-                } else if (labels !== undefined) {
-                    labeler.start(labels.start());
-                }
-                if (xml.attr("angle") !== undefined) {
-                    labeler.angle(parseFloat(xml.attr("angle")));
-                } else if (labels !== undefined) {
-                    labeler.angle(labels.angle());
-                }
-                if (xml.attr("position") !== undefined) { 
-                    labeler.position(ns.math.Point.parse(xml.attr("position")));
-                } else if (labels !== undefined) {
-                    labeler.position(labels.position());
-                }
-                if (xml.attr("anchor") !== undefined) {
-                    labeler.anchor(ns.math.Point.parse(xml.attr("anchor")));
-                } else if (labels !== undefined) {
-                    labeler.anchor(labels.anchor());
-                }
-                if (xml.attr("densityfactor") !== undefined) {
-                    labeler.densityfactor(parseFloat(xml.attr("densityfactor")));
-                } else if (labels !== undefined) {
-                    labeler.densityfactor(labels.densityfactor());
-                }
-            }
-            return labeler;
-        };
-*/
-        
     });
 
 });
@@ -17644,7 +17526,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 paddingTop = graph.window().margin().top() + graph.window().border();
                 plotLeft = paddingLeft + graph.window().padding().left() + graph.plotarea().margin().left() + graph.plotarea().border();
                 plotTop = paddingTop + graph.window().padding().top() + graph.plotarea().margin().top() + graph.plotarea().border();
-                if (this.frame() === "plot") {
+                if (this.frame() === ns.Img.PLOT) {
                     bx = plotLeft + window.multigraph.math.util.interp(this.base().x(), -1, 1, 0, graph.plotBox().width());
                     by = plotTop + window.multigraph.math.util.interp(this.base().y(), 1, -1, 0, graph.plotBox().height());
                 } else {
@@ -19377,7 +19259,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                 paddingTop = graph.window().margin().top() + graph.window().border();
                 plotLeft = paddingLeft + graph.window().padding().left() + graph.plotarea().margin().left() + graph.plotarea().border();
                 plotTop = paddingTop + graph.window().padding().top() + graph.plotarea().margin().top() + graph.plotarea().border();
-                if (this.frame() === "plot") {
+                if (this.frame() === ns.Img.PLOT) {
                     bx = plotLeft + window.multigraph.math.util.interp(this.base().x(), -1, 1, 0, graph.plotBox().width());
                     by = plotTop + window.multigraph.math.util.interp(this.base().y(), 1, -1, 0, graph.plotBox().height());
                 } else {
@@ -19410,54 +19292,12 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 
     ns.mixin.add(function (ns) {
 
-/*
-        var measureTextWidth = function (context, string) {
-            var metrics = context.measureText(string);
-            return metrics.width;
-        };
-
-        var measureTextHeight = function (context, string) {
-            //NOTE: kludge: canvas cannot exactly measure text height, so we just return a value
-            //      estimated by using the width of an "M" as a substitute.  Maybe improve this
-            //      later by using a better workaround.
-            var metrics = context.measureText("M");
-            return metrics.width;
-        };
-*/
-
         var drawText = function (text, context, base, anchor, position, angle, color) {
             var h = text.origHeight();
             var w = text.origWidth();
 
-/*
-            var h = 8;
-            var w = 28;
-*/
-
             var ax = 0.5 * w * (anchor.x() + 1);
             var ay = 0.5 * h * (anchor.y() + 1);
-/*
-console.log('drawing text: ' + text.string());
-console.log('base = ' + base.serialize());
-console.log('anchor = ' + anchor.serialize());
-console.log('position = ' + position.serialize());
-console.log('angle = ' + angle);
-
-base.x(base.x() + 12);
-base.y(base.y() + 17);
-
-
-context.save();
-context.strokeStyle = '#ff0000';
-context.beginPath();
-context.moveTo(base.x()-50, base.y());
-context.lineTo(base.x()+50, base.y());
-context.moveTo(base.x(), base.y()-50);
-context.lineTo(base.x(), base.y()+50);
-context.closePath();
-context.stroke();
-context.restore();
-*/
 
             context.save();
             context.fillStyle = color.getHexString("#");
@@ -19465,27 +19305,10 @@ context.restore();
             //      into a single one for efficiency:
             context.transform(1,0,0,-1,0,2*base.y());
             context.transform(1,0,0,1,base.x(),base.y());
-/*
-context.save();
-context.beginPath();
-context.strokeStyle = '#0000ff';
-context.moveTo(0,0);
-context.lineTo(position.x(),-position.y());
-context.closePath();
-context.stroke();
-context.restore();
-*/
             context.transform(1,0,0,1,position.x(),-position.y());
             context.rotate(-angle*Math.PI/180.0);
             context.transform(1,0,0,1,-ax,ay);
             context.fillText(text.string(), 0, 0);
-/*
-            context.transform(1,0,0,-1,0,2*base.y());
-            context.transform(1,0,0,1,-ax+position.x(),ay-position.y());
-            context.transform(1,0,0,1,base.x(),base.y());
-            context.rotate(-angle*Math.PI/180.0);
-            context.fillText(text.string(), 0, 0);
-*/
             context.restore();
         };
 
@@ -19586,20 +19409,10 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             if (this.width() > 0 && this.height() > 0) {
                 // create the canvas; store ref to the canvas object in this.canvas()
 
-/*
-                this.canvas($(
-"<canvas width=\""+this.width()+"\" height=\""+this.height()+"\"/>"
-).appendTo(
-$(this.div()).empty())[0]
-);
-*/
-
-
-                this.canvas($(
-"<canvas width=\""+this.width()+"\" height=\""+this.height()+"\"/>"
-).appendTo(
-$(this.div()))[0]
-);
+                this.canvas(
+                    $("<canvas width=\""+this.width()+"\" height=\""+this.height()+"\"/>")
+                        .appendTo($(this.div()))[0]
+                );
 
                 this.busySpinner($('<div style="position: absolute; left:5px; top:5px;"></div>') .
                                   appendTo($(this.div())) .
