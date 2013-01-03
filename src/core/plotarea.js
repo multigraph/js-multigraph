@@ -7,23 +7,19 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
             this.hasA("margin").which.validatesWith(function (margin) {
                 return margin instanceof window.multigraph.math.Insets;
-            }); // defaultTo temporarily handled in isBuiltWith below
+            });
 
-            this.hasA("border").which.isA("integer").and.defaultsTo(defaultValues.plotarea.border);
+            this.hasA("border").which.isA("integer");
 
             this.hasA("color").which.validatesWith(function (color) {
                 return color === null || color instanceof window.multigraph.math.RGBColor;
-            }).defaultsTo(null);
+            });
 
             this.hasA("bordercolor").which.validatesWith(function (bordercolor) {
                 return bordercolor instanceof window.multigraph.math.RGBColor;
-            }).defaultsTo(window.multigraph.math.RGBColor.parse(defaultValues.plotarea.bordercolor));
-
-            this.isBuiltWith(function () {
-                // temporary workaround until we can pass a function to be evaled to defaultsTo():
-                this.margin( defaultValues.plotarea.margin() );
             });
 
+            window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.plotarea, attributes);
         });
 
     ns.Plotarea = Plotarea;

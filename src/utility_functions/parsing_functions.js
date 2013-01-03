@@ -33,7 +33,7 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
                 "border": 2,
                 "margin" : function () { return new window.multigraph.math.Insets(/*top*/2, /*left*/2, /*bottom*/2, /*right*/2); },
                 "padding": function () { return new window.multigraph.math.Insets(/*top*/5, /*left*/5, /*bottom*/5, /*right*/5); },
-                "bordercolor": "0x000000"
+                "bordercolor": function () { return new window.multigraph.math.RGBColor.parse("0x000000"); }
             },
             "legend": {
                 "icon" : {
@@ -68,7 +68,8 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
             "plotarea": {
                 "margin" : function () { return new window.multigraph.math.Insets(/*top*/10 , /*left*/38, /*bottom*/35, /*right*/35); },
                 "border": 0,
-                "bordercolor": "0xeeeeee"
+                "color" : null,
+                "bordercolor": function () { return new window.multigraph.math.RGBColor.parse("0xeeeeee"); }
             },
             "title": {
                 "text"         : undefined,
