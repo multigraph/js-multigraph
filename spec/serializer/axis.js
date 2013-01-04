@@ -78,6 +78,7 @@ describe("Axis Serialization", function () {
             +     ' maxposition="1"'
             +     '>'
             +   '<grid color="0xeeeeee" visible="false"/>' // axes initialize a default grid
+            +   '<zoom allowed="yes" anchor="none"/>'
             + '</horizontalaxis>';
         axis = new Axis(Axis.HORIZONTAL);
 
@@ -137,6 +138,7 @@ describe("Axis Serialization", function () {
                 +     'A Title'
                 +   '</title>'
                 +   '<grid color="0xeeeeee" visible="false"/>' // axes initialize a default grid
+                +   '<zoom allowed="yes" anchor="none"/>'
                 + '</verticalaxis>';
 
             axis = new Axis(Axis.VERTICAL);
@@ -210,6 +212,7 @@ describe("Axis Serialization", function () {
                 +     ' densityfactor="0.5"'
                 +      '/>'
                 +  '<grid color="0xeeeeee" visible="false"/>' // axes initialize a default grid
+                +   '<zoom allowed="yes" anchor="none"/>'
                 + '</verticalaxis>';
 
             axis = new Axis(Axis.VERTICAL);
@@ -286,6 +289,7 @@ describe("Axis Serialization", function () {
                 +        '/>'
                 +  '</labels>'
                 +  '<grid color="0xeeeeee" visible="false"/>' // axes initialize a default grid
+                +   '<zoom allowed="yes" anchor="none"/>'
                 + '</verticalaxis>';
 
             axis = new Axis(Axis.VERTICAL);
@@ -353,6 +357,7 @@ describe("Axis Serialization", function () {
                 +      ' color="0x984545"'
                 +      ' visible="false"'
                 +      '/>'
+                +   '<zoom allowed="yes" anchor="none"/>'
                 + '</verticalaxis>';
 
             axis = new Axis(Axis.VERTICAL);
@@ -417,6 +422,7 @@ describe("Axis Serialization", function () {
                 +      ' min="0"'
                 +      ' max="5"'
                 +      '/>'
+                +   '<zoom allowed="yes" anchor="none"/>'
                 + '</verticalaxis>';
 
             axis = new Axis(Axis.VERTICAL);
