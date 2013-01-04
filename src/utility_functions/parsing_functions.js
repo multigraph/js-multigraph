@@ -15,7 +15,7 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
     ns.insertDefaults = function (elem, defaults, attributes) {
         var i;
         for (i = 0; i < attributes.length; i++) {
-            if (defaults[attributes[i]] !== undefined && typeof(defaults[attributes[i]]) !== "object") {
+            if (defaults[attributes[i]] !== undefined && (typeof(defaults[attributes[i]]) !== "object" || defaults[attributes[i]] === null)) {
                 if (elem.attributes().indexOf(attributes[i]) > -1) {
                     elem.attribute(attributes[i]).defaultsTo(defaults[attributes[i]]);
                 }
