@@ -24,7 +24,7 @@ describe("Background", function () {
         var image;
 
         beforeEach(function () {
-            image = new Img("http://example.com/cool_dog.gif");
+            image = new Img("http://example.com/example.gif");
         });
 
         it("should be able to add a Img to a Background", function () {
@@ -33,7 +33,7 @@ describe("Background", function () {
         });
 
         it("should be able to add an Img with attributes to a Background", function () {
-            image.src("http://example.com/lazy_cat.gif");
+            image.src("http://example.com/example2.gif");
             image.base(window.multigraph.math.Point.parse("0 1"));
             b.img(image);
             expect(b.img()).toBe(image);
@@ -41,19 +41,20 @@ describe("Background", function () {
 
         it("should be able to set/get attributes of an Img added to a Background", function () {
             b.img(image);
-            b.img().src("http://example.com/lazy_cat.gif");
+            b.img().src("http://example.com/example.png");
             b.img().base(window.multigraph.math.Point.parse("1 0.5"));
-            expect(b.img().src()).toBe("http://example.com/lazy_cat.gif");
-            expect(b.img().base().serialize()).toBe("1,0.5");
+            expect(b.img().src()).toBe("http://example.com/example.png");
+            expect(b.img().base().x()).toEqual(1);
+            expect(b.img().base().y()).toEqual(0.5);
         });
 
         it("should not keep old data around when an Img is replaced", function () {
-            var image2 = new Img("http://example.com/cool_dog.gif");
+            var image2 = new Img("http://example.com/example2.gif");
             b.img(image);
-            b.img().src("http://example.com/lazy_cat.gif");
+            b.img().src("http://example.com/example.png");
             b.img().base(window.multigraph.math.Point.parse("0 1"));
             b.img(image2);
-            expect(b.img().src()).toBe("http://example.com/cool_dog.gif");
+            expect(b.img().src()).toBe("http://example.com/example2.gif");
         });
 
     });

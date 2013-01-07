@@ -5,9 +5,6 @@ window.multigraph.util.namespace("window.multigraph.math", function (ns) {
         this.hasA("x").which.isA("number");
         this.hasA("y").which.isA("number");
         this.isBuiltWith("x", "y");
-        this.respondsTo("serialize", function () {
-            return this.x() + "," + this.y();
-        });
         this.respondsTo("eq", function (p) {
             return ((this.x()===p.x()) && (this.y()===p.y()));
         });

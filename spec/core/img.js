@@ -7,7 +7,7 @@ describe("Background Img", function () {
         image;
 
     beforeEach(function () {
-        image = new Img("http://example.com/cool_dogs.gif");
+        image = new Img("http://example.com/example.gif");
     });
 
     it("should be able to create a Img", function () {
@@ -16,11 +16,11 @@ describe("Background Img", function () {
 
     describe("src attribute", function () {
         it("should default the src attribute to the passed value", function () {
-            expect(image.src()).toBe("http://example.com/cool_dogs.gif");
+            expect(image.src()).toBe("http://example.com/example.gif");
         });
         it("should be able to set/get the src attribute", function () {
-            image.src("http://example.com/cool_dog.gif");
-            expect(image.src()).toBe("http://example.com/cool_dog.gif");
+            image.src("http://example.com/example2.gif");
+            expect(image.src()).toBe("http://example.com/example2.gif");
         });
 
     });
@@ -28,7 +28,8 @@ describe("Background Img", function () {
     describe("anchor attribute", function () {
         it("should be able to set/get the anchor attribute", function () {
             image.anchor(window.multigraph.math.Point.parse("0 1"));
-            expect(image.anchor().serialize()).toBe("0,1");
+            expect(image.anchor().x()).toEqual(0);
+            expect(image.anchor().y()).toEqual(1);
         });
 
     });
@@ -36,7 +37,8 @@ describe("Background Img", function () {
     describe("base attribute", function () {
         it("should be able to set/get the base attribute", function () {
             image.base(window.multigraph.math.Point.parse("1 1"));
-            expect(image.base().serialize()).toBe("1,1");
+            expect(image.base().x()).toEqual(1);
+            expect(image.base().y()).toEqual(1);
         });
 
     });
@@ -44,7 +46,8 @@ describe("Background Img", function () {
     describe("position attribute", function () {
         it("should be able to set/get the position attribute", function () {
             image.position(window.multigraph.math.Point.parse("-1 1"));
-            expect(image.position().serialize()).toBe("-1,1");
+            expect(image.position().x()).toEqual(-1);
+            expect(image.position().y()).toEqual(1);
         });
 
     });
