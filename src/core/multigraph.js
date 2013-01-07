@@ -215,11 +215,10 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * 
      * @param {String} options.driver (OPTIONAL) Indicates which
      *       graphics driver to use; should be one of the strings
-     *       "canvas", "raphael", "logger", or "auto".  The default
-     *       (which is used if the 'driver' tag is absent) is "auto",
-     *       which causes Multigraph to check the features of the
-     *       browser it is running in and choose the most appropriate
-     *       driver.
+     *       "canvas", "raphael", or "auto".  The default (which is
+     *       used if the 'driver' tag is absent) is "auto", which
+     *       causes Multigraph to check the features of the browser
+     *       it is running in and choose the most appropriate driver.
      * 
      * @param {Function} options.error (OPTIONAL) A function for
      *       displaying error messages to the user.  Multigraph will
@@ -316,8 +315,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return Multigraph.createCanvasGraph(options);
         } else if (options.driver === "raphael") {
             return Multigraph.createRaphaelGraph(options);
-        } else if (options.driver === "logger") {
-            return Multigraph.createLoggerGraph(options);
         } else {
             options.messageHanlder.error(new Error("invalid graphic driver '" + options.driver + "' specified to Multigraph.createGraph"));
             return undefined;
@@ -342,11 +339,10 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * 
      * @param {String} options.driver (OPTIONAL) Indicates which
      *       graphics driver to use; should be one of the strings
-     *       "canvas", "raphael", "logger", or "auto".  The default
-     *       (which is used if the 'driver' tag is absent) is "auto",
-     *       which causes Multigraph to check the features of the
-     *       browser it is running in and choose the most appropriate
-     *       driver.
+     *       "canvas", "raphael", or "auto".  The default (which is
+     *       used if the 'driver' tag is absent) is "auto", which
+     *       causes Multigraph to check the features of the browser
+     *       it is running in and choose the most appropriate driver.
      * 
      * @param {Function} options.error (OPTIONAL) A function for
      *       displaying error messages to the user.  Multigraph will
