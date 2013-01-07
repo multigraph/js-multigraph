@@ -4,7 +4,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.data.variables.variable),
         DataValue = ns.DataValue,
-        DataVariable = new window.jermaine.Model( "DataVariable", function () {
+        DataVariable = new window.jermaine.Model("DataVariable", function () {
             this.hasA("id").which.isA("string");
             this.hasA("column").which.isA("integer");
             this.hasA("type").which.isOneOf(DataValue.types()).and.defaultsTo(ns.DataValue.NUMBER);

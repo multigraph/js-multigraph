@@ -124,7 +124,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         return shape;
     };
 
-    PointlineRenderer.ShapeOption = new window.jermaine.Model( "PointlineRenderer.ShapeOption", function () {
+    PointlineRenderer.ShapeOption = new window.jermaine.Model("PointlineRenderer.ShapeOption", function () {
         this.isA(ns.Renderer.Option);
         this.hasA("value").which.validatesWith(PointlineRenderer.isShape);
         this.isBuiltWith("value");

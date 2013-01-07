@@ -1,7 +1,7 @@
 window.multigraph.util.namespace("window.multigraph.math", function (ns) {
     "use strict";
 
-    ns.Point = new window.jermaine.Model( "Point", function () {
+    ns.Point = new window.jermaine.Model("Point", function () {
         this.hasA("x").which.isA("number");
         this.hasA("y").which.isA("number");
         this.isBuiltWith("x", "y");

@@ -271,13 +271,13 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     };
 
 
-    Renderer.Option = new window.jermaine.Model( "Renderer.Option", function () {
+    Renderer.Option = new window.jermaine.Model("Renderer.Option", function () {
         this.hasA("min").which.validatesWith(ns.DataValue.isInstance);
         this.hasA("max").which.validatesWith(ns.DataValue.isInstance);
     });
 
 
-    Renderer.RGBColorOption = new window.jermaine.Model( "Renderer.RGBColorOption", function () {
+    Renderer.RGBColorOption = new window.jermaine.Model("Renderer.RGBColorOption", function () {
         this.isA(Renderer.Option);
         this.hasA("value").which.validatesWith(function (v) {
             return v instanceof window.multigraph.math.RGBColor || v === null;
@@ -295,7 +295,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     });
 
-    Renderer.NumberOption = new window.jermaine.Model( "Renderer.NumberOption", function () {
+    Renderer.NumberOption = new window.jermaine.Model("Renderer.NumberOption", function () {
         this.isA(Renderer.Option);
         this.hasA("value").which.isA("number");
         this.isBuiltWith("value");
@@ -310,7 +310,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
     });
 
-    Renderer.DataValueOption = new window.jermaine.Model( "Renderer.DataValueOption", function () {
+    Renderer.DataValueOption = new window.jermaine.Model("Renderer.DataValueOption", function () {
         this.isA(Renderer.Option);
         this.hasA("value").which.validatesWith(function (value) {
             return ns.DataValue.isInstance(value) || value === null;
@@ -324,7 +324,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
     });
 
-    Renderer.VerticalDataValueOption = new window.jermaine.Model( "Renderer.DataValueOption", function () {
+    Renderer.VerticalDataValueOption = new window.jermaine.Model("Renderer.DataValueOption", function () {
         this.isA(Renderer.DataValueOption);
         this.isBuiltWith("value");
         this.respondsTo("parseValue", function (string, renderer) {
@@ -333,7 +333,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         
     });
 
-    Renderer.HorizontalDataValueOption = new window.jermaine.Model( "Renderer.DataValueOption", function () {
+    Renderer.HorizontalDataValueOption = new window.jermaine.Model("Renderer.DataValueOption", function () {
         this.isA(Renderer.DataValueOption);
         this.isBuiltWith("value");
         this.respondsTo("parseValue", function (string, renderer) {
@@ -342,7 +342,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         
     });
 
-    Renderer.DataMeasureOption = new window.jermaine.Model( "Renderer.DataMeasureOption", function () {
+    Renderer.DataMeasureOption = new window.jermaine.Model("Renderer.DataMeasureOption", function () {
         this.isA(Renderer.Option);
         this.hasA("value").which.validatesWith(function (value) {
             return ns.DataMeasure.isInstance(value) || value === null;
@@ -356,7 +356,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
     });
 
-    Renderer.VerticalDataMeasureOption = new window.jermaine.Model( "Renderer.DataMeasureOption", function () {
+    Renderer.VerticalDataMeasureOption = new window.jermaine.Model("Renderer.DataMeasureOption", function () {
         this.isA(Renderer.DataMeasureOption);
         this.respondsTo("parseValue", function (string, renderer) {
             this.value( ns.DataMeasure.parse(renderer.plot().verticalaxis().type(), string) );
@@ -364,7 +364,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         
     });
 
-    Renderer.HorizontalDataMeasureOption = new window.jermaine.Model( "Renderer.DataMeasureOption", function () {
+    Renderer.HorizontalDataMeasureOption = new window.jermaine.Model("Renderer.DataMeasureOption", function () {
         this.isA(Renderer.DataMeasureOption);
         this.isBuiltWith("value");
         this.respondsTo("parseValue", function (string, renderer) {

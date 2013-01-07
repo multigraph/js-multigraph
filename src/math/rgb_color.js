@@ -1,7 +1,7 @@
 window.multigraph.util.namespace("window.multigraph.math", function (ns) {
     "use strict";
 
-    ns.RGBColor = new window.jermaine.Model( "RGBColor", function () {
+    ns.RGBColor = new window.jermaine.Model("RGBColor", function () {
         
         this.hasA("r").which.validatesWith(function (r) {
             return window.multigraph.utilityFunctions.validateNumberRange(r, 0, 1.0);

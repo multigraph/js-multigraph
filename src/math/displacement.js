@@ -56,7 +56,7 @@ window.multigraph.util.namespace("window.multigraph.math", function (ns) {
      * @param {Number} a
      * @param {Integer} b (OPTIONAL)
      */
-    ns.Displacement = new window.jermaine.Model( "Displacement", function () {
+    ns.Displacement = new window.jermaine.Model("Displacement", function () {
         
         this.hasA("a").which.validatesWith(function (a) {
             return window.multigraph.utilityFunctions.validateNumberRange(a, -1.0, 1.0);

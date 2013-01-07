@@ -5,7 +5,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.plot);
 
-    DataPlot = new window.jermaine.Model( "DataPlot", function () {
+    DataPlot = new window.jermaine.Model("DataPlot", function () {
         this.isA(ns.Plot);
         this.hasMany("variable").eachOfWhich.validateWith(function (variable) {
             return variable instanceof ns.DataVariable || variable === null;
