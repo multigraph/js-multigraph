@@ -58,9 +58,11 @@ describe("Axis", function () {
     describe("length attribute", function () {
         it("should be able to set/get the length attribute", function () {
             a.length(window.multigraph.math.Displacement.parse(".5+2"));
-            expect(a.length().serialize()).toBe("0.5+2");
+            expect(a.length().a()).toEqual(0.5);
+            expect(a.length().b()).toEqual(2);
             a.length(window.multigraph.math.Displacement.parse(".7"));
-            expect(a.length().serialize()).toBe("0.7");
+            expect(a.length().a()).toEqual(0.7);
+            expect(a.length().b()).toEqual(0);
         });
 
     });

@@ -72,17 +72,6 @@ window.multigraph.util.namespace("window.multigraph.math", function (ns) {
             return (this.a() + 1) * totalLength/2.0 + this.b();
         });
 
-        this.respondsTo("serialize", function () {
-            var output = this.a().toString(10);
-            if (this.b() !== undefined && this.b() !== 0) {
-                if (this.b() >= 0) {
-                    output += "+";
-                }
-                output += this.b().toString(10);
-            }
-            return output;
-        });
-
     });
 
     ns.Displacement.regExp = /^([\+\-]?[0-9\.]+)([+\-])([0-9\.+\-]+)$/;
