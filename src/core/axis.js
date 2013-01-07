@@ -142,9 +142,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasA("linewidth").which.isA("integer");
         this.hasA("orientation").which.validatesWith(Orientation.isInstance);
         this.isBuiltWith("orientation", function () {
-            if (this.grid() === undefined) {
-                this.grid(new ns.Grid());
-            }
+            this.grid(new ns.Grid());
             this.zoom(new ns.Zoom());
             this.pan(new ns.Pan());
         });
