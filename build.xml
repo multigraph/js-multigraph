@@ -22,10 +22,6 @@
     <filelist dir="src/parser/jquery" files="jquery_mixin.js"/>
     <fileset dir="src/parser/jquery" includes="**/*.js" excludes="jquery_mixin.js" />
   </path>
-  <path id="path.serializer-js">
-    <filelist dir="src/serializer" files="serializer_mixin.js"/>
-    <fileset dir="src/serializer" includes="**/*.js" excludes="serializer_mixin.js" />
-  </path>
   <path id="path.events-jquery-draggable-js">
     <filelist dir="src/events/jquery/draggable" files="mixin.js"/>
     <fileset dir="src/events/jquery/draggable" includes="**/*.js" excludes="mixin.js" />
@@ -60,7 +56,7 @@
     <fileset dir="spec" includes="**/*.js" excludes="graphics/logger/**/*.js"/>
   </path>
   <path id="path.build-spec-js">
-    <fileset dir="spec" includes="**/*.js" excludes="graphics/logger/**/*.js serializer/**/*.js"/>
+    <fileset dir="spec" includes="**/*.js" excludes="graphics/logger/**/*.js"/>
   </path>
   <path id="path.spec-logger-js">
     <filelist dir="spec/graphics/logger" files="graphicstests.js"/>
@@ -112,7 +108,6 @@
     <pathconvert property="scripttags.jasmine-src" pathsep="${line.separator}">
       <path refid="path.multigraph-core-js"/>
       <path refid="path.parser-jquery-js"/>
-      <path refid="path.serializer-js"/>
       <path refid="path.normalizer-js"/>
       <path refid="path.events-jquery-draggable-js"/>
       <path refid="path.events-jquery-mouse-js"/>
