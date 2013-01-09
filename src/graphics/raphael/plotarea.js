@@ -25,7 +25,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             }
 
             if (plotareaAttrs !== undefined) {
-                plotarea = paper.rect(graph.x0(), graph.y0(), graph.plotBox().width(), graph.plotBox().height())
+                plotarea = paper.rect(graph.x0() - this.border()/2, graph.y0() - this.border()/2, graph.plotBox().width() + this.border(), graph.plotBox().height() + this.border())
                     .attr(plotareaAttrs);
                 plotarea.insertAfter(set);
                 set.push(plotarea);
