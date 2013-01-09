@@ -144,6 +144,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 return val instanceof window.multigraph.core.Multigraph;
             });
             
+            this.hasA("x0").which.isA("number");
+            this.hasA("y0").which.isA("number");
+
             this.isBuiltWith(function () {
                 this.window( new ns.Window() );
                 this.plotarea( new ns.Plotarea() );
@@ -214,6 +217,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 if (this.title()) {
                     this.title().initializeGeometry(graphicsContext);
                 }
+
+                this.x0( this.window().margin().left()  + this.window().border() + this.window().padding().left() + this.plotarea().margin().left() + this.plotarea().border() );
+                this.y0( this.window().margin().bottom() + this.window().border() + this.window().padding().bottom() + this.plotarea().margin().bottom() + this.plotarea().border() );
             });
 
             /**

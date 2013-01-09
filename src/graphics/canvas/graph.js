@@ -4,9 +4,6 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
     ns.mixin.add(function (ns) {
         var Graph = ns.Graph;
 
-        Graph.hasA("x0").which.isA("number");
-        Graph.hasA("y0").which.isA("number");
-
         Graph.respondsTo("render", function (context, width, height) {
             var i;
             context.fillStyle = this.window().bordercolor().getHexString("#");
@@ -22,8 +19,6 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                 this.background().img().render(this, context, width, height);
             }
 
-            this.x0( this.window().margin().left()  + this.window().border() + this.window().padding().left() + this.plotarea().margin().left() );
-            this.y0( this.window().margin().bottom() + this.window().border() + this.window().padding().bottom() + this.plotarea().margin().bottom() );
             context.transform(1,0,0,1,this.x0(),this.y0());
 
             if (this.plotarea().color() !== null) {

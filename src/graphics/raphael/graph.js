@@ -6,9 +6,6 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
         Graph.hasA("transformString");
 
-        Graph.hasA("x0").which.isA("number");
-        Graph.hasA("y0").which.isA("number");
-
         Graph.respondsTo("render", function (paper, width, height) {
             var windowBorder = this.window().border(),
                 backgroundSet = paper.set(),
@@ -18,8 +15,6 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 titleSet = paper.set(),
                 i;
 
-            this.x0( this.window().margin().left() + windowBorder + this.window().padding().left() + this.plotarea().margin().left() + this.plotarea().border() );
-            this.y0( this.window().margin().bottom() + windowBorder + this.window().padding().bottom() + this.plotarea().margin().bottom() + this.plotarea().border() );
             this.transformString("S 1, -1, 0, " + (height/2) + " t " + this.x0() + ", " + this.y0());
 
             this.window().render(this, paper, backgroundSet, width, height);
