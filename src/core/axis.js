@@ -69,9 +69,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @type {DataValue}
          * @author jrfrimme
          */
-        this.hasA("dataMin").which.validatesWith(function (x) {
-            return ns.DataValue.isInstance(x);
-        });
+        this.hasA("dataMin").which.validatesWith(ns.DataValue.isInstance);
         /**
          * Convenience method for checking to see if dataMin has been set or not
          *
@@ -105,9 +103,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @type {DataValue}
          * @author jrfrimme
          */
-        this.hasA("dataMax").which.validatesWith(function (x) {
-            return ns.DataValue.isInstance(x);
-        });
+        this.hasA("dataMax").which.validatesWith(ns.DataValue.isInstance);
         /**
          * Convenience method for checking to see if dataMax has been set or not.
          *
