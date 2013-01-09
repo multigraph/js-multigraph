@@ -34,7 +34,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             var haxis = this.horizontalaxis();
             var vaxis = this.verticalaxis();
 
-            if (!haxis.dataMin() || !haxis.dataMax()) {
+            if (!haxis.hasDataMin() || !haxis.hasDataMax()) {
                 // if this plot's horizontal axis does not have a min or max value yet,
                 // return immediately without doing anything
                 return;
