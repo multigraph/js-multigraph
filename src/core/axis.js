@@ -322,7 +322,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 return;
             }
             baseRealValue = this.axisValueToDataValue(pixelBase).getRealValue();
-            if (this.zoom().anchor() !== undefined) {
+            if (window.multigraph.core.DataValue.isInstance(this.zoom().anchor())) {
                 baseRealValue = this.zoom().anchor().getRealValue();
             }
             factor = 10 * Math.abs(pixelDisplacement / (this.pixelLength() - this.maxoffset() - this.minoffset()));

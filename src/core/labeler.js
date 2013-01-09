@@ -95,7 +95,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             });
 
 
-            this.hasA("iteratorNextValue").which.validatesWith(ns.DataValue.isInstance).and.which.defaultsTo(null);
+            this.hasA("iteratorNextValue").which.validatesWith(function (value) {
+                return ns.DataValue.isInstance(value) || value === null;
+            }).and.which.defaultsTo(null);
             this.hasA("iteratorMinValue").which.validatesWith(ns.DataValue.isInstance);
             this.hasA("iteratorMaxValue").which.validatesWith(ns.DataValue.isInstance);
 
