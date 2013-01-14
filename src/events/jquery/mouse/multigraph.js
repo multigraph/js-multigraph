@@ -69,19 +69,15 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
             var computeRatio = function (originalWidth, originalHeight) {
                 var wr = window.innerWidth / originalWidth;
                 var hr = window.innerHeight / originalHeight;
-                var r = wr;
-                if (hr < wr) {
-                    r = hr;
-                }
+                var r = Math.min(wr, hr);
                 return r;
             };
 
             $target.dblclick(function (event) {
                 var $ = window.multigraph.jQuery;
                 if (multigraph.clone() === false) {
-
                     multigraph.overlay(
-                        $("<div class=\"multigraphOverlay\" style=\"position: fixed; left: 0px; top: 0px; height: 100%; width: 100%; z-index: 9999; background: black; opacity: 0.5;\"></div>").appendTo("body")
+                        $("<div style=\"position: fixed; left: 0px; top: 0px; height: 100%; width: 100%; z-index: 9999; background: black; opacity: 0.5;\"></div>").appendTo("body")
                     );
 
                     var clone = $(multigraph.div()).clone().empty()[0];
@@ -113,6 +109,41 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
                     multigraph.render();
                 }
             });
+
+            window.multigraph.jQuery(window).resize(function () {
+                if (multigraph.clone() === true) {
+                    var r = computeRatio(multigraph.width(), multigraph.height());
+                    var w = multigraph.width() * r;
+                    var h = multigraph.height() * r;
+
+                    window.multigraph.jQuery(multigraph.div()).css("width", w + "px")
+                        .css("height", h + "px")
+                        .css("left", ((window.innerWidth  - w) / 2) + "px")
+                        .css("top", ((window.innerHeight - h) / 2) + "px");
+
+                    window.multigraph.jQuery(multigraph.canvas()).css("width", w + "px")
+                        .css("height", h + "px");
+
+                }
+            });
+
+            window.multigraph.jQuery(window).on("orientationchange", function () {
+                if (multigraph.clone() === true) {
+                    var r = computeRatio(multigraph.width(), multigraph.height());
+                    var w = multigraph.width() * r;
+                    var h = multigraph.height() * r;
+
+                    window.multigraph.jQuery(multigraph.div()).css("width", w + "px")
+                        .css("height", h + "px")
+                        .css("left", ((window.innerWidth  - w) / 2) + "px")
+                        .css("top", ((window.innerHeight - h) / 2) + "px");
+
+                    window.multigraph.jQuery(multigraph.canvas()).css("width", w + "px")
+                        .css("height", h + "px");
+
+                }
+            }, false);
+
         });
 
     });
