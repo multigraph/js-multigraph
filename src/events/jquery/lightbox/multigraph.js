@@ -29,10 +29,14 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.lightbox", fun
                 var w = parseInt(multigraph.width() * r, 10);
                 var h = parseInt(multigraph.height() * r, 10);
                 
-                window.multigraph.jQuery(multigraph.canvas()).css("width", w + "px")
-                    .css("height", h + "px");
                 scaleAndPositionElement(multigraph.div(), w, h);
 
+                multigraph.context().canvas.width  = w;
+                multigraph.context().canvas.height = h;
+
+                multigraph.width(w);
+                multigraph.height(h);
+                multigraph.render();
             }
         });
 
