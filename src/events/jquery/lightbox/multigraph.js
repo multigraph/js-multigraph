@@ -54,8 +54,7 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.lightbox", fun
                     .div(clone)
                     .clone(true);
                 multigraph.init();
-                multigraph.registerMouseEvents(multigraph.canvas());
-                multigraph.registerTouchEvents(multigraph.canvas());
+                multigraph.registerEvents();
             } else {
                 $(multigraph.div()).remove();
                 multigraph.overlay().remove();

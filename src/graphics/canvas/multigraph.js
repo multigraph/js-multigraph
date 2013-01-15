@@ -49,6 +49,11 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             }
         });
 
+        ns.Multigraph.respondsTo("registerEvents", function () {
+            this.registerMouseEvents(this.canvas());
+            this.registerTouchEvents(this.canvas());
+        });
+
     });
 
     var applyMixins = function (options) {
@@ -67,8 +72,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         multigraph.div(options.div);
         $(options.div).css("cursor" , "pointer");
         multigraph.init();
-        multigraph.registerMouseEvents(multigraph.canvas());
-        multigraph.registerTouchEvents(multigraph.canvas());
+        multigraph.registerEvents();
         multigraph.registerCommonDataCallback(function (event) {
             multigraph.redraw();
         });

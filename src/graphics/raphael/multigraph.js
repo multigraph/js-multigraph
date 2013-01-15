@@ -28,8 +28,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
         ns.Multigraph.respondsTo("init", function () {
             this.$div(window.multigraph.jQuery(this.div()));
-            this.$div().on("mousedown", { "mg": this }, this.setupEvents);
-            this.registerTouchEvents(this.$div());
+            this.registerEvents();
             this.width(this.$div().width());
             this.height(this.$div().height());
             if (this.paper()) {
@@ -51,6 +50,11 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 this.graphs().at(i).render(this.paper(), this.width(), this.height());
             }
             text.remove();
+        });
+
+        ns.Multigraph.respondsTo("registerEvents", function () {
+            this.$div().on("mousedown", { "mg": this }, this.setupEvents);
+            this.registerTouchEvents(this.$div());
         });
 
         ns.Multigraph.respondsTo("setupEvents", function (mouseDownEvent) {
