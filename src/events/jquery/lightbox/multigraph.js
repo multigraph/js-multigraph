@@ -45,7 +45,7 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.lightbox", fun
             var $ = window.multigraph.jQuery;
             if (multigraph.clone() === false) {
                 multigraph.overlay(
-                    $("<div style=\"position: fixed; left: 0px; top: 0px; height: 100%; width: 100%; z-index: 9999; background: black; opacity: 0.5;\"></div>").appendTo("body")
+                    $("<div style=\"position: fixed; left: 0px; top: 0px; height: 100%; min-height: 100%; width: 100%; z-index: 9999; background: black; opacity: 0.5;\"></div>").appendTo("body")
                 );
 
                 var clone = $(multigraph.div()).clone().empty()[0];
