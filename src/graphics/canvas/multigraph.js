@@ -55,6 +55,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
         ns.mixin.apply(window.multigraph.core);
         window.multigraph.events.jquery.draggable.mixin.apply(window.multigraph, options.messageHandler.error);
+        window.multigraph.events.jquery.lightbox.mixin.apply(window.multigraph, options.messageHandler.error);
         window.multigraph.events.jquery.mouse.mixin.apply(window.multigraph, options.messageHandler.error);
         window.multigraph.events.jquery.touch.mixin.apply(window.multigraph, options.messageHandler.error);
         window.multigraph.normalizer.mixin.apply(window.multigraph.core);
