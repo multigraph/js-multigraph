@@ -31,8 +31,7 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.lightbox", fun
                 
                 scaleAndPositionElement(multigraph.div(), w, h);
 
-                multigraph.context().canvas.width  = w;
-                multigraph.context().canvas.height = h;
+                multigraph.resizeSurface(w, h);
 
                 multigraph.width(w);
                 multigraph.height(h);

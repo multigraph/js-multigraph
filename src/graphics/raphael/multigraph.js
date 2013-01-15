@@ -100,6 +100,10 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             }
         });
 
+        ns.Multigraph.respondsTo("resizeSurface", function (width, height) {
+            this.paper().setSize(width, height);
+        });
+
     });
 
     var applyMixins = function (options) {

@@ -54,6 +54,11 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             this.registerTouchEvents(this.canvas());
         });
 
+        ns.Multigraph.respondsTo("resizeSurface", function (width, height) {
+            this.context().canvas.width  = width;
+            this.context().canvas.height = height;
+        });
+
     });
 
     var applyMixins = function (options) {
