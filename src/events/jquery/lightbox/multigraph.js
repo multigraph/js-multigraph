@@ -70,9 +70,8 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.lightbox", fun
                     .div(multigraph.originalDiv())
                     .width($(multigraph.div()).width())
                     .height($(multigraph.div()).height())
-                    .canvas($(multigraph.div()).children("canvas")[0])
-                    .busySpinner($(multigraph.div()).find("div img").parent().busy_spinner())
-                    .context(multigraph.canvas().getContext("2d"));
+                    .busySpinner($(multigraph.div()).find("div img").parent().busy_spinner());
+                multigraph.initializeSurface();
                 multigraph.render();
             }
         });

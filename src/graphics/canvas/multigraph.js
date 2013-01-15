@@ -21,19 +21,15 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             this.width($(this.div()).width());
             this.height($(this.div()).height());
             if (this.width() > 0 && this.height() > 0) {
-                // create the canvas; store ref to the canvas object in this.canvas()
+                // create the canvas
+                $("<canvas width=\""+this.width()+"\" height=\""+this.height()+"\"/>")
+                    .appendTo($(this.div()));
 
-                this.canvas(
-                    $("<canvas width=\""+this.width()+"\" height=\""+this.height()+"\"/>")
-                        .appendTo($(this.div()))[0]
-                );
+                this.initializeSurface();
 
                 this.busySpinner($('<div style="position: absolute; left:5px; top:5px;"></div>') .
                                   appendTo($(this.div())) .
                                   busy_spinner());
-
-                // get the canvas context; store ref to it in this.context()
-                this.context(this.canvas().getContext("2d"));
             }
             this.render();
         });
@@ -57,6 +53,11 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         ns.Multigraph.respondsTo("resizeSurface", function (width, height) {
             this.context().canvas.width  = width;
             this.context().canvas.height = height;
+        });
+
+        ns.Multigraph.respondsTo("initializeSurface", function () {
+            this.canvas(window.multigraph.jQuery(this.div()).children("canvas")[0]);
+            this.context(this.canvas().getContext("2d"));
         });
 
     });
