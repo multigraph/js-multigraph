@@ -14,20 +14,24 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.lightbox", fun
             return r;
         };
 
+        var scaleAndPositionElement = function (elem, width, height) {
+            window.multigraph.jQuery(elem)
+                .css("width", width + "px")
+                .css("height", height + "px")
+                .css("left", ((window.innerWidth  - width) / 2) + "px")
+                .css("top", ((window.innerHeight - height) / 2) + "px");
+        };
+
         ns.core.Multigraph.respondsTo("resize", function (event) {
             var multigraph = event.data.multigraph;
             if (multigraph.clone() === true) {
                 var r = computeRatio(multigraph.width(), multigraph.height());
-                var w = multigraph.width() * r;
-                var h = multigraph.height() * r;
-                
-                window.multigraph.jQuery(multigraph.div()).css("width", w + "px")
-                    .css("height", h + "px")
-                    .css("left", ((window.innerWidth  - w) / 2) + "px")
-                    .css("top", ((window.innerHeight - h) / 2) + "px");
+                var w = parseInt(multigraph.width() * r, 10);
+                var h = parseInt(multigraph.height() * r, 10);
                 
                 window.multigraph.jQuery(multigraph.canvas()).css("width", w + "px")
                     .css("height", h + "px");
+                scaleAndPositionElement(multigraph.div(), w, h);
 
             }
         });
@@ -42,12 +46,13 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.lightbox", fun
 
                 var clone = $(multigraph.div()).clone().empty()[0];
                 var r = computeRatio(multigraph.width(), multigraph.height());
+                var w = parseInt(multigraph.width() * r, 10);
+                var h = parseInt(multigraph.height() * r, 10);
                 $(clone).css("position", "fixed")
-                    .css("z-index", 9999)
-                    .css("width", (multigraph.width() * r) + "px")
-                    .css("height", (multigraph.height() * r) + "px")
-                    .css("left", ((window.innerWidth  - (multigraph.width() * r)) / 2) + "px")
-                    .css("top", ((window.innerHeight - (multigraph.height() * r)) / 2) + "px");
+                    .css("z-index", 9999);
+
+                scaleAndPositionElement(clone, w, h);
+
                 $("body").append(clone);
 
                 multigraph.originalDiv(multigraph.div())
