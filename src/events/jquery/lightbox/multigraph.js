@@ -8,8 +8,8 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.lightbox", fun
         ns.core.Multigraph.hasAn("overlay");
 
         var computeRatio = function (originalWidth, originalHeight) {
-            var wr = window.innerWidth / originalWidth;
-            var hr = window.innerHeight / originalHeight;
+            var wr = (originalWidth > 0) ? window.innerWidth / originalWidth : 1;
+            var hr = (originalHeight > 0) ? window.innerHeight / originalHeight : 1;
             var r = Math.min(wr, hr);
             return r;
         };
