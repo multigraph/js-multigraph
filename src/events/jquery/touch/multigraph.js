@@ -94,7 +94,6 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
                 if (e.touches.length === 1 && dragStarted === true) {
                     handleDrag(e);
                 }
-
                 // pinch zoom
                 if (e.touches.length === 2 && pinchZoomStarted === true) {
                     handlePinchZoom(e);
@@ -185,16 +184,13 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
                 previoustoucha = touchLoc;
             };
 
-            var handleDoubleTap = function () {
-                multigraph.graphs().at(0).doDragReset();                
-                var axis = multigraph.graphs().at(0).findNearestAxis(base.x(), base.y());
-                if (axis.orientation() === window.multigraph.core.Axis.HORIZONTAL) {
-                    multigraph.graphs().at(0).doDrag(multigraph, base.x(), base.y(), 10, 0, true);
-                } else {
-                    multigraph.graphs().at(0).doDrag(multigraph, base.x(), base.y(), 0, 10, true);
-                }
-                multigraph.graphs().at(0).doDragReset();                
-                multigraph.graphs().at(0).doDragDone();
+            var handleDoubleTap = function (event) {
+                // object that mimics the structure of jQuery's event.data pattern
+                var obj = {
+                    "data" : {
+                        "multigraph" : multigraph
+                    }};
+                multigraph.handleLightbox(obj);
             };
 
             var handlePinchZoom = function (e) {
