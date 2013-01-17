@@ -47,6 +47,13 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     };
 
     /*
+     * Same as DataValue.isInstance, but also allows the null value
+     */
+    DataValue.isInstanceOrNull = function (obj) {
+        return ((obj===null) || (obj && (typeof(obj.getRealValue) === "function") && (typeof(obj.compareTo) === "function")));
+    };
+
+    /*
      * Create a new DataValue subtype of a given type from a real value
      */
     DataValue.create = function (type, realValue) {

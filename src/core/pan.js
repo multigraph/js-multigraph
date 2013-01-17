@@ -5,8 +5,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.horizontalaxis.pan),
     Pan = new window.jermaine.Model("Pan", function () {
         this.hasA("allowed").which.isA("boolean");
-        this.hasA("min").which.validatesWith(ns.DataValue.isInstance);
-        this.hasA("max").which.validatesWith(ns.DataValue.isInstance);
+        this.hasA("min").which.validatesWith(ns.DataValue.isInstanceOrNull);
+        this.hasA("max").which.validatesWith(ns.DataValue.isInstanceOrNull);
 
         //NOTE: the distinction between DataValue and DataMeasure for the zoom & pan model
         //      attributes might seem confusing, so here's a table to clarify it:
