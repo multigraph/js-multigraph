@@ -1562,7 +1562,7 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
     ns.insertDefaults = function (elem, defaults, attributes) {
         var i;
         for (i = 0; i < attributes.length; i++) {
-            if (defaults[attributes[i]] !== undefined && typeof(defaults[attributes[i]]) !== "object") {
+            if (defaults[attributes[i]] !== undefined && (typeof(defaults[attributes[i]]) !== "object" || defaults[attributes[i]] === null)) {
                 if (elem.attributes().indexOf(attributes[i]) > -1) {
                     elem.attribute(attributes[i]).defaultsTo(defaults[attributes[i]]);
                 }
@@ -1580,7 +1580,7 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
                 "border": 2,
                 "margin" : function () { return new window.multigraph.math.Insets(/*top*/2, /*left*/2, /*bottom*/2, /*right*/2); },
                 "padding": function () { return new window.multigraph.math.Insets(/*top*/5, /*left*/5, /*bottom*/5, /*right*/5); },
-                "bordercolor": "0x000000"
+                "bordercolor": function () { return new window.multigraph.math.RGBColor.parse("0x000000"); }
             },
             "legend": {
                 "icon" : {
@@ -1615,7 +1615,8 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
             "plotarea": {
                 "margin" : function () { return new window.multigraph.math.Insets(/*top*/10 , /*left*/38, /*bottom*/35, /*right*/35); },
                 "border": 0,
-                "bordercolor": "0xeeeeee"
+                "color" : null,
+                "bordercolor": function () { return new window.multigraph.math.RGBColor.parse("0xeeeeee"); }
             },
             "title": {
                 "text"         : undefined,
@@ -1910,22 +1911,6 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
 });
 window.multigraph.util.namespace("window.multigraph.utilityFunctions", function (ns) {
     "use strict";
-
-    ns.serializeScalarAttributes = function (elem, scalarAttributes, attributeStrings) {
-        var i;
-
-        for (i = 0; i < scalarAttributes.length; i++) {
-            if (elem[scalarAttributes[i]]() !== undefined) {
-                attributeStrings.push(scalarAttributes[i] + '="' + elem[scalarAttributes[i]]() + '"');
-            }
-        }
-
-        return attributeStrings;
-    };
-
-});
-window.multigraph.util.namespace("window.multigraph.utilityFunctions", function (ns) {
-    "use strict";
     
     ns.validateNumberRange = function (number, lowerBound, upperBound) {
         return typeof(number) === "number" && number >= lowerBound && number <= upperBound;
@@ -1995,7 +1980,13 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * Return true or false depending on whether obj is an instance of a DataValue type
      */
     DataValue.isInstance = function (obj) {
-        // Note: we also accept null values
+        return (obj && (typeof(obj.getRealValue) === "function") && (typeof(obj.compareTo) === "function"));
+    };
+
+    /*
+     * Same as DataValue.isInstance, but also allows the null value
+     */
+    DataValue.isInstanceOrNull = function (obj) {
         return ((obj===null) || (obj && (typeof(obj.getRealValue) === "function") && (typeof(obj.compareTo) === "function")));
     };
 
@@ -2135,7 +2126,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 window.multigraph.util.namespace("window.multigraph.math", function (ns) {
     "use strict";
 
-    ns.Box = new window.jermaine.Model( "Box", function () {
+    ns.Box = new window.jermaine.Model("Box", function () {
         this.hasA("width").which.isA("number");
         this.hasA("height").which.isA("number");
         this.isBuiltWith("width", "height");
@@ -2200,7 +2191,7 @@ window.multigraph.util.namespace("window.multigraph.math", function (ns) {
      * @param {Number} a
      * @param {Integer} b (OPTIONAL)
      */
-    ns.Displacement = new window.jermaine.Model( "Displacement", function () {
+    ns.Displacement = new window.jermaine.Model("Displacement", function () {
         
         this.hasA("a").which.validatesWith(function (a) {
             return window.multigraph.utilityFunctions.validateNumberRange(a, -1.0, 1.0);
@@ -2214,17 +2205,6 @@ window.multigraph.util.namespace("window.multigraph.math", function (ns) {
 
         this.respondsTo("calculateCoordinate", function (totalLength) {
             return (this.a() + 1) * totalLength/2.0 + this.b();
-        });
-
-        this.respondsTo("serialize", function () {
-            var output = this.a().toString(10);
-            if (this.b() !== undefined && this.b() !== 0) {
-                if (this.b() >= 0) {
-                    output += "+";
-                }
-                output += this.b().toString(10);
-            }
-            return output;
         });
 
     });
@@ -2321,7 +2301,7 @@ window.multigraph.util.namespace("window.multigraph.math", function (ns) {
 window.multigraph.util.namespace("window.multigraph.math", function (ns) {
     "use strict";
 
-    ns.Insets = new window.jermaine.Model( "Insets", function () {
+    ns.Insets = new window.jermaine.Model("Insets", function () {
         this.hasA("top").which.isA("number");
         this.hasA("left").which.isA("number");
         this.hasA("bottom").which.isA("number");
@@ -2339,13 +2319,10 @@ window.multigraph.util.namespace("window.multigraph.math", function (ns) {
 window.multigraph.util.namespace("window.multigraph.math", function (ns) {
     "use strict";
 
-    ns.Point = new window.jermaine.Model( "Point", function () {
+    ns.Point = new window.jermaine.Model("Point", function () {
         this.hasA("x").which.isA("number");
         this.hasA("y").which.isA("number");
         this.isBuiltWith("x", "y");
-        this.respondsTo("serialize", function () {
-            return this.x() + "," + this.y();
-        });
         this.respondsTo("eq", function (p) {
             return ((this.x()===p.x()) && (this.y()===p.y()));
         });
@@ -2369,7 +2346,7 @@ window.multigraph.util.namespace("window.multigraph.math", function (ns) {
 window.multigraph.util.namespace("window.multigraph.math", function (ns) {
     "use strict";
 
-    ns.RGBColor = new window.jermaine.Model( "RGBColor", function () {
+    ns.RGBColor = new window.jermaine.Model("RGBColor", function () {
         
         this.hasA("r").which.validatesWith(function (r) {
             return window.multigraph.utilityFunctions.validateNumberRange(r, 0, 1.0);
@@ -2595,7 +2572,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.plot.renderer),
         Type = new window.multigraph.math.Enum("RendererType");
 
-    Renderer = new window.jermaine.Model( "Renderer", function () {
+    Renderer = new window.jermaine.Model("Renderer", function () {
         this.hasA("type").which.validatesWith(Type.isInstance);
         this.hasA("plot").which.validatesWith(function (plot) {
             return plot instanceof ns.Plot;
@@ -2858,13 +2835,13 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     };
 
 
-    Renderer.Option = new window.jermaine.Model( "Renderer.Option", function () {
+    Renderer.Option = new window.jermaine.Model("Renderer.Option", function () {
         this.hasA("min").which.validatesWith(ns.DataValue.isInstance);
         this.hasA("max").which.validatesWith(ns.DataValue.isInstance);
     });
 
 
-    Renderer.RGBColorOption = new window.jermaine.Model( "Renderer.RGBColorOption", function () {
+    Renderer.RGBColorOption = new window.jermaine.Model("Renderer.RGBColorOption", function () {
         this.isA(Renderer.Option);
         this.hasA("value").which.validatesWith(function (v) {
             return v instanceof window.multigraph.math.RGBColor || v === null;
@@ -2882,7 +2859,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     });
 
-    Renderer.NumberOption = new window.jermaine.Model( "Renderer.NumberOption", function () {
+    Renderer.NumberOption = new window.jermaine.Model("Renderer.NumberOption", function () {
         this.isA(Renderer.Option);
         this.hasA("value").which.isA("number");
         this.isBuiltWith("value");
@@ -2897,7 +2874,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
     });
 
-    Renderer.DataValueOption = new window.jermaine.Model( "Renderer.DataValueOption", function () {
+    Renderer.DataValueOption = new window.jermaine.Model("Renderer.DataValueOption", function () {
         this.isA(Renderer.Option);
         this.hasA("value").which.validatesWith(function (value) {
             return ns.DataValue.isInstance(value) || value === null;
@@ -2911,7 +2888,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
     });
 
-    Renderer.VerticalDataValueOption = new window.jermaine.Model( "Renderer.DataValueOption", function () {
+    Renderer.VerticalDataValueOption = new window.jermaine.Model("Renderer.DataValueOption", function () {
         this.isA(Renderer.DataValueOption);
         this.isBuiltWith("value");
         this.respondsTo("parseValue", function (string, renderer) {
@@ -2920,7 +2897,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         
     });
 
-    Renderer.HorizontalDataValueOption = new window.jermaine.Model( "Renderer.DataValueOption", function () {
+    Renderer.HorizontalDataValueOption = new window.jermaine.Model("Renderer.DataValueOption", function () {
         this.isA(Renderer.DataValueOption);
         this.isBuiltWith("value");
         this.respondsTo("parseValue", function (string, renderer) {
@@ -2929,7 +2906,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         
     });
 
-    Renderer.DataMeasureOption = new window.jermaine.Model( "Renderer.DataMeasureOption", function () {
+    Renderer.DataMeasureOption = new window.jermaine.Model("Renderer.DataMeasureOption", function () {
         this.isA(Renderer.Option);
         this.hasA("value").which.validatesWith(function (value) {
             return ns.DataMeasure.isInstance(value) || value === null;
@@ -2943,7 +2920,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
     });
 
-    Renderer.VerticalDataMeasureOption = new window.jermaine.Model( "Renderer.DataMeasureOption", function () {
+    Renderer.VerticalDataMeasureOption = new window.jermaine.Model("Renderer.DataMeasureOption", function () {
         this.isA(Renderer.DataMeasureOption);
         this.respondsTo("parseValue", function (string, renderer) {
             this.value( ns.DataMeasure.parse(renderer.plot().verticalaxis().type(), string) );
@@ -2951,7 +2928,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         
     });
 
-    Renderer.HorizontalDataMeasureOption = new window.jermaine.Model( "Renderer.DataMeasureOption", function () {
+    Renderer.HorizontalDataMeasureOption = new window.jermaine.Model("Renderer.DataMeasureOption", function () {
         this.isA(Renderer.DataMeasureOption);
         this.isBuiltWith("value");
         this.respondsTo("parseValue", function (string, renderer) {
@@ -3220,7 +3197,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.data.variables.variable),
         DataValue = ns.DataValue,
-        DataVariable = new window.jermaine.Model( "DataVariable", function () {
+        DataVariable = new window.jermaine.Model("DataVariable", function () {
             this.hasA("id").which.isA("string");
             this.hasA("column").which.isA("integer");
             this.hasA("type").which.isOneOf(DataValue.types()).and.defaultsTo(ns.DataValue.NUMBER);
@@ -3454,7 +3431,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     var Plot;
 
-    Plot = new window.jermaine.Model( "Plot", function () {
+    Plot = new window.jermaine.Model("Plot", function () {
         this.hasA("legend").which.validatesWith(function (legend) {
             return legend instanceof ns.PlotLegend;
         });
@@ -3789,7 +3766,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * @constructor
      * @param {AxisOrientation} Orientation
      */
-    Axis = new window.jermaine.Model( "Axis", function () {
+    Axis = new window.jermaine.Model("Axis", function () {
         this.hasA("title").which.validatesWith(function (title) {
             return title instanceof ns.AxisTitle;
         });
@@ -3839,9 +3816,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @type {DataValue}
          * @author jrfrimme
          */
-        this.hasA("dataMin").which.validatesWith(function (x) {
-            return ns.DataValue.isInstance(x);
-        });
+        this.hasA("dataMin").which.validatesWith(ns.DataValue.isInstance);
         /**
          * Convenience method for checking to see if dataMin has been set or not
          *
@@ -3875,9 +3850,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @type {DataValue}
          * @author jrfrimme
          */
-        this.hasA("dataMax").which.validatesWith(function (x) {
-            return ns.DataValue.isInstance(x);
-        });
+        this.hasA("dataMax").which.validatesWith(ns.DataValue.isInstance);
         /**
          * Convenience method for checking to see if dataMax has been set or not.
          *
@@ -3912,9 +3885,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasA("linewidth").which.isA("integer");
         this.hasA("orientation").which.validatesWith(Orientation.isInstance);
         this.isBuiltWith("orientation", function () {
-            if (this.grid() === undefined) {
-                this.grid(new ns.Grid());
-            }
+            this.grid(new ns.Grid());
             this.zoom(new ns.Zoom());
             this.pan(new ns.Pan());
         });
@@ -4094,7 +4065,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 return;
             }
             baseRealValue = this.axisValueToDataValue(pixelBase).getRealValue();
-            if (this.zoom().anchor() !== undefined) {
+            if (window.multigraph.core.DataValue.isInstance(this.zoom().anchor())) {
                 baseRealValue = this.zoom().anchor().getRealValue();
             }
             factor = 10 * Math.abs(pixelDisplacement / (this.pixelLength() - this.maxoffset() - this.minoffset()));
@@ -4194,7 +4165,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * @for axisBinding
      * @constructor
      */
-    ns.AxisBinding = new window.jermaine.Model( "AxisBinding", function () {
+    ns.AxisBinding = new window.jermaine.Model("AxisBinding", function () {
         var AxisBinding = this;
 
         AxisBinding.instances = {};
@@ -4452,7 +4423,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * @constructor
      * @param {Axis} axis
      */
-    AxisTitle = new window.jermaine.Model( "AxisTitle", function () {
+    AxisTitle = new window.jermaine.Model("AxisTitle", function () {
         /**
          * Pointer to the Title's parent Axis jermiane model.
          *
@@ -4594,7 +4565,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.background);
 
-    Background = new window.jermaine.Model( "Background", function () {
+    Background = new window.jermaine.Model("Background", function () {
         this.hasA("color").which.validatesWith(function (color) {
             return color instanceof window.multigraph.math.RGBColor;
         }).defaultsTo(window.multigraph.math.RGBColor.parse(defaultValues.background.color));
@@ -4612,7 +4583,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.plot);
 
-    ns.ConstantPlot = new window.jermaine.Model( "ConstantPlot", function () {
+    ns.ConstantPlot = new window.jermaine.Model("ConstantPlot", function () {
         this.isA(ns.Plot);
         this.hasA("constantValue").which.validatesWith(ns.DataValue.isInstance);
 
@@ -4739,7 +4710,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.plot);
 
-    DataPlot = new window.jermaine.Model( "DataPlot", function () {
+    DataPlot = new window.jermaine.Model("DataPlot", function () {
         this.isA(ns.Plot);
         this.hasMany("variable").eachOfWhich.validateWith(function (variable) {
             return variable instanceof ns.DataVariable || variable === null;
@@ -4805,7 +4776,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.plot.datatips);
 
-    Datatips = new window.jermaine.Model( "Datatips", function () {
+    Datatips = new window.jermaine.Model("Datatips", function () {
         this.hasMany("variables").eachOfWhich.validateWith(function (variable) {
             return variable instanceof ns.DatatipsVariable;
         });
@@ -4835,7 +4806,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.plot.datatips.variable),
-        DatatipsVariable = new window.jermaine.Model( "DatatipsVariable", function () {
+        DatatipsVariable = new window.jermaine.Model("DatatipsVariable", function () {
             this.hasA("format").which.validatesWith(function (format) {
                 return typeof(format) === "string";
             });
@@ -5290,7 +5261,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.plot.filter);
 
-    Filter = new window.jermaine.Model( "Filter", function () {
+    Filter = new window.jermaine.Model("Filter", function () {
         this.hasMany("options").eachOfWhich.validatesWith(function (option) {
             return option instanceof ns.FilterOption;
         });
@@ -5308,7 +5279,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.plot.filter.option),
-        FilterOption = new window.jermaine.Model( "FilterOption", function () {
+        FilterOption = new window.jermaine.Model("FilterOption", function () {
         this.hasA("name").which.validatesWith(function (name) {
             return typeof(name) === "string";
         });
@@ -5340,7 +5311,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      */
     var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues),
-        Graph = new window.jermaine.Model( "Graph", function () {
+        Graph = new window.jermaine.Model("Graph", function () {
 
             /**
              * Child model which controls the properties of the Graph's Window.
@@ -5670,7 +5641,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * @param {Graph} graph
      * @author jrfrimme
      */
-    Title = new window.jermaine.Model( "GraphTitle", function () {
+    Title = new window.jermaine.Model("GraphTitle", function () {
         /**
          * Pointer to the Title's parent Graph Jermaine model.
          *
@@ -5834,7 +5805,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.horizontalaxis.grid),
-        Grid = new window.jermaine.Model( "Grid", function () {
+        Grid = new window.jermaine.Model("Grid", function () {
             this.hasA("color").which.validatesWith(function (color) {
                 return color instanceof window.multigraph.math.RGBColor;
             });
@@ -5851,7 +5822,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.legend.icon),
-        Icon = new window.jermaine.Model( "Icon", function () {
+        Icon = new window.jermaine.Model("Icon", function () {
             this.hasA("height").which.isA("integer");
             this.hasA("width").which.isA("integer");
             this.hasA("border").which.isA("integer");
@@ -5868,7 +5839,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.background.img),
-        Img = new window.jermaine.Model( "Img", function () {
+        Img = new window.jermaine.Model("Img", function () {
             this.hasA("src").which.isA("string");
             this.hasA("anchor").which.validatesWith(function (anchor) {
                 return anchor instanceof window.multigraph.math.Point;
@@ -5900,7 +5871,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         Axis = ns.Axis,
         DataValue = ns.DataValue,
 
-        Labeler = new window.jermaine.Model( "Labeler", function () {
+        Labeler = new window.jermaine.Model("Labeler", function () {
 
             var getValue = function (valueOrFunction) {
                 if (typeof(valueOrFunction) === "function") {
@@ -5989,7 +5960,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             });
 
 
-            this.hasA("iteratorNextValue").which.validatesWith(ns.DataValue.isInstance).and.which.defaultsTo(null);
+            this.hasA("iteratorNextValue").which.validatesWith(ns.DataValue.isInstanceOrNull).and.which.defaultsTo(null);
             this.hasA("iteratorMinValue").which.validatesWith(ns.DataValue.isInstance);
             this.hasA("iteratorMaxValue").which.validatesWith(ns.DataValue.isInstance);
 
@@ -6101,7 +6072,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * @constructor
      * @requires Point,RGBColor,Plot,Icon
     */
-    Legend = new window.jermaine.Model( "Legend", function () {
+    Legend = new window.jermaine.Model("Legend", function () {
         /**
          * The value which determines if the legend will be rendered; a value of `true` means the Legend will
          * be drawn while `false` means that it will not.
@@ -6587,7 +6558,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * @for Mixin
      * @author mbp
      */
-    var Mixin = new window.jermaine.Model( "Mixin", function () {
+    var Mixin = new window.jermaine.Model("Mixin", function () {
 
         /**
          * The internal list of functions to be applied.
@@ -6689,7 +6660,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * @for Multigraph
      * @constructor
      */
-    var Multigraph = new window.jermaine.Model( "Multigraph", function () {
+    var Multigraph = new window.jermaine.Model("Multigraph", function () {
 
         /**
          * Jermiane Attr_List of all the graphs in a Multigraph.
@@ -6886,11 +6857,10 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * 
      * @param {String} options.driver (OPTIONAL) Indicates which
      *       graphics driver to use; should be one of the strings
-     *       "canvas", "raphael", "logger", or "auto".  The default
-     *       (which is used if the 'driver' tag is absent) is "auto",
-     *       which causes Multigraph to check the features of the
-     *       browser it is running in and choose the most appropriate
-     *       driver.
+     *       "canvas", "raphael", or "auto".  The default (which is
+     *       used if the 'driver' tag is absent) is "auto", which
+     *       causes Multigraph to check the features of the browser
+     *       it is running in and choose the most appropriate driver.
      * 
      * @param {Function} options.error (OPTIONAL) A function for
      *       displaying error messages to the user.  Multigraph will
@@ -6987,8 +6957,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return Multigraph.createCanvasGraph(options);
         } else if (options.driver === "raphael") {
             return Multigraph.createRaphaelGraph(options);
-        } else if (options.driver === "logger") {
-            return Multigraph.createLoggerGraph(options);
         } else {
             options.messageHanlder.error(new Error("invalid graphic driver '" + options.driver + "' specified to Multigraph.createGraph"));
             return undefined;
@@ -7013,11 +6981,10 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * 
      * @param {String} options.driver (OPTIONAL) Indicates which
      *       graphics driver to use; should be one of the strings
-     *       "canvas", "raphael", "logger", or "auto".  The default
-     *       (which is used if the 'driver' tag is absent) is "auto",
-     *       which causes Multigraph to check the features of the
-     *       browser it is running in and choose the most appropriate
-     *       driver.
+     *       "canvas", "raphael", or "auto".  The default (which is
+     *       used if the 'driver' tag is absent) is "auto", which
+     *       causes Multigraph to check the features of the browser
+     *       it is running in and choose the most appropriate driver.
      * 
      * @param {Function} options.error (OPTIONAL) A function for
      *       displaying error messages to the user.  Multigraph will
@@ -7208,14 +7175,10 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
     attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.horizontalaxis.pan),
-    Pan = new window.jermaine.Model( "Pan", function () {
+    Pan = new window.jermaine.Model("Pan", function () {
         this.hasA("allowed").which.isA("boolean");
-        this.hasA("min").which.validatesWith(function (min) {
-            return ns.DataValue.isInstance(min);
-        });
-        this.hasA("max").which.validatesWith(function (max) {
-            return ns.DataValue.isInstance(max);
-        });
+        this.hasA("min").which.validatesWith(ns.DataValue.isInstanceOrNull);
+        this.hasA("max").which.validatesWith(ns.DataValue.isInstanceOrNull);
 
         //NOTE: the distinction between DataValue and DataMeasure for the zoom & pan model
         //      attributes might seem confusing, so here's a table to clarify it:
@@ -7236,7 +7199,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.plot.legend),
-        PlotLegend = new window.jermaine.Model( "PlotLegend", function () {
+        PlotLegend = new window.jermaine.Model("PlotLegend", function () {
             this.hasA("visible").which.isA("boolean");
             this.hasA("label").which.validatesWith(function (label) {
                 return label instanceof ns.Text;
@@ -7257,23 +7220,19 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
             this.hasA("margin").which.validatesWith(function (margin) {
                 return margin instanceof window.multigraph.math.Insets;
-            }); // defaultTo temporarily handled in isBuiltWith below
+            });
 
-            this.hasA("border").which.isA("integer").and.defaultsTo(defaultValues.plotarea.border);
+            this.hasA("border").which.isA("integer");
 
             this.hasA("color").which.validatesWith(function (color) {
                 return color === null || color instanceof window.multigraph.math.RGBColor;
-            }).defaultsTo(null);
+            });
 
             this.hasA("bordercolor").which.validatesWith(function (bordercolor) {
                 return bordercolor instanceof window.multigraph.math.RGBColor;
-            }).defaultsTo(window.multigraph.math.RGBColor.parse(defaultValues.plotarea.bordercolor));
-
-            this.isBuiltWith(function () {
-                // temporary workaround until we can pass a function to be evaled to defaultsTo():
-                this.margin( defaultValues.plotarea.margin() );
             });
 
+            window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.plotarea, attributes);
         });
 
     ns.Plotarea = Plotarea;
@@ -7346,7 +7305,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     var BandRenderer;
 
-    BandRenderer = new window.jermaine.Model( "BandRenderer", function () {
+    BandRenderer = new window.jermaine.Model("BandRenderer", function () {
         this.isA(ns.Renderer);
         this.hasA("numberOfVariables").which.defaultsTo(3);
     });
@@ -7461,7 +7420,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.plot.renderer);
 
-    BarRenderer = new window.jermaine.Model( "BarRenderer", function () {
+    BarRenderer = new window.jermaine.Model("BarRenderer", function () {
         this.isA(ns.Renderer);
         this.hasA("numberOfVariables").which.defaultsTo(2);
     });
@@ -7564,7 +7523,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.plot.renderer);
 
-    FillRenderer = new window.jermaine.Model( "FillRenderer", function () {
+    FillRenderer = new window.jermaine.Model("FillRenderer", function () {
         this.isA(ns.Renderer);
         this.hasA("numberOfVariables").which.defaultsTo(2);
     });
@@ -7680,7 +7639,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.plot.renderer);
 
-    PointlineRenderer = new window.jermaine.Model( "PointlineRenderer", function () {
+    PointlineRenderer = new window.jermaine.Model("PointlineRenderer", function () {
         this.isA(ns.Renderer);
         this.hasA("numberOfVariables").which.defaultsTo(2);
         //
@@ -7737,7 +7696,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         return shape;
     };
 
-    PointlineRenderer.ShapeOption = new window.jermaine.Model( "PointlineRenderer.ShapeOption", function () {
+    PointlineRenderer.ShapeOption = new window.jermaine.Model("PointlineRenderer.ShapeOption", function () {
         this.isA(ns.Renderer.Option);
         this.hasA("value").which.validatesWith(PointlineRenderer.isShape);
         this.isBuiltWith("value");
@@ -7865,7 +7824,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     var RangeBarRenderer;
 
-    RangeBarRenderer = new window.jermaine.Model( "RangeBarRenderer", function () {
+    RangeBarRenderer = new window.jermaine.Model("RangeBarRenderer", function () {
         this.isA(ns.Renderer);
         this.hasA("numberOfVariables").which.defaultsTo(3);
     });
@@ -7931,7 +7890,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * @constructor
      * @param string {String} The string stored in the Text model
      */
-    ns.Text = new window.jermaine.Model( "Text", function () {
+    ns.Text = new window.jermaine.Model("Text", function () {
         this.isBuiltWith("string");
 
         /**
@@ -8840,32 +8799,27 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.window),
-        Window = new window.jermaine.Model( "Window", function () {
+        Window = new window.jermaine.Model("Window", function () {
 
             this.hasA("width").which.isA("integer");
 
             this.hasA("height").which.isA("integer");
 
-            this.hasA("border").which.isA("integer").and.defaultsTo(defaultValues.window.border);
+            this.hasA("border").which.isA("integer");
 
             this.hasA("margin").which.validatesWith(function (margin) {
                 return margin instanceof window.multigraph.math.Insets;
-            }); // defaultTo temporarily handled in isBuiltWith below
+            });
 
             this.hasA("padding").which.validatesWith(function (padding) {
                 return padding instanceof window.multigraph.math.Insets;
-            }); // defaultTo temporarily handled in isBuiltWith below
+            });
 
             this.hasA("bordercolor").which.validatesWith(function (bordercolor) {
                 return bordercolor instanceof window.multigraph.math.RGBColor;
-            }).defaultsTo(window.multigraph.math.RGBColor.parse(defaultValues.window.bordercolor));
-
-            this.isBuiltWith(function () {
-                // temporary workaround until we can pass a function to be evaled to defaultsTo():
-                this.margin( defaultValues.window.margin() );
-                this.padding( defaultValues.window.padding() );
             });
 
+            window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.window, attributes);
         });
 
     ns.Window = Window;
@@ -8875,7 +8829,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.horizontalaxis.zoom),
-        Zoom = new window.jermaine.Model( "Zoom", function () {
+        Zoom = new window.jermaine.Model("Zoom", function () {
 
             this.hasA("allowed").which.isA("boolean");
             this.hasA("min").which.validatesWith(function (min) {
