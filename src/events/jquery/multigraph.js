@@ -95,6 +95,7 @@
             };
 
             $(this).multigraph(options);
+            $(this).lightbox({});
 
         });
 

@@ -185,12 +185,7 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
             };
 
             var handleDoubleTap = function (event) {
-                // object that mimics the structure of jQuery's event.data pattern
-                var obj = {
-                    "data" : {
-                        "multigraph" : multigraph
-                    }};
-                multigraph.handleLightbox(obj);
+                $target.parent().lightbox("toggle");
             };
 
             var handlePinchZoom = function (e) {

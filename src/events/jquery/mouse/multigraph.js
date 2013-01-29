@@ -63,11 +63,9 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
                 multigraph.graphs().at(0).doDragDone();
             });
 
-            $target.dblclick({ "multigraph" : multigraph }, multigraph.handleLightbox);
-
-            window.multigraph.jQuery(window).resize({ "multigraph" : multigraph }, multigraph.resize);
-
-            window.multigraph.jQuery(window).on("orientationchange", { "multigraph" : multigraph }, multigraph.resize);
+            $target.dblclick(function () {
+                $target.parent().lightbox("toggle");
+            });
 
         });
 
