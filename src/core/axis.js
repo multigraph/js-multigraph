@@ -296,16 +296,16 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             offset = pixelDisplacement / this.axisToDataRatio();
             newRealMin = this.dataMin().getRealValue() - offset;
             newRealMax = this.dataMax().getRealValue() - offset;
-            if (pixelDisplacement < 0 && this.pan().min() && newRealMin < this.pan().min().getRealValue()) {
+            if (this.pan().min() && newRealMin < this.pan().min().getRealValue()) {
                 newRealMax += (this.pan().min().getRealValue() - newRealMin);
                 newRealMin = this.pan().min().getRealValue();
             }
-            if (pixelDisplacement > 0 && this.pan().max() && newRealMax > this.pan().max().getRealValue()) {
+            if (this.pan().max() && newRealMax > this.pan().max().getRealValue()) {
                 newRealMin -= (newRealMax - this.pan().max().getRealValue());
-                newRealMax = this.pan().max();
+                newRealMax = this.pan().max().getRealValue();
             }
             this.setDataRange(ns.DataValue.create(this.type(), newRealMin),
-                          ns.DataValue.create(this.type(), newRealMax));
+                              ns.DataValue.create(this.type(), newRealMax));
         });
 
         this.respondsTo("doZoom", function (pixelBase, pixelDisplacement) {
