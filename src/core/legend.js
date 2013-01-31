@@ -178,6 +178,10 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return icon instanceof ns.Icon;
         });
 
+        this.isBuiltWith(function () {
+            this.icon( new ns.Icon() );
+        });
+
         /**
          * Pointers to Plot models that have entries in the Legend.
          *

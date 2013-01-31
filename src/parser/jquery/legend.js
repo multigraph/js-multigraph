@@ -48,8 +48,6 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 }
                 if (xml.find("icon").length > 0) {
                     legend.icon(ns.core.Icon[parse](xml.find("icon")));
-                } else {
-                    legend.icon(ns.core.Icon[parse]());
                 }
             }
             return legend;
