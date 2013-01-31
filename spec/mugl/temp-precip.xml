@@ -1,0 +1,94 @@
+<mugl>
+  <background color="0xffffff"/>
+  <window margin="0" padding="5" border="1" bordercolor="0x000000"/>
+  <plotarea margintop="10" marginleft="90" marginbottom="35" marginright="35"/>
+  <horizontalaxis id="time" type="datetime" min="18761101" max="18761110" length="1" base="-1,-1" anchor="-1" tickmin="-5" tickmax="5">
+    <labels start="0" anchor="0,0" position="0,-10">
+      <label format="%Y" spacing="1000Y 500Y 200Y 100Y 50Y 20Y 10Y 5Y 2Y 1Y"/>
+      <label format="%Y-%M" spacing="6M 3M 2M 1M"/>
+      <label format="%Y-%M-%D" spacing="30D 20D 15D 10D 5D 2D 1D"/>
+    </labels>
+    <title>Year</title>
+  </horizontalaxis>
+    <verticalaxis   id="tempc"  min="-20" max="30" length="1" position="0,0">
+      <labels format="%.1f" start="0" spacing="20 10 5 2 1 0.5 0.1" anchor="0,0" position="-15,0" angle="0" />
+      <title angle="90" anchor="0,-1" position="-27,0">Degrees C</title>
+      <zoom max="100" min="1"/>
+      <pan min="-50" max="70"/>
+    </verticalaxis>
+    <verticalaxis   id="prcpmm"  min="0" max="50" length="1" position="-50,0">
+      <labels format="%1d" start="0" spacing="100 50 20 10 5 2 1" anchor="0,0" position="-15,0" angle="0" />
+      <title angle="90" anchor="0,-1" position="-27,0">Precipitation (mm)</title>
+      <pan allowed="no"/>
+      <zoom anchor="0"/>
+    </verticalaxis>
+
+  <plot>
+    <legend label="Daily Max/Min Temp"/>
+    <horizontalaxis ref="time">
+      <variable ref="temp-time"/>
+    </horizontalaxis>
+    <verticalaxis ref="tempc">
+      <variable ref="temp-tmin"/>
+      <variable ref="temp-tmax"/>
+    </verticalaxis>
+    <renderer type="rangebar">
+      <option name="fillcolor" value="0x0000cc"/>
+      <option name="barwidth"  value="20H"/>
+      <option name="baroffset" value="0.5"/>
+    </renderer>
+  </plot>
+  <plot>
+    <legend label="Daily Precip"/>
+    <horizontalaxis ref="time">
+      <variable ref="prcp-time"/>
+    </horizontalaxis>
+    <verticalaxis ref="prcpmm">
+      <variable ref="prcp-prcp"/>
+    </verticalaxis>
+    <renderer type="bar">
+      <option name="barwidth"  value="20H"/>
+      <option name="baroffset" value="0.5"/>
+      <option name="fillcolor" value="0x00ff00"/>
+    </renderer>
+  </plot>
+
+    <data>
+      <variables>
+        <variable column="0" id="temp-time" type="datetime"/>
+        <variable column="1" id="temp-tmin" missingvalue="-9000" missingop="le"/>
+        <variable column="2" id="temp-tmax" missingvalue="-9000" missingop="le"/>
+      </variables>
+      <values>
+18761101,7.2,23.3
+18761102,12.8,19.4
+18761103,5.6,10.0
+18761104,0.6,14.4
+18761105,0.0,17.2
+18761106,7.8,14.4
+18761107,3.3,10.0
+18761108,0.0,5.6
+18761109,0.6,4.4
+18761110,-1.7,6.7
+</values>
+</data>
+    <data>
+      <variables>
+        <variable column="0" id="prcp-time" type="datetime"/>
+        <variable column="1" id="prcp-prcp" missingvalue="-9000" missingop="le"/>
+      </variables>
+      <values>
+18761101,0.0
+18761102,2.3
+18761103,2.3
+18761104,0.0
+18761105,0.0
+18761106,0.0
+18761107,0.3
+18761108,0.0
+18761109,0.0
+18761110,0.0
+</values>
+</data>
+
+</mugl>
