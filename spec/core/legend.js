@@ -84,6 +84,78 @@ describe("Legend", function () {
         expect(l.padding()).toBe(3);
     });
 
+    describe("determineVisibility method", function () {
+        var DataPlot = window.multigraph.core.DataPlot,
+            PlotLegend = window.multigraph.core.PlotLegend;
+
+        it("should return true if the 'visible' attr was set to true", function () {
+            l.visible(true);
+            expect(l.determineVisibility()).toEqual(true);
+        });
+
+        it("should return false if the 'visible' attr was set to false", function () {
+            l.visible(false);
+            expect(l.determineVisibility()).toEqual(false);
+        });
+
+        it("should return false if the 'visible' attr is set to null and there are fewer than two plots with visible legends in the graph", function () {
+            expect(l.visible()).toBe(null);
+            expect(l.plots().size()).toEqual(0);
+            expect(l.determineVisibility()).toEqual(false);
+
+            l.plots().add(new DataPlot());
+            l.plots().at(0).legend(new PlotLegend());
+            l.plots().at(0).legend().visible(true).label(new Text("foo"));
+            expect(l.visible()).toBe(null);
+            expect(l.plots().size()).toEqual(1);
+            expect(l.determineVisibility()).toEqual(false);
+        });
+
+        it("should return true if the 'visible' attr is set to null and there is more than one plot with visible legends in the graph", function () {
+            l.plots().add(new DataPlot());
+            l.plots().at(0).legend(new PlotLegend());
+            l.plots().at(0).legend().visible(true).label(new Text("foo"));
+            l.plots().add(new DataPlot());
+            l.plots().at(1).legend(new PlotLegend());
+            l.plots().at(1).legend().visible(true).label(new Text("bar"));
+            expect(l.visible()).toBe(null);
+            expect(l.plots().size()).toEqual(2);
+            expect(l.determineVisibility()).toEqual(true);
+
+            l = new Legend();
+            l.plots().add(new DataPlot());
+            l.plots().at(0).legend(new PlotLegend());
+            l.plots().at(0).legend().visible(true).label(new Text("fizz"));
+            l.plots().add(new DataPlot());
+            l.plots().at(1).legend(new PlotLegend());
+            l.plots().at(1).legend().visible(true).label(new Text("buzz"));
+            l.plots().add(new DataPlot());
+            l.plots().at(2).legend(new PlotLegend());
+            l.plots().at(2).legend().visible(true).label(new Text("bang"));
+            expect(l.visible()).toBe(null);
+            expect(l.plots().size()).toEqual(3);
+            expect(l.determineVisibility()).toEqual(true);
+        });
+
+        it("should return the value of the 'visible' attr if it is set to true or false regardless of the number of plots", function () {
+            l.visible(true);
+            expect(l.visible()).toBe(true);
+            expect(l.plots().size()).toEqual(0);
+            expect(l.determineVisibility()).toEqual(true);
+
+            l.visible(false);
+            l.plots().add(new DataPlot());
+            l.plots().at(0).legend(new PlotLegend());
+            l.plots().at(0).legend().visible(true).label(new Text("foo"));
+            l.plots().add(new DataPlot());
+            l.plots().at(1).legend(new PlotLegend());
+            l.plots().at(1).legend().visible(true).label(new Text("bar"));
+            expect(l.visible()).toBe(false);
+            expect(l.plots().size()).toEqual(2);
+            expect(l.determineVisibility()).toEqual(false);
+        });
+    });
+
     describe("initializeGeometry", function () {
         var Graph = window.multigraph.core.Graph,
             DataPlot = window.multigraph.core.DataPlot,
@@ -118,65 +190,6 @@ describe("Legend", function () {
 
         it("should exist", function () {
             expect(l.initializeGeometry).not.toBeUndefined();
-        });
-
-        describe("setting the visible attribute", function () {
-            it("should not change the visibility if it was explictly set", function () {
-                plot1.legend().visible(true).label(new Text("foo"));
-                graph.plots().add(plot1);
-                l.visible(true);
-                l.initializeGeometry(graph);
-                expect(l.visible()).toEqual(true);
-
-                l = new Legend();
-                l.visible(false);
-                l.initializeGeometry(graph);
-                expect(l.visible()).toEqual(false);
-
-                plot2.legend().visible(true).label(new Text("bar"));
-                plot3.legend().visible(true).label(new Text("foobar"));
-                graph.plots().add(plot2);
-                graph.plots().add(plot3);
-                l = new Legend();
-                l.visible(false);
-                l.initializeGeometry(graph);
-                expect(l.visible()).toEqual(false);
-            });
-            it("should set visible to false if there are no plots in the graph", function () {
-                l.initializeGeometry(graph);
-                expect(l.visible()).toEqual(false);
-            });
-            it("should set visible to false if there are fewer than two plots with visible legends in the graph", function () {
-                plot1.legend().visible(true).label(new Text("foo"));
-                graph.plots().add(plot1);
-                l.initializeGeometry(graph);
-                expect(l.visible()).toEqual(false);
-
-                plot2.legend().visible(false).label(new Text("bar"));
-                plot3.legend().visible(false).label(new Text("foobar"));
-                graph.plots().add(plot2);
-                graph.plots().add(plot3);
-                l = new Legend();
-                l.initializeGeometry(graph);
-                expect(l.visible()).toEqual(false);
-            });
-            it("should set visible to true if there is more than one plot with visible legends in the graph", function () {
-                plot1.legend().visible(true).label(new Text("foo"));
-                plot2.legend().visible(true).label(new Text("bar"));
-                graph.plots().add(plot1);
-                graph.plots().add(plot2);
-                l.initializeGeometry(graph);
-                expect(l.visible()).toEqual(true);
-
-                plot3.legend().visible(false).label(new Text("foobar"));
-                plot4.legend().visible(false).label(new Text("larry"));
-                graph.plots().add(plot3);
-                graph.plots().add(plot4);
-                l = new Legend();
-                l.icon(new Icon());
-                l.initializeGeometry(graph);
-                expect(l.visible()).toEqual(true);
-            });
         });
 
         it("should only track plots with visible legends", function () {

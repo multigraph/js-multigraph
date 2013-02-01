@@ -41,7 +41,7 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
                     "width": 40,
                     "border": 1
                 },
-                "visible": undefined,
+                "visible": null,
                 "base": function () { return new window.multigraph.math.Point(1,1); },
                 "anchor": function () { return new window.multigraph.math.Point(1,1); },
                 "position": function () { return new window.multigraph.math.Point(0,0); },

@@ -6,8 +6,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * @submodule core
      */
 
-    var Icon,
-        Legend,
+    var Legend,
         defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.legend);
 
@@ -34,7 +33,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @type {boolean}
          * @author jrfrimme
          */
-        this.hasA("visible").which.isA("boolean");
+        this.hasA("visible").which.validatesWith(function (visible) {
+            return typeof visible === "boolean" || visible === null;
+        });
 
         /**
          * The value which gives the location of the base point relative to the Legend's frame.
@@ -319,6 +320,21 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          */
         this.hasA("maxLabelHeight").which.isA("number");
 
+        this.respondsTo("determineVisibility", function () {
+            switch (this.visible()) {
+                case true:
+                    return true;
+                case false:
+                    return false;
+                case null:
+                    if (this.plots().size() > 1) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+            }
+        });
+
         /**
          * Initializes the Legend's geometry. Determines values for the internal attributes `maxLabelWidth`,
          * `maxLabelHeight`, `blockWidth`, `blockHeight`, `width`, `height`, `x` and `y`; these values
@@ -339,23 +355,14 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 label,
                 i;
 
-            if (this.visible() === false) {
-                return this;
-            }
-
             for (i = 0; i < graph.plots().size(); i++) {
                 if (graph.plots().at(i).legend() && graph.plots().at(i).legend().visible() !== false) {
                     this.plots().add(graph.plots().at(i));
                 }
             }
 
-            if (this.visible() === undefined) {
-                if (this.plots().size() > 1) {
-                    this.visible(true);
-                } else {
-                    this.visible(false);
-                    return this;
-                }
+            if (this.determineVisibility() === false) {
+                return this;
             }
 
             // if neither rows nor cols is specified, default to 1 col
@@ -425,7 +432,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 plotCount = 0,
                 r, c;
 
-            if (this.visible() === false) {
+            if (this.determineVisibility() === false) {
                 return this;
             }
 
