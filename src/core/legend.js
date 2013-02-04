@@ -355,26 +355,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 label,
                 i;
 
-            for (i = 0; i < graph.plots().size(); i++) {
-                if (graph.plots().at(i).legend() && graph.plots().at(i).legend().visible() !== false) {
-                    this.plots().add(graph.plots().at(i));
-                }
-            }
-
             if (this.determineVisibility() === false) {
                 return this;
-            }
-
-            // if neither rows nor cols is specified, default to 1 col
-            if (this.rows() === undefined && this.columns() === undefined) {
-                this.columns(1);
-            }
-
-            // if only one of rows/cols is specified, compute the other
-            if (this.columns() === undefined) {
-                this.columns(parseInt(this.plots().size() / this.rows() + ( (this.plots().size() % this.rows()) > 0 ? 1 : 0 ), 10));
-            } else if  (this.rows() === undefined) {
-                this.rows(parseInt(this.plots().size() / this.columns() + ( (this.plots().size() % this.columns()) > 0 ? 1 : 0 ), 10));
             }
 
             for (i = 0; i < this.plots().size(); i++) {

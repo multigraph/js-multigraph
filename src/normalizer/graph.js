@@ -83,6 +83,12 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
                 this.plots().at(i).normalize(this);
             }
 
+            //
+            // normalizes the legend
+            //
+            if (this.legend()) {
+                this.legend().normalize(this);
+            }
 
             //
             // execute the setDataRange method for each axis binding, to sync up all axes
