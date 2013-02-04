@@ -7,13 +7,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
             var legend = new ns.core.PlotLegend();
             if (xml) {
                 if (xml.attr("visible") !== undefined) {
-                    if (xml.attr("visible").toLowerCase() === "true") {
-                        legend.visible(true);
-                    } else if (xml.attr("visible").toLowerCase() === "false") {
-                        legend.visible(false);
-                    } else {
-                        legend.visible(xml.attr("visible"));
-                    }
+                    legend.visible(ns.utilityFunctions.parseBoolean(xml.attr("visible")));
                 }
                 if (xml.attr("label") !== undefined) {
                     legend.label(new ns.core.Text(xml.attr("label")));

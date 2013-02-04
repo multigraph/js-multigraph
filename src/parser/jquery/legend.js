@@ -8,13 +8,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
             if (xml) {
                 
                 if (xml.attr("visible") !== undefined) {
-                    if (xml.attr("visible").toLowerCase() === "true") {
-                        legend.visible(true);
-                    } else if (xml.attr("visible").toLowerCase() === "false") {
-                        legend.visible(false);
-                    } else {
-                        legend.visible(xml.attr("visible"));
-                    }
+                    legend.visible(ns.utilityFunctions.parseBoolean(xml.attr("visible")));
                 }
                 if (xml.attr("base") !== undefined) {
                     legend.base(window.multigraph.math.Point.parse(xml.attr("base")));

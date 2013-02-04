@@ -12,10 +12,10 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 //      the Grid object itself, though, the default for the visible
                 //      attribute is false, so that when we create a default grid object
                 //      in code (as opposed to parsing), it defaults to not visible.
-                if ((xml.attr("visible") === "true") || (xml.attr("visible") === undefined)) {
-                    grid.visible(true);
+                if (xml.attr("visible") !== undefined) {
+                    grid.visible(ns.utilityFunctions.parseBoolean(xml.attr("visible")));
                 } else {
-                    grid.visible(false);
+                    grid.visible(true);
                 }
             }
             return grid;

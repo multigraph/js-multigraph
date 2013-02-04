@@ -9,18 +9,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
             if (xml) {
                 allowed = xml.attr("allowed");
                 if (allowed !== undefined) {
-                    switch (allowed.toLowerCase()) {
-                        case "yes":
-                            allowed = true;
-                            break;
-                        case "no":
-                            allowed = false;
-                            break;
-                        default:
-                            break;
-                    }
-
-                    zoom.allowed(allowed);
+                    zoom.allowed(ns.utilityFunctions.parseBoolean(allowed));
                 }
                 if (xml.attr("min") !== undefined) {
                     zoom.min( window.multigraph.core.DataMeasure.parse(type, xml.attr("min")) );
