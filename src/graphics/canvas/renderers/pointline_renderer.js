@@ -159,7 +159,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 
         });
 
-        ns.PointlineRenderer.respondsTo("renderLegendIcon", function (context, x, y, icon, opacity) {
+        ns.PointlineRenderer.respondsTo("renderLegendIcon", function (context, x, y, icon) {
             var settings = this.settings();
 
             context.save();

@@ -144,7 +144,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             context.restore();
         });
 
-        ns.FillRenderer.respondsTo("renderLegendIcon", function (context, x, y, icon, opacity) {
+        ns.FillRenderer.respondsTo("renderLegendIcon", function (context, x, y, icon) {
             var state = this.state();
             
             context.save();

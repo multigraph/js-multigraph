@@ -178,7 +178,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 
         });
 
-        ns.BarRenderer.respondsTo("renderLegendIcon", function (context, x, y, icon, opacity) {
+        ns.BarRenderer.respondsTo("renderLegendIcon", function (context, x, y, icon) {
             var settings          = this.settings(),
                 rendererFillColor = this.getOptionValue("fillcolor", 0),
                 rendererOpacity   = this.getOptionValue("fillopacity", 0),
@@ -192,7 +192,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             context.fillRect(0, 0, icon.width(), icon.height());
 
             context.lineWidth = 1;
-            context.fillStyle = rendererFillColor.toRGBA(opacity * rendererOpacity);
+            context.fillStyle = rendererFillColor.toRGBA(rendererOpacity);
 
             if (settings.barpixelwidth < settings.hidelines) {
                 context.strokeStyle = rendererFillColor.toRGBA(rendererOpacity);

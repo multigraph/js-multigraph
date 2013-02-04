@@ -180,7 +180,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             return path; 
         });
 
-        ns.BarRenderer.respondsTo("renderLegendIcon", function (graphicsContext, x, y, icon, opacity) {
+        ns.BarRenderer.respondsTo("renderLegendIcon", function (graphicsContext, x, y, icon) {
             var settings          = this.settings(),
                 rendererFillColor = this.getOptionValue("fillcolor", 0),
                 rendererOpacity   = this.getOptionValue("fillopacity", 0),
