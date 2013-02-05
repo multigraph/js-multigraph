@@ -54,8 +54,11 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.lightbox", fun
             var methods = {
                 open : function () {
                     var clone = this.clone(true);
-                    this.data("lightbox").overlay = $("<div style=\"position: fixed; left: 0px; top: 0px; height: 100%; min-height: 100%; width: 100%; z-index: 9999; background: black; opacity: 0.5;\"></div>").appendTo("body");
-                    this.data("lightbox").contents = clone;
+                    var data = this.data("lightbox");
+                    var cloneData = clone.data("lightbox");
+
+                    data.overlay = $("<div style=\"position: fixed; left: 0px; top: 0px; height: 100%; min-height: 100%; width: 100%; z-index: 9999; background: black; opacity: 0.5;\"></div>").appendTo("body");
+                    data.contents = clone;
 
                     var w = clone.width();
                     var h = clone.height();
@@ -65,10 +68,10 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.lightbox", fun
                     scaleAndPositionElement(clone, w, h);
                     $("body").append(clone);
 
-                    this.data("lightbox").contentWidth = w;
-                    this.data("lightbox").contentHeight = h;
+                    data.contentWidth = w;
+                    data.contentHeight = h;
 
-                    this.data("lightbox").openCallback.call(this);
+                    data.openCallback.call(this);
 
                     $(clone).css("position", "fixed")
                         .css("z-index", 9999);
@@ -78,41 +81,48 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.lightbox", fun
                             clone.lightbox("close");
                         })
                     );
-                    $(clone).data("lightbox").opened = true;
 
-                    $(clone).data("lightbox").resizeHandler = function () {
+                    cloneData.opened = true;
+
+                    cloneData.resizeHandler = function () {
                         clone.lightbox("resize");
                     };
 
-                    $(window).on("resize", $(clone).data("lightbox").resizeHandler);
-                    $(window).on("orientationchange", $(clone).data("lightbox").resizeHandler);
+                    $(window).on("resize", cloneData.resizeHandler);
+                    $(window).on("orientationchange", cloneData.resizeHandler);
+                    return this;
                 },
                 
                 close : function () {
-                    $(window).off("resize", this.data("lightbox").resizeHandler);
-                    $(window).off("orientationchange", this.data("lightbox").resizeHandler);
+                    var data = this.data("lightbox");
 
-                    this.data("lightbox").opened = false;
-                    this.data("lightbox").overlay.remove();
-                    this.data("lightbox").overlay = undefined;
+                    $(window).off("resize", data.resizeHandler);
+                    $(window).off("orientationchange", data.resizeHandler);
 
-                    this.data("lightbox").closeCallback.call(this);
+                    data.opened = false;
+                    data.overlay.remove();
+                    data.overlay = undefined;
 
-                    this.data("lightbox").contents.remove();
+                    data.closeCallback.call(this);
+
+                    data.contents.remove();
+                    return this;
                 },
                 
                 resize : function () {
-                    var w = this.data("lightbox").contentWidth;
-                    var h = this.data("lightbox").contentHeight;
+                    var data = this.data("lightbox");
+
+                    var w = data.contentWidth;
+                    var h = data.contentHeight;
                     var r = computeRatio(w, h);
                     w = parseInt(w * r, 10);
                     h = parseInt(h * r, 10);
 
-                    scaleAndPositionElement(this.data("lightbox").contents, w, h);
-                    this.data("lightbox").contentWidth = w;
-                    this.data("lightbox").contentHeight = h;
+                    scaleAndPositionElement(data.contents, w, h);
+                    data.contentWidth = w;
+                    data.contentHeight = h;
 
-                    this.data("lightbox").resizeCallback.call(this);
+                    data.resizeCallback.call(this);
 
                     return this;
                 },
