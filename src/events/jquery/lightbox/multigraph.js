@@ -6,6 +6,51 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.lightbox", fun
         ns.core.Multigraph.hasA("originalDiv");
 
         (function ($) {
+            var defaults = {
+                openCallback : function () {
+                    var lightboxData = this.data("lightbox");
+                    this.data("multigraph").multigraph.done(function (m) {
+                        m.originalDiv(m.div())
+                            .div(lightboxData.contents);
+                        m.initializeSurface();
+                        m.resizeSurface(lightboxData.contentWidth, lightboxData.contentHeight);
+                        m.width(lightboxData.contentWidth)
+                            .height(lightboxData.contentHeight);
+                        m.busySpinner().remove();
+                        m.busySpinner($('<div style="position: absolute; left:5px; top:5px;"></div>')
+                                      .appendTo($(m.div()))
+                                      .busy_spinner());
+                        m.render();
+                    });
+                },
+
+                closeCallback : function () {
+                    var lightboxData = this.data("lightbox");
+                    this.data("multigraph").multigraph.done(function (m) {
+                        m.div(m.originalDiv())
+                            .width($(m.div()).width())
+                            .height($(m.div()).height())
+                            .busySpinner($('<div style="position: absolute; left:5px; top:5px;"></div>')
+                                         .appendTo($(m.div()))
+                                         .busy_spinner()
+                                        );
+
+                        m.initializeSurface();
+                        m.render();
+                    });
+                },
+
+                resizeCallback : function () {
+                    var lightboxData = this.data("lightbox");
+                    this.data("multigraph").multigraph.done(function (m) {
+                        m.resizeSurface(lightboxData.contentWidth, lightboxData.contentHeight);
+                        m.width(lightboxData.contentWidth)
+                            .height(lightboxData.contentHeight);
+                        m.render();
+                    });
+                }
+            };
+
             var methods = {
                 open : function () {
                     var clone = this.clone(true);
@@ -23,19 +68,7 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.lightbox", fun
                     this.data("lightbox").contentWidth = w;
                     this.data("lightbox").contentHeight = h;
 
-                    this.data("multigraph").multigraph.done(function (m) {
-                        m.originalDiv(m.div())
-                            .div(clone);
-                        m.initializeSurface();
-                        m.resizeSurface(w, h);
-                        m.width(w)
-                            .height(h);
-                        m.busySpinner().remove();
-                        m.busySpinner($('<div style="position: absolute; left:5px; top:5px;"></div>')
-                                         .appendTo($(m.div()))
-                                         .busy_spinner());
-                        m.render();
-                    });
+                    this.data("lightbox").openCallback.call(this);
 
                     $(clone).css("position", "fixed")
                         .css("z-index", 9999);
@@ -62,19 +95,8 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.lightbox", fun
                     this.data("lightbox").opened = false;
                     this.data("lightbox").overlay.remove();
                     this.data("lightbox").overlay = undefined;
-                    
-                    this.data("multigraph").multigraph.done(function (m) {
-                        m.div(m.originalDiv())
-                            .width($(m.div()).width())
-                            .height($(m.div()).height())
-                            .busySpinner($('<div style="position: absolute; left:5px; top:5px;"></div>')
-                                         .appendTo($(m.div()))
-                                         .busy_spinner()
-                                        );
 
-                        m.initializeSurface();
-                        m.render();
-                    });
+                    this.data("lightbox").closeCallback.call(this);
 
                     this.data("lightbox").contents.remove();
                 },
@@ -90,13 +112,8 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.lightbox", fun
                     this.data("lightbox").contentWidth = w;
                     this.data("lightbox").contentHeight = h;
 
-                    this.data("multigraph").multigraph.done(function (m) {
-                        m.resizeSurface(w, h);
+                    this.data("lightbox").resizeCallback.call(this);
 
-                        m.width(w);
-                        m.height(h);
-                        m.render();
-                    });
                     return this;
                 },
 
@@ -114,9 +131,8 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.lightbox", fun
                         var $this = $(this),
                         data = $this.data("lightbox");
                         if ( !data ) {
-                            $this.data("lightbox", {
-                                opened : false
-                            });
+                            var settings = $.extend(defaults, options, { opened : false });
+                            $this.data("lightbox", settings);
                         }
                         return this;
                     });
