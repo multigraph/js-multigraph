@@ -207,8 +207,7 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.lightbox", fun
             };
 
             var scaleElement = function (elem, width, height) {
-                $(elem)
-                    .css("width", width + "px")
+                elem.css("width", width + "px")
                     .css("height", height + "px");
             };
 
@@ -222,8 +221,7 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.lightbox", fun
                     top = 0;
                 }
 
-                $(elem)
-                    .css("left", left + "px")
+                elem.css("left", left + "px")
                     .css("top", top + "px");
             };
 
