@@ -7,6 +7,10 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.lightbox", fun
 
         (function ($) {
             var defaults = {
+                fullscreen : false,
+
+                scale : false,
+
                 openCallback : function () {
                     var lightboxData = this.data("lightbox");
                     this.data("multigraph").multigraph.done(function (m) {
@@ -56,16 +60,26 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.lightbox", fun
                     var clone = this.clone(true);
                     var data = this.data("lightbox");
                     var cloneData = clone.data("lightbox");
+                    var w, h;
 
                     data.overlay = $("<div style=\"position: fixed; left: 0px; top: 0px; height: 100%; min-height: 100%; width: 100%; z-index: 9999; background: black; opacity: 0.5;\"></div>").appendTo("body");
                     data.contents = clone;
 
-                    var w = clone.width();
-                    var h = clone.height();
-                    var r = computeRatio(w, h);
-                    w = parseInt(w * r, 10);
-                    h = parseInt(h * r, 10);
-                    scaleAndPositionElement(clone, w, h);
+                    if (data.fullscreen === true) {
+                        w = window.innerWidth;
+                        h = window.innerHeight;
+                    } else {
+                        w = clone.width();
+                        h = clone.height();
+                        if (data.scale === true) {
+                            var r = computeRatio(w, h);
+                            w = parseInt(w * r, 10);
+                            h = parseInt(h * r, 10);
+                        }
+                    }
+
+                    scaleElement(clone, w, h);
+                    positionElement(clone, w, h);
                     $("body").append(clone);
 
                     data.contentWidth = w;
@@ -111,14 +125,24 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.lightbox", fun
                 
                 resize : function () {
                     var data = this.data("lightbox");
+                    var w, h;
 
-                    var w = data.contentWidth;
-                    var h = data.contentHeight;
-                    var r = computeRatio(w, h);
-                    w = parseInt(w * r, 10);
-                    h = parseInt(h * r, 10);
+                    if (data.fullscreen === true) {
+                        w = window.innerWidth;
+                        h = window.innerHeight;
+                    } else {
+                        w = data.contentWidth;
+                        h = data.contentHeight;
+                        if (data.scale === true) {
+                            var r = computeRatio(w, h);
+                            w = parseInt(w * r, 10);
+                            h = parseInt(h * r, 10);
+                        }
+                    }
 
-                    scaleAndPositionElement(data.contents, w, h);
+                    scaleElement(data.contents, w, h);
+                    positionElement(data.contents, w, h);
+
                     data.contentWidth = w;
                     data.contentHeight = h;
 
@@ -160,22 +184,35 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.lightbox", fun
                 }
             };
 
+            var computeRatio = function (originalWidth, originalHeight) {
+                var wr = (originalWidth > 0) ? window.innerWidth / originalWidth : 1;
+                var hr = (originalHeight > 0) ? window.innerHeight / originalHeight : 1;
+                var r = Math.min(wr, hr);
+                return r;
+            };
+
+            var scaleElement = function (elem, width, height) {
+                $(elem)
+                    .css("width", width + "px")
+                    .css("height", height + "px");
+            };
+
+            var positionElement = function (elem, width, height) {
+                var left = (window.innerWidth  - width) / 2;
+                var top = (window.innerHeight - height) / 2;
+                if (left < 0) {
+                    left = 0;
+                }
+                if (top < 0) {
+                    top = 0;
+                }
+
+                $(elem)
+                    .css("left", left + "px")
+                    .css("top", top + "px");
+            };
+
         }(window.multigraph.jQuery));
-
-        var computeRatio = function (originalWidth, originalHeight) {
-            var wr = (originalWidth > 0) ? window.innerWidth / originalWidth : 1;
-            var hr = (originalHeight > 0) ? window.innerHeight / originalHeight : 1;
-            var r = Math.min(wr, hr);
-            return r;
-        };
-
-        var scaleAndPositionElement = function (elem, width, height) {
-            window.multigraph.jQuery(elem)
-                .css("width", width + "px")
-                .css("height", height + "px")
-                .css("left", ((window.innerWidth  - width) / 2) + "px")
-                .css("top", ((window.innerHeight - height) / 2) + "px");
-        };
 
     });
 
