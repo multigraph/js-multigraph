@@ -11,7 +11,9 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.lightbox", fun
 
                 scale : false,
 
-                openCallback : function () {
+                preopen : function () {},
+
+                postopen : function () {
                     var lightboxData = this.data("lightbox");
                     this.data("multigraph").multigraph.done(function (m) {
                         m.originalDiv(m.div())
@@ -28,7 +30,9 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.lightbox", fun
                     });
                 },
 
-                closeCallback : function () {
+                preclose : function () {},
+
+                postclose : function () {
                     var lightboxData = this.data("lightbox");
                     this.data("multigraph").multigraph.done(function (m) {
                         m.div(m.originalDiv())
@@ -44,7 +48,9 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.lightbox", fun
                     });
                 },
 
-                resizeCallback : function () {
+                preresize : function () {},
+
+                postresize : function () {
                     var lightboxData = this.data("lightbox");
                     this.data("multigraph").multigraph.done(function (m) {
                         m.resizeSurface(lightboxData.contentWidth, lightboxData.contentHeight);
@@ -62,8 +68,11 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.lightbox", fun
                     var cloneData = clone.data("lightbox");
                     var w, h;
 
-                    data.overlay = $("<div style=\"position: fixed; left: 0px; top: 0px; height: 100%; min-height: 100%; width: 100%; z-index: 9999; background: black; opacity: 0.5;\"></div>").appendTo("body");
                     data.contents = clone;
+                    data.preopen.call(this);
+                    clone = data.contents; // data.contents might have been altered by data.preopen
+
+                    data.overlay = $("<div style=\"position: fixed; left: 0px; top: 0px; height: 100%; min-height: 100%; width: 100%; z-index: 9999; background: black; opacity: 0.5;\"></div>").appendTo("body");
 
                     if (data.fullscreen === true) {
                         w = window.innerWidth;
@@ -85,7 +94,6 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.lightbox", fun
                     data.contentWidth = w;
                     data.contentHeight = h;
 
-                    data.openCallback.call(this);
 
                     clone.css("position", "fixed")
                         .css("z-index", 9999);
@@ -104,11 +112,16 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.lightbox", fun
 
                     $(window).on("resize", cloneData.resizeHandler);
                     $(window).on("orientationchange", cloneData.resizeHandler);
+
+                    data.postopen.call(this);
+
                     return this;
                 },
                 
                 close : function () {
                     var data = this.data("lightbox");
+
+                    data.preclose.call(this);
 
                     $(window).off("resize", data.resizeHandler);
                     $(window).off("orientationchange", data.resizeHandler);
@@ -117,7 +130,7 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.lightbox", fun
                     data.overlay.remove();
                     data.overlay = undefined;
 
-                    data.closeCallback.call(this);
+                    data.postclose.call(this);
 
                     data.contents.remove();
                     return this;
@@ -126,6 +139,8 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.lightbox", fun
                 resize : function () {
                     var data = this.data("lightbox");
                     var w, h;
+
+                    data.preresize.call(this);
 
                     if (data.fullscreen === true) {
                         w = window.innerWidth;
@@ -146,7 +161,7 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.lightbox", fun
                     data.contentWidth = w;
                     data.contentHeight = h;
 
-                    data.resizeCallback.call(this);
+                    data.postresize.call(this);
 
                     return this;
                 },
