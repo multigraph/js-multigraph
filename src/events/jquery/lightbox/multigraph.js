@@ -65,12 +65,12 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.lightbox", fun
                 open : function () {
                     var clone = this.clone(true);
                     var data = this.data("lightbox");
-                    var cloneData = clone.data("lightbox");
                     var w, h;
 
                     data.contents = clone;
                     data.preopen.call(this);
                     clone = data.contents; // data.contents might have been altered by data.preopen
+                    var cloneData = clone.data("lightbox");
 
                     data.overlay = $("<div style=\"position: fixed; left: 0px; top: 0px; height: 100%; min-height: 100%; width: 100%; z-index: 9999; background: black; opacity: 0.5;\"></div>").appendTo("body");
 
@@ -89,11 +89,8 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.lightbox", fun
 
                     scaleElement(clone, w, h);
                     positionElement(clone, w, h);
+
                     $("body").append(clone);
-
-                    data.contentWidth = w;
-                    data.contentHeight = h;
-
 
                     clone.css("position", "fixed")
                         .css("z-index", 9999);
@@ -103,6 +100,9 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.lightbox", fun
                             clone.lightbox("close");
                         })
                     );
+
+                    cloneData.contentWidth = w;
+                    cloneData.contentHeight = h;
 
                     cloneData.opened = true;
 
@@ -183,6 +183,21 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.lightbox", fun
                             var settings = $.extend(defaults, options, { opened : false });
                             $this.data("lightbox", settings);
                         }
+
+                        $this.on("touchstart", function (e) {
+                            var t2 = e.timeStamp,
+                                t1 = $this.data("lightbox").lastTouch || t2,
+                                dt = t2 - t1,
+                                fingers = e.originalEvent.touches.length;
+                            $this.data("lightbox").lastTouch = t2;
+                            if (!dt || dt > 500 || fingers > 1) {
+                                return;
+                            }
+                            
+                            e.preventDefault(); // double tap - prevent the zoom
+                            $this.lightbox("toggle");
+                        });
+
                         return this;
                     });
                 }

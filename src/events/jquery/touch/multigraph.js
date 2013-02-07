@@ -185,7 +185,7 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
             };
 
             var handleDoubleTap = function (event) {
-                $target.parent().lightbox("toggle");
+//                $target.parent().lightbox("toggle");
             };
 
             var handlePinchZoom = function (e) {
