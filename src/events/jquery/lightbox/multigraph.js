@@ -3,8 +3,6 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.lightbox", fun
 
     ns.mixin.add(function (ns) {
 
-        ns.core.Multigraph.hasA("originalDiv");
-
         (function ($) {
             var defaults = {
                 fullscreen : false,
@@ -17,9 +15,9 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.lightbox", fun
 
                 postopen : function () {
                     var lightboxData = this.data("lightbox");
+                    lightboxData.originalDiv = this;
                     this.data("multigraph").multigraph.done(function (m) {
-                        m.originalDiv(m.div())
-                            .div(lightboxData.contents);
+                        m.div(lightboxData.contents);
                         m.initializeSurface();
                         m.resizeSurface(lightboxData.contentWidth, lightboxData.contentHeight);
                         m.width(lightboxData.contentWidth)
@@ -37,7 +35,7 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.lightbox", fun
                 postclose : function () {
                     var lightboxData = this.data("lightbox");
                     this.data("multigraph").multigraph.done(function (m) {
-                        m.div(m.originalDiv())
+                        m.div(lightboxData.originalDiv)
                             .width($(m.div()).width())
                             .height($(m.div()).height())
                             .busySpinner($('<div style="position: absolute; left:5px; top:5px;"></div>')
