@@ -11,6 +11,8 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.lightbox", fun
 
                 scale : false,
 
+                defaultEventHandling : true,
+
                 preopen : function () {},
 
                 postopen : function () {
@@ -184,19 +186,22 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.lightbox", fun
                             $this.data("lightbox", settings);
                         }
 
-                        $this.on("touchstart", function (e) {
-                            var t2 = e.timeStamp,
-                                t1 = $this.data("lightbox").lastTouch || t2,
-                                dt = t2 - t1,
-                                fingers = e.originalEvent.touches.length;
-                            $this.data("lightbox").lastTouch = t2;
-                            if (!dt || dt > 500 || fingers > 1) {
-                                return;
-                            }
-                            
-                            e.preventDefault(); // double tap - prevent the zoom
-                            $this.lightbox("toggle");
-                        });
+                        if ($this.data("lightbox").defaultEventHandling === true) {
+                            // modified from ecmanaut's answer at
+                            // http://stackoverflow.com/questions/3103842/safari-ipad-prevent-zoom-on-double-tap
+                            $this.on("touchstart", function (e) {
+                                var t2 = e.timeStamp,
+                                    t1 = $this.data("lightbox").lastTouch || t2,
+                                    dt = t2 - t1,
+                                    fingers = e.originalEvent.touches.length;
+                                $this.data("lightbox").lastTouch = t2;
+                                if (!dt || dt > 500 || fingers > 1) {
+                                    return;
+                                }
+                                e.preventDefault(); // double tap - prevent the zoom
+                                $this.lightbox("toggle");
+                            });
+                        }
 
                         return this;
                     });
