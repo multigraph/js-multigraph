@@ -95,7 +95,49 @@
             };
 
             $(this).multigraph(options);
-            $(this).lightbox({});
+            $(this).lightbox({
+                scale : true,
+                postopen : function () {
+                    var lightboxData = this.data("lightbox");
+                    lightboxData.originalDiv = this;
+                    this.data("multigraph").multigraph.done(function (m) {
+                        m.div(lightboxData.contents);
+                        m.initializeSurface();
+                        m.resizeSurface(lightboxData.contentWidth, lightboxData.contentHeight);
+                        m.width(lightboxData.contentWidth)
+                            .height(lightboxData.contentHeight);
+                        m.busySpinner().remove();
+                        m.busySpinner($('<div style="position: absolute; left:5px; top:5px;"></div>')
+                                      .appendTo($(m.div()))
+                                      .busy_spinner());
+                        m.render();
+                    });
+                },
+                postclose : function () {
+                    var lightboxData = this.data("lightbox");
+                    this.data("multigraph").multigraph.done(function (m) {
+                        m.div(lightboxData.originalDiv)
+                            .width($(m.div()).width())
+                            .height($(m.div()).height())
+                            .busySpinner($('<div style="position: absolute; left:5px; top:5px;"></div>')
+                                         .appendTo($(m.div()))
+                                         .busy_spinner()
+                                        );
+
+                        m.initializeSurface();
+                        m.render();
+                    });
+                },
+                postresize : function () {
+                    var lightboxData = this.data("lightbox");
+                    this.data("multigraph").multigraph.done(function (m) {
+                        m.resizeSurface(lightboxData.contentWidth, lightboxData.contentHeight);
+                        m.width(lightboxData.contentWidth)
+                            .height(lightboxData.contentHeight);
+                        m.render();
+                    });
+                }
+            });
 
         });
 
