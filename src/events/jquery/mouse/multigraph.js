@@ -63,10 +63,6 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
                 multigraph.graphs().at(0).doDragDone();
             });
 
-            $target.dblclick(function () {
-                $target.parent().lightbox("toggle");
-            });
-
         });
 
     });
