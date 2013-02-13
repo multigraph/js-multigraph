@@ -112,6 +112,10 @@
                                       .busy_spinner());
                         m.render();
                     });
+                    var timeout= window.setTimeout(function () {
+                            lightboxData.contents.lightbox("resize");
+                            window.clearTimeout(timeout);
+                        }, 50);
                 },
                 postclose : function () {
                     var lightboxData = this.data("lightbox");
