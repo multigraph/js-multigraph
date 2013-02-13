@@ -26,10 +26,6 @@
     <filelist dir="src/events/jquery/draggable" files="mixin.js"/>
     <fileset dir="src/events/jquery/draggable" includes="**/*.js" excludes="mixin.js" />
   </path>
-  <path id="path.events-jquery-lightbox-js">
-    <filelist dir="src/events/jquery/lightbox" files="mixin.js"/>
-    <fileset dir="src/events/jquery/lightbox" includes="**/*.js" excludes="mixin.js" />
-  </path>
   <path id="path.events-jquery-mouse-js">
     <filelist dir="src/events/jquery/mouse" files="mixin.js"/>
     <fileset dir="src/events/jquery/mouse" includes="**/*.js" excludes="mixin.js" />
@@ -107,7 +103,6 @@
       <path refid="path.parser-jquery-js"/>
       <path refid="path.normalizer-js"/>
       <path refid="path.events-jquery-draggable-js"/>
-      <path refid="path.events-jquery-lightbox-js"/>
       <path refid="path.events-jquery-mouse-js"/>
       <path refid="path.events-jquery-touch-js"/>
       <path refid="path.graphics-raphael-js"/>
@@ -146,7 +141,6 @@
     <pathconvert property="scripttags.raphael" pathsep="${line.separator}">
       <path refid="path.graphics-raphael-js"/>
       <path refid="path.events-jquery-draggable-js"/>
-      <path refid="path.events-jquery-lightbox-js"/>
       <path refid="path.events-jquery-mouse-js"/>
       <path refid="path.events-jquery-touch-js"/>
       <path refid="path.normalizer-js"/>
@@ -168,7 +162,6 @@
     <pathconvert property="scripttags.canvas" pathsep="${line.separator}">
       <path refid="path.graphics-canvas-js"/>
       <path refid="path.events-jquery-draggable-js"/>
-      <path refid="path.events-jquery-lightbox-js"/>
       <path refid="path.events-jquery-mouse-js"/>
       <path refid="path.events-jquery-touch-js"/>
       <path refid="path.normalizer-js"/>
@@ -188,7 +181,6 @@
       <path refid="path.parser-jquery-js"/>
       <path refid="path.normalizer-js"/>
       <path refid="path.events-jquery-draggable-js"/>
-      <path refid="path.events-jquery-lightbox-js"/>
       <path refid="path.events-jquery-mouse-js"/>
       <path refid="path.events-jquery-touch-js"/>
       <path refid="path.graphics-raphael-js"/>
