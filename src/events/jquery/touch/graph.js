@@ -2,10 +2,9 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
     "use strict";
 
     ns.mixin.add(function (ns, errorHandler) {
-        var Graph = ns.core.Graph;
         var Axis  = ns.core.Axis;
 
-        Graph.respondsTo("doFirstPinchZoom", function (multigraph, bx, by, dx, dy, totalx, totaly) {
+        ns.core.Graph.respondsTo("doFirstPinchZoom", function (multigraph, bx, by, dx, dy, totalx, totaly) {
 // TODO: this try...catch is just to remind myself how to apply, make sure this is correct later
             try {
                 if (!this.dragStarted()) {
