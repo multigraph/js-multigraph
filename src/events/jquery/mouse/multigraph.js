@@ -62,6 +62,7 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
                 mouseIsDown = false;
                 multigraph.graphs().at(0).doDragDone();
             });
+
         });
 
     });

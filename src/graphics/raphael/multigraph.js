@@ -28,14 +28,10 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
         ns.Multigraph.respondsTo("init", function () {
             this.$div(window.multigraph.jQuery(this.div()));
-            this.$div().on("mousedown", { "mg": this }, this.setupEvents);
-            this.registerTouchEvents(this.$div());
+            this.registerEvents();
             this.width(this.$div().width());
             this.height(this.$div().height());
-            if (this.paper()) {
-                this.paper().remove();
-            }
-            this.paper(new window.Raphael(this.div(), this.width(), this.height()));
+            this.initializeSurface();
             this.busySpinner($('<div style="position: absolute; left:5px; top:5px;"></div>') .
                              appendTo(this.$div()) .
                              busy_spinner());
@@ -51,6 +47,11 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 this.graphs().at(i).render(this.paper(), this.width(), this.height());
             }
             text.remove();
+        });
+
+        ns.Multigraph.respondsTo("registerEvents", function () {
+            this.$div().on("mousedown", { "mg": this }, this.setupEvents);
+            this.registerTouchEvents(this.$div());
         });
 
         ns.Multigraph.respondsTo("setupEvents", function (mouseDownEvent) {
@@ -94,6 +95,17 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             for (i = 0; i < mg.graphs().size(); ++i) {
                 mg.graphs().at(i).doDragDone();
             }
+        });
+
+        ns.Multigraph.respondsTo("resizeSurface", function (width, height) {
+            this.paper().setSize(width, height);
+        });
+
+        ns.Multigraph.respondsTo("initializeSurface", function () {
+            if (this.paper()) {
+                this.paper().remove();
+            }
+            this.paper(new window.Raphael(this.div(), this.width(), this.height()));
         });
 
     });
