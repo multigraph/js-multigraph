@@ -6,19 +6,12 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
         var math = window.multigraph.util.namespace("window.multigraph.math");
 
         core.Multigraph.respondsTo("registerTouchEvents", function (target) {
-            var previousTouches = [];
             var touchStarted = false;
             var dragStarted = false;
-            var doubleTapStarted = false;
-            var doubleTapSecondTapStarted = false;
             var pinchZoomStarted = false;
-
-            var doubleTapTimeout;
 
             var base;
             var multigraph = this;
-
-            //            var deltas = [];
 
             var pinchZoomInitialDeltas = {};
             var pinchZoomDetermined = false;
@@ -43,26 +36,6 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
                 }
                 previoustoucha = touchLocationToGraphCoords(e.touches[0]);
 
-                // double tap
-                if (e.touches.length === 1) {
-                    if (previousTouches.length === 0) {
-                        if (doubleTapStarted === true) {
-                            doubleTapSecondTapStarted = true;
-                        }
-                        doubleTapStarted = true;
-                        clearTimeout(doubleTapTimeout);
-                        doubleTapTimeout = setTimeout(function () {
-                                doubleTapStarted = false;
-                                doubleTapSecondTapStarted = false;
-                                clearTimeout(doubleTapTimeout);
-                            }, 500);
-                    }
-                } else {
-                    doubleTapStarted = false;
-                    doubleTapSecondTapStarted = false;
-                    clearTimeout(doubleTapTimeout);
-                }
-
                 // one finger drag
                 if (e.touches.length === 1) {
                     dragStarted = true;
@@ -80,8 +53,6 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
                     pinchZoomDetermined = false;
                 }
 
-                previousTouches = e.touches;
-
                 touchStarted = false;
                 multigraph.graphs().at(0).doDragDone();
             };
@@ -98,27 +69,11 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
                 if (e.touches.length === 2 && pinchZoomStarted === true) {
                     handlePinchZoom(e);
                 }
-                
-                previousTouches = e.touches;
             };
 
             var handleTouchEnd = function (jqueryEvent) {
                 var e = jqueryEvent.originalEvent;
                 e.preventDefault();
-                // double tap
-                if (e.touches.length === 0 && previousTouches.length === 1) {
-                    if (doubleTapSecondTapStarted === true) {
-                        handleDoubleTap(e);
-                        doubleTapStarted = false;
-                        doubleTapSecondTapStarted = false;
-                    } else if (doubleTapStarted === true) {
-                        doubleTapSecondTapStarted = true;
-                    }
-                } else {
-                    doubleTapStarted = false;
-                    doubleTapSecondTapStarted = false;
-                    clearTimeout(doubleTapTimeout);
-                }
                 
                 // one finger drag
                 if (e.touches.length === 1) {
@@ -135,56 +90,34 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
                     pinchZoomStarted = false;
                     pinchZoomDetermined = false;
                 }
-                
-                previousTouches = e.touches;
 
                 touchStarted = false;
                 multigraph.graphs().at(0).doDragDone();
-
-                /*
-                var string = "";
-                for (var i =0; i < deltas.length; i++) {
-                    string += "dx: " + deltas[i].dx + ". dy: " + deltas[i].dy + ".\n" 
-                }
-                deltas = []
-                alert(string)
-                */
             };
 
             var handleTouchLeave = function (jqueryEvent) {
-                var e = jqueryEvent.originalEvent;
-                e.preventDefault();
-                doubleTapStarted = false;
-                doubleTapSecondTapStarted = false;
-                clearTimeout(doubleTapTimeout);
+                jqueryEvent.originalEvent.preventDefault();
+
                 dragStarted = false;
                 pinchZoomStarted = false;
                 pinchZoomDetermined = false;
-                previousTouches = e.touches;
-
                 touchStarted = false;
+
                 multigraph.graphs().at(0).doDragDone();
             };
 
             var handleDrag = function (e) {
                 var touchLoc = touchLocationToGraphCoords(e.touches[0]);
-                //                var previousLoc = touchLocationToGraphCoords(previousTouches[0]);
-                //                var dx = touchLoc.x() - previousLoc.x();
-                //                var dy = touchLoc.y() - previousLoc.y();
                 var dx = touchLoc.x() - previoustoucha.x();
                 var dy = touchLoc.y() - previoustoucha.y();
-                //                deltas.push({"dx":dx,"dy":dy});
                 if (multigraph.graphs().size() > 0) {
-                    if (!touchStarted ) {
+                    if (!touchStarted) {
                         multigraph.graphs().at(0).doDragReset();
                     }
                     multigraph.graphs().at(0).doDrag(multigraph, base.x(), base.y(), dx, dy, false);
                 }
                 touchStarted = true;
                 previoustoucha = touchLoc;
-            };
-
-            var handleDoubleTap = function (event) {
             };
 
             var handlePinchZoom = function (e) {
@@ -197,7 +130,7 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
                 var dy = calculateAbsoluteDistance(a.y(), b.y()) - calculateAbsoluteDistance(previoustoucha.y(), previoustouchb.y());
 
                 if (multigraph.graphs().size() > 0) {
-                    if (!touchStarted ) {
+                    if (!touchStarted) {
                         multigraph.graphs().at(0).doDragReset();
                     }
                     if (pinchZoomDetermined === true) {
