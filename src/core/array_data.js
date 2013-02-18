@@ -11,7 +11,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * @for ArrayData
      * @constructor
      * @param {array} columns A array of DataVariables
-     * @param {array} stringArray A array of the preparsed DataValues
+     * @param {array} stringArray A array of strings which will later be parsed into DataValues
      */
     ns.ArrayData = window.jermaine.Model(function () {
         var ArrayData = this;
@@ -36,7 +36,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @param {DataValue} min
          * @param {DataValue} max
          * @param {Integer} buffer
-         * @return ArrayData
          * @author jrfrimme
          */
         this.respondsTo("getIterator", function (columnIds, min, max, buffer) {
@@ -81,7 +80,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @param {DataValue} min
          * @param {DataValue} max
          * @param {Integer} buffer
-         * @throws {error} Throws error if arrayData is not an array of strings
          * @return iter
          * @author jrfrimme
          */

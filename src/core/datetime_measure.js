@@ -18,6 +18,10 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         return DatetimeUnit.isInstance(unit);
     };
 
+    DatetimeMeasure.prototype.negative = function () {
+        return new DatetimeMeasure(-this.measure, this.unit);
+    };
+
     DatetimeMeasure.prototype.getRealValue = function () {
         var factor;
         switch (this.unit) {
@@ -90,20 +94,45 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         return alignment.add( DatetimeMeasure.parse((d * monthSpacing) + "M") );
     };
 
-    DatetimeMeasure.prototype.firstSpacingLocationAtOrAfter = function (value, alignment)  {
+
+    /**
+     * Consider the regular lattice of points on the Datetime line separated from each other
+     * by `this` DatetimeMeasure, and aligned at the DatetimeValue `alignment`.  This function
+     * return the smallest DatetimeValue in that lattice which is greater than or equal to
+     * `value`.
+     * 
+     * return: a DatetimeValue
+     */
+    DatetimeMeasure.prototype.firstSpacingLocationAtOrAfter = function (/*DatetimeValue*/value, /*DatetimeValue*/alignment)  {
         switch (this.unit) {
-            case DatetimeMeasure.MILLISECOND:
-            case DatetimeMeasure.SECOND:
-            case DatetimeMeasure.MINUTE:
-            case DatetimeMeasure.HOUR:
-            case DatetimeMeasure.DAY:
-            case DatetimeMeasure.WEEK:
-                return DatetimeMeasure.findTickmarkWithMillisecondSpacing(value.getRealValue(), alignment.getRealValue(), this.getRealValue());
-            case DatetimeMeasure.MONTH:
-                return DatetimeMeasure.findTickmarkWithMonthSpacing(value, alignment, this.measure);
-            case DatetimeMeasure.YEAR:
-                return DatetimeMeasure.findTickmarkWithMonthSpacing(value, alignment, this.measure * 12);
-        }    
+        case DatetimeMeasure.MONTH:
+            return DatetimeMeasure.findTickmarkWithMonthSpacing(value, alignment, this.measure);
+        case DatetimeMeasure.YEAR:
+            return DatetimeMeasure.findTickmarkWithMonthSpacing(value, alignment, this.measure * 12);
+        //case DatetimeMeasure.MILLISECOND:
+        //case DatetimeMeasure.SECOND:
+        //case DatetimeMeasure.MINUTE:
+        //case DatetimeMeasure.HOUR:
+        //case DatetimeMeasure.DAY:
+        //case DatetimeMeasure.WEEK:
+        default:
+            return DatetimeMeasure.findTickmarkWithMillisecondSpacing(value.getRealValue(), alignment.getRealValue(), this.getRealValue());
+        }
+    };
+
+    /**
+     * This function is just like `firstSpacingLocationAtOrAfter` above, but returns the
+     * greatest DatetimeValue in the lattice that is less than or equal to `value`.
+     * 
+     * return: a DatetimeValue
+     */
+    DatetimeMeasure.prototype.lastSpacingLocationAtOrBefore = function (/*DatetimeValue*/value, /*DatetimeValue*/alignment)  {
+        var x = this.firstSpacingLocationAtOrAfter(value, alignment);
+        if (x.eq(value)) {
+            return x;
+        }
+        var y = x.add(this.negative());
+        return y;
     };
 
     DatetimeMeasure.prototype.toString = function () {

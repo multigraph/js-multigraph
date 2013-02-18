@@ -6,6 +6,7 @@ describe("Data parsing", function () {
 
     var Data = window.multigraph.core.Data,
         ArrayData = window.multigraph.core.ArrayData,
+        PeriodicArrayData = window.multigraph.core.PeriodicArrayData,
         CSVData = window.multigraph.core.CSVData,
         DataVariable = window.multigraph.core.DataVariable,
         NumberValue = window.multigraph.core.NumberValue,
@@ -100,6 +101,40 @@ describe("Data parsing", function () {
         });
 
     });
+
+     describe("PeriodicArrayData -- <data> with <repeat> and <values> section", function () {
+
+        beforeEach(function () {
+            xmlString = ''
+                + '<data>'
+                +   '<variables>'
+                +     '<variable id="time" column="0" type="datetime"/>'
+                +     '<variable id="temp" column="1" type="number"/>'
+                +   '</variables>'
+                +   '<repeat period="1Y"/>'
+                +   '<values>'
+                +     '2010-01-01,1'
+                +     '2010-05-01,5'
+                +     '2010-10-01,10'
+                +   '</values>'
+                + '</data>';
+            $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+            data = Data.parseXML($xml);
+        });
+
+        it("parser should return an PeriodicArrayData instance", function () {
+            expect(data).not.toBeUndefined();
+            expect(data instanceof Data).toBe(true);
+            expect(data instanceof ArrayData).toBe(true);
+            expect(data instanceof PeriodicArrayData).toBe(true);
+        });
+
+        it("the period should be correct", function () {
+            expect(data.period().getRealValue()).toEqual(31536000000);
+        });
+
+    });
+
 
     describe("CSVData -- <data> with <csv> section", function () {
 

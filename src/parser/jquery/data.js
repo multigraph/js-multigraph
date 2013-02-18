@@ -3,9 +3,11 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
 
     var DataVariable = window.multigraph.core.DataVariable,
         ArrayData  = window.multigraph.core.ArrayData,
+        PeriodicArrayData  = window.multigraph.core.PeriodicArrayData,
         CSVData  = window.multigraph.core.CSVData,
         WebServiceData  = window.multigraph.core.WebServiceData,
-        Data = window.multigraph.core.Data;
+        Data = window.multigraph.core.Data,
+        DataMeasure = window.multigraph.core.DataMeasure;
 
     ns.mixin.add(function (ns, parse) {
         
@@ -30,12 +32,32 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     });
                 }
 
+                // check to see if we have a <repeat> section, and if so, grab the period from it
+                var haveRepeat = false;
+                var period;
+                var repeat_xml = window.multigraph.jQuery(xml.find(">repeat"));
+                if (repeat_xml.length > 0) {
+                    var periodString = window.multigraph.jQuery(repeat_xml).attr("period");
+                    if (periodString === undefined || periodString === "") {
+                        messageHandler.warning("<repeat> tag requires a 'period' attribute; data treated as non-repeating");
+                    } else {
+                        period = DataMeasure.parse(dataVariables[0].type(),
+                                                   periodString);
+                        haveRepeat = true;
+                    }
+                }
+
                 // if we have a <values> section, parse it and return an ArrayData instance:
                 var values_xml = window.multigraph.jQuery(xml.find(">values"));
                 if (values_xml.length > 0) {
                     values_xml = values_xml[0];
                     var stringValues = ArrayData.textToStringArray(window.multigraph.jQuery(values_xml).text());
-                    var values = new ArrayData(dataVariables, stringValues);
+                    var values;
+                    if (haveRepeat) {
+                        values = new PeriodicArrayData(dataVariables, stringValues, period);
+                    } else {
+                        values = new ArrayData(dataVariables, stringValues);
+                    }
                     if (data.defaultMissingvalueString !== undefined) {
                         values.defaultMissingvalue(data.defaultMissingvalueString);
                     }
