@@ -1001,6 +1001,234 @@ window.jermaine.util.namespace("window.jermaine", function (ns) {
         };
     };
 }(jQuery));
+(function ($) {
+    var defaults = {
+        fullscreen : false,
+        scale : false,
+        defaultEventHandling : true,
+        preopen : function () {},
+        postopen : function () {},
+        preclose : function () {},
+        postclose : function () {},
+        preresize : function () {},
+        postresize : function () {}
+    };
+
+    var methods = {
+        open : function () {
+            var clone = this.clone(true),
+                data = this.data("lightbox"),
+                w, h;
+
+            data.contents = clone;
+            data.preopen.call(this);
+            clone = data.contents; // data.contents might have been altered by data.preopen
+            var cloneData = clone.data("lightbox");
+
+            data.overlay = $("<div/>")
+                .css({
+                    "position"         : "fixed",
+                    "left"             : "0px",
+                    "top"              : "0px",
+                    "height"           : "100%",
+                    "min-height"       : "100%",
+                    "width"            : "100%",
+                    "z-index"          : "9999",
+                    "background-color" : "black",
+                    "opacity"          : "0.5"
+                })
+                .appendTo("body");
+
+            data.box = $("<div/>")
+                .css({
+                    "position"         : "fixed",
+                    "z-index"          : "9999"
+                })
+                .appendTo("body");
+            
+
+            data.box.append(clone);
+
+            if (data.fullscreen === true) {
+                w = window.innerWidth;
+                h = window.innerHeight;
+            } else {
+                w = clone.width();
+                h = clone.height();
+                if (data.scale === true) {
+                    var r = computeRatio(w, h);
+                    w = parseInt(w * r, 10);
+                    h = parseInt(h * r, 10);
+                }
+            }
+
+            scaleElement(data.box, w, h);
+            positionElement(data.box, w, h);
+
+            scaleElement(clone, w, h);
+            positionElement(clone, w, h);
+            clone.css("position", "fixed")
+                .css("z-index", 9999);
+
+            data.box.append(
+                $("<img src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAYAAAAehFoBAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NkY4OUE4QUE2MDEyMTFFMkFBMEM4Q0Y2RTlFNkI4QzEiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NkY4OUE4QUI2MDEyMTFFMkFBMEM4Q0Y2RTlFNkI4QzEiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo2Rjg5QThBODYwMTIxMUUyQUEwQzhDRjZFOUU2QjhDMSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo2Rjg5QThBOTYwMTIxMUUyQUEwQzhDRjZFOUU2QjhDMSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PvXC/ukAAAcjSURBVHjaxFlpTFVXEJ7HDrIIUkCRzYitQJQK/kBTxAop2EQhaqkEqjZqK9FGa+2Cf2pabdIlEbE0FEkTArFaF6CAKCCStG5BokXAglpUIkKqgn0KyNb5jve+PB9vfyyTfIF7373nzJkzZ76ZuYqRkRGyUKwYoYwQxqsMD4aj9FsPo4Nxg1HP6LR0Mhsz37NlxDNSGLHt7e2e9+/fpwcPHtDTp0/p+fPn4iFHR0eaOnUqTZ8+nQICAsjV1bWJb5cwChiN5kysMNHCsNwHjE+uXr3qe+nSJWpsbCSlUmnUyzNmzKDw8HCKiooiX1/fGr61l1E9XgonMjLPnDnjX1NTI6xpiURGRtLSpUspJCSklC8/YvwzVgo7M7Lr6+vTzp49S9evX6exlISEBEpOTsYWfcgotFRhX0ZFeXl52JEjR2i8JDg4mJYtWwZXyeTLjxnD5ig8m1F17NixgJKSEhpvsbGxoZSUFIqNjf2VL1MZQ6Yo7M34o7CwcPapU6doImXdunUUFxf3E/+bbqzCCFm1x48fjzpx4gRNhmzYsAGWxkHM0hb0NeWrioqKKFaYsJjJwOnTp6HH94zXDSkczth59OjRSVMWYCKi3NxcO9blZ4a1PqbL5AdtwFa6ZM6cOWRvb09WVlakUChU95uamlQMpynu7u4gCvEOIEtnZyd1dHRofaeqqopmzZoVydHjfb7M1aZwDLNWdGVlpV7/6u3tpSVLlgjKtbW1Vd338vKSt/IlsbOzE8w2c+ZMcnNzU73z5MkTOnToEOkLq0xSCHdf8L+/MAY1Fd6JCYeHh/Uq3NbWRq2trbR8+XJhOdlisCDyiWvXrr30/Pz588VvgYGB5OnpSdbWL3Y4MzOT9O0k5NatW3ThwoUgXnASX/6m7sNeSGYuXrxolI9hu27fvi1cYsqUKeTs7CyUx+n28PBQPRcUFERz584VOYSPjw+SH/FsbW0tMXMaNde5c+eg33uahy6JrWszMDAgLGwM8vPz6d69e9Tf3y8GgOW8vb1py5Yt4ncoFhERIRQFkLlhgTdv3hSuYOw8V65cwfBvMVzUFY5paGgwehDg0aNHxCwo/g4ODr4I4OyfsOiKFSsE/Pz8hHVhWbgO/H///v0mzQMjstJw/DfUFV7U3Nxscvipq6sjJEQ4QLLvI4KsWrVKWBd+CxcB7UI4AtHdu3dNnufGDeT/FCUfOieGX1dXF5lTfRQXFwtLQkH4s+zXcuiTla2urhan3hzBIllekxUO5BsKQ9FBlzx79owKCgrI399fuAQUhT/L0QACIsjLyyNzyzEp9w6SXcIVk5riV5qAQkg/u7u7aWhoaFTcRgh7/Pix2eNL4c9VtrCdHB0sEQz68OFDcnFxIScnJ9V9BwcHsQhLxpcikb1s4X5spSUWBiEsXLhQe8LNPr1t2zaxCHPHl9ixV1a4B4fE3EQFPsv5K02bNk0A16PKFmY65LnmzoFdYvlPdok2PuVwPGtzti0mJkZECeQKYDv1w6ZKsNlCWBQSJLCkqYJYztIqW7gPSoOlTF15aGioinrhFnJic/LkSVH+I3vDc3ALMN369euRgZk8DwzC8rc6cZznctskv0J2tnjx4lHU29LSIths3759In729fW9yAE4JuOd9PR0k304LCwMQ/yprnD1ggULTBoEPQX4JqyLyCBT765du8TvUDY7O1tQN6KQXGjCMBs3bjR6HrgYk1K/psLFCQkJ/RjQmC2CssjEoCz8VmazrKwsEdrk5y5fviyYsKenRxWfcSgTExPF7hgzF56T2lu96gp3Q2kcDEMrRsWBrg2UxRbLUYHrQCoqKhr1PFgQOTLISfZnhLitW7eK7M7QfPHxaOFRvraa7rukpCSD4YWrWeGzaPBhYiiANHPPnj0630M6CRfRTEW3b9+udz704djCaBqWayuR6vjElyUnJ799+PBhreEFHUhUG6BgHC45hCEh1xcSkezn5OTQvHnzVIuEIIpgx6RsbJTAgKji1TtBmn2JYMZfK1eudNBVHE6UrF27lnbs2IFy403GiK4yH8H5y7S0tEkt87ETrKxSau2OGGpof7t69eoYpVIZj1M/0YLqBAWA1M1sMabzgxW9y6zUsGnTpgm1LCIOiIVD7F5drVd93UsfRiUn3mEHDx4cd8siTIK616xZ8wM6/Ob2h90ZRRw1oqG0oT6CuRIdHU0HDhyAIp/DJS3twMPPv2Z8mpGRoSgrKxszRUHnaAts3ry5C01L9Xg7Ft84FjF+ZEYLRzkk9QvMbl7jYO3evRvxNY+Rwfh3PL4i4ZC+w/iMc9vw0tJStJJEc8SQ4ECBuZA/p6amDkitp28YJn00UVjwYTFCau3HcYEZCqXv3LkjEh18BkNuDFYDBaM/wSyK5OU843cGqLRrIr7T6ZJXpK+hwdKXUDcwLwPBv11KvpulYsEiGSuFJ0z+F2AAyCap34M2ukUAAAAASUVORK5CYII=\" alt=\"close\"/>")
+                    .css({
+                        "position" : "absolute",
+                        "right"    : "-9px",
+                        "top"      : "-8px",
+                        "width"    : "44px",
+                        "height"   : "44px",
+                        "z-index"  : "10000"
+                    })
+                    .click(function () {
+                        clone.lightbox("close");
+                    })
+            );
+
+            cloneData.contentWidth = w;
+            cloneData.contentHeight = h;
+            cloneData.opened = true;
+            cloneData.resizeHandler = function () {
+                clone.lightbox("resize");
+            };
+
+            $(window).on("resize", cloneData.resizeHandler);
+            $(window).on("orientationchange", cloneData.resizeHandler);
+
+            data.postopen.call(this);
+
+            return this;
+        },
+                
+        close : function () {
+            var data = this.data("lightbox");
+
+            data.preclose.call(this);
+
+            $(window).off("resize", data.resizeHandler);
+            $(window).off("orientationchange", data.resizeHandler);
+
+            data.opened = false;
+            data.overlay.remove();
+            data.overlay = undefined;
+
+            data.postclose.call(this);
+
+            data.box.remove();
+            return this;
+        },
+                
+        resize : function () {
+            var data = this.data("lightbox"),
+                w, h;
+
+            data.preresize.call(this);
+
+            if (data.fullscreen === true) {
+                w = window.innerWidth;
+                h = window.innerHeight;
+            } else {
+                w = data.contentWidth;
+                h = data.contentHeight;
+                if (data.scale === true) {
+                    var r = computeRatio(w, h);
+                    w = parseInt(w * r, 10);
+                    h = parseInt(h * r, 10);
+                }
+            }
+
+            scaleElement(data.box, w, h);
+            positionElement(data.box, w, h);
+
+            scaleElement(data.contents, w, h);
+            positionElement(data.contents, w, h);
+
+            data.contentWidth = w;
+            data.contentHeight = h;
+
+            data.postresize.call(this);
+
+            return this;
+        },
+
+        toggle : function () {
+            if (this.data("lightbox").opened === true) {
+                this.lightbox("close");
+            } else {
+                this.lightbox("open");
+            }
+            return this;
+        },
+
+        init : function (options) {
+            return this.each(function() {
+                var $this = $(this),
+                data = $this.data("lightbox");
+                if ( !data ) {
+                    var settings = $.extend(defaults, options, { opened : false });
+                    $this.data("lightbox", settings);
+                }
+
+                if ($this.data("lightbox").defaultEventHandling === true) {
+                    // modified from ecmanaut's answer at
+                    // http://stackoverflow.com/questions/3103842/safari-ipad-prevent-zoom-on-double-tap
+                    $this.on("touchstart", function (e) {
+                        var t2 = e.timeStamp,
+                            t1 = $this.data("lightbox").lastTouch || t2,
+                            dt = t2 - t1,
+                            fingers = e.originalEvent.touches.length;
+                        $this.data("lightbox").lastTouch = t2;
+                        if (!dt || dt > 500 || fingers > 1) {
+                            return;
+                        }
+                        e.preventDefault(); // double tap - prevent the zoom
+                        $this.lightbox("toggle");
+                    });
+                }
+
+                return this;
+            });
+        }
+    };
+
+    $.fn.lightbox = function (method) {
+        if ( methods[method] ) {
+            return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
+        } else if ( typeof method === "object" || !method ) {
+            return methods.init.apply( this, arguments );
+        } else {
+            $.error( "Method " +  method + " does not exist on jQuery.lightbox" );
+            return null;
+        }
+    };
+
+    var computeRatio = function (originalWidth, originalHeight) {
+        var wr = (originalWidth > 0) ? window.innerWidth / originalWidth : 1,
+            hr = (originalHeight > 0) ? window.innerHeight / originalHeight : 1,
+            r = Math.min(wr, hr);
+        return r;
+    };
+
+    var scaleElement = function (elem, width, height) {
+        elem.css("width", width + "px")
+            .css("height", height + "px");
+    };
+
+    var positionElement = function (elem, width, height) {
+        var left = (window.innerWidth  - width) / 2,
+            top = (window.innerHeight - height) / 2;
+        if (left < 0) {
+            left = 0;
+        }
+        if (top < 0) {
+            top = 0;
+        }
+
+        elem.css("left", left + "px")
+            .css("top", top + "px");
+    };
+
+}(jQuery));
 /*! Copyright (c) 2011 Brandon Aaron (http://brandonaaron.net)
  * Licensed under the MIT License (LICENSE.txt).
  *
@@ -1588,7 +1816,7 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
                     "width": 40,
                     "border": 1
                 },
-                "visible": undefined,
+                "visible": null,
                 "base": function () { return new window.multigraph.math.Point(1,1); },
                 "anchor": function () { return new window.multigraph.math.Point(1,1); },
                 "position": function () { return new window.multigraph.math.Point(0,0); },
@@ -1703,8 +1931,8 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
                 },
                 "pan": {
                     "allowed": true,
-                    "min": undefined,
-                    "max": undefined
+                    "min": null,
+                    "max": null
                 },
                 "zoom": {
                     "allowed": true,
@@ -1908,6 +2136,23 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
         };
         
     };
+});
+window.multigraph.util.namespace("window.multigraph.utilityFunctions", function (ns) {
+    "use strict";
+    
+    ns.parseBoolean = function (param) {
+        switch (param.toLowerCase()) {
+            case "true":
+            case "yes":
+                return true;
+            case "false":
+            case "no":
+                return false;
+            default:
+                return param;
+        }
+    };
+
 });
 window.multigraph.util.namespace("window.multigraph.utilityFunctions", function (ns) {
     "use strict";
@@ -3461,7 +3706,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * @for ArrayData
      * @constructor
      * @param {array} columns A array of DataVariables
-     * @param {array} stringArray A array of the preparsed DataValues
+     * @param {array} stringArray A array of strings which will later be parsed into DataValues
      */
     ns.ArrayData = window.jermaine.Model(function () {
         var ArrayData = this;
@@ -3486,7 +3731,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @param {DataValue} min
          * @param {DataValue} max
          * @param {Integer} buffer
-         * @return ArrayData
          * @author jrfrimme
          */
         this.respondsTo("getIterator", function (columnIds, min, max, buffer) {
@@ -3531,7 +3775,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @param {DataValue} min
          * @param {DataValue} max
          * @param {Integer} buffer
-         * @throws {error} Throws error if arrayData is not an array of strings
          * @return iter
          * @author jrfrimme
          */
@@ -4043,16 +4286,16 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             offset = pixelDisplacement / this.axisToDataRatio();
             newRealMin = this.dataMin().getRealValue() - offset;
             newRealMax = this.dataMax().getRealValue() - offset;
-            if (pixelDisplacement < 0 && this.pan().min() && newRealMin < this.pan().min().getRealValue()) {
+            if (this.pan().min() && newRealMin < this.pan().min().getRealValue()) {
                 newRealMax += (this.pan().min().getRealValue() - newRealMin);
                 newRealMin = this.pan().min().getRealValue();
             }
-            if (pixelDisplacement > 0 && this.pan().max() && newRealMax > this.pan().max().getRealValue()) {
+            if (this.pan().max() && newRealMax > this.pan().max().getRealValue()) {
                 newRealMin -= (newRealMax - this.pan().max().getRealValue());
-                newRealMax = this.pan().max();
+                newRealMax = this.pan().max().getRealValue();
             }
             this.setDataRange(ns.DataValue.create(this.type(), newRealMin),
-                          ns.DataValue.create(this.type(), newRealMax));
+                              ns.DataValue.create(this.type(), newRealMax));
         });
 
         this.respondsTo("doZoom", function (pixelBase, pixelDisplacement) {
@@ -4739,7 +4982,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             var haxis = this.horizontalaxis();
             var vaxis = this.verticalaxis();
 
-            if (!haxis.dataMin() || !haxis.dataMax()) {
+            if (!haxis.hasDataMin() || !haxis.hasDataMax()) {
                 // if this plot's horizontal axis does not have a min or max value yet,
                 // return immediately without doing anything
                 return;
@@ -5002,6 +5245,10 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         return DatetimeUnit.isInstance(unit);
     };
 
+    DatetimeMeasure.prototype.negative = function () {
+        return new DatetimeMeasure(-this.measure, this.unit);
+    };
+
     DatetimeMeasure.prototype.getRealValue = function () {
         var factor;
         switch (this.unit) {
@@ -5074,20 +5321,45 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         return alignment.add( DatetimeMeasure.parse((d * monthSpacing) + "M") );
     };
 
-    DatetimeMeasure.prototype.firstSpacingLocationAtOrAfter = function (value, alignment)  {
+
+    /**
+     * Consider the regular lattice of points on the Datetime line separated from each other
+     * by `this` DatetimeMeasure, and aligned at the DatetimeValue `alignment`.  This function
+     * return the smallest DatetimeValue in that lattice which is greater than or equal to
+     * `value`.
+     * 
+     * return: a DatetimeValue
+     */
+    DatetimeMeasure.prototype.firstSpacingLocationAtOrAfter = function (/*DatetimeValue*/value, /*DatetimeValue*/alignment)  {
         switch (this.unit) {
-            case DatetimeMeasure.MILLISECOND:
-            case DatetimeMeasure.SECOND:
-            case DatetimeMeasure.MINUTE:
-            case DatetimeMeasure.HOUR:
-            case DatetimeMeasure.DAY:
-            case DatetimeMeasure.WEEK:
-                return DatetimeMeasure.findTickmarkWithMillisecondSpacing(value.getRealValue(), alignment.getRealValue(), this.getRealValue());
-            case DatetimeMeasure.MONTH:
-                return DatetimeMeasure.findTickmarkWithMonthSpacing(value, alignment, this.measure);
-            case DatetimeMeasure.YEAR:
-                return DatetimeMeasure.findTickmarkWithMonthSpacing(value, alignment, this.measure * 12);
-        }    
+        case DatetimeMeasure.MONTH:
+            return DatetimeMeasure.findTickmarkWithMonthSpacing(value, alignment, this.measure);
+        case DatetimeMeasure.YEAR:
+            return DatetimeMeasure.findTickmarkWithMonthSpacing(value, alignment, this.measure * 12);
+        //case DatetimeMeasure.MILLISECOND:
+        //case DatetimeMeasure.SECOND:
+        //case DatetimeMeasure.MINUTE:
+        //case DatetimeMeasure.HOUR:
+        //case DatetimeMeasure.DAY:
+        //case DatetimeMeasure.WEEK:
+        default:
+            return DatetimeMeasure.findTickmarkWithMillisecondSpacing(value.getRealValue(), alignment.getRealValue(), this.getRealValue());
+        }
+    };
+
+    /**
+     * This function is just like `firstSpacingLocationAtOrAfter` above, but returns the
+     * greatest DatetimeValue in the lattice that is less than or equal to `value`.
+     * 
+     * return: a DatetimeValue
+     */
+    DatetimeMeasure.prototype.lastSpacingLocationAtOrBefore = function (/*DatetimeValue*/value, /*DatetimeValue*/alignment)  {
+        var x = this.firstSpacingLocationAtOrAfter(value, alignment);
+        if (x.eq(value)) {
+            return x;
+        }
+        var y = x.add(this.negative());
+        return y;
     };
 
     DatetimeMeasure.prototype.toString = function () {
@@ -5439,6 +5711,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 return val instanceof window.multigraph.core.Multigraph;
             });
             
+            this.hasA("x0").which.isA("number");
+            this.hasA("y0").which.isA("number");
+
             this.isBuiltWith(function () {
                 this.window( new ns.Window() );
                 this.plotarea( new ns.Plotarea() );
@@ -5509,6 +5784,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 if (this.title()) {
                     this.title().initializeGeometry(graphicsContext);
                 }
+
+                this.x0( this.window().margin().left()  + this.window().border() + this.window().padding().left() + this.plotarea().margin().left() + this.plotarea().border() );
+                this.y0( this.window().margin().bottom() + this.window().border() + this.window().padding().bottom() + this.plotarea().margin().bottom() + this.plotarea().border() );
             });
 
             /**
@@ -6053,8 +6331,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * @submodule core
      */
 
-    var Icon,
-        Legend,
+    var Legend,
         defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
         attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.legend);
 
@@ -6081,7 +6358,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @type {boolean}
          * @author jrfrimme
          */
-        this.hasA("visible").which.isA("boolean");
+        this.hasA("visible").which.validatesWith(function (visible) {
+            return typeof visible === "boolean" || visible === null;
+        });
 
         /**
          * The value which gives the location of the base point relative to the Legend's frame.
@@ -6225,6 +6504,10 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return icon instanceof ns.Icon;
         });
 
+        this.isBuiltWith(function () {
+            this.icon( new ns.Icon() );
+        });
+
         /**
          * Pointers to Plot models that have entries in the Legend.
          *
@@ -6362,6 +6645,21 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          */
         this.hasA("maxLabelHeight").which.isA("number");
 
+        this.respondsTo("determineVisibility", function () {
+            switch (this.visible()) {
+                case true:
+                    return true;
+                case false:
+                    return false;
+                case null:
+                    if (this.plots().size() > 1) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+            }
+        });
+
         /**
          * Initializes the Legend's geometry. Determines values for the internal attributes `maxLabelWidth`,
          * `maxLabelHeight`, `blockWidth`, `blockHeight`, `width`, `height`, `x` and `y`; these values
@@ -6382,35 +6680,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 label,
                 i;
 
-            if (this.visible() === false) {
+            if (this.determineVisibility() === false) {
                 return this;
-            }
-
-            for (i = 0; i < graph.plots().size(); i++) {
-                if (graph.plots().at(i).legend() && graph.plots().at(i).legend().visible() !== false) {
-                    this.plots().add(graph.plots().at(i));
-                }
-            }
-
-            if (this.visible() === undefined) {
-                if (this.plots().size() > 1) {
-                    this.visible(true);
-                } else {
-                    this.visible(false);
-                    return this;
-                }
-            }
-
-            // if neither rows nor cols is specified, default to 1 col
-            if (this.rows() === undefined && this.columns() === undefined) {
-                this.columns(1);
-            }
-
-            // if only one of rows/cols is specified, compute the other
-            if (this.columns() === undefined) {
-                this.columns(parseInt(this.plots().size() / this.rows() + ( (this.plots().size() % this.rows()) > 0 ? 1 : 0 ), 10));
-            } else if  (this.rows() === undefined) {
-                this.rows(parseInt(this.plots().size() / this.columns() + ( (this.plots().size() % this.columns()) > 0 ? 1 : 0 ), 10));
             }
 
             for (i = 0; i < this.plots().size(); i++) {
@@ -6468,7 +6739,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 plotCount = 0,
                 r, c;
 
-            if (this.visible() === false) {
+            if (this.determineVisibility() === false) {
                 return this;
             }
 
@@ -7193,6 +7464,195 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     ns.Pan = Pan;
 
+});
+window.multigraph.util.namespace("window.multigraph.core", function (ns) {
+    "use strict";
+
+    /**
+     * @module multigraph
+     * @submodule core
+     */
+
+    /**
+     * @class PeriodicArrayData
+     * @for PeriodicArrayData
+     * @constructor
+     * @param {array} columns A array of DataVariables
+     * @param {array} stringArray A array of strings which will later be parsed into DataValues
+     */
+    ns.PeriodicArrayData = window.jermaine.Model(function () {
+        var PeriodicArrayData = this,
+            emptyIterator = {
+                "next"    : function () {},
+                "hasNext" : function () { return false; }
+            };
+
+        this.isA(ns.ArrayData);
+        this.hasA("period").which.validatesWith(ns.DataMeasure.isInstance);
+        //this.hasA("column0RelativeRealValues").which.defaultsTo(null);
+        this.isBuiltWith("columns", "stringArray", "period", function () {
+            this.init();
+            this.addListener("listenerAdded", function (event) {
+                if (event.targetType === "dataReady") {
+                    event.listener(this.array()[0][0], this.array()[this.array().length-1][0]);
+                }
+            });
+        });
+
+/*
+        this.respondsTo("initializeColumn0RelativeRealValues", function() {
+            var array = this.array(),
+                column0RelativeRealValues = [],
+                i;
+            for (i=0; i<array.length; ++i) {
+                column0RelativeRealValues[i] = array[i][0] - array[0][0];
+            }
+            this.column0RelativeRealValues(column0RelativeRealValues);
+        });
+*/
+
+        /**
+         * @method getIterator
+         * @param {string array} columnIDs
+         * @param {DataValue} min
+         * @param {DataValue} max
+         * @param {Integer} buffer
+         * @author jrfrimme
+         */
+        this.respondsTo("getIterator", function (columnIds, min, max, buffer) {
+            return PeriodicArrayData.getArrayDataIterator(this, columnIds, min, max, buffer);
+        });
+
+        /**
+         * @method getArrayDataIterator
+         * @static
+         * @param {ArrayData} arrayData
+         * @param {string array} columnIDs
+         * @param {DataValue} min
+         * @param {DataValue} max
+         * @param {Integer} buffer
+         * @return iter
+         * @author jrfrimme
+         */
+        PeriodicArrayData.getArrayDataIterator = function (periodicArrayData, columnIds, min, max, buffer) {
+            var iter = {},
+                arraySlice = [],
+                curr = 0,
+                i, j,
+                currentIndex,
+                columnIndices,
+                array = periodicArrayData.array();
+
+            buffer = buffer || 0;
+
+            // columnIds argument should be an array of strings
+            if (Object.prototype.toString.apply(columnIds) !== "[object Array]") {
+                throw new Error("ArrayData: getIterator method requires that the first parameter be an array of strings");
+            } else {
+                for (i = 0; i < columnIds.length; ++i) {
+                    if (typeof(columnIds[i]) !== "string") {
+                        throw new Error("ArrayData: getIterator method requires that the first parameter be an array of strings");
+                    }
+                }
+            }
+
+            //min,max arguments should be data values
+            if (!ns.DataValue.isInstance(min) || !ns.DataValue.isInstance(max)) {
+                throw new Error("ArrayData: getIterator method requires the second and third argument to be number values");
+            }
+
+            //buffer argument should be an integer
+            if (typeof(buffer) !== "number") {
+                throw new Error("ArrayData: getIterator method requires last argument to be an integer");
+            }
+
+            // if we have no data, return an empty iterator
+            if (array.length === 0) {
+                return emptyIterator;
+            }
+
+/*
+            // populate the column0RelativeRealValues array if it hasn't yet been populated
+            if (this.column0RelativeRealValues() === null) {
+                this.initializeColumn0RelativeRealValues();
+            }
+*/
+
+            // Let `baseValue` be the location of the first data point in the array
+            var baseValue = array[0][0];
+
+            // In the regular lattice of spacing `period` aligned with baseValue,
+            // find the last point that is less than or equal to `min`.  Call this point `b`.
+            var b = periodicArrayData.period().lastSpacingLocationAtOrBefore(min, baseValue);
+
+            // Let `offsetRealValue` be the difference between b and baseValue, as a real value:
+            var offsetRealValue = b.getRealValue() - baseValue.getRealValue();
+
+            // Let `baseMin` be `min` shifted 'backward' by offsetRealValue; this is `min`
+            // relative to the same period cycle as baseValue:
+            var baseMin = ns.DataValue.create(min.type, min.getRealValue() - offsetRealValue);
+
+            // find the index of the first row in the array whose column0 value is >= baseMin;
+            // this is the data point we start with
+            for (currentIndex=0; currentIndex<array.length; ++currentIndex) {
+                if (array[currentIndex][0].ge(baseMin)) {
+                    break;
+                }
+            }
+            if (currentIndex === array.length) {
+                return emptyIterator;
+            }
+
+            //
+            //TODO later: back up 'buffer' steps
+            //
+
+            // set the current value to be the column0 value at this first index, shifted
+            // 'forward' by offsetRealValue
+            var currentValue = ns.DataValue.create(array[currentIndex][0].type, array[currentIndex][0].getRealValue() + offsetRealValue);
+
+            columnIndices = [];
+            for (j = 0;j < columnIds.length; ++j) {
+                var k = periodicArrayData.columnIdToColumnNumber(columnIds[j]);
+                columnIndices.push( k );
+            }
+
+            return {
+                next : function() {
+                    var projection = [],
+                        i, x;
+                    if (currentIndex < 0) {
+                        return null;
+                    }
+                    for (i=0; i<columnIndices.length; ++i) {
+                        if (columnIndices[i] === 0) {
+                            projection.push(currentValue);
+                        } else {
+                            projection.push(array[currentIndex][columnIndices[i]]);
+                        }
+                    }
+                    ++currentIndex;
+                    if (currentIndex >= array.length) {
+                        currentIndex = 0;
+                        b = b.add(periodicArrayData.period());
+                        offsetRealValue = b.getRealValue() - baseValue.getRealValue();
+                    }
+                    currentValue = ns.DataValue.create(array[currentIndex][0].type, array[currentIndex][0].getRealValue() + offsetRealValue);
+                    if (currentValue.gt(max)) {
+                        //TODO: actually need to figure out how to move forward `buffer` steps, but for
+                        // now skip that part.
+                        currentIndex = -1;
+                    }
+                    return projection;
+                },
+                hasNext : function() {
+                    return (currentIndex >= 0);
+                }
+            };
+            
+        };
+
+    });
 });
 window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
@@ -9095,9 +9555,11 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
 
     var DataVariable = window.multigraph.core.DataVariable,
         ArrayData  = window.multigraph.core.ArrayData,
+        PeriodicArrayData  = window.multigraph.core.PeriodicArrayData,
         CSVData  = window.multigraph.core.CSVData,
         WebServiceData  = window.multigraph.core.WebServiceData,
-        Data = window.multigraph.core.Data;
+        Data = window.multigraph.core.Data,
+        DataMeasure = window.multigraph.core.DataMeasure;
 
     ns.mixin.add(function (ns, parse) {
         
@@ -9122,12 +9584,32 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     });
                 }
 
+                // check to see if we have a <repeat> section, and if so, grab the period from it
+                var haveRepeat = false;
+                var period;
+                var repeat_xml = window.multigraph.jQuery(xml.find(">repeat"));
+                if (repeat_xml.length > 0) {
+                    var periodString = window.multigraph.jQuery(repeat_xml).attr("period");
+                    if (periodString === undefined || periodString === "") {
+                        messageHandler.warning("<repeat> tag requires a 'period' attribute; data treated as non-repeating");
+                    } else {
+                        period = DataMeasure.parse(dataVariables[0].type(),
+                                                   periodString);
+                        haveRepeat = true;
+                    }
+                }
+
                 // if we have a <values> section, parse it and return an ArrayData instance:
                 var values_xml = window.multigraph.jQuery(xml.find(">values"));
                 if (values_xml.length > 0) {
                     values_xml = values_xml[0];
                     var stringValues = ArrayData.textToStringArray(window.multigraph.jQuery(values_xml).text());
-                    var values = new ArrayData(dataVariables, stringValues);
+                    var values;
+                    if (haveRepeat) {
+                        values = new PeriodicArrayData(dataVariables, stringValues, period);
+                    } else {
+                        values = new ArrayData(dataVariables, stringValues);
+                    }
                     if (data.defaultMissingvalueString !== undefined) {
                         values.defaultMissingvalue(data.defaultMissingvalueString);
                     }
@@ -9482,10 +9964,10 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 //      the Grid object itself, though, the default for the visible
                 //      attribute is false, so that when we create a default grid object
                 //      in code (as opposed to parsing), it defaults to not visible.
-                if ((xml.attr("visible") === "true") || (xml.attr("visible") === undefined)) {
-                    grid.visible(true);
+                if (xml.attr("visible") !== undefined) {
+                    grid.visible(ns.utilityFunctions.parseBoolean(xml.attr("visible")));
                 } else {
-                    grid.visible(false);
+                    grid.visible(true);
                 }
             }
             return grid;
@@ -9634,13 +10116,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
             if (xml) {
                 
                 if (xml.attr("visible") !== undefined) {
-                    if (xml.attr("visible").toLowerCase() === "true") {
-                        legend.visible(true);
-                    } else if (xml.attr("visible").toLowerCase() === "false") {
-                        legend.visible(false);
-                    } else {
-                        legend.visible(xml.attr("visible"));
-                    }
+                    legend.visible(ns.utilityFunctions.parseBoolean(xml.attr("visible")));
                 }
                 if (xml.attr("base") !== undefined) {
                     legend.base(window.multigraph.math.Point.parse(xml.attr("base")));
@@ -9674,8 +10150,6 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 }
                 if (xml.find("icon").length > 0) {
                     legend.icon(ns.core.Icon[parse](xml.find("icon")));
-                } else {
-                    legend.icon(ns.core.Icon[parse]());
                 }
             }
             return legend;
@@ -9719,18 +10193,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
             if (xml) {
                 allowed = xml.attr("allowed");
                 if (allowed !== undefined) {
-                    switch (allowed.toLowerCase()) {
-                        case "yes":
-                            allowed = true;
-                            break;
-                        case "no":
-                            allowed = false;
-                            break;
-                        default:
-                            break;
-                    }
-
-                    pan.allowed(allowed);
+                    pan.allowed(ns.utilityFunctions.parseBoolean(allowed));
                 }
                 if (xml.attr("min") !== undefined) {
                     pan.min( window.multigraph.core.DataValue.parse(type, xml.attr("min")) );
@@ -9878,13 +10341,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
             var legend = new ns.core.PlotLegend();
             if (xml) {
                 if (xml.attr("visible") !== undefined) {
-                    if (xml.attr("visible").toLowerCase() === "true") {
-                        legend.visible(true);
-                    } else if (xml.attr("visible").toLowerCase() === "false") {
-                        legend.visible(false);
-                    } else {
-                        legend.visible(xml.attr("visible"));
-                    }
+                    legend.visible(ns.utilityFunctions.parseBoolean(xml.attr("visible")));
                 }
                 if (xml.attr("label") !== undefined) {
                     legend.label(new ns.core.Text(xml.attr("label")));
@@ -10084,18 +10541,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
             if (xml) {
                 allowed = xml.attr("allowed");
                 if (allowed !== undefined) {
-                    switch (allowed.toLowerCase()) {
-                        case "yes":
-                            allowed = true;
-                            break;
-                        case "no":
-                            allowed = false;
-                            break;
-                        default:
-                            break;
-                    }
-
-                    zoom.allowed(allowed);
+                    zoom.allowed(ns.utilityFunctions.parseBoolean(allowed));
                 }
                 if (xml.attr("min") !== undefined) {
                     zoom.min( window.multigraph.core.DataMeasure.parse(type, xml.attr("min")) );
@@ -10391,6 +10837,12 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
                 this.plots().at(i).normalize(this);
             }
 
+            //
+            // normalizes the legend
+            //
+            if (this.legend()) {
+                this.legend().normalize(this);
+            }
 
             //
             // execute the setDataRange method for each axis binding, to sync up all axes
@@ -10406,7 +10858,7 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
             for (i = 0; i < this.axes().size(); i++) {
                 // for each axis...
                 axis = this.axes().at(i);
-                if (!axis.hasDataMin() || axis.hasDataMax()) {
+                if (!axis.hasDataMin() || !axis.hasDataMax()) {
                     // if this axis is mising either a dataMin() or dataMax() value...
                     for (j=0; j < this.plots().size(); ++j) {
                         // find a DataPlot that references this axis...
@@ -10482,6 +10934,73 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
                 this.formatter(ns.DataFormatter.create(type, labelerFormat));
             }
 
+        });
+
+    });
+
+});
+window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
+    "use strict";
+
+    ns.mixin.add(function (ns) {
+
+        ns.Legend.respondsTo("normalize", function (graph) {
+            var i, j,
+                flag;
+
+            //
+            // stores pointers to plots with legends in the Legend object
+            //
+            for (i = 0; i < graph.plots().size(); i++) {
+                // doesn't add a plot if it doesn't have a visible legend
+                if (!graph.plots().at(i).legend() || graph.plots().at(i).legend().visible() !== true) {
+                    continue;
+                }
+
+                // doesn't add a plot if it has already been added
+                flag = false;
+                for (j = 0; j < this.plots().size(); j++) {
+                    if (graph.plots().at(i) === this.plots().at(j)) {
+                        flag = true;
+                        break;
+                    }
+                }
+                if (flag === true) {
+                    continue;
+                }
+
+                this.plots().add(graph.plots().at(i));
+            }
+
+            //
+            // If there are no plots in the legend default to 1 row and column if they aren't specified
+            //
+            if (this.plots().size() === 0) {
+                if (this.columns() === undefined) {
+                    this.columns(1);
+                }
+                if (this.rows() === undefined) {
+                    this.rows(1);
+                }
+            }
+
+            //
+            // if neither rows nor cols is specified, default to 1 col
+            //
+            if (this.rows() === undefined && this.columns() === undefined) {
+                this.columns(1);
+            }
+
+            //
+            // if only one of rows/cols is specified, compute the other
+            //
+            if (this.columns() === undefined) {
+                this.columns(parseInt(this.plots().size() / this.rows() + ( (this.plots().size() % this.rows()) > 0 ? 1 : 0 ), 10));
+            } else if (this.rows() === undefined) {
+                this.rows(parseInt(this.plots().size() / this.columns() + ( (this.plots().size() % this.columns()) > 0 ? 1 : 0 ), 10));
+            }
+
+            return this;
         });
 
     });
@@ -10813,6 +11332,7 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
                 mouseIsDown = false;
                 multigraph.graphs().at(0).doDragDone();
             });
+
         });
 
     });
@@ -10916,6 +11436,53 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
             };
 
             $(this).multigraph(options);
+            $(this).lightbox({
+                scale : true,
+                postopen : function () {
+                    var lightboxData = this.data("lightbox");
+                    lightboxData.originalDiv = this;
+                    this.data("multigraph").multigraph.done(function (m) {
+                        m.div(lightboxData.contents);
+                        m.initializeSurface();
+                        m.resizeSurface(lightboxData.contentWidth, lightboxData.contentHeight);
+                        m.width(lightboxData.contentWidth)
+                            .height(lightboxData.contentHeight);
+                        m.busySpinner().remove();
+                        m.busySpinner($('<div style="position: absolute; left:5px; top:5px;"></div>')
+                                      .appendTo($(m.div()))
+                                      .busy_spinner());
+                        m.render();
+                    });
+                    var timeout= window.setTimeout(function () {
+                            lightboxData.contents.lightbox("resize");
+                            window.clearTimeout(timeout);
+                        }, 50);
+                },
+                postclose : function () {
+                    var lightboxData = this.data("lightbox");
+                    this.data("multigraph").multigraph.done(function (m) {
+                        m.div(lightboxData.originalDiv)
+                            .width($(m.div()).width())
+                            .height($(m.div()).height())
+                            .busySpinner($('<div style="position: absolute; left:5px; top:5px;"></div>')
+                                         .appendTo($(m.div()))
+                                         .busy_spinner()
+                                        );
+
+                        m.initializeSurface();
+                        m.render();
+                    });
+                },
+                postresize : function () {
+                    var lightboxData = this.data("lightbox");
+                    this.data("multigraph").multigraph.done(function (m) {
+                        m.resizeSurface(lightboxData.contentWidth, lightboxData.contentHeight);
+                        m.width(lightboxData.contentWidth)
+                            .height(lightboxData.contentHeight);
+                        m.render();
+                    });
+                }
+            });
 
         });
 
@@ -10932,10 +11499,9 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
     "use strict";
 
     ns.mixin.add(function (ns, errorHandler) {
-        var Graph = ns.core.Graph;
         var Axis  = ns.core.Axis;
 
-        Graph.respondsTo("doFirstPinchZoom", function (multigraph, bx, by, dx, dy, totalx, totaly) {
+        ns.core.Graph.respondsTo("doFirstPinchZoom", function (multigraph, bx, by, dx, dy, totalx, totaly) {
 // TODO: this try...catch is just to remind myself how to apply, make sure this is correct later
             try {
                 if (!this.dragStarted()) {
@@ -10973,32 +11539,19 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
     "use strict";
 
     ns.mixin.add(function (ns) {
-        var core = ns.core;
         var math = window.multigraph.util.namespace("window.multigraph.math");
 
-        core.Multigraph.respondsTo("registerTouchEvents", function (target) {
-            var previousTouches = [];
-            var touchStarted = false;
-            var dragStarted = false;
-            var doubleTapStarted = false;
-            var doubleTapSecondTapStarted = false;
-            var pinchZoomStarted = false;
-
-            var doubleTapTimeout;
-
-            var base;
-            var multigraph = this;
-
-            //            var deltas = [];
-
-            var pinchZoomInitialDeltas = {};
-            var pinchZoomDetermined = false;
-            var pinchZoomDeterminedTimeout;
-
-            var previoustoucha;
-            var previoustouchb;
-
-            var $target = window.multigraph.jQuery(target);
+        ns.core.Multigraph.respondsTo("registerTouchEvents", function (target) {
+            var touchStarted = false,
+                dragStarted = false,
+                pinchZoomStarted = false,
+                pinchZoomDetermined = false,
+                pinchZoomInitialDeltas = {},
+                pinchZoomDeterminedTimeout,
+                previoustoucha, previoustouchb,
+                base,
+                multigraph = this,
+                $target = window.multigraph.jQuery(target);
 
             var touchLocationToGraphCoords = function (touch) {
                 return new math.Point((touch.pageX - $target.offset().left) - multigraph.graphs().at(0).x0(),
@@ -11013,26 +11566,6 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
                     base = touchLocationToGraphCoords(e.touches[0]);
                 }
                 previoustoucha = touchLocationToGraphCoords(e.touches[0]);
-
-                // double tap
-                if (e.touches.length === 1) {
-                    if (previousTouches.length === 0) {
-                        if (doubleTapStarted === true) {
-                            doubleTapSecondTapStarted = true;
-                        }
-                        doubleTapStarted = true;
-                        clearTimeout(doubleTapTimeout);
-                        doubleTapTimeout = setTimeout(function () {
-                                doubleTapStarted = false;
-                                doubleTapSecondTapStarted = false;
-                                clearTimeout(doubleTapTimeout);
-                            }, 500);
-                    }
-                } else {
-                    doubleTapStarted = false;
-                    doubleTapSecondTapStarted = false;
-                    clearTimeout(doubleTapTimeout);
-                }
 
                 // one finger drag
                 if (e.touches.length === 1) {
@@ -11051,8 +11584,6 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
                     pinchZoomDetermined = false;
                 }
 
-                previousTouches = e.touches;
-
                 touchStarted = false;
                 multigraph.graphs().at(0).doDragDone();
             };
@@ -11065,32 +11596,15 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
                 if (e.touches.length === 1 && dragStarted === true) {
                     handleDrag(e);
                 }
-
                 // pinch zoom
                 if (e.touches.length === 2 && pinchZoomStarted === true) {
                     handlePinchZoom(e);
                 }
-                
-                previousTouches = e.touches;
             };
 
             var handleTouchEnd = function (jqueryEvent) {
                 var e = jqueryEvent.originalEvent;
                 e.preventDefault();
-                // double tap
-                if (e.touches.length === 0 && previousTouches.length === 1) {
-                    if (doubleTapSecondTapStarted === true) {
-                        handleDoubleTap(e);
-                        doubleTapStarted = false;
-                        doubleTapSecondTapStarted = false;
-                    } else if (doubleTapStarted === true) {
-                        doubleTapSecondTapStarted = true;
-                    }
-                } else {
-                    doubleTapStarted = false;
-                    doubleTapSecondTapStarted = false;
-                    clearTimeout(doubleTapTimeout);
-                }
                 
                 // one finger drag
                 if (e.touches.length === 1) {
@@ -11107,47 +11621,28 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
                     pinchZoomStarted = false;
                     pinchZoomDetermined = false;
                 }
-                
-                previousTouches = e.touches;
 
                 touchStarted = false;
                 multigraph.graphs().at(0).doDragDone();
-
-                /*
-                var string = "";
-                for (var i =0; i < deltas.length; i++) {
-                    string += "dx: " + deltas[i].dx + ". dy: " + deltas[i].dy + ".\n" 
-                }
-                deltas = []
-                alert(string)
-                */
             };
 
             var handleTouchLeave = function (jqueryEvent) {
-                var e = jqueryEvent.originalEvent;
-                e.preventDefault();
-                doubleTapStarted = false;
-                doubleTapSecondTapStarted = false;
-                clearTimeout(doubleTapTimeout);
+                jqueryEvent.originalEvent.preventDefault();
+
                 dragStarted = false;
                 pinchZoomStarted = false;
                 pinchZoomDetermined = false;
-                previousTouches = e.touches;
-
                 touchStarted = false;
+
                 multigraph.graphs().at(0).doDragDone();
             };
 
             var handleDrag = function (e) {
-                var touchLoc = touchLocationToGraphCoords(e.touches[0]);
-                //                var previousLoc = touchLocationToGraphCoords(previousTouches[0]);
-                //                var dx = touchLoc.x() - previousLoc.x();
-                //                var dy = touchLoc.y() - previousLoc.y();
-                var dx = touchLoc.x() - previoustoucha.x();
-                var dy = touchLoc.y() - previoustoucha.y();
-                //                deltas.push({"dx":dx,"dy":dy});
+                var touchLoc = touchLocationToGraphCoords(e.touches[0]),
+                    dx = touchLoc.x() - previoustoucha.x(),
+                    dy = touchLoc.y() - previoustoucha.y();
                 if (multigraph.graphs().size() > 0) {
-                    if (!touchStarted ) {
+                    if (!touchStarted) {
                         multigraph.graphs().at(0).doDragReset();
                     }
                     multigraph.graphs().at(0).doDrag(multigraph, base.x(), base.y(), dx, dy, false);
@@ -11156,29 +11651,16 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
                 previoustoucha = touchLoc;
             };
 
-            var handleDoubleTap = function () {
-                multigraph.graphs().at(0).doDragReset();                
-                var axis = multigraph.graphs().at(0).findNearestAxis(base.x(), base.y());
-                if (axis.orientation() === window.multigraph.core.Axis.HORIZONTAL) {
-                    multigraph.graphs().at(0).doDrag(multigraph, base.x(), base.y(), 10, 0, true);
-                } else {
-                    multigraph.graphs().at(0).doDrag(multigraph, base.x(), base.y(), 0, 10, true);
-                }
-                multigraph.graphs().at(0).doDragReset();                
-                multigraph.graphs().at(0).doDragDone();
-            };
-
             var handlePinchZoom = function (e) {
-                var a = touchLocationToGraphCoords(e.touches[0]);
-                var b = touchLocationToGraphCoords(e.touches[1]);
-                var basex = (a.x() + b.x()) / 2;
-                var basey = (a.y() + b.y()) / 2;
-
-                var dx = calculateAbsoluteDistance(a.x(), b.x()) - calculateAbsoluteDistance(previoustoucha.x(), previoustouchb.x());
-                var dy = calculateAbsoluteDistance(a.y(), b.y()) - calculateAbsoluteDistance(previoustoucha.y(), previoustouchb.y());
+                var a = touchLocationToGraphCoords(e.touches[0]),
+                    b = touchLocationToGraphCoords(e.touches[1]),
+                    basex = (a.x() + b.x()) / 2,
+                    basey = (a.y() + b.y()) / 2,
+                    dx = calculateAbsoluteDistance(a.x(), b.x()) - calculateAbsoluteDistance(previoustoucha.x(), previoustouchb.x()),
+                    dy = calculateAbsoluteDistance(a.y(), b.y()) - calculateAbsoluteDistance(previoustoucha.y(), previoustouchb.y());
 
                 if (multigraph.graphs().size() > 0) {
-                    if (!touchStarted ) {
+                    if (!touchStarted) {
                         multigraph.graphs().at(0).doDragReset();
                     }
                     if (pinchZoomDetermined === true) {
@@ -11188,8 +11670,8 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
                 touchStarted = true;
 
                 // two finger scroll
-                var cx = ((a.x() - previoustoucha.x()) + (b.x() - previoustouchb.x())) / 2;
-                var cy = ((a.y() - previoustoucha.y()) + (b.y() - previoustouchb.y())) / 2;
+                var cx = ((a.x() - previoustoucha.x()) + (b.x() - previoustouchb.x())) / 2,
+                    cy = ((a.y() - previoustoucha.y()) + (b.y() - previoustouchb.y())) / 2;
                 if (pinchZoomDetermined === true) {
                     multigraph.graphs().at(0).doDrag(multigraph, basex, basey, cx, cy, false);
                 }
@@ -11224,23 +11706,23 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
 
                     if (pinchZoomDeterminedTimeout === undefined) {
                         pinchZoomDeterminedTimeout = setTimeout(function () {
-                                var basex = pinchZoomInitialDeltas.base.x;
-                                var basey = pinchZoomInitialDeltas.base.y;
-                                var dx = pinchZoomInitialDeltas.zoomDeltas.dx;
-                                var dy = pinchZoomInitialDeltas.zoomDeltas.dy;
-                                var cx = pinchZoomInitialDeltas.panDeltas.dx;
-                                var cy = pinchZoomInitialDeltas.panDeltas.dy;
+                            var basex = pinchZoomInitialDeltas.base.x,
+                                basey = pinchZoomInitialDeltas.base.y,
+                                dx = pinchZoomInitialDeltas.zoomDeltas.dx,
+                                dy = pinchZoomInitialDeltas.zoomDeltas.dy,
+                                cx = pinchZoomInitialDeltas.panDeltas.dx,
+                                cy = pinchZoomInitialDeltas.panDeltas.dy;
 
-                                multigraph.graphs().at(0).doDragReset();
-                                
-                                multigraph.graphs().at(0).doFirstPinchZoom(multigraph, basex, basey, dx, dy, pinchZoomInitialDeltas.zoomDeltas.totalx, pinchZoomInitialDeltas.zoomDeltas.totaly);
-                                multigraph.graphs().at(0).doDrag(multigraph, basex, basey, cx, cy, false);
+                            multigraph.graphs().at(0).doDragReset();
 
-                                pinchZoomInitialDeltas = {};
-                                pinchZoomDetermined = true;
-                                clearTimeout(pinchZoomDeterminedTimeout);
-                                pinchZoomDeterminedTimeout = undefined;
-                            }, 60);
+                            multigraph.graphs().at(0).doFirstPinchZoom(multigraph, basex, basey, dx, dy, pinchZoomInitialDeltas.zoomDeltas.totalx, pinchZoomInitialDeltas.zoomDeltas.totaly);
+                            multigraph.graphs().at(0).doDrag(multigraph, basex, basey, cx, cy, false);
+
+                            pinchZoomInitialDeltas = {};
+                            pinchZoomDetermined = true;
+                            clearTimeout(pinchZoomDeterminedTimeout);
+                            pinchZoomDeterminedTimeout = undefined;
+                        }, 60);
                     }
                 }
 
@@ -17279,9 +17761,6 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
         Graph.hasA("transformString");
 
-        Graph.hasA("x0").which.isA("number");
-        Graph.hasA("y0").which.isA("number");
-
         Graph.respondsTo("render", function (paper, width, height) {
             var windowBorder = this.window().border(),
                 backgroundSet = paper.set(),
@@ -17291,8 +17770,6 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 titleSet = paper.set(),
                 i;
 
-            this.x0( this.window().margin().left() + windowBorder + this.window().padding().left() + this.plotarea().margin().left() + this.plotarea().border() );
-            this.y0( this.window().margin().bottom() + windowBorder + this.window().padding().bottom() + this.plotarea().margin().bottom() + this.plotarea().border() );
             this.transformString("S 1, -1, 0, " + (height/2) + " t " + this.x0() + ", " + this.y0());
 
             this.window().render(this, paper, backgroundSet, width, height);
@@ -17629,14 +18106,10 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
         ns.Multigraph.respondsTo("init", function () {
             this.$div(window.multigraph.jQuery(this.div()));
-            this.$div().on("mousedown", { "mg": this }, this.setupEvents);
-            this.registerTouchEvents(this.$div());
+            this.registerEvents();
             this.width(this.$div().width());
             this.height(this.$div().height());
-            if (this.paper()) {
-                this.paper().remove();
-            }
-            this.paper(new window.Raphael(this.div(), this.width(), this.height()));
+            this.initializeSurface();
             this.busySpinner($('<div style="position: absolute; left:5px; top:5px;"></div>') .
                              appendTo(this.$div()) .
                              busy_spinner());
@@ -17652,6 +18125,11 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 this.graphs().at(i).render(this.paper(), this.width(), this.height());
             }
             text.remove();
+        });
+
+        ns.Multigraph.respondsTo("registerEvents", function () {
+            this.$div().on("mousedown", { "mg": this }, this.setupEvents);
+            this.registerTouchEvents(this.$div());
         });
 
         ns.Multigraph.respondsTo("setupEvents", function (mouseDownEvent) {
@@ -17695,6 +18173,17 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             for (i = 0; i < mg.graphs().size(); ++i) {
                 mg.graphs().at(i).doDragDone();
             }
+        });
+
+        ns.Multigraph.respondsTo("resizeSurface", function (width, height) {
+            this.paper().setSize(width, height);
+        });
+
+        ns.Multigraph.respondsTo("initializeSurface", function () {
+            if (this.paper()) {
+                this.paper().remove();
+            }
+            this.paper(new window.Raphael(this.div(), this.width(), this.height()));
         });
 
     });
@@ -17794,7 +18283,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             }
 
             if (plotareaAttrs !== undefined) {
-                plotarea = paper.rect(graph.x0(), graph.y0(), graph.plotBox().width(), graph.plotBox().height())
+                plotarea = paper.rect(graph.x0() - this.border()/2, graph.y0() - this.border()/2, graph.plotBox().width() + this.border(), graph.plotBox().height() + this.border())
                     .attr(plotareaAttrs);
                 plotarea.insertAfter(set);
                 set.push(plotarea);
@@ -18185,7 +18674,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             return path; 
         });
 
-        ns.BarRenderer.respondsTo("renderLegendIcon", function (graphicsContext, x, y, icon, opacity) {
+        ns.BarRenderer.respondsTo("renderLegendIcon", function (graphicsContext, x, y, icon) {
             var settings          = this.settings(),
                 rendererFillColor = this.getOptionValue("fillcolor", 0),
                 rendererOpacity   = this.getOptionValue("fillopacity", 0),
@@ -18327,7 +18816,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
         });
 
-        ns.FillRenderer.respondsTo("renderLegendIcon", function (graphicsContext, x, y, icon, opacity) {
+        ns.FillRenderer.respondsTo("renderLegendIcon", function (graphicsContext, x, y, icon) {
             var settings = this.settings(),
                 iconBackgroundAttrs = {},
                 path = "";
@@ -18557,7 +19046,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
         });
 
-        ns.PointlineRenderer.respondsTo("renderLegendIcon", function (graphicsContext, x, y, icon, opacity) {
+        ns.PointlineRenderer.respondsTo("renderLegendIcon", function (graphicsContext, x, y, icon) {
             var settings = this.settings(),
                 path     = "",
                 pointAttrs;
@@ -19022,44 +19511,40 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
     "use strict";
 
     ns.mixin.add(function (ns) {
-        var Graph = ns.Graph;
 
-        Graph.hasA("x0").which.isA("number");
-        Graph.hasA("y0").which.isA("number");
+        ns.Background.respondsTo("render", function (graph, context, width, height) {
+            var mb = graph.window().margin().left() + graph.window().border();
+
+            context.save();
+            context.fillStyle = this.color().getHexString("#");
+            context.fillRect(mb, mb, width - 2*mb, height - 2*mb);
+            context.restore();
+ 
+            if (this.img() && this.img().src() !== undefined) {
+                this.img().render(graph, context, width, height);
+            }
+       });
+
+    });
+
+});
+
+window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (ns) {
+    "use strict";
+
+    ns.mixin.add(function (ns) {
+        var Graph = ns.Graph;
 
         Graph.respondsTo("render", function (context, width, height) {
             var i;
-            context.fillStyle = this.window().bordercolor().getHexString("#");
-            var m = this.window().margin().left();
-            context.fillRect(m,m,width-2*m,height-2*m);
 
-            var mb = m + this.window().border();
+            this.window().render(context, width, height);
 
-            context.fillStyle = this.background().color().getHexString("#");
-            context.fillRect(mb,mb,width-2*mb,height-2*mb);
+            this.background().render(this, context, width, height);
 
-            if (this.background().img() && this.background().img().src() !== undefined) {
-                this.background().img().render(this, context, width, height);
-            }
-
-            this.x0( this.window().margin().left()  + this.window().border() + this.window().padding().left() + this.plotarea().margin().left() );
-            this.y0( this.window().margin().bottom() + this.window().border() + this.window().padding().bottom() + this.plotarea().margin().bottom() );
             context.transform(1,0,0,1,this.x0(),this.y0());
 
-            if (this.plotarea().color() !== null) {
-                context.save();
-                context.fillStyle = this.plotarea().color().getHexString("#");
-                context.fillRect(0,0,this.plotBox().width(), this.plotBox().height());
-                context.restore();
-            }
-
-            if (this.plotarea().border() > 0) {
-                context.save();
-                context.lineWidth = this.plotarea().border();
-                context.strokeStyle = this.plotarea().bordercolor().getHexString("#");
-                context.strokeRect(0,0,this.plotBox().width(), this.plotBox().height());
-                context.restore();
-            }
+            this.plotarea().render(this, context);
 
             for (i=0; i<this.axes().size(); ++i) {
                 this.axes().at(i).renderGrid(this, context);
@@ -19361,19 +19846,15 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             this.width($(this.div()).width());
             this.height($(this.div()).height());
             if (this.width() > 0 && this.height() > 0) {
-                // create the canvas; store ref to the canvas object in this.canvas()
+                // create the canvas
+                $("<canvas width=\""+this.width()+"\" height=\""+this.height()+"\"/>")
+                    .appendTo($(this.div()));
 
-                this.canvas(
-                    $("<canvas width=\""+this.width()+"\" height=\""+this.height()+"\"/>")
-                        .appendTo($(this.div()))[0]
-                );
+                this.initializeSurface();
 
                 this.busySpinner($('<div style="position: absolute; left:5px; top:5px;"></div>') .
                                   appendTo($(this.div())) .
                                   busy_spinner());
-
-                // get the canvas context; store ref to it in this.context()
-                this.context(this.canvas().getContext("2d"));
             }
             this.render();
         });
@@ -19387,6 +19868,21 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             for (i=0; i<this.graphs().size(); ++i) {
                 this.graphs().at(i).render(this.context(), this.width(), this.height());
             }
+        });
+
+        ns.Multigraph.respondsTo("registerEvents", function () {
+            this.registerMouseEvents(this.canvas());
+            this.registerTouchEvents(this.canvas());
+        });
+
+        ns.Multigraph.respondsTo("resizeSurface", function (width, height) {
+            this.context().canvas.width  = width;
+            this.context().canvas.height = height;
+        });
+
+        ns.Multigraph.respondsTo("initializeSurface", function () {
+            this.canvas(window.multigraph.jQuery(this.div()).children("canvas")[0]);
+            this.context(this.canvas().getContext("2d"));
         });
 
     });
@@ -19406,8 +19902,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         multigraph.div(options.div);
         $(options.div).css("cursor" , "pointer");
         multigraph.init();
-        multigraph.registerMouseEvents(multigraph.canvas());
-        multigraph.registerTouchEvents(multigraph.canvas());
+        multigraph.registerEvents();
         multigraph.registerCommonDataCallback(function (event) {
             multigraph.redraw();
         });
@@ -19460,6 +19955,33 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
     };
 
 });
+window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (ns) {
+    "use strict";
+
+    ns.mixin.add(function (ns) {
+
+        ns.Plotarea.respondsTo("render", function (graph, context) {
+            if (this.color() !== null) {
+                context.save();
+                context.fillStyle = this.color().getHexString("#");
+                context.fillRect(0,0,graph.plotBox().width(), graph.plotBox().height());
+                context.restore();
+            }
+
+            if (this.border() > 0) {
+                var border = this.border();
+                context.save();
+                context.lineWidth = border;
+                context.strokeStyle = this.bordercolor().getHexString("#");
+                context.strokeRect(-border/2, -border/2, graph.plotBox().width() + border, graph.plotBox().height() + border);
+                context.restore();
+            }
+        });
+
+    });
+
+});
+
 window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (ns) {
     "use strict";
 
@@ -19793,7 +20315,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 
         });
 
-        ns.BarRenderer.respondsTo("renderLegendIcon", function (context, x, y, icon, opacity) {
+        ns.BarRenderer.respondsTo("renderLegendIcon", function (context, x, y, icon) {
             var settings          = this.settings(),
                 rendererFillColor = this.getOptionValue("fillcolor", 0),
                 rendererOpacity   = this.getOptionValue("fillopacity", 0),
@@ -19807,7 +20329,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             context.fillRect(0, 0, icon.width(), icon.height());
 
             context.lineWidth = 1;
-            context.fillStyle = rendererFillColor.toRGBA(opacity * rendererOpacity);
+            context.fillStyle = rendererFillColor.toRGBA(rendererOpacity);
 
             if (settings.barpixelwidth < settings.hidelines) {
                 context.strokeStyle = rendererFillColor.toRGBA(rendererOpacity);
@@ -19988,7 +20510,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             context.restore();
         });
 
-        ns.FillRenderer.respondsTo("renderLegendIcon", function (context, x, y, icon, opacity) {
+        ns.FillRenderer.respondsTo("renderLegendIcon", function (context, x, y, icon) {
             var state = this.state();
             
             context.save();
@@ -20197,7 +20719,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 
         });
 
-        ns.PointlineRenderer.respondsTo("renderLegendIcon", function (context, x, y, icon, opacity) {
+        ns.PointlineRenderer.respondsTo("renderLegendIcon", function (context, x, y, icon) {
             var settings = this.settings();
 
             context.save();
@@ -20457,3 +20979,21 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         });
     });
 });
+window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (ns) {
+    "use strict";
+
+    ns.mixin.add(function (ns) {
+
+        ns.Window.respondsTo("render", function (context, width, height) {
+            var m = this.margin().left();
+
+            context.save();
+            context.fillStyle = this.bordercolor().getHexString("#");
+            context.fillRect(m, m, width - 2*m, height - 2*m);
+            context.restore();
+        });
+
+    });
+
+});
+

@@ -204,9 +204,10 @@ describe("DatetimeMeasure", function () {
             var alignment = DatetimeValue.parse(alignmentString);
             var result    = DatetimeValue.parse(resultString);
 
-            it("should give a result of '" + resultString + "' for the input '" + valueString + "' with an alignment of '" + alignmentString + "' and a spacing of '" + spacingString + "'", function () {
-                expect(spacing.firstSpacingLocationAtOrAfter(value, alignment).eq(result)).toBe(true);
-            });
+            it("should give a result of '" + resultString + "' for the input '" + valueString +
+               "' with an alignment of '" + alignmentString + "' and a spacing of '" + spacingString + "'", function () {
+                   expect(spacing.firstSpacingLocationAtOrAfter(value, alignment).eq(result)).toBe(true);
+               });
         };
 
         //     alignment               spacing   value                        result
@@ -252,6 +253,70 @@ describe("DatetimeMeasure", function () {
         doTest("2000-07-21 03:30:10",  "1Y",     "1990-08-22 04:57:52.342",   "1991-07-21 03:30:10");
 
         //TODO: write a lot more tests for this!!!
+    });
+
+    describe("lastSpacingLocationAtOrBefore() method", function () {
+
+        var doTest = function (alignmentString, spacingString, valueString, resultString) {
+            var value     = DatetimeValue.parse(valueString);
+            var spacing   = DatetimeMeasure.parse(spacingString);
+            var alignment = DatetimeValue.parse(alignmentString);
+            var result    = DatetimeValue.parse(resultString);
+
+            it("should give a result of '" + resultString + "' for the input '" + valueString +
+               "' with an alignment of '" + alignmentString + "' and a spacing of '" + spacingString + "'", function () {
+                   expect(spacing.lastSpacingLocationAtOrBefore(value, alignment).eq(result)).toBe(true);
+               });
+        };
+
+        //     alignment               spacing   value                        result
+        doTest("2012-01-01 00:00:00",  "1s",     "2012-08-04 12:23:32",       "2012-08-04 12:23:32");
+        doTest("2012-01-01 00:00:00",  "1s",     "2012-08-04 12:23:32.123",   "2012-08-04 12:23:32");
+
+        doTest("2012-01-01 00:00:00",  "1m",     "2012-08-04 12:23:00",       "2012-08-04 12:23:00");
+        doTest("2012-01-01 00:00:00",  "1m",     "2012-08-04 12:23:32",       "2012-08-04 12:23:00");
+
+        doTest("2012-01-01 00:00:00",  "1H",     "2012-08-04 12:23:32",       "2012-08-04 12:00:00");
+        doTest("2012-01-01 00:00:00",  "1H",     "1940-01-01 12:23:32",       "1940-01-01 12:00:00");
+        doTest("2012-01-01 05:20:00",  "1H",     "2000-08-04 12:23:32",       "2000-08-04 12:20:00");
+
+        doTest("2012-01-01 00:00:00",  "1D",     "2012-08-04 12:23:32",       "2012-08-04 00:00:00");
+
+        doTest("2012-08-01",           "1W",     "2012-08-04",                "2012-08-01");
+        doTest("2012-08-01",           "1W",     "2012-08-30",                "2012-08-29");
+
+        doTest("2012-01-01 00:00:00",  "1M",     "2012-01-01 00:00:00.123",   "2012-01-01 00:00:00");
+        doTest("2010-12-05 00:00:00",  "1M",     "2010-12-05 00:00:01.132",   "2010-12-05 00:00:00");
+        doTest("2012-03-10 12:00:10",  "1M",     "2012-03-10 12:59:02.123",   "2012-03-10 12:00:10");
+        doTest("2000-07-21 03:30:10",  "1M",     "2000-07-21 04:57:02",       "2000-07-21 03:30:10");
+
+        doTest("2012-08-01",           "1M",     "2012-08-04",                "2012-08-01");
+        doTest("2012-08-01",           "1M",     "2012-09-04",                "2012-09-01");
+        doTest("2012-08-01 10:23:14",  "1M",     "2012-09-04",                "2012-09-01 10:23:14");
+        doTest("2012-08-01 10:23:14",  "1M",     "2012-10-01 10:23:15",       "2012-10-01 10:23:14");
+
+        doTest("2012-03-31",           "1M",     "2012-09-04",                "2012-09-01");
+        doTest("2012-03-31",           "1M",     "2012-10-04",                "2012-10-01");
+        doTest("2012-08-01",           "3M",     "2012-09-04",                "2012-08-01");
+        doTest("2012-08-01",           "18M",    "2014-09-04",                "2014-02-01");
+        doTest("2012-02-29",           "1M",     "2012-10-16",                "2012-09-29");
+
+        doTest("2012-01-01 00:00:00",  "1M",     "2000-05-07 00:00:00.123",   "2000-05-01 00:00:00");
+        doTest("2012-01-01 00:00:00",  "1M",     "2000-05-01 00:00:00",       "2000-05-01 00:00:00");
+        doTest("2012-01-01 00:00:00",  "1M",     "1920-05-01 00:10:00",       "1920-05-01 00:00:00");
+
+        doTest("2012-01-01 00:00:00",  "1Y",     "2012-01-01 00:00:00.123",   "2012-01-01 00:00:00");
+        doTest("2010-12-05 00:00:00",  "1Y",     "2010-12-05 00:00:01.132",   "2010-12-05 00:00:00");
+        doTest("2012-03-10 12:00:10",  "1Y",     "2012-03-10 12:59:02.123",   "2012-03-10 12:00:10");
+        doTest("2000-07-21 03:30:10",  "1Y",     "2000-07-21 04:57:02",       "2000-07-21 03:30:10");
+        doTest("2012-08-01",           "1Y",     "2014-10-16",                "2014-08-01");
+        doTest("2000-05-31",           "1Y",     "2012-10-16",                "2012-05-31");
+        doTest("1992-02-29",           "1Y",     "1992-10-16",                "1992-03-01"); // NOTE: this isn't really correct
+        doTest("2012-02-29",           "4Y",     "2012-10-16",                "2012-02-29");
+
+        doTest("2000-07-21 03:30:10",  "1Y",     "1990-08-22 04:57:52.342",   "1990-07-21 03:30:10");
+
+
     });
 
     describe("toString() method", function () {
