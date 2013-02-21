@@ -2,14 +2,26 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
     "use strict";
 
     ns.mixin.add(function (ns) {
+        var Window = ns.Window;
 
-        window.multigraph.core.Window.respondsTo("render", function (graph, paper, set, width, height) {
+        Window.hasAn("elem");
+
+        Window.respondsTo("render", function (graph, paper, set, width, height) {
+            var ml = this.margin().left(),
+                elem = paper.rect(ml,ml,width-2*ml,height-2*ml)
+                    .attr({"fill" : this.bordercolor().getHexString("#")});
+
+            // window border
+            this.elem(elem);
+            set.push(elem);
+        });
+
+        Window.respondsTo("redraw", function (width, height) {
             var ml = this.margin().left();
-
-                // window border
-                set.push( paper.rect(ml,ml,width-2*ml,height-2*ml)
-                          .attr({"fill" : this.bordercolor().getHexString("#")}) );
-
+            this.elem().attr({
+                "width"  : width - 2*ml,
+                "height" : height - 2*ml
+            });
         });
 
     });

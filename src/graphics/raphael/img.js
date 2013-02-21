@@ -3,45 +3,62 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
     ns.mixin.add(function (ns) {
 
-        window.multigraph.core.Img.hasA("image").which.defaultsTo(function () {return new Image();});
-        window.multigraph.core.Img.hasA("fetched").which.defaultsTo(false);
+        var Img = ns.Img;
 
-        window.multigraph.core.Img.respondsTo("render", function (graph, paper, set, width, height) {
-            var that = this,
-                paddingLeft,
-                paddingTop,
-                plotLeft,
-                plotTop,
-                ax,
-                ay,
-                bx,
-                by,
-                x,
-                y;
+        var computeImgLocation = function (img, graph) {
+            var interp        = window.multigraph.math.util.interp,
+                graphWindow   = graph.window(),
+                graphPlotarea = graph.plotarea(),
+                ax          = interp(img.anchor().x(), -1, 1, 0, img.image().width),
+                ay          = interp(img.anchor().y(), 1, -1, 0, img.image().height),
+                paddingLeft = graphWindow.margin().left() + graphWindow.border(),
+                paddingTop  = graphWindow.margin().top() + graphWindow.border(),
+                plotLeft    = paddingLeft + graphWindow.padding().left() + graphPlotarea.margin().left() + graphPlotarea.border(),
+                plotTop     = paddingTop + graphWindow.padding().top() + graphPlotarea.margin().top() + graphPlotarea.border(),
+                bx, by;
+
+            if (img.frame() === Img.PLOT) {
+                bx = plotLeft + interp(img.base().x(), -1, 1, 0, graph.plotBox().width());
+                by = plotTop + interp(img.base().y(), 1, -1, 0, graph.plotBox().height());
+            } else {
+                bx = paddingLeft + interp(img.base().x(), -1, 1, 0, graph.paddingBox().width());
+                by = paddingTop + interp(img.base().y(), 1, -1, 0, graph.paddingBox().height());
+            }
+            return {
+                x : bx + img.position().x() - ax,
+                y : by + img.position().y() - ay
+            };
+        };
+
+        Img.hasA("image").which.defaultsTo(function () {return new Image();});
+        Img.hasA("fetched").which.defaultsTo(false);
+        Img.hasAn("elem");
+
+        Img.respondsTo("render", function (graph, paper, set, width, height) {
+            var that = this;
 
             if (this.fetched()) {
-                ax = window.multigraph.math.util.interp(this.anchor().x(), -1, 1, 0, this.image().width);
-                ay = window.multigraph.math.util.interp(this.anchor().y(), 1, -1, 0, this.image().height);
-                paddingLeft = graph.window().margin().left() + graph.window().border();
-                paddingTop = graph.window().margin().top() + graph.window().border();
-                plotLeft = paddingLeft + graph.window().padding().left() + graph.plotarea().margin().left() + graph.plotarea().border();
-                plotTop = paddingTop + graph.window().padding().top() + graph.plotarea().margin().top() + graph.plotarea().border();
-                if (this.frame() === ns.Img.PLOT) {
-                    bx = plotLeft + window.multigraph.math.util.interp(this.base().x(), -1, 1, 0, graph.plotBox().width());
-                    by = plotTop + window.multigraph.math.util.interp(this.base().y(), 1, -1, 0, graph.plotBox().height());
-                } else {
-                    bx = paddingLeft + window.multigraph.math.util.interp(this.base().x(), -1, 1, 0, graph.paddingBox().width());
-                    by = paddingTop + window.multigraph.math.util.interp(this.base().y(), 1, -1, 0, graph.paddingBox().height());
-                }
-                x = bx + this.position().x() - ax;
-                y = by + this.position().y() - ay;
-                set.push( paper.image(this.src(), x, y, this.image().width, this.image().height) );                
+                var imgLoc = computeImgLocation(this, graph),
+                    elem = paper.image(this.src(), imgLoc.x, imgLoc.y, this.image().width, this.image().height);
+
+                this.elem(elem);
+                set.push(elem);
             } else {
                 this.image().onload = function () {
                     that.fetched(true);
                     graph.render(paper, width, height);
                 };
                 this.image().src = this.src();
+            }
+        });
+
+        Img.respondsTo("redraw", function (graph) {
+            if (this.fetched()) {
+                var imgLoc = computeImgLocation(this, graph);
+                this.elem().attr({
+                    x : imgLoc.x,
+                    y : imgLoc.y
+                });
             }
         });
 

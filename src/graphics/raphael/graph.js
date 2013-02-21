@@ -48,6 +48,25 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
         });
 
+        Graph.respondsTo("redraw", function (paper, width, height) {
+            var i;
+
+            this.window().redraw(width, height);
+
+            this.background().redraw(this, width, height);
+
+            this.plotarea().redraw(this);
+
+            for (i = 0; i < this.axes().size(); ++i) {
+                this.axes().at(i).redrawGrid(this, paper);
+            }
+
+            for (i = 0; i < this.axes().size(); ++i) {
+                this.axes().at(i).redraw(this, paper);
+            }
+
+        });
+
         Graph.respondsTo("transformSets", function (height, x0, y0, backgroundSet, axesSet, plotsSet, legendSet, titleSet) {
             var i;
             for (i = 0; i < backgroundSet.length; i++) {

@@ -22,7 +22,14 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         ns.Multigraph.respondsTo("redraw", function () {
             var that = this;
             window.requestAnimationFrame(function () {
-                that.render();
+                var text = that.paper().text(-8000, -8000, "foo"),
+                    i;
+                that.initializeGeometry(that.width(), that.height(), { "elem" : text });
+                for (i=0; i<that.graphs().size(); ++i) {
+                    that.graphs().at(i).redraw(that.paper(), that.width(), that.height());
+                }
+                text.remove();
+//                that.render();
             });
         });
 

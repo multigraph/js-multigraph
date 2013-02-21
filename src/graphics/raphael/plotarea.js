@@ -3,34 +3,43 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
     ns.mixin.add(function (ns) {
 
-        window.multigraph.core.Plotarea.respondsTo("render", function (graph, paper, set) {
-            var plotareaAttrs,
+        var Plotarea = window.multigraph.core.Plotarea;
+
+        Plotarea.hasAn("elem");
+
+        Plotarea.respondsTo("render", function (graph, paper, set) {
+            var plotareaAttrs = {},
+                border = this.border(),
                 plotarea;
 
             if (this.color() !== null) {
-                if (plotareaAttrs === undefined) {
-                    plotareaAttrs = {};
-                }
-                plotareaAttrs.fill   = this.color().getHexString("#");
-                plotareaAttrs.stroke = this.color().getHexString("#"); // set to fill color in case border isn't drawn
+                plotareaAttrs.fill = this.color().getHexString("#");
             }
 
-            if (this.border() > 0) {
-                if (plotareaAttrs === undefined) {
-                    plotareaAttrs = { "fill-opacity" : 0 };
-                }
+            if (border > 0) {
+                plotareaAttrs["fill-opacity"]   = 0 ;
                 plotareaAttrs["stroke-opacity"] = 1;
                 plotareaAttrs.stroke            = this.bordercolor().getHexString("#");
-                plotareaAttrs["stroke-width"]   = this.border();
+                plotareaAttrs["stroke-width"]   = border;
+            } else {
+                plotareaAttrs.stroke = "none";                
             }
 
-            if (plotareaAttrs !== undefined) {
-                plotarea = paper.rect(graph.x0() - this.border()/2, graph.y0() - this.border()/2, graph.plotBox().width() + this.border(), graph.plotBox().height() + this.border())
-                    .attr(plotareaAttrs);
-                plotarea.insertAfter(set);
-                set.push(plotarea);
-            }
+            plotarea = paper.rect(graph.x0() - border/2, graph.y0() - border/2, graph.plotBox().width() + border, graph.plotBox().height() + border)
+                .attr(plotareaAttrs);
+            plotarea.insertAfter(set);
+            this.elem(plotarea);
+            set.push(plotarea);
+        });
 
+        Plotarea.respondsTo("redraw", function (graph) {
+            var border = this.border(),
+                plotBox = graph.plotBox();
+
+            this.elem().attr({
+                width  : plotBox.width() + border,
+                height : plotBox.height() + border
+            });
         });
 
     });
