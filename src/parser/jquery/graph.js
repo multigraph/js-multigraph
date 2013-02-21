@@ -85,10 +85,10 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     graph.title( ns.core.Title[parse](xml.find(">title"), graph) );
                 }
                 window.multigraph.jQuery.each(xml.find(">horizontalaxis"), function (i,e) {
-                    graph.axes().add( ns.core.Axis[parse](window.multigraph.jQuery(e), ns.core.Axis.HORIZONTAL, messageHandler) );
+                    graph.axes().add( ns.core.Axis[parse](window.multigraph.jQuery(e), ns.core.Axis.HORIZONTAL, messageHandler, graph.multigraph()) );
                 });
                 window.multigraph.jQuery.each(xml.find(">verticalaxis"), function (i,e) {
-                    graph.axes().add( ns.core.Axis[parse](window.multigraph.jQuery(e), ns.core.Axis.VERTICAL, messageHandler) );
+                    graph.axes().add( ns.core.Axis[parse](window.multigraph.jQuery(e), ns.core.Axis.VERTICAL, messageHandler, graph.multigraph()) );
                 });
                 if (xml.find(">data").length === 0) {
                     // On second throught, let's not throw an error if no <data> tag

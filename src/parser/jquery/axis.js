@@ -38,7 +38,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
         };
 
         
-        ns.core.Axis[parse] = function (xml, orientation, messageHandler) {
+        ns.core.Axis[parse] = function (xml, orientation, messageHandler, multigraph) {
 
             var axis = new ns.core.Axis(orientation),
                 i,
@@ -165,7 +165,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     if (! ns.core.DataValue.isInstance(bindingMaxDataValue)) {
                         throw new Error("invalid axis binding max: '" + bindingMaxAttr + "'");
                     }
-                    ns.core.AxisBinding.findByIdOrCreateNew(bindingIdAttr).addAxis(axis, bindingMinDataValue, bindingMaxDataValue);
+                    ns.core.AxisBinding.findByIdOrCreateNew(bindingIdAttr).addAxis(axis, bindingMinDataValue, bindingMaxDataValue, multigraph);
                 }
 
             }

@@ -48,7 +48,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @param {number|DataValue} max
          * @author jrfrimme
          */
-        this.respondsTo("addAxis", function(axis, min, max) {
+        this.respondsTo("addAxis", function(axis, min, max, multigraph/*optional*/) {
             // NOTE: min/max can be either numbers, or DataValue
             // instances, but they CANNOT be strings.
 
@@ -62,11 +62,12 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             max = axis.toRealValue(max);
 
             this.axes().push({
-                axis   : axis,
-                factor : 1 / (max - min),
-                offset : -min / (max - min),
-                min    : min,
-                max    : max
+                axis       : axis,
+                multigraph : multigraph,
+                factor     : 1 / (max - min),
+                offset     : -min / (max - min),
+                min        : min,
+                max        : max
             });
         });
 
@@ -152,7 +153,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 axes = this.axes(),
                 axis,
                 minRealValue = initiatingAxis.toRealValue(min),
-                maxRealValue = initiatingAxis.toRealValue(max);
+                maxRealValue = initiatingAxis.toRealValue(max),
+                redrawn_multigraphs = [],
+                redrawn;
 
             if (dispatch === undefined) {
                 dispatch = true; // dispatch defaults to true
@@ -161,6 +164,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             for (i=0; i<axes.length; ++i) {
                 if (axes[i].axis === initiatingAxis) {
                     initiatingAxisIndex = i;
+                    redrawn_multigraphs = [ axes[i].multigraph ];
                     break;
                 }
             }
@@ -174,6 +178,21 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                         (maxRealValue * axes[initiatingAxisIndex].factor + axes[initiatingAxisIndex].offset - axis.offset) / axis.factor,
                         dispatch
                     );
+                    if (axis.multigraph !== undefined) {
+                        // If this axis has a multigraph stored with it, and if that multigraph isn't already in the `redrawn_multigraphs`
+                        // array, call its `redraw` method, and add it to the array.
+                        redrawn = false;
+                        for (j=0; j<redrawn_multigraphs.length; ++j) {
+                            if (axis.multigraph === redrawn_multigraphs[j]) {
+                                redrawn = true;
+                                break;
+                            }
+                        }
+                        if (!redrawn) {
+                            axis.multigraph.redraw();
+                            redrawn_multigraphs.push(axis.multigraph);
+                        }
+                    }
                 }
             }
         });
