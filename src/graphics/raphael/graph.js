@@ -65,6 +65,10 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 this.axes().at(i).redraw(this, paper);
             }
 
+            for (i = 0; i < this.plots().size(); ++i) {
+                this.plots().at(i).redraw();
+            }
+
         });
 
         Graph.respondsTo("transformSets", function (height, x0, y0, backgroundSet, axesSet, plotsSet, legendSet, titleSet) {

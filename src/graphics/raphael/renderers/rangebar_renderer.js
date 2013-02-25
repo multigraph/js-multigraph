@@ -3,16 +3,18 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
     ns.mixin.add(function (ns) {
 
-        // cached state object, for quick access during rendering, populated in begin() method:
-        ns.RangeBarRenderer.hasA("state");
+        var RangeBarRenderer = ns.RangeBarRenderer;
 
-        ns.RangeBarRenderer.respondsTo("begin", function (graphicsContext) {
+        RangeBarRenderer.hasAn("elem");
+        // cached state object, for quick access during rendering, populated in begin() method:
+        RangeBarRenderer.hasA("state");
+
+        RangeBarRenderer.respondsTo("begin", function (graphicsContext) {
             var state = {
                 "paper"              : graphicsContext.paper,
                 "set"                : graphicsContext.set,
                 "path"               : "",
-                "barpixelwidth"      : this.getOptionValue("barwidth").getRealValue() * this.plot().horizontalaxis().axisToDataRatio(),
-                "barpixeloffset"     : 0,
+                "barwidth"           : this.getOptionValue("barwidth"),
                 "baroffset"          : this.getOptionValue("baroffset"),
                 "fillcolor"          : this.getOptionValue("fillcolor"),
                 "fillopacity"        : this.getOptionValue("fillopacity"),
@@ -20,57 +22,72 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 "linewidth"          : this.getOptionValue("linewidth"),
                 "hidelines"          : this.getOptionValue("hidelines")
             };
+            state.barpixelwidth  = state.barwidth.getRealValue() * this.plot().horizontalaxis().axisToDataRatio();
             state.barpixeloffset = state.barpixelwidth * state.baroffset;
             this.state(state);
         });
 
-        ns.RangeBarRenderer.respondsTo("dataPoint", function (datap) {
-            var state = this.state(),
-                path = "",
-                p;
+        RangeBarRenderer.respondsTo("beginRedraw", function () {
+            var state = this.state();
+            state.path = "";
+            state.barpixelwidth  = state.barwidth.getRealValue() * this.plot().horizontalaxis().axisToDataRatio();
+            state.barpixeloffset = state.barpixelwidth * state.baroffset;
+        });
 
+        RangeBarRenderer.respondsTo("dataPoint", function (datap) {
             if (this.isMissing(datap)) {
                 return;
             }
 
-            p = this.transformPoint(datap);
+            var state = this.state(),
+                p     = this.transformPoint(datap),
+                x0    = p[0] - state.barpixeloffset,
+                x1    = x0 + state.barpixelwidth;
 
-            var x0 = p[0] - state.barpixeloffset;
-            var x1 = x0 + state.barpixelwidth;
-
-            path += "M" + x0 + "," + p[1];
-            path += "L" + x0 + "," + p[2];
-            path += "L" + x1 + "," + p[2];
-            path += "L" + x1 + "," + p[1];
-            path += "Z";
-
-            state.path += path;
-
+            state.path += "M" + x0 + "," + p[1] +
+                "L" + x0 + "," + p[2] +
+                "L" + x1 + "," + p[2] +
+                "L" + x1 + "," + p[1] +
+                "Z";
         });
 
-        ns.RangeBarRenderer.respondsTo("end", function () {
+        RangeBarRenderer.respondsTo("end", function () {
             var state = this.state(),
-                paper = state.paper,
-                set = state.set,
-                path = state.path,
-                rangeBarAttrs = {};
-
-            rangeBarAttrs["fill-opacity"] = state.fillopacity;
-            rangeBarAttrs.fill = state.fillcolor.getHexString("#");
-            rangeBarAttrs.stroke = state.fillcolor.getHexString("#");
+                path  = state.path,
+                rangeBarAttrs = {
+                    "fill-opacity" : state.fillopacity,
+                    fill           : state.fillcolor.getHexString("#"),
+                    stroke         : "none"
+                };
 
             if (state.linewidth > 0 && state.barpixelwidth > state.hidelines) {
-                rangeBarAttrs.stroke = state.linecolor.getHexString("#");
+                rangeBarAttrs.stroke          = state.linecolor.getHexString("#");
                 rangeBarAttrs["stroke-width"] = state.linewidth;
             }
 
-            set.push(
-                paper.path(path).attr(rangeBarAttrs)
-            );
-
+            var elem = state.paper.path(path).attr(rangeBarAttrs);
+            this.elem(elem);
+            state.set.push(elem);
         });
 
-        ns.RangeBarRenderer.respondsTo("generateBar", function (x, y, width, height) {
+        RangeBarRenderer.respondsTo("endRedraw", function () {
+            var state = this.state(),
+                rangeBarAttrs = {
+                    path : state.path
+                };
+
+            if (state.linewidth > 0 && state.barpixelwidth > state.hidelines) {
+                rangeBarAttrs.stroke          = state.linecolor.getHexString("#");
+                rangeBarAttrs["stroke-width"] = state.linewidth;
+            } else {
+                rangeBarAttrs.stroke          = "none";
+                rangeBarAttrs["stroke-width"] = 1;
+            }
+
+            this.elem().attr(rangeBarAttrs);
+        });
+
+        RangeBarRenderer.respondsTo("generateBar", function (x, y, width, height) {
             var path = "M" + x + "," + y;
             path    += "L" + x + "," + (y + height);
             path    += "L" + (x + width) + "," + (y + height);
@@ -79,7 +96,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             return path;
         });
 
-        ns.RangeBarRenderer.respondsTo("renderLegendIcon", function (graphicsContext, x, y, icon) {
+        RangeBarRenderer.respondsTo("renderLegendIcon", function (graphicsContext, x, y, icon) {
             var state = this.state(),
                 paper = graphicsContext.paper,
                 set = graphicsContext.set,

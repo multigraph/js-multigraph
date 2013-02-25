@@ -3,10 +3,15 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
     ns.mixin.add(function (ns) {
 
-        // cached settings object, for quick access during rendering, populated in begin() method:
-        ns.PointlineRenderer.hasA("settings");
+        var PointlineRenderer = ns.PointlineRenderer;
 
-        ns.PointlineRenderer.respondsTo("begin", function (graphicsContext) {
+        PointlineRenderer.hasA("lineElem");
+        PointlineRenderer.hasA("pointsElem");
+
+        // cached settings object, for quick access during rendering, populated in begin() method:
+        PointlineRenderer.hasA("settings");
+
+        PointlineRenderer.respondsTo("begin", function (graphicsContext) {
             var settings = {
                 "paper"              : graphicsContext.paper,
                 "set"                : graphicsContext.set,
@@ -35,15 +40,21 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             this.settings(settings);
         });
 
-        ns.PointlineRenderer.respondsTo("dataPoint", function (datap) {
-            var settings = this.settings(),
-                p;
+        PointlineRenderer.respondsTo("beginRedraw", function () {
+            var settings    = this.settings();
+            settings.path   = "";
+            settings.points = [];
+            settings.first  = true;
+        });
+
+        PointlineRenderer.respondsTo("dataPoint", function (datap) {
+            var settings = this.settings();
 
             if (this.isMissing(datap)) {
                 settings.first = true;
                 return;
             }
-            p = this.transformPoint(datap);
+            var p = this.transformPoint(datap);
             if (settings.linewidth > 0) {
                 if (settings.first) {
                     settings.path += "M" + p[0] + "," + p[1];
@@ -57,127 +68,138 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             }
         });
 
-        ns.PointlineRenderer.respondsTo("end", function () {
-            var settings = this.settings();
+        PointlineRenderer.respondsTo("end", function () {
+            var settings = this.settings(),
+                paper    = settings.paper,
+                set      = settings.set;
 
             if (settings.linewidth > 0) {
-                settings.set.push( settings.paper.path(settings.path)
-                                   .attr({
-                                       "stroke"       : settings.linecolor.getHexString("#"),
-                                       "stroke-width" : settings.linewidth
-                                   }));
+                var lineElem = paper.path(settings.path)
+                    .attr({
+                        "stroke"       : settings.linecolor.getHexString("#"),
+                        "stroke-width" : settings.linewidth
+                    });
+                this.lineElem(lineElem);
+                set.push(lineElem);
             }
 
             if (settings.pointsize > 0) {
-                this.drawPoints();
+                var pointsElem = paper.path(drawPoints(settings))
+                        .attr(computePointAttributes(settings));
+                this.pointsElem(pointsElem);
+                set.push(pointsElem);
             }
         });
 
-        ns.PointlineRenderer.respondsTo("drawPoints", function () {
-            var settings  = this.settings(),
-                paper     = settings.paper,
-                pointSet  = paper.set(),
-                points    = settings.points,
-                pointPath = "",
-                raphaelAttrs,
+        PointlineRenderer.respondsTo("endRedraw", function () {
+            var settings = this.settings();
+
+            if (this.lineElem()) {
+                this.lineElem().attr("path", settings.path);
+            }
+
+            if (this.pointsElem()) {
+                this.pointsElem().attr("path", drawPoints(settings));
+            }
+        });
+
+        var drawPoints = function (settings) {
+            var points     = settings.points,
+                pointshape = settings.pointshape,
+                pointsize  = settings.pointsize,
+                pointPath  = "",
                 i;
 
-            if ((settings.pointshape === ns.PointlineRenderer.PLUS) || (settings.pointshape === ns.PointlineRenderer.X)) {
-                raphaelAttrs = {
+            for (i = 0; i < points.length; ++i) {
+                pointPath += drawPoint(pointshape, pointsize, points[i]);
+            }
+
+            return pointPath;
+        };
+
+        var drawPoint = function (shape, size, p) {
+            var path,
+                a,b,d;
+
+            switch (shape) {
+                case PointlineRenderer.PLUS:
+                    path = "M" + p[0] + "," + (p[1]-size) +
+                      "L" + p[0] + "," + (p[1]+size) +
+                      "M" + (p[0]-size) + "," + p[1] +
+                      "L" + (p[0]+size) + "," + p[1];
+                    break;
+                case PointlineRenderer.X:
+                    d = 0.70710 * size;
+                    path = "M" + (p[0]-d) + "," + (p[1]-d) +
+                      "L" + (p[0]+d) + "," + (p[1]+d) +
+                      "M" + (p[0]-d) + "," + (p[1]+d) +
+                      "L" + (p[0]+d) + "," + (p[1]-d);
+                    break;
+                case PointlineRenderer.TRIANGLE:
+                    d = 1.5 * size;
+                    a = 0.866025 * d;
+                    b = 0.5 * d;
+                    path = "M" + p[0] + "," + (p[1]+d) +
+                      "L" + (p[0]+a) + "," + (p[1]-b) +
+                      "L" + (p[0]-a) + "," + (p[1]-b) +
+                      "Z";
+                    break;
+                case PointlineRenderer.DIAMOND:
+                    d = 1.5 * size;
+                    path = "M" + (p[0]-size) + "," + p[1] +
+                      "L" + p[0] + "," + (p[1]+d) +
+                      "L" + (p[0]+size) + "," + p[1] +
+                      "L" + p[0] + "," + (p[1]-d) +
+                      "Z";
+                    break;
+                case PointlineRenderer.STAR:
+                    d = 1.5 * size;
+                    path = "M" + (p[0]-d*0.0000) + "," + (p[1]+d*1.0000) +
+                      "L" + (p[0]+d*0.3536) + "," + (p[1]+d*0.3536) +
+                      "L" + (p[0]+d*0.9511) + "," + (p[1]+d*0.3090) +
+                      "L" + (p[0]+d*0.4455) + "," + (p[1]-d*0.2270) +
+                      "L" + (p[0]+d*0.5878) + "," + (p[1]-d*0.8090) +
+                      "L" + (p[0]-d*0.0782) + "," + (p[1]-d*0.4938) +
+                      "L" + (p[0]-d*0.5878) + "," + (p[1]-d*0.8090) +
+                      "L" + (p[0]-d*0.4938) + "," + (p[1]-d*0.0782) +
+                      "L" + (p[0]-d*0.9511) + "," + (p[1]+d*0.3090) +
+                      "L" + (p[0]-d*0.2270) + "," + (p[1]+d*0.4455) +
+                      "Z";
+                    break;
+                case PointlineRenderer.SQUARE:
+                    path = "M" + (p[0] - size) + "," +  (p[1] - size) +
+                      "L" + (p[0] + (2 * size)) + "," +  (p[1] - size) +
+                      "L" + (p[0] + (2 * size)) + "," +  (p[1] + (2 * size)) +
+                      "L" + (p[0] - size) + "," +  (p[1] + (2 * size)) +
+                      "Z";
+                    break;
+                default: // PointlineRenderer.CIRCLE
+                    path = "M" + p[0] + "," + p[1] +
+                      "m0," + (-size) +
+                      "a" + size + "," + size + ",0,1,1,0," + (2 * size) +
+                      "a" + size + "," + size + ",0,1,1,0," + (-2 * size) +
+                      "z";
+                    break;
+            }
+            return path;
+        };
+
+        var computePointAttributes = function (settings) {
+            if ((settings.pointshape === PointlineRenderer.PLUS) || (settings.pointshape === PointlineRenderer.X)) {
+                return {
                     "stroke"       : settings.pointcolor.getHexString("#"),
                     "stroke-width" : settings.pointoutlinewidth
                 };
-
             } else {
-                raphaelAttrs = {
+                return {
                     "fill"         : settings.pointcolor.toRGBA(settings.pointopacity),
                     "stroke"       : settings.pointoutlinecolor.getHexString("#"),
                     "stroke-width" : settings.pointoutlinewidth
                 };
             }
+        };
 
-            for (i = 0; i < points.length; ++i) {
-                pointPath += this.drawPoint(settings.pointshape, settings.pointsize, points[i]);
-            }
-
-            if (pointPath !== "") {
-                pointSet.push(paper.path(pointPath));
-            }
-
-            pointSet.attr(raphaelAttrs);
-
-            settings.set.push(pointSet);
-        });
-
-        ns.PointlineRenderer.respondsTo("drawPoint", function (shape, size, p) {
-            var path = "",
-                a,b,d;
-
-            switch (shape) {
-                case ns.PointlineRenderer.PLUS:
-                    path += "M" + p[0] + "," + (p[1]-size);
-                    path += "L" + p[0] + "," + (p[1]+size);
-                    path += "M" + (p[0]-size) + "," + p[1];
-                    path += "L" + (p[0]+size) + "," + p[1];
-                    break;
-                case ns.PointlineRenderer.X:
-                    d = 0.70710 * size;
-                    path += "M" + (p[0]-d) + "," + (p[1]-d);
-                    path += "L" + (p[0]+d) + "," + (p[1]+d);
-                    path += "M" + (p[0]-d) + "," + (p[1]+d);
-                    path += "L" + (p[0]+d) + "," + (p[1]-d);
-                    break;
-                case ns.PointlineRenderer.TRIANGLE:
-                    d = 1.5 * size;
-                    a = 0.866025 * d;
-                    b = 0.5 * d;
-                    path += "M" + p[0] + "," + (p[1]+d);
-                    path += "L" + (p[0]+a) + "," + (p[1]-b);
-                    path += "L" + (p[0]-a) + "," + (p[1]-b);
-                    path += "Z";
-                    break;
-                case ns.PointlineRenderer.DIAMOND:
-                    d = 1.5 * size;
-                    path += "M" + (p[0]-size) + "," + p[1];
-                    path += "L" + p[0] + "," + (p[1]+d);
-                    path += "L" + (p[0]+size) + "," + p[1];
-                    path += "L" + p[0] + "," + (p[1]-d);
-                    path += "Z";
-                    break;
-                case ns.PointlineRenderer.STAR:
-                    d = 1.5 * size;
-                    path += "M" + (p[0]-d*0.0000) + "," + (p[1]+d*1.0000);
-                    path += "L" + (p[0]+d*0.3536) + "," + (p[1]+d*0.3536);
-                    path += "L" + (p[0]+d*0.9511) + "," + (p[1]+d*0.3090);
-                    path += "L" + (p[0]+d*0.4455) + "," + (p[1]-d*0.2270);
-                    path += "L" + (p[0]+d*0.5878) + "," + (p[1]-d*0.8090);
-                    path += "L" + (p[0]-d*0.0782) + "," + (p[1]-d*0.4938);
-                    path += "L" + (p[0]-d*0.5878) + "," + (p[1]-d*0.8090);
-                    path += "L" + (p[0]-d*0.4938) + "," + (p[1]-d*0.0782);
-                    path += "L" + (p[0]-d*0.9511) + "," + (p[1]+d*0.3090);
-                    path += "L" + (p[0]-d*0.2270) + "," + (p[1]+d*0.4455);
-                    path += "Z";
-                    break;
-                case ns.PointlineRenderer.SQUARE:
-                    path += "M" + (p[0] - size) + "," +  (p[1] - size);
-                    path += "L" + (p[0] + (2 * size)) + "," +  (p[1] - size);
-                    path += "L" + (p[0] + (2 * size)) + "," +  (p[1] + (2 * size));
-                    path += "L" + (p[0] - size) + "," +  (p[1] + (2 * size));
-                    path += "Z";
-                    break;
-                default: // ns.PointlineRenderer.CIRCLE
-                    path += "M" + p[0] + "," + p[1];
-                    path += "m0," + (-size);
-                    path += "a" + size + "," + size + ",0,1,1,0," + (2 * size);
-                    path += "a" + size + "," + size + ",0,1,1,0," + (-2 * size);
-                    path += "z";
-                    break;
-            }
-            return path;
-
-        });
-
-        ns.PointlineRenderer.respondsTo("renderLegendIcon", function (graphicsContext, x, y, icon) {
+        PointlineRenderer.respondsTo("renderLegendIcon", function (graphicsContext, x, y, icon) {
             var settings = this.settings(),
                 path     = "",
                 pointAttrs;
@@ -203,21 +225,10 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                     );
             }
             if (settings.pointsize > 0) {
-                if ((settings.pointshape === ns.PointlineRenderer.PLUS) || (settings.pointshape === ns.PointlineRenderer.X)) {
-                    pointAttrs = {
-                        "stroke"       : settings.pointcolor.toRGBA(),
-                        "stroke-width" : settings.pointoutlinewidth
-                    };
-                } else {
-                    pointAttrs = {
-                        "fill"         : settings.pointcolor.toRGBA(settings.pointopacity),
-                        "stroke"       : settings.pointoutlinecolor.toRGBA(),
-                        "stroke-width" : settings.pointoutlinewidth
-                    };
-                }
+                pointAttrs = computePointAttributes(settings);
 
                 graphicsContext.set.push(
-                    graphicsContext.paper.path( this.drawPoint(settings.pointshape, settings.pointsize, [(x + icon.width()/2), (y + icon.height()/2)]) )
+                    graphicsContext.paper.path( drawPoint(settings.pointshape, settings.pointsize, [(x + icon.width()/2), (y + icon.height()/2)]) )
                         .attr(pointAttrs)
                 );
             }

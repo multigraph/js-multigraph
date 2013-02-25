@@ -3,17 +3,22 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
     ns.mixin.add(function (ns) {
 
-        // cached settings object, for quick access during rendering, populated in begin() method:
-        ns.BarRenderer.hasA("settings");
+        var BarRenderer = ns.BarRenderer;
 
-        ns.BarRenderer.respondsTo("begin", function (graphicsContext) {
+        BarRenderer.hasMany("barElems");
+        BarRenderer.hasAn("outlineElem");
+
+        // cached settings object, for quick access during rendering, populated in begin() method:
+        BarRenderer.hasA("settings");
+
+        BarRenderer.respondsTo("begin", function (graphicsContext) {
             var settings = {
                 "paper"              : graphicsContext.paper,
                 "set"                : graphicsContext.set,
-                "paths"              : [],
-                "barpixelwidth"      : this.getOptionValue("barwidth").getRealValue() * this.plot().horizontalaxis().axisToDataRatio(),
+                "paths"              : {},
+                "barwidth"           : this.getOptionValue("barwidth"),
                 "baroffset"          : this.getOptionValue("baroffset"),
-                "barpixelbase"       : (this.getOptionValue("barbase") !== null)?this.plot().verticalaxis().dataValueToAxisValue(this.getOptionValue("barbase")):0,
+                "barbase"            : this.getOptionValue("barbase"),
                 "fillcolor"          : this.getOptionValue("fillcolor"),
                 "linecolor"          : this.getOptionValue("linecolor"),
                 "hidelines"          : this.getOptionValue("hidelines"),
@@ -22,42 +27,52 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 "prevCorner"         : null,
                 "pixelEdgeTolerance" : 1
             };
+            settings.barpixelwidth = settings.barwidth.getRealValue() * this.plot().horizontalaxis().axisToDataRatio();
+            settings.barpixelbase  = (settings.barbase !== null) ? this.plot().verticalaxis().dataValueToAxisValue(settings.barbase) : 0;
+
+            var i;
+            for (i = 0; i < this.options().fillcolor().size(); i++) {
+                settings.paths[this.options().fillcolor().at(i).value().getHexString("0x")] = {
+                    fillcolor : this.options().fillcolor().at(i).value(),
+                    path      : ""
+                };
+            }
+            for (i = 0; i < this.barElems().size(); i++) {
+                this.barElems().pop();
+            }
 
             this.settings(settings);
         });
 
-        ns.BarRenderer.respondsTo("dataPoint", function (datap) {
-            var settings = this.settings(),
-                p,
-                x0,
-                x1,
-                fillcolor = this.getOptionValue("fillcolor", datap[1]),
-                flag = false,
-                i;
+        BarRenderer.respondsTo("beginRedraw", function () {
+            var settings = this.settings();
+            settings.barpixelwidth   = settings.barwidth.getRealValue() * this.plot().horizontalaxis().axisToDataRatio();
+            settings.barpixelbase    = (settings.barbase !== null) ? this.plot().verticalaxis().dataValueToAxisValue(settings.barbase) : 0;
+            settings.barGroups       = [];
+            settings.currentBarGroup = null;
+            settings.prevCorner      = null;
 
+            var i;
+            for (i = 0; i < this.options().fillcolor().size(); i++) {
+                settings.paths[this.options().fillcolor().at(i).value().getHexString("0x")] = {
+                    fillcolor : this.options().fillcolor().at(i).value(),
+                    path      : ""
+                };
+            }
+        });
+
+        BarRenderer.respondsTo("dataPoint", function (datap) {
             if (this.isMissing(datap)) {
                 return;
             }
 
-            p = this.transformPoint(datap);
+            var settings = this.settings(),
+                p = this.transformPoint(datap),
+                x0 = p[0] + settings.baroffset,
+                x1 = p[0] + settings.baroffset + settings.barpixelwidth,
+                fillcolor = this.getOptionValue("fillcolor", datap[1]);
 
-            x0 = p[0] + settings.baroffset;
-            x1 = p[0] + settings.baroffset + settings.barpixelwidth;
-            
-            for (i = 0; i < settings.paths.length; i++) {
-                if (settings.paths[i].fillcolor === fillcolor) {
-                    settings.paths[i].path += this.generateBar(x0, settings.barpixelbase, settings.barpixelwidth, p[1] - settings.barpixelbase);
-                    flag = true;
-                    break;
-                }
-            }
-
-            if (flag === false) {
-                i = settings.paths.length;
-                settings.paths[i] = {};
-                settings.paths[i].fillcolor = fillcolor;
-                settings.paths[i].path = this.generateBar(x0, settings.barpixelbase, settings.barpixelwidth, p[1] - settings.barpixelbase);
-            }
+            settings.paths[fillcolor.getHexString("0x")].path += this.generateBar(x0, settings.barpixelbase, settings.barpixelwidth, p[1] - settings.barpixelbase);
 
             if (settings.barpixelwidth > settings.hidelines) {
                 if (settings.prevCorner === null) {
@@ -75,19 +90,11 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             }
         });
 
-        ns.BarRenderer.respondsTo("end", function () {
-            var settings = this.settings(),
-                p,
-                outlinePath = "",
+        var computeBarOutline = function (settings) {
+            var outlinePath = "",
+                barpixelbase = settings.barpixelbase,
                 barGroup,
-                i,
-                j,
-                n;
-
-            if (settings.prevCorner !== null && settings.currentBarGroup !== null) {
-                settings.currentBarGroup.push( settings.prevCorner );
-                settings.barGroups.push( settings.currentBarGroup );
-            }        
+                i, j, n;
 
             for (i = 0; i < settings.barGroups.length; i++) {
                 barGroup = settings.barGroups[i];
@@ -105,12 +112,12 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 //
                 
                 //   horizontal line @ y from x(next) to x
-                outlinePath += "M" + barGroup[1][0] + "," + barGroup[0][1];
-                outlinePath += "L" + barGroup[0][0] + "," + barGroup[0][1];
+                outlinePath += "M" + barGroup[1][0] + "," + barGroup[0][1] +
+                    "L" + barGroup[0][0] + "," + barGroup[0][1];
                 //   vertical line @ x from y to base
-                outlinePath += "L" + barGroup[0][0] + "," + settings.barpixelbase;
+                outlinePath += "L" + barGroup[0][0] + "," + barpixelbase;
                 //   horizontal line @ base from x to x(next)
-                outlinePath += "L" + barGroup[1][0] + "," + settings.barpixelbase;
+                outlinePath += "L" + barGroup[1][0] + "," + barpixelbase;
                 
                 for (j = 1; j < n - 1; ++j) {
                     // For intermediate points, draw 3 lines:
@@ -126,14 +133,14 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                     //         x     x(next)
                     //
                     //   vertical line @ x from min to max of (y, y(next), base)
-                    outlinePath += "M" + barGroup[j][0] + "," + Math.min(barGroup[j-1][1], barGroup[j][1], settings.barpixelbase);
-                    outlinePath += "L" + barGroup[j][0] + "," + Math.max(barGroup[j-1][1], barGroup[j][1], settings.barpixelbase);
+                    outlinePath += "M" + barGroup[j][0] + "," + Math.min(barGroup[j-1][1], barGroup[j][1], barpixelbase) +
+                        "L" + barGroup[j][0] + "," + Math.max(barGroup[j-1][1], barGroup[j][1], barpixelbase);
                     //   horizontal line @ y(next) from x to x(next)
-                    outlinePath += "M" + barGroup[j][0] + "," +   barGroup[j][1];
-                    outlinePath += "L" + barGroup[j+1][0] + "," + barGroup[j][1];
+                    outlinePath += "M" + barGroup[j][0] + "," +   barGroup[j][1] +
+                        "L" + barGroup[j+1][0] + "," + barGroup[j][1];
                     //   horizontal line @ base from x to x(next)
-                    outlinePath += "M" + barGroup[j][0] + "," +   settings.barpixelbase;
-                    outlinePath += "L" + barGroup[j+1][0] + "," + settings.barpixelbase;
+                    outlinePath += "M" + barGroup[j][0] + "," +   barpixelbase +
+                        "L" + barGroup[j+1][0] + "," + barpixelbase;
                 }
                 // For last point, draw one line:
                 //
@@ -145,33 +152,67 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 //         x     x(next)
                 //
                 //   vertical line @ x from base to y
-                outlinePath += "M" + barGroup[n-1][0] + "," + barGroup[n-1][1];
-                outlinePath += "L" + barGroup[n-1][0] + "," + settings.barpixelbase;
+                outlinePath += "M" + barGroup[n-1][0] + "," + barGroup[n-1][1] +
+                    "L" + barGroup[n-1][0] + "," + barpixelbase;
+            }
+            return outlinePath;
+        };
+
+        BarRenderer.respondsTo("end", function () {
+            var settings = this.settings(),
+                paper    = settings.paper,
+                set      = settings.set,
+                barElem, outlineElem;
+
+            if (settings.prevCorner !== null && settings.currentBarGroup !== null) {
+                settings.currentBarGroup.push( settings.prevCorner );
+                settings.barGroups.push( settings.currentBarGroup );
+            }        
+
+            var key;
+            for (key in settings.paths) {
+                if (settings.paths.hasOwnProperty(key)) {
+                    barElem = paper.path(settings.paths[key].path)
+                        .attr({
+                            "fill"   : settings.paths[key].fillcolor.getHexString("#"),
+                            "stroke" : "none"
+                        });
+                    this.barElems().add(barElem);
+                    set.push(barElem);
+                }
             }
 
-
-            for (i = 0; i < settings.paths.length; i++) {
-                settings.set.push( settings.paper.path(settings.paths[i].path)
-                                   .attr({
-                                       "stroke-width": 1,
-                                       "fill": settings.paths[i].fillcolor.getHexString("#"),
-                                       "stroke": settings.fillcolor.getHexString("#")
-                                   })
-                                 );
-            }
-
-            settings.set.push( settings.paper.path(outlinePath)
-                               .attr({
-                                   "stroke-width": 1,
-                                   "stroke": settings.linecolor.getHexString("#")
-                               })
-                             );
-
-
+            outlineElem = paper.path(computeBarOutline(settings))
+                .attr({
+                    "stroke-width" : 1,
+                    "stroke"       : settings.linecolor.getHexString("#")
+                });
+            this.outlineElem(outlineElem);
+            set.push(outlineElem);
         });
 
+        BarRenderer.respondsTo("endRedraw", function () {
+            var settings = this.settings(),
+                barElem, outlineElem;
 
-        ns.BarRenderer.respondsTo("generateBar", function (x, y, width, height) {
+            if (settings.prevCorner !== null && settings.currentBarGroup !== null) {
+                settings.currentBarGroup.push( settings.prevCorner );
+                settings.barGroups.push( settings.currentBarGroup );
+            }        
+
+            var key,
+                i = 0;
+            for (key in settings.paths) {
+                if (settings.paths.hasOwnProperty(key)) {
+                    this.barElems().at(i).attr("path", settings.paths[key].path);
+                    i++;
+                }
+            }
+
+            this.outlineElem().attr("path", computeBarOutline(settings));
+        });
+
+        BarRenderer.respondsTo("generateBar", function (x, y, width, height) {
             var path = "M" + x + "," + y;
             path    += "L" + x + "," + (y + height); 
             path    += "L" + (x + width) + "," + (y + height); 
@@ -180,7 +221,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             return path; 
         });
 
-        ns.BarRenderer.respondsTo("renderLegendIcon", function (graphicsContext, x, y, icon) {
+        BarRenderer.respondsTo("renderLegendIcon", function (graphicsContext, x, y, icon) {
             var settings          = this.settings(),
                 rendererFillColor = this.getOptionValue("fillcolor", 0),
                 rendererOpacity   = this.getOptionValue("fillopacity", 0),

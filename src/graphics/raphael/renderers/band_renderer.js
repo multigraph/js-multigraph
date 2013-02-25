@@ -3,10 +3,16 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
     ns.mixin.add(function (ns) {
 
-        // cached state object, for quick access during rendering, populated in begin() method:
-        ns.BandRenderer.hasA("state");
+        var BandRenderer = ns.BandRenderer;
 
-        ns.BandRenderer.respondsTo("begin", function (graphicsContext) {
+        BandRenderer.hasA("fillElem");
+        BandRenderer.hasA("line1Elem");
+        BandRenderer.hasA("line2Elem");
+
+        // cached state object, for quick access during rendering, populated in begin() method:
+        BandRenderer.hasA("state");
+
+        BandRenderer.respondsTo("begin", function (graphicsContext) {
             var state = {
                 "paper"              : graphicsContext.paper,
                 "set"                : graphicsContext.set,
@@ -26,6 +32,14 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             this.state(state);
         });
 
+        BandRenderer.respondsTo("beginRedraw", function () {
+            var state = this.state();
+            state.run = [];
+            state.fillPath = "";
+            state.line1Path = "";
+            state.line2Path = "";
+        });
+
         // This renderer's dataPoint() method works by accumulating
         // and drawing one "run" of data points at a time.  A "run" of
         // points consists of a consecutive sequence of non-missing
@@ -33,25 +47,23 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         // color can change if the data line crosses the fill base
         // line, if the downfillcolor is different from the
         // fillcolor.)
-        ns.BandRenderer.respondsTo("dataPoint", function (datap) {
-            var state = this.state(),
-                p;
+        BandRenderer.respondsTo("dataPoint", function (datap) {
+            var state = this.state();
 
             if (this.isMissing(datap)) {
                 // if this is a missing point, render and reset the current run, if any
                 if (state.run.length > 0) {
-                    this.renderRun();
+                    renderRun(state);
                     state.run = [];
                 }
             } else {
                 // otherwise, transform point to pixel coords
-                p = this.transformPoint(datap);
                 // and add it to the current run
-                state.run.push(p);
+                state.run.push(this.transformPoint(datap));
             }
         });
 
-        ns.BandRenderer.respondsTo("end", function () {
+        BandRenderer.respondsTo("end", function () {
             var state = this.state(),
                 paper = state.paper,
                 set = state.set,
@@ -59,42 +71,59 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 color;
             // render the current run, if any
             if (state.run.length > 0) {
-                this.renderRun();
+                renderRun(state);
             }
 
-            set.push(
-                paper.path(state.fillPath)
-                    .attr({
-                        "stroke-width": 1,
-                        "fill": state.fillcolor.toRGBA(state.fillopacity),
-                        "stroke": state.fillcolor.toRGBA(state.fillopacity)
-                    })
-            );
+            var fillElem = paper.path(state.fillPath)
+                .attr({
+                    "stroke-width" : 1,
+                    "fill"         : state.fillcolor.toRGBA(state.fillopacity),
+                    "stroke"       : state.fillcolor.toRGBA(state.fillopacity)
+                });
+
+            this.fillElem(fillElem);
+            set.push(fillElem);
                 
             width = (state.line1width >= 0) ? state.line1width : state.linewidth;
             if (state.line1Path !== "" && width > 0) {
                 color = (state.line1color !== null) ? state.line1color : state.linecolor;
-                set.push(
-                    paper.path(state.line1Path)
-                        .attr({
-                            "stroke-width": width,
-                            "stroke": color.getHexString("#")
-                        })
-                );
+                var line1Elem = paper.path(state.line1Path)
+                    .attr({
+                        "stroke-width" : width,
+                        "stroke"       : color.getHexString("#")
+                    });
+                this.line1Elem(line1Elem);
+                set.push(line1Elem);
             }
             
             width = (state.line2width >= 0) ? state.line2width : state.linewidth;
             if (state.line2Path !== "" && width > 0) {
                 color = (state.line2color !== null) ? state.line2color : state.linecolor;
-                set.push(
-                    paper.path(state.line2Path)
-                        .attr({
-                            "stroke-width": width,
-                            "stroke": color.getHexString("#")
-                        })
-                );
+                var line2Elem = paper.path(state.line2Path)
+                    .attr({
+                        "stroke-width" : width,
+                        "stroke"       : color.getHexString("#")
+                    });
+                this.line2Elem(line2Elem);
+                set.push(line2Elem);
             }
-            
+        });
+
+        BandRenderer.respondsTo("endRedraw", function () {
+            var state = this.state(),
+                width;
+            // render the current run, if any
+            if (state.run.length > 0) {
+                renderRun(state);
+            }
+
+            this.fillElem().attr("path", state.fillPath);
+            if (this.line1Elem()) {
+                this.line1Elem().attr("path", state.line1Path);
+            }
+            if (this.line2Elem()) {
+                this.line2Elem().attr("path", state.line2Path);
+            }
         });
 
         //
@@ -109,7 +138,6 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 for (i = 1; i < run.length; ++i) {
                     path += "L" + run[i][0] + "," + run[i][whichLine];
                 }
-
             }
             return path;
         };
@@ -117,9 +145,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         // Render the current run of data points.  This consists of drawing the fill region
         // in the band between the two data lines, and connecting the points of each data line
         // with lines of the appropriate color.
-        ns.BandRenderer.respondsTo("renderRun", function () {
-            var state = this.state(),
-                fillPath = state.fillPath,
+        var renderRun = function (state) {
+            var fillPath  = state.fillPath,
                 line1Path = state.line1Path,
                 line2Path = state.line2Path,
                 run = state.run,
@@ -127,13 +154,13 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
             // trace to the right along line 1
             fillPath += "M" + run[0][0] + "," + run[0][1];            
-            for (i=1; i<run.length; ++i) {
+            for (i = 1; i < run.length; ++i) {
                 fillPath += "L" + run[i][0] + "," + run[i][1];
             }
 
             // trace back to the left along line 2
             fillPath += "L" + run[run.length-1][0] + "," + run[run.length-1][2];
-            for (i=run.length-1; i>=0; --i) {
+            for (i = run.length-1; i >= 0; --i) {
                 fillPath += "L" + run[i][0] + "," + run[i][2];
             }
             fillPath += "Z";
@@ -147,9 +174,9 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             state.fillPath = fillPath;
             state.line1Path = line1Path;
             state.line2Path = line2Path;
-        });
+        };
 
-        ns.BandRenderer.respondsTo("renderLegendIcon", function (graphicsContext, x, y, icon) {
+        BandRenderer.respondsTo("renderLegendIcon", function (graphicsContext, x, y, icon) {
             var state = this.state(),
                 backgroundColor,
                 linewidth,
