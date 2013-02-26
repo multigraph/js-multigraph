@@ -123,43 +123,47 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
         FillRenderer.respondsTo("renderLegendIcon", function (graphicsContext, x, y, icon) {
             var settings = this.settings(),
+                paper = graphicsContext.paper,
+                set   = graphicsContext.set,
+                iconWidth  = icon.width(),
+                iconHeight = icon.height(),
                 iconBackgroundAttrs = {},
                 path = "";
             
             // Draw icon background (with opacity)
             iconBackgroundAttrs.stroke = "rgba(255, 255, 255, 1)";
-            if (icon.width() < 10 || icon.height() < 10) {
+            if (iconWidth < 10 || iconHeight < 10) {
                 iconBackgroundAttrs.fill = settings.fillcolor.toRGBA(settings.fillopacity);
             } else {
                 iconBackgroundAttrs.fill = "rgba(255, 255, 255, 1)";
             }
 
-            graphicsContext.set.push(
-                graphicsContext.paper.rect(x, y, icon.width(), icon.height())
+            set.push(
+                paper.rect(x, y, iconWidth, iconHeight)
                     .attr(iconBackgroundAttrs)
             );
 
             path += "M0,0";
 
-      // Draw the middle range icon or the large range icon if the width and height allow it
-            if (icon.width() > 10 || icon.height() > 10) {
-        // Draw a more complex icon if the icons width and height are large enough
-                if (icon.width() > 20 || icon.height() > 20) {
-                    path += "L" + (icon.width() / 6) + "," + (icon.height() / 2);
-                    path += "L" + (icon.width() / 3) + "," + (icon.height() / 4);
+            // Draw the middle range icon or the large range icon if the width and height allow it
+            if (iconWidth > 10 || iconHeight > 10) {
+                // Draw a more complex icon if the icons width and height are large enough
+                if (iconWidth > 20 || iconHeight > 20) {
+                    path += "L" + (iconWidth / 6) + "," + (iconHeight / 2);
+                    path += "L" + (iconWidth / 3) + "," + (iconHeight / 4);
                 }
-                path += "L" + (icon.width() / 2) + "," + (icon.height() - icon.height() / 4);
+                path += "L" + (iconWidth / 2) + "," + (iconHeight - iconHeight / 4);
 
-                if (icon.width() > 20 || icon.height() > 20) {
-                    path += "L" + (icon.width() - icon.width() / 3) + "," + (icon.height() / 4);
-                    path += "L" + (icon.width() - icon.width() / 6) + "," + (icon.height() / 2);
+                if (iconWidth > 20 || iconHeight > 20) {
+                    path += "L" + (iconWidth - iconWidth / 3) + "," + (iconHeight / 4);
+                    path += "L" + (iconWidth - iconWidth / 6) + "," + (iconHeight / 2);
                 }
             }
 
-            path += "L" + icon.width() + ",0";
+            path += "L" + iconWidth + ",0";
 
-            graphicsContext.set.push(
-                graphicsContext.paper.path(path)
+            set.push(
+                paper.path(path)
                     .attr({
                         "stroke"       : settings.linecolor.toRGBA(settings.fillopacity),
                         "stroke-width" : settings.linewidth,
@@ -167,6 +171,10 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                     })
                     .transform("t" + x + "," + y)
             );
+        });
+
+        FillRenderer.respondsTo("redrawLegendIcon", function () {
+            // no-op
         });
 
     });

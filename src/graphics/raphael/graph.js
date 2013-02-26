@@ -45,7 +45,6 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
             this.transformSets(height, this.x0(), this.y0(), backgroundSet, axesSet, plotsSet, legendSet, titleSet);
             this.fixLayers(backgroundSet, axesSet, plotsSet);
-
         });
 
         Graph.respondsTo("redraw", function (paper, width, height) {
@@ -69,6 +68,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 this.plots().at(i).redraw();
             }
 
+            this.legend().redraw();
         });
 
         Graph.respondsTo("transformSets", function (height, x0, y0, backgroundSet, axesSet, plotsSet, legendSet, titleSet) {

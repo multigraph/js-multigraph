@@ -6,6 +6,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         var RangeBarRenderer = ns.RangeBarRenderer;
 
         RangeBarRenderer.hasAn("elem");
+        RangeBarRenderer.hasAn("iconGraphicElem");
         // cached state object, for quick access during rendering, populated in begin() method:
         RangeBarRenderer.hasA("state");
 
@@ -87,24 +88,25 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             this.elem().attr(rangeBarAttrs);
         });
 
-        RangeBarRenderer.respondsTo("generateBar", function (x, y, width, height) {
-            var path = "M" + x + "," + y;
-            path    += "L" + x + "," + (y + height);
-            path    += "L" + (x + width) + "," + (y + height);
-            path    += "L" + (x + width) + "," + y;
-            path    += "Z";
-            return path;
-        });
+        var generateBar = function (x, y, width, height) {
+            return "M" + x + "," + y +
+                "L" + x + "," + (y + height) +
+                "L" + (x + width) + "," + (y + height) +
+                "L" + (x + width) + "," + y +
+                "Z";
+        };
 
         RangeBarRenderer.respondsTo("renderLegendIcon", function (graphicsContext, x, y, icon) {
             var state = this.state(),
                 paper = graphicsContext.paper,
-                set = graphicsContext.set,
+                set   = graphicsContext.set,
+                iconWidth  = icon.width(),
+                iconHeight = icon.height(),
                 path = "";
 
             // Draw icon background
             set.push(
-                paper.rect(x, y, icon.width(), icon.height())
+                paper.rect(x, y, iconWidth, iconHeight)
                     .attr({
                         "stroke" : "#FFFFFF",
                         "fill"   : "#FFFFFF"
@@ -125,28 +127,40 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
             // Adjust the width of the icons bars based upon the width and height of the icon Ranges: {20, 10, 0}
             var barwidth;
-            if (icon.width() > 20 || icon.height() > 20) {
-                barwidth = icon.width() / 6;
-            } else if(icon.width() > 10 || icon.height() > 10) {
-                barwidth = icon.width() / 4;
+            if (iconWidth > 20 || iconHeight > 20) {
+                barwidth = iconWidth / 6;
+            } else if(iconWidth > 10 || iconHeight > 10) {
+                barwidth = iconWidth / 4;
             } else {
-                barwidth = icon.width() / 4;
+                barwidth = iconWidth / 4;
             }
 
             // If the icon is large enough draw extra bars
-            if (icon.width() > 20 && icon.height() > 20) {
-                path += this.generateBar(x + icon.width()/4 - barwidth/2,                y + icon.height()/8, barwidth, icon.height()/2);
-
-                path += this.generateBar(x + icon.width() - icon.width()/4 - barwidth/2, y + icon.height()/4, barwidth, icon.height()/3);
+            if (iconWidth > 20 && iconHeight > 20) {
+                path += generateBar(x + iconWidth/4 - barwidth/2,             y + iconHeight/8, barwidth, iconHeight/2);
+                path += generateBar(x + iconWidth - iconWidth/4 - barwidth/2, y + iconHeight/4, barwidth, iconHeight/3);
             }
-            path += this.generateBar(x + icon.width()/2 - barwidth/2, y, barwidth, icon.height()-icon.height()/4);
+            path += generateBar(x + iconWidth/2 - barwidth/2, y, barwidth, iconHeight-iconHeight/4);
 
-            set.push(
-                paper.path(path)
-                    .attr(attrs)
-            );
+            var iconGraphicElem = paper.path(path)
+                .attr(attrs);
+            this.iconGraphicElem(iconGraphicElem);
+            set.push(iconGraphicElem);
 
             return this;
+        });
+
+        RangeBarRenderer.respondsTo("redrawLegendIcon", function () {
+            var state = this.state(),
+                stroke;
+
+            if (state.barpixelwidth < 10) {
+                stroke = state.fillcolor.toRGBA(state.fillopacity);
+            } else {
+                stroke = state.linecolor.getHexString("#");
+            }
+
+            this.iconGraphicElem().attr("stroke", stroke);
         });
 
     });

@@ -7,6 +7,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
         BarRenderer.hasMany("barElems");
         BarRenderer.hasAn("outlineElem");
+        BarRenderer.hasAn("iconGraphicElem");
 
         // cached settings object, for quick access during rendering, populated in begin() method:
         BarRenderer.hasA("settings");
@@ -72,7 +73,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 x1 = p[0] + settings.baroffset + settings.barpixelwidth,
                 fillcolor = this.getOptionValue("fillcolor", datap[1]);
 
-            settings.paths[fillcolor.getHexString("0x")].path += this.generateBar(x0, settings.barpixelbase, settings.barpixelwidth, p[1] - settings.barpixelbase);
+            settings.paths[fillcolor.getHexString("0x")].path += generateBar(x0, settings.barpixelbase, settings.barpixelwidth, p[1] - settings.barpixelbase);
 
             if (settings.barpixelwidth > settings.hidelines) {
                 if (settings.prevCorner === null) {
@@ -212,65 +213,80 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             this.outlineElem().attr("path", computeBarOutline(settings));
         });
 
-        BarRenderer.respondsTo("generateBar", function (x, y, width, height) {
-            var path = "M" + x + "," + y;
-            path    += "L" + x + "," + (y + height); 
-            path    += "L" + (x + width) + "," + (y + height); 
-            path    += "L" + (x + width) + "," + y; 
-            path    += "Z";
-            return path; 
-        });
+        var generateBar = function (x, y, width, height) {
+            return "M" + x + "," + y +
+                "L" + x + "," + (y + height) +
+                "L" + (x + width) + "," + (y + height) +
+                "L" + (x + width) + "," + y +
+                "Z";
+        };
 
         BarRenderer.respondsTo("renderLegendIcon", function (graphicsContext, x, y, icon) {
-            var settings          = this.settings(),
+            var settings = this.settings(),
+                paper = graphicsContext.paper,
+                set   = graphicsContext.set,
                 rendererFillColor = this.getOptionValue("fillcolor", 0),
                 rendererOpacity   = this.getOptionValue("fillopacity", 0),
+                iconWidth  = icon.width(),
+                iconHeight = icon.height(),
                 path = "",
-                iconAttrs,
+                barAttrs,
                 barwidth;
 
             // Draw icon background (with opacity)
-            graphicsContext.set.push(
-                graphicsContext.paper.rect(x, y, icon.width(), icon.height())
+            set.push(
+                paper.rect(x, y, iconWidth, iconHeight)
                     .attr({                    
                         "stroke" : "rgba(255, 255, 255, 1)",
                         "fill"   : "rgba(255, 255, 255, 1)"
                     })
             );
 
-            iconAttrs = {
+            barAttrs = {
                 "stroke-width" : 1,
                 "fill"         : rendererFillColor.toRGBA(rendererOpacity)
             };
 
             if (settings.barpixelwidth < settings.hidelines) {
-                iconAttrs.stroke = rendererFillColor.toRGBA(rendererOpacity);
+                barAttrs.stroke = "none";
             } else {
-                iconAttrs.stroke = this.getOptionValue("linecolor", 0).toRGBA(rendererOpacity);
+                barAttrs.stroke = this.getOptionValue("linecolor", 0).toRGBA(rendererOpacity);
             }
 
             // Adjust the width of the icons bars based upon the width and height of the icon Ranges: {20, 10, 0}
-            if (icon.width() > 20 || icon.height() > 20) {
-                barwidth = icon.width() / 6;
-            } else if (icon.width() > 10 || icon.height() > 10) {
-                barwidth = icon.width() / 4;
+            if (iconWidth > 20 || iconHeight > 20) {
+                barwidth = iconWidth / 6;
+            } else if (iconWidth > 10 || iconHeight > 10) {
+                //TODO: determine if this conditional is neccesary, the next two cases have the same result
+                barwidth = iconWidth / 4;
             } else {
-                barwidth = icon.width() / 4;
+                barwidth = iconWidth / 4;
             }
 
             // If the icon is large enough draw extra bars
-            if (icon.width() > 20 && icon.height() > 20) {
-                path += this.generateBar(x + (icon.width() / 4) - (barwidth / 2), y, barwidth, icon.height() / 2);
-                path += this.generateBar(x + icon.width() - (icon.width() / 4) - (barwidth / 2), y, barwidth, icon.height() / 3);
+            if (iconWidth > 20 && iconHeight > 20) {
+                path += generateBar(x + (iconWidth / 4) - (barwidth / 2),             y, barwidth, iconHeight / 2);
+                path += generateBar(x + iconWidth - (iconWidth / 4) - (barwidth / 2), y, barwidth, iconHeight / 3);
+            }
+            path += generateBar(x + (iconWidth / 2) - (barwidth / 2), y, barwidth, iconHeight - (iconHeight / 4));
+
+            var iconGraphicElem = paper.path(path)
+                .attr(barAttrs);
+            this.iconGraphicElem(iconGraphicElem);
+            set.push(iconGraphicElem);
+        });
+
+        BarRenderer.respondsTo("redrawLegendIcon", function () {
+            var settings = this.settings(),
+                stroke;
+
+            if (settings.barpixelwidth < settings.hidelines) {
+                stroke = "none";
+            } else {
+                stroke = this.getOptionValue("linecolor", 0).toRGBA(this.getOptionValue("fillopacity", 0));
             }
 
-            path += this.generateBar(x + (icon.width() / 2) - (barwidth / 2), y, barwidth, icon.height() - (icon.height() / 4));
-
-            graphicsContext.set.push(
-                graphicsContext.paper.path(path)
-                    .attr(iconAttrs)
-            );
-
+            this.iconGraphicElem().attr("stroke", stroke);
         });
 
     });

@@ -178,20 +178,24 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
         BandRenderer.respondsTo("renderLegendIcon", function (graphicsContext, x, y, icon) {
             var state = this.state(),
+                paper = graphicsContext.paper,
+                set   = graphicsContext.set,
+                iconWidth  = icon.width(),
+                iconHeight = icon.height(),
                 backgroundColor,
                 linewidth,
                 linecolor,
                 path = "";
 
             // Draw icon background (with opacity)
-            if (icon.width() < 10 || icon.height() < 10) {
+            if (iconWidth < 10 || iconHeight < 10) {
                 backgroundColor = state.fillcolor.toRGBA();
             } else {
                 backgroundColor = "#FFFFFF";
             }
 
-            graphicsContext.set.push(
-                graphicsContext.paper.rect(x, y, icon.width(), icon.height())
+            set.push(
+                paper.rect(x, y, iconWidth, iconHeight)
                     .attr({
                         "fill"   : backgroundColor,
                         "stroke" : backgroundColor
@@ -202,14 +206,14 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             linewidth = (state.line2width >= 0) ? state.line2width : state.linewidth;
             linecolor = (state.line2color !== null) ? state.line2color : state.linecolor;
 
-            path += "M" + 0 + "," + (2*icon.height()/8);
-            path += "L" + 0 + "," + (6*icon.height()/8);
-            path += "L" + icon.width() + "," + (7*icon.height()/8);
-            path += "L" + icon.width() + "," + (3*icon.height()/8);
-            path += "L" + 0 + "," + (2*icon.height()/8);
+            path += "M" + 0 + "," + (2*iconHeight/8);
+            path += "L" + 0 + "," + (6*iconHeight/8);
+            path += "L" + iconWidth + "," + (7*iconHeight/8);
+            path += "L" + iconWidth + "," + (3*iconHeight/8);
+            path += "L" + 0 + "," + (2*iconHeight/8);
 
-            graphicsContext.set.push(
-                graphicsContext.paper.path(path)
+            set.push(
+                paper.path(path)
                     .attr({
                         "stroke-width" : linewidth,
                         "stroke"       : linecolor.toRGBA(),
@@ -218,6 +222,10 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                     .transform("t" + x + "," + y)
             );
             
+        });
+
+        BandRenderer.respondsTo("redrawLegendIcon", function () {
+            // no-op
         });
 
     });

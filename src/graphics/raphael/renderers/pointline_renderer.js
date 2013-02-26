@@ -201,12 +201,14 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
         PointlineRenderer.respondsTo("renderLegendIcon", function (graphicsContext, x, y, icon) {
             var settings = this.settings(),
-                path     = "",
-                pointAttrs;
+                paper = graphicsContext.paper,
+                set   = graphicsContext.set,
+                iconWidth  = icon.width(),
+                iconHeight = icon.height();
 
             // Draw icon background (with opacity)
-            graphicsContext.set.push(
-                graphicsContext.paper.rect(x, y, icon.width(), icon.height())
+            set.push(
+                paper.rect(x, y, iconWidth, iconHeight)
                     .attr({
                         "stroke" : "rgba(255, 255, 255, 1)",
                         "fill"   : "rgba(255, 255, 255, 1)"
@@ -214,26 +216,29 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             );
 
             if (settings.linewidth > 0) {
-                path += "M" + x + "," + (y + icon.height()/2);
-                path += "L" + (x + icon.width()) + "," + (y + icon.height()/2);
-                graphicsContext.set.push(
-                    graphicsContext.paper.path(path)
+                var path = "M" + x + "," + (y + iconHeight/2) +
+                    "L" + (x + iconWidth) + "," + (y + iconHeight/2);
+                set.push(
+                    paper.path(path)
                         .attr({
                             "stroke"       : settings.linecolor.toRGBA(),
                             "stroke-width" : settings.linewidth
                         })
-                    );
+                );
             }
             if (settings.pointsize > 0) {
-                pointAttrs = computePointAttributes(settings);
-
-                graphicsContext.set.push(
-                    graphicsContext.paper.path( drawPoint(settings.pointshape, settings.pointsize, [(x + icon.width()/2), (y + icon.height()/2)]) )
-                        .attr(pointAttrs)
+                set.push(
+                    paper.path( drawPoint(settings.pointshape, settings.pointsize, [(x + iconWidth/2), (y + iconHeight/2)]) )
+                        .attr(computePointAttributes(settings))
                 );
             }
 
         });
+
+        PointlineRenderer.respondsTo("redrawLegendIcon", function () {
+            // no-op
+        });
+
     });
 
 });
