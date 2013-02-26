@@ -69,6 +69,10 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             }
 
             this.legend().redraw();
+
+            if (this.title()) {
+                this.title().redraw();
+            }
         });
 
         Graph.respondsTo("transformSets", function (height, x0, y0, backgroundSet, axesSet, plotsSet, legendSet, titleSet) {

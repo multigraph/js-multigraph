@@ -182,13 +182,11 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             }
 
             //
-            // Render the title
+            // Redraw the title
             //
-/*
             if (this.title()) {
-                this.title().render(paper, set);
+                this.title().redraw();
             }
-*/
             text.remove();
         });
 

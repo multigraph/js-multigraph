@@ -8,6 +8,22 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
     ns.mixin.add(function (ns) {
 
+        var AxisTitle = ns.AxisTitle;
+
+        AxisTitle.hasA("previousBase");
+        AxisTitle.hasAn("elem");
+
+        var computePixelBasePoint = function (labeler) {
+            var axis = labeler.axis(),
+                axisBase = (labeler.base() + 1) * (axis.pixelLength() / 2) + axis.minoffset() + axis.parallelOffset();
+
+            if (axis.orientation() === ns.Axis.HORIZONTAL) {
+                return new window.multigraph.math.Point(axisBase, axis.perpOffset());
+            } else {
+                return new window.multigraph.math.Point(axis.perpOffset(), axisBase);
+            }
+        };
+
         /**
          * Renders the axis title using the Raphael driver.
          *
@@ -18,20 +34,15 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
          * @param {Set} set
          * @author jrfrimme
          */
-        ns.AxisTitle.respondsTo("render", function (paper, set) {
-            var h = this.content().origHeight();
-            var w = this.content().origWidth();
-            var ax = 0.5 * w * this.anchor().x();
-            var ay = 0.5 * h * this.anchor().y();
-            var storedBase = (this.base() + 1) * (this.axis().pixelLength() / 2) + this.axis().minoffset() + this.axis().parallelOffset();
-            var transformString = "";
-            var base;
+        AxisTitle.respondsTo("render", function (paper, set) {
+            var h = this.content().origHeight(),
+                w = this.content().origWidth(),
+                ax = 0.5 * w * this.anchor().x(),
+                ay = 0.5 * h * this.anchor().y(),
+                base = computePixelBasePoint(this),
+                transformString = "";
 
-            if (this.axis().orientation() === ns.Axis.HORIZONTAL) {
-                base = new window.multigraph.math.Point(storedBase, this.axis().perpOffset());
-            } else {
-                base = new window.multigraph.math.Point(this.axis().perpOffset(), storedBase);
-            }
+            this.previousBase(base);
 
             transformString += "t" + base.x() + "," + base.y();
             transformString += "s1,-1";
@@ -39,10 +50,31 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             transformString += "r" + (-this.angle());
             transformString += "t" + (-ax) + "," + ay;
 
-            set.push(
-                paper.text(0, 0, this.content().string())
-                    .transform(transformString)
-            );
+            var elem = paper.text(0, 0, this.content().string())
+                .transform(transformString);
+            this.elem(elem);
+            set.push(elem);
+        });
+
+        AxisTitle.respondsTo("redraw", function () {
+            var previousBase = this.previousBase(),
+                base         = computePixelBasePoint(this);
+
+            if (base.x() === previousBase.x() && base.y() === previousBase.y()) {
+                return this;
+            }
+
+            var deltaX = base.x() - previousBase.x(),
+                deltaY = base.y() - previousBase.y(),
+                x = this.elem().attr("x"),
+                y = this.elem().attr("y");
+
+            this.elem().attr({
+                "x" : x + deltaX,
+                "y" : y - deltaY
+            });
+
+            this.previousBase(base);
         });
 
     });

@@ -8,6 +8,30 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
     ns.mixin.add(function (ns) {
 
+        var Title = ns.Title;
+
+        Title.hasA("borderElem");
+        Title.hasA("backgroundElem");
+        Title.hasA("textElem");
+        Title.hasA("previousBase");
+
+        var computeTitlePixelBase = function (title) {
+            var graph = title.graph(),
+                base  = title.base();
+
+            if (title.frame() === "padding") {
+                return new window.multigraph.math.Point(
+                    (base.x() + 1) * (graph.paddingBox().width() / 2) -  graph.plotarea().margin().left(),
+                    (base.y() + 1) * (graph.paddingBox().height() / 2) - graph.plotarea().margin().bottom()
+                );
+            } else {
+                return new window.multigraph.math.Point(
+                    (base.x() + 1) * (graph.plotBox().width() / 2),
+                    (base.y() + 1) * (graph.plotBox().height() / 2)
+                );
+            }
+        };
+
         /**
          * Renders the title using the Raphael driver.
          *
@@ -18,25 +42,18 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
          * @param {Set} set
          * @author jrfrimme
          */
-        ns.Title.respondsTo("render", function (paper, set) {
-            var h = this.text().origHeight();
-            var w = this.text().origWidth();
-            var ax = (0.5 * w + this.padding() + this.border()) * (this.anchor().x() + 1);
-            var ay = (0.5 * h + this.padding() + this.border()) * (this.anchor().y() + 1);
-            var base;
-            var transformString = "";
+        Title.respondsTo("render", function (paper, set) {
+            var anchor  = this.anchor(),
+                border  = this.border(),
+                padding = this.padding(),
+                w = this.text().origWidth(),
+                h = this.text().origHeight(),
+                ax = (0.5 * w + padding + border) * (anchor.x() + 1),
+                ay = (0.5 * h + padding + border) * (anchor.y() + 1),
+                base = computeTitlePixelBase(this),
+                transformString = "";
 
-            if (this.frame() === "padding") {
-                base = new window.multigraph.math.Point(
-                    (this.base().x() + 1) * (this.graph().paddingBox().width() / 2) - this.graph().plotarea().margin().left(),
-                    (this.base().y() + 1) * (this.graph().paddingBox().height() / 2) - this.graph().plotarea().margin().bottom()
-                );
-            } else {
-                base = new window.multigraph.math.Point(
-                    (this.base().x() + 1) * (this.graph().plotBox().width() / 2),
-                    (this.base().y() + 1) * (this.graph().plotBox().height() / 2)
-                );
-            }
+            this.previousBase(base);
 
             transformString += "t" + base.x() + "," + base.y();
             transformString += "s1,-1";
@@ -44,43 +61,61 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             transformString += "t" + (-ax) + "," + ay;
 
             // border
-            if (this.border() > 0) {
-                set.push(
-                    paper.rect(
-                        this.border()/2,
-                        this.border()/2,
-                        w + (2 * this.padding()) + this.border(),
-                        h + (2 * this.padding()) + this.border()
-                    )
-                        .transform(transformString)
-                        .attr({
-                            "stroke"       : this.bordercolor().toRGBA(),
-                            "stroke-width" : this.border()
-                        })
-                );
+            if (border > 0) {
+                var borderElem = paper.rect(border/2, border/2, w + (2 * padding) + border, h + (2 * padding) + border)
+                    .transform(transformString)
+                    .attr({
+                        "stroke"       : this.bordercolor().toRGBA(),
+                        "stroke-width" : border
+                    });
+                this.borderElem(borderElem);
+                set.push(borderElem);
             }
 
             // background
-            set.push(
-                paper.rect(
-                    this.border(),
-                    this.border(),
-                    w + (2 * this.padding()),
-                    h + (2 * this.padding())
-                )
-                    .transform(transformString)
-                    .attr({
-                        "stroke" : this.color().toRGBA(this.opacity()),
-                        "fill"   : this.color().toRGBA(this.opacity())
-                    })
-            );
+            var backgroundElem = paper.rect(border, border, w + (2 * padding), h + (2 * padding))
+                .transform(transformString)
+                .attr({
+                    "stroke" : "none",
+                    "fill"   : this.color().toRGBA(this.opacity())
+                });
+            this.backgroundElem(backgroundElem);
+            set.push(backgroundElem);
 
             // text
-            set.push(
-                paper.text(this.border() + this.padding() + w/2, this.border() + this.padding() + h/2, this.text().string())
-                    .transform(transformString)
-                    .attr({"font-size" : this.fontSize()})
-            );
+            var textElem = paper.text(border + padding + w/2, border + padding + h/2, this.text().string())
+                .transform(transformString)
+                .attr({"font-size" : this.fontSize()});
+
+            this.textElem(textElem);
+            set.push(textElem);
+
+            return this;
+        });
+
+        Title.respondsTo("redraw", function () {
+            var base         = computeTitlePixelBase(this),
+                previousBase = this.previousBase();
+
+            if (base.x() === previousBase.x() && base.y() === previousBase.y()) {
+                return this;
+            }
+
+            var deltaX = base.x() - previousBase.x(),
+                deltaY = base.y() - previousBase.y(),
+                x = this.textElem().attr("x"),
+                y = this.textElem().attr("y"),
+                transformString = "...t" + deltaX + " " + deltaY;
+
+            this.textElem().attr({
+                "x" : x + deltaX,
+                "y" : y - deltaY
+            });
+            if (this.borderElem()) {
+                this.borderElem().transform(transformString);
+            }
+            this.backgroundElem().transform(transformString);
+            this.previousBase(base);
 
             return this;
         });
