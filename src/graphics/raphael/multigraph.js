@@ -130,7 +130,16 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         var multigraph = window.multigraph.core.Multigraph.parseXML( window.multigraph.parser.jquery.stringToJQueryXMLObj(mugl), options.mugl, options.messageHandler );
         multigraph.normalize();
         multigraph.div(options.div);
-        window.multigraph.jQuery(options.div).css("cursor" , "pointer");
+        window.multigraph.jQuery(options.div).css({
+            "cursor"                : "pointer",
+            "-webkit-touch-callout" : "none",
+            "-webkit-user-select"   : "none",
+            "-khtml-user-select"    : "none",
+            "-moz-user-select"      : "none",
+            "-ms-user-select"       : "none",
+            "-o-user-select"        : "none",
+            "user-select"           : "none"
+        });
         multigraph.init();
         multigraph.registerCommonDataCallback(function () {
             multigraph.redraw();
