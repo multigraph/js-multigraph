@@ -3,55 +3,156 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
     ns.mixin.add(function (ns) {
 
-        var drawText = function (text, graphicsContext, base, anchor, position, angle, color) {
-            var h = text.origHeight(),
-                w = text.origWidth(),
-                ax = 0.5 * w * anchor.x(),
-                ay = 0.5 * h * anchor.y(),
-                transformString = "",
-                textAttrs = {};
+        var Labeler = ns.Labeler;
 
-            transformString += "t" + base.x() + "," + base.y();
-            transformString += "s1,-1";
-            transformString += "t" + position.x() + "," + (-position.y());
-            transformString += "r" + (-angle);
-            transformString += "t" + (-ax) + "," + ay;
+        Labeler.hasAn("elems").which.defaultsTo(function () { return []; });
 
-            textAttrs.fill = color.getHexString("#");
-
-            graphicsContext.set.push(
-                graphicsContext.paper.text(0, 0, text.string()).transform(transformString).attr(textAttrs)
-            );
-
+        var computeTransformString = function (base, anchor, position, angle) {
+            return "t" + base.x() + "," + base.y() +
+                "s1,-1" +
+                "t" + position.x() + "," + (-position.y()) +
+                "r" + (-angle) +
+                "t" + (-anchor.x()) + "," + anchor.y();
         };
 
-        ns.Labeler.respondsTo("measureStringWidth", function (elem, string) {
+        var computePixelBasePoint = function (axis, value) {
+            var a = axis.dataValueToAxisValue(value),
+                perpOffset = axis.perpOffset();
+
+            if (axis.orientation() === ns.Axis.HORIZONTAL) {
+                return new window.multigraph.math.Point(a, perpOffset);
+            } else {
+                return new window.multigraph.math.Point(perpOffset, a);
+            }
+        };
+
+        var drawText = function (text, graphicsContext, base, anchor, position, angle, color) {
+            var pixelAnchor     = new window.multigraph.math.Point(0.5 * text.origWidth() * anchor.x(), 0.5 * text.origHeight() * anchor.y()),
+                transformString = computeTransformString(base, pixelAnchor, position, angle);
+
+            var elem = graphicsContext.paper.text(0, 0, text.string())
+                .transform(transformString)
+                .attr("fill", color.getHexString("#"));
+
+            graphicsContext.set.push(
+                elem
+            );
+            return elem;
+        };
+
+        Labeler.respondsTo("measureStringWidth", function (elem, string) {
             return (new ns.Text(string)).initializeGeometry({
                     "elem"  : elem,
                     "angle" : this.angle()
                 }).rotatedWidth();
         });
-        ns.Labeler.respondsTo("measureStringHeight", function (elem, string) {
+
+        Labeler.respondsTo("measureStringHeight", function (elem, string) {
             return (new ns.Text(string)).initializeGeometry({
                     "elem"  : elem,
                     "angle" : this.angle()
                 }).rotatedHeight();
         });
 
-        ns.Labeler.respondsTo("renderLabel", function (graphicsContext, value) {
+        Labeler.respondsTo("renderLabel", function (graphicsContext, value) {
             var formattedString = new ns.Text(this.formatter().format(value)),
-                a = this.axis().dataValueToAxisValue(value);
+                axis      = this.axis(),
+                basePoint = computePixelBasePoint(axis, value);
 
             formattedString.initializeGeometry({
                     "elem"  : graphicsContext.textElem,
                     "angle" : this.angle()
                 });
 
-            if (this.axis().orientation() === ns.Axis.HORIZONTAL) {
-                drawText(formattedString, graphicsContext, new window.multigraph.math.Point(a, this.axis().perpOffset()), this.anchor(), this.position(), this.angle(), this.color());
-            } else {
-                drawText(formattedString, graphicsContext, new window.multigraph.math.Point(this.axis().perpOffset(), a), this.anchor(), this.position(), this.angle(), this.color());
+            this.elems().push({
+                "elem" : drawText(formattedString, graphicsContext, basePoint, this.anchor(), this.position(), this.angle(), this.color()),
+                "base" : basePoint
+            });
+        });
+
+        Labeler.respondsTo("redraw", function (graph, paper, values) {
+            var axis  = this.axis(),
+                elems = this.elems(),
+                newLabels     = [],
+                missingValues = [],
+                elem, basePoint, storedBase,
+                flag,
+                i, j;
+
+            // move existing text elements to new position
+            var formattedString,
+                deltaX, deltaY,
+                x, y;
+            for (i = 0; i < values.length; i++) {
+                flag = false;
+                formattedString = this.formatter().format(values[i]);
+                for (j = 0; j < elems.length; j++) {
+                    elem = elems[j].elem;
+                    if (formattedString === elem.attr("text")) {
+                        basePoint  = computePixelBasePoint(axis, values[i]);
+                        storedBase = elems[j].base;
+
+                        deltaX = basePoint.x() - storedBase.x();
+                        deltaY = basePoint.y() - storedBase.y();
+                        x      = elem.attr("x");
+                        y      = elem.attr("y");
+
+                        elem.attr({
+                            "x" : x + deltaX,
+                            "y" : y - deltaY
+                        });
+                        elems[j].base = basePoint;
+                        newLabels.push(elems.splice(j, 1)[0]);
+                        flag = true;
+                        break;
+                    }
+                }
+                if (flag === false) {
+                    missingValues.push(values[i]);
+                }
             }
+
+            // use remaining text elems if they exist, create new ones otherwise
+            for (i = 0; i < missingValues.length; i++) {
+                formattedString = new ns.Text(this.formatter().format(missingValues[i]));
+                basePoint = computePixelBasePoint(axis, missingValues[i]);
+
+                if (elems.length > 0) {
+                    elem = elems.pop().elem;
+                    elem.transform("")
+                        .attr({
+                            "text" : formattedString.string(),
+                            "x"    : 0,
+                            "y"    : 0
+                        });
+                } else {
+                    elem = paper.text(0, 0, formattedString.string())
+                        .attr("fill", this.color().getHexString("#"));
+                }
+
+                formattedString.initializeGeometry({
+                    "elem"  : elem,
+                    "angle" : this.angle()
+                });
+                var pixelAnchor     = new window.multigraph.math.Point( 0.5 * formattedString.origWidth()  * this.anchor().x(),
+                                                                        0.5 * formattedString.origHeight() * this.anchor().y()
+                                                                      ),
+                    transformString = computeTransformString(basePoint, pixelAnchor, this.position(), this.angle());
+
+                elem.transform(graph.transformString() + transformString);
+
+                newLabels.push({
+                    "elem" : elem,
+                    "base" : basePoint
+                });
+            }
+
+            var length = elems.length;
+            for (i = 0; i < length; i++) {
+                elems.pop().elem.remove();
+            }
+
+            this.elems(newLabels);
         });
 
     });
