@@ -21,6 +21,7 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
             };
 
             $target.mousedown(function (event) {
+                event.preventDefault();
                 mouseLast = base = eventLocationToGraphCoords(event);
                 mouseIsDown = true;
                 dragStarted = false;

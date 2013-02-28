@@ -62,6 +62,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         });
 
         ns.Multigraph.respondsTo("setupEvents", function (mouseDownEvent) {
+            mouseDownEvent.preventDefault();
             var mg = mouseDownEvent.data.mg;
 
             mg.baseX(mouseDownEvent.pageX - mg.$div().offset().left);
