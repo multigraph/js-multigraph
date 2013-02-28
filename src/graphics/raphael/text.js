@@ -22,33 +22,51 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
          *   @param {String} graphicsContext.fontSize
          */
         Text.respondsTo("initializeGeometry", function (graphicsContext) {
-            var origWidth,
-                origHeight,
-                rotatedWidth,
-                rotatedHeight;
+            var elem = graphicsContext.elem,
+                origWidth, origHeight,
+                rotatedWidth, rotatedHeight,
+                boundingBox,
+                defaultFontSize,
+                currentTransform,
+                currentText;
 
-            graphicsContext.elem.transform("");
-
-            var defaultFontSize;
             if (graphicsContext.fontSize !== undefined) {
-                defaultFontSize = graphicsContext.elem.attr("font-size");
-                graphicsContext.elem.attr("font-size", graphicsContext.fontSize);
+                defaultFontSize = elem.attr("font-size");
+                elem.attr("font-size", graphicsContext.fontSize);
             }
-            origWidth  = this.measureStringWidth(graphicsContext.elem);
-            origHeight = this.measureStringHeight(graphicsContext.elem);
 
-            if (graphicsContext && graphicsContext.angle !== undefined) {
-                graphicsContext.elem.transform("R" + graphicsContext.angle);
-                rotatedWidth  = this.measureStringWidth(graphicsContext.elem);
-                rotatedHeight = this.measureStringHeight(graphicsContext.elem);
+            currentText = elem.attr("text");
+            elem.attr("text", this.string());
+
+            currentTransform = elem.transform();
+            elem.transform("");
+
+            boundingBox = elem.getBBox();
+            origWidth   = boundingBox.width;
+            origHeight  = boundingBox.height;
+            if (graphicsContext.angle !== undefined) {
+                var angle = graphicsContext.angle/180 * Math.PI,
+                    sinAngle = Math.abs(Math.sin(angle)),
+                    cosAngle = Math.abs(Math.cos(angle));
+
+                rotatedWidth  = cosAngle * origWidth + sinAngle * origHeight;
+                rotatedHeight = sinAngle * origWidth + cosAngle * origHeight;
             } else {
                 rotatedWidth  = origWidth;
                 rotatedHeight = origHeight;
             }
 
             if (graphicsContext.fontSize !== undefined) {
-                graphicsContext.elem.attr("font-size", defaultFontSize);
+                elem.attr("font-size", defaultFontSize);
             }
+
+            elem.attr("text", currentText);
+
+            var i;
+            for (i = 0; i < currentTransform.length; i++) {
+                currentTransform[i] = currentTransform[i].join(" ");
+            }
+            elem.transform(currentTransform.join(" "));
 
             this.origWidth(origWidth);
             this.origHeight(origHeight);
