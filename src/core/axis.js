@@ -193,6 +193,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return labeler===null || labeler instanceof ns.Labeler;
         });
         this.hasA("currentLabelDensity").which.isA("number");
+        this.hasA("currentLabelerIndex").which.isA("number");
 
         /**
          * Decides which labeler to use: take the one with the largest density <= 0.8.
@@ -205,36 +206,83 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @author jrfrimme
          */
         this.respondsTo("prepareRender", function (graphicsContext) {
-            var currentLabeler,
-                currentLabelDensity = 0,
-                density = 0,
-                densityThreshold = 0.8,
-                i,
-                labelers = this.labelers(),
-                nlabelers = this.labelers().size();
             if (!this.hasDataMin() || !this.hasDataMax()) {
                 // if either endpoint dataMin() or dataMax() hasn't been specified yet,
                 // return immediately without doing anything
                 return;
             }
-            if (nlabelers<=0) {
+            var currentLabeler,
+                currentLabelDensity = 0,
+                storedDensity = 0,
+                densityThreshold = 0.8,
+                labelers = this.labelers(),
+                nlabelers = this.labelers().size(),
+                index = this.currentLabelerIndex(),
+                storedIndex;
+
+            if (nlabelers <= 0) {
                 currentLabeler = null;
             } else {
-                currentLabeler = labelers.at(0);
-                currentLabelDensity = currentLabeler.getLabelDensity(graphicsContext);
-                i = 1;
-                while (i<nlabelers) {
-                    density = labelers.at(i).getLabelDensity(graphicsContext);
-                    if (density > densityThreshold) {
-                        break;
+                var flag = true,
+                    lastLabelerIndex = labelers.size() - 1;
+
+                if (index === undefined) {
+                    index = 0;
+                }
+                storedIndex = index;
+                currentLabelDensity = labelers.at(index).getLabelDensity(graphicsContext);
+
+                if (currentLabelDensity > densityThreshold) {
+                    if (index === 0) { // use labeler at position 0
+                        flag = false;
+                    } else { // check the prior labeler
+                        storedDensity = currentLabelDensity;
+                        index--;
+                    }
+                } else if (currentLabelDensity < densityThreshold) { // check the next labeler
+                    storedDensity = currentLabelDensity;
+                    if (index === lastLabelerIndex) {
+                        flag = false;
                     } else {
-                        currentLabeler = labelers.at(i);
-                        currentLabelDensity = density;
-                        ++i;
+                        index++;
+                    }
+                } else if (currentLabelDensity === densityThreshold) { // use labeler at position 0
+                    flag = false
+                }
+
+                while (flag) {
+                    currentLabelDensity = labelers.at(index).getLabelDensity(graphicsContext);
+                    if (currentLabelDensity > densityThreshold) { // labeler before current one
+                        if (index === 0) { // use labeler at position 0
+                            break;
+                        } else if (storedIndex > index) { // going backwards through labelers
+                            storedIndex = index;
+                            storedDensity = currentLabelDensity;
+                            index--;
+                        } else { // the prior labeler had density < threshold and was checking the next labeler
+                            index = storedIndex;
+                            currentLabelDensity = storedDensity;
+                            break;
+                        }
+                    } else if (currentLabelDensity < densityThreshold) { // this labeler or one after it
+                        if (storedIndex > index) { // going backwards through labelers so prior labeler had density > threshold
+                            break;
+                        } else if (index === lastLabelerIndex) {
+                            break;
+                        } else { // check next labeler to see if it has density < threshold
+                            storedIndex = index;
+                            storedDensity = currentLabelDensity;
+                            index++;
+                        }
+                    } else if (currentLabelDensity === densityThreshold) {
+                        break;
                     }
                 }
             }
+            currentLabeler = labelers.at(index);
+
             this.currentLabeler(currentLabeler);
+            this.currentLabelerIndex(index);
             this.currentLabelDensity(currentLabelDensity);
         });
 
