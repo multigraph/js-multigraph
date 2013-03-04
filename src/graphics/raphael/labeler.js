@@ -41,17 +41,27 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         };
 
         Labeler.respondsTo("measureStringWidth", function (elem, string) {
-            return (new ns.Text(string)).initializeGeometry({
-                    "elem"  : elem,
-                    "angle" : this.angle()
-                }).rotatedWidth();
+            if (window.Raphael.svg) {
+                return (new ns.Text(string)).initializeGeometry({
+                        "elem"  : elem,
+                        "angle" : this.angle()
+                    }).rotatedWidth();
+            } else {
+                elem.attr("text", string);
+                return elem.W;
+            }
         });
 
         Labeler.respondsTo("measureStringHeight", function (elem, string) {
-            return (new ns.Text(string)).initializeGeometry({
-                    "elem"  : elem,
-                    "angle" : this.angle()
-                }).rotatedHeight();
+            if (window.Raphael.svg) {
+                return (new ns.Text(string)).initializeGeometry({
+                        "elem"  : elem,
+                        "angle" : this.angle()
+                    }).rotatedHeight();
+            } else {
+                elem.attr("text", string);
+                return elem.H;
+            }
         });
 
         Labeler.respondsTo("renderLabel", function (graphicsContext, value) {
