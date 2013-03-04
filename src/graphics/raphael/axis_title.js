@@ -40,15 +40,13 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 ax = 0.5 * w * this.anchor().x(),
                 ay = 0.5 * h * this.anchor().y(),
                 base = computePixelBasePoint(this),
-                transformString = "";
+                transformString = "t" + base.x() + "," + base.y() +
+                    "s1,-1" +
+                    "t" + this.position().x() + "," + (-this.position().y()) +
+                    "r" + (-this.angle()) +
+                    "t" + (-ax) + "," + ay;
 
             this.previousBase(base);
-
-            transformString += "t" + base.x() + "," + base.y();
-            transformString += "s1,-1";
-            transformString += "t" + this.position().x() + "," + (-this.position().y());
-            transformString += "r" + (-this.angle());
-            transformString += "t" + (-ax) + "," + ay;
 
             var elem = paper.text(0, 0, this.content().string())
                 .transform(transformString);

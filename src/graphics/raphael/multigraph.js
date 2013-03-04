@@ -19,9 +19,12 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         ns.Multigraph.hasA("mouseLastX").which.isA("number");
         ns.Multigraph.hasA("mouseLastY").which.isA("number");
 
+        //        ns.Multigraph.hasA("time").which.defaultsTo(0);
+        //        ns.Multigraph.hasA("runs").which.defaultsTo(0);
         ns.Multigraph.respondsTo("redraw", function () {
             var that = this;
             window.requestAnimationFrame(function () {
+                    //                var begin = new Date().getTime();
                 var text = that.paper().text(-8000, -8000, "foo"),
                     i;
                 that.initializeGeometry(that.width(), that.height(), { "elem" : text });
@@ -29,7 +32,9 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                     that.graphs().at(i).redraw(that.paper(), that.width(), that.height());
                 }
                 text.remove();
-//                that.render();
+                //                var end = new Date().getTime();
+                //                that.time(that.time() + (end - begin));
+                //                that.runs(that.runs() + 1);
             });
         });
 
@@ -65,6 +70,9 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             mouseDownEvent.preventDefault();
             var mg = mouseDownEvent.data.mg;
 
+            //            mg.time(0);
+            //            mg.runs(0);
+            
             mg.baseX(mouseDownEvent.pageX - mg.$div().offset().left);
             mg.baseY(mg.$div().height() - (mouseDownEvent.pageY - mg.$div().offset().top));
             mg.mouseLastX(mouseDownEvent.pageX - mg.$div().offset().left);
@@ -103,6 +111,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             for (i = 0; i < mg.graphs().size(); ++i) {
                 mg.graphs().at(i).doDragDone();
             }
+
+            //            alert("time : " + mg.time() + "\nruns: " + mg.runs() + "\naverage: " + (mg.time()/mg.runs()));
         });
 
         ns.Multigraph.respondsTo("resizeSurface", function (width, height) {

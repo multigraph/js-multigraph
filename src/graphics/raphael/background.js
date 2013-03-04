@@ -12,7 +12,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 elem = paper.rect(mb, mb, width-2*mb, height-2*mb)
                     .attr({
                         "fill"   : this.color().getHexString("#"),
-                        "stroke" : this.color().getHexString("#")
+                        "stroke" : "none"
                     });
 
             this.elem(elem);

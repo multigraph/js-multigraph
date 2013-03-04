@@ -9,12 +9,11 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 return;
             }
 
-            var haxis = this.horizontalaxis(),
-                vaxis = this.verticalaxis();
+            var haxis = this.horizontalaxis();
 
             if (!haxis.hasDataMin() || !haxis.hasDataMax()) {
-                // if this plot's horizontal axis does not have a min or max value yet,                         
-                // return immediately without doing anything                                                    
+                // if this plot's horizontal axis does not have a min or max value yet,
+                // return immediately without doing anything
                 return;
             }
 

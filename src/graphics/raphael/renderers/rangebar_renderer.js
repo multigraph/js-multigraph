@@ -45,7 +45,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 x0    = p[0] - state.barpixeloffset,
                 x1    = x0 + state.barpixelwidth;
 
-            state.path += "M" + x0 + "," + p[1] +
+            state.path = state.path +
+                "M" + x0 + "," + p[1] +
                 "L" + x0 + "," + p[2] +
                 "L" + x1 + "," + p[2] +
                 "L" + x1 + "," + p[1] +
@@ -137,10 +138,11 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
             // If the icon is large enough draw extra bars
             if (iconWidth > 20 && iconHeight > 20) {
-                path += generateBar(x + iconWidth/4 - barwidth/2,             y + iconHeight/8, barwidth, iconHeight/2);
-                path += generateBar(x + iconWidth - iconWidth/4 - barwidth/2, y + iconHeight/4, barwidth, iconHeight/3);
+                path = path +
+                    generateBar(x + iconWidth/4 - barwidth/2,             y + iconHeight/8, barwidth, iconHeight/2) +
+                    generateBar(x + iconWidth - iconWidth/4 - barwidth/2, y + iconHeight/4, barwidth, iconHeight/3);
             }
-            path += generateBar(x + iconWidth/2 - barwidth/2, y, barwidth, iconHeight-iconHeight/4);
+            path = path + generateBar(x + iconWidth/2 - barwidth/2, y, barwidth, iconHeight-iconHeight/4);
 
             var iconGraphicElem = paper.path(path)
                 .attr(attrs);

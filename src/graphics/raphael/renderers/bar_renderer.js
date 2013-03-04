@@ -73,7 +73,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 x1 = p[0] + settings.baroffset + settings.barpixelwidth,
                 fillcolor = this.getOptionValue("fillcolor", datap[1]);
 
-            settings.paths[fillcolor.getHexString("0x")].path += generateBar(x0, settings.barpixelbase, settings.barpixelwidth, p[1] - settings.barpixelbase);
+            settings.paths[fillcolor.getHexString("0x")].path = settings.paths[fillcolor.getHexString("0x")].path +
+                generateBar(x0, settings.barpixelbase, settings.barpixelwidth, p[1] - settings.barpixelbase);
 
             if (settings.barpixelwidth > settings.hidelines) {
                 if (settings.prevCorner === null) {
@@ -113,12 +114,12 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 //
                 
                 //   horizontal line @ y from x(next) to x
-                outlinePath += "M" + barGroup[1][0] + "," + barGroup[0][1] +
-                    "L" + barGroup[0][0] + "," + barGroup[0][1];
-                //   vertical line @ x from y to base
-                outlinePath += "L" + barGroup[0][0] + "," + barpixelbase;
-                //   horizontal line @ base from x to x(next)
-                outlinePath += "L" + barGroup[1][0] + "," + barpixelbase;
+                outlinePath = outlinePath + "M" + barGroup[1][0] + "," + barGroup[0][1] +
+                    "L" + barGroup[0][0] + "," + barGroup[0][1] +
+                    //   vertical line @ x from y to base
+                    "L" + barGroup[0][0] + "," + barpixelbase +
+                    //   horizontal line @ base from x to x(next)
+                    "L" + barGroup[1][0] + "," + barpixelbase;
                 
                 for (j = 1; j < n - 1; ++j) {
                     // For intermediate points, draw 3 lines:
@@ -134,13 +135,13 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                     //         x     x(next)
                     //
                     //   vertical line @ x from min to max of (y, y(next), base)
-                    outlinePath += "M" + barGroup[j][0] + "," + Math.min(barGroup[j-1][1], barGroup[j][1], barpixelbase) +
-                        "L" + barGroup[j][0] + "," + Math.max(barGroup[j-1][1], barGroup[j][1], barpixelbase);
-                    //   horizontal line @ y(next) from x to x(next)
-                    outlinePath += "M" + barGroup[j][0] + "," +   barGroup[j][1] +
-                        "L" + barGroup[j+1][0] + "," + barGroup[j][1];
-                    //   horizontal line @ base from x to x(next)
-                    outlinePath += "M" + barGroup[j][0] + "," +   barpixelbase +
+                    outlinePath = outlinePath + "M" + barGroup[j][0] + "," + Math.min(barGroup[j-1][1], barGroup[j][1], barpixelbase) +
+                        "L" + barGroup[j][0] + "," + Math.max(barGroup[j-1][1], barGroup[j][1], barpixelbase) +
+                        //   horizontal line @ y(next) from x to x(next)
+                        "M" + barGroup[j][0] + "," +   barGroup[j][1] +
+                        "L" + barGroup[j+1][0] + "," + barGroup[j][1] +
+                        //   horizontal line @ base from x to x(next)
+                        "M" + barGroup[j][0] + "," +   barpixelbase +
                         "L" + barGroup[j+1][0] + "," + barpixelbase;
                 }
                 // For last point, draw one line:
@@ -153,7 +154,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 //         x     x(next)
                 //
                 //   vertical line @ x from base to y
-                outlinePath += "M" + barGroup[n-1][0] + "," + barGroup[n-1][1] +
+                outlinePath = outlinePath + "M" + barGroup[n-1][0] + "," + barGroup[n-1][1] +
                     "L" + barGroup[n-1][0] + "," + barpixelbase;
             }
             return outlinePath;
@@ -265,10 +266,11 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
             // If the icon is large enough draw extra bars
             if (iconWidth > 20 && iconHeight > 20) {
-                path += generateBar(x + (iconWidth / 4) - (barwidth / 2),             y, barwidth, iconHeight / 2);
-                path += generateBar(x + iconWidth - (iconWidth / 4) - (barwidth / 2), y, barwidth, iconHeight / 3);
+                path = path + 
+                    generateBar(x + (iconWidth / 4) - (barwidth / 2),             y, barwidth, iconHeight / 2) +
+                    generateBar(x + iconWidth - (iconWidth / 4) - (barwidth / 2), y, barwidth, iconHeight / 3);
             }
-            path += generateBar(x + (iconWidth / 2) - (barwidth / 2), y, barwidth, iconHeight - (iconHeight / 4));
+            path = path + generateBar(x + (iconWidth / 2) - (barwidth / 2), y, barwidth, iconHeight - (iconHeight / 4));
 
             var iconGraphicElem = paper.path(path)
                 .attr(barAttrs);

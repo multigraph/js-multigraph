@@ -76,9 +76,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
             var fillElem = paper.path(state.fillPath)
                 .attr({
-                    "stroke-width" : 1,
                     "fill"         : state.fillcolor.toRGBA(state.fillopacity),
-                    "stroke"       : state.fillcolor.toRGBA(state.fillopacity)
+                    "stroke"       : "none"
                 });
 
             this.fillElem(fillElem);
@@ -134,9 +133,9 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
             width = (width >= 0) ? width : defaultWidth;
             if (width > 0) {
-                path += "M" + run[0][0] + "," + run[0][whichLine];
+                path = path + "M" + run[0][0] + "," + run[0][whichLine];
                 for (i = 1; i < run.length; ++i) {
-                    path += "L" + run[i][0] + "," + run[i][whichLine];
+                    path = path + "L" + run[i][0] + "," + run[i][whichLine];
                 }
             }
             return path;
@@ -153,17 +152,17 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 i;
 
             // trace to the right along line 1
-            fillPath += "M" + run[0][0] + "," + run[0][1];            
+            fillPath = fillPath + "M" + run[0][0] + "," + run[0][1];            
             for (i = 1; i < run.length; ++i) {
                 fillPath += "L" + run[i][0] + "," + run[i][1];
             }
 
             // trace back to the left along line 2
-            fillPath += "L" + run[run.length-1][0] + "," + run[run.length-1][2];
+            fillPath = fillPath + "L" + run[run.length-1][0] + "," + run[run.length-1][2];
             for (i = run.length-1; i >= 0; --i) {
-                fillPath += "L" + run[i][0] + "," + run[i][2];
+                fillPath = fillPath + "L" + run[i][0] + "," + run[i][2];
             }
-            fillPath += "Z";
+            fillPath = fillPath + "Z";
 
             // stroke line1
             line1Path = strokeRunLine(line1Path, run, 1, state.line1width, state.linewidth);
@@ -185,7 +184,11 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 backgroundColor,
                 linewidth,
                 linecolor,
-                path = "";
+                path = "M" + 0 + "," + (2*iconHeight/8) +
+                    "L" + 0 + "," + (6*iconHeight/8) +
+                    "L" + iconWidth + "," + (7*iconHeight/8) +
+                    "L" + iconWidth + "," + (3*iconHeight/8) +
+                    "L" + 0 + "," + (2*iconHeight/8);
 
             // Draw icon background (with opacity)
             if (iconWidth < 10 || iconHeight < 10) {
@@ -206,12 +209,6 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             linewidth = (state.line2width >= 0) ? state.line2width : state.linewidth;
             linecolor = (state.line2color !== null) ? state.line2color : state.linecolor;
 
-            path += "M" + 0 + "," + (2*iconHeight/8);
-            path += "L" + 0 + "," + (6*iconHeight/8);
-            path += "L" + iconWidth + "," + (7*iconHeight/8);
-            path += "L" + iconWidth + "," + (3*iconHeight/8);
-            path += "L" + 0 + "," + (2*iconHeight/8);
-
             set.push(
                 paper.path(path)
                     .attr({
@@ -221,7 +218,6 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                     })
                     .transform("t" + x + "," + y)
             );
-            
         });
 
         BandRenderer.respondsTo("redrawLegendIcon", function () {

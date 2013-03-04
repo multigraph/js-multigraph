@@ -51,11 +51,13 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
         FillRenderer.respondsTo("dataPoint", function (datap) {
             var settings = this.settings(),
+                fillpath = settings.fillpath,
+                path     = settings.path,
                 p;
 
             if (this.isMissing(datap)) {
                 if (settings.previouspoint !== null) {
-                    settings.fillpath += "L" + settings.previouspoint[0] + "," + settings.fillpixelbase;
+                    fillpath = fillpath + "L" + settings.previouspoint[0] + "," + settings.fillpixelbase;
                 }
                 settings.first = true;
                 settings.previouspoint = null;
@@ -66,18 +68,21 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
             if (settings.first) {
                 settings.first = false;
-                settings.fillpath += "M" + p[0] + "," + settings.fillpixelbase;
-                settings.fillpath += "L" + p[0] + "," + p[1];
+                fillpath = fillpath +
+                    "M" + p[0] + "," + settings.fillpixelbase +
+                    "L" + p[0] + "," + p[1];
                 if (settings.linewidth > 0) {
-                    settings.path += "M" + p[0] + "," + p[1];
+                    path = path + "M" + p[0] + "," + p[1];
                 }
             } else {
-                settings.fillpath += "L" + p[0] + "," + p[1];
+                fillpath = fillpath + "L" + p[0] + "," + p[1];
                 if (settings.linewidth > 0) {
-                    settings.path += "L" + p[0] + "," + p[1];
+                    path = path + "L" + p[0] + "," + p[1];
                 }
             }
 
+            settings.fillpath = fillpath;
+            settings.path     = path;
             settings.previouspoint = p;
         });
 
@@ -87,7 +92,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 set   = settings.set;
             
             if (settings.previouspoint !== null) {
-                settings.fillpath += "L" + settings.previouspoint[0] + "," + settings.fillpixelbase;
+                settings.fillpath = settings.fillpath + "L" + settings.previouspoint[0] + "," + settings.fillpixelbase;
             }
 
             var fillElem = paper.path(settings.fillpath)
@@ -113,7 +118,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             var settings = this.settings();
             
             if (settings.previouspoint !== null) {
-                settings.fillpath += "L" + settings.previouspoint[0] + "," + settings.fillpixelbase;
+                settings.fillpath = settings.fillpath + "L" + settings.previouspoint[0] + "," + settings.fillpixelbase;
             }
             this.fillElem().attr("path", settings.fillpath);
             if (this.lineElem()) {
@@ -128,7 +133,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 iconWidth  = icon.width(),
                 iconHeight = icon.height(),
                 iconBackgroundAttrs = {},
-                path = "";
+                path = "M0,0";
             
             // Draw icon background (with opacity)
             iconBackgroundAttrs.stroke = "rgba(255, 255, 255, 1)";
@@ -143,24 +148,24 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                     .attr(iconBackgroundAttrs)
             );
 
-            path += "M0,0";
-
             // Draw the middle range icon or the large range icon if the width and height allow it
             if (iconWidth > 10 || iconHeight > 10) {
                 // Draw a more complex icon if the icons width and height are large enough
                 if (iconWidth > 20 || iconHeight > 20) {
-                    path += "L" + (iconWidth / 6) + "," + (iconHeight / 2);
-                    path += "L" + (iconWidth / 3) + "," + (iconHeight / 4);
+                    path = path +
+                        "L" + (iconWidth / 6) + "," + (iconHeight / 2) +
+                        "L" + (iconWidth / 3) + "," + (iconHeight / 4);
                 }
-                path += "L" + (iconWidth / 2) + "," + (iconHeight - iconHeight / 4);
+                path = path + "L" + (iconWidth / 2) + "," + (iconHeight - iconHeight / 4);
 
                 if (iconWidth > 20 || iconHeight > 20) {
-                    path += "L" + (iconWidth - iconWidth / 3) + "," + (iconHeight / 4);
-                    path += "L" + (iconWidth - iconWidth / 6) + "," + (iconHeight / 2);
+                    path = path +
+                        "L" + (iconWidth - iconWidth / 3) + "," + (iconHeight / 4) +
+                        "L" + (iconWidth - iconWidth / 6) + "," + (iconHeight / 2);
                 }
             }
 
-            path += "L" + iconWidth + ",0";
+            path = path + "L" + iconWidth + ",0";
 
             set.push(
                 paper.path(path)

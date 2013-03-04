@@ -57,10 +57,10 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             var p = this.transformPoint(datap);
             if (settings.linewidth > 0) {
                 if (settings.first) {
-                    settings.path += "M" + p[0] + "," + p[1];
+                    settings.path = settings.path + "M" + p[0] + "," + p[1];
                     settings.first = false;
                 } else {
-                    settings.path += "L" + p[0] + "," + p[1];
+                    settings.path = settings.path + "L" + p[0] + "," + p[1];
                 }
             }
             if (settings.pointsize > 0) {
@@ -111,7 +111,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 i;
 
             for (i = 0; i < points.length; ++i) {
-                pointPath += drawPoint(pointshape, pointsize, points[i]);
+                pointPath = pointPath + drawPoint(pointshape, pointsize, points[i]);
             }
 
             return pointPath;

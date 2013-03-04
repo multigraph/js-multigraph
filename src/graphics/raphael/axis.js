@@ -11,22 +11,31 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 //        Axis.hasMany("labelElems");
 
         var computeGridPath = function (axis, graph) {
-            var path,
-                currentLabeler = axis.currentLabeler(),
+            var currentLabeler = axis.currentLabeler(),
                 perpOffset     = axis.perpOffset(),
                 orientation    = axis.orientation(),
                 plotBox        = graph.plotBox(),
+                path = "",
+                offset,
                 a, v;
+
+            if (orientation === Axis.HORIZONTAL) {
+                offset   = plotBox.height() - perpOffset;
+            } else {
+                offset = plotBox.width()  - perpOffset;
+            }
 
             while (currentLabeler.hasNext()) {
                 v = currentLabeler.next();
                 a = axis.dataValueToAxisValue(v);
                 if (orientation === Axis.HORIZONTAL) {
-                    path += "M" + a + "," + perpOffset +
-                        "L" + a + "," + (plotBox.height() - perpOffset);
+                    path = path +
+                        "M" + a + "," + perpOffset +
+                        "L" + a + "," + offset;
                 } else {
-                    path += "M" + perpOffset + "," + a +
-                        "L" + (plotBox.width() - perpOffset) + "," + a;
+                    path = path +
+                        "M" + perpOffset + "," + a +
+                        "L" + offset + "," + a;
                 }
             }
             return path;
@@ -60,29 +69,21 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             var previousLabeler = axis.currentLabeler();
             axis.prepareRender(text);
             if (axis.currentLabeler() !== previousLabeler && previousLabeler !== undefined) {
+                axis.currentLabeler().elems(previousLabeler.elems());
+                /*
                 var i;
                 for (i = 0; i < previousLabeler.elems().length; i++) {
                     previousLabeler.elems()[i].elem.remove();
                 }
+                */
                 previousLabeler.elems([]);
             }
-/*
-            if (axis.currentLabeler() !== previousLabeler && previousLabeler !== undefined) {
-                var length = previousLabeler.elems().size(),
-                    label, i;
-                for (i = 0; i < length; i++) {
-                    label = previousLabeler.elems().pop();
-                    console.log(previousLabeler.elems().size());
-                }
-            }
-*/
         };
 
         Axis.respondsTo("renderGrid", function (graph, paper, set) {
             var text = paper.text(-8000, -8000, "foo");
 
             prepareRaphaelRender(this, text);
-//            this.prepareRender(text);
 
             // draw the grid lines
             if (this.hasDataMin() && this.hasDataMax()) { // skip if we don't yet have data values
@@ -194,14 +195,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                     while (this.currentLabeler().hasNext()) {
                         v = this.currentLabeler().next();
                         a = this.dataValueToAxisValue(v);
-                        tickmarkPath += computeTickmarkPath(this, a);
+                        tickmarkPath = tickmarkPath + computeTickmarkPath(this, a);
                         values.push(v);
-/*
-                        this.currentLabeler().renderLabel({ "paper"    : paper,
-                                                            "set"      : set,
-                                                            "textElem" : text
-                                                          }, v);
-*/
                     }
                     this.currentLabeler().redraw(graph, paper, values);
                     this.tickmarkElem().attr("path", tickmarkPath);

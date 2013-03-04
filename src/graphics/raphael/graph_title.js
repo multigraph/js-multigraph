@@ -51,14 +51,12 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 ax = (0.5 * w + padding + border) * (anchor.x() + 1),
                 ay = (0.5 * h + padding + border) * (anchor.y() + 1),
                 base = computeTitlePixelBase(this),
-                transformString = "";
+                transformString = "t" + base.x() + "," + base.y() +
+                    "s1,-1" +
+                    "t" + this.position().x() + "," + (-this.position().y()) +
+                    "t" + (-ax) + "," + ay;
 
             this.previousBase(base);
-
-            transformString += "t" + base.x() + "," + base.y();
-            transformString += "s1,-1";
-            transformString += "t" + this.position().x() + "," + (-this.position().y());
-            transformString += "t" + (-ax) + "," + ay;
 
             // border
             if (border > 0) {
