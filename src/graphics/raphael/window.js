@@ -17,11 +17,17 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         });
 
         Window.respondsTo("redraw", function (width, height) {
-            var ml = this.margin().left() * 2;
-            this.elem().attr({
-                "width"  : width - ml,
-                "height" : height - ml
-            });
+            var ml = this.margin().left() * 2,
+                windowwidth  = width - ml,
+                windowheight = height - ml,
+                elem = this.elem();
+
+            if (elem.attr("width") !== windowwidth) {
+                elem.attr("width", windowwidth);
+            }
+            if (elem.attr("height") !== windowheight) {
+                elem.attr("height", windowheight);
+            }
         });
 
     });

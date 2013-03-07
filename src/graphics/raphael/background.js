@@ -24,12 +24,17 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         });
 
         Background.respondsTo("redraw", function (graph, width, height) {
-            var mb = graph.window().margin().left() + graph.window().border();
+            var mb = graph.window().margin().left() + graph.window().border() * 2,
+                bwidth  = width - mb,
+                bheight = height - mb,
+                elem = this.elem();
 
-            this.elem().attr({
-                "width"  : width - 2*mb,
-                "height" : height - 2*mb
-            });
+            if (elem.attr("width") !== bwidth) {
+                elem.attr("width", bwidth);
+            }
+            if (elem.attr("height") !== bheight) {
+                elem.attr("height", bheight);
+            }
 
             if (this.img() && this.img().src() !== undefined) {
                 this.img().redraw(graph);

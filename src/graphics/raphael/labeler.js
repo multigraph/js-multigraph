@@ -20,9 +20,15 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 perpOffset = axis.perpOffset();
 
             if (axis.orientation() === ns.Axis.HORIZONTAL) {
-                return new window.multigraph.math.Point(a, perpOffset);
+                return {
+                    x : function () { return a; },
+                    y : function () { return perpOffset; }
+                };
             } else {
-                return new window.multigraph.math.Point(perpOffset, a);
+                return {
+                    x : function () { return perpOffset; },
+                    y : function () { return a; }
+                };
             }
         };
 
@@ -107,10 +113,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                         x      = elem.attr("x");
                         y      = elem.attr("y");
 
-                        elem.attr({
-                            "x" : x + deltaX,
-                            "y" : y - deltaY
-                        });
+                        elem.transform("t" + deltaX + " " + deltaY + "...");
                         elems[j].base = basePoint;
                         newLabels.push(elems.splice(j, 1)[0]);
                         flag = true;
@@ -144,9 +147,12 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                     "elem"  : elem,
                     "angle" : this.angle()
                 });
-                var pixelAnchor     = new window.multigraph.math.Point( 0.5 * formattedString.origWidth()  * this.anchor().x(),
-                                                                        0.5 * formattedString.origHeight() * this.anchor().y()
-                                                                      ),
+                var ax = 0.5 * formattedString.origWidth()  * this.anchor().x(),
+                    ay = 0.5 * formattedString.origHeight() * this.anchor().y(),
+                    pixelAnchor = {
+                        x : function () { return ax; },
+                        y : function () { return ay; }
+                    },
                     transformString = computeTransformString(basePoint, pixelAnchor, this.position(), this.angle());
 
                 elem.transform(graph.transformString() + transformString);

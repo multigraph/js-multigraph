@@ -24,17 +24,18 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         ns.Multigraph.respondsTo("redraw", function () {
             var that = this;
             window.requestAnimationFrame(function () {
-                    //                var begin = new Date().getTime();
                 var text = that.paper().text(-8000, -8000, "foo"),
-                    i;
-                that.initializeGeometry(that.width(), that.height(), { "elem" : text });
-                for (i=0; i<that.graphs().size(); ++i) {
+                    i, j;
+                //                that.initializeGeometry(that.width(), that.height(), { "elem" : text });
+                for (i = 0; i < that.graphs().size(); i++) {
+                    for (j = 0; j < that.graphs().at(i).axes().size(); j++) {
+                        that.graphs().at(i).axes().at(j).computeAxisToDataRatio();
+                    }
+                }
+                for (i = 0; i < that.graphs().size(); i++) {
                     that.graphs().at(i).redraw(that.paper(), that.width(), that.height());
                 }
                 text.remove();
-                //                var end = new Date().getTime();
-                //                that.time(that.time() + (end - begin));
-                //                that.runs(that.runs() + 1);
             });
         });
 

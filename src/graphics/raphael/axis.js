@@ -70,18 +70,12 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             axis.prepareRender(text);
             if (axis.currentLabeler() !== previousLabeler && previousLabeler !== undefined) {
                 axis.currentLabeler().elems(previousLabeler.elems());
-                /*
-                var i;
-                for (i = 0; i < previousLabeler.elems().length; i++) {
-                    previousLabeler.elems()[i].elem.remove();
-                }
-                */
                 previousLabeler.elems([]);
             }
         };
 
         Axis.respondsTo("renderGrid", function (graph, paper, set) {
-            var text = paper.text(-8000, -8000, "foo");
+            var text = paper.text(100, 100, "foo");
 
             prepareRaphaelRender(this, text);
 
@@ -106,7 +100,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         });
 
         Axis.respondsTo("redrawGrid", function (graph, paper) {
-            var text = paper.text(-8000, -8000, "foo");
+            var text = paper.text(100, 100, "foo");
 
             prepareRaphaelRender(this, text);
 //            this.prepareRender(text);
@@ -125,7 +119,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         });
 
         Axis.respondsTo("render", function (graph, paper, set) {
-            var text = paper.text(-8000, -8000, "foo"),
+            var text = paper.text(100, 100, "foo"),
                 tickmarkPath = "";
 
             //
@@ -176,7 +170,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         });
 
         Axis.respondsTo("redraw", function (graph, paper) {
-            var text = paper.text(-8000, -8000, "foo"),
+            var text = paper.text(100, 100, "foo"),
                 tickmarkPath = "";
 
             //

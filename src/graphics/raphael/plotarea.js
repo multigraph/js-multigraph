@@ -34,12 +34,17 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
         Plotarea.respondsTo("redraw", function (graph) {
             var border = this.border(),
-                plotBox = graph.plotBox();
+                plotBox = graph.plotBox(),
+                pwidth = plotBox.width() + border,
+                pheight = plotBox.height() + border,
+                elem = this.elem();
 
-            this.elem().attr({
-                width  : plotBox.width() + border,
-                height : plotBox.height() + border
-            });
+            if (elem.attr("width") !== pwidth) {
+                elem.attr("width", pwidth);
+            }
+            if (elem.attr("height") !== pheight) {
+                elem.attr("height", pheight);
+            }
         });
 
     });
