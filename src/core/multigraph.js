@@ -179,16 +179,19 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * @static
      * @author jrfrimme
      */
-    var browserHasCanvasSupport = function () {
+    ns.browserHasCanvasSupport = function () {
         return (
-                (!!window.HTMLCanvasElement)
-                &&
-                (!!window.CanvasRenderingContext2D)
-                &&
+                (!!window.HTMLCanvasElement) &&
+                (!!window.CanvasRenderingContext2D) &&
                 (function (elem) {
                     return !!(elem.getContext && elem.getContext('2d'));
                 }(document.createElement('canvas')))
             );
+    };
+
+    ns.browserHasSVGSupport = function () {
+        return !!document.createElementNS &&
+            !!document.createElementNS('http://www.w3.org/2000/svg', "svg").createSVGRect;
     };
 
     /**
@@ -246,7 +249,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
         // if driver wasn't specified, choose the best based on browser capability
         if (!options.driver) {
-            if (browserHasCanvasSupport()) {
+            if (ns.browserHasCanvasSupport()) {
                 options.driver = "canvas";
             } else {
                 options.driver = "raphael";
