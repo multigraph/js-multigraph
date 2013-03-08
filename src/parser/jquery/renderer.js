@@ -33,7 +33,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                         if (missingValueOption.length > 0 || missingOpOption.length > 0) {
                             var columns = plot.data().columns();
                             for (i=0; i<columns.size();  ++i) {
-                                if (columns.at(i).type() == ns.core.DataValue.NUMBER) {
+                                if (columns.at(i).type() === ns.core.DataValue.NUMBER) {
                                     if (missingValueOption.length > 0 && (columns.at(i).missingvalue() === undefined)) {
                                         columns.at(i).missingvalue(ns.core.NumberValue.parse(missingValueOption.attr("value")));
                                     }

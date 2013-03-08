@@ -86,7 +86,7 @@ describe("Legend Normalizer", function () {
         });
 
         it("should not change the number of rows if explicitly set", function () {
-            var rows = 5
+            var rows = 5;
             legend.rows(rows);
             expect(legend.rows()).toEqual(rows);
             legend.normalize(graph);
@@ -100,7 +100,7 @@ describe("Legend Normalizer", function () {
         });
 
         it("should not change the number of columns if explicitly set", function () {
-            var columns = 8
+            var columns = 8;
             legend.columns(columns);
             expect(legend.columns()).toEqual(columns);
             legend.normalize(graph);

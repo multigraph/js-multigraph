@@ -247,7 +247,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                         index++;
                     }
                 } else if (currentLabelDensity === densityThreshold) { // use labeler at position 0
-                    flag = false
+                    flag = false;
                 }
 
                 while (flag) {
@@ -322,9 +322,11 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             if (dispatch === undefined) {
                 dispatch = true;
             }
+/*
             if (dispatch) {
                 //dispatchEvent(new AxisEvent(AxisEvent.CHANGE,min,max));  
             }
+*/
         });
 
         this.respondsTo("setDataRange", function (min, max, dispatch) {

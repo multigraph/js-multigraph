@@ -1,4 +1,4 @@
-/*global describe, it, beforeEach, expect, xit, jasmine */
+/*global describe, xdescribe, it, beforeEach, expect, xit, jasmine */
 
 describe("ArrayData", function () {
     "use strict";

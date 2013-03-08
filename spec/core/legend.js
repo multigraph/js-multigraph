@@ -233,7 +233,7 @@ describe("Legend", function () {
             }
 
             expect(l.maxLabelHeight()).toEqual(l.icon().height());
-        })
+        });
 
         // These figures were calculated by hand using the formula:
         // Take the max of multiplying the number of lines in the label by 12, and the height of the icon

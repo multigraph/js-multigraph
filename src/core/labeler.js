@@ -143,9 +143,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
                 // length of the formatted axis representative value, in pixels
                 var pixelFormattedValue = (
-                    (this.axis().orientation() === Axis.HORIZONTAL)
-                        ? this.measureStringWidth(graphicsContext, representativeValueString)
-                        : this.measureStringHeight(graphicsContext, representativeValueString)
+                    (this.axis().orientation() === Axis.HORIZONTAL) ?
+                        this.measureStringWidth(graphicsContext, representativeValueString) :
+                        this.measureStringHeight(graphicsContext, representativeValueString)
                 );
                 // return the ratio -- the fraction of the spacing taken up by the formatted string
                 return pixelFormattedValue / pixelSpacing;

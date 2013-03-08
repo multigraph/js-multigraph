@@ -90,6 +90,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 window.multigraph.jQuery.each(xml.find(">verticalaxis"), function (i,e) {
                     graph.axes().add( ns.core.Axis[parse](window.multigraph.jQuery(e), ns.core.Axis.VERTICAL, messageHandler, graph.multigraph()) );
                 });
+                /*
                 if (xml.find(">data").length === 0) {
                     // On second throught, let's not throw an error if no <data> tag
                     // is specified, because conceivably there could be graphs in
@@ -100,6 +101,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     //    mbp Mon Nov 12 16:05:21 2012
                     //throw new Error("Graph Data Error: No data tags specified");
                 }
+                */
                 window.multigraph.jQuery.each(xml.find(">throttle"), function (i,e) {
                     var pattern    = $(e).attr('pattern')    ? $(e).attr('pattern')    : defaults.throttle.pattern,
                         requests   = $(e).attr('requests')   ? $(e).attr('requests')   : defaults.throttle.requests,
