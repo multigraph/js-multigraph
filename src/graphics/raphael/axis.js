@@ -138,6 +138,14 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 if (this.currentLabeler()) {
                     var v, a;
                     this.currentLabeler().prepare(this.dataMin(), this.dataMax());
+                    // removes existing labels, if any, for redraw
+                    if (this.currentLabeler().elems().length > 0) {
+                        var i, j;
+                        for (i = 0, j = this.currentLabeler().elems().length; i < j; i++) {
+                            this.currentLabeler().elems().pop().elem.remove();
+                        }
+                    }
+
                     while (this.currentLabeler().hasNext()) {
                         v = this.currentLabeler().next();
                         a = this.dataValueToAxisValue(v);
