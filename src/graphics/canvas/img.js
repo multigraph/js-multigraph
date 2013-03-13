@@ -7,39 +7,34 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         window.multigraph.core.Img.hasA("fetched").which.defaultsTo(false);
 
         window.multigraph.core.Img.respondsTo("render", function (graph, context, width, height) {
-            var that = this,
-                paddingLeft,
-                paddingTop,
-                plotLeft,
-                plotTop,
-                ax,
-                ay,
-                bx,
-                by,
-                x,
-                y;
-
             if (this.fetched()) {
-                ax = window.multigraph.math.util.interp(this.anchor().x(), -1, 1, 0, this.image().width);
-                ay = window.multigraph.math.util.interp(this.anchor().y(), 1, -1, 0, this.image().height);
-                paddingLeft = graph.window().margin().left() + graph.window().border();
-                paddingTop = graph.window().margin().top() + graph.window().border();
-                plotLeft = paddingLeft + graph.window().padding().left() + graph.plotarea().margin().left() + graph.plotarea().border();
-                plotTop = paddingTop + graph.window().padding().top() + graph.plotarea().margin().top() + graph.plotarea().border();
+                var interp      = window.multigraph.math.util.interp,
+                    image       = this.image(),
+                    graphWindow = graph.window(),
+                    plotarea    = graph.plotarea(),
+                    ax = interp(this.anchor().x(), -1, 1, 0, image.width),
+                    ay = interp(this.anchor().y(), 1, -1, 0, image.height),
+                    paddingLeft = graphWindow.margin().left() + graphWindow.border(),
+                    paddingTop  = graphWindow.margin().top() + graphWindow.border(),
+                    plotLeft = paddingLeft + graphWindow.padding().left() + plotarea.margin().left() + plotarea.border(),
+                    plotTop  = paddingTop + graphWindow.padding().top() + plotarea.margin().top() + plotarea.border(),
+                    bx, by,
+                    x, y;
                 if (this.frame() === ns.Img.PLOT) {
-                    bx = plotLeft + window.multigraph.math.util.interp(this.base().x(), -1, 1, 0, graph.plotBox().width());
-                    by = plotTop + window.multigraph.math.util.interp(this.base().y(), 1, -1, 0, graph.plotBox().height());
+                    bx = plotLeft + interp(this.base().x(), -1, 1, 0, graph.plotBox().width());
+                    by = plotTop + interp(this.base().y(), 1, -1, 0, graph.plotBox().height());
                 } else {
-                    bx = paddingLeft + window.multigraph.math.util.interp(this.base().x(), -1, 1, 0, graph.paddingBox().width());
-                    by = paddingTop + window.multigraph.math.util.interp(this.base().y(), 1, -1, 0, graph.paddingBox().height());
+                    bx = paddingLeft + interp(this.base().x(), -1, 1, 0, graph.paddingBox().width());
+                    by = paddingTop + interp(this.base().y(), 1, -1, 0, graph.paddingBox().height());
                 }
                 x = bx + this.position().x() - ax;
                 y = by + this.position().y() - ay;
                 context.save();
                 context.transform(1, 0, 0, -1, 0, height);
-                context.drawImage(this.image(), x, y, this.image().width, this.image().height);
+                context.drawImage(image, x, y, image.width, image.height);
                 context.restore();
             } else {
+                var that = this;
                 this.image().onload = function () {
                     that.fetched(true);
                     context.save();

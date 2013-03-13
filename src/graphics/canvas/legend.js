@@ -12,14 +12,15 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         });
 
         ns.Legend.respondsTo("renderLegend", function (context) {
+            var border = this.border();
             context.save();
-            if (this.border() > 0) {
+            if (border > 0) {
                 context.strokeStyle = this.bordercolor().toRGBA();
-                context.strokeRect(this.border()/2, this.border()/2, this.width() - this.border()/2, this.height() - this.border()/2);
+                context.strokeRect(border/2, border/2, this.width() - border/2, this.height() - border/2);
             }
 
             context.fillStyle = this.color().toRGBA(this.opacity());
-            context.fillRect(this.border(), this.border(), this.width() - (2 * this.border()), this.height() - (2 * this.border()));
+            context.fillRect(border, border, this.width() - (2 * border), this.height() - (2 * border));
             context.restore();
         });
 

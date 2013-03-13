@@ -33,6 +33,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 
             this.state(state);
 
+            context.save();
             context.fillStyle = state.fillcolor.getHexString("#");
         });
 
@@ -44,7 +45,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         // line, if the downfillcolor is different from the
         // fillcolor.)
         ns.FillRenderer.respondsTo("dataPoint", function (datap) {
-            var state = this.state(),
+            var state   = this.state(),
                 context = state.context,
                 fillcolor,
                 linecolor,
@@ -107,6 +108,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                 state.run.push( [state.run[state.run.length-1][0], state.fillpixelbase] );
                 this.renderRun(state.currentfillcolor, state.currentlinecolor);
             }
+            context.restore();
         });
 
         // Render the current run of data points.  This consists of drawing the fill region
@@ -124,10 +126,9 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             context.strokeStyle = state.fillcolor.getHexString("#");
             context.beginPath();
             context.moveTo(state.run[0][0], state.run[0][1]);
-            for (i=1; i<state.run.length; ++i) {
+            for (i = 1; i < state.run.length; ++i) {
                 context.lineTo(state.run[i][0], state.run[i][1]);
             }
-            context.closePath();
             context.fill();
             context.restore();
 
@@ -137,7 +138,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             context.lineWidth = state.linewidth;
             context.beginPath();
             context.moveTo(state.run[1][0], state.run[1][1]);
-            for (i=2; i<state.run.length-1; ++i) {
+            for (i = 2; i < state.run.length-1; ++i) {
                 context.lineTo(state.run[i][0], state.run[i][1]);
             }
             context.stroke();
@@ -145,19 +146,21 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         });
 
         ns.FillRenderer.respondsTo("renderLegendIcon", function (context, x, y, icon) {
-            var state = this.state();
+            var state = this.state(),
+                iconWidth = icon.width(),
+                iconHeight = icon.height();
             
             context.save();
             context.transform(1, 0, 0, 1, x, y);
 
             context.save();
             // Draw icon background (with opacity)
-            if (icon.width() < 10 || icon.height() < 10) {
+            if (iconWidth < 10 || iconHeight < 10) {
                 context.fillStyle = state.fillcolor.toRGBA();
             } else {
                 context.fillStyle = "rgba(255, 255, 255, 1)";
             }
-            context.fillRect(0, 0, icon.width(), icon.height());
+            context.fillRect(0, 0, iconWidth, iconHeight);
             context.restore();
 
             context.strokeStyle = state.linecolor.toRGBA();
@@ -167,26 +170,24 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             context.beginPath();
             context.moveTo(0, 0);
             // Draw the middle range icon or the large range icon if the width and height allow it
-            if (icon.width() > 10 || icon.height() > 10) {
+            if (iconWidth > 10 || iconHeight > 10) {
                 // Draw a more complex icon if the icons width and height are large enough
-                if (icon.width() > 20 || icon.height() > 20) {
-                    context.lineTo(icon.width() / 6, icon.height() / 2);
-                    context.lineTo(icon.width() / 3, icon.height() / 4);
+                if (iconWidth > 20 || iconHeight > 20) {
+                    context.lineTo(iconWidth / 6, iconHeight / 2);
+                    context.lineTo(iconWidth / 3, iconHeight / 4);
                 }
-                context.lineTo(icon.width() / 2, icon.height() - icon.height() / 4);
+                context.lineTo(iconWidth / 2, iconHeight - iconHeight / 4);
 
-                if (icon.width() > 20 || icon.height() > 20) {
-                    context.lineTo(icon.width() - icon.width() / 3, icon.height() / 4);
-                    context.lineTo(icon.width() - icon.width() / 6, icon.height() / 2);
+                if (iconWidth > 20 || iconHeight > 20) {
+                    context.lineTo(iconWidth - iconWidth / 3, iconHeight / 4);
+                    context.lineTo(iconWidth - iconWidth / 6, iconHeight / 2);
                 }
             }
-            context.lineTo(icon.width(), 0);
+            context.lineTo(iconWidth, 0);
             context.stroke();
             context.fill();
-            context.closePath();
 
             context.restore();
-
         });
 
     });

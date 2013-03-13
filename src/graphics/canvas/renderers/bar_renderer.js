@@ -22,9 +22,6 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             };
 
             this.settings(settings);
-
-            //context.fillStyle = settings.fillcolor.getHexString("#");
-            context.strokeStyle = settings.linecolor.getHexString("#");
         });
 
         // This bar renderer uses a somewhat sophisticated technique when drawing
@@ -63,24 +60,20 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         //
     
         ns.BarRenderer.respondsTo("dataPoint", function (datap) {
-            var settings = this.settings(),
-                context = settings.context,
-                p,
-                x0,
-                x1,
-                fillcolor = this.getOptionValue("fillcolor", datap[1]);
-
             if (this.isMissing(datap)) {
                 return;
             }
 
-            p = this.transformPoint(datap);
+            var settings = this.settings(),
+                context  = settings.context,
+                p  = this.transformPoint(datap),
+                x0 = p[0] + settings.baroffset,
+                x1 = p[0] + settings.baroffset + settings.barpixelwidth;
 
-            x0 = p[0] + settings.baroffset;
-            x1 = p[0] + settings.baroffset + settings.barpixelwidth;
-
-            context.fillStyle = fillcolor.getHexString("#");
+            context.save();
+            context.fillStyle = this.getOptionValue("fillcolor", datap[1]).getHexString("#");
             context.fillRect(x0, settings.barpixelbase, settings.barpixelwidth, p[1] - settings.barpixelbase);
+            context.restore();
 
             if (settings.barpixelwidth > settings.hidelines) {
                 if (settings.prevCorner === null) {
@@ -96,23 +89,25 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                 }
                 settings.prevCorner = [x1,p[1]];
             }
-
         });
         
         ns.BarRenderer.respondsTo("end", function () {
-            var settings = this.settings(),
-                context = settings.context,
+            var settings     = this.settings(),
+                context      = settings.context,
+                barpixelbase = settings.barpixelbase,
+                max = Math.max,
+                min = Math.min,
                 p,
                 barGroup,
-                i,
-                j,
-                n;
+                i, j, n;
 
             if (settings.prevCorner !== null && settings.currentBarGroup !== null) {
                 settings.currentBarGroup.push( settings.prevCorner );
                 settings.barGroups.push( settings.currentBarGroup );
             }        
 
+            context.save();
+            context.strokeStyle = settings.linecolor.getHexString("#");
             context.beginPath();
             for (i = 0; i < settings.barGroups.length; i++) {
                 barGroup = settings.barGroups[i];
@@ -133,9 +128,9 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                 context.moveTo(barGroup[1][0], barGroup[0][1]);
                 context.lineTo(barGroup[0][0], barGroup[0][1]);
                 //   vertical line @ x from y to base
-                context.lineTo(barGroup[0][0], settings.barpixelbase);
+                context.lineTo(barGroup[0][0], barpixelbase);
                 //   horizontal line @ base from x to x(next)
-                context.lineTo(barGroup[1][0], settings.barpixelbase);
+                context.lineTo(barGroup[1][0], barpixelbase);
                 
                 for (j = 1; j < n - 1; ++j) {
                     // For intermediate points, draw 3 lines:
@@ -151,14 +146,14 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                     //         x     x(next)
                     //
                     //   vertical line @ x from min to max of (y, y(next), base)
-                    context.moveTo(barGroup[j][0], Math.min(barGroup[j-1][1], barGroup[j][1], settings.barpixelbase));
-                    context.lineTo(barGroup[j][0], Math.max(barGroup[j-1][1], barGroup[j][1], settings.barpixelbase));
+                    context.moveTo(barGroup[j][0], min(barGroup[j-1][1], barGroup[j][1], barpixelbase));
+                    context.lineTo(barGroup[j][0], max(barGroup[j-1][1], barGroup[j][1], barpixelbase));
                     //   horizontal line @ y(next) from x to x(next)
                     context.moveTo(barGroup[j][0],   barGroup[j][1]);
                     context.lineTo(barGroup[j+1][0], barGroup[j][1]);
                     //   horizontal line @ base from x to x(next)
-                    context.moveTo(barGroup[j][0],   settings.barpixelbase);
-                    context.lineTo(barGroup[j+1][0], settings.barpixelbase);
+                    context.moveTo(barGroup[j][0],   barpixelbase);
+                    context.lineTo(barGroup[j+1][0], barpixelbase);
                 }
                 // For last point, draw one line:
                 //
@@ -171,18 +166,15 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                 //
                 //   vertical line @ x from base to y
                 context.moveTo(barGroup[n-1][0], barGroup[n-1][1]);
-                context.lineTo(barGroup[n-1][0], settings.barpixelbase);
+                context.lineTo(barGroup[n-1][0], barpixelbase);
             }
             context.stroke();
-            context.closePath();
-
+            context.restore();
         });
 
         ns.BarRenderer.respondsTo("renderLegendIcon", function (context, x, y, icon) {
             var settings          = this.settings(),
-                rendererFillColor = this.getOptionValue("fillcolor", 0),
-                rendererOpacity   = this.getOptionValue("fillopacity", 0),
-                barwidth;
+                rendererFillColor = this.getOptionValue("fillcolor", 0).toRGBA(this.getOptionValue("fillopacity", 0));
 
             context.save();
             context.transform(1, 0, 0, 1, x, y);
@@ -192,34 +184,37 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             context.fillRect(0, 0, icon.width(), icon.height());
 
             context.lineWidth = 1;
-            context.fillStyle = rendererFillColor.toRGBA(rendererOpacity);
+            context.fillStyle = rendererFillColor;
 
             if (settings.barpixelwidth < settings.hidelines) {
-                context.strokeStyle = rendererFillColor.toRGBA(rendererOpacity);
+                context.strokeStyle = rendererFillColor;
             } else {
                 context.strokeStyle = this.getOptionValue("linecolor", 0).toRGBA();
             }
 
             // Adjust the width of the icons bars based upon the width and height of the icon Ranges: {20, 10, 0}
-            if (icon.width() > 20 || icon.height() > 20) {
-                barwidth = icon.width() / 6;
-            } else if (icon.width() > 10 || icon.height() > 10) {
-                barwidth = icon.width() / 4;
+            var iconWidth = icon.width(),
+                iconHeight = icon.height(),
+                barwidth;
+            if (iconWidth > 20 || iconHeight > 20) {
+                barwidth = iconWidth / 6;
+            } else if (iconWidth > 10 || iconHeight > 10) {
+                barwidth = iconWidth / 4;
             } else {
-                barwidth = icon.width() / 4;
+                barwidth = iconWidth / 4;
             }
 
             // If the icon is large enough draw extra bars
-            if (icon.width() > 20 && icon.height() > 20) {
-                context.fillRect((icon.width() / 4) - (barwidth / 2), 0, barwidth, icon.height() / 2);
-                context.strokeRect((icon.width() / 4) - (barwidth / 2), 0, barwidth, icon.height() / 2);
+            if (iconWidth > 20 && iconHeight > 20) {
+                context.fillRect(   (iconWidth / 4) - (barwidth / 2),             0, barwidth, iconHeight / 2);
+                context.strokeRect( (iconWidth / 4) - (barwidth / 2),             0, barwidth, iconHeight / 2);
 
-                context.fillRect(icon.width() - (icon.width() / 4) - (barwidth / 2), 0, barwidth, icon.height() / 3);
-                context.strokeRect(icon.width() - (icon.width() / 4) - (barwidth / 2), 0, barwidth, icon.height() / 3);
+                context.fillRect(   iconWidth - (iconWidth / 4) - (barwidth / 2), 0, barwidth, iconHeight / 3);
+                context.strokeRect( iconWidth - (iconWidth / 4) - (barwidth / 2), 0, barwidth, iconHeight / 3);
             }
 
-            context.fillRect((icon.width() / 2) - (barwidth / 2), 0, barwidth, icon.height() - (icon.height() / 4));
-            context.strokeRect((icon.width() / 2) - (barwidth / 2), 0, barwidth, icon.height() - (icon.height() / 4));
+            context.fillRect(       (iconWidth / 2) - (barwidth / 2),             0, barwidth, iconHeight - (iconHeight / 4));
+            context.strokeRect(     (iconWidth / 2) - (barwidth / 2),             0, barwidth, iconHeight - (iconHeight / 4));
 
             context.restore();
         });

@@ -18,21 +18,24 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
          * @author jrfrimme
          */
         ns.Title.respondsTo("render", function (context) {
-            var h = this.text().origHeight();
-            var w = this.text().origWidth();
-            var ax = (0.5 * w + this.padding() + this.border()) * (this.anchor().x() + 1);
-            var ay = (0.5 * h + this.padding() + this.border()) * (this.anchor().y() + 1);
-            var base;
+            var graph   = this.graph(),
+                border  = this.border(),
+                padding = this.padding(),
+                h = this.text().origHeight(),
+                w = this.text().origWidth(),
+                ax = (0.5 * w + padding + border) * (this.anchor().x() + 1),
+                ay = (0.5 * h + padding + border) * (this.anchor().y() + 1),
+                base;
 
             if (this.frame() === "padding") {
                 base = new window.multigraph.math.Point(
-                    (this.base().x() + 1) * (this.graph().paddingBox().width() / 2) - this.graph().plotarea().margin().left(),
-                    (this.base().y() + 1) * (this.graph().paddingBox().height() / 2) - this.graph().plotarea().margin().bottom()
+                    (this.base().x() + 1) * (graph.paddingBox().width() / 2) - graph.plotarea().margin().left(),
+                    (this.base().y() + 1) * (graph.paddingBox().height() / 2) - graph.plotarea().margin().bottom()
                 );
             } else {
                 base = new window.multigraph.math.Point(
-                    (this.base().x() + 1) * (this.graph().plotBox().width() / 2),
-                    (this.base().y() + 1) * (this.graph().plotBox().height() / 2)
+                    (this.base().x() + 1) * (graph.plotBox().width() / 2),
+                    (this.base().y() + 1) * (graph.plotBox().height() / 2)
                 );
             }
 
@@ -44,16 +47,16 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             context.transform(1, 0, 0, 1, -ax, ay);
 
             // border
-            if (this.border() > 0) {
+            if (border > 0) {
                 context.save();
                 context.transform(1, 0, 0, -1, 0, 0);
                 context.strokeStyle = this.bordercolor().toRGBA();
-                context.lineWidth = this.border();
+                context.lineWidth = border;
                 context.strokeRect(
-                    this.border() / 2,
-                    this.border() / 2,
-                    w + (2 * this.padding()) + this.border(),
-                    h + (2 * this.padding()) + this.border()
+                    border / 2,
+                    border / 2,
+                    w + (2 * padding) + border,
+                    h + (2 * padding) + border
                 );
                 context.restore();
             }
@@ -64,16 +67,16 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             context.strokeStyle = this.color().toRGBA(this.opacity());
             context.fillStyle = this.color().toRGBA(this.opacity());
             context.fillRect(
-                this.border(),
-                this.border(),
-                w + (2 * this.padding()),
-                h + (2 * this.padding())
+                border,
+                border,
+                w + (2 * padding),
+                h + (2 * padding)
             );
             context.restore();
 
             // text
             context.font = this.fontSize() + " sans-serif";
-            context.fillText(this.text().string(), this.border() + this.padding(), -(this.border() + this.padding()));
+            context.fillText(this.text().string(), border + padding, -(border + padding));
             context.restore();
         });
 

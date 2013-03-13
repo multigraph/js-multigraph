@@ -30,8 +30,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         // line, if the downfillcolor is different from the
         // fillcolor.)
         ns.BandRenderer.respondsTo("dataPoint", function (datap) {
-            var state = this.state(),
-                p;
+            var state = this.state();
 
             if (this.isMissing(datap)) {
                 // if this is a missing point, render and reset the current run, if any
@@ -41,7 +40,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                 }
             } else {
                 // otherwise, transform point to pixel coords
-                p = this.transformPoint(datap);
+                var p = this.transformPoint(datap);
                 // and add it to the current run
                 state.run.push(p);
             }
@@ -69,7 +68,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                 context.lineWidth = width;
                 context.beginPath();
                 context.moveTo(run[0][0], run[0][whichLine]);
-                for (i=1; i<run.length; ++i) {
+                for (i = 1; i < run.length; ++i) {
                     context.lineTo(run[i][0], run[i][whichLine]);
                 }
                 context.stroke();
@@ -81,9 +80,9 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         // in the band between the two data lines, and connecting the points of each data line
         // with lines of the appropriate color.
         ns.BandRenderer.respondsTo("renderRun", function () {
-            var state = this.state(),
+            var state   = this.state(),
                 context = state.context,
-                run = state.run,
+                run     = state.run,
                 i;
 
             // fill the run
@@ -93,15 +92,14 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             context.beginPath();
             // trace to the right along line 1
             context.moveTo(run[0][0], run[0][1]);
-            for (i=1; i<run.length; ++i) {
+            for (i = 1; i < run.length; ++i) {
                 context.lineTo(run[i][0], run[i][1]);
             }
             // trace back to the left along line 2
             context.lineTo(run[run.length-1][0], run[run.length-1][2]);
-            for (i=run.length-1; i>=0; --i) {
+            for (i = run.length-1; i >= 0; --i) {
                 context.lineTo(run[i][0], run[i][2]);
             }
-            context.closePath();
             context.fill();
             context.restore();
 
@@ -113,19 +111,21 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         });
 
         ns.BandRenderer.respondsTo("renderLegendIcon", function (context, x, y, icon) {
-            var state = this.state();
+            var state = this.state(),
+                iconWidth  = icon.width(),
+                iconHeight = icon.height();
 
             context.save();
             context.transform(1, 0, 0, 1, x, y);
 
             context.save();
             // Draw icon background (with opacity)
-            if (icon.width() < 10 || icon.height() < 10) {
+            if (iconWidth < 10 || iconHeight < 10) {
                 context.fillStyle = state.fillcolor.toRGBA();
             } else {
                 context.fillStyle = "#FFFFFF";
             }
-            context.fillRect(0, 0, icon.width(), icon.height());
+            context.fillRect(0, 0, iconWidth, iconHeight);
             context.restore();
 
             // Draw icon graphics
@@ -135,15 +135,14 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 
             context.beginPath();
 
-            context.moveTo(0,            2*icon.height()/8);
-            context.lineTo(0,            6*icon.height()/8);
-            context.lineTo(icon.width(), 7*icon.height()/8);
-            context.lineTo(icon.width(), 3*icon.height()/8);
-            context.lineTo(0,            2*icon.height()/8);
+            context.moveTo(0,         2*iconHeight/8);
+            context.lineTo(0,         6*iconHeight/8);
+            context.lineTo(iconWidth, 7*iconHeight/8);
+            context.lineTo(iconWidth, 3*iconHeight/8);
+            context.lineTo(0,         2*iconHeight/8);
             
-            context.stroke();
             context.fill();
-            context.closePath();
+            context.stroke();
 
             context.restore();
         });

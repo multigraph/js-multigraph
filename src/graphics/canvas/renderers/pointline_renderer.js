@@ -31,9 +31,12 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             }
             this.settings(settings);
 
-            context.strokeStyle = settings.linecolor.getHexString("#");
-            context.lineWidth = settings.linewidth;
-            context.beginPath();
+            if (settings.linewidth > 0) {
+                context.save();
+                context.beginPath();
+                context.lineWidth = settings.linewidth;
+                context.strokeStyle = settings.linecolor.getHexString("#");
+            }
         });
         ns.PointlineRenderer.respondsTo("dataPoint", function (datap) {
             var settings = this.settings(),
@@ -62,7 +65,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                 context  = settings.context;
             if (settings.linewidth > 0) {
                 context.stroke();
-                context.closePath();
+                context.restore();
             }
             if (settings.pointsize > 0) {
                 this.drawPoints();
@@ -76,10 +79,11 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                 points   = settings.points,
                 i;
 
+            context.save();
+            context.beginPath();
             if ((settings.pointshape === ns.PointlineRenderer.PLUS) || (settings.pointshape === ns.PointlineRenderer.X)) {
                 context.strokeStyle = settings.pointcolor.getHexString("#");
                 context.lineWidth = settings.pointoutlinewidth;
-                context.beginPath();
             } else {
                 context.fillStyle = settings.pointcolor.toRGBA(settings.pointopacity);
                 context.strokeStyle = settings.pointoutlinecolor.getHexString("#");
@@ -90,73 +94,72 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                 this.drawPoint(context, settings, points[i]);
             }
 
-            if ((settings.pointshape === ns.PointlineRenderer.PLUS) || (settings.pointshape === ns.PointlineRenderer.X)) {
-                context.stroke();
-                context.closePath();
+            if (!((settings.pointshape === ns.PointlineRenderer.PLUS) || (settings.pointshape === ns.PointlineRenderer.X))) {
+                context.fill();
             }
-
+            context.stroke();
+            context.restore();
         });
 
         ns.PointlineRenderer.respondsTo("drawPoint", function (context, settings, p) {
+            var pointsize = settings.pointsize,
+                p0 = p[0],
+                p1 = p[1],
+                a,b,d;
 
-            var a,b,d;
-
-            if (settings.pointshape === ns.PointlineRenderer.PLUS) {
-                context.moveTo(p[0], p[1]-settings.pointsize);
-                context.lineTo(p[0], p[1]+settings.pointsize);
-                context.moveTo(p[0]-settings.pointsize, p[1]);
-                context.lineTo(p[0]+settings.pointsize, p[1]);
-                return;
-            } else if (settings.pointshape === ns.PointlineRenderer.X) {
-                d = 0.70710 * settings.pointsize;
-                context.moveTo(p[0]-d, p[1]-d);
-                context.lineTo(p[0]+d, p[1]+d);
-                context.moveTo(p[0]-d, p[1]+d);
-                context.lineTo(p[0]+d, p[1]-d);
-                return;
+            switch (settings.pointshape) {
+                case ns.PointlineRenderer.PLUS:
+                    context.moveTo(p0,             p1 - pointsize);
+                    context.lineTo(p0,             p1 + pointsize);
+                    context.moveTo(p0 - pointsize, p1);
+                    context.lineTo(p0 + pointsize, p1);
+                    return;
+                case ns.PointlineRenderer.X:
+                    d = 0.70710 * pointsize;
+                    context.moveTo(p0-d, p1-d);
+                    context.lineTo(p0+d, p1+d);
+                    context.moveTo(p0-d, p1+d);
+                    context.lineTo(p0+d, p1-d);
+                    return;
+                case ns.PointlineRenderer.SQUARE:
+                    context.moveTo(p0 - pointsize, p1 - pointsize);
+                    context.lineTo(p0 + pointsize, p1 - pointsize);
+                    context.lineTo(p0 + pointsize, p1 + pointsize);
+                    context.lineTo(p0 - pointsize, p1 + pointsize);
+                    return;
+                case ns.PointlineRenderer.TRIANGLE:
+                    d = 1.5 * pointsize;
+                    a = 0.866025 * d;
+                    b = 0.5 * d;
+                    context.moveTo(p0,     p1 + d);
+                    context.lineTo(p0 + a, p1 - b);
+                    context.lineTo(p0 - a, p1 - b);
+                    return;
+                case ns.PointlineRenderer.DIAMOND:
+                    d = 1.5 * pointsize;
+                    context.moveTo(p0 - pointsize, p1);
+                    context.lineTo(p0,             p1 + d);
+                    context.lineTo(p0 + pointsize, p1);
+                    context.lineTo(p0,             p1 - d);
+                    return;
+                case ns.PointlineRenderer.STAR:
+                    d = 1.5 * pointsize;
+                    context.moveTo(p0 - d*0.0000, p1 + d*1.0000);
+                    context.lineTo(p0 + d*0.3536, p1 + d*0.3536);
+                    context.lineTo(p0 + d*0.9511, p1 + d*0.3090);
+                    context.lineTo(p0 + d*0.4455, p1 - d*0.2270);
+                    context.lineTo(p0 + d*0.5878, p1 - d*0.8090);
+                    context.lineTo(p0 - d*0.0782, p1 - d*0.4938);
+                    context.lineTo(p0 - d*0.5878, p1 - d*0.8090);
+                    context.lineTo(p0 - d*0.4938, p1 - d*0.0782);
+                    context.lineTo(p0 - d*0.9511, p1 + d*0.3090);
+                    context.lineTo(p0 - d*0.2270, p1 + d*0.4455);
+                    return;
+                case ns.PointlineRenderer.CIRCLE:
+                    context.moveTo(p0 + pointsize, p1);
+                    context.arc(p0, p1, pointsize, 0, 2*Math.PI, false);
+                    return;
             }
-
-            context.beginPath();
-
-            if (settings.pointshape === ns.PointlineRenderer.SQUARE) {
-                context.moveTo(p[0] - settings.pointsize, p[1] - settings.pointsize);
-                context.lineTo(p[0] + settings.pointsize, p[1] - settings.pointsize);
-                context.lineTo(p[0] + settings.pointsize, p[1] + settings.pointsize);
-                context.lineTo(p[0] - settings.pointsize, p[1] + settings.pointsize);
-            } else if (settings.pointshape === ns.PointlineRenderer.TRIANGLE) {
-                d = 1.5*settings.pointsize;
-                a = 0.866025*d;
-                b = 0.5*d;
-                context.moveTo(p[0], p[1]+d);
-                context.lineTo(p[0]+a, p[1]-b);
-                context.lineTo(p[0]-a, p[1]-b);
-            } else if (settings.pointshape === ns.PointlineRenderer.DIAMOND) {
-                d = 1.5*settings.pointsize;
-                context.moveTo(p[0]-settings.pointsize, p[1]);
-                context.lineTo(p[0], p[1]+d);
-                context.lineTo(p[0]+settings.pointsize, p[1]);
-                context.lineTo(p[0], p[1]-d);
-            } else if (settings.pointshape === ns.PointlineRenderer.STAR) {
-                d = 1.5*settings.pointsize;
-                context.moveTo(p[0]-d*0.0000, p[1]+d*1.0000);
-                context.lineTo(p[0]+d*0.3536, p[1]+d*0.3536);
-                context.lineTo(p[0]+d*0.9511, p[1]+d*0.3090);
-                context.lineTo(p[0]+d*0.4455, p[1]-d*0.2270);
-                context.lineTo(p[0]+d*0.5878, p[1]-d*0.8090);
-                context.lineTo(p[0]-d*0.0782, p[1]-d*0.4938);
-                context.lineTo(p[0]-d*0.5878, p[1]-d*0.8090);
-                context.lineTo(p[0]-d*0.4938, p[1]-d*0.0782);
-                context.lineTo(p[0]-d*0.9511, p[1]+d*0.3090);
-                context.lineTo(p[0]-d*0.2270, p[1]+d*0.4455);
-            } else { // ns.PointlineRenderer.CIRCLE
-                context.arc(p[0], p[1], settings.pointsize, 0, 2*Math.PI, false);
-            }
-
-            context.closePath();
-            context.fill();
-            context.stroke();
-
-
         });
 
         ns.PointlineRenderer.respondsTo("renderLegendIcon", function (context, x, y, icon) {
@@ -174,13 +177,12 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                 context.moveTo(x, y + icon.height()/2);
                 context.lineTo(x + icon.width(), y + icon.height()/2);
                 context.stroke();
-                context.closePath();
             }
             if (settings.pointsize > 0) {
+                context.beginPath();
                 if ((settings.pointshape === ns.PointlineRenderer.PLUS) || (settings.pointshape === ns.PointlineRenderer.X)) {
                     context.strokeStyle = settings.pointcolor.toRGBA();
                     context.lineWidth   = settings.pointoutlinewidth;
-                    context.beginPath();
                 } else {
                     context.fillStyle   = settings.pointcolor.toRGBA(settings.pointopacity);
                     context.strokeStyle = settings.pointoutlinecolor.toRGBA();
@@ -189,14 +191,12 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 
                 this.drawPoint(context, settings, [(x + icon.width()/2), (y + icon.height()/2)]);
 
-                if ((settings.pointshape === ns.PointlineRenderer.PLUS) || (settings.pointshape === ns.PointlineRenderer.X)) {
-                    context.stroke();
-                    context.closePath();
+                if (!((settings.pointshape === ns.PointlineRenderer.PLUS) || (settings.pointshape === ns.PointlineRenderer.X))) {
+                    context.fill();
                 }
-
+                context.stroke();
             }
             context.restore();
-
         });
 
     });

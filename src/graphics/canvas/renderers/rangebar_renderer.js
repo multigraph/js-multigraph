@@ -21,51 +21,41 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             };
             state.barpixeloffset = state.barpixelwidth * state.baroffset;
             this.state(state);
+            context.save();
+            context.beginPath();
         });
 
         ns.RangeBarRenderer.respondsTo("dataPoint", function (datap) {
-            var state = this.state(),
-                context = state.context,
-                p;
-
             if (this.isMissing(datap)) {
                 return;
             }
 
-            p = this.transformPoint(datap);
+            var state = this.state(),
+                context = state.context,
+                p = this.transformPoint(datap),
+                x0 = p[0] - state.barpixeloffset,
+                x1 = x0 + state.barpixelwidth;
 
-            var x0 = p[0] - state.barpixeloffset;
-            var x1 = x0 + state.barpixelwidth;
-
-            context.save();
-            context.globalAlpha = state.fillopacity;
-            context.fillStyle = state.fillcolor.getHexString("#");
-            context.beginPath();
             context.moveTo(x0, p[1]);
             context.lineTo(x0, p[2]);
             context.lineTo(x1, p[2]);
             context.lineTo(x1, p[1]);
-            context.closePath();
-            context.fill();
-            context.restore();
-
-            if (state.linewidth > 0 && state.barpixelwidth > state.hidelines) {
-                context.save();
-                context.strokeStyle = state.linecolor.getHexString("#");
-                context.lineWidth = state.linewidth;
-                context.beginPath();
-                context.moveTo(x0, p[1]);
-                context.lineTo(x0, p[2]);
-                context.lineTo(x1, p[2]);
-                context.lineTo(x1, p[1]);
-                context.closePath();
-                context.stroke();
-                context.restore();
-            }
-
+            context.lineTo(x0, p[1]);
         });
 
         ns.RangeBarRenderer.respondsTo("end", function () {
+            var state = this.state(),
+                context = state.context;
+
+            context.globalAlpha = state.fillopacity;
+            context.fillStyle = state.fillcolor.getHexString("#");
+            context.fill();
+            if (state.linewidth > 0 && state.barpixelwidth > state.hidelines) {
+                context.strokeStyle = state.linecolor.getHexString("#");
+                context.lineWidth = state.linewidth;
+                context.stroke();
+            }
+            context.restore();
         });
 
         ns.RangeBarRenderer.respondsTo("renderLegendIcon", function (context, x, y, icon) {
@@ -91,26 +81,28 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             }
 
             // Adjust the width of the icons bars based upon the width and height of the icon Ranges: {20, 10, 0}
-            var barwidth;
-            if (icon.width() > 20 || icon.height() > 20) {
-                barwidth = icon.width() / 6;
-            } else if(icon.width() > 10 || icon.height() > 10) {
-                barwidth = icon.width() / 4;
+            var iconWidth = icon.width(),
+                iconHeight = icon.height(),
+                barwidth;
+            if (iconWidth > 20 || iconHeight > 20) {
+                barwidth = iconWidth / 6;
+            } else if(iconWidth > 10 || iconHeight > 10) {
+                barwidth = iconWidth / 4;
             } else {
-                barwidth = icon.width() / 4;
+                barwidth = iconWidth / 4;
             }
 
             // If the icon is large enough draw extra bars
-            if (icon.width() > 20 && icon.height() > 20) {
-                context.fillRect(  icon.width()/4 - barwidth/2,                icon.height()/8, barwidth, icon.height()/2);
-                context.strokeRect(icon.width()/4 - barwidth/2,                icon.height()/8, barwidth, icon.height()/2);
+            if (iconWidth > 20 && iconHeight > 20) {
+                context.fillRect(  iconWidth/4 - barwidth/2,             iconHeight/8, barwidth, iconHeight/2);
+                context.strokeRect(iconWidth/4 - barwidth/2,             iconHeight/8, barwidth, iconHeight/2);
 
-                context.fillRect(  icon.width() - icon.width()/4 - barwidth/2, icon.height()/4, barwidth, icon.height()/3);
-                context.strokeRect(icon.width() - icon.width()/4 - barwidth/2, icon.height()/4, barwidth, icon.height()/3);
+                context.fillRect(  iconWidth - iconWidth/4 - barwidth/2, iconHeight/4, barwidth, iconHeight/3);
+                context.strokeRect(iconWidth - iconWidth/4 - barwidth/2, iconHeight/4, barwidth, iconHeight/3);
             }
 
-            context.fillRect(  icon.width()/2 - barwidth/2, 0, barwidth, icon.height()-icon.height()/4);
-            context.strokeRect(icon.width()/2 - barwidth/2, 0, barwidth, icon.height()-icon.height()/4);
+            context.fillRect(  iconWidth/2 - barwidth/2, 0, barwidth, iconHeight-iconHeight/4);
+            context.strokeRect(iconWidth/2 - barwidth/2, 0, barwidth, iconHeight-iconHeight/4);
 
             context.restore();
         });

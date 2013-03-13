@@ -4,11 +4,10 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
     ns.mixin.add(function (ns) {
 
         var drawText = function (text, context, base, anchor, position, angle, color) {
-            var h = text.origHeight();
-            var w = text.origWidth();
-
-            var ax = 0.5 * w * (anchor.x() + 1);
-            var ay = 0.5 * h * (anchor.y() + 1);
+            var h = text.origHeight(),
+                w = text.origWidth(),
+                ax = 0.5 * w * (anchor.x() + 1),
+                ay = 0.5 * h * (anchor.y() + 1);
 
             context.save();
             context.fillStyle = color.getHexString("#");
@@ -38,7 +37,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 
         ns.Labeler.respondsTo("renderLabel", function (context, value) {
             var formattedString = new ns.Text(this.formatter().format(value)),
-                a = this.axis().dataValueToAxisValue(value);
+                a = this.axis().dataValueToAxisValue(value),
+                base;
 
             formattedString.initializeGeometry({
                     "context" : context,
@@ -46,14 +46,12 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                 });
 
             if (this.axis().orientation() === ns.Axis.HORIZONTAL) {
-                drawText(formattedString, context, new window.multigraph.math.Point(a, this.axis().perpOffset()),
-                         this.anchor(), this.position(), this.angle(), this.color());
+                base = new window.multigraph.math.Point(a, this.axis().perpOffset());
             } else {
-                drawText(formattedString, context, new window.multigraph.math.Point(this.axis().perpOffset(), a),
-                         this.anchor(), this.position(), this.angle(), this.color());
+                base = new window.multigraph.math.Point(this.axis().perpOffset(), a);
             }
+            drawText(formattedString, context, base, this.anchor(), this.position(), this.angle(), this.color());
         });
-
 
     });
 
