@@ -12,4 +12,4 @@
 	url = https://github.com/nemac/ajaxthrottle.git
 [submodule "lib/lightbox"]
 	path = lib/lightbox
-	url = git@github.com:nemac/lightbox.git
+	url = https://github.com/nemac/lightbox.git
