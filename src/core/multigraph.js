@@ -11,6 +11,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     var $ = window.multigraph.jQuery;
 
+    // define empty object for holding data adpaters
+    window.multigraph.adapters = {};
+
     /**
      * The Multigraph Jermaine model is the root class for the js-multigraph project.
      *
