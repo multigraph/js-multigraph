@@ -158,8 +158,6 @@ sub make_test_html {
     my $prevlink = shift;
     my $nextlink = shift;
 
-printf("jsfiles: %s\n", join(", ", @$jsfiles));
-
     my $prev = "";
     my $next = "";
     if ($prevlink) {

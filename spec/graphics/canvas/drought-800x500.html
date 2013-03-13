@@ -9,7 +9,7 @@
 -->
 <html>
 <head>
-  <title>raphael graphics test: <a href="../../mugl/bar_graph.xml">bar_graph.xml</a> (800 X 500)</title>
+  <title>canvas graphics test: <a href="../../mugl/drought.xml">drought.xml</a> (800 X 500)</title>
   <script type="text/javascript" src="../../../lib/jermaine/build/jermaine.js"></script>
   <script type="text/javascript" src="../../../lib/jquery/jquery.min.js"></script>
   <script type="text/javascript" src="../../../lib/ajaxthrottle/src/ajaxthrottle.js"></script>
@@ -110,28 +110,25 @@
 <script type="text/javascript" src="../../../src/parser/jquery/window.js"></script>
 <script type="text/javascript" src="../../../src/parser/jquery/zoom.js"></script>
 
-<script type="text/javascript" src="../../../src/graphics/raphael/raphael.js"></script>
-<script type="text/javascript" src="../../../src/graphics/raphael/raphael_mixin.js"></script>
-<script type="text/javascript" src="../../../src/graphics/raphael/axis.js"></script>
-<script type="text/javascript" src="../../../src/graphics/raphael/axis_title.js"></script>
-<script type="text/javascript" src="../../../src/graphics/raphael/background.js"></script>
-<script type="text/javascript" src="../../../src/graphics/raphael/constant_plot.js"></script>
-<script type="text/javascript" src="../../../src/graphics/raphael/data_plot.js"></script>
-<script type="text/javascript" src="../../../src/graphics/raphael/graph.js"></script>
-<script type="text/javascript" src="../../../src/graphics/raphael/graph_title.js"></script>
-<script type="text/javascript" src="../../../src/graphics/raphael/icon.js"></script>
-<script type="text/javascript" src="../../../src/graphics/raphael/img.js"></script>
-<script type="text/javascript" src="../../../src/graphics/raphael/labeler.js"></script>
-<script type="text/javascript" src="../../../src/graphics/raphael/legend.js"></script>
-<script type="text/javascript" src="../../../src/graphics/raphael/multigraph.js"></script>
-<script type="text/javascript" src="../../../src/graphics/raphael/plotarea.js"></script>
-<script type="text/javascript" src="../../../src/graphics/raphael/renderers/band_renderer.js"></script>
-<script type="text/javascript" src="../../../src/graphics/raphael/renderers/bar_renderer.js"></script>
-<script type="text/javascript" src="../../../src/graphics/raphael/renderers/fill_renderer.js"></script>
-<script type="text/javascript" src="../../../src/graphics/raphael/renderers/pointline_renderer.js"></script>
-<script type="text/javascript" src="../../../src/graphics/raphael/renderers/rangebar_renderer.js"></script>
-<script type="text/javascript" src="../../../src/graphics/raphael/text.js"></script>
-<script type="text/javascript" src="../../../src/graphics/raphael/window.js"></script>
+<script type="text/javascript" src="../../../src/graphics/canvas/canvas_mixin.js"></script>
+<script type="text/javascript" src="../../../src/graphics/canvas/axis.js"></script>
+<script type="text/javascript" src="../../../src/graphics/canvas/axis_title.js"></script>
+<script type="text/javascript" src="../../../src/graphics/canvas/background.js"></script>
+<script type="text/javascript" src="../../../src/graphics/canvas/graph.js"></script>
+<script type="text/javascript" src="../../../src/graphics/canvas/graph_title.js"></script>
+<script type="text/javascript" src="../../../src/graphics/canvas/icon.js"></script>
+<script type="text/javascript" src="../../../src/graphics/canvas/img.js"></script>
+<script type="text/javascript" src="../../../src/graphics/canvas/labeler.js"></script>
+<script type="text/javascript" src="../../../src/graphics/canvas/legend.js"></script>
+<script type="text/javascript" src="../../../src/graphics/canvas/multigraph.js"></script>
+<script type="text/javascript" src="../../../src/graphics/canvas/plotarea.js"></script>
+<script type="text/javascript" src="../../../src/graphics/canvas/renderers/band_renderer.js"></script>
+<script type="text/javascript" src="../../../src/graphics/canvas/renderers/bar_renderer.js"></script>
+<script type="text/javascript" src="../../../src/graphics/canvas/renderers/fill_renderer.js"></script>
+<script type="text/javascript" src="../../../src/graphics/canvas/renderers/pointline_renderer.js"></script>
+<script type="text/javascript" src="../../../src/graphics/canvas/renderers/rangebar_renderer.js"></script>
+<script type="text/javascript" src="../../../src/graphics/canvas/text.js"></script>
+<script type="text/javascript" src="../../../src/graphics/canvas/window.js"></script>
 <script type="text/javascript" src="../../../src/events/jquery/draggable/mixin.js"></script>
 <script type="text/javascript" src="../../../src/events/jquery/draggable/graph.js"></script>
 <script type="text/javascript" src="../../../src/events/jquery/mouse/mixin.js"></script>
@@ -150,23 +147,23 @@
 <script type="text/javascript" src="../../../src/normalizer/multigraph.js"></script>
 <script type="text/javascript" src="../../../src/normalizer/plot.js"></script>
 <!--END_ANT_LINES-->
-
+<script type="text/javascript" src="../../../experimental/adapters/drought.js"></script>
 </head>
 <body>
 <center>
 <table>
 <tr>
-<td align="left"><h3>raphael graphics test: <a href="../../mugl/bar_graph.xml">bar_graph.xml</a> (800 X 500)</h3></td>
-<td align="right">Switch to: <a href="../canvas/bar_graph-800x500.html">canvas</a></td>
+<td align="left"><h3>canvas graphics test: <a href="../../mugl/drought.xml">drought.xml</a> (800 X 500)</h3></td>
+<td align="right">Switch to: <a href="../raphael/drought-800x500.html">raphael</a></td>
 </tr>
 <tr><td colspan="2">
 <table>
 <tr>
-<td width="40%" align="left">Previous: <a href="band_legend-800x500.html">band_legend-800x500.html</a></td>
+<td width="40%" align="left">Previous: <a href="dewpoint-800x500.html">dewpoint-800x500.html</a></td>
 <td width="20%" align="center"><a href="../index.html">All Graphics Tests</a></td>
-<td width="40%" align="right">Next: <a href="bar_legend-800x500.html">bar_legend-800x500.html</a></td>
+<td width="40%" align="right">Next: <a href="empty_titles-800x500.html">empty_titles-800x500.html</a></td>
 </tr>
-<tr><td align="center" colspan="3"><div class="multigraph" data-src="../../mugl/bar_graph.xml" data-width="800" data-height="500" data-driver="raphael"/></td></tr>
+<tr><td align="center" colspan="3"><div class="multigraph" data-src="../../mugl/drought.xml" data-width="800" data-height="500" data-driver="canvas"/></td></tr>
 </table>
 </td></tr></table>
 </center>
