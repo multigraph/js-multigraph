@@ -389,7 +389,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
         return {
             error : function(e) {
-                $(div).errorDisplay("displayError", e.message, e.message, {
+                var stackTrace = (e.stack && typeof(e.stack) === "string") ? e.stack.replace(/\n/g, "</li><li>") : e.message;
+                $(div).errorDisplay("displayError", stackTrace, e.message, {
                     fontColor       : '#000000',
                     backgroundColor : '#ff0000',
                     indicatorColor  : '#ff0000'
@@ -398,8 +399,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
             warning : function (w) {
                 // w can be either a string, or a Warning instance
-                var message = "Warning: " + ((typeof(w) === "string") ? w : w.message);
-                $(div).errorDisplay("displayError", message, message, {
+                var message    = "Warning: " + ((typeof(w) === "string") ? w : w.message),
+                    stackTrace = (typeof(w) !== "string" && w.stack && typeof(w.stack) === "string") ? w.stack.replace(/\n/g, "</li><li>") : message;
+                $(div).errorDisplay("displayError", stackTrace, message, {
                     fontColor       : '#000000',
                     backgroundColor : '#e06a1b',
                     indicatorColor  : '#e06a1b'
