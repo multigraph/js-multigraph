@@ -4,6 +4,10 @@
 ###  at.  The 'ant graphicstests' target will create a test html file
 ###  for viewing each of these mugl files at the specified size(s).
 ###
+###  Each line in this file may optionally end with a (space or comma separated)
+###  list of javascript files that will be included in the generated
+###  html file, after all the multigraph-related javascript files are included.
+###
 ###  'ant graphicstests' also scans this directory to see what
 ###  mugl files are present in it, and creates a test html file at the
 ###  default size of 800 x 500 for any mugl files not listed here.  If
@@ -31,3 +35,4 @@ dashboard-projections.xml   800  400
 crn-webservice.xml          1000 400
 acis-webservice.xml         1000 400
 multigraph-logo.xml         500  500
+drought.xml                 800  500   ../../../experimental/adapters/drought.js

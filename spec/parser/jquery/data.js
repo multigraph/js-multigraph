@@ -105,7 +105,7 @@ describe("Data parsing", function () {
 
     describe("ArrayData with adpater attribute", function () {
         // define an adapter
-        window.multigraph.adapters['ncdc-divisional-drought'] = {
+        window.multigraph.adapters['drought'] = {
             textToStringArray : function (dataVariables, text) {
                 var stringArray = [],
                     stringValuesThisRow,
@@ -124,7 +124,7 @@ describe("Data parsing", function () {
 
         beforeEach(function() {
             xmlString = ''
-                + '<data adapter="ncdc-divisional-drought">'
+                + '<data adapter="drought">'
                 +   '<variables>'
                 +     '<variable id="time" column="0" type="datetime"/>'
                 +     '<variable id="pdsi" column="1" type="number"/>'
