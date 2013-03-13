@@ -17,9 +17,18 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 defaultMissingvalueString,
                 defaultMissingopString,
                 dataVariables = [],
-                data = {};
+                data = {},
+                adap, adapter = ArrayData;
 
             if (xml) {
+
+                adap = window.multigraph.jQuery(xml).attr("adapter");
+                if (adap !== undefined && adap !== "") {
+                    adapter = window.multigraph.adapters[adap];
+                    if (adapter === undefined) {
+                        throw new Error("Missing data adpater: " + adapter);
+                    }
+                }
 
                 // parse the <variables> section
                 variables_xml = xml.find("variables");
@@ -51,7 +60,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 var values_xml = window.multigraph.jQuery(xml.find(">values"));
                 if (values_xml.length > 0) {
                     values_xml = values_xml[0];
-                    var stringValues = ArrayData.textToStringArray(window.multigraph.jQuery(values_xml).text());
+                    var stringValues = adapter.textToStringArray(dataVariables, window.multigraph.jQuery(values_xml).text());
                     var values;
                     if (haveRepeat) {
                         values = new PeriodicArrayData(dataVariables, stringValues, period);

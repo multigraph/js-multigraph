@@ -226,7 +226,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @return {array} stringValues
          * @author jrfrimme
          */
-        ArrayData.textToStringArray = function (text) {
+        ArrayData.textToStringArray = function (dataVariables, text) {
             var stringValues = [],
                 lines = text.split("\n"),
                 stringValuesThisRow,
