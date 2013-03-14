@@ -6,8 +6,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * @submodule core
      */
 
-    var UF = window.multigraph.util.namespace("window.multigraph.utilityFunctions");
-
     /**
      * A WebServiceDataCacheNode represents a single node in the
      * doubly-linked list holding the data for a WebServiceDataCache.
@@ -55,7 +53,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @type {Array|null}
          * @author jrfrimme
          */
-        this.hasA("data").which.defaultsTo(null).and.validatesWith(function(data) {
+        this.hasA("data").which.defaultsTo(null).and.validatesWith(function (data) {
+            var UF = window.multigraph.util.namespace("window.multigraph.utilityFunctions");
             // accept null
             if (data === null) { return true; }
             // only accept arrays
@@ -72,7 +71,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                     this.message = "WebServiceDataCacheNode's data attribute is not an Array of Arrays";
                     return false;
                 }
-                for (i=0; i<firstRow.length; ++i) {
+                for (i = 0; i < firstRow.length; ++i) {
                     if (!ns.DataValue.isInstance(firstRow[i])) {
                         this.message = "WebServiceDataCacheNode's data attribute is not an Array of Arrays of DataValues (bad value in position " + i + " of first row";
                         return false;
@@ -89,7 +88,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @type {WebServiceDataCacheNode|null}
          * @author jrfrimme
          */
-        this.hasA("next").which.defaultsTo(null).and.validatesWith(function(x) {
+        this.hasA("next").which.defaultsTo(null).and.validatesWith(function (x) {
             return x === null || x instanceof ns.WebServiceDataCacheNode;
         });
 
@@ -100,7 +99,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @type {WebServiceDataCacheNode|null}
          * @author jrfrimme
          */
-        this.hasA("prev").which.defaultsTo(null).and.validatesWith(function(x) {
+        this.hasA("prev").which.defaultsTo(null).and.validatesWith(function (x) {
             return x === null || x instanceof ns.WebServiceDataCacheNode;
         });
 
@@ -130,7 +129,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @author jrfrimme
          * @return {WebServiceDataCacheNode|null}
          */
-        this.respondsTo("dataNext", function() {
+        this.respondsTo("dataNext", function () {
             var node = this.next();
             while (node !== null && !node.hasData()) {
                 node = node.next();
@@ -146,7 +145,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @author jrfrimme
          * @return {WebServiceDataCacheNode|null}
          */
-        this.respondsTo("dataPrev", function() {
+        this.respondsTo("dataPrev", function () {
             var node = this.prev();
             while (node !== null && !node.hasData()) {
                 node = node.prev();
@@ -162,7 +161,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @author jrfrimme
          * @return {DataValue|null}
          */
-        this.respondsTo("dataMin", function() {
+        this.respondsTo("dataMin", function () {
             var data = this.data();
             if (data === null) { return null; }
             if (data.length === 0) { return null; }
@@ -222,7 +221,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @param {String} dataText
          * @author jrfrimme
          */
-        this.respondsTo("parseData", function(columns, dataText) {
+        this.respondsTo("parseData", function (columns, dataText) {
             var i, b,
                 maxPrevValue = null,
                 minNextValue = null,
@@ -248,7 +247,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             // populate the data array by copying values from the converted array, skipping any
             // values that are already within the range covered by the rest of the cache
             data = [];
-            for (i=0; i<arrayDataArray.length; ++i) {
+            for (i = 0; i < arrayDataArray.length; ++i) {
                 row = arrayDataArray[i];
                 if ((maxPrevValue === null || row[0].gt(maxPrevValue)) &&
                     (minNextValue === null || row[0].lt(minNextValue))) {

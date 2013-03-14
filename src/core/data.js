@@ -6,18 +6,14 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * @submodule core
      */
 
-    var DataVariable = ns.DataVariable,
-        Data,
-        i;
-
     /**
      * @class Data
      * @for Data
      * @constructor
      * @param {DataVariable} columns
      */
-    Data = new window.jermaine.Model(function () {
-        var Data = this;
+    var Data = new window.jermaine.Model(function () {
+        var DataVariable = ns.DataVariable;
         
         this.isA(ns.EventEmitter);
 
@@ -51,10 +47,12 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          *         having a "column" attribute of 1
          */
         var find = function (attrName, attrValue, columns) {
-            var result = -1;
+            var result = -1,
+                i;
             for (i = 0; i < columns.size(); ++i) {
                 if (columns.at(i)[attrName]() === attrValue) {
                     result = i;
+                    break;
                 }
             }
             return result;
@@ -69,7 +67,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          */
         this.respondsTo("initializeColumns", function () {
             var i;
-            for (i=0; i<this.columns().size(); ++i) {
+            for (i = 0; i < this.columns().size(); ++i) {
                 this.columns().at(i).data(this);
             }
         });
@@ -100,14 +98,13 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
 
         this.respondsTo("columnIdToColumnNumber", function (id) {
-            var columnIndex,
-                column = undefined;
-
             if (typeof(id) !== "string") {
                 throw new Error("Data: columnIdToColumnNumber expects parameter to be a string");
             }
 
-            columnIndex = find("id", id, this.columns());
+            var columnIndex = find("id", id, this.columns()),
+                column = undefined;
+
             if (columnIndex >= 0) {
                 column = this.columns().at(columnIndex);
             }
@@ -120,13 +117,11 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
 
         this.respondsTo("columnIdToDataVariable", function (id) {
-            var dv;
-            
             if (typeof(id) !== "string") {
                 throw new Error("Data: columnIdToDataVariable requires a string parameter");
             }
             
-            dv = find("id", id, this.columns()) !== -1?this.columns().at(find("id", id, this.columns())):undefined;
+            var dv = find("id", id, this.columns()) !== -1?this.columns().at(find("id", id, this.columns())):undefined;
 
             if (dv === undefined) {
                 throw new Error("Data: no column with the label " + id);
@@ -136,13 +131,11 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
 
         this.respondsTo("getColumnId", function (column) {
-            var result;
-
             if (typeof(column) !== "number") {
                 throw new Error("Data: getColumnId method expects an integer");
             }
 
-            result = find("column", column, this.columns());
+            var result = find("column", column, this.columns());
 
             if (result === -1) {
                 throw new Error("Data: column " + column + " does not exist");
@@ -153,8 +146,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
         this.respondsTo("getColumns", function () {
             var result = [],
-                         columns = this.columns(),
-                         i;
+                columns = this.columns(),
+                i;
 
             for (i = 0; i < columns.size(); ++i) {
                 result.push(columns.at(i));

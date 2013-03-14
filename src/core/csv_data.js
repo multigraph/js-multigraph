@@ -1,11 +1,9 @@
 window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
-    var ArrayData = ns.ArrayData,
-        DataValue = ns.DataValue,
-        Data = ns.Data;
-
     var CSVData = window.jermaine.Model(function () {
+        var ArrayData = ns.ArrayData;
+
         this.isA(ArrayData);
         this.hasA("filename").which.isA("string");
         this.hasA("messageHandler");

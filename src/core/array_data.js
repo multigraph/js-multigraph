@@ -84,13 +84,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @author jrfrimme
          */
         ArrayData.getArrayDataIterator = function (arrayData, columnIds, min, max, buffer) {
-            var iter = {},
-                arraySlice = [],
-                curr = 0,
-                i, j,
-                projection,
-                firstIndex,
-                lastIndex,
+            var i, j,
+                firstIndex, lastIndex,
                 currentIndex,
                 columnIndices,
                 array = arrayData.array();
@@ -127,7 +122,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             }
 
             // find the index of the first row in the array whose column0 value is >= min
-            for (firstIndex=0; firstIndex<array.length; ++firstIndex) {
+            for (firstIndex = 0; firstIndex < array.length; ++firstIndex) {
                 if (array[firstIndex][0].ge(min)) {
                     break;
                 }
@@ -142,7 +137,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             if (firstIndex === array.length-1) {
                 lastIndex = firstIndex;
             } else {
-                for (lastIndex=firstIndex; lastIndex<array.length-1; ++lastIndex) {
+                for (lastIndex = firstIndex; lastIndex < array.length-1; ++lastIndex) {
                     if (array[lastIndex+1][0].gt(max)) {
                         break;
                     }
@@ -155,7 +150,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             }
 
             columnIndices = [];
-            for (j = 0;j < columnIds.length; ++j) {
+            for (j = 0; j < columnIds.length; ++j) {
                 var k = arrayData.columnIdToColumnNumber(columnIds[j]);
                 columnIndices.push( k );
             }
@@ -169,7 +164,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                     if (currentIndex > lastIndex) {
                         return null;
                     }
-                    for (i=0; i<columnIndices.length; ++i) {
+                    for (i = 0; i < columnIndices.length; ++i) {
                         projection.push(array[currentIndex][columnIndices[i]]);
                     }
                     ++currentIndex;
@@ -179,7 +174,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                     return currentIndex <= lastIndex;
                 }
             };
-            
         };
 
         /**
@@ -197,13 +191,13 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             var dataValues = [],
                 lines = text.split("\n"),
                 i;
-            for (i=0; i<lines.length; ++i) {
+            for (i = 0; i < lines.length; ++i) {
                 if (/\d/.test(lines[i])) { // skip line unless it contains a digit
                     var stringValuesThisRow = lines[i].split(/\s*,\s*/),
                         dataValuesThisRow = [],
                         j;
                     if (stringValuesThisRow.length === dataVariableArray.length) {
-                        for (j=0; j<stringValuesThisRow.length; ++j) {
+                        for (j = 0; j < stringValuesThisRow.length; ++j) {
                             dataValuesThisRow.push(ns.DataValue.parse(dataVariableArray[j].type(), stringValuesThisRow[j]));
                         }
                         dataValues.push( dataValuesThisRow );

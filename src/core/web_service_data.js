@@ -13,8 +13,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * @extends Data
      */
     ns.WebServiceData = window.jermaine.Model(function () {
-        var WebServiceData = this;
-
         this.isA(ns.Data);
         this.hasA("serviceaddress").which.isA("string");
         this.hasA("serviceaddresspattern").which.isA("string");
@@ -49,7 +47,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return [0, 10];
         });
 
-        this.hasA("arraydata").which.defaultsTo(null).and.validatesWith(function(arraydata) {
+        this.hasA("arraydata").which.defaultsTo(null).and.validatesWith(function (arraydata) {
             return arraydata instanceof ns.ArrayData || arraydata === null;
         });
 
@@ -60,7 +58,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @type {null|WebServiceDataCacheNode}
          * @author jrfrimme
          */
-        this.hasA("cacheHead").which.defaultsTo(null).and.validatesWith(function(x) {
+        this.hasA("cacheHead").which.defaultsTo(null).and.validatesWith(function (x) {
             //NOTE: need "ns." prefix on WebServiceDataCacheNode below, because of file
             //  load order issues
             return x === null || x instanceof ns.WebServiceDataCacheNode;
@@ -73,7 +71,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @type {null|WebServiceDataCacheNode}
          * @author jrfrimme
          */
-        this.hasA("cacheTail").which.defaultsTo(null).and.validatesWith(function(x) {
+        this.hasA("cacheTail").which.defaultsTo(null).and.validatesWith(function (x) {
             //NOTE: need "ns." prefix on WebServiceDataCacheNode below, because of file
             //  load order issues
             return x === null || x instanceof ns.WebServiceDataCacheNode;
@@ -87,7 +85,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @author jrfrimme
          * @return {null|WebServiceDataCacheNode}
          */
-        this.respondsTo("dataHead", function() {
+        this.respondsTo("dataHead", function () {
             var head = this.cacheHead();
             if (head === null) { return null; }
             if (head.hasData()) { return head; }
@@ -102,7 +100,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @author jrfrimme
          * @return {null|WebServiceDataCacheNode}
          */
-        this.respondsTo("dataTail", function() {
+        this.respondsTo("dataTail", function () {
             var tail = this.cacheTail();
             if (tail === null) { return null; }
             if (tail.hasData()) { return tail; }
@@ -120,7 +118,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @param {WebServiceCacheNode} node
          * @author jrfrimme
          */
-        this.respondsTo("insertCacheNode", function(node) {
+        this.respondsTo("insertCacheNode", function (node) {
             var head = this.cacheHead(),
                 tail = this.cacheTail();
             if (head === null) {
@@ -139,7 +137,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             }
         });
 
-        this.respondsTo("constructRequestURL", function(min, max) {
+        this.respondsTo("constructRequestURL", function (min, max) {
             if (this.serviceaddress() === undefined) {
                 throw new Error("WebServiceData.constructRequestURL: undefined service address");
             }
@@ -159,10 +157,10 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                     .replace("$max",this.formatter().format(max)));
         });
 
-        this.hasA("coveredMin").which.defaultsTo(null).and.validatesWith(function(x) {
+        this.hasA("coveredMin").which.defaultsTo(null).and.validatesWith(function (x) {
             return x === null || ns.DataValue.isInstance(x);
         });
-        this.hasA("coveredMax").which.defaultsTo(null).and.validatesWith(function(x) {
+        this.hasA("coveredMax").which.defaultsTo(null).and.validatesWith(function (x) {
             return x === null || ns.DataValue.isInstance(x);
         });
 
@@ -172,7 +170,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @method insureCoveredRange
          * @author jrfrimme
          */
-        this.respondsTo("insureCoveredRange", function() {
+        this.respondsTo("insureCoveredRange", function () {
             var head = this.cacheHead(),
                 tail = this.cacheTail(),
                 coveredMin = this.coveredMin(),
@@ -199,7 +197,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             }
         });
 
-        this.respondsTo("requestSingleRange", function(min, max) {
+        this.respondsTo("requestSingleRange", function (min, max) {
             var node,
                 requestURL,
                 that = this;
@@ -218,7 +216,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             this.ajaxthrottle().ajax({
                 url      : requestURL,
                 dataType : "text",
-                success  : function(data) {
+                success  : function (data) {
                     // if data contains a <values> tag, extract its text string value
                     if (data.indexOf("<values>") > 0) {
                         data = window.multigraph.parser.jquery.stringToJQueryXMLObj(data).find("values").text();
@@ -249,8 +247,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             });
         });
 
-        this.respondsTo("getIterator", function(columnIds, min, max, buffer) {
-      
+        this.respondsTo("getIterator", function (columnIds, min, max, buffer) {
             var initialNode,
                 initialIndex,
                 n, b, i, tmp,
@@ -285,7 +282,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             }
             // convert columnIds to columnIndices
             columnIndices = [];
-            for (i=0; i<columnIds.length; ++i) {
+            for (i = 0; i < columnIds.length; ++i) {
                 columnIndices.push( this.columnIdToColumnNumber(columnIds[i]) );
             }
 
@@ -344,9 +341,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 // go forward 'buffer' more steps, being careful not to go further than the last element of the tail
                 n = 0;
                 //while (n<buffer && !(finalNode===_tail && finalIndex<finalNode.data.length)) {
-                while (n<buffer) {
+                while (n < buffer) {
                     ++finalIndex;
-                    if (finalIndex>=finalNode.data().length) {
+                    if (finalIndex >= finalNode.data().length) {
                         b = finalNode.dataNext();
                         if (b !== null) {
                             finalNode = b;
