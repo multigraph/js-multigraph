@@ -1,0 +1,43 @@
+<mugl>
+  <window margin="0" padding="5" border="5" bordercolor="0x000000"/>
+  <plotarea margintop="10" marginleft="38" marginbottom="35" marginright="35"/>
+  <horizontalaxis id="time" type="datetime" min="1900" max="2014" length="1" base="-1,-1" anchor="-1">
+    <labels>
+      <label spacing="500Y 100Y 50Y 20Y 10Y 5Y 2Y 1Y" format="%Y"/>
+      <label spacing="6M 3M 2M 1M" format="%n %Y"/>
+    </labels>
+  </horizontalaxis>
+  <verticalaxis   id="pdsi" type="number"   min="-7" max="7" length="1">
+    <title angle="90" anchor="0,-1" position="-30,0">Palmer Drought Serverity Index</title>
+  </verticalaxis>
+  <plot>
+    <horizontalaxis ref="time">
+      <variable ref="time"/>
+    </horizontalaxis>
+    <verticalaxis ref="pdsi">
+      <variable ref="pdsi"/>
+    </verticalaxis>
+    <renderer type="bar">
+      <option name="linecolor" value="0x000000"/>
+      <option name="fillcolor"            max="-4"  value="0xfe9b00"/>		<!-- Extreme Drought -->
+      <option name="fillcolor" min="-4"   max="-3"  value="0xfece00"/>		<!-- Severe Drought -->
+      <option name="fillcolor" min="-3"   max="-2"  value="0xffff33"/>		<!-- Moderate Drought -->
+      <option name="fillcolor" min="-2"   max="2"   value="0xdddddd"/>		<!-- Near Normal -->
+      <option name="fillcolor" min="2"    max="3"   value="0x9cff89"/>		<!-- Unusually Moist -->
+      <option name="fillcolor" min="3"    max="4"   value="0x69cd52"/>		<!-- Very Moist -->
+      <option name="fillcolor" min="4"              value="0x109a00"/>		<!-- Extremely Moist -->
+      <option name="barbase" value="0"/>
+      <option name="barwidth" value="1M"/>
+      <option name="baroffset" value="0"/>
+      <option name="hidelines" value="10"/>
+    </renderer>
+
+  </plot>
+  <data adapter="drought">
+    <variables>
+      <variable column="0" id="time" type="datetime"/>
+      <variable column="1" id="pdsi" type="number" missingvalue="-99" missingop="le"/>
+    </variables>
+    <csv location="drought.csv"/>
+  </data>
+</mugl>

@@ -36,3 +36,4 @@ crn-webservice.xml          1000 400
 acis-webservice.xml         1000 400
 multigraph-logo.xml         500  500
 drought.xml                 800  500   ../../../experimental/adapters/drought.js
+drought-csv.xml             800  500   ../../../experimental/adapters/drought.js
