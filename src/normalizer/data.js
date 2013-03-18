@@ -3,45 +3,36 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
 
     ns.mixin.add(function (ns) {
 
-        ns.Data.prototype.normalize = function () {
-            var i,
-                j,
-                sortedVariables = [],
-                unsortedVariables = [];
-
-            //
-            // Handles missing variable tags if the data tag has a 'csv' or 'service' tag
-            //
-            if (this instanceof ns.CSVData || this instanceof ns.WebServiceData) {
-                if (this.columns().size() === 0) {
-                    throw new Error("Data Normalization: Data gotten from csv and web service sources require variables to be specified in the mugl.");
-                }
-            }
-
-            //
-            // Sorts variables into appropriate order
-            //
-            for (i = 0; i < this.columns().size(); i++) {
-                if (this.columns().at(i).column() !== undefined) {
-                    sortedVariables[this.columns().at(i).column()] = this.columns().at(i);
+        // Sorts variables into appropriate order
+        var sortVariables = function (data, sortedVariables, unsortedVariables) {
+            var columns = data.columns(),
+                column,
+                i;
+            for (i = 0; i < columns.size(); i++) {
+                column = columns.at(i);
+                if (column.column() !== undefined) {
+                    sortedVariables[column.column()] = column;
                 } else {
-                    unsortedVariables.push(this.columns().at(i));
+                    unsortedVariables.push(column);
                 }
             }
+        };
 
-            // creates placeholder variables if the data tag has a 'values' tag
-            if (this instanceof ns.ArrayData === true && this instanceof ns.CSVData === false && this instanceof ns.WebServiceData === false) {
-                var numMissingVariables = this.stringArray()[0].length - this.columns().size();
-                if (numMissingVariables > 0) {
-                    for (i = 0; i < numMissingVariables; i++) {
-                        unsortedVariables.push(null);
-                    }
+        // creates placeholder variables
+        var createPlaceholderVariables = function (data, unsortedVariables) {
+            var numMissingVariables = data.stringArray()[0].length - data.columns().size(),
+                i;
+            if (numMissingVariables > 0) {
+                for (i = 0; i < numMissingVariables; i++) {
+                    unsortedVariables.push(null);
                 }
             }
+        };
 
-            // inserts unsorted variables into the correct location
-            var index = 0;
-            for (i = 0; i < unsortedVariables.length; i++) {
+        // inserts unsorted variables into the correct location
+        var insertUnsortedVariables = function (sortedVariables, unsortedVariables) {
+            var index, i;
+            for (i = 0, index = 0; i < unsortedVariables.length; i++) {
                 while (true) {
                     if (sortedVariables[index] === undefined) {
                         break;
@@ -50,24 +41,27 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
                 }
                 sortedVariables[index] = unsortedVariables[i];
             }
-            
-            // checks that columns were correctly specified for 'values' data tags
-            if (this instanceof ns.ArrayData === true && this instanceof ns.CSVData === false && this instanceof ns.WebServiceData === false) {
-                if (sortedVariables.length > this.stringArray()[0].length) {
-                    for (i = 0; i < sortedVariables.length; i++) {
-                        if (sortedVariables[i] instanceof ns.DataVariable && sortedVariables[i].column() > this.stringArray()[0].length) {
-                            throw new Error("Data Variable Error: Attempting to specify column '" + sortedVariables[i].column() + "' for a variable, while there are only " + this.stringArray()[0].length + " data columns available");
-                        }
-                    }                    
-                }
-            }
+        };
 
-            //
-            // Handles missing attrs.
-            // creates the appropriate variable if missing and if the data had a 'values' tag.
-            //
+        // checks that columns were correctly specified
+        var checkColumnIndicies = function (data, sortedVariables) {
+            var length = data.stringArray()[0].length,
+                i;
+            if (sortedVariables.length > length) {
+                for (i = 0; i < sortedVariables.length; i++) {
+                    if (sortedVariables[i] instanceof ns.DataVariable && sortedVariables[i].column() > length) {
+                        throw new Error("Data Variable Error: Attempting to specify column '" + sortedVariables[i].column() + "' for a variable, while there are only " + length + " data columns available");
+                    }
+                }                    
+            }
+        };
+
+        // Handles missing attributes
+        // creates the appropriate variables if missing
+        var handleMissingAttributes = function (sortedVariables, defaultMissingop, defaultMissingvalue) {
             var defaultid,
-                defaultMissingop = ns.DataValue.parseComparator(this.defaultMissingop());
+                i;
+            defaultMissingop = ns.DataValue.parseComparator(defaultMissingop);
             for (i = 0; i < sortedVariables.length; i++) {
                 if (!sortedVariables[i]) {
                     if (i === 0) {
@@ -87,46 +81,95 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
                     }
                 }
 
-                if (this.defaultMissingvalue() !== undefined) {
+                if (defaultMissingvalue !== undefined) {
                     if (sortedVariables[i].missingvalue() === undefined) {
-                        sortedVariables[i].missingvalue(ns.DataValue.parse(sortedVariables[i].type(), this.defaultMissingvalue()));
+                        sortedVariables[i].missingvalue(ns.DataValue.parse(sortedVariables[i].type(), defaultMissingvalue));
                     }
                 }
                 if (sortedVariables[i].missingop() === undefined) {
                     sortedVariables[i].missingop(defaultMissingop);
                 }
             }
+        };
 
-            //
-            // Inserts the normalized variables into the data instance
-            //
-            while (this.columns().size() > 0) {
-                this.columns().pop();
+        // Inserts the normalized variables into the data instance
+        var insertNormalizedVariables = function (data, sortedVariables) {
+            var columns = data.columns(),
+                i;
+            while (columns.size() > 0) {
+                columns.pop();
             }
             for (i = 0; i < sortedVariables.length; i++) {
-                this.columns().add(sortedVariables[i]);
+                columns.add(sortedVariables[i]);
             }
-            this.initializeColumns();
+            data.initializeColumns();
+        };
+
+        // parses string values into the proper data types
+        // If there was actual data, validate that the number of values found in stringArray
+        // as large as the the number of variables declared.  ArrayData.textToStringArray(),
+        // which is the function that constructed stringArray, has already guaranteed that
+        // every row in stringArray is of the same length, so we can use the length of the
+        // first row as the number of variables.
+        var createDataValueArray = function (data, sortedVariables) {
+            if (data.stringArray().length > 0) {
+                if (data.stringArray()[0].length < sortedVariables.length) {
+                    throw new Error("data contains only " + data.stringArray()[0].length + " column(s), but should contain " + sortedVariables.length);
+                }
+            }
+
+            var dataValues = ns.ArrayData.stringArrayToDataValuesArray(sortedVariables, data.stringArray());
+
+            data.array(dataValues);
+            data.stringArray([]);
+        };
+
+        ns.Data.prototype.normalize = function () {
+            var sortedVariables   = [],
+                unsortedVariables = [],
+                isCsvOrWebService = this instanceof ns.CSVData || this instanceof ns.WebServiceData;
+
+            // Handles missing variable tags if the data tag has a 'csv' or 'service' tag
+            if (isCsvOrWebService) {
+                if (this.columns().size() === 0) {
+                    throw new Error("Data Normalization: Data gotten from csv and web service sources require variables to be specified in the mugl.");
+                }
+            }
+
+            sortVariables(this, sortedVariables, unsortedVariables);
+
+            // creates placeholder variables if the data tag has a 'values' tag
+            if (this instanceof ns.ArrayData === true && !isCsvOrWebService) {
+                createPlaceholderVariables(this, unsortedVariables);
+            }
+
+            insertUnsortedVariables(sortedVariables, unsortedVariables);
+
+            // checks that columns were correctly specified for 'values' data tags
+            if (this instanceof ns.ArrayData === true && !isCsvOrWebService) {
+                checkColumnIndicies(this, sortedVariables);
+            }
+
+            handleMissingAttributes(sortedVariables, this.defaultMissingop(), this.defaultMissingvalue());
+            insertNormalizedVariables(this, sortedVariables);
 
             // parses string values into the proper data types if the data tag has a 'values' tag
-            if (this instanceof ns.ArrayData === true && this instanceof ns.CSVData === false && this instanceof ns.WebServiceData === false) {
-                // If there was actual data, validate that the number of values found in stringArray
-                // as large as the the number of variables declared.  ArrayData.textToStringArray(),
-                // which is the function that constructed stringArray, has already guaranteed that
-                // every row in stringArray is of the same length, so we can use the length of the
-                // first row as the number of variables.
-                if (this.stringArray().length > 0) {
-                    if (this.stringArray()[0].length < sortedVariables.length) {
-                        throw new Error("<value> data contains only " + this.stringArray()[0].length + " column(s), but should contain " + sortedVariables.length);
-                    }
-                }
-
-                var dataValues = ns.ArrayData.stringArrayToDataValuesArray(sortedVariables, this.stringArray());
-
-                this.array(dataValues);
-                this.stringArray([]);
+            if (this instanceof ns.ArrayData === true && !isCsvOrWebService) {
+                createDataValueArray(this, sortedVariables);
             }
+        };
 
+        ns.Data.prototype.ajaxNormalize = function () {
+            var sortedVariables   = [],
+                unsortedVariables = [];
+
+            sortVariables(this, sortedVariables, unsortedVariables);
+            createPlaceholderVariables(this, unsortedVariables);
+            insertUnsortedVariables(sortedVariables, unsortedVariables);
+            checkColumnIndicies(this, sortedVariables);
+            handleMissingAttributes(sortedVariables, this.defaultMissingop(), this.defaultMissingvalue());
+            insertNormalizedVariables(this, sortedVariables);
+            createDataValueArray(this, sortedVariables);
         };
 
     });
