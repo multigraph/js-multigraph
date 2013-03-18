@@ -8,6 +8,10 @@ describe("CSV Data", function () {
         DataValue = window.multigraph.core.DataValue,
         testArrayData;
 
+    beforeEach(function () {
+        window.multigraph.normalizer.mixin.apply(window.multigraph.core);
+    });
+
     describe("constructor", function () {
         var csv;
 

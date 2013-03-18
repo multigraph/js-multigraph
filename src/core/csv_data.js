@@ -45,15 +45,11 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                     url : that.filename(),
 
                     success : function (data) {
-                        var i, j,
-                            lines,
-                            stringValues,
-                            dataValues = [],
-                            dataValuesRow;
                         //parse the data
-                        dataValues = ArrayData.textToDataValuesArray(that.getColumns(), data);
-                        // populate array
-                        that.array(dataValues);
+                        var dataValues = ArrayData.textToStringArray(that.getColumns(), data);
+                        that.stringArray(dataValues);
+                        // renormalize & populate array
+                        that.ajaxNormalize();
                         that.dataIsReady(true);
                         that.emit({type : "dataReady"});
                     },
@@ -74,7 +70,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                     complete : function (jqXHR, textStatus) {
                         that.emit({type : 'ajaxEvent', action : 'complete'});
                     }
-
 
                 });
             }
