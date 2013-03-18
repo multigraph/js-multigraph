@@ -46,7 +46,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
                     success : function (data) {
                         //parse the data
-                        var dataValues = ArrayData.textToStringArray(that.getColumns(), data);
+                        var dataValues = that.adapter().textToStringArray(that.getColumns(), data);
                         that.stringArray(dataValues);
                         // renormalize & populate array
                         that.ajaxNormalize();

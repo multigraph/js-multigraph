@@ -79,6 +79,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
         this.hasA("defaultMissingvalue").which.isA("string");
         this.hasA("defaultMissingop").which.isA("string").and.defaultsTo("eq");
+        this.hasA("adapter");
 
         /**
          * Initialization function --- should be called from isBuiltWith initializer.  This is split
