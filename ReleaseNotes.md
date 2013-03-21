@@ -1,3 +1,24 @@
+Version 4.1 (2013-03-21)
+---------------------------
+
+* removes serializer from release
+* adds a custom lightbox plugin for mobile devices
+* adds support for `adapter` plugins for `values` and `csv` data sources
+* adds `repeat` tag to support periodic data
+* `boolean` attributes in the MUGL can all be `yes` or `no` OR `true` or `false`
+* graphs with bound axes will automatically be redrawn when one is interacted with
+* improves raphael's performance
+* improves canvas's performance in IE 10
+* error reporting now includes full stack trace
+* cursor does not change to text mode on mouse down
+* corrects test for instances of DataValue
+* abstracts graph generation
+* simplifies touch handlers
+* removes references to logger renderer in release
+* bugfixes with the legend
+* bugfixes in defaults handler
+* fixes whitespace issues
+
 Version 4.0 (2013-01-03)
 ---------------------------
 
