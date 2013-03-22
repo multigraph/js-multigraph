@@ -3,11 +3,11 @@
 <head>
     <meta charset="utf-8">
     <title>src&#x2F;core&#x2F;axis_binding.js - js-Multigraph</title>
-    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0pr2&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
+    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.7.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
     <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
-    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.8.0pr2&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.7.0&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
 </head>
 <body class="yui3-skin-sam">
 
@@ -62,6 +62,8 @@
                 <li><a href="..&#x2F;classes/Mixin.html">Mixin</a></li>
             
                 <li><a href="..&#x2F;classes/Multigraph.html">Multigraph</a></li>
+            
+                <li><a href="..&#x2F;classes/PeriodicArrayData.html">PeriodicArrayData</a></li>
             
                 <li><a href="..&#x2F;classes/Text.html">Text</a></li>
             
@@ -139,7 +141,7 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
      * @for axisBinding
      * @constructor
      *&#x2F;
-    ns.AxisBinding = new window.jermaine.Model( &quot;AxisBinding&quot;, function () {
+    ns.AxisBinding = new window.jermaine.Model(&quot;AxisBinding&quot;, function () {
         var AxisBinding = this;
 
         AxisBinding.instances = {};
@@ -176,7 +178,7 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
          * @param {number|DataValue} max
          * @author jrfrimme
          *&#x2F;
-        this.respondsTo(&quot;addAxis&quot;, function(axis, min, max) {
+        this.respondsTo(&quot;addAxis&quot;, function(axis, min, max, multigraph&#x2F;*optional*&#x2F;) {
             &#x2F;&#x2F; NOTE: min&#x2F;max can be either numbers, or DataValue
             &#x2F;&#x2F; instances, but they CANNOT be strings.
 
@@ -190,11 +192,12 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
             max = axis.toRealValue(max);
 
             this.axes().push({
-                axis   : axis,
-                factor : 1 &#x2F; (max - min),
-                offset : -min &#x2F; (max - min),
-                min    : min,
-                max    : max
+                axis       : axis,
+                multigraph : multigraph,
+                factor     : 1 &#x2F; (max - min),
+                offset     : -min &#x2F; (max - min),
+                min        : min,
+                max        : max
             });
         });
 
@@ -280,7 +283,9 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
                 axes = this.axes(),
                 axis,
                 minRealValue = initiatingAxis.toRealValue(min),
-                maxRealValue = initiatingAxis.toRealValue(max);
+                maxRealValue = initiatingAxis.toRealValue(max),
+                redrawn_multigraphs = [],
+                redrawn;
 
             if (dispatch === undefined) {
                 dispatch = true; &#x2F;&#x2F; dispatch defaults to true
@@ -289,6 +294,7 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
             for (i=0; i&lt;axes.length; ++i) {
                 if (axes[i].axis === initiatingAxis) {
                     initiatingAxisIndex = i;
+                    redrawn_multigraphs = [ axes[i].multigraph ];
                     break;
                 }
             }
@@ -302,36 +308,24 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
                         (maxRealValue * axes[initiatingAxisIndex].factor + axes[initiatingAxisIndex].offset - axis.offset) &#x2F; axis.factor,
                         dispatch
                     );
+                    if (axis.multigraph !== undefined) {
+                        &#x2F;&#x2F; If this axis has a multigraph stored with it, and if that multigraph isn&#x27;t already in the &#x60;redrawn_multigraphs&#x60;
+                        &#x2F;&#x2F; array, call its &#x60;redraw&#x60; method, and add it to the array.
+                        redrawn = false;
+                        for (j=0; j&lt;redrawn_multigraphs.length; ++j) {
+                            if (axis.multigraph === redrawn_multigraphs[j]) {
+                                redrawn = true;
+                                break;
+                            }
+                        }
+                        if (!redrawn) {
+                            axis.multigraph.redraw();
+                            redrawn_multigraphs.push(axis.multigraph);
+                        }
+                    }
                 }
             }
         });
-
-&#x2F;*
-
-NOTE: Note sure why&#x2F;if we need the two functions below; they&#x27;re here
-because I copied&#x2F;translated them from the Flash version.  If we do end
-up needing them, we need to first resolve the issue of converting
-to&#x2F;from number values vs DataValue instances for min&#x2F;max.
-
-    mbp Fri Nov 9 17:15:26 2012
-
-        this.respondsTo(&quot;setDataRangeNoBind&quot;, function (min, max, factor, offset) {
-            var axes = this.axes(),
-                j;
-            for (j=0; j&lt;axes.length; ++j) {
-                axes[j].axis.setDataRangeNoBind((min * factor + offset - axes[j].offset) &#x2F; axes[j].factor,
-                                                (max * factor + offset - axes[j].offset) &#x2F; axes[j].factor);
-            }
-        });
-
-        AxisBinding.setAxisBindingDataRangeNoBind = function(bindingId, min, max, factor, offset) {
-            var binding = AxisBinding.getInstanceById(bindingId);
-            if (binding) {
-                binding.setDataRangeNoBind(min, max, factor, offset);
-            }
-        };
-*&#x2F;
-
 
         &#x2F;**
          * 

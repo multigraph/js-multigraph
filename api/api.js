@@ -11,6 +11,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "Legend",
         "Mixin",
         "Multigraph",
+        "PeriodicArrayData",
         "Text",
         "Title",
         "WebServiceData",

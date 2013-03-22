@@ -3,11 +3,11 @@
 <head>
     <meta charset="utf-8">
     <title>src&#x2F;graphics&#x2F;raphael&#x2F;axis_title.js - js-Multigraph</title>
-    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0pr2&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
+    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.7.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
     <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
-    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.8.0pr2&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.7.0&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
 </head>
 <body class="yui3-skin-sam">
 
@@ -62,6 +62,8 @@
                 <li><a href="..&#x2F;classes/Mixin.html">Mixin</a></li>
             
                 <li><a href="..&#x2F;classes/Multigraph.html">Multigraph</a></li>
+            
+                <li><a href="..&#x2F;classes/PeriodicArrayData.html">PeriodicArrayData</a></li>
             
                 <li><a href="..&#x2F;classes/Text.html">Text</a></li>
             
@@ -136,6 +138,22 @@ window.multigraph.util.namespace(&quot;window.multigraph.graphics.raphael&quot;,
 
     ns.mixin.add(function (ns) {
 
+        var AxisTitle = ns.AxisTitle;
+
+        AxisTitle.hasA(&quot;previousBase&quot;);
+        AxisTitle.hasAn(&quot;elem&quot;);
+
+        var computePixelBasePoint = function (labeler) {
+            var axis = labeler.axis(),
+                axisBase = (labeler.base() + 1) * (axis.pixelLength() &#x2F; 2) + axis.minoffset() + axis.parallelOffset();
+
+            if (axis.orientation() === ns.Axis.HORIZONTAL) {
+                return new window.multigraph.math.Point(axisBase, axis.perpOffset());
+            } else {
+                return new window.multigraph.math.Point(axis.perpOffset(), axisBase);
+            }
+        };
+
         &#x2F;**
          * Renders the axis title using the Raphael driver.
          *
@@ -146,31 +164,45 @@ window.multigraph.util.namespace(&quot;window.multigraph.graphics.raphael&quot;,
          * @param {Set} set
          * @author jrfrimme
          *&#x2F;
-        ns.AxisTitle.respondsTo(&quot;render&quot;, function (paper, set) {
-            var h = this.content().origHeight();
-            var w = this.content().origWidth();
-            var ax = 0.5 * w * this.anchor().x();
-            var ay = 0.5 * h * this.anchor().y();
-            var storedBase = (this.base() + 1) * (this.axis().pixelLength() &#x2F; 2) + this.axis().minoffset() + this.axis().parallelOffset();
-            var transformString = &quot;&quot;;
-            var base;
+        AxisTitle.respondsTo(&quot;render&quot;, function (paper, set) {
+            var h = this.content().origHeight(),
+                w = this.content().origWidth(),
+                ax = 0.5 * w * this.anchor().x(),
+                ay = 0.5 * h * this.anchor().y(),
+                base = computePixelBasePoint(this),
+                transformString = &quot;t&quot; + base.x() + &quot;,&quot; + base.y() +
+                    &quot;s1,-1&quot; +
+                    &quot;t&quot; + this.position().x() + &quot;,&quot; + (-this.position().y()) +
+                    &quot;r&quot; + (-this.angle()) +
+                    &quot;t&quot; + (-ax) + &quot;,&quot; + ay;
 
-            if (this.axis().orientation() === ns.Axis.HORIZONTAL) {
-                base = new window.multigraph.math.Point(storedBase, this.axis().perpOffset());
-            } else {
-                base = new window.multigraph.math.Point(this.axis().perpOffset(), storedBase);
+            this.previousBase(base);
+
+            var elem = paper.text(0, 0, this.content().string())
+                .transform(transformString);
+            this.elem(elem);
+            set.push(elem);
+        });
+
+        AxisTitle.respondsTo(&quot;redraw&quot;, function () {
+            var previousBase = this.previousBase(),
+                base         = computePixelBasePoint(this);
+
+            if (base.x() === previousBase.x() &amp;&amp; base.y() === previousBase.y()) {
+                return this;
             }
 
-            transformString += &quot;t&quot; + base.x() + &quot;,&quot; + base.y();
-            transformString += &quot;s1,-1&quot;;
-            transformString += &quot;t&quot; + this.position().x() + &quot;,&quot; + (-this.position().y());
-            transformString += &quot;r&quot; + (-this.angle());
-            transformString += &quot;t&quot; + (-ax) + &quot;,&quot; + ay;
+            var deltaX = base.x() - previousBase.x(),
+                deltaY = base.y() - previousBase.y(),
+                x = this.elem().attr(&quot;x&quot;),
+                y = this.elem().attr(&quot;y&quot;);
 
-            set.push(
-                paper.text(0, 0, this.content().string())
-                    .transform(transformString)
-            );
+            this.elem().attr({
+                &quot;x&quot; : x + deltaX,
+                &quot;y&quot; : y - deltaY
+            });
+
+            this.previousBase(base);
         });
 
     });

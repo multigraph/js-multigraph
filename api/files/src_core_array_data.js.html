@@ -3,11 +3,11 @@
 <head>
     <meta charset="utf-8">
     <title>src&#x2F;core&#x2F;array_data.js - js-Multigraph</title>
-    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0pr2&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
+    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.7.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
     <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
-    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.8.0pr2&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.7.0&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
 </head>
 <body class="yui3-skin-sam">
 
@@ -62,6 +62,8 @@
                 <li><a href="..&#x2F;classes/Mixin.html">Mixin</a></li>
             
                 <li><a href="..&#x2F;classes/Multigraph.html">Multigraph</a></li>
+            
+                <li><a href="..&#x2F;classes/PeriodicArrayData.html">PeriodicArrayData</a></li>
             
                 <li><a href="..&#x2F;classes/Text.html">Text</a></li>
             
@@ -139,7 +141,7 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
      * @for ArrayData
      * @constructor
      * @param {array} columns A array of DataVariables
-     * @param {array} stringArray A array of the preparsed DataValues
+     * @param {array} stringArray A array of strings which will later be parsed into DataValues
      *&#x2F;
     ns.ArrayData = window.jermaine.Model(function () {
         var ArrayData = this;
@@ -164,7 +166,6 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
          * @param {DataValue} min
          * @param {DataValue} max
          * @param {Integer} buffer
-         * @return ArrayData
          * @author jrfrimme
          *&#x2F;
         this.respondsTo(&quot;getIterator&quot;, function (columnIds, min, max, buffer) {
@@ -209,18 +210,12 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
          * @param {DataValue} min
          * @param {DataValue} max
          * @param {Integer} buffer
-         * @throws {error} Throws error if arrayData is not an array of strings
          * @return iter
          * @author jrfrimme
          *&#x2F;
         ArrayData.getArrayDataIterator = function (arrayData, columnIds, min, max, buffer) {
-            var iter = {},
-                arraySlice = [],
-                curr = 0,
-                i, j,
-                projection,
-                firstIndex,
-                lastIndex,
+            var i, j,
+                firstIndex, lastIndex,
                 currentIndex,
                 columnIndices,
                 array = arrayData.array();
@@ -257,7 +252,7 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
             }
 
             &#x2F;&#x2F; find the index of the first row in the array whose column0 value is &gt;= min
-            for (firstIndex=0; firstIndex&lt;array.length; ++firstIndex) {
+            for (firstIndex = 0; firstIndex &lt; array.length; ++firstIndex) {
                 if (array[firstIndex][0].ge(min)) {
                     break;
                 }
@@ -272,7 +267,7 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
             if (firstIndex === array.length-1) {
                 lastIndex = firstIndex;
             } else {
-                for (lastIndex=firstIndex; lastIndex&lt;array.length-1; ++lastIndex) {
+                for (lastIndex = firstIndex; lastIndex &lt; array.length-1; ++lastIndex) {
                     if (array[lastIndex+1][0].gt(max)) {
                         break;
                     }
@@ -285,7 +280,7 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
             }
 
             columnIndices = [];
-            for (j = 0;j &lt; columnIds.length; ++j) {
+            for (j = 0; j &lt; columnIds.length; ++j) {
                 var k = arrayData.columnIdToColumnNumber(columnIds[j]);
                 columnIndices.push( k );
             }
@@ -299,7 +294,7 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
                     if (currentIndex &gt; lastIndex) {
                         return null;
                     }
-                    for (i=0; i&lt;columnIndices.length; ++i) {
+                    for (i = 0; i &lt; columnIndices.length; ++i) {
                         projection.push(array[currentIndex][columnIndices[i]]);
                     }
                     ++currentIndex;
@@ -309,7 +304,6 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
                     return currentIndex &lt;= lastIndex;
                 }
             };
-            
         };
 
         &#x2F;**
@@ -327,13 +321,13 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
             var dataValues = [],
                 lines = text.split(&quot;\n&quot;),
                 i;
-            for (i=0; i&lt;lines.length; ++i) {
+            for (i = 0; i &lt; lines.length; ++i) {
                 if (&#x2F;\d&#x2F;.test(lines[i])) { &#x2F;&#x2F; skip line unless it contains a digit
                     var stringValuesThisRow = lines[i].split(&#x2F;\s*,\s*&#x2F;),
                         dataValuesThisRow = [],
                         j;
                     if (stringValuesThisRow.length === dataVariableArray.length) {
-                        for (j=0; j&lt;stringValuesThisRow.length; ++j) {
+                        for (j = 0; j &lt; stringValuesThisRow.length; ++j) {
                             dataValuesThisRow.push(ns.DataValue.parse(dataVariableArray[j].type(), stringValuesThisRow[j]));
                         }
                         dataValues.push( dataValuesThisRow );
@@ -356,7 +350,7 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
          * @return {array} stringValues
          * @author jrfrimme
          *&#x2F;
-        ArrayData.textToStringArray = function (text) {
+        ArrayData.textToStringArray = function (dataVariables, text) {
             var stringValues = [],
                 lines = text.split(&quot;\n&quot;),
                 stringValuesThisRow,

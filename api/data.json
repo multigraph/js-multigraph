@@ -62,6 +62,13 @@
             },
             "namespaces": {}
         },
+        "src/core/datetime_measure.js": {
+            "name": "src/core/datetime_measure.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
         "src/core/event_emitter.js": {
             "name": "src/core/event_emitter.js",
             "modules": {},
@@ -125,6 +132,17 @@
             },
             "fors": {
                 "Multigraph": 1
+            },
+            "namespaces": {}
+        },
+        "src/core/periodic_array_data.js": {
+            "name": "src/core/periodic_array_data.js",
+            "modules": {},
+            "classes": {
+                "PeriodicArrayData": 1
+            },
+            "fors": {
+                "PeriodicArrayData": 1
             },
             "namespaces": {}
         },
@@ -279,6 +297,7 @@
                 "Legend": 1,
                 "Mixin": 1,
                 "Multigraph": 1,
+                "PeriodicArrayData": 1,
                 "Text": 1,
                 "WebServiceData": 1,
                 "WebServiceDataCacheNode": 1,
@@ -297,6 +316,7 @@
                 "Legend": 1,
                 "Mixin": 1,
                 "Multigraph": 1,
+                "PeriodicArrayData": 1,
                 "Text": 1,
                 "WebServiceData": 1,
                 "WebServiceDataCacheNode": 1,
@@ -322,6 +342,7 @@
                 "Legend": 1,
                 "Mixin": 1,
                 "Multigraph": 1,
+                "PeriodicArrayData": 1,
                 "Text": 1,
                 "WebServiceData": 1,
                 "WebServiceDataCacheNode": 1,
@@ -407,7 +428,7 @@
                 },
                 {
                     "name": "stringArray",
-                    "description": "A array of the preparsed DataValues",
+                    "description": "A array of strings which will later be parsed into DataValues",
                     "type": "Array"
                 }
             ]
@@ -485,7 +506,7 @@
             "submodule": "core",
             "namespace": "",
             "file": "src/core/data.js",
-            "line": 13,
+            "line": 9,
             "is_constructor": 1,
             "params": [
                 {
@@ -571,7 +592,7 @@
             "submodule": "core",
             "namespace": "",
             "file": "src/core/legend.js",
-            "line": 14,
+            "line": 13,
             "description": "Legend is a Jermaine model that supports the rendering of Multigraph Legends.\n\nThe methods for this object take a parameter called `graphicsContext`, which is a\ndriver-specific object that stores whatever state/configuration is needed by the\ndriver.  Each driver is responsible for creating its own graphicsContext object and\npassing it to these methods, which in turn pass that object on to the driver-specific\nmethods that they call.",
             "is_constructor": 1,
             "requires": [
@@ -609,9 +630,36 @@
             "submodule": "core",
             "namespace": "",
             "file": "src/core/multigraph.js",
-            "line": 14,
+            "line": 17,
             "description": "The Multigraph Jermaine model is the root class for the js-multigraph project.",
             "is_constructor": 1
+        },
+        "PeriodicArrayData": {
+            "name": "PeriodicArrayData",
+            "shortname": "PeriodicArrayData",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "multigraph",
+            "submodule": "core",
+            "namespace": "",
+            "file": "src/core/periodic_array_data.js",
+            "line": 9,
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "columns",
+                    "description": "A array of DataVariables",
+                    "type": "Array"
+                },
+                {
+                    "name": "stringArray",
+                    "description": "A array of strings which will later be parsed into DataValues",
+                    "type": "Array"
+                }
+            ]
         },
         "Text": {
             "name": "Text",
@@ -664,7 +712,7 @@
             "submodule": "core",
             "namespace": "",
             "file": "src/core/web_service_data_cache_node.js",
-            "line": 11,
+            "line": 9,
             "description": "A WebServiceDataCacheNode represents a single node in the\ndoubly-linked list holding the data for a WebServiceDataCache.\nThe WebServiceDataCacheNode has an array of data (which may\nactually be null, if the node's data has not yet been loaded),\nnext and prev pointers to the next and previous nodes in the\nlinked list, and coveredMin and coveredMax values that indicate\nthe min and max values of the \"covered\" range of data for this\nnode.\n\nThe \"covered\" range is the interval of the data number line for\nwhich this node is responsible for storing data; Multigraph\nuses range this to avoid requesting the same data twice --- it\nnever requests data for a range already covered by an existing\ncache node.\n\nInitially, when the WebServiceDataCacheNode is created, the\nlimits of the covered range are specified in the constructor.\nLater on, when the node's data is actually populated, the\nlimits are potentially adjusted outward, if the range of data\nreceived is larger than the initially specified covered range.\nSo in all cases, the covered range indicates the range for\nwhich no more data is needed, because it's covered by this\nnode.\n\nNote that the covered range is never adjusted to be smaller.\n\nThe WebServiceDataCacheNode does not actually fetch any data\n--- it is simply a storage container for fetched data; it's up\nto other code outside of this object to fetch and populate the\ndata.",
             "is_constructor": 1,
             "params": [
@@ -780,9 +828,6 @@
                     "type": "Integer"
                 }
             ],
-            "return": {
-                "description": "ArrayData"
-            },
             "author": "jrfrimme",
             "class": "ArrayData",
             "module": "multigraph",
@@ -790,7 +835,7 @@
         },
         {
             "file": "src/core/array_data.js",
-            "line": 46,
+            "line": 45,
             "description": "Determines the upper and lower bounds of a column in a dataset.",
             "itemtype": "method",
             "name": "getBounds",
@@ -812,7 +857,7 @@
         },
         {
             "file": "src/core/array_data.js",
-            "line": 71,
+            "line": 70,
             "itemtype": "method",
             "name": "onReady",
             "params": [
@@ -827,7 +872,7 @@
         },
         {
             "file": "src/core/array_data.js",
-            "line": 76,
+            "line": 75,
             "itemtype": "method",
             "name": "getArrayDataIterator",
             "static": 1,
@@ -858,9 +903,6 @@
                     "type": "Integer"
                 }
             ],
-            "throws": [
-                "{error} Throws error if arrayData is not an array of strings"
-            ],
             "return": {
                 "description": "iter"
             },
@@ -871,7 +913,7 @@
         },
         {
             "file": "src/core/array_data.js",
-            "line": 187,
+            "line": 179,
             "itemtype": "method",
             "name": "textToDataValuesArray",
             "static": 1,
@@ -902,7 +944,7 @@
         },
         {
             "file": "src/core/array_data.js",
-            "line": 224,
+            "line": 216,
             "itemtype": "method",
             "name": "textToStringArray",
             "static": 1,
@@ -924,7 +966,7 @@
         },
         {
             "file": "src/core/array_data.js",
-            "line": 267,
+            "line": 259,
             "description": "Parses an array of strings into an array of DataValues.",
             "itemtype": "method",
             "name": "textToStringArray",
@@ -952,7 +994,7 @@
         },
         {
             "file": "src/core/axis.js",
-            "line": 58,
+            "line": 56,
             "description": "Stores the \"min\" value from the mugl file as a string, if there was one.",
             "itemtype": "property",
             "name": "min",
@@ -964,7 +1006,7 @@
         },
         {
             "file": "src/core/axis.js",
-            "line": 67,
+            "line": 65,
             "description": "The current min DataValue for the axis.",
             "itemtype": "property",
             "name": "dataMin",
@@ -976,7 +1018,7 @@
         },
         {
             "file": "src/core/axis.js",
-            "line": 77,
+            "line": 73,
             "description": "Convenience method for checking to see if dataMin has been set or not",
             "itemtype": "method",
             "name": "hasDataMin",
@@ -991,7 +1033,7 @@
         },
         {
             "file": "src/core/axis.js",
-            "line": 94,
+            "line": 90,
             "description": "Stores the \"max\" value from the mugl file as a string, if there was one.",
             "itemtype": "property",
             "name": "max",
@@ -1003,7 +1045,7 @@
         },
         {
             "file": "src/core/axis.js",
-            "line": 103,
+            "line": 99,
             "description": "The current max DataValue for the axis.",
             "itemtype": "property",
             "name": "dataMax",
@@ -1015,7 +1057,7 @@
         },
         {
             "file": "src/core/axis.js",
-            "line": 113,
+            "line": 107,
             "description": "Convenience method for checking to see if dataMax has been set or not.",
             "itemtype": "method",
             "name": "hasDataMax",
@@ -1030,7 +1072,7 @@
         },
         {
             "file": "src/core/axis.js",
-            "line": 213,
+            "line": 198,
             "description": "Decides which labeler to use: take the one with the largest density <= 0.8.\nUnless all have density > 0.8, in which case we take the first one.  This assumes\nthat the labelers list is ordered in increasing order of label density.\nThis function sets the `currentLabeler` and `currentLabelDensity` attributes.",
             "itemtype": "method",
             "name": "prepareRender",
@@ -1048,7 +1090,7 @@
         },
         {
             "file": "src/core/axis.js",
-            "line": 377,
+            "line": 411,
             "description": "Compute the distance from an axis to a point.  The point\n(x,y) is expressed in pixel coordinates in the same\ncoordinate system as the axis.\n\nWe use two different kinds of computations depending on\nwhether the point lies inside or outside the region bounded\nby the two lines perpendicular to the axis through its\nendpoints.  If the point lies inside this region, the\ndistance is simply the difference in the perpendicular\ncoordinate of the point and the perpendicular coordinate of\nthe axis.\n\nIf the point lies outside the region, then the distance is\nthe L2 distance between the point and the closest endpoint\nof the axis.",
             "itemtype": "method",
             "name": "distanceToPoint",
@@ -1118,7 +1160,7 @@
         },
         {
             "file": "src/core/axis_binding.js",
-            "line": 73,
+            "line": 74,
             "itemtype": "method",
             "name": "removeAxis",
             "params": [
@@ -1135,7 +1177,7 @@
         },
         {
             "file": "src/core/axis_binding.js",
-            "line": 91,
+            "line": 92,
             "description": "Force all the axes in this binding to sync up with each\nother, if possible.\n\nThis is done by looking for an axis in this binding which\nhas its dataMin and dataMax values set, and then calling\nits setDataRange() method with those values.  The main\npurpose of this method is to facilitate the initial setting\nof dataMin/dataMax values for axes in a binding that do not\nalready have dataMin/dataMax values set; this forces them\nto be set based on the binding, as determined by another\naxis in the binding.\n\nNote that this method is NOT the normal way for bound axes\nto interact with each other once initialization is\ncomplete; that is done via the axes' own setDataRange()\nmethod.",
             "itemtype": "method",
             "name": "sync",
@@ -1149,7 +1191,7 @@
         },
         {
             "file": "src/core/axis_binding.js",
-            "line": 132,
+            "line": 133,
             "itemtype": "method",
             "name": "setDataRange",
             "params": [
@@ -1181,7 +1223,7 @@
         },
         {
             "file": "src/core/axis_binding.js",
-            "line": 208,
+            "line": 200,
             "itemtype": "method",
             "name": "getInstanceById",
             "static": 1,
@@ -1198,7 +1240,7 @@
         },
         {
             "file": "src/core/axis_binding.js",
-            "line": 220,
+            "line": 212,
             "itemtype": "method",
             "name": "findByIdOrCreateNew",
             "static": 1,
@@ -1215,7 +1257,7 @@
         },
         {
             "file": "src/core/axis_binding.js",
-            "line": 236,
+            "line": 228,
             "itemtype": "method",
             "name": "syncAllBindings",
             "static": 1,
@@ -1226,7 +1268,7 @@
         },
         {
             "file": "src/core/axis_binding.js",
-            "line": 250,
+            "line": 242,
             "itemtype": "method",
             "name": "forgetAllBindings",
             "static": 1,
@@ -1346,7 +1388,7 @@
         },
         {
             "file": "src/core/data.js",
-            "line": 24,
+            "line": 20,
             "description": "Searches through a jermaine attr_list of DataVariables (columns) for\nan entry having a given id or column number.",
             "itemtype": "method",
             "name": "find",
@@ -1384,7 +1426,7 @@
         },
         {
             "file": "src/core/data.js",
-            "line": 63,
+            "line": 61,
             "description": "Set the `data` attribute of each of this data object's columns\nto point to the data object itself.",
             "itemtype": "method",
             "name": "initializeColumns",
@@ -1395,7 +1437,7 @@
         },
         {
             "file": "src/core/data.js",
-            "line": 85,
+            "line": 84,
             "description": "Initialization function --- should be called from isBuiltWith initializer.  This is split\noff into a separate function so that it can be called from submodel's isBuiltWith initializers\nas well, since Jermaine does not provide a way to call the parent models' isBuiltWith initializer\nfunction.",
             "itemtype": "method",
             "name": "init",
@@ -1403,6 +1445,20 @@
             "class": "Data",
             "module": "multigraph",
             "submodule": "core"
+        },
+        {
+            "file": "src/core/datetime_measure.js",
+            "line": 98,
+            "description": "Consider the regular lattice of points on the Datetime line separated from each other\nby `this` DatetimeMeasure, and aligned at the DatetimeValue `alignment`.  This function\nreturn the smallest DatetimeValue in that lattice which is greater than or equal to\n`value`.\n\nreturn: a DatetimeValue",
+            "class": "EventEmitter",
+            "module": "multigraph"
+        },
+        {
+            "file": "src/core/datetime_measure.js",
+            "line": 123,
+            "description": "This function is just like `firstSpacingLocationAtOrAfter` above, but returns the\ngreatest DatetimeValue in the lattice that is less than or equal to `value`.\n\nreturn: a DatetimeValue",
+            "class": "EventEmitter",
+            "module": "multigraph"
         },
         {
             "file": "src/core/event_emitter.js",
@@ -1622,7 +1678,7 @@
         },
         {
             "file": "src/core/graph.js",
-            "line": 173,
+            "line": 176,
             "description": "Initializes the Graph's geometry. Determines the width and height of the Graph's `windowBox`,\n`paddingBox` and `plotBox`; calls its Axes' and Legend's implementations of\n`initializeGeometry`.",
             "itemtype": "method",
             "name": "initializeGeometry",
@@ -1650,7 +1706,7 @@
         },
         {
             "file": "src/core/graph.js",
-            "line": 219,
+            "line": 225,
             "description": "Convience function for registering callback functions on the Graph's `Data` models. Adds\n`dataReady` event listeners to each of the Graph's `Data` models.",
             "itemtype": "method",
             "name": "registerCommonDataCallback",
@@ -1668,7 +1724,7 @@
         },
         {
             "file": "src/core/graph.js",
-            "line": 234,
+            "line": 240,
             "itemtype": "method",
             "name": "pauseAllData",
             "author": "jrfrimme",
@@ -1678,7 +1734,7 @@
         },
         {
             "file": "src/core/graph.js",
-            "line": 248,
+            "line": 254,
             "itemtype": "method",
             "name": "resumeAllData",
             "author": "jrfrimme",
@@ -1688,7 +1744,7 @@
         },
         {
             "file": "src/core/graph.js",
-            "line": 262,
+            "line": 268,
             "itemtype": "method",
             "name": "findNearestAxis",
             "params": [
@@ -1901,7 +1957,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 29,
+            "line": 28,
             "description": "The value which determines if the legend will be rendered; a value of `true` means the Legend will\nbe drawn while `false` means that it will not.",
             "itemtype": "property",
             "name": "visible",
@@ -1913,7 +1969,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 39,
+            "line": 40,
             "description": "The value which gives the location of the base point relative to the Legend's frame.",
             "itemtype": "property",
             "name": "base",
@@ -1925,7 +1981,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 50,
+            "line": 51,
             "description": "The value which gives the location of the Legend's anchor point to be attached to the base point.",
             "itemtype": "property",
             "name": "anchor",
@@ -1937,7 +1993,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 61,
+            "line": 62,
             "description": "A coordinate pair of pixel offsets for the base point.",
             "itemtype": "property",
             "name": "position",
@@ -1949,7 +2005,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 72,
+            "line": 73,
             "description": "The value which determines whether the legend is positioned relative to the plot area or the padding\nbox. A value of `plot` means the Legend will be drawn relative to the plot area while `padding` means\nthat it will the padding box.",
             "itemtype": "property",
             "name": "frame",
@@ -1961,7 +2017,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 85,
+            "line": 86,
             "description": "The value which determines the background color of the Legend.",
             "itemtype": "property",
             "name": "color",
@@ -1973,7 +2029,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 96,
+            "line": 97,
             "description": "The value which determines the bordercolor of the Legend.",
             "itemtype": "property",
             "name": "bordercolor",
@@ -1985,7 +2041,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 107,
+            "line": 108,
             "description": "The value which determines the opacity of the Legend; depending on where the Legend is positioned it\nmay obscure parts of the plot data.",
             "itemtype": "property",
             "name": "opacity",
@@ -1997,7 +2053,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 119,
+            "line": 120,
             "description": "The value which determines the thickness of the border drawn around the Legend; a value of `0` turns\nthe border off.",
             "itemtype": "property",
             "name": "border",
@@ -2009,7 +2065,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 129,
+            "line": 130,
             "description": "The value which determines the number of rows to be used for Plot entries in the Legend. If left\nunspecified then rows will be inserted to account for each Plot entry.",
             "itemtype": "property",
             "name": "rows",
@@ -2021,7 +2077,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 139,
+            "line": 140,
             "description": "The value which determines the number of columns to be used for Plot entries in the Legend. If rows\nis set while columns is left unspecified then columns will be inserted to account for each Plot\nentry.",
             "itemtype": "property",
             "name": "columns",
@@ -2033,7 +2089,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 150,
+            "line": 151,
             "description": "The value which determines whether the corners of the legend box are rounded when drawn. A value of\n`0` means that the corners will be drawn square while values greater than `0` mean that the corners\nare rounded off with circles whose radius in pixels is this value.",
             "itemtype": "property",
             "name": "cornerradius",
@@ -2045,7 +2101,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 161,
+            "line": 162,
             "description": "The value which determines the pixel width of the padding between the Legend border and its entries.",
             "itemtype": "property",
             "name": "padding",
@@ -2057,7 +2113,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 170,
+            "line": 171,
             "description": "A optional sub-model which determines the appearance of the Icons for the Plot entries.",
             "itemtype": "property",
             "name": "icon",
@@ -2069,7 +2125,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 181,
+            "line": 186,
             "description": "Pointers to Plot models that have entries in the Legend.",
             "itemtype": "property",
             "name": "plots",
@@ -2081,7 +2137,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 192,
+            "line": 197,
             "description": "Internal value which determines the number of pixels between an entries icon and its border.",
             "itemtype": "property",
             "name": "iconOffset",
@@ -2097,7 +2153,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 204,
+            "line": 209,
             "description": "Internal value which determines the number of pixels between an entries label and its icon.",
             "itemtype": "property",
             "name": "labelOffset",
@@ -2113,7 +2169,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 217,
+            "line": 222,
             "description": "Internal value which determines the number of pixels between the right end of an entries label and\nits border",
             "itemtype": "property",
             "name": "labelEnding",
@@ -2129,7 +2185,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 230,
+            "line": 235,
             "description": "Computed value of the width of the Legend.",
             "itemtype": "property",
             "name": "width",
@@ -2144,7 +2200,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 241,
+            "line": 246,
             "description": "Computed value of the height of the Legend.",
             "itemtype": "property",
             "name": "height",
@@ -2159,7 +2215,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 252,
+            "line": 257,
             "description": "Computed `x` value of the Legend's lower left corner relative to its frame.",
             "itemtype": "property",
             "name": "x",
@@ -2174,7 +2230,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 263,
+            "line": 268,
             "description": "Computed `y` value of the Legend's lower left corner relative to its frame.",
             "itemtype": "property",
             "name": "y",
@@ -2189,7 +2245,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 274,
+            "line": 279,
             "description": "Computed width of an individual plot entry.",
             "itemtype": "property",
             "name": "blockWidth",
@@ -2204,7 +2260,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 285,
+            "line": 290,
             "description": "Computed height of an individual plot entry.",
             "itemtype": "property",
             "name": "blockHeight",
@@ -2219,7 +2275,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 296,
+            "line": 301,
             "description": "Computed width of the longest label of all plot entries.",
             "itemtype": "property",
             "name": "maxLabelWidth",
@@ -2234,7 +2290,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 307,
+            "line": 312,
             "description": "Maximum value of the Icon's height and the computed height of the tallest label of all plot entries.",
             "itemtype": "property",
             "name": "maxLabelHeight",
@@ -2249,7 +2305,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 318,
+            "line": 338,
             "description": "Initializes the Legend's geometry. Determines values for the internal attributes `maxLabelWidth`,\n`maxLabelHeight`, `blockWidth`, `blockHeight`, `width`, `height`, `x` and `y`; these values\ndetermine the size and position of the legend and its various internal components, and need\nto be recomputed whenever the geometry of the containing graph changes;  this method is\ncalled by Graph.initializeGeometry().",
             "itemtype": "method",
             "name": "initializeGeometry",
@@ -2276,7 +2332,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 405,
+            "line": 398,
             "description": "Renders the legend; calls various driver-specific graphics functions to do the\nactual drawing of the various parts of the legend (background, borders, icons,\ntext).",
             "itemtype": "method",
             "name": "render",
@@ -2362,7 +2418,7 @@
         },
         {
             "file": "src/core/multigraph.js",
-            "line": 23,
+            "line": 26,
             "description": "Jermiane Attr_List of all the graphs in a Multigraph.",
             "itemtype": "property",
             "name": "graphs",
@@ -2374,7 +2430,7 @@
         },
         {
             "file": "src/core/multigraph.js",
-            "line": 34,
+            "line": 37,
             "description": "The div the multigraph is rendered in.",
             "itemtype": "property",
             "name": "div",
@@ -2386,7 +2442,7 @@
         },
         {
             "file": "src/core/multigraph.js",
-            "line": 43,
+            "line": 46,
             "description": "The url for the mugl file this graph was created from, if any",
             "itemtype": "property",
             "name": "mugl",
@@ -2398,7 +2454,7 @@
         },
         {
             "file": "src/core/multigraph.js",
-            "line": 52,
+            "line": 55,
             "description": "JavaScript array of ajax throttles; each entry in this array is an\nobject with the following properties:\n   regex        : regular expression for matching URLs\n   ajaxthrottle : instance of $.ajaxthrottle",
             "itemtype": "property",
             "name": "ajaxthrottles",
@@ -2410,7 +2466,7 @@
         },
         {
             "file": "src/core/multigraph.js",
-            "line": 121,
+            "line": 128,
             "description": "The busy spinner",
             "itemtype": "property",
             "name": "busySpinner",
@@ -2422,7 +2478,7 @@
         },
         {
             "file": "src/core/multigraph.js",
-            "line": 137,
+            "line": 144,
             "description": "Initializes the Multigraph's geometry by calling the `initializeGeometry` function of\neach of its graph children.",
             "itemtype": "method",
             "name": "initializeGeometry",
@@ -2450,7 +2506,7 @@
         },
         {
             "file": "src/core/multigraph.js",
-            "line": 154,
+            "line": 161,
             "description": "Convience function for registering callback functions for data becoming ready.",
             "itemtype": "method",
             "name": "registerCommonDataCallback",
@@ -2468,7 +2524,7 @@
         },
         {
             "file": "src/core/multigraph.js",
-            "line": 170,
+            "line": 177,
             "description": "Determines if the browser supports canvas elements.",
             "itemtype": "method",
             "name": "browserHasCanvasSupport",
@@ -2482,7 +2538,7 @@
         },
         {
             "file": "src/core/multigraph.js",
-            "line": 190,
+            "line": 200,
             "description": "Creates a Multigraph according to specified options. Returns a\njQuery `promise` which interacts with the multigraph through its\n`done` function.",
             "itemtype": "method",
             "name": "createGraph",
@@ -2509,7 +2565,7 @@
                         },
                         {
                             "name": "driver",
-                            "description": "(OPTIONAL) Indicates which\n      graphics driver to use; should be one of the strings\n      \"canvas\", \"raphael\", \"logger\", or \"auto\".  The default\n      (which is used if the 'driver' tag is absent) is \"auto\",\n      which causes Multigraph to check the features of the\n      browser it is running in and choose the most appropriate\n      driver.",
+                            "description": "(OPTIONAL) Indicates which\n      graphics driver to use; should be one of the strings\n      \"canvas\", \"raphael\", or \"auto\".  The default (which is\n      used if the 'driver' tag is absent) is \"auto\", which\n      causes Multigraph to check the features of the browser\n      it is running in and choose the most appropriate driver.",
                             "type": "String"
                         },
                         {
@@ -2536,7 +2592,7 @@
         },
         {
             "file": "src/core/multigraph.js",
-            "line": 323,
+            "line": 330,
             "description": "`window.multigraph.create` is an alias for `window.multigraph.core.Multigraph.createGraph`.",
             "itemtype": "method",
             "name": "window.multigraph.create",
@@ -2558,7 +2614,7 @@
                         },
                         {
                             "name": "driver",
-                            "description": "(OPTIONAL) Indicates which\n      graphics driver to use; should be one of the strings\n      \"canvas\", \"raphael\", \"logger\", or \"auto\".  The default\n      (which is used if the 'driver' tag is absent) is \"auto\",\n      which causes Multigraph to check the features of the\n      browser it is running in and choose the most appropriate\n      driver.",
+                            "description": "(OPTIONAL) Indicates which\n      graphics driver to use; should be one of the strings\n      \"canvas\", \"raphael\", or \"auto\".  The default (which is\n      used if the 'driver' tag is absent) is \"auto\", which\n      causes Multigraph to check the features of the browser\n      it is running in and choose the most appropriate driver.",
                             "type": "String"
                         },
                         {
@@ -2586,7 +2642,7 @@
         },
         {
             "file": "src/core/multigraph.js",
-            "line": 369,
+            "line": 375,
             "description": "Creates default error and warning functions for multigraph.",
             "itemtype": "method",
             "name": "createDefaultMessageHandlers",
@@ -2604,6 +2660,79 @@
             },
             "author": "jrfrimme",
             "class": "Multigraph",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/periodic_array_data.js",
+            "line": 47,
+            "itemtype": "method",
+            "name": "getIterator",
+            "params": [
+                {
+                    "name": "columnIDs",
+                    "description": "",
+                    "type": "String array"
+                },
+                {
+                    "name": "min",
+                    "description": "",
+                    "type": "DataValue"
+                },
+                {
+                    "name": "max",
+                    "description": "",
+                    "type": "DataValue"
+                },
+                {
+                    "name": "buffer",
+                    "description": "",
+                    "type": "Integer"
+                }
+            ],
+            "author": "jrfrimme",
+            "class": "PeriodicArrayData",
+            "module": "multigraph",
+            "submodule": "core"
+        },
+        {
+            "file": "src/core/periodic_array_data.js",
+            "line": 59,
+            "itemtype": "method",
+            "name": "getArrayDataIterator",
+            "static": 1,
+            "params": [
+                {
+                    "name": "arrayData",
+                    "description": "",
+                    "type": "ArrayData"
+                },
+                {
+                    "name": "columnIDs",
+                    "description": "",
+                    "type": "String array"
+                },
+                {
+                    "name": "min",
+                    "description": "",
+                    "type": "DataValue"
+                },
+                {
+                    "name": "max",
+                    "description": "",
+                    "type": "DataValue"
+                },
+                {
+                    "name": "buffer",
+                    "description": "",
+                    "type": "Integer"
+                }
+            ],
+            "return": {
+                "description": "iter"
+            },
+            "author": "jrfrimme",
+            "class": "PeriodicArrayData",
             "module": "multigraph",
             "submodule": "core"
         },
@@ -2739,7 +2868,7 @@
         },
         {
             "file": "src/core/web_service_data.js",
-            "line": 56,
+            "line": 54,
             "description": "A pointer to the head WebServiceDataCacheNode in this WebServieData's cache.",
             "itemtype": "property",
             "name": "cacheHead",
@@ -2751,7 +2880,7 @@
         },
         {
             "file": "src/core/web_service_data.js",
-            "line": 69,
+            "line": 67,
             "description": "A pointer to the tail WebServiceDataCacheNode in this WebServieData's cache.",
             "itemtype": "property",
             "name": "cacheTail",
@@ -2763,7 +2892,7 @@
         },
         {
             "file": "src/core/web_service_data.js",
-            "line": 82,
+            "line": 80,
             "description": "Return a pointer to the first WebServiceDataCacheNode in this WebServieData's cache\nthat actually contains data, if any.  If the cache doesn't contain any data, return null.",
             "itemtype": "method",
             "name": "dataHead",
@@ -2778,7 +2907,7 @@
         },
         {
             "file": "src/core/web_service_data.js",
-            "line": 97,
+            "line": 95,
             "description": "Return a pointer to the last WebServiceDataCacheNode in this WebServieData's cache\nthat actually contains data, if any.  If the cache doesn't contain any data, return null.",
             "itemtype": "method",
             "name": "dataTail",
@@ -2793,7 +2922,7 @@
         },
         {
             "file": "src/core/web_service_data.js",
-            "line": 112,
+            "line": 110,
             "description": "Insert a WebServiceCacheNode into this WebService's cache.\nIf this node's coveredMin is less than the cache head's\ncoveredMin, insert it at the head; otherwise insert it at\nthe tail.  Note that nodes are only inserted either at the\nhead or at the tail of the cache --- not in the middle.",
             "itemtype": "method",
             "name": "insertCacheNode",
@@ -2811,7 +2940,7 @@
         },
         {
             "file": "src/core/web_service_data.js",
-            "line": 169,
+            "line": 167,
             "description": "Initiate requests needed to fetch data between coveredMin and coveredMax, if any.",
             "itemtype": "method",
             "name": "insureCoveredRange",
@@ -2822,7 +2951,7 @@
         },
         {
             "file": "src/core/web_service_data_cache_node.js",
-            "line": 51,
+            "line": 49,
             "description": "The actual data for this node.",
             "itemtype": "property",
             "name": "data",
@@ -2834,7 +2963,7 @@
         },
         {
             "file": "src/core/web_service_data_cache_node.js",
-            "line": 85,
+            "line": 84,
             "description": "The next node in the cache's linked list",
             "itemtype": "property",
             "name": "next",
@@ -2846,7 +2975,7 @@
         },
         {
             "file": "src/core/web_service_data_cache_node.js",
-            "line": 96,
+            "line": 95,
             "description": "The previous node in the cache's linked list",
             "itemtype": "property",
             "name": "prev",
@@ -2858,7 +2987,7 @@
         },
         {
             "file": "src/core/web_service_data_cache_node.js",
-            "line": 107,
+            "line": 106,
             "description": "The min of the covered value range",
             "itemtype": "property",
             "name": "coveredMin",
@@ -2870,7 +2999,7 @@
         },
         {
             "file": "src/core/web_service_data_cache_node.js",
-            "line": 116,
+            "line": 115,
             "description": "The max of the covered value range",
             "itemtype": "property",
             "name": "coveredMax",
@@ -2882,7 +3011,7 @@
         },
         {
             "file": "src/core/web_service_data_cache_node.js",
-            "line": 125,
+            "line": 124,
             "description": "Return the next node in the cache that actually has data,\nor null if none exists.",
             "itemtype": "method",
             "name": "dataNext",
@@ -2897,7 +3026,7 @@
         },
         {
             "file": "src/core/web_service_data_cache_node.js",
-            "line": 141,
+            "line": 140,
             "description": "Return the previous node in the cache that actually has data,\nor null if none exists.",
             "itemtype": "method",
             "name": "dataPrev",
@@ -2912,7 +3041,7 @@
         },
         {
             "file": "src/core/web_service_data_cache_node.js",
-            "line": 157,
+            "line": 156,
             "description": "Return the minimum (column 0) data value for this node.  Returns null\nif the node has no data yet.",
             "itemtype": "method",
             "name": "dataMin",
@@ -2927,7 +3056,7 @@
         },
         {
             "file": "src/core/web_service_data_cache_node.js",
-            "line": 174,
+            "line": 173,
             "description": "Return the maximum (column 0) data value for this node.    Returns null\nif the node has no data yet.",
             "itemtype": "method",
             "name": "dataMax",
@@ -2942,7 +3071,7 @@
         },
         {
             "file": "src/core/web_service_data_cache_node.js",
-            "line": 191,
+            "line": 190,
             "description": "Return true if this node has data; false if not.",
             "itemtype": "method",
             "name": "hasData",
@@ -2956,7 +3085,7 @@
         },
         {
             "file": "src/core/web_service_data_cache_node.js",
-            "line": 204,
+            "line": 203,
             "description": "Populate this node's data array by parsing the values\ncontained in the 'dataText' string, which should be a\nstring of comma-separated values of the same sort expected\nby ArrayData and CSVData.  The first argument, `columns`,\nshould be a plain javascript array of DataVariable instances,\nof the sort returned by `Data.getColumns()`.\n\nThis method examines other nodes in the cache in order\ninsure that values included in this node's data array\nare (a) strictly greater than the maximum value present in the\ncache prior to this node, and (b) strictly less than the\nminimum value present in the cache after this node.\nThis guarantees that there is no overlap between the\ndata in this node and other nodes in the cache.",
             "itemtype": "method",
             "name": "parseData",
@@ -2979,7 +3108,7 @@
         },
         {
             "file": "src/graphics/canvas/axis_title.js",
-            "line": 11,
+            "line": 10,
             "description": "Renders the axis title using the Canvas driver.",
             "itemtype": "method",
             "name": "render",
@@ -3098,7 +3227,7 @@
         },
         {
             "file": "src/graphics/raphael/axis_title.js",
-            "line": 11,
+            "line": 27,
             "description": "Renders the axis title using the Raphael driver.",
             "itemtype": "method",
             "name": "render",
@@ -3122,7 +3251,7 @@
         },
         {
             "file": "src/graphics/raphael/graph_title.js",
-            "line": 11,
+            "line": 35,
             "description": "Renders the title using the Raphael driver.",
             "itemtype": "method",
             "name": "render",
@@ -3181,7 +3310,7 @@
         },
         {
             "file": "src/graphics/raphael/text.js",
-            "line": 61,
+            "line": 79,
             "description": "Determines unrotated width for the stored string in the raphael environment.",
             "itemtype": "method",
             "name": "measureStringWidth",
@@ -3204,7 +3333,7 @@
         },
         {
             "file": "src/graphics/raphael/text.js",
-            "line": 79,
+            "line": 97,
             "description": "Determines unrotated height for the stored string in the raphael environment.",
             "itemtype": "method",
             "name": "measureStringHeight",
@@ -3227,7 +3356,7 @@
         },
         {
             "file": "src/math/displacement.js",
-            "line": 90,
+            "line": 79,
             "description": "Parses a string into a Displacement.  The string should be of one of the following forms:\n\n    \"A+B\"  ==>  a=A  b=B\n    \"A-B\"  ==>  a=A  b=-B\n    \"A\"    ==>  a=A  b=0\n    \"+A\"   ==>  a=A  b=0\n    \"-A\"   ==>  a=-A b=0",
             "itemtype": "method",
             "name": "parse",
@@ -3245,5 +3374,14 @@
             "submodule": "math"
         }
     ],
-    "warnings": []
+    "warnings": [
+        {
+            "message": "Missing item type\nConsider the regular lattice of points on the Datetime line separated from each other\nby `this` DatetimeMeasure, and aligned at the DatetimeValue `alignment`.  This function\nreturn the smallest DatetimeValue in that lattice which is greater than or equal to\n`value`.\n\nreturn: a DatetimeValue",
+            "line": " src/core/datetime_measure.js:98"
+        },
+        {
+            "message": "Missing item type\nThis function is just like `firstSpacingLocationAtOrAfter` above, but returns the\ngreatest DatetimeValue in the lattice that is less than or equal to `value`.\n\nreturn: a DatetimeValue",
+            "line": " src/core/datetime_measure.js:123"
+        }
+    ]
 }

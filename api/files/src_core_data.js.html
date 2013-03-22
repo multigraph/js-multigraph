@@ -3,11 +3,11 @@
 <head>
     <meta charset="utf-8">
     <title>src&#x2F;core&#x2F;data.js - js-Multigraph</title>
-    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0pr2&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
+    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.7.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
     <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
-    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.8.0pr2&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.7.0&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
 </head>
 <body class="yui3-skin-sam">
 
@@ -62,6 +62,8 @@
                 <li><a href="..&#x2F;classes/Mixin.html">Mixin</a></li>
             
                 <li><a href="..&#x2F;classes/Multigraph.html">Multigraph</a></li>
+            
+                <li><a href="..&#x2F;classes/PeriodicArrayData.html">PeriodicArrayData</a></li>
             
                 <li><a href="..&#x2F;classes/Text.html">Text</a></li>
             
@@ -134,18 +136,14 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
      * @submodule core
      *&#x2F;
 
-    var DataVariable = ns.DataVariable,
-        Data,
-        i;
-
     &#x2F;**
      * @class Data
      * @for Data
      * @constructor
      * @param {DataVariable} columns
      *&#x2F;
-    Data = new window.jermaine.Model(function () {
-        var Data = this;
+    var Data = new window.jermaine.Model(function () {
+        var DataVariable = ns.DataVariable;
         
         this.isA(ns.EventEmitter);
 
@@ -179,10 +177,12 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
          *         having a &quot;column&quot; attribute of 1
          *&#x2F;
         var find = function (attrName, attrValue, columns) {
-            var result = -1;
+            var result = -1,
+                i;
             for (i = 0; i &lt; columns.size(); ++i) {
                 if (columns.at(i)[attrName]() === attrValue) {
                     result = i;
+                    break;
                 }
             }
             return result;
@@ -197,7 +197,7 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
          *&#x2F;
         this.respondsTo(&quot;initializeColumns&quot;, function () {
             var i;
-            for (i=0; i&lt;this.columns().size(); ++i) {
+            for (i = 0; i &lt; this.columns().size(); ++i) {
                 this.columns().at(i).data(this);
             }
         });
@@ -209,6 +209,7 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
 
         this.hasA(&quot;defaultMissingvalue&quot;).which.isA(&quot;string&quot;);
         this.hasA(&quot;defaultMissingop&quot;).which.isA(&quot;string&quot;).and.defaultsTo(&quot;eq&quot;);
+        this.hasA(&quot;adapter&quot;);
 
         &#x2F;**
          * Initialization function --- should be called from isBuiltWith initializer.  This is split
@@ -228,14 +229,13 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
         });
 
         this.respondsTo(&quot;columnIdToColumnNumber&quot;, function (id) {
-            var columnIndex,
-                column = undefined;
-
             if (typeof(id) !== &quot;string&quot;) {
                 throw new Error(&quot;Data: columnIdToColumnNumber expects parameter to be a string&quot;);
             }
 
-            columnIndex = find(&quot;id&quot;, id, this.columns());
+            var columnIndex = find(&quot;id&quot;, id, this.columns()),
+                column = undefined;
+
             if (columnIndex &gt;= 0) {
                 column = this.columns().at(columnIndex);
             }
@@ -248,13 +248,11 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
         });
 
         this.respondsTo(&quot;columnIdToDataVariable&quot;, function (id) {
-            var dv;
-            
             if (typeof(id) !== &quot;string&quot;) {
                 throw new Error(&quot;Data: columnIdToDataVariable requires a string parameter&quot;);
             }
             
-            dv = find(&quot;id&quot;, id, this.columns()) !== -1?this.columns().at(find(&quot;id&quot;, id, this.columns())):undefined;
+            var dv = find(&quot;id&quot;, id, this.columns()) !== -1?this.columns().at(find(&quot;id&quot;, id, this.columns())):undefined;
 
             if (dv === undefined) {
                 throw new Error(&quot;Data: no column with the label &quot; + id);
@@ -264,13 +262,11 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
         });
 
         this.respondsTo(&quot;getColumnId&quot;, function (column) {
-            var result;
-
             if (typeof(column) !== &quot;number&quot;) {
                 throw new Error(&quot;Data: getColumnId method expects an integer&quot;);
             }
 
-            result = find(&quot;column&quot;, column, this.columns());
+            var result = find(&quot;column&quot;, column, this.columns());
 
             if (result === -1) {
                 throw new Error(&quot;Data: column &quot; + column + &quot; does not exist&quot;);
@@ -281,8 +277,8 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
 
         this.respondsTo(&quot;getColumns&quot;, function () {
             var result = [],
-                         columns = this.columns(),
-                         i;
+                columns = this.columns(),
+                i;
 
             for (i = 0; i &lt; columns.size(); ++i) {
                 result.push(columns.at(i));
