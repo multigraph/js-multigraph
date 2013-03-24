@@ -27,7 +27,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 
                 this.initializeSurface();
 
-                this.busySpinner($('<div style="position: absolute; left:5px; top:5px;"></div>') .
+                this.busySpinner($('<div style="position:absolute;top:50%;left:50%;margin-top:-16px;margin-left:-16px"></div>') .
                                   appendTo($(this.div())) .
                                   busy_spinner());
             }
