@@ -37,6 +37,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 ajaxthrottle = window.multigraph.jQuery;
             }
 
+            this.adapter(ArrayData);
             this.init();
 
             if (that.filename() !== undefined) {
