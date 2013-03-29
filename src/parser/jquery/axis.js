@@ -3,35 +3,37 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
 
     ns.mixin.add(function (ns, parse) {
 
-
         var parseLabels = function (xml, axis) {
             var spacingStrings = [],
-                labelers = axis.labelers(),
-                i,
-                j;
-            if (window.multigraph.jQuery.trim(xml.find("labels").attr("spacing"))!=="") {
-                spacingStrings = window.multigraph.jQuery.trim(xml.find("labels").attr("spacing")).split(/\s+/);
+                spacingString,
+                labelsTag = xml.find("labels"),
+                labelers  = axis.labelers(),
+                Labeler   = ns.core.Labeler,
+                $         = ns.jQuery,
+                i;
+            spacingString = $.trim(labelsTag.attr("spacing"));
+            if (spacingString !== "") {
+                spacingStrings = spacingString.split(/\s+/);
             }
             if (spacingStrings.length > 0) {
                 // If there was a spacing attr on the <labels> tag, create a new labeler for
                 // each spacing present in it, using the other values from the <labels> tag
-                for (i=0; i<spacingStrings.length; ++i) {
-                    //labelers.push(ns.core.Labeler[parse](xml.find("labels"), axis, undefined, spacingStrings[i]));
-                    labelers.add(ns.core.Labeler[parse](xml.find("labels"), axis, undefined, spacingStrings[i]));
+                for (i = 0; i < spacingStrings.length; ++i) {
+                    labelers.add(Labeler[parse](labelsTag, axis, undefined, spacingStrings[i]));
                 }
             } else {
                 // Otherwise, parse the <labels> tag to get default values
-                var defaults = ns.core.Labeler[parse](xml.find("labels"), axis, undefined, null);
+                var defaults = Labeler[parse](labelsTag, axis, undefined, null);
                 // And loop over each <label> tag, creating labelers for each, splitting multiple
                 // spacings on the same <label> tag into multiple labelers:
-                window.multigraph.jQuery.each(xml.find("label"), function (j, e) {
+                $.each(xml.find("label"), function (j, e) {
+                    spacingString = $.trim($(e).attr("spacing"));
                     spacingStrings = [];
-                    if (window.multigraph.jQuery.trim(window.multigraph.jQuery(e).attr("spacing"))!=="") {
-                        spacingStrings = window.multigraph.jQuery.trim(window.multigraph.jQuery(e).attr("spacing")).split(/\s+/);
+                    if (spacingString !== "") {
+                        spacingStrings = spacingString.split(/\s+/);
                     }
-                    for (i=0; i<spacingStrings.length; ++i) {
-                        //labelers.push( ns.core.Labeler[parse](window.multigraph.jQuery(e), axis, defaults, spacingStrings[i]) );
-                        labelers.add( ns.core.Labeler[parse](window.multigraph.jQuery(e), axis, defaults, spacingStrings[i]) );
+                    for (i = 0; i < spacingStrings.length; ++i) {
+                        labelers.add( Labeler[parse]($(e), axis, defaults, spacingStrings[i]) );
                     }
                 });
             }
@@ -40,18 +42,29 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
         
         ns.core.Axis[parse] = function (xml, orientation, messageHandler, multigraph) {
 
-            var axis = new ns.core.Axis(orientation),
-                i,
-                j,
+            var core = ns.core,
+                axis = new core.Axis(orientation),
+                DataValue    = core.DataValue,
+                Displacement = ns.math.Displacement,
+                Point        = ns.math.Point,
+                RGBColor     = ns.math.RGBColor,
+                attr, child,
                 value;
 
             if (xml) {
 
-                axis.id(xml.attr("id"));
-                if (xml.attr("type")) {
-                    axis.type(ns.core.DataValue.parseType(xml.attr("type")));
+                attr = xml.attr("id");
+                if (attr !== undefined) {
+                    axis.id(attr);
                 }
-                axis.length(window.multigraph.math.Displacement.parse(xml.attr("length")));
+                attr = xml.attr("type");
+                if (attr !== undefined) {
+                    axis.type(DataValue.parseType(attr));
+                }
+                attr = xml.attr("length");
+                if (attr !== undefined) {
+                    axis.length(Displacement.parse(attr));
+                }
 
                 //
                 // The following provides support for the deprecated "positionbase" axis attribute;
@@ -63,11 +76,11 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     if (positionbase) {
                         messageHandler.warning('Use of deprecated axis attribute "positionbase"; use "base" attribute instead');
                         if ((positionbase === "left") || (positionbase === "bottom")) {
-                            axis.base(window.multigraph.math.Point.parse("-1 -1"));
+                            axis.base(Point.parse("-1 -1"));
                         } else if (positionbase === "right") {
-                            axis.base(window.multigraph.math.Point.parse("1 -1"));
+                            axis.base(Point.parse("1 -1"));
                         } else if (positionbase === "top") {
-                            axis.base(window.multigraph.math.Point.parse("-1 1"));
+                            axis.base(Point.parse("-1 1"));
                         }
                     }
                 }());
@@ -76,96 +89,120 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 // attribute.
                 //
 
-                if (xml.attr("position")) {
+                attr = xml.attr("position");
+                if (attr !== undefined) {
                     try {
-                        axis.position(window.multigraph.math.Point.parse(xml.attr("position")));
+                        axis.position(Point.parse(attr));
                     } catch (e) {
                         // If position did not parse as a Point, and if it can be interpreted
                         // as a number, construct the position point by interpreting that
                         // number as an offset from the 0 location along the perpendicular
                         // direction.
-                        value = parseInt(xml.attr("position"),10);
+                        value = parseInt(attr, 10);
                         if (value !== value) { // test for isNaN
                             throw e;
                         }
-                        if (orientation === ns.core.Axis.HORIZONTAL) {
-                            axis.position(new window.multigraph.math.Point(0, value));
+                        if (orientation === core.Axis.HORIZONTAL) {
+                            axis.position(new Point(0, value));
                         } else {
-                            axis.position(new window.multigraph.math.Point(value, 0));
+                            axis.position(new Point(value, 0));
                         }
                     }
                 }
-                if (xml.attr("pregap") !== undefined) {
-                    axis.pregap(parseFloat(xml.attr("pregap")));
+                attr = xml.attr("pregap");
+                if (attr !== undefined) {
+                    axis.pregap(parseFloat(attr));
                 }
-                if (xml.attr("postgap") !== undefined) {
-                    axis.postgap(parseFloat(xml.attr("postgap")));
+                attr = xml.attr("postgap");
+                if (attr !== undefined) {
+                    axis.postgap(parseFloat(attr));
                 }
-                if (xml.attr("anchor")) {
-                    axis.anchor(parseFloat(xml.attr("anchor")));
+                attr = xml.attr("anchor");
+                if (attr  !== undefined) {
+                    axis.anchor(parseFloat(attr));
                 }
-                if (xml.attr("base")) {
-                    axis.base(window.multigraph.math.Point.parse(xml.attr("base")));
+                attr = xml.attr("base");
+                if (attr  !== undefined) {
+                    axis.base(Point.parse(attr));
                 }
-                if (xml.attr("minposition") !== undefined) {
-                    axis.minposition(window.multigraph.math.Displacement.parse(xml.attr("minposition")));
+                attr = xml.attr("minposition");
+                if (attr !== undefined) {
+                    axis.minposition(Displacement.parse(attr));
                 }
-                if (xml.attr("maxposition") !== undefined) {
-                    axis.maxposition(window.multigraph.math.Displacement.parse(xml.attr("maxposition")));
+                attr = xml.attr("maxposition");
+                if (attr !== undefined) {
+                    axis.maxposition(Displacement.parse(attr));
                 }
                 axis.min(xml.attr("min"));
                 if (axis.min() !== "auto") {
-                    axis.dataMin(ns.core.DataValue.parse(axis.type(), axis.min()));
+                    axis.dataMin(DataValue.parse(axis.type(), axis.min()));
                 }
-                if (xml.attr("minoffset") !== undefined) {
-                    axis.minoffset(parseFloat(xml.attr("minoffset")));
+                attr = xml.attr("minoffset");
+                if (attr !== undefined) {
+                    axis.minoffset(parseFloat(attr));
                 }
                 axis.max(xml.attr("max"));
                 if (axis.max() !== "auto") {
-                    axis.dataMax(ns.core.DataValue.parse(axis.type(), axis.max()));
+                    axis.dataMax(DataValue.parse(axis.type(), axis.max()));
                 }
-                if (xml.attr("maxoffset") !== undefined) {
-                    axis.maxoffset(parseFloat(xml.attr("maxoffset")));
+                attr = xml.attr("maxoffset");
+                if (attr !== undefined) {
+                    axis.maxoffset(parseFloat(attr));
                 }
-                axis.color(window.multigraph.math.RGBColor.parse(xml.attr("color")));
-                if (xml.attr("tickcolor")) {
-                    axis.tickcolor(window.multigraph.math.RGBColor.parse(xml.attr("tickcolor")));
+                attr = xml.attr("color");
+                if (attr !== undefined) {
+                    axis.color(RGBColor.parse(attr));
                 }
-                if (xml.attr("tickmin") !== undefined) {
-                    axis.tickmin(parseInt(xml.attr("tickmin"), 10));
+                attr = xml.attr("tickcolor");
+                if (attr !== undefined) {
+                    axis.tickcolor(RGBColor.parse(attr));
                 }
-                if (xml.attr("tickmax") !== undefined) {
-                    axis.tickmax(parseInt(xml.attr("tickmax"), 10));
+                attr = xml.attr("tickmin");
+                if (attr !== undefined) {
+                    axis.tickmin(parseInt(attr, 10));
                 }
-                axis.highlightstyle(xml.attr("highlightstyle"));
-                if (xml.attr("linewidth") !== undefined) {
-                    axis.linewidth(parseInt(xml.attr("linewidth"), 10));
+                attr = xml.attr("tickmax");
+                if (attr !== undefined) {
+                    axis.tickmax(parseInt(attr, 10));
+                }
+                attr = xml.attr("highlightstyle");
+                if (attr !== undefined) {
+                    axis.highlightstyle(attr);
+                }
+                attr = xml.attr("linewidth");
+                if (attr !== undefined) {
+                    axis.linewidth(parseInt(attr, 10));
                 }
 
-                if (xml.find("title").length > 0)        { axis.title(ns.core.AxisTitle[parse](xml.find("title"), axis));            }
-                else                                     { axis.title(new ns.core.AxisTitle(axis));                                  }
+                child = xml.find("title");
+                if (child.length > 0)                    { axis.title(core.AxisTitle[parse](child, axis));     }
+                else                                     { axis.title(new core.AxisTitle(axis));               }
 
-                if (xml.find("grid").length > 0)         { axis.grid(ns.core.Grid[parse](xml.find("grid")));                         }
-                if (xml.find("pan").length > 0)          { axis.pan(ns.core.Pan[parse](xml.find("pan"), axis.type()));               }
-                if (xml.find("zoom").length > 0)         { axis.zoom(ns.core.Zoom[parse](xml.find("zoom"), axis.type()));            }
-                if (xml.find("labels").length > 0)       { parseLabels(xml, axis);                                                   }
+                child = xml.find("grid");
+                if (child.length > 0)                    { axis.grid(core.Grid[parse](child));                 }
+                child = xml.find("pan");
+                if (child.length > 0)                    { axis.pan(core.Pan[parse](child, axis.type()));      }
+                child = xml.find("zoom");
+                if (child.length > 0)                    { axis.zoom(core.Zoom[parse](child, axis.type()));    }
+                if (xml.find("labels").length > 0)       { parseLabels(xml, axis);                             }
 
-                if (xml.find("binding").length > 0) {
-                    var bindingIdAttr = xml.find("binding").attr("id");
-                    var bindingMinAttr = xml.find("binding").attr("min");
-                    var bindingMaxAttr = xml.find("binding").attr("max");
-                    var bindingMinDataValue = ns.core.DataValue.parse(axis.type(), bindingMinAttr);
-                    var bindingMaxDataValue = ns.core.DataValue.parse(axis.type(), bindingMaxAttr);
+                child = xml.find("binding");
+                if (child.length > 0) {
+                    var bindingIdAttr  = child.attr("id"),
+                        bindingMinAttr = child.attr("min"),
+                        bindingMaxAttr = child.attr("max"),
+                        bindingMinDataValue = DataValue.parse(axis.type(), bindingMinAttr),
+                        bindingMaxDataValue = DataValue.parse(axis.type(), bindingMaxAttr);
                     if (typeof(bindingIdAttr) !== "string" || bindingIdAttr.length <= 0) {
                         throw new Error("invalid axis binding id: '" + bindingIdAttr + "'");
                     }
-                    if (! ns.core.DataValue.isInstance(bindingMinDataValue)) {
+                    if (! DataValue.isInstance(bindingMinDataValue)) {
                         throw new Error("invalid axis binding min: '" + bindingMinAttr + "'");
                     }
-                    if (! ns.core.DataValue.isInstance(bindingMaxDataValue)) {
+                    if (! DataValue.isInstance(bindingMaxDataValue)) {
                         throw new Error("invalid axis binding max: '" + bindingMaxAttr + "'");
                     }
-                    ns.core.AxisBinding.findByIdOrCreateNew(bindingIdAttr).addAxis(axis, bindingMinDataValue, bindingMaxDataValue, multigraph);
+                    core.AxisBinding.findByIdOrCreateNew(bindingIdAttr).addAxis(axis, bindingMinDataValue, bindingMaxDataValue, multigraph);
                 }
 
             }

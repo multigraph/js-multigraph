@@ -5,17 +5,20 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
         
         ns.core.Pan[parse] = function (xml, type) {
             var pan = new ns.core.Pan(),
-                allowed;
+                DataValue = ns.core.DataValue,
+                attr;
             if (xml) {
-                allowed = xml.attr("allowed");
-                if (allowed !== undefined) {
-                    pan.allowed(ns.utilityFunctions.parseBoolean(allowed));
+                attr = xml.attr("allowed");
+                if (attr !== undefined) {
+                    pan.allowed(ns.utilityFunctions.parseBoolean(attr));
                 }
-                if (xml.attr("min") !== undefined) {
-                    pan.min( window.multigraph.core.DataValue.parse(type, xml.attr("min")) );
+                attr = xml.attr("min");
+                if (attr !== undefined) {
+                    pan.min( DataValue.parse(type, attr) );
                 }
-                if (xml.attr("max") !== undefined) {
-                    pan.max( window.multigraph.core.DataValue.parse(type, xml.attr("max")) );
+                attr = xml.attr("max");
+                if (attr !== undefined) {
+                    pan.max( DataValue.parse(type, attr) );
                 }
             }
             return pan;

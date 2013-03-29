@@ -4,7 +4,9 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
     ns.mixin.add(function (ns, parse) {
         
         ns.core.Img[parse] = function (xml, multigraph) {
-            var img;
+            var img,
+                attr,
+                Point = ns.math.Point;
             if (xml && xml.attr("src") !== undefined) {
                 var src = xml.attr("src");
                 if (!src) {
@@ -14,17 +16,21 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     src = multigraph.rebaseUrl(src);
                 }
                 img = new ns.core.Img(src);
-                if (xml.attr("anchor") !== undefined) {
-                    img.anchor(window.multigraph.math.Point.parse(xml.attr("anchor")));
+                attr = xml.attr("anchor");
+                if (attr !== undefined) {
+                    img.anchor(Point.parse(attr));
                 }
-                if (xml.attr("base") !== undefined) {
-                    img.base(window.multigraph.math.Point.parse(xml.attr("base")));
+                attr = xml.attr("base");
+                if (attr !== undefined) {
+                    img.base(Point.parse(attr));
                 }
-                if (xml.attr("position") !== undefined) {
-                    img.position(window.multigraph.math.Point.parse(xml.attr("position")));
+                attr = xml.attr("position");
+                if (attr !== undefined) {
+                    img.position(Point.parse(attr));
                 }
-                if (xml.attr("frame") !== undefined) {
-                    img.frame(xml.attr("frame").toLowerCase());
+                attr = xml.attr("frame");
+                if (attr !== undefined) {
+                    img.frame(attr.toLowerCase());
                 }
             }
             return img;

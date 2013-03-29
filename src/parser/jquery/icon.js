@@ -4,16 +4,20 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
     ns.mixin.add(function (ns, parse) {
         
         ns.core.Icon[parse] = function (xml) {
-            var icon = new ns.core.Icon();
+            var icon = new ns.core.Icon(),
+                attr;
             if (xml) {
-                if (xml.attr("height") !== undefined) {
-                    icon.height(parseInt(xml.attr("height"), 10));
+                attr = xml.attr("height");
+                if (attr !== undefined) {
+                    icon.height(parseInt(attr, 10));
                 }
-                if (xml.attr("width") !== undefined) {
-                    icon.width(parseInt(xml.attr("width"), 10));
+                attr = xml.attr("width");
+                if (attr !== undefined) {
+                    icon.width(parseInt(attr, 10));
                 }
-                if (xml.attr("border") !== undefined) {
-                    icon.border(parseInt(xml.attr("border"), 10));
+                attr = xml.attr("border");
+                if (attr !== undefined) {
+                    icon.border(parseInt(attr, 10));
                 }
             }
             return icon;

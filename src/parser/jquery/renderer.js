@@ -3,19 +3,20 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
 
     ns.mixin.add(function (ns, parse) {
 
-
-
         ns.core.Renderer[parse] = function (xml, plot, messageHandler) {
             var rendererType,
                 renderer,
-                opt;
+                opt,
+                $        = ns.jQuery,
+                core     = ns.core,
+                Renderer = core.Renderer;
 
             if (xml && xml.attr("type") !== undefined) {
-                rendererType = ns.core.Renderer.Type.parse(xml.attr("type"));
-                if (!ns.core.Renderer.Type.isInstance(rendererType)) {
+                rendererType = Renderer.Type.parse(xml.attr("type"));
+                if (!Renderer.Type.isInstance(rendererType)) {
                     throw new Error("unknown renderer type '" + xml.attr("type") + "'");
                 }
-                renderer = ns.core.Renderer.create(rendererType);
+                renderer = Renderer.create(rendererType);
                 renderer.plot(plot);
                 if (xml.find("option").length > 0) {
 
@@ -31,14 +32,16 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                             missingValueOption = xml.find("option[name=missingvalue]"),
                             missingOpOption = xml.find("option[name=missingop]");
                         if (missingValueOption.length > 0 || missingOpOption.length > 0) {
-                            var columns = plot.data().columns();
-                            for (i=0; i<columns.size();  ++i) {
-                                if (columns.at(i).type() === ns.core.DataValue.NUMBER) {
-                                    if (missingValueOption.length > 0 && (columns.at(i).missingvalue() === undefined)) {
-                                        columns.at(i).missingvalue(ns.core.NumberValue.parse(missingValueOption.attr("value")));
+                            var columns = plot.data().columns(),
+                                column;
+                            for (i = 0; i < columns.size();  ++i) {
+                                column = columns.at(i);
+                                if (column.type() === core.DataValue.NUMBER) {
+                                    if (missingValueOption.length > 0 && (column.missingvalue() === undefined)) {
+                                        column.missingvalue(core.NumberValue.parse(missingValueOption.attr("value")));
                                     }
-                                    if (missingOpOption.length > 0 && (columns.at(i).missingop() === undefined)) {
-                                        columns.at(i).missingop(ns.core.DataValue.parseComparator(missingOpOption.attr("value")));
+                                    if (missingOpOption.length > 0 && (column.missingop() === undefined)) {
+                                        column.missingop(core.DataValue.parseComparator(missingOpOption.attr("value")));
                                     }
                                 }
                             }
@@ -61,14 +64,14 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     // missingvalue/missingop renderer options.
                     //
 
-                    window.multigraph.jQuery.each(xml.find(">option"), function (i, e) {
+                    $.each(xml.find(">option"), function (i, e) {
                         try {
-                            renderer.setOptionFromString(window.multigraph.jQuery(e).attr("name"),
-                                                         window.multigraph.jQuery(e).attr("value"),
-                                                         window.multigraph.jQuery(e).attr("min"),
-                                                         window.multigraph.jQuery(e).attr("max"));
+                            renderer.setOptionFromString($(e).attr("name"),
+                                                         $(e).attr("value"),
+                                                         $(e).attr("min"),
+                                                         $(e).attr("max"));
                         } catch (e) {
-                            if (e instanceof window.multigraph.core.Warning) {
+                            if (e instanceof core.Warning) {
                                 messageHandler.warning(e);
                             } else {
                                 throw e;

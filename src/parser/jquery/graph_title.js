@@ -4,42 +4,56 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
     ns.mixin.add(function (ns, parse) {
         
         ns.core.Title[parse] = function (xml, graph) {
-            var title;
+            var title,
+                Point    = ns.math.Point,
+                RGBColor = ns.math.RGBColor,
+                attr;
             if (xml) {
-                if (xml.text() !== "") {
-                    title = new ns.core.Title(new window.multigraph.core.Text(xml.text()), graph);
+                attr = xml.text();
+                if (attr !== "") {
+                    title = new ns.core.Title(new window.multigraph.core.Text(attr), graph);
                 } else {
                     return undefined;
                 }                
-                if (xml.attr("frame") !== undefined) {
-                    title.frame(xml.attr("frame").toLowerCase());
+                attr = xml.attr("frame");
+                if (attr !== undefined) {
+                    title.frame(attr.toLowerCase());
                 }
-                if (xml.attr("border") !== undefined) {
-                    title.border(parseInt(xml.attr("border"), 10));
+                attr = xml.attr("border");
+                if (attr !== undefined) {
+                    title.border(parseInt(attr, 10));
                 }
-                if (xml.attr("color") !== undefined) {
-                    title.color(window.multigraph.math.RGBColor.parse(xml.attr("color")));
+                attr = xml.attr("color");
+                if (attr !== undefined) {
+                    title.color(RGBColor.parse(attr));
                 }
-                if (xml.attr("bordercolor") !== undefined) {
-                    title.bordercolor(window.multigraph.math.RGBColor.parse(xml.attr("bordercolor")));
+                attr = xml.attr("bordercolor");
+                if (attr !== undefined) {
+                    title.bordercolor(RGBColor.parse(attr));
                 }
-                if (xml.attr("opacity") !== undefined) {
-                    title.opacity(parseFloat(xml.attr("opacity")));
+                attr = xml.attr("opacity");
+                if (attr !== undefined) {
+                    title.opacity(parseFloat(attr));
                 }
-                if (xml.attr("padding") !== undefined) {
-                    title.padding(parseInt(xml.attr("padding"), 10));
+                attr = xml.attr("padding");
+                if (attr !== undefined) {
+                    title.padding(parseInt(attr, 10));
                 }
-                if (xml.attr("cornerradius") !== undefined) {
-                    title.cornerradius(parseInt(xml.attr("cornerradius"), 10));
+                attr = xml.attr("cornerradius");
+                if (attr !== undefined) {
+                    title.cornerradius(parseInt(attr, 10));
                 }
-                if (xml.attr("anchor") !== undefined) {
-                    title.anchor(window.multigraph.math.Point.parse(xml.attr("anchor")));
+                attr = xml.attr("anchor");
+                if (attr !== undefined) {
+                    title.anchor(Point.parse(attr));
                 }
-                if (xml.attr("base") !== undefined) {
-                    title.base(window.multigraph.math.Point.parse(xml.attr("base")));
+                attr = xml.attr("base");
+                if (attr !== undefined) {
+                    title.base(Point.parse(attr));
                 }
-                if (xml.attr("position") !== undefined) {
-                    title.position(window.multigraph.math.Point.parse(xml.attr("position")));
+                attr = xml.attr("position");
+                if (attr !== undefined) {
+                    title.position(Point.parse(attr));
                 }
             }
             return title;

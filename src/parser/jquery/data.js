@@ -4,8 +4,9 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
     ns.mixin.add(function (ns, parse) {
         
         window.multigraph.core.Data[parse] = function (xml, multigraph, messageHandler) {
-            var ArrayData = window.multigraph.core.ArrayData,
-                $ = window.multigraph.jQuery,
+            var core = ns.core,
+                ArrayData = core.ArrayData,
+                $ = ns.jQuery,
                 variables_xml,
                 defaultMissingvalueString,
                 defaultMissingopString,
@@ -28,9 +29,10 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 defaultMissingvalueString = variables_xml.attr("missingvalue");
                 defaultMissingopString    = variables_xml.attr("missingop");
 
-                if (variables_xml.find(">variable").length > 0) {
-                    $.each(variables_xml.find(">variable"), function (i, e) {
-                        dataVariables.push( ns.core.DataVariable[parse]($(e)) );
+                var variables = variables_xml.find(">variable");
+                if (variables.length > 0) {
+                    $.each(variables, function (i, e) {
+                        dataVariables.push( core.DataVariable[parse]($(e)) );
                     });
                 }
 
@@ -43,8 +45,8 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     if (periodString === undefined || periodString === "") {
                         messageHandler.warning("<repeat> tag requires a 'period' attribute; data treated as non-repeating");
                     } else {
-                        period = window.multigraph.core.DataMeasure.parse(dataVariables[0].type(),
-                                                                          periodString);
+                        period = core.DataMeasure.parse(dataVariables[0].type(),
+                                                        periodString);
                         haveRepeat = true;
                     }
                 }
@@ -55,7 +57,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     values_xml = values_xml[0];
                     var stringValues = adapter.textToStringArray(dataVariables, $(values_xml).text());
                     if (haveRepeat) {
-                        data = new window.multigraph.core.PeriodicArrayData(dataVariables, stringValues, period);
+                        data = new core.PeriodicArrayData(dataVariables, stringValues, period);
                     } else {
                         data = new ArrayData(dataVariables, stringValues);
                     }
@@ -66,10 +68,10 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 if (csv_xml.length > 0) {
                     csv_xml = csv_xml[0];
                     var filename = $(csv_xml).attr("location");
-                    data = new window.multigraph.core.CSVData(dataVariables,
-                                                              multigraph ? multigraph.rebaseUrl(filename) : filename,
-                                                              messageHandler,
-                                                              multigraph ? multigraph.getAjaxThrottle(filename) : undefined);
+                    data = new core.CSVData(dataVariables,
+                                            multigraph ? multigraph.rebaseUrl(filename) : filename,
+                                            messageHandler,
+                                            multigraph ? multigraph.getAjaxThrottle(filename) : undefined);
                 }
 
                 // if we have a <service> section, parse it and return a WebServiceData instance:
@@ -77,10 +79,10 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 if (service_xml.length > 0) {
                     service_xml = $(service_xml[0]);
                     var location = service_xml.attr("location");
-                    data = new window.multigraph.core.WebServiceData(dataVariables,
-                                                                     multigraph ? multigraph.rebaseUrl(location) : location,
-                                                                     messageHandler,
-                                                                     multigraph ? multigraph.getAjaxThrottle(location) : undefined);
+                    data = new core.WebServiceData(dataVariables,
+                                                   multigraph ? multigraph.rebaseUrl(location) : location,
+                                                   messageHandler,
+                                                   multigraph ? multigraph.getAjaxThrottle(location) : undefined);
                     var format = service_xml.attr("format");
                     if (format) {
                         data.format(format);

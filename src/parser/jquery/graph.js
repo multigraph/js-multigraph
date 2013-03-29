@@ -1,9 +1,8 @@
 window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
     "use strict";
 
-    var $ = window.multigraph.jQuery;
-
     ns.mixin.add(function (ns, parse) {
+        var $ = ns.jQuery;
 
         /*
          * This function traverses an XML document looking for attributes values involving deprecated
@@ -14,19 +13,20 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
             var $xml = $(xml),
                 attributes = $xml[0].attributes,
                 children = $xml.children(),
+                colorNameIsDeprecated = ns.math.RGBColor.colorNameIsDeprecated,
                 dep;
             if (xml.nodeName === "option") {
                 if (/color/.test($xml.attr('name'))) {
-                    dep = ns.math.RGBColor.colorNameIsDeprecated($xml.attr('value'));
+                    dep = colorNameIsDeprecated($xml.attr('value'));
                     if (dep) {
                         messageHandler.warning('Warning: color string "' + $xml.attr('value') + '" is deprecated; use "' + dep + '" instead');
                     }
                 }
             }
             if (attributes) {
-                $.each(attributes, function() {
+                $.each(attributes, function () {
                     if (/color/.test(this.name)) {
-                    dep = ns.math.RGBColor.colorNameIsDeprecated(this.value);
+                    dep = colorNameIsDeprecated(this.value);
                         if (dep) {
                             messageHandler.warning('Warning: color string "' + this.value + '" is deprecated; use "' + dep + '" instead');
                         }
@@ -35,7 +35,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
 
             }
             if (children) {
-                children.each(function() {
+                children.each(function () {
                     checkDeprecatedColorNames(this, messageHandler);
                 });
             }
@@ -43,8 +43,11 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
         
 
         ns.core.Graph[parse] = function (xml, multigraph, messageHandler) {
-            var graph = new ns.core.Graph(),
-                defaults = window.multigraph.utilityFunctions.getDefaultValuesFromXSD();
+            var core  = ns.core,
+                graph = new core.Graph(),
+                Axis  = core.Axis,
+                defaults = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
+                child;
 
             graph.multigraph(multigraph);
             if (xml) {
@@ -64,31 +67,34 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
 
                 // NOTE: 'OBJ.find(">TAG")' returns a list of JQuery objects corresponding to the immediate
                 // (1st generation) child nodes of OBJ corresponding to xml tag TAG
-                if (xml.find(">window").length > 0) {
-                    graph.window( ns.core.Window[parse](xml.find(">window")) );
-                } else {
-                    graph.window( ns.core.Window[parse]() );
+                child = xml.find(">window");
+                if (child.length > 0) {
+                    graph.window( core.Window[parse](child) );
                 }
 
-                if (xml.find(">legend").length > 0) {
-                    graph.legend( ns.core.Legend[parse](xml.find(">legend")) );
+                child = xml.find(">legend");
+                if (child.length > 0) {
+                    graph.legend( core.Legend[parse](child) );
                 } else {
-                    graph.legend( ns.core.Legend[parse]() );
+                    graph.legend( core.Legend[parse]() );
                 }
-                if (xml.find(">background").length > 0) {
-                    graph.background( ns.core.Background[parse](xml.find(">background"), graph.multigraph()) );
+                child = xml.find(">background");
+                if (child.length > 0) {
+                    graph.background( core.Background[parse](child, graph.multigraph()) );
                 }
-                if (xml.find(">plotarea").length > 0) {
-                    graph.plotarea( ns.core.Plotarea[parse](xml.find(">plotarea")) );
+                child = xml.find(">plotarea");
+                if (child.length > 0) {
+                    graph.plotarea( core.Plotarea[parse](child) );
                 }
-                if (xml.find(">title").length > 0) {
-                    graph.title( ns.core.Title[parse](xml.find(">title"), graph) );
+                child = xml.find(">title");
+                if (child.length > 0) {
+                    graph.title( core.Title[parse](child, graph) );
                 }
-                window.multigraph.jQuery.each(xml.find(">horizontalaxis"), function (i,e) {
-                    graph.axes().add( ns.core.Axis[parse](window.multigraph.jQuery(e), ns.core.Axis.HORIZONTAL, messageHandler, graph.multigraph()) );
+                $.each(xml.find(">horizontalaxis"), function (i, e) {
+                    graph.axes().add( Axis[parse]($(e), Axis.HORIZONTAL, messageHandler, graph.multigraph()) );
                 });
-                window.multigraph.jQuery.each(xml.find(">verticalaxis"), function (i,e) {
-                    graph.axes().add( ns.core.Axis[parse](window.multigraph.jQuery(e), ns.core.Axis.VERTICAL, messageHandler, graph.multigraph()) );
+                $.each(xml.find(">verticalaxis"), function (i, e) {
+                    graph.axes().add( Axis[parse]($(e), Axis.VERTICAL, messageHandler, graph.multigraph()) );
                 });
                 /*
                 if (xml.find(">data").length === 0) {
@@ -102,18 +108,18 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     //throw new Error("Graph Data Error: No data tags specified");
                 }
                 */
-                window.multigraph.jQuery.each(xml.find(">throttle"), function (i,e) {
+                $.each(xml.find(">throttle"), function (i, e) {
                     var pattern    = $(e).attr('pattern')    ? $(e).attr('pattern')    : defaults.throttle.pattern,
                         requests   = $(e).attr('requests')   ? $(e).attr('requests')   : defaults.throttle.requests,
                         period     = $(e).attr('period')     ? $(e).attr('period')     : defaults.throttle.period,
                         concurrent = $(e).attr('concurrent') ? $(e).attr('concurrent') : defaults.throttle.concurrent;
                     multigraph.addAjaxThrottle(pattern, requests, period, concurrent);
                 });
-                window.multigraph.jQuery.each(xml.find(">data"), function (i,e) {
-                    graph.data().add( ns.core.Data[parse](window.multigraph.jQuery(e), graph.multigraph(), messageHandler) );
+                $.each(xml.find(">data"), function (i, e) {
+                    graph.data().add( core.Data[parse]($(e), graph.multigraph(), messageHandler) );
                 });
-                window.multigraph.jQuery.each(xml.find(">plot"), function (i,e) {
-                    graph.plots().add( ns.core.Plot[parse](window.multigraph.jQuery(e), graph, messageHandler) );
+                $.each(xml.find(">plot"), function (i, e) {
+                    graph.plots().add( core.Plot[parse]($(e), graph, messageHandler) );
                 });
                 graph.postParse();
             }

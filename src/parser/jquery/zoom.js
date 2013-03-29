@@ -4,24 +4,29 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
     ns.mixin.add(function (ns, parse) {
         
         ns.core.Zoom[parse] = function (xml, type) {
-            var zoom = new ns.core.Zoom(),
-                allowed;
+            var core = ns.core,
+                zoom = new core.Zoom(),
+                DataMeasure = core.DataMeasure,
+                attr;
             if (xml) {
-                allowed = xml.attr("allowed");
-                if (allowed !== undefined) {
-                    zoom.allowed(ns.utilityFunctions.parseBoolean(allowed));
+                attr = xml.attr("allowed");
+                if (attr !== undefined) {
+                    zoom.allowed(ns.utilityFunctions.parseBoolean(attr));
                 }
-                if (xml.attr("min") !== undefined) {
-                    zoom.min( window.multigraph.core.DataMeasure.parse(type, xml.attr("min")) );
+                attr = xml.attr("min");
+                if (attr !== undefined) {
+                    zoom.min( DataMeasure.parse(type, attr) );
                 }
-                if (xml.attr("max") !== undefined) {
-                    zoom.max( window.multigraph.core.DataMeasure.parse(type, xml.attr("max")) );
+                attr = xml.attr("max");
+                if (attr !== undefined) {
+                    zoom.max( DataMeasure.parse(type, attr) );
                 }
-                if (xml.attr("anchor") !== undefined) {
-                    if (xml.attr("anchor").toLowerCase() === "none") {
+                attr = xml.attr("anchor");
+                if (attr !== undefined) {
+                    if (attr.toLowerCase() === "none") {
                         zoom.anchor(null);
                     } else {
-                        zoom.anchor( window.multigraph.core.DataValue.parse(type, xml.attr("anchor")) );
+                        zoom.anchor( core.DataValue.parse(type, attr) );
                     }
                 }
             }

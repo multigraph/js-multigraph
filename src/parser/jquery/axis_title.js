@@ -4,27 +4,34 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
     ns.mixin.add(function (ns, parse) {
         
         ns.core.AxisTitle[parse] = function (xml, axis) {
-            var title = new ns.core.AxisTitle(axis);
-            var nonEmptyTitle = false;
+            var title = new ns.core.AxisTitle(axis),
+                nonEmptyTitle = false,
+                Point = ns.math.Point,
+                attr;
             if (xml) {
-                if (xml.text() !== "") {
-                    title.content(new window.multigraph.core.Text(xml.text()));
+                attr = xml.text();
+                if (attr !== "") {
+                    title.content(new ns.core.Text(attr));
                     nonEmptyTitle = true;
                 }
-                if (xml.attr("anchor") !== undefined) {
-                    title.anchor(window.multigraph.math.Point.parse(xml.attr("anchor")));
+                attr = xml.attr("anchor");
+                if (attr !== undefined) {
+                    title.anchor(Point.parse(attr));
                     nonEmptyTitle = true;
                 }
-                if (xml.attr("base") !== undefined) {
-                    title.base(parseFloat(xml.attr("base")));
+                attr = xml.attr("base");
+                if (attr !== undefined) {
+                    title.base(parseFloat(attr));
                     nonEmptyTitle = true;
                 }
-                if (xml.attr("position") !== undefined) {
-                    title.position(window.multigraph.math.Point.parse(xml.attr("position")));
+                attr = xml.attr("position");
+                if (attr !== undefined) {
+                    title.position(Point.parse(attr));
                     nonEmptyTitle = true;
                 }
-                if (xml.attr("angle") !== undefined) {
-                    title.angle(parseFloat(xml.attr("angle")));
+                attr = xml.attr("angle");
+                if (attr !== undefined) {
+                    title.angle(parseFloat(attr));
                     nonEmptyTitle = true;
                 }
             }

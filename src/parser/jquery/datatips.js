@@ -4,24 +4,42 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
     ns.mixin.add(function (ns, parse) {
 
         ns.core.Datatips[parse] = function (xml) {
-            var datatips = new ns.core.Datatips();
+            var datatips = new ns.core.Datatips(),
+                $ = ns.jQuery,
+                RGBColor = ns.math.RGBColor,
+                attr, child;
             if (xml) {
-                if (xml.find("variable").length > 0) {
-                    window.multigraph.jQuery.each(xml.find("variable"), function (i, e) {
-                        datatips.variables().add( ns.core.DatatipsVariable[parse](window.multigraph.jQuery(e)) );
+                child = xml.find("variable");
+                if (child.length > 0) {
+                    $.each(child, function (i, e) {
+                        datatips.variables().add( ns.core.DatatipsVariable[parse]($(e)) );
                     });
                 }
-                datatips.format(xml.attr("format"));
-                datatips.bgcolor(window.multigraph.math.RGBColor.parse(xml.attr("bgcolor")));
-                datatips.bgalpha(xml.attr("bgalpha"));
-                if (xml.attr("border") !== undefined) {
-                    datatips.border(parseInt(xml.attr("border"), 10));
+                
+                attr = xml.attr("format");
+                if (attr !== undefined) {
+                    datatips.format(attr);
                 }
-                datatips.bordercolor(window.multigraph.math.RGBColor.parse(xml.attr("bordercolor")));
-                if (xml.attr("pad") !== undefined) {
-                    datatips.pad(parseInt(xml.attr("pad"), 10));
+                attr = xml.attr("bgcolor");
+                if (attr !== undefined) {
+                    datatips.bgcolor(RGBColor.parse(attr));
                 }
-
+                attr = xml.attr("bgalpha");
+                if (attr !== undefined) {
+                    datatips.bgalpha(attr);
+                }
+                attr = xml.attr("border");
+                if (attr !== undefined) {
+                    datatips.border(parseInt(attr, 10));
+                }
+                attr = xml.attr("bordercolor");
+                if (attr !== undefined) {
+                    datatips.bordercolor(RGBColor.parse(attr));
+                }
+                attr = xml.attr("pad");
+                if (attr !== undefined) {
+                    datatips.pad(parseInt(attr, 10));
+                }
             }
             return datatips;
         };

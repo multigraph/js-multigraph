@@ -4,44 +4,67 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
     ns.mixin.add(function (ns, parse) {
 
         ns.core.Legend[parse] = function (xml) {
-            var legend = new ns.core.Legend();
+            var legend = new ns.core.Legend(),
+                Point    = ns.math.Point,
+                RGBColor = ns.math.RGBColor,
+                attr;
             if (xml) {
                 
-                if (xml.attr("visible") !== undefined) {
-                    legend.visible(ns.utilityFunctions.parseBoolean(xml.attr("visible")));
+                attr = xml.attr("visible");
+                if (attr !== undefined) {
+                    legend.visible(ns.utilityFunctions.parseBoolean(attr));
                 }
-                if (xml.attr("base") !== undefined) {
-                    legend.base(window.multigraph.math.Point.parse(xml.attr("base")));
+                attr = xml.attr("base");
+                if (attr !== undefined) {
+                    legend.base(Point.parse(attr));
                 }
-                if (xml.attr("anchor") !== undefined) {
-                    legend.anchor(window.multigraph.math.Point.parse(xml.attr("anchor")));
+                attr = xml.attr("anchor");
+                if (attr !== undefined) {
+                    legend.anchor(Point.parse(attr));
                 }
-                if (xml.attr("position") !== undefined) {
-                    legend.position(window.multigraph.math.Point.parse(xml.attr("position")));
+                attr = xml.attr("position");
+                if (attr !== undefined) {
+                    legend.position(Point.parse(attr));
                 }
-                legend.frame(xml.attr("frame"));
-                legend.color(ns.math.RGBColor.parse(xml.attr("color")));
-                legend.bordercolor(ns.math.RGBColor.parse(xml.attr("bordercolor")));
-                if (xml.attr("opacity") !== undefined) {
-                    legend.opacity(parseFloat(xml.attr("opacity")));
+                attr = xml.attr("frame");
+                if (attr !== undefined) {
+                    legend.frame(attr);
                 }
-                if (xml.attr("border") !== undefined) {
-                    legend.border(parseInt(xml.attr("border"), 10));
+                attr = xml.attr("color");
+                if (attr !== undefined) {
+                    legend.color(RGBColor.parse(attr));
                 }
-                if (xml.attr("rows") !== undefined) {
-                    legend.rows(parseInt(xml.attr("rows"), 10));
+                attr = xml.attr("bordercolor");
+                if (attr !== undefined) {
+                    legend.bordercolor(RGBColor.parse(attr));
                 }
-                if (xml.attr("columns") !== undefined) {
-                    legend.columns(parseInt(xml.attr("columns"), 10));
+                attr = xml.attr("opacity");
+                if (attr !== undefined) {
+                    legend.opacity(parseFloat(attr));
                 }
-                if (xml.attr("cornerradius") !== undefined) {
-                    legend.cornerradius(parseInt(xml.attr("cornerradius"), 10));
+                attr = xml.attr("border");
+                if (attr !== undefined) {
+                    legend.border(parseInt(attr, 10));
                 }
-                if (xml.attr("padding") !== undefined) {
-                    legend.padding(parseInt(xml.attr("padding"), 10));
+                attr = xml.attr("rows");
+                if (attr !== undefined) {
+                    legend.rows(parseInt(attr, 10));
                 }
-                if (xml.find("icon").length > 0) {
-                    legend.icon(ns.core.Icon[parse](xml.find("icon")));
+                attr = xml.attr("columns");
+                if (attr !== undefined) {
+                    legend.columns(parseInt(attr, 10));
+                }
+                attr = xml.attr("cornerradius");
+                if (attr !== undefined) {
+                    legend.cornerradius(parseInt(attr, 10));
+                }
+                attr = xml.attr("padding");
+                if (attr !== undefined) {
+                    legend.padding(parseInt(attr, 10));
+                }
+                attr = xml.find("icon");
+                if (attr.length > 0) {
+                    legend.icon(ns.core.Icon[parse](attr));
                 }
             }
             return legend;

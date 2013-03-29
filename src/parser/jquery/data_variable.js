@@ -1,25 +1,30 @@
 window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
     "use strict";
 
-    var DataValue = window.multigraph.core.DataValue;
-
     ns.mixin.add(function (ns, parse) {
         
         ns.core.DataVariable[parse] = function (xml, data) {
-            var variable;
+            var variable,
+                DataValue = window.multigraph.core.DataValue,
+                attr;
+
             if (xml && xml.attr("id")) {
                 variable = new ns.core.DataVariable(xml.attr("id"));
-                if (xml.attr("column")) {
-                    variable.column(parseInt(xml.attr("column"), 10));
+                attr = xml.attr("column");
+                if (attr !== undefined) {
+                    variable.column(parseInt(attr, 10));
                 }
-                if (xml.attr("type")) {
-                    variable.type(DataValue.parseType(xml.attr("type")));
+                attr = xml.attr("type");
+                if (attr !== undefined) {
+                    variable.type(DataValue.parseType(attr));
                 }
-                if (xml.attr("missingvalue")) {
-                    variable.missingvalue(DataValue.parse(variable.type(), xml.attr("missingvalue")));
+                attr = xml.attr("missingvalue");
+                if (attr !== undefined) {
+                    variable.missingvalue(DataValue.parse(variable.type(), attr));
                 }
-                if (xml.attr("missingop")) {
-                    variable.missingop(DataValue.parseComparator(xml.attr("missingop")));
+                attr = xml.attr("missingop");
+                if (attr !== undefined) {
+                    variable.missingop(DataValue.parseComparator(attr));
                 }
             }
             return variable;
