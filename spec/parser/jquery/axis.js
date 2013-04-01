@@ -249,6 +249,7 @@ describe("Axis parsing", function () {
                 i;
 
             beforeEach(function () {
+
                 xmlString = '<verticalaxis'
                     +   ' color="0x000000"'
                     +   ' id="y1"'
@@ -308,6 +309,74 @@ describe("Axis parsing", function () {
                     expect(axis.labelers().at(i).anchor().y()).toEqual((Point.parse(anchorString)).y());
                     expect(axis.labelers().at(i).spacing().getRealValue()).toEqual((DataMeasure.parse(axis.type(), spacingStrings[i])).getRealValue());
                     expect(axis.labelers().at(i).densityfactor()).toEqual(parseFloat(densityfactorString));
+                }
+            });
+
+            it("should properly parse axis models from XML with a labels child tag, a type of 'number' and no spacing attribute", function () {
+                var defaultValues = (window.multigraph.utilityFunctions.getDefaultValuesFromXSD()).horizontalaxis.labels,
+                    spacingStrings   = defaultValues.defaultNumberSpacing.split(/\s+/),
+
+                xmlString = '<verticalaxis'
+                    +   ' type="number"'
+                    +    '>'
+                    +  '<labels'
+                    +     ' start="' + startString + '"'
+                    +     ' angle="' + angleString +'"'
+                    +     ' format="' + formatString +'"'
+                    +     ' anchor="' + anchorString +'"'
+                    +     ' position="' + positionString +'"'
+                    +     ' densityfactor="' + densityfactorString +'"'
+                    +      '/>'
+                    + '</verticalaxis>';
+
+                $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+                axis = Axis.parseXML($xml, Axis.VERTICAL);
+
+                for (i = 0; i < axis.labelers().size(); i++) {
+                    expect(axis.labelers().at(i).formatter().getFormatString()).toEqual((DataFormatter.create(axis.type(), formatString)).getFormatString());
+                    expect(axis.labelers().at(i).start()).toEqual((DataValue.parse(axis.type(), startString)));
+                    expect(axis.labelers().at(i).angle()).toEqual(parseFloat(angleString));
+                    expect(axis.labelers().at(i).position().x()).toEqual((Point.parse(positionString)).x());
+                    expect(axis.labelers().at(i).position().y()).toEqual((Point.parse(positionString)).y());
+                    expect(axis.labelers().at(i).anchor().x()).toEqual((Point.parse(anchorString)).x());
+                    expect(axis.labelers().at(i).anchor().y()).toEqual((Point.parse(anchorString)).y());
+                    expect(axis.labelers().at(i).densityfactor()).toEqual(parseFloat(densityfactorString));
+                    expect(axis.labelers().at(i).spacing().getRealValue()).toEqual((DataMeasure.parse(axis.type(), spacingStrings[i])).getRealValue());
+                }
+            });
+
+            it("should properly parse axis models from XML with a labels child tag, a type of 'datetime' and no spacing attribute", function () {
+                var defaultValues = (window.multigraph.utilityFunctions.getDefaultValuesFromXSD()).horizontalaxis.labels,
+                    spacingStrings = defaultValues.defaultDatetimeSpacing.split(/\s+/),
+                    datetimeFormatString = "%Y-%M-%D %H:%i",
+                    datetimeStartString = "0";
+
+                xmlString = '<verticalaxis'
+                    +   ' type="datetime"'
+                    +    '>'
+                    +  '<labels'
+                    +     ' start="' + datetimeStartString + '"'
+                    +     ' angle="' + angleString +'"'
+                    +     ' format="' + datetimeFormatString +'"'
+                    +     ' anchor="' + anchorString +'"'
+                    +     ' position="' + positionString +'"'
+                    +     ' densityfactor="' + densityfactorString +'"'
+                    +      '/>'
+                    + '</verticalaxis>';
+
+                $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+                axis = Axis.parseXML($xml, Axis.VERTICAL);
+
+                for (i = 0; i < axis.labelers().size(); i++) {
+                    expect(axis.labelers().at(i).formatter().getFormatString()).toEqual((DataFormatter.create(axis.type(), datetimeFormatString)).getFormatString());
+                    expect(axis.labelers().at(i).start()).toEqual((DataValue.parse(axis.type(), datetimeStartString)));
+                    expect(axis.labelers().at(i).angle()).toEqual(parseFloat(angleString));
+                    expect(axis.labelers().at(i).position().x()).toEqual((Point.parse(positionString)).x());
+                    expect(axis.labelers().at(i).position().y()).toEqual((Point.parse(positionString)).y());
+                    expect(axis.labelers().at(i).anchor().x()).toEqual((Point.parse(anchorString)).x());
+                    expect(axis.labelers().at(i).anchor().y()).toEqual((Point.parse(anchorString)).y());
+                    expect(axis.labelers().at(i).densityfactor()).toEqual(parseFloat(densityfactorString));
+                    expect(axis.labelers().at(i).spacing().getRealValue()).toEqual((DataMeasure.parse(axis.type(), spacingStrings[i])).getRealValue());
                 }
             });
 
