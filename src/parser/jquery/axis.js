@@ -7,6 +7,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
             var spacingStrings = [],
                 spacingString,
                 labelsTag = xml.find("labels"),
+                labelTags = xml.find("label"),
                 labelers  = axis.labelers(),
                 Labeler   = ns.core.Labeler,
                 $         = ns.jQuery,
@@ -21,12 +22,12 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 for (i = 0; i < spacingStrings.length; ++i) {
                     labelers.add(Labeler[parse](labelsTag, axis, undefined, spacingStrings[i]));
                 }
-            } else {
-                // Otherwise, parse the <labels> tag to get default values
+            } else if (labelTags.length > 0) {
+                // If there are <label> tags, parse the <labels> tag to get default values
                 var defaults = Labeler[parse](labelsTag, axis, undefined, null);
                 // And loop over each <label> tag, creating labelers for each, splitting multiple
                 // spacings on the same <label> tag into multiple labelers:
-                $.each(xml.find("label"), function (j, e) {
+                $.each(labelTags, function (j, e) {
                     spacingString = $.trim($(e).attr("spacing"));
                     spacingStrings = [];
                     if (spacingString !== "") {
@@ -36,6 +37,17 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                         labelers.add( Labeler[parse]($(e), axis, defaults, spacingStrings[i]) );
                     }
                 });
+            } else {
+                // Otherwise create labelers using the default spacing, with the other values
+                // from the <labels> tag
+                var defaultValues = (ns.utilityFunctions.getDefaultValuesFromXSD()).horizontalaxis.labels;
+                spacingString = axis.type() === ns.core.DataValue.NUMBER ?
+                    defaultValues.defaultNumberSpacing :
+                    defaultValues.defaultDatetimeSpacing;
+                spacingStrings = spacingString.split(/\s+/);
+                for (i = 0; i < spacingStrings.length; ++i) {
+                    labelers.add(Labeler[parse](labelsTag, axis, undefined, spacingStrings[i]));
+                }
             }
         };
 
