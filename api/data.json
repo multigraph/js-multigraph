@@ -274,6 +274,19 @@
                 "Displacement": 1
             },
             "namespaces": {}
+        },
+        "src/utility_functions/parsing_functions.js": {
+            "name": "src/utility_functions/parsing_functions.js",
+            "modules": {
+                "utilityfunctions": 1
+            },
+            "classes": {
+                "ParsingFunctions": 1
+            },
+            "fors": {
+                "ParsingFunctions": 1
+            },
+            "namespaces": {}
         }
     },
     "modules": {
@@ -283,7 +296,8 @@
                 "core": 1,
                 "canvas": 1,
                 "raphael": 1,
-                "math": 1
+                "math": 1,
+                "utilityfunctions": 1
             },
             "classes": {
                 "ArrayData": 1,
@@ -302,7 +316,8 @@
                 "WebServiceData": 1,
                 "WebServiceDataCacheNode": 1,
                 "WebServiceDataIterator": 1,
-                "Displacement": 1
+                "Displacement": 1,
+                "ParsingFunctions": 1
             },
             "fors": {
                 "ArrayData": 1,
@@ -321,10 +336,11 @@
                 "WebServiceData": 1,
                 "WebServiceDataCacheNode": 1,
                 "WebServiceDataIterator": 1,
-                "Displacement": 1
+                "Displacement": 1,
+                "ParsingFunctions": 1
             },
             "namespaces": {},
-            "file": "src/math/displacement.js",
+            "file": "src/utility_functions/parsing_functions.js",
             "line": 12
         },
         "core": {
@@ -401,6 +417,23 @@
             "file": "src/math/displacement.js",
             "line": 12,
             "description": "The Math module provides utility models and functions which correspond to mathematical concepts.",
+            "tag": "main",
+            "itemtype": "main"
+        },
+        "utilityfunctions": {
+            "name": "utilityfunctions",
+            "submodules": {},
+            "classes": {
+                "ParsingFunctions": 1
+            },
+            "fors": {},
+            "is_submodule": 1,
+            "namespaces": {},
+            "module": "multigraph",
+            "namespace": "",
+            "file": "src/utility_functions/parsing_functions.js",
+            "line": 12,
+            "description": "The Utility Functions module provides utility functions which correspond to general concepts.",
             "tag": "main",
             "itemtype": "main"
         }
@@ -798,6 +831,22 @@
                     "type": "Integer"
                 }
             ]
+        },
+        "ParsingFunctions": {
+            "name": "ParsingFunctions",
+            "shortname": "ParsingFunctions",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "multigraph",
+            "submodule": "utilityfunctions",
+            "namespace": "",
+            "file": "src/utility_functions/parsing_functions.js",
+            "line": 12,
+            "description": "Functions which provide abstractions for the parser.",
+            "static": 1
         }
     },
     "classitems": [
@@ -3372,6 +3421,148 @@
             "class": "Displacement",
             "module": "multigraph",
             "submodule": "math"
+        },
+        {
+            "file": "src/utility_functions/parsing_functions.js",
+            "line": 20,
+            "description": "Abstract function for parsing and setting jermaine attributes which do not require\nextremely complicated logic to determine their values. Any attributes which require\ncomplex logic to determine their proper values should be explicitly set in the parser.",
+            "itemtype": "method",
+            "name": "parseAttribute",
+            "params": [
+                {
+                    "name": "value",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "attribute",
+                    "description": "",
+                    "type": "Function"
+                },
+                {
+                    "name": "preprocessor",
+                    "description": "",
+                    "type": "Function"
+                }
+            ],
+            "static": 1,
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "ParsingFunctions",
+            "module": "multigraph",
+            "submodule": "utilityfunctions"
+        },
+        {
+            "file": "src/utility_functions/parsing_functions.js",
+            "line": 40,
+            "description": "Parses String attributes.",
+            "itemtype": "method",
+            "name": "parseString",
+            "params": [
+                {
+                    "name": "value",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "static": 1,
+            "return": {
+                "description": "",
+                "type": "String"
+            },
+            "class": "ParsingFunctions",
+            "module": "multigraph",
+            "submodule": "utilityfunctions"
+        },
+        {
+            "file": "src/utility_functions/parsing_functions.js",
+            "line": 52,
+            "description": "Parses a string argument with a radix of 10 and returns an integer.",
+            "itemtype": "method",
+            "name": "parseInteger",
+            "params": [
+                {
+                    "name": "value",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "static": 1,
+            "return": {
+                "description": "",
+                "type": "Integer"
+            },
+            "class": "ParsingFunctions",
+            "module": "multigraph",
+            "submodule": "utilityfunctions"
+        },
+        {
+            "file": "src/utility_functions/parsing_functions.js",
+            "line": 64,
+            "description": "Returns a curried function that parses a value into a DataValue of the specified type.",
+            "itemtype": "method",
+            "name": "parseDataValue",
+            "params": [
+                {
+                    "name": "type",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "static": 1,
+            "return": {
+                "description": "",
+                "type": "Function"
+            },
+            "class": "ParsingFunctions",
+            "module": "multigraph",
+            "submodule": "utilityfunctions"
+        },
+        {
+            "file": "src/utility_functions/parsing_functions.js",
+            "line": 78,
+            "description": "Returns a curried function that parses a value into a DataMeasure of the specified type.",
+            "itemtype": "method",
+            "name": "parseDataMeasure",
+            "params": [
+                {
+                    "name": "type",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "static": 1,
+            "return": {
+                "description": "",
+                "type": "Function"
+            },
+            "class": "ParsingFunctions",
+            "module": "multigraph",
+            "submodule": "utilityfunctions"
+        },
+        {
+            "file": "src/utility_functions/parsing_functions.js",
+            "line": 92,
+            "description": "Parses the allowed Boolean Strings and returns the appropriate value. If the parameter\nis not one of the allowed values then the parameter is returned as an error might not\nneed to be thrown immediately.",
+            "itemtype": "method",
+            "name": "parseBoolean",
+            "params": [
+                {
+                    "name": "param",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "static": 1,
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "ParsingFunctions",
+            "module": "multigraph",
+            "submodule": "utilityfunctions"
         }
     ],
     "warnings": [

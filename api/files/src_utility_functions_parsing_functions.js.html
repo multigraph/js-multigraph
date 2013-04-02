@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src&#x2F;math&#x2F;displacement.js - js-Multigraph</title>
+    <title>src&#x2F;utility_functions&#x2F;parsing_functions.js - js-Multigraph</title>
     <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.7.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
@@ -128,141 +128,124 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: src&#x2F;math&#x2F;displacement.js</h1>
+                        <h1 class="file-heading">File: src&#x2F;utility_functions&#x2F;parsing_functions.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
-window.multigraph.util.namespace(&quot;window.multigraph.math&quot;, function (ns) {
+window.multigraph.util.namespace(&quot;window.multigraph.utilityFunctions&quot;, function (ns) {
     &quot;use strict&quot;;
 
     &#x2F;**
-     * The Math module provides utility models and functions which correspond to mathematical concepts.
+     * The Utility Functions module provides utility functions which correspond to general concepts.
      *
      * @module multigraph
-     * @submodule math
-     * @main math
+     * @submodule utilityfunctions
+     * @main utilityfunctions
      *&#x2F;
 
     &#x2F;**
-     * A Displacement represents a geometric position along a line
-     * segment, expressed in terms of two quantities: a relative
-     * position called &#x60;a&#x60;, and an absolute offset called &#x60;b&#x60;.  The
-     * length of the line segment is not known in advance --- the idea
-     * is that the Displacement object encapsulates a rule for
-     * determining a location along ANY line segment.  The Displacement
-     * has methods which take the line segment length as an argument
-     * and return the computed final position.
+     * Functions which provide abstractions for the parser.
      *
-     * There are two different position-calcuating methods,
-     * corresponding to two different interpretations of the relative
-     * value &#x60;a&#x60;:
-     *
-     * **relative length**:
-     *     &#x60;a&#x60; is a number between 0 and 1, representing a fraction of
-     *       the total length of the line segment; the relative
-     *       position determined by &#x60;a&#x60; is the fraction &#x60;a&#x60; of the
-     *       total length of the segment.
-     *     In this case, the position-calculating method
-     *       &#x60;calculateLength(L)&#x60; returns the number &#x60;a * L + b&#x60;, which
-     *       corresponds to moving &#x60;a&#x60; of the way along the length L,
-     *       then adding &#x60;b&#x60;:
-     *
-     *             [--------------------------------X------------]
-     *             |&lt;---- a * L ---&gt;|&lt;---- b ------&gt;|
-     *             |&lt;------------------  L  --------------------&gt;|
-     *
-     * **relative coordinate**:
-     *     &#x60;a&#x60; is a number between -1 and 1, representing a coordinate
-     *       value in a [-1,1] coordinate system along the line
-     *       segment.
-     *     In this case, the position-calculating method
-     *       &#x60;calculateCoordinate(L)&#x60; returns the number &#x60;(a+1) * L&#x2F;2 +
-     *       b&#x60;.  which corresponds to moving to the position
-     *       determined by the &#x60;a&#x60; coordinate, then adding &#x60;b&#x60;:
-     *
-     *             [------------------------------------X--------]
-     *             |&lt;--- (a+1) * L&#x2F;2 ---&gt;|&lt;---- b -----&gt;|
-     *             |&lt;------------------  L  --------------------&gt;|
-     *
-     * @class Displacement
-     * @for Displacement
-     * @constructor
-     * @param {Number} a
-     * @param {Integer} b (OPTIONAL)
-     *&#x2F;
-    ns.Displacement = new window.jermaine.Model(&quot;Displacement&quot;, function () {
-        
-        this.hasA(&quot;a&quot;).which.validatesWith(function (a) {
-            return window.multigraph.utilityFunctions.validateNumberRange(a, -1.0, 1.0);
-        });
-        this.hasA(&quot;b&quot;).which.isA(&quot;integer&quot;).and.defaultsTo(0);
-        this.isBuiltWith(&quot;a&quot;, &quot;%b&quot;);
-
-        this.respondsTo(&quot;calculateLength&quot;, function (totalLength) {
-            return this.a() * totalLength + this.b();
-        });
-
-        this.respondsTo(&quot;calculateCoordinate&quot;, function (totalLength) {
-            return (this.a() + 1) * totalLength&#x2F;2.0 + this.b();
-        });
-
-    });
-
-    ns.Displacement.regExp = &#x2F;^([\+\-]?[0-9\.]+)([+\-])([0-9\.+\-]+)$&#x2F;;
-
-    &#x2F;**
-     * Parses a string into a Displacement.  The string should be of one of the following forms:
-     *
-     *     &quot;A+B&quot;  ==&gt;  a=A  b=B
-     *     &quot;A-B&quot;  ==&gt;  a=A  b=-B
-     *     &quot;A&quot;    ==&gt;  a=A  b=0
-     *     &quot;+A&quot;   ==&gt;  a=A  b=0
-     *     &quot;-A&quot;   ==&gt;  a=-A b=0
-     * 
-     * @method parse
-     * @param {String} string
+     * @class ParsingFunctions
+     * @for ParsingFunctions
      * @static
-     * @author jrfrimme
      *&#x2F;
-    ns.Displacement.parse = function (string) {
-        var ar = ns.Displacement.regExp.exec(string),
-            d,
-            a,
-            b,
-            sign;
-        if (string === undefined) {
-            d = new ns.Displacement(1);
-        } else if (ar !== null) {
-            a = parseFloat(ar[1]);
-            b = parseFloat(ar[3]);
-            switch (ar[2]) {
-            case &quot;+&quot;:
-                sign = 1;
-                break;
-            case &quot;-&quot;:
-                sign = -1;
-                break;
-            default:
-                sign = 0;
-                break;
-            }
-            &#x2F;*
-              if (isNaN(a) || sign == 0 || isNaN(b)) {
-              throw new ParseError(&#x27;parse error&#x27;);
-              }
-            *&#x2F;
-            d = new ns.Displacement(a, sign * b);
-        } else {
-            a = parseFloat(string);
-            &#x2F;*n
-              if (isNaN(a)) {
-              throw new ParseError(&#x27;parse error&#x27;);
-              }
-            *&#x2F;
-            d = new ns.Displacement(a);
+
+    &#x2F;**
+     * Abstract function for parsing and setting jermaine attributes which do not require
+     * extremely complicated logic to determine their values. Any attributes which require
+     * complex logic to determine their proper values should be explicitly set in the parser.
+     *
+     * @method parseAttribute
+     * @param {String} value
+     * @param {Function} attribute
+     * @param {Function} preprocessor
+     * @static
+     * @return {Boolean}
+     *&#x2F;
+    ns.parseAttribute = function (value, attribute, preprocessor) {
+        if (value !== undefined) {
+            attribute(preprocessor(value));
+            return true;
         }
-        return d;
+        return false;
     };
+    
+    &#x2F;**
+     * Parses String attributes.
+     *
+     * @method parseString
+     * @param {String} value
+     * @static
+     * @return {String}
+     *&#x2F;
+    ns.parseString = function (value) {
+        return value;
+    };
+
+    &#x2F;**
+     * Parses a string argument with a radix of 10 and returns an integer.
+     *
+     * @method parseInteger
+     * @param {String} value
+     * @static
+     * @return {Integer}
+     *&#x2F;
+    ns.parseInteger = function (value) {
+        return parseInt(value, 10);
+    };
+
+    &#x2F;**
+     * Returns a curried function that parses a value into a DataValue of the specified type.
+     *
+     * @method parseDataValue
+     * @param {String} type
+     * @static
+     * @return {Function}
+     *&#x2F;
+    ns.parseDataValue = function (type) {
+        return function (value) {
+            return window.multigraph.core.DataValue.parse(type, value);
+        };
+    };
+
+    &#x2F;**
+     * Returns a curried function that parses a value into a DataMeasure of the specified type.
+     *
+     * @method parseDataMeasure
+     * @param {String} type
+     * @static
+     * @return {Function}
+     *&#x2F;
+    ns.parseDataMeasure = function (type) {
+        return function (value) {
+            return window.multigraph.core.DataMeasure.parse(type, value);
+        };
+    };
+
+    &#x2F;**
+     * Parses the allowed Boolean Strings and returns the appropriate value. If the parameter
+     * is not one of the allowed values then the parameter is returned as an error might not
+     * need to be thrown immediately.
+     *
+     * @method parseBoolean
+     * @param {String} param
+     * @static
+     * @return {Boolean}
+     *&#x2F;
+    ns.parseBoolean = function (param) {
+        switch (param.toLowerCase()) {
+            case &quot;true&quot;:
+            case &quot;yes&quot;:
+                return true;
+            case &quot;false&quot;:
+            case &quot;no&quot;:
+                return false;
+            default:
+                return param;
+        }
+    };
+
 });
 
     </pre>

@@ -11,6 +11,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "Legend",
         "Mixin",
         "Multigraph",
+        "ParsingFunctions",
         "PeriodicArrayData",
         "Text",
         "Title",
@@ -24,7 +25,8 @@ YUI.add("yuidoc-meta", function(Y) {
         "core",
         "math",
         "multigraph",
-        "raphael"
+        "raphael",
+        "utilityfunctions"
     ],
     "allModules": [
         {
@@ -50,6 +52,11 @@ YUI.add("yuidoc-meta", function(Y) {
             "displayName": "raphael",
             "name": "raphael",
             "description": "Mixin functions for the raphael driver."
+        },
+        {
+            "displayName": "utilityfunctions",
+            "name": "utilityfunctions",
+            "description": "The Utility Functions module provides utility functions which correspond to general concepts."
         }
     ]
 } };
