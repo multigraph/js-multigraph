@@ -5,17 +5,13 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
         
         ns.core.PlotLegend[parse] = function (xml, plot) {
             var legend = new ns.core.PlotLegend(),
+                utilityFunctions = ns.utilityFunctions,
+                parseAttribute   = utilityFunctions.parseAttribute,
                 Text = ns.core.Text,
-                attr;
+                child;
             if (xml) {
-                attr = xml.attr("visible");
-                if (attr !== undefined) {
-                    legend.visible(ns.utilityFunctions.parseBoolean(attr));
-                }
-                attr = xml.attr("label");
-                if (attr !== undefined) {
-                    legend.label(new Text(attr));
-                }
+                parseAttribute(xml.attr("visible"), legend.visible, utilityFunctions.parseBoolean);
+                parseAttribute(xml.attr("label"),   legend.label,   function (value) { return new Text(value); });
             }
 
             if (legend.label() === undefined) {

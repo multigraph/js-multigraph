@@ -6,7 +6,8 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
         ns.core.Filter[parse] = function (xml) {
             var filter = new ns.core.Filter(),
                 $ = ns.jQuery,
-                attr, child;
+                utilityFunctions = ns.utilityFunctions,
+                child;
             if (xml) {
                 child = xml.find("option");
                 if (child.length > 0) {
@@ -14,10 +15,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                         filter.options().add( ns.core.FilterOption[parse]($(e)) );
                     });
                 }
-                attr = xml.attr("type");
-                if (attr !== undefined) {
-                    filter.type(attr);
-                }
+                utilityFunctions.parseAttribute(xml.attr("type"), filter.type, utilityFunctions.parseString);
             }
             return filter;
         };

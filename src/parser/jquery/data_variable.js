@@ -5,27 +5,17 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
         
         ns.core.DataVariable[parse] = function (xml, data) {
             var variable,
-                DataValue = window.multigraph.core.DataValue,
+                utilityFunctions = ns.utilityFunctions,
+                parseAttribute   = utilityFunctions.parseAttribute,
+                DataValue        = ns.core.DataValue,
                 attr;
 
             if (xml && xml.attr("id")) {
                 variable = new ns.core.DataVariable(xml.attr("id"));
-                attr = xml.attr("column");
-                if (attr !== undefined) {
-                    variable.column(parseInt(attr, 10));
-                }
-                attr = xml.attr("type");
-                if (attr !== undefined) {
-                    variable.type(DataValue.parseType(attr));
-                }
-                attr = xml.attr("missingvalue");
-                if (attr !== undefined) {
-                    variable.missingvalue(DataValue.parse(variable.type(), attr));
-                }
-                attr = xml.attr("missingop");
-                if (attr !== undefined) {
-                    variable.missingop(DataValue.parseComparator(attr));
-                }
+                parseAttribute(xml.attr("column"),       variable.column,       utilityFunctions.parseInteger);
+                parseAttribute(xml.attr("type"),         variable.type,         DataValue.parseType);
+                parseAttribute(xml.attr("missingvalue"), variable.missingvalue, utilityFunctions.parseDataValue(variable.type()));
+                parseAttribute(xml.attr("missingop"),    variable.missingop,    DataValue.parseComparator);
             }
             return variable;
         };

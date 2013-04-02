@@ -5,13 +5,10 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
         
         ns.core.DatatipsVariable[parse] = function (xml) {
             var variable = new ns.core.DatatipsVariable(),
-                attr;
+                utilityFunctions = ns.utilityFunctions;
 
             if (xml) {
-                attr = xml.attr("format");
-                if (attr !== undefined) {
-                    variable.format(attr);
-                }
+                utilityFunctions.parseAttribute(xml.attr("format"), variable.format, utilityFunctions.parseString);
             }
             return variable;
         };

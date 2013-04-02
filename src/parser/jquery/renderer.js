@@ -27,10 +27,10 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     // of <data><variable> or <data><variables> instead.  When we're ready to
                     // remove this support, delete the block of code:
                     //
-                    (function(renderer, xml, plot, messageHandler) {
+                    (function (renderer, xml, plot, messageHandler) {
                         var i,
                             missingValueOption = xml.find("option[name=missingvalue]"),
-                            missingOpOption = xml.find("option[name=missingop]");
+                            missingOpOption    = xml.find("option[name=missingop]");
                         if (missingValueOption.length > 0 || missingOpOption.length > 0) {
                             var columns = plot.data().columns(),
                                 column;

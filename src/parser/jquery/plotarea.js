@@ -6,37 +6,18 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
         ns.core.Plotarea[parse] = function (xml) {
             var plotarea = new ns.core.Plotarea(),
                 margin = plotarea.margin(),
-                RGBColor = ns.math.RGBColor,
-                attr;
+                utilityFunctions = ns.utilityFunctions,
+                parseAttribute   = utilityFunctions.parseAttribute,
+                parseInteger     = utilityFunctions.parseInteger,
+                parseRGBColor    = ns.math.RGBColor.parse;
             if (xml) {
-                attr = xml.attr("marginbottom");
-                if (attr !== undefined) {
-                    margin.bottom(parseInt(attr, 10));
-                }
-                attr = xml.attr("marginleft");
-                if (attr !== undefined) {
-                    margin.left(parseInt(attr, 10));
-                }
-                attr = xml.attr("margintop");
-                if (attr !== undefined) {
-                    margin.top(parseInt(attr, 10));
-                }
-                attr = xml.attr("marginright");
-                if (attr !== undefined) {
-                    margin.right(parseInt(attr, 10));
-                }
-                attr = xml.attr("border");
-                if (attr !== undefined) {
-                    plotarea.border(parseInt(attr, 10));
-                }
-                attr = xml.attr("color");
-                if (attr !== undefined) {
-                    plotarea.color(RGBColor.parse(attr));
-                }
-                attr = xml.attr("bordercolor");
-                if (attr !== undefined) {
-                    plotarea.bordercolor(RGBColor.parse(attr));
-                }
+                parseAttribute(xml.attr("marginbottom"), margin.bottom,        parseInteger);
+                parseAttribute(xml.attr("marginleft"),   margin.left,          parseInteger);
+                parseAttribute(xml.attr("margintop"),    margin.top,           parseInteger);
+                parseAttribute(xml.attr("marginright"),  margin.right,         parseInteger);
+                parseAttribute(xml.attr("border"),       plotarea.border,      parseInteger);
+                parseAttribute(xml.attr("color"),        plotarea.color,       parseRGBColor);
+                parseAttribute(xml.attr("bordercolor"),  plotarea.bordercolor, parseRGBColor);
             }
             return plotarea;
         };

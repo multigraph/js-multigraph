@@ -5,56 +5,29 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
         
         ns.core.Title[parse] = function (xml, graph) {
             var title,
-                Point    = ns.math.Point,
-                RGBColor = ns.math.RGBColor,
-                attr;
+                parsePoint       = ns.math.Point.parse,
+                parseRGBColor    = ns.math.RGBColor.parse,
+                utilityFunctions = ns.utilityFunctions,
+                parseAttribute   = utilityFunctions.parseAttribute,
+                parseInteger     = utilityFunctions.parseInteger;
+
             if (xml) {
-                attr = xml.text();
-                if (attr !== "") {
-                    title = new ns.core.Title(new window.multigraph.core.Text(attr), graph);
+                var text = xml.text();
+                if (text !== "") {
+                    title = new ns.core.Title(new ns.core.Text(text), graph);
                 } else {
                     return undefined;
                 }                
-                attr = xml.attr("frame");
-                if (attr !== undefined) {
-                    title.frame(attr.toLowerCase());
-                }
-                attr = xml.attr("border");
-                if (attr !== undefined) {
-                    title.border(parseInt(attr, 10));
-                }
-                attr = xml.attr("color");
-                if (attr !== undefined) {
-                    title.color(RGBColor.parse(attr));
-                }
-                attr = xml.attr("bordercolor");
-                if (attr !== undefined) {
-                    title.bordercolor(RGBColor.parse(attr));
-                }
-                attr = xml.attr("opacity");
-                if (attr !== undefined) {
-                    title.opacity(parseFloat(attr));
-                }
-                attr = xml.attr("padding");
-                if (attr !== undefined) {
-                    title.padding(parseInt(attr, 10));
-                }
-                attr = xml.attr("cornerradius");
-                if (attr !== undefined) {
-                    title.cornerradius(parseInt(attr, 10));
-                }
-                attr = xml.attr("anchor");
-                if (attr !== undefined) {
-                    title.anchor(Point.parse(attr));
-                }
-                attr = xml.attr("base");
-                if (attr !== undefined) {
-                    title.base(Point.parse(attr));
-                }
-                attr = xml.attr("position");
-                if (attr !== undefined) {
-                    title.position(Point.parse(attr));
-                }
+                parseAttribute(xml.attr("frame"),        title.frame,        function (value) { return value.toLowerCase(); });
+                parseAttribute(xml.attr("border"),       title.border,       parseInteger);
+                parseAttribute(xml.attr("color"),        title.color,        parseRGBColor);
+                parseAttribute(xml.attr("bordercolor"),  title.bordercolor,  parseRGBColor);
+                parseAttribute(xml.attr("opacity"),      title.opacity,      parseFloat);
+                parseAttribute(xml.attr("padding"),      title.padding,      parseInteger);
+                parseAttribute(xml.attr("cornerradius"), title.cornerradius, parseInteger);
+                parseAttribute(xml.attr("anchor"),       title.anchor,       parsePoint);
+                parseAttribute(xml.attr("base"),         title.base,         parsePoint);
+                parseAttribute(xml.attr("position"),     title.position,     parsePoint);
             }
             return title;
         };

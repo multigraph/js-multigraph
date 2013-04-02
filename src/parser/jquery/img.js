@@ -5,8 +5,8 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
         
         ns.core.Img[parse] = function (xml, multigraph) {
             var img,
-                attr,
-                Point = ns.math.Point;
+                parseAttribute = ns.utilityFunctions.parseAttribute,
+                parsePoint    = ns.math.Point.parse;
             if (xml && xml.attr("src") !== undefined) {
                 var src = xml.attr("src");
                 if (!src) {
@@ -16,22 +16,10 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     src = multigraph.rebaseUrl(src);
                 }
                 img = new ns.core.Img(src);
-                attr = xml.attr("anchor");
-                if (attr !== undefined) {
-                    img.anchor(Point.parse(attr));
-                }
-                attr = xml.attr("base");
-                if (attr !== undefined) {
-                    img.base(Point.parse(attr));
-                }
-                attr = xml.attr("position");
-                if (attr !== undefined) {
-                    img.position(Point.parse(attr));
-                }
-                attr = xml.attr("frame");
-                if (attr !== undefined) {
-                    img.frame(attr.toLowerCase());
-                }
+                parseAttribute(xml.attr("anchor"),   img.anchor,   parsePoint);
+                parseAttribute(xml.attr("base"),     img.base,     parsePoint);
+                parseAttribute(xml.attr("position"), img.position, parsePoint);
+                parseAttribute(xml.attr("frame"),    img.frame,    function (value) { return value.toLowerCase(); });
             }
             return img;
         };

@@ -3,25 +3,18 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
 
     ns.mixin.add(function (ns, parse) {
         
-        ns.core.Window[parse] = function (xml, messageHandler) {
+        ns.core.Window[parse] = function (xml) {
             //WARNING: do not declare a local var named "window" here; it masks the global 'window' object,
             //  which screws up the references to window.multigraph.* below!
             var w = new ns.core.Window(),
-                RGBColor = ns.math.RGBColor,
+                utilityFunctions = ns.utilityFunctions,
+                parseAttribute   = utilityFunctions.parseAttribute,
+                parseInteger     = utilityFunctions.parseInteger,
                 attr;
             if (xml) {
-                attr = xml.attr("width");
-                if (attr !== undefined) {
-                    w.width(parseInt(attr, 10));
-                }
-                attr = xml.attr("height");
-                if (attr !== undefined) {
-                    w.height(parseInt(attr, 10));
-                }
-                attr = xml.attr("border");
-                if (attr !== undefined) {
-                    w.border(parseInt(attr, 10));
-                }
+                parseAttribute(xml.attr("width"),  w.width,  parseInteger);
+                parseAttribute(xml.attr("height"), w.height, parseInteger);
+                parseAttribute(xml.attr("border"), w.border, parseInteger);
 
                 attr = xml.attr("margin");
                 if (attr !== undefined) {
@@ -37,19 +30,9 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     }(parseInt(attr, 10)));
                 }
 
-                attr = xml.attr("bordercolor");
-                if (attr !== undefined) {
-                    w.bordercolor(RGBColor.parse(attr));
-
-                    // remove this block when removing support for deprecated color names
-                    if (RGBColor.colorNameIsDeprecated(attr)) {
-                        if (messageHandler && messageHandler.warning) {
-                            messageHandler.warning("Color name '"+attr+"; is deprecated; use the RGB hex notation instead");
-                        }
-                    }
-                // end of block to remove when removing support for deprecated color names
-                }
-
+                // removed deprecated color name check from commit #17665e2
+                //    jrfrimme Tues Apr 2 11:47 2013
+                parseAttribute(xml.attr("bordercolor"), w.bordercolor, ns.math.RGBColor.parse);
             }
             return w;
         };

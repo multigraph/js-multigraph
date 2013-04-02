@@ -6,34 +6,24 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
         ns.core.AxisTitle[parse] = function (xml, axis) {
             var title = new ns.core.AxisTitle(axis),
                 nonEmptyTitle = false,
-                Point = ns.math.Point,
-                attr;
+                parsePoint = ns.math.Point.parse,
+                text,
+                parseTitleAttribute = function (value, attribute, preprocessor) {
+                    if (ns.utilityFunctions.parseAttribute(value, attribute, preprocessor)) {
+                        nonEmptyTitle = true;
+                    }
+                };
+
             if (xml) {
-                attr = xml.text();
-                if (attr !== "") {
-                    title.content(new ns.core.Text(attr));
+                text = xml.text();
+                if (text !== "") {
+                    title.content(new ns.core.Text(text));
                     nonEmptyTitle = true;
                 }
-                attr = xml.attr("anchor");
-                if (attr !== undefined) {
-                    title.anchor(Point.parse(attr));
-                    nonEmptyTitle = true;
-                }
-                attr = xml.attr("base");
-                if (attr !== undefined) {
-                    title.base(parseFloat(attr));
-                    nonEmptyTitle = true;
-                }
-                attr = xml.attr("position");
-                if (attr !== undefined) {
-                    title.position(Point.parse(attr));
-                    nonEmptyTitle = true;
-                }
-                attr = xml.attr("angle");
-                if (attr !== undefined) {
-                    title.angle(parseFloat(attr));
-                    nonEmptyTitle = true;
-                }
+                parseTitleAttribute(xml.attr("anchor"),   title.anchor,   parsePoint);
+                parseTitleAttribute(xml.attr("base"),     title.base,     parseFloat);
+                parseTitleAttribute(xml.attr("position"), title.position, parsePoint);
+                parseTitleAttribute(xml.attr("angle"),    title.angle,    parseFloat);
             }
 
             if (nonEmptyTitle === true) { 

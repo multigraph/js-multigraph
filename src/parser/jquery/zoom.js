@@ -6,21 +6,14 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
         ns.core.Zoom[parse] = function (xml, type) {
             var core = ns.core,
                 zoom = new core.Zoom(),
-                DataMeasure = core.DataMeasure,
+                utilityFunctions = ns.utilityFunctions,
+                parseAttribute   = utilityFunctions.parseAttribute,
+                parseDataMeasure = utilityFunctions.parseDataMeasure,
                 attr;
             if (xml) {
-                attr = xml.attr("allowed");
-                if (attr !== undefined) {
-                    zoom.allowed(ns.utilityFunctions.parseBoolean(attr));
-                }
-                attr = xml.attr("min");
-                if (attr !== undefined) {
-                    zoom.min( DataMeasure.parse(type, attr) );
-                }
-                attr = xml.attr("max");
-                if (attr !== undefined) {
-                    zoom.max( DataMeasure.parse(type, attr) );
-                }
+                parseAttribute(xml.attr("allowed"), zoom.allowed, utilityFunctions.parseBoolean);
+                parseAttribute(xml.attr("min"),     zoom.min,     parseDataMeasure(type));
+                parseAttribute(xml.attr("max"),     zoom.max,     parseDataMeasure(type));
                 attr = xml.attr("anchor");
                 if (attr !== undefined) {
                     if (attr.toLowerCase() === "none") {

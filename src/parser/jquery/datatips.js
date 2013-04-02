@@ -6,8 +6,12 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
         ns.core.Datatips[parse] = function (xml) {
             var datatips = new ns.core.Datatips(),
                 $ = ns.jQuery,
-                RGBColor = ns.math.RGBColor,
-                attr, child;
+                parseRGBColor    = ns.math.RGBColor.parse,
+                utilityFunctions = ns.utilityFunctions,
+                parseAttribute   = utilityFunctions.parseAttribute,
+                parseInteger     = utilityFunctions.parseInteger,
+                parseString      = utilityFunctions.parseString,
+                child;
             if (xml) {
                 child = xml.find("variable");
                 if (child.length > 0) {
@@ -16,30 +20,12 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     });
                 }
                 
-                attr = xml.attr("format");
-                if (attr !== undefined) {
-                    datatips.format(attr);
-                }
-                attr = xml.attr("bgcolor");
-                if (attr !== undefined) {
-                    datatips.bgcolor(RGBColor.parse(attr));
-                }
-                attr = xml.attr("bgalpha");
-                if (attr !== undefined) {
-                    datatips.bgalpha(attr);
-                }
-                attr = xml.attr("border");
-                if (attr !== undefined) {
-                    datatips.border(parseInt(attr, 10));
-                }
-                attr = xml.attr("bordercolor");
-                if (attr !== undefined) {
-                    datatips.bordercolor(RGBColor.parse(attr));
-                }
-                attr = xml.attr("pad");
-                if (attr !== undefined) {
-                    datatips.pad(parseInt(attr, 10));
-                }
+                parseAttribute(xml.attr("format"),      datatips.format,      parseString);
+                parseAttribute(xml.attr("bgcolor"),     datatips.bgcolor,     parseRGBColor);
+                parseAttribute(xml.attr("bgalpha"),     datatips.bgalpha,     parseString);
+                parseAttribute(xml.attr("border"),      datatips.border,      parseInteger);
+                parseAttribute(xml.attr("bordercolor"), datatips.bordercolor, parseRGBColor);
+                parseAttribute(xml.attr("pad"),         datatips.pad,         parseInteger);
             }
             return datatips;
         };

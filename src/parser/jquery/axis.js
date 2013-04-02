@@ -55,28 +55,25 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
         ns.core.Axis[parse] = function (xml, orientation, messageHandler, multigraph) {
 
             var core = ns.core,
+                math = ns.math,
                 axis = new core.Axis(orientation),
-                DataValue    = core.DataValue,
-                Displacement = ns.math.Displacement,
-                Point        = ns.math.Point,
-                RGBColor     = ns.math.RGBColor,
+                utilityFunctions  = ns.utilityFunctions,
+                parseAttribute    = utilityFunctions.parseAttribute,
+                parseInteger      = utilityFunctions.parseInteger,
+                parseString       = utilityFunctions.parseString,
+                DataValue         = core.DataValue,
+                parseDisplacement = math.Displacement.parse,
+                Point             = math.Point,
+                parsePoint        = Point.parse,
+                parseRGBColor     = math.RGBColor.parse,
                 attr, child,
                 value;
 
             if (xml) {
 
-                attr = xml.attr("id");
-                if (attr !== undefined) {
-                    axis.id(attr);
-                }
-                attr = xml.attr("type");
-                if (attr !== undefined) {
-                    axis.type(DataValue.parseType(attr));
-                }
-                attr = xml.attr("length");
-                if (attr !== undefined) {
-                    axis.length(Displacement.parse(attr));
-                }
+                parseAttribute(xml.attr("id"),     axis.id,     parseString);
+                parseAttribute(xml.attr("type"),   axis.type,   DataValue.parseType);
+                parseAttribute(xml.attr("length"), axis.length, parseDisplacement);
 
                 //
                 // The following provides support for the deprecated "positionbase" axis attribute;
@@ -88,11 +85,11 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     if (positionbase) {
                         messageHandler.warning('Use of deprecated axis attribute "positionbase"; use "base" attribute instead');
                         if ((positionbase === "left") || (positionbase === "bottom")) {
-                            axis.base(Point.parse("-1 -1"));
+                            axis.base(parsePoint("-1 -1"));
                         } else if (positionbase === "right") {
-                            axis.base(Point.parse("1 -1"));
+                            axis.base(parsePoint("1 -1"));
                         } else if (positionbase === "top") {
-                            axis.base(Point.parse("-1 1"));
+                            axis.base(parsePoint("-1 1"));
                         }
                     }
                 }());
@@ -104,7 +101,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 attr = xml.attr("position");
                 if (attr !== undefined) {
                     try {
-                        axis.position(Point.parse(attr));
+                        axis.position(parsePoint(attr));
                     } catch (e) {
                         // If position did not parse as a Point, and if it can be interpreted
                         // as a number, construct the position point by interpreting that
@@ -121,75 +118,34 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                         }
                     }
                 }
-                attr = xml.attr("pregap");
-                if (attr !== undefined) {
-                    axis.pregap(parseFloat(attr));
-                }
-                attr = xml.attr("postgap");
-                if (attr !== undefined) {
-                    axis.postgap(parseFloat(attr));
-                }
-                attr = xml.attr("anchor");
-                if (attr  !== undefined) {
-                    axis.anchor(parseFloat(attr));
-                }
-                attr = xml.attr("base");
-                if (attr  !== undefined) {
-                    axis.base(Point.parse(attr));
-                }
-                attr = xml.attr("minposition");
-                if (attr !== undefined) {
-                    axis.minposition(Displacement.parse(attr));
-                }
-                attr = xml.attr("maxposition");
-                if (attr !== undefined) {
-                    axis.maxposition(Displacement.parse(attr));
-                }
+
                 axis.min(xml.attr("min"));
                 if (axis.min() !== "auto") {
                     axis.dataMin(DataValue.parse(axis.type(), axis.min()));
-                }
-                attr = xml.attr("minoffset");
-                if (attr !== undefined) {
-                    axis.minoffset(parseFloat(attr));
                 }
                 axis.max(xml.attr("max"));
                 if (axis.max() !== "auto") {
                     axis.dataMax(DataValue.parse(axis.type(), axis.max()));
                 }
-                attr = xml.attr("maxoffset");
-                if (attr !== undefined) {
-                    axis.maxoffset(parseFloat(attr));
-                }
-                attr = xml.attr("color");
-                if (attr !== undefined) {
-                    axis.color(RGBColor.parse(attr));
-                }
-                attr = xml.attr("tickcolor");
-                if (attr !== undefined) {
-                    axis.tickcolor(RGBColor.parse(attr));
-                }
-                attr = xml.attr("tickmin");
-                if (attr !== undefined) {
-                    axis.tickmin(parseInt(attr, 10));
-                }
-                attr = xml.attr("tickmax");
-                if (attr !== undefined) {
-                    axis.tickmax(parseInt(attr, 10));
-                }
-                attr = xml.attr("highlightstyle");
-                if (attr !== undefined) {
-                    axis.highlightstyle(attr);
-                }
-                attr = xml.attr("linewidth");
-                if (attr !== undefined) {
-                    axis.linewidth(parseInt(attr, 10));
-                }
 
+                parseAttribute(xml.attr("pregap"),         axis.pregap,         parseFloat);
+                parseAttribute(xml.attr("postgap"),        axis.postgap,        parseFloat);
+                parseAttribute(xml.attr("anchor"),         axis.anchor,         parseFloat);
+                parseAttribute(xml.attr("base"),           axis.base,           parsePoint);
+                parseAttribute(xml.attr("minposition"),    axis.minposition,    parseDisplacement);
+                parseAttribute(xml.attr("maxposition"),    axis.maxposition,    parseDisplacement);
+                parseAttribute(xml.attr("minoffset"),      axis.minoffset,      parseFloat);
+                parseAttribute(xml.attr("maxoffset"),      axis.maxoffset,      parseFloat);
+                parseAttribute(xml.attr("color"),          axis.color,          parseRGBColor);
+                parseAttribute(xml.attr("tickcolor"),      axis.tickcolor,      parseRGBColor);
+                parseAttribute(xml.attr("tickmin"),        axis.tickmin,        parseInteger);
+                parseAttribute(xml.attr("tickmax"),        axis.tickmax,        parseInteger);
+                parseAttribute(xml.attr("highlightstyle"), axis.highlightstyle, parseString);
+                parseAttribute(xml.attr("linewidth"),      axis.linewidth,      parseInteger);
+                
                 child = xml.find("title");
                 if (child.length > 0)                    { axis.title(core.AxisTitle[parse](child, axis));     }
                 else                                     { axis.title(new core.AxisTitle(axis));               }
-
                 child = xml.find("grid");
                 if (child.length > 0)                    { axis.grid(core.Grid[parse](child));                 }
                 child = xml.find("pan");

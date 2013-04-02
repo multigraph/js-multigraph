@@ -9,10 +9,10 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
          * color names and issues a warning about each one found.  Remove this function when removing
          * support for these names.  See src/math/rgb_color.js for a list of the deprecated colors.
          */
-        var checkDeprecatedColorNames = function(xml, messageHandler) {
-            var $xml = $(xml),
+        var checkDeprecatedColorNames = function (xml, messageHandler) {
+            var $xml       = $(xml),
                 attributes = $xml[0].attributes,
-                children = $xml.children(),
+                children   = $xml.children(),
                 colorNameIsDeprecated = ns.math.RGBColor.colorNameIsDeprecated,
                 dep;
             if (xml.nodeName === "option") {
@@ -46,7 +46,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
             var core  = ns.core,
                 graph = new core.Graph(),
                 Axis  = core.Axis,
-                defaults = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
+                defaults = ns.utilityFunctions.getDefaultValuesFromXSD(),
                 child;
 
             graph.multigraph(multigraph);

@@ -13,66 +13,40 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
             // If the spacing argument has the value null, the resulting labeler will have no spacing
             // attribute set at all.
             var labeler,
-                core  = ns.core,
-                math  = ns.math,
-                Point = math.Point,
-                attr;
+                math = ns.math,
+                utilityFunctions = ns.utilityFunctions,
+                parsePoint = math.Point.parse;
+
+            // `parseAttribute` returns true or false depending on whether or not it set the attribute.
+            // If it did not and if the `defaults` object exists then the attribute is set to the
+            // appropriate default value.
+            var parseLabelerAttribute = function (value, attribute, preprocessor, defaultName) {
+                if (!utilityFunctions.parseAttribute(value, attribute, preprocessor) && defaults !== undefined) {
+                    attribute(defaults[defaultName]());
+                }
+            };
+            var parseDataFormatter = function (type) {
+                return function (value) {
+                    return window.multigraph.core.DataFormatter.create(type, value);
+                };
+            };
+
             if (xml) {
-                labeler = new core.Labeler(axis);
+                labeler = new ns.core.Labeler(axis);
                 if (spacing !== null) {
                     if (spacing === undefined) {
                         spacing = xml.attr("spacing");
                     }
                     //NOTE: spacing might still === undefined at this point
-                    if (spacing !== undefined) {
-                        labeler.spacing(core.DataMeasure.parse(axis.type(), spacing));
-                    } else if (defaults !== undefined) {
-                        labeler.spacing(defaults.spacing());
-                    }
+                    parseLabelerAttribute(spacing, labeler.spacing, utilityFunctions.parseDataMeasure(axis.type()), "spacing");
                 }
-                attr = xml.attr("format");
-                if (attr !== undefined) {
-                    labeler.formatter(core.DataFormatter.create(axis.type(), attr));
-                } else if (defaults !== undefined) {
-                    labeler.formatter(defaults.formatter());
-                }
-                attr = xml.attr("start");
-                if (attr !== undefined) {
-                    labeler.start(core.DataValue.parse(axis.type(), attr));
-                } else if (defaults !== undefined) {
-                    labeler.start(defaults.start());
-                }
-                attr = xml.attr("angle");
-                if (attr !== undefined) {
-                    labeler.angle(parseFloat(attr));
-                } else if (defaults !== undefined) {
-                    labeler.angle(defaults.angle());
-                }
-                attr = xml.attr("position");
-                if (attr !== undefined) { 
-                    labeler.position(Point.parse(attr));
-                } else if (defaults !== undefined) {
-                    labeler.position(defaults.position());
-                }
-                attr = xml.attr("anchor");
-                if (attr !== undefined) {
-                    labeler.anchor(Point.parse(attr));
-                } else if (defaults !== undefined) {
-                    labeler.anchor(defaults.anchor());
-                }
-                attr = xml.attr("densityfactor");
-                if (attr !== undefined) {
-                    labeler.densityfactor(parseFloat(attr));
-                } else if (defaults !== undefined) {
-                    labeler.densityfactor(defaults.densityfactor());
-                }
-
-                attr = xml.attr("color");
-                if (attr !== undefined) {
-                    labeler.color(math.RGBColor.parse(attr));
-                } else if (defaults !== undefined) {
-                    labeler.color(defaults.color());
-                }
+                parseLabelerAttribute(xml.attr("format"),        labeler.formatter,     parseDataFormatter(axis.type()),              "formatter");
+                parseLabelerAttribute(xml.attr("start"),         labeler.start,         utilityFunctions.parseDataValue(axis.type()), "start");
+                parseLabelerAttribute(xml.attr("angle"),         labeler.angle,         parseFloat,                                   "angle");
+                parseLabelerAttribute(xml.attr("position"),      labeler.position,      parsePoint,                                   "position");
+                parseLabelerAttribute(xml.attr("anchor"),        labeler.anchor,        parsePoint,                                   "anchor");
+                parseLabelerAttribute(xml.attr("densityfactor"), labeler.densityfactor, parseFloat,                                   "densityfactor");
+                parseLabelerAttribute(xml.attr("color"),         labeler.color,         math.RGBColor.parse,                          "color");
             }
             return labeler;
         };

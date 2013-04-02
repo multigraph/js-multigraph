@@ -5,12 +5,11 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
         
         ns.core.Grid[parse] = function (xml) {
             var grid = new ns.core.Grid(),
+                utilityFunctions = ns.utilityFunctions,
+                parseAttribute   = utilityFunctions.parseAttribute,
                 attr;
             if (xml) {
-                attr = xml.attr("color");
-                if (attr !== undefined) {
-                    grid.color(ns.math.RGBColor.parse(attr));
-                }
+                parseAttribute(xml.attr("color"), grid.color, ns.math.RGBColor.parse);
                 //NOTE: visible attribute should default to true when parsing, so that
                 //      the presence of a <grid> tag at all will turn on a grid.  In
                 //      the Grid object itself, though, the default for the visible
@@ -18,7 +17,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 //      in code (as opposed to parsing), it defaults to not visible.
                 attr = xml.attr("visible");
                 if (attr !== undefined) {
-                    grid.visible(ns.utilityFunctions.parseBoolean(attr));
+                    grid.visible(utilityFunctions.parseBoolean(attr));
                 } else {
                     grid.visible(true);
                 }
