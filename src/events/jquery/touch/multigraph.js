@@ -5,10 +5,10 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
         var math = window.multigraph.util.namespace("window.multigraph.math");
 
         ns.core.Multigraph.respondsTo("registerTouchEvents", function (target) {
-            var touchStarted = false,
-                dragStarted = false,
-                pinchZoomStarted = false,
-                pinchZoomDetermined = false,
+            var touchStarted           = false,
+                dragStarted            = false,
+                pinchZoomStarted       = false,
+                pinchZoomDetermined    = false,
                 pinchZoomInitialDeltas = {},
                 pinchZoomDeterminedTimeout,
                 previoustoucha, previoustouchb,
@@ -159,6 +159,7 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
                             "dy" : 0
                         };
                     }
+
                     pinchZoomInitialDeltas.zoomDeltas.dx += dx;
                     pinchZoomInitialDeltas.zoomDeltas.dy += dy;
                     pinchZoomInitialDeltas.panDeltas.dx += cx;

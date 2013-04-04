@@ -2,30 +2,35 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
     "use strict";
 
     ns.mixin.add(function (ns, errorHandler) {
-        var Axis  = ns.core.Axis;
 
         ns.core.Graph.respondsTo("doFirstPinchZoom", function (multigraph, bx, by, dx, dy, totalx, totaly) {
+            var dragAxis = this.dragAxis,
+                dragOrientation = this.dragOrientation,
+                Axis = ns.core.Axis,
+                HORIZONTAL = Axis.HORIZONTAL,
+                VERTICAL   = Axis.VERTICAL;
+
 // TODO: this try...catch is just to remind myself how to apply, make sure this is correct later
             try {
                 if (!this.dragStarted()) {
                     if (totalx > totaly) {
-                        this.dragOrientation(Axis.HORIZONTAL);
+                        dragOrientation(HORIZONTAL);
                     } else {
-                        this.dragOrientation(Axis.VERTICAL);
+                        dragOrientation(VERTICAL);
                     }
-                    this.dragAxis(this.findNearestAxis(bx, by, this.dragOrientation()));
-                    if (this.dragAxis() === null) {
-                        this.dragOrientation( (this.dragOrientation() === Axis.HORIZONTAL) ? Axis.VERTICAL : Axis.HORIZONTAL );
-                        this.dragAxis( this.findNearestAxis(bx, by, this.dragOrientation()) );
+                    dragAxis(this.findNearestAxis(bx, by, dragOrientation()));
+                    if (dragAxis() === null) {
+                        dragOrientation( (dragOrientation() === HORIZONTAL) ? VERTICAL : HORIZONTAL );
+                        dragAxis( this.findNearestAxis(bx, by, dragOrientation()) );
                     }
                     this.dragStarted(true);
                 }
 
                 // do the action
-                if (this.dragOrientation() === Axis.HORIZONTAL) {
-                    this.dragAxis().doZoom(bx, dx);
+                if (dragOrientation() === HORIZONTAL) {
+                    dragAxis().doZoom(bx, dx);
                 } else {
-                    this.dragAxis().doZoom(by, dy);
+                    dragAxis().doZoom(by, dy);
                 }
 
                 // draw everything

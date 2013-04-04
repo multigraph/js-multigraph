@@ -2,8 +2,8 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.draggable", fu
     "use strict";
 
     ns.mixin.add(function (ns, errorHandler) {
-        var Graph = ns.core.Graph;
-        var Axis  = ns.core.Axis;
+        var Graph = ns.core.Graph,
+            Axis  = ns.core.Axis;
 
         Graph.hasA("dragStarted").which.isA("boolean");
         Graph.hasA("dragOrientation").which.validatesWith(Axis.Orientation.isInstance);
@@ -12,7 +12,6 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.draggable", fu
         });
 
         Graph.respondsTo("doDragReset", function () {
-            var i;
             this.dragStarted(false);
             this.pauseAllData();
         });
@@ -22,38 +21,40 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.draggable", fu
         });
 
         Graph.respondsTo("doDrag", function (multigraph, bx, by, dx, dy, shiftKey) {
-            var i = 0;
+            var dragAxis        = this.dragAxis,
+                dragOrientation = this.dragOrientation,
+                HORIZONTAL = Axis.HORIZONTAL,
+                VERTICAL   = Axis.VERTICAL;
 // TODO: this try...catch is just to remind myself how to apply, make sure this is correct later
             try {
                 if (!this.dragStarted()) {
                     if (Math.abs(dx) > Math.abs(dy)) {
-                        this.dragOrientation(Axis.HORIZONTAL);
+                        dragOrientation(HORIZONTAL);
                     } else {
-                        this.dragOrientation(Axis.VERTICAL);
+                        dragOrientation(VERTICAL);
                     }
-                    this.dragAxis(this.findNearestAxis(bx, by, this.dragOrientation()));
-                    if (this.dragAxis() === null) {
-                        this.dragOrientation( (this.dragOrientation() === Axis.HORIZONTAL) ? Axis.VERTICAL : Axis.HORIZONTAL );
-                        this.dragAxis( this.findNearestAxis(bx, by, this.dragOrientation()) );
+                    dragAxis(this.findNearestAxis(bx, by, dragOrientation()));
+                    if (dragAxis() === null) {
+                        dragOrientation( (dragOrientation() === HORIZONTAL) ? VERTICAL : HORIZONTAL );
+                        dragAxis( this.findNearestAxis(bx, by, dragOrientation()) );
                     }
                     this.dragStarted(true);
                 }
 
                 // do the action
                 if (shiftKey) {
-                    if (this.dragOrientation() === Axis.HORIZONTAL) {
-                        this.dragAxis().doZoom(bx, dx);
+                    if (dragOrientation() === HORIZONTAL) {
+                        dragAxis().doZoom(bx, dx);
                     } else {
-                        this.dragAxis().doZoom(by, dy);
+                        dragAxis().doZoom(by, dy);
                     }
                 } else {
-                    if (this.dragOrientation() === Axis.HORIZONTAL) {
-                        this.dragAxis().doPan(bx, dx);
+                    if (dragOrientation() === HORIZONTAL) {
+                        dragAxis().doPan(bx, dx);
                     } else {
-                        this.dragAxis().doPan(by, dy);
+                        dragAxis().doPan(by, dy);
                     }
                 }
-
 
                 // draw everything
                 multigraph.redraw();

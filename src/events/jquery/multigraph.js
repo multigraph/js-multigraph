@@ -1,21 +1,21 @@
-(function($) {
+(function ($) {
     "use strict";
 
     var core = window.multigraph.util.namespace("window.multigraph.core");
 
     var methods = {
-        multigraph : function() {
+        multigraph : function () {
             return this.data('multigraph').multigraph;
         },
 
-        done : function(func) {
-            return this.each(function() {
+        done : function (func) {
+            return this.each(function () {
                 return $(this).data('multigraph').multigraph.done(func);
             });
         },
 
-        init : function(options) {
-            return this.each(function() {
+        init : function (options) {
+            return this.each(function () {
                 var $this = $(this),
                     data = $this.data('multigraph');
                 options.div = this;
@@ -29,7 +29,7 @@
         }
     };
 
-    $.fn.multigraph = function( method ) {
+    $.fn.multigraph = function (method) {
         if ( methods[method] ) {
             return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
         } else if ( typeof method === 'object' || ! method ) {
@@ -62,13 +62,13 @@
      * width or height.
      * 
      */
-    $(document).ready(function() {
+    $(document).ready(function () {
 
-        $("div.multigraph").each(function() {
+        $("div.multigraph").each(function () {
 
-            var width = $(this).attr("data-width"),
+            var width  = $(this).attr("data-width"),
                 height = $(this).attr("data-height"),
-                src = $(this).attr("data-src"),
+                src    = $(this).attr("data-src"),
                 driver = $(this).attr("data-driver"),
                 options;
 
