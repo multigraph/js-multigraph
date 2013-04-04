@@ -10,7 +10,6 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
                 this.graphs().at(i).normalize();
             }
 
-
         });
 
     });

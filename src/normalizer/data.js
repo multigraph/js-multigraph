@@ -59,9 +59,10 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
         // Handles missing attributes
         // creates the appropriate variables if missing
         var handleMissingAttributes = function (sortedVariables, defaultMissingop, defaultMissingvalue) {
-            var defaultid,
+            var DataValue = ns.DataValue,
+                defaultid,
                 i;
-            defaultMissingop = ns.DataValue.parseComparator(defaultMissingop);
+            defaultMissingop = DataValue.parseComparator(defaultMissingop);
             for (i = 0; i < sortedVariables.length; i++) {
                 if (!sortedVariables[i]) {
                     if (i === 0) {
@@ -71,19 +72,19 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
                     } else {
                         defaultid = "y" + (i-1);
                     }
-                    sortedVariables[i] = new ns.DataVariable(defaultid, i, ns.DataValue.NUMBER);
+                    sortedVariables[i] = new ns.DataVariable(defaultid, i, DataValue.NUMBER);
                 } else {
                     if (sortedVariables[i].column() === undefined) {
                         sortedVariables[i].column(i);
                     }
                     if (sortedVariables[i].type() === undefined) {
-                        sortedVariables[i].type(ns.DataValue.NUMBER);
+                        sortedVariables[i].type(DataValue.NUMBER);
                     }
                 }
 
                 if (defaultMissingvalue !== undefined) {
                     if (sortedVariables[i].missingvalue() === undefined) {
-                        sortedVariables[i].missingvalue(ns.DataValue.parse(sortedVariables[i].type(), defaultMissingvalue));
+                        sortedVariables[i].missingvalue(DataValue.parse(sortedVariables[i].type(), defaultMissingvalue));
                     }
                 }
                 if (sortedVariables[i].missingop() === undefined) {
@@ -112,13 +113,14 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
         // every row in stringArray is of the same length, so we can use the length of the
         // first row as the number of variables.
         var createDataValueArray = function (data, sortedVariables) {
-            if (data.stringArray().length > 0) {
-                if (data.stringArray()[0].length < sortedVariables.length) {
-                    throw new Error("data contains only " + data.stringArray()[0].length + " column(s), but should contain " + sortedVariables.length);
+            var stringArray = data.stringArray();
+            if (stringArray.length > 0) {
+                if (stringArray[0].length < sortedVariables.length) {
+                    throw new Error("data contains only " + stringArray[0].length + " column(s), but should contain " + sortedVariables.length);
                 }
             }
 
-            var dataValues = ns.ArrayData.stringArrayToDataValuesArray(sortedVariables, data.stringArray());
+            var dataValues = ns.ArrayData.stringArrayToDataValuesArray(sortedVariables, stringArray);
 
             data.array(dataValues);
             data.stringArray([]);
