@@ -10,12 +10,13 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             if (this.hasDataMin() && this.hasDataMax()) { // skip if we don't yet have data values
                 if (this.grid().visible()) { // skip if grid lines aren't turned on
                     if (this.labelers().size() > 0 && this.currentLabelDensity() <= 1.5) {
-                        var perpOffset = this.perpOffset(),
-                            plotBox    = graph.plotBox();
-                        this.currentLabeler().prepare(this.dataMin(), this.dataMax());
+                        var currentLabeler = this.currentLabeler(),
+                            perpOffset     = this.perpOffset(),
+                            plotBox        = graph.plotBox();
+                        currentLabeler.prepare(this.dataMin(), this.dataMax());
                         context.beginPath();
-                        while (this.currentLabeler().hasNext()) {
-                            var v = this.currentLabeler().next(),
+                        while (currentLabeler.hasNext()) {
+                            var v = currentLabeler.next(),
                                 a = this.dataValueToAxisValue(v);
                             if (this.orientation() === ns.Axis.HORIZONTAL) {
                                 context.moveTo(a, perpOffset);
@@ -34,7 +35,10 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 
         ns.Axis.respondsTo("render", function (graph, context) {
             var parallelOffset = this.parallelOffset(),
-                perpOffset     = this.perpOffset();
+                perpOffset     = this.perpOffset(),
+                pixelLength    = this.pixelLength(),
+                currentLabeler = this.currentLabeler(),
+                axisIsHorizontal = (this.orientation() === ns.Axis.HORIZONTAL);
             //NOTE: axes are drawn relative to the graph's plot area (plotBox); the coordinates
             //      below are relative to the coordinate system of that box.
 
@@ -42,13 +46,12 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             // Render the axis line itself
             //
             context.beginPath();
-            if (this.orientation() === ns.Axis.HORIZONTAL) {
+            if (axisIsHorizontal) {
                 context.moveTo(parallelOffset, perpOffset);
-                context.lineTo(parallelOffset + this.pixelLength(), perpOffset);
-
+                context.lineTo(parallelOffset + pixelLength, perpOffset);
             } else {
                 context.moveTo(perpOffset, parallelOffset);
-                context.lineTo(perpOffset, parallelOffset + this.pixelLength());
+                context.lineTo(perpOffset, parallelOffset + pixelLength);
             }
 
             context.strokeStyle = this.color().getHexString("#");
@@ -58,20 +61,20 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             // Render the tick marks and labels
             //
             if (this.hasDataMin() && this.hasDataMax()) { // but skip if we don't yet have data values
-                if (this.currentLabeler()) {
+                if (currentLabeler) {
                     var tickmin   = this.tickmin(),
                         tickmax   = this.tickmax(),
                         tickcolor = this.tickcolor();
                     context.beginPath();
                     context.fillStyle = '#000000';
-                    this.currentLabeler().prepare(this.dataMin(), this.dataMax());
-                    while (this.currentLabeler().hasNext()) {
-                        var v = this.currentLabeler().next();
-                        var a = this.dataValueToAxisValue(v);
+                    currentLabeler.prepare(this.dataMin(), this.dataMax());
+                    while (currentLabeler.hasNext()) {
+                        var v = currentLabeler.next(),
+                            a = this.dataValueToAxisValue(v);
                         if (tickcolor !== undefined && tickcolor !== null) {
                             context.strokeStyle = tickcolor.getHexString('#');
                         }
-                        if (this.orientation() === ns.Axis.HORIZONTAL) {
+                        if (axisIsHorizontal) {
                             context.moveTo(a, perpOffset+tickmax);
                             context.lineTo(a, perpOffset+tickmin);
                         } else {
@@ -81,7 +84,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                         if (tickcolor !== undefined && tickcolor !== null) {
                             context.restore();
                         }
-                        this.currentLabeler().renderLabel(context, v);
+                        currentLabeler.renderLabel(context, v);
                     }
                     context.stroke();
                 }

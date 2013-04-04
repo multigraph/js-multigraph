@@ -5,10 +5,12 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 
     ns.mixin.add(function (ns) {
 
-        // cached state object, for quick access during rendering, populated in begin() method:
-        ns.FillRenderer.hasA("state");
+        var FillRenderer = ns.FillRenderer;
 
-        ns.FillRenderer.respondsTo("begin", function (context) {
+        // cached state object, for quick access during rendering, populated in begin() method:
+        FillRenderer.hasA("state");
+
+        FillRenderer.respondsTo("begin", function (context) {
             var state = {
                 "context"            : context,
                 "run"                : [],
@@ -43,8 +45,9 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         // color can change if the data line crosses the fill base
         // line, if the downfillcolor is different from the
         // fillcolor.)
-        ns.FillRenderer.respondsTo("dataPoint", function (datap) {
-            var state   = this.state(),
+        FillRenderer.respondsTo("dataPoint", function (datap) {
+            var state = this.state(),
+                fillpixelbase = state.fillpixelbase,
                 fillcolor,
                 linecolor,
                 p;
@@ -52,7 +55,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             // if this is a missing point, and if it's not the first point, end the current run and render it
             if (this.isMissing(datap)) {
                 if (state.previouspoint !== null) {
-                    state.run.push( [state.previouspoint[0], state.fillpixelbase] );
+                    state.run.push( [state.previouspoint[0], fillpixelbase] );
                     this.renderRun();
                     state.run = [];
                     state.previouspoint = null;
@@ -65,7 +68,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 
             // set the fillcolor and linecolor for this data point, based on whether it's above
             // or below the base line
-            if (p[1] >= state.fillpixelbase) {
+            if (p[1] >= fillpixelbase) {
                 fillcolor = state.fillcolor;
             } else {
                 fillcolor = state.downfillcolor;
@@ -73,7 +76,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 
             // if we're starting a new run, start with this data point's base line projection
             if (state.run.length === 0) {
-                state.run.push( [p[0], state.fillpixelbase] );
+                state.run.push( [p[0], fillpixelbase] );
             } else {
                 // if we're not starting a new run, but the fill color
                 // has changed, interpolate to find the exact base
@@ -81,12 +84,12 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                 // point, render it, and start a new run with the
                 // crossing point.
                 if (!fillcolor.eq(state.currentfillcolor)) {
-                    var x = mathUtil.safe_interp(state.fillpixelbase, state.previouspoint[1], p[1], state.previouspoint[0], p[0]);
+                    var x = mathUtil.safe_interp(fillpixelbase, state.previouspoint[1], p[1], state.previouspoint[0], p[0]);
                     // base line crossing point is [x, state.fillpixelbase]
-                    state.run.push( [x, state.fillpixelbase] );
+                    state.run.push( [x, fillpixelbase] );
                     this.renderRun();
                     state.run = [];
-                    state.run.push( [x, state.fillpixelbase] );
+                    state.run.push( [x, fillpixelbase] );
                 }
             }
 
@@ -96,7 +99,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             state.currentfillcolor = fillcolor;
         });
 
-        ns.FillRenderer.respondsTo("end", function () {
+        FillRenderer.respondsTo("end", function () {
             var state = this.state(),
                 context = state.context;
             if (state.run.length > 0) {
@@ -110,7 +113,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         // under the points, and the lines connecting the points.  The first and last points
         // in the run array are always on the base line; the points in between these two
         // are the actual data points.
-        ns.FillRenderer.respondsTo("renderRun", function () {
+        FillRenderer.respondsTo("renderRun", function () {
             var state = this.state(),
                 context = state.context,
                 i;
@@ -140,7 +143,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             context.restore();
         });
 
-        ns.FillRenderer.respondsTo("renderLegendIcon", function (context, x, y, icon) {
+        FillRenderer.respondsTo("renderLegendIcon", function (context, x, y, icon) {
             var state = this.state(),
                 iconWidth = icon.width(),
                 iconHeight = icon.height();

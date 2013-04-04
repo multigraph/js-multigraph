@@ -8,7 +8,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         Background.hasAn("elem");
 
         Background.respondsTo("render", function (graph, paper, set, width, height) {
-            var mb = graph.window().margin().left() + graph.window().border(),
+            var img = this.img(),
+                mb = graph.window().margin().left() + graph.window().border(),
                 elem = paper.rect(mb, mb, width-2*mb, height-2*mb)
                     .attr({
                         "fill"   : this.color().getHexString("#"),
@@ -18,8 +19,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             this.elem(elem);
             set.push(elem);
 
-            if (this.img() && this.img().src() !== undefined) {
-                this.img().render(graph, paper, set, width, height);
+            if (img && img.src() !== undefined) {
+                img.render(graph, paper, set, width, height);
             }
         });
 
@@ -27,6 +28,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             var mb = graph.window().margin().left() + graph.window().border() * 2,
                 bwidth  = width - mb,
                 bheight = height - mb,
+                img  = this.img(),
                 elem = this.elem();
 
             if (elem.attr("width") !== bwidth) {
@@ -36,8 +38,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 elem.attr("height", bheight);
             }
 
-            if (this.img() && this.img().src() !== undefined) {
-                this.img().redraw(graph);
+            if (img && img.src() !== undefined) {
+                img.redraw(graph);
             }
         });
 

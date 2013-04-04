@@ -7,12 +7,11 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         Graph.hasA("transformString");
 
         Graph.respondsTo("render", function (paper, width, height) {
-            var windowBorder = this.window().border(),
-                backgroundSet = paper.set(),
-                axesSet = paper.set(),
-                plotsSet = paper.set(),
-                legendSet = paper.set(),
-                titleSet = paper.set(),
+            var backgroundSet = paper.set(),
+                axesSet       = paper.set(),
+                plotsSet      = paper.set(),
+                legendSet     = paper.set(),
+                titleSet      = paper.set(),
                 i;
 
             this.transformString("S 1, -1, 0, " + (height/2) + " t " + this.x0() + ", " + this.y0());
@@ -44,7 +43,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             }
 
             this.transformSets(height, this.x0(), this.y0(), backgroundSet, axesSet, plotsSet, legendSet, titleSet);
-            this.fixLayers(backgroundSet, axesSet, plotsSet);
+//            this.fixLayers(backgroundSet, axesSet, plotsSet);
         });
 
         Graph.respondsTo("redraw", function (paper, width, height) {
@@ -90,11 +89,13 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             plotsSet.attr("clip-rect", "1,1," + (this.plotBox().width()-2) + "," + (this.plotBox().height()-2));
         });
 
+/*
         Graph.respondsTo("fixLayers", function (backgroundSet, axesSet, plotsSet) {
 //            backgroundSet.insertAfter(axesSet);
 //            axesSet.insertAfter(plotsSet);
 //            plotsSet.toFront();
         });
+*/
 
     });
 

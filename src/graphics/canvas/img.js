@@ -3,15 +3,18 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 
     ns.mixin.add(function (ns) {
 
-        window.multigraph.core.Img.hasA("image").which.defaultsTo(function () {return new Image();});
-        window.multigraph.core.Img.hasA("fetched").which.defaultsTo(false);
+        var Img = window.multigraph.core.Img;
 
-        window.multigraph.core.Img.respondsTo("render", function (graph, context, width, height) {
+        Img.hasA("image").which.defaultsTo(function () {return new Image();});
+        Img.hasA("fetched").which.defaultsTo(false);
+
+        Img.respondsTo("render", function (graph, context, width, height) {
             if (this.fetched()) {
                 var interp      = window.multigraph.math.util.interp,
                     image       = this.image(),
                     graphWindow = graph.window(),
                     plotarea    = graph.plotarea(),
+                    base = this.base(),
                     ax = interp(this.anchor().x(), -1, 1, 0, image.width),
                     ay = interp(this.anchor().y(), 1, -1, 0, image.height),
                     paddingLeft = graphWindow.margin().left() + graphWindow.border(),
@@ -20,12 +23,12 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                     plotTop  = paddingTop + graphWindow.padding().top() + plotarea.margin().top() + plotarea.border(),
                     bx, by,
                     x, y;
-                if (this.frame() === ns.Img.PLOT) {
-                    bx = plotLeft + interp(this.base().x(), -1, 1, 0, graph.plotBox().width());
-                    by = plotTop + interp(this.base().y(), 1, -1, 0, graph.plotBox().height());
+                if (this.frame() === Img.PLOT) {
+                    bx = plotLeft + interp(base.x(), -1, 1, 0, graph.plotBox().width());
+                    by = plotTop + interp(base.y(), 1, -1, 0, graph.plotBox().height());
                 } else {
-                    bx = paddingLeft + interp(this.base().x(), -1, 1, 0, graph.paddingBox().width());
-                    by = paddingTop + interp(this.base().y(), 1, -1, 0, graph.paddingBox().height());
+                    bx = paddingLeft + interp(base.x(), -1, 1, 0, graph.paddingBox().width());
+                    by = paddingTop + interp(base.y(), 1, -1, 0, graph.paddingBox().height());
                 }
                 x = bx + this.position().x() - ax;
                 y = by + this.position().y() - ay;

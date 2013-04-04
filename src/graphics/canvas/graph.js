@@ -15,23 +15,23 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 
             this.plotarea().render(this, context);
 
-            for (i=0; i<this.axes().size(); ++i) {
+            for (i = 0; i < this.axes().size(); ++i) {
                 this.axes().at(i).renderGrid(this, context);
             }
 
 
             context.save();
-            context.rect(0,0,this.plotBox().width(), this.plotBox().height());
+            context.rect(0, 0, this.plotBox().width(), this.plotBox().height());
             context.clip();
 
 
-            for (i=0; i<this.plots().size(); ++i) {
+            for (i = 0; i < this.plots().size(); ++i) {
                 this.plots().at(i).render(this, context);
             }
 
             context.restore();
 
-            for (i=0; i<this.axes().size(); ++i) {
+            for (i = 0; i < this.axes().size(); ++i) {
                 this.axes().at(i).render(this, context);
             }
 

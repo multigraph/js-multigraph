@@ -3,10 +3,12 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 
     ns.mixin.add(function (ns) {
 
-        // cached state object, for quick access during rendering, populated in begin() method:
-        ns.BandRenderer.hasA("state");
+        var BandRenderer = ns.BandRenderer;
 
-        ns.BandRenderer.respondsTo("begin", function (context) {
+        // cached state object, for quick access during rendering, populated in begin() method:
+        BandRenderer.hasA("state");
+
+        BandRenderer.respondsTo("begin", function (context) {
             var state = {
                 "context"            : context,
                 "run"                : [],
@@ -29,7 +31,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         // color can change if the data line crosses the fill base
         // line, if the downfillcolor is different from the
         // fillcolor.)
-        ns.BandRenderer.respondsTo("dataPoint", function (datap) {
+        BandRenderer.respondsTo("dataPoint", function (datap) {
             var state = this.state();
 
             if (this.isMissing(datap)) {
@@ -46,7 +48,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             }
         });
 
-        ns.BandRenderer.respondsTo("end", function () {
+        BandRenderer.respondsTo("end", function () {
             var state = this.state();
             // render the current run, if any
             if (state.run.length > 0) {
@@ -79,7 +81,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         // Render the current run of data points.  This consists of drawing the fill region
         // in the band between the two data lines, and connecting the points of each data line
         // with lines of the appropriate color.
-        ns.BandRenderer.respondsTo("renderRun", function () {
+        BandRenderer.respondsTo("renderRun", function () {
             var state   = this.state(),
                 context = state.context,
                 run     = state.run,
@@ -110,7 +112,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             strokeRunLine(context, run, 2, state.line2color, state.linecolor, state.line2width, state.linewidth);
         });
 
-        ns.BandRenderer.respondsTo("renderLegendIcon", function (context, x, y, icon) {
+        BandRenderer.respondsTo("renderLegendIcon", function (context, x, y, icon) {
             var state = this.state(),
                 iconWidth  = icon.width(),
                 iconHeight = icon.height();

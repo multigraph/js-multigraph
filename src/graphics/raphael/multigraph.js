@@ -7,40 +7,41 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
     ns.mixin.add(function (ns) {
 
-        ns.Multigraph.hasA("paper"); // Raphael paper object
+        var Multigraph = ns.Multigraph;
 
-        ns.Multigraph.hasA("$div");  // jQuery object for the Raphael paper's div
+        Multigraph.hasA("paper"); // Raphael paper object
 
-        ns.Multigraph.hasA("width").which.isA("number");
-        ns.Multigraph.hasA("height").which.isA("number");
+        Multigraph.hasA("$div");  // jQuery object for the Raphael paper's div
 
-        ns.Multigraph.hasA("baseX").which.isA("number");
-        ns.Multigraph.hasA("baseY").which.isA("number");
-        ns.Multigraph.hasA("mouseLastX").which.isA("number");
-        ns.Multigraph.hasA("mouseLastY").which.isA("number");
+        Multigraph.hasA("width").which.isA("number");
+        Multigraph.hasA("height").which.isA("number");
 
-        //        ns.Multigraph.hasA("time").which.defaultsTo(0);
-        //        ns.Multigraph.hasA("runs").which.defaultsTo(0);
+        Multigraph.hasA("baseX").which.isA("number");
+        Multigraph.hasA("baseY").which.isA("number");
+        Multigraph.hasA("mouseLastX").which.isA("number");
+        Multigraph.hasA("mouseLastY").which.isA("number");
+
         ns.Multigraph.respondsTo("redraw", function () {
             var that = this;
             window.requestAnimationFrame(function () {
-                var text = that.paper().text(-8000, -8000, "foo"),
+                var text   = that.paper().text(-8000, -8000, "foo"),
+                    graphs = that.graphs(),
                     i, j;
                 //                that.initializeGeometry(that.width(), that.height(), { "elem" : text });
-                for (i = 0; i < that.graphs().size(); i++) {
-                    for (j = 0; j < that.graphs().at(i).axes().size(); j++) {
-                        that.graphs().at(i).axes().at(j).computeAxisToDataRatio();
+                for (i = 0; i < graphs.size(); i++) {
+                    for (j = 0; j < graphs.at(i).axes().size(); j++) {
+                        graphs.at(i).axes().at(j).computeAxisToDataRatio();
                     }
                 }
-                for (i = 0; i < that.graphs().size(); i++) {
-                    that.graphs().at(i).redraw(that.paper(), that.width(), that.height());
+                for (i = 0; i < graphs.size(); i++) {
+                    graphs.at(i).redraw(that.paper(), that.width(), that.height());
                 }
                 text.remove();
             });
         });
 
         ns.Multigraph.respondsTo("init", function () {
-            this.$div(window.multigraph.jQuery(this.div()));
+            this.$div($(this.div()));
             this.registerEvents();
             this.width(this.$div().width());
             this.height(this.$div().height());
@@ -52,11 +53,13 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         });
 
         ns.Multigraph.respondsTo("render", function () {
-            var i;
             this.paper().clear();
-            var text = this.paper().text(-8000, -8000, "foo");
+
+            var text = this.paper().text(-8000, -8000, "foo"),
+                i;
+
             this.initializeGeometry(this.width(), this.height(), { "elem" : text });
-            for (i=0; i<this.graphs().size(); ++i) {
+            for (i = 0; i < this.graphs().size(); ++i) {
                 this.graphs().at(i).render(this.paper(), this.width(), this.height());
             }
             text.remove();
@@ -69,15 +72,13 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
         ns.Multigraph.respondsTo("setupEvents", function (mouseDownEvent) {
             mouseDownEvent.preventDefault();
-            var mg = mouseDownEvent.data.mg;
-
-            //            mg.time(0);
-            //            mg.runs(0);
+            var mg   = mouseDownEvent.data.mg,
+                $div = mg.$div();
             
-            mg.baseX(mouseDownEvent.pageX - mg.$div().offset().left);
-            mg.baseY(mg.$div().height() - (mouseDownEvent.pageY - mg.$div().offset().top));
-            mg.mouseLastX(mouseDownEvent.pageX - mg.$div().offset().left);
-            mg.mouseLastY(mg.$div().height() - (mouseDownEvent.pageY - mg.$div().offset().top));
+            mg.baseX(mouseDownEvent.pageX - $div.offset().left);
+            mg.baseY($div.height() - (mouseDownEvent.pageY - $div.offset().top));
+            mg.mouseLastX(mouseDownEvent.pageX - $div.offset().left);
+            mg.mouseLastY($div.height() - (mouseDownEvent.pageY - $div.offset().top));
 
             mg.graphs().at(0).doDragReset();
 
@@ -88,8 +89,9 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
         ns.Multigraph.respondsTo("triggerEvents", function (mouseMoveEvent) {
             var mg = mouseMoveEvent.data.mg,
-                eventX = mouseMoveEvent.pageX - mg.$div().offset().left,
-                eventY = mg.$div().height() - (mouseMoveEvent.pageY - mg.$div().offset().top),
+                $div = mg.$div(),
+                eventX = mouseMoveEvent.pageX - $div.offset().left,
+                eventY = $div.height() - (mouseMoveEvent.pageY - $div.offset().top),
                 dx = eventX - mg.mouseLastX(),
                 dy = eventY - mg.mouseLastY(),
                 i;
@@ -105,15 +107,15 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
         ns.Multigraph.respondsTo("unbindEvents", function (e) {
             var mg = e.data.mg,
+                $div = mg.$div(),
                 i;
-            mg.$div().off("mousemove", mg.triggerEvents);
-            mg.$div().off("mouseup", mg.unbindEvents);
-            mg.$div().off("mouseleave", mg.unbindEvents);
+            $div.off("mousemove", mg.triggerEvents);
+            $div.off("mouseup", mg.unbindEvents);
+            $div.off("mouseleave", mg.unbindEvents);
             for (i = 0; i < mg.graphs().size(); ++i) {
                 mg.graphs().at(i).doDragDone();
             }
 
-            //            alert("time : " + mg.time() + "\nruns: " + mg.runs() + "\naverage: " + (mg.time()/mg.runs()));
         });
 
         ns.Multigraph.respondsTo("resizeSurface", function (width, height) {
@@ -165,12 +167,12 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         
         try {
             applyMixins(options);
-            muglPromise = window.multigraph.jQuery.ajax({
+            muglPromise = $.ajax({
                 "url"      : options.mugl,
                 "dataType" : "text"
             }),
 
-            deferred = window.multigraph.jQuery.Deferred();
+            deferred = $.Deferred();
         } catch (e) {
             options.messageHandler.error(e);
         }
@@ -186,7 +188,6 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         });
 
         return deferred.promise();
-
     };
 
     window.multigraph.core.Multigraph.createRaphaelGraphFromString = function (options) {
@@ -202,7 +203,6 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         }
 
         return deferred.promise();
-
     };
 
 });

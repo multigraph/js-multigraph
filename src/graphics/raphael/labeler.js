@@ -72,8 +72,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
         Labeler.respondsTo("renderLabel", function (graphicsContext, value) {
             var formattedString = new ns.Text(this.formatter().format(value)),
-                axis      = this.axis(),
-                basePoint = computePixelBasePoint(axis, value);
+                basePoint = computePixelBasePoint(this.axis(), value);
 
             formattedString.initializeGeometry({
                     "elem"  : graphicsContext.textElem,

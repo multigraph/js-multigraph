@@ -61,6 +61,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 }
                 settings.first = true;
                 settings.previouspoint = null;
+                settings.fillpath = fillpath;
                 return;
             }
 

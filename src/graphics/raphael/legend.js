@@ -24,9 +24,9 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             graphicsContext.set.push(
                 graphicsContext.paper.rect(0, 0, this.width(), this.height())
                     .attr({
-                        "stroke" : this.bordercolor().toRGBA(),
+                        "stroke"       : this.bordercolor().toRGBA(),
                         "stroke-width" : this.border(),
-                        "fill"   : this.color().toRGBA(this.opacity())
+                        "fill"         : this.color().toRGBA(this.opacity())
                     })
             );
         });
@@ -48,7 +48,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 return this;
             }
 
-            var deltaX = this.x() - this.previousX(),
+            var legendPlots = this.plots(),
+                deltaX = this.x() - this.previousX(),
                 deltaY = this.y() - this.previousY(),
                 plotCount = 0,
                 r, c;
@@ -60,15 +61,15 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             }
 
             for (r = 0; r < this.rows(); r++) {
-                if (plotCount >= this.plots().size()) {
+                if (plotCount >= legendPlots.size()) {
                     break;
                 }
                 for (c = 0; c < this.columns(); c++) {
-                    if (plotCount >= this.plots().size()) {
+                    if (plotCount >= legendPlots.size()) {
                         break;
                     }
                     // Redraw the icon
-                    this.plots().at(plotCount).renderer().redrawLegendIcon();
+                    legendPlots.at(plotCount).renderer().redrawLegendIcon();
 
                     plotCount++;
                 }

@@ -18,24 +18,29 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
          * @author jrfrimme
          */
         ns.Title.respondsTo("render", function (context) {
-            var graph   = this.graph(),
-                border  = this.border(),
-                padding = this.padding(),
-                h = this.text().origHeight(),
-                w = this.text().origWidth(),
+            var Point = window.multigraph.math.Point,
+                graph     = this.graph(),
+                border    = this.border(),
+                padding   = this.padding(),
+                pointBase = this.base(),
+                text      = this.text(),
+                backgroundColor = this.color().toRGBA(this.opacity()),
+                h = text.origHeight(),
+                w = text.origWidth(),
                 ax = (0.5 * w + padding + border) * (this.anchor().x() + 1),
                 ay = (0.5 * h + padding + border) * (this.anchor().y() + 1),
+            
                 base;
 
             if (this.frame() === "padding") {
-                base = new window.multigraph.math.Point(
-                    (this.base().x() + 1) * (graph.paddingBox().width() / 2) - graph.plotarea().margin().left(),
-                    (this.base().y() + 1) * (graph.paddingBox().height() / 2) - graph.plotarea().margin().bottom()
+                base = new Point(
+                    (pointBase.x() + 1) * (graph.paddingBox().width() / 2) - graph.plotarea().margin().left(),
+                    (pointBase.y() + 1) * (graph.paddingBox().height() / 2) - graph.plotarea().margin().bottom()
                 );
             } else {
-                base = new window.multigraph.math.Point(
-                    (this.base().x() + 1) * (graph.plotBox().width() / 2),
-                    (this.base().y() + 1) * (graph.plotBox().height() / 2)
+                base = new Point(
+                    (pointBase.x() + 1) * (graph.plotBox().width() / 2),
+                    (pointBase.y() + 1) * (graph.plotBox().height() / 2)
                 );
             }
 
@@ -64,8 +69,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             // background
             context.save();
             context.transform(1, 0, 0, -1, 0, 0);
-            context.strokeStyle = this.color().toRGBA(this.opacity());
-            context.fillStyle = this.color().toRGBA(this.opacity());
+            context.strokeStyle = backgroundColor;
+            context.fillStyle = backgroundColor;
             context.fillRect(
                 border,
                 border,
@@ -76,7 +81,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 
             // text
             context.font = this.fontSize() + " sans-serif";
-            context.fillText(this.text().string(), border + padding, -(border + padding));
+            context.fillText(text.string(), border + padding, -(border + padding));
             context.restore();
         });
 

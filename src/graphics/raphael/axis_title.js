@@ -15,12 +15,13 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
         var computePixelBasePoint = function (labeler) {
             var axis = labeler.axis(),
-                axisBase = (labeler.base() + 1) * (axis.pixelLength() / 2) + axis.minoffset() + axis.parallelOffset();
+                axisBase = (labeler.base() + 1) * (axis.pixelLength() / 2) + axis.minoffset() + axis.parallelOffset(),
+                Point = window.multigraph.math.Point;
 
             if (axis.orientation() === ns.Axis.HORIZONTAL) {
-                return new window.multigraph.math.Point(axisBase, axis.perpOffset());
+                return new Point(axisBase, axis.perpOffset());
             } else {
-                return new window.multigraph.math.Point(axis.perpOffset(), axisBase);
+                return new Point(axis.perpOffset(), axisBase);
             }
         };
 
@@ -35,8 +36,9 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
          * @author jrfrimme
          */
         AxisTitle.respondsTo("render", function (paper, set) {
-            var h = this.content().origHeight(),
-                w = this.content().origWidth(),
+            var content = this.content(),
+                h = content.origHeight(),
+                w = content.origWidth(),
                 ax = 0.5 * w * this.anchor().x(),
                 ay = 0.5 * h * this.anchor().y(),
                 base = computePixelBasePoint(this),
@@ -48,7 +50,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
             this.previousBase(base);
 
-            var elem = paper.text(0, 0, this.content().string())
+            var elem = paper.text(0, 0, content.string())
                 .transform(transformString);
             this.elem(elem);
             set.push(elem);
@@ -56,7 +58,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
         AxisTitle.respondsTo("redraw", function () {
             var previousBase = this.previousBase(),
-                base         = computePixelBasePoint(this);
+                base         = computePixelBasePoint(this),
+                elem         = this.elem();
 
             if (base.x() === previousBase.x() && base.y() === previousBase.y()) {
                 return this;
@@ -64,10 +67,10 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
             var deltaX = base.x() - previousBase.x(),
                 deltaY = base.y() - previousBase.y(),
-                x = this.elem().attr("x"),
-                y = this.elem().attr("y");
+                x = elem.attr("x"),
+                y = elem.attr("y");
 
-            this.elem().attr({
+            elem.attr({
                 "x" : x + deltaX,
                 "y" : y - deltaY
             });

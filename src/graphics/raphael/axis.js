@@ -20,7 +20,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 a, v;
 
             if (orientation === Axis.HORIZONTAL) {
-                offset   = plotBox.height() - perpOffset;
+                offset = plotBox.height() - perpOffset;
             } else {
                 offset = plotBox.width()  - perpOffset;
             }
@@ -44,7 +44,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         var computeAxisPath = function (axis) {
             // NOTE: axes are drawn relative to the graph's plot area (plotBox); the coordinates
             //   below are relative to the coordinate system of that box.
-            if (axis.orientation() === ns.Axis.HORIZONTAL) {
+            if (axis.orientation() === Axis.HORIZONTAL) {
                 return "M " + axis.parallelOffset() + ", " + axis.perpOffset() +
                     " l " + axis.pixelLength() + ", 0";
             } else {
@@ -120,6 +120,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
         Axis.respondsTo("render", function (graph, paper, set) {
             var text = paper.text(100, 100, "foo"),
+                currentLabeler = this.currentLabeler(),
+                tickcolor = this.tickcolor(),
                 tickmarkPath = "";
 
             //
@@ -135,30 +137,30 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             // Render the tick marks and labels
             //
             if (this.hasDataMin() && this.hasDataMax()) { // but skip if we don't yet have data values
-                if (this.currentLabeler()) {
+                if (currentLabeler) {
                     var v, a;
-                    this.currentLabeler().prepare(this.dataMin(), this.dataMax());
+                    currentLabeler.prepare(this.dataMin(), this.dataMax());
                     // removes existing labels, if any, for redraw
-                    if (this.currentLabeler().elems().length > 0) {
+                    if (currentLabeler.elems().length > 0) {
                         var i, j;
-                        for (i = 0, j = this.currentLabeler().elems().length; i < j; i++) {
-                            this.currentLabeler().elems().pop().elem.remove();
+                        for (i = 0, j = currentLabeler.elems().length; i < j; i++) {
+                            currentLabeler.elems().pop().elem.remove();
                         }
                     }
 
-                    while (this.currentLabeler().hasNext()) {
-                        v = this.currentLabeler().next();
+                    while (currentLabeler.hasNext()) {
+                        v = currentLabeler.next();
                         a = this.dataValueToAxisValue(v);
                         tickmarkPath += computeTickmarkPath(this, a);
-                        this.currentLabeler().renderLabel({ "paper"    : paper,
-                                                            "set"      : set,
-                                                            "textElem" : text
-                                                          }, v);
+                        currentLabeler.renderLabel({ "paper"    : paper,
+                                                     "set"      : set,
+                                                     "textElem" : text
+                                                   }, v);
                     }
                     var tickmarks = paper.path(tickmarkPath)
                         .attr("stroke",
-                              (this.tickcolor() !== undefined && this.tickcolor() !== null) ?
-                                  this.tickcolor().getHexString('#') :
+                              (tickcolor !== undefined && tickcolor !== null) ?
+                                  tickcolor.getHexString('#') :
                                   "#000"
                              );
 
@@ -179,6 +181,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
         Axis.respondsTo("redraw", function (graph, paper) {
             var text = paper.text(100, 100, "foo"),
+                currentLabeler = this.currentLabeler(),
                 tickmarkPath = "";
 
             //
@@ -190,17 +193,17 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             // Render the tick marks and labels
             //
             if (this.hasDataMin() && this.hasDataMax()) { // but skip if we don't yet have data values
-                if (this.currentLabeler()) {
+                if (currentLabeler) {
                     var v, a,
                         values = [];
                     this.currentLabeler().prepare(this.dataMin(), this.dataMax());
-                    while (this.currentLabeler().hasNext()) {
-                        v = this.currentLabeler().next();
+                    while (currentLabeler.hasNext()) {
+                        v = currentLabeler.next();
                         a = this.dataValueToAxisValue(v);
                         tickmarkPath = tickmarkPath + computeTickmarkPath(this, a);
                         values.push(v);
                     }
-                    this.currentLabeler().redraw(graph, paper, values);
+                    currentLabeler.redraw(graph, paper, values);
                     this.tickmarkElem().attr("path", tickmarkPath);
                 }
             }

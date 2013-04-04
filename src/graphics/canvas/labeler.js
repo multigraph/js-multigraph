@@ -3,6 +3,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 
     ns.mixin.add(function (ns) {
 
+        var Labeler = ns.Labeler;
         var drawText = function (text, context, base, anchor, position, angle, color) {
             var h = text.origHeight(),
                 w = text.origWidth(),
@@ -22,22 +23,25 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             context.restore();
         };
 
-        ns.Labeler.respondsTo("measureStringWidth", function (context, string) {
+        Labeler.respondsTo("measureStringWidth", function (context, string) {
             return (new ns.Text(string)).initializeGeometry({
                     "context" : context,
                     "angle"   : this.angle()
                 }).rotatedWidth();
         });
-        ns.Labeler.respondsTo("measureStringHeight", function (context, string) {
+
+        Labeler.respondsTo("measureStringHeight", function (context, string) {
             return (new ns.Text(string)).initializeGeometry({
                     "context" : context,
                     "angle"   : this.angle()
                 }).rotatedHeight();
         });
 
-        ns.Labeler.respondsTo("renderLabel", function (context, value) {
-            var formattedString = new ns.Text(this.formatter().format(value)),
-                a = this.axis().dataValueToAxisValue(value),
+        Labeler.respondsTo("renderLabel", function (context, value) {
+            var Point = window.multigraph.math.Point,
+                axis = this.axis(),
+                formattedString = new ns.Text(this.formatter().format(value)),
+                a = axis.dataValueToAxisValue(value),
                 base;
 
             formattedString.initializeGeometry({
@@ -45,10 +49,10 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                     "angle"   : this.angle()
                 });
 
-            if (this.axis().orientation() === ns.Axis.HORIZONTAL) {
-                base = new window.multigraph.math.Point(a, this.axis().perpOffset());
+            if (axis.orientation() === ns.Axis.HORIZONTAL) {
+                base = new Point(a, axis.perpOffset());
             } else {
-                base = new window.multigraph.math.Point(this.axis().perpOffset(), a);
+                base = new Point(axis.perpOffset(), a);
             }
             drawText(formattedString, context, base, this.anchor(), this.position(), this.angle(), this.color());
         });

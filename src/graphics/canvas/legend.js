@@ -2,16 +2,18 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
     "use strict";
 
     ns.mixin.add(function (ns) {
-        ns.Legend.respondsTo("begin", function (context) {
+        var Legend = ns.Legend;
+
+        Legend.respondsTo("begin", function (context) {
             context.save();
             context.transform(1, 0, 0, 1, this.x(), this.y());
         });
 
-        ns.Legend.respondsTo("end", function (context) {
+        Legend.respondsTo("end", function (context) {
             context.restore();
         });
 
-        ns.Legend.respondsTo("renderLegend", function (context) {
+        Legend.respondsTo("renderLegend", function (context) {
             var border = this.border();
             context.save();
             if (border > 0) {
@@ -24,7 +26,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             context.restore();
         });
 
-        ns.Legend.respondsTo("renderLabel", function (label, context, x, y) {
+        Legend.respondsTo("renderLabel", function (label, context, x, y) {
             context.save();
             context.fillStyle = "rgba(0, 0, 0, 1)";
             context.transform(1, 0, 0, -1, 0, y + this.maxLabelHeight()/2 - label.origHeight()/2);

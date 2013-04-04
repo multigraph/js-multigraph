@@ -17,15 +17,16 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
 
         var computeTitlePixelBase = function (title) {
             var graph = title.graph(),
-                base  = title.base();
+                base  = title.base(),
+                Point = window.multigraph.math.Point;
 
             if (title.frame() === "padding") {
-                return new window.multigraph.math.Point(
+                return new Point(
                     (base.x() + 1) * (graph.paddingBox().width() / 2) -  graph.plotarea().margin().left(),
                     (base.y() + 1) * (graph.paddingBox().height() / 2) - graph.plotarea().margin().bottom()
                 );
             } else {
-                return new window.multigraph.math.Point(
+                return new Point(
                     (base.x() + 1) * (graph.plotBox().width() / 2),
                     (base.y() + 1) * (graph.plotBox().height() / 2)
                 );
@@ -46,8 +47,9 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             var anchor  = this.anchor(),
                 border  = this.border(),
                 padding = this.padding(),
-                w = this.text().origWidth(),
-                h = this.text().origHeight(),
+                text    = this.text(),
+                w = text.origWidth(),
+                h = text.origHeight(),
                 ax = (0.5 * w + padding + border) * (anchor.x() + 1),
                 ay = (0.5 * h + padding + border) * (anchor.y() + 1),
                 base = computeTitlePixelBase(this),
@@ -81,7 +83,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             set.push(backgroundElem);
 
             // text
-            var textElem = paper.text(border + padding + w/2, border + padding + h/2, this.text().string())
+            var textElem = paper.text(border + padding + w/2, border + padding + h/2, text.string())
                 .transform(transformString)
                 .attr({"font-size" : this.fontSize()});
 
@@ -99,13 +101,14 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                 return this;
             }
 
-            var deltaX = base.x() - previousBase.x(),
+            var textElem = this.textElem(),
+                deltaX = base.x() - previousBase.x(),
                 deltaY = base.y() - previousBase.y(),
-                x = this.textElem().attr("x"),
-                y = this.textElem().attr("y"),
+                x = textElem.attr("x"),
+                y = textElem.attr("y"),
                 transformString = "...t" + deltaX + " " + deltaY;
 
-            this.textElem().attr({
+            textElem.attr({
                 "x" : x + deltaX,
                 "y" : y - deltaY
             });

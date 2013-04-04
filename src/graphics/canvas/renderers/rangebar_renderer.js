@@ -3,10 +3,12 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 
     ns.mixin.add(function (ns) {
 
-        // cached state object, for quick access during rendering, populated in begin() method:
-        ns.RangeBarRenderer.hasA("state");
+        var RangeBarRenderer = ns.RangeBarRenderer;
 
-        ns.RangeBarRenderer.respondsTo("begin", function (context) {
+        // cached state object, for quick access during rendering, populated in begin() method:
+        RangeBarRenderer.hasA("state");
+
+        RangeBarRenderer.respondsTo("begin", function (context) {
             var state = {
                 "context"            : context,
                 "run"                : [],
@@ -25,7 +27,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             context.beginPath();
         });
 
-        ns.RangeBarRenderer.respondsTo("dataPoint", function (datap) {
+        RangeBarRenderer.respondsTo("dataPoint", function (datap) {
             if (this.isMissing(datap)) {
                 return;
             }
@@ -43,7 +45,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             context.lineTo(x0, p[1]);
         });
 
-        ns.RangeBarRenderer.respondsTo("end", function () {
+        RangeBarRenderer.respondsTo("end", function () {
             var state = this.state(),
                 context = state.context;
 
@@ -58,8 +60,11 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             context.restore();
         });
 
-        ns.RangeBarRenderer.respondsTo("renderLegendIcon", function (context, x, y, icon) {
-            var state = this.state();
+        RangeBarRenderer.respondsTo("renderLegendIcon", function (context, x, y, icon) {
+            var state = this.state(),
+                iconWidth  = icon.width(),
+                iconHeight = icon.height(),
+                barwidth;
 
             context.save();
             context.transform(1, 0, 0, 1, x, y);
@@ -68,7 +73,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             context.save();
             context.strokeStyle = "#FFFFFF";
             context.fillStyle = "#FFFFFF";
-            context.fillRect(0, 0, icon.width(), icon.height());
+            context.fillRect(0, 0, iconWidth, iconHeight);
             context.restore();
 
             // Draw icon graphics
@@ -81,9 +86,6 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             }
 
             // Adjust the width of the icons bars based upon the width and height of the icon Ranges: {20, 10, 0}
-            var iconWidth = icon.width(),
-                iconHeight = icon.height(),
-                barwidth;
             if (iconWidth > 20 || iconHeight > 20) {
                 barwidth = iconWidth / 6;
             } else if(iconWidth > 10 || iconHeight > 10) {

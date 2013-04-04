@@ -3,10 +3,12 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 
     ns.mixin.add(function (ns) {
 
-        // cached settings object, for quick access during rendering, populated in begin() method:
-        ns.PointlineRenderer.hasA("settings");
+        var PointlineRenderer = ns.PointlineRenderer;
 
-        ns.PointlineRenderer.respondsTo("begin", function (context) {
+        // cached settings object, for quick access during rendering, populated in begin() method:
+        PointlineRenderer.hasA("settings");
+
+        PointlineRenderer.respondsTo("begin", function (context) {
             var settings = {
                 "context"            : context,
                 "points"             : [],
@@ -38,7 +40,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                 context.strokeStyle = settings.linecolor.getHexString("#");
             }
         });
-        ns.PointlineRenderer.respondsTo("dataPoint", function (datap) {
+        PointlineRenderer.respondsTo("dataPoint", function (datap) {
             var settings = this.settings(),
                 context  = settings.context,
                 p;
@@ -60,7 +62,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             }
         });
 
-        ns.PointlineRenderer.respondsTo("end", function () {
+        PointlineRenderer.respondsTo("end", function () {
             var settings = this.settings(),
                 context  = settings.context;
             if (settings.linewidth > 0) {
@@ -73,15 +75,16 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         });
 
 
-        ns.PointlineRenderer.respondsTo("drawPoints", function (p) {
-            var settings = this.settings(),
-                context  = settings.context,
-                points   = settings.points,
+        PointlineRenderer.respondsTo("drawPoints", function (p) {
+            var settings   = this.settings(),
+                context    = settings.context,
+                points     = settings.points,
+                pointshape = settings.pointshape,
                 i;
 
             context.save();
             context.beginPath();
-            if ((settings.pointshape === ns.PointlineRenderer.PLUS) || (settings.pointshape === ns.PointlineRenderer.X)) {
+            if ((pointshape === PointlineRenderer.PLUS) || (pointshape === PointlineRenderer.X)) {
                 context.strokeStyle = settings.pointcolor.getHexString("#");
                 context.lineWidth = settings.pointoutlinewidth;
             } else {
@@ -94,40 +97,40 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                 this.drawPoint(context, settings, points[i]);
             }
 
-            if (!((settings.pointshape === ns.PointlineRenderer.PLUS) || (settings.pointshape === ns.PointlineRenderer.X))) {
+            if (!((pointshape === PointlineRenderer.PLUS) || (pointshape === PointlineRenderer.X))) {
                 context.fill();
             }
             context.stroke();
             context.restore();
         });
 
-        ns.PointlineRenderer.respondsTo("drawPoint", function (context, settings, p) {
+        PointlineRenderer.respondsTo("drawPoint", function (context, settings, p) {
             var pointsize = settings.pointsize,
                 p0 = p[0],
                 p1 = p[1],
                 a,b,d;
 
             switch (settings.pointshape) {
-                case ns.PointlineRenderer.PLUS:
+                case PointlineRenderer.PLUS:
                     context.moveTo(p0,             p1 - pointsize);
                     context.lineTo(p0,             p1 + pointsize);
                     context.moveTo(p0 - pointsize, p1);
                     context.lineTo(p0 + pointsize, p1);
                     return;
-                case ns.PointlineRenderer.X:
+                case PointlineRenderer.X:
                     d = 0.70710 * pointsize;
                     context.moveTo(p0-d, p1-d);
                     context.lineTo(p0+d, p1+d);
                     context.moveTo(p0-d, p1+d);
                     context.lineTo(p0+d, p1-d);
                     return;
-                case ns.PointlineRenderer.SQUARE:
+                case PointlineRenderer.SQUARE:
                     context.moveTo(p0 - pointsize, p1 - pointsize);
                     context.lineTo(p0 + pointsize, p1 - pointsize);
                     context.lineTo(p0 + pointsize, p1 + pointsize);
                     context.lineTo(p0 - pointsize, p1 + pointsize);
                     return;
-                case ns.PointlineRenderer.TRIANGLE:
+                case PointlineRenderer.TRIANGLE:
                     d = 1.5 * pointsize;
                     a = 0.866025 * d;
                     b = 0.5 * d;
@@ -135,14 +138,14 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                     context.lineTo(p0 + a, p1 - b);
                     context.lineTo(p0 - a, p1 - b);
                     return;
-                case ns.PointlineRenderer.DIAMOND:
+                case PointlineRenderer.DIAMOND:
                     d = 1.5 * pointsize;
                     context.moveTo(p0 - pointsize, p1);
                     context.lineTo(p0,             p1 + d);
                     context.lineTo(p0 + pointsize, p1);
                     context.lineTo(p0,             p1 - d);
                     return;
-                case ns.PointlineRenderer.STAR:
+                case PointlineRenderer.STAR:
                     d = 1.5 * pointsize;
                     context.moveTo(p0 - d*0.0000, p1 + d*1.0000);
                     context.lineTo(p0 + d*0.3536, p1 + d*0.3536);
@@ -155,32 +158,35 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                     context.lineTo(p0 - d*0.9511, p1 + d*0.3090);
                     context.lineTo(p0 - d*0.2270, p1 + d*0.4455);
                     return;
-                case ns.PointlineRenderer.CIRCLE:
+                case PointlineRenderer.CIRCLE:
                     context.moveTo(p0 + pointsize, p1);
                     context.arc(p0, p1, pointsize, 0, 2*Math.PI, false);
                     return;
             }
         });
 
-        ns.PointlineRenderer.respondsTo("renderLegendIcon", function (context, x, y, icon) {
-            var settings = this.settings();
+        PointlineRenderer.respondsTo("renderLegendIcon", function (context, x, y, icon) {
+            var settings   = this.settings(),
+                pointshape = settings.pointshape,
+                iconWidth  = icon.width(),
+                iconHeight = icon.height();
 
             context.save();
             // Draw icon background (with opacity)
             context.fillStyle = "rgba(255, 255, 255, 1)";
-            context.fillRect(x, y, icon.width(), icon.height());
+            context.fillRect(x, y, iconWidth, iconHeight);
 
             if (settings.linewidth > 0) {
                 context.strokeStyle = settings.linecolor.toRGBA();
                 context.lineWidth   = settings.linewidth;
                 context.beginPath();
-                context.moveTo(x, y + icon.height()/2);
-                context.lineTo(x + icon.width(), y + icon.height()/2);
+                context.moveTo(x, y + iconHeight/2);
+                context.lineTo(x + iconWidth, y + iconHeight/2);
                 context.stroke();
             }
             if (settings.pointsize > 0) {
                 context.beginPath();
-                if ((settings.pointshape === ns.PointlineRenderer.PLUS) || (settings.pointshape === ns.PointlineRenderer.X)) {
+                if ((pointshape === PointlineRenderer.PLUS) || (pointshape === PointlineRenderer.X)) {
                     context.strokeStyle = settings.pointcolor.toRGBA();
                     context.lineWidth   = settings.pointoutlinewidth;
                 } else {
@@ -189,9 +195,9 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                     context.lineWidth   = settings.pointoutlinewidth;
                 }
 
-                this.drawPoint(context, settings, [(x + icon.width()/2), (y + icon.height()/2)]);
+                this.drawPoint(context, settings, [(x + iconWidth/2), (y + iconHeight/2)]);
 
-                if (!((settings.pointshape === ns.PointlineRenderer.PLUS) || (settings.pointshape === ns.PointlineRenderer.X))) {
+                if (!((pointshape === PointlineRenderer.PLUS) || (pointshape === PointlineRenderer.X))) {
                     context.fill();
                 }
                 context.stroke();

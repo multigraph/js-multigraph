@@ -3,10 +3,12 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 
     ns.mixin.add(function (ns) {
 
-        // cached settings object, for quick access during rendering, populated in begin() method:
-        ns.BarRenderer.hasA("settings");
+        var BarRenderer = ns.BarRenderer;
 
-        ns.BarRenderer.respondsTo("begin", function (context) {
+        // cached settings object, for quick access during rendering, populated in begin() method:
+        BarRenderer.hasA("settings");
+
+        BarRenderer.respondsTo("begin", function (context) {
             var settings = {
                 "context"            : context,
                 "barpixelwidth"      : this.getOptionValue("barwidth").getRealValue() * this.plot().horizontalaxis().axisToDataRatio(),
@@ -59,7 +61,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         //    [ [1,2], [2,3], [3,3], [4,3] ]
         //
     
-        ns.BarRenderer.respondsTo("dataPoint", function (datap) {
+        BarRenderer.respondsTo("dataPoint", function (datap) {
             if (this.isMissing(datap)) {
                 return;
             }
@@ -91,7 +93,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             }
         });
         
-        ns.BarRenderer.respondsTo("end", function () {
+        BarRenderer.respondsTo("end", function () {
             var settings     = this.settings(),
                 context      = settings.context,
                 barpixelbase = settings.barpixelbase,
@@ -172,7 +174,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             context.restore();
         });
 
-        ns.BarRenderer.respondsTo("renderLegendIcon", function (context, x, y, icon) {
+        BarRenderer.respondsTo("renderLegendIcon", function (context, x, y, icon) {
             var settings          = this.settings(),
                 rendererFillColor = this.getOptionValue("fillcolor", 0).toRGBA(this.getOptionValue("fillopacity", 0));
 
