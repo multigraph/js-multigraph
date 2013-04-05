@@ -26,8 +26,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.isBuiltWith("columns", "stringArray", "period", function () {
             this.init();
             this.addListener("listenerAdded", function (event) {
+                var data = this.array();
                 if (event.targetType === "dataReady") {
-                    event.listener(this.array()[0][0], this.array()[this.array().length-1][0]);
+                    event.listener(data[0][0], data[data.length-1][0]);
                 }
             });
         });
@@ -68,7 +69,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @author jrfrimme
          */
         PeriodicArrayData.getArrayDataIterator = function (periodicArrayData, columnIds, min, max, buffer) {
-            var iter = {},
+            var DataValue = ns.DataValue,
+                iter = {},
                 arraySlice = [],
                 curr = 0,
                 i, j,
@@ -90,7 +92,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             }
 
             //min,max arguments should be data values
-            if (!ns.DataValue.isInstance(min) || !ns.DataValue.isInstance(max)) {
+            if (!DataValue.isInstance(min) || !DataValue.isInstance(max)) {
                 throw new Error("ArrayData: getIterator method requires the second and third argument to be number values");
             }
 
@@ -123,11 +125,11 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
             // Let `baseMin` be `min` shifted 'backward' by offsetRealValue; this is `min`
             // relative to the same period cycle as baseValue:
-            var baseMin = ns.DataValue.create(min.type, min.getRealValue() - offsetRealValue);
+            var baseMin = DataValue.create(min.type, min.getRealValue() - offsetRealValue);
 
             // find the index of the first row in the array whose column0 value is >= baseMin;
             // this is the data point we start with
-            for (currentIndex=0; currentIndex<array.length; ++currentIndex) {
+            for (currentIndex = 0; currentIndex < array.length; ++currentIndex) {
                 if (array[currentIndex][0].ge(baseMin)) {
                     break;
                 }
@@ -142,22 +144,22 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
             // set the current value to be the column0 value at this first index, shifted
             // 'forward' by offsetRealValue
-            var currentValue = ns.DataValue.create(array[currentIndex][0].type, array[currentIndex][0].getRealValue() + offsetRealValue);
+            var currentValue = DataValue.create(array[currentIndex][0].type, array[currentIndex][0].getRealValue() + offsetRealValue);
 
             columnIndices = [];
-            for (j = 0;j < columnIds.length; ++j) {
+            for (j = 0; j < columnIds.length; ++j) {
                 var k = periodicArrayData.columnIdToColumnNumber(columnIds[j]);
                 columnIndices.push( k );
             }
 
             return {
-                next : function() {
+                next : function () {
                     var projection = [],
                         i, x;
                     if (currentIndex < 0) {
                         return null;
                     }
-                    for (i=0; i<columnIndices.length; ++i) {
+                    for (i = 0; i < columnIndices.length; ++i) {
                         if (columnIndices[i] === 0) {
                             projection.push(currentValue);
                         } else {
@@ -178,7 +180,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                     }
                     return projection;
                 },
-                hasNext : function() {
+                hasNext : function () {
                     return (currentIndex >= 0);
                 }
             };

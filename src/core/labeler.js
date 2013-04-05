@@ -1,8 +1,9 @@
 window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
-    var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
-        attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.horizontalaxis.labels.label),
+    var utilityFunctions = window.multigraph.utilityFunctions,
+        defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = utilityFunctions.getKeys(defaultValues.horizontalaxis.labels.label),
         Axis = ns.Axis,
         DataValue = ns.DataValue,
 
@@ -36,25 +37,28 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             });
 
             this.isBuiltWith("axis", function () {
+                var labelsDefaults = defaultValues.horizontalaxis.labels;
                 if (this.axis().type() === DataValue.DATETIME) {
-                    this.start( getValue(defaultValues.horizontalaxis.labels['start-datetime']) );
+                    this.start( getValue(labelsDefaults['start-datetime']) );
                 } else {
-                    this.start( getValue(defaultValues.horizontalaxis.labels['start-number']) );
+                    this.start( getValue(labelsDefaults['start-number']) );
                 }
             });
 
             this.respondsTo("initializeGeometry", function (graph) {
-                var labelDefaults = defaultValues.horizontalaxis.labels.label;
+                var axis    = this.axis(),
+                    plotBox = graph.plotBox(),
+                    labelDefaults = defaultValues.horizontalaxis.labels.label;
 
                 if (this.position() === undefined) {
-                    if (this.axis().orientation() === Axis.HORIZONTAL) {
-                        if (this.axis().perpOffset() > graph.plotBox().height()/2) {
+                    if (axis.orientation() === Axis.HORIZONTAL) {
+                        if (axis.perpOffset() > plotBox.height()/2) {
                             this.position( getValue(labelDefaults["position-horizontal-top"]) );
                         } else {
                             this.position( getValue(labelDefaults["position-horizontal-bottom"]) );
                         }
                     } else {
-                        if (this.axis().perpOffset() > graph.plotBox().width()/2) {
+                        if (axis.perpOffset() > plotBox.width()/2) {
                             this.position( getValue(labelDefaults["position-vertical-right"]) );
                         } else {
                             this.position( getValue(labelDefaults["position-vertical-left"]) );
@@ -63,22 +67,20 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 }
 
                 if (this.anchor() === undefined) {
-                    if (this.axis().orientation() === Axis.HORIZONTAL) {
-                        if (this.axis().perpOffset() > graph.plotBox().height()/2) {
+                    if (axis.orientation() === Axis.HORIZONTAL) {
+                        if (axis.perpOffset() > plotBox.height()/2) {
                             this.anchor( getValue(labelDefaults["anchor-horizontal-top"]) );
                         } else {
                             this.anchor( getValue(labelDefaults["anchor-horizontal-bottom"]) );
                         }
                     } else {
-                        if (this.axis().perpOffset() > graph.plotBox().width()/2) {
+                        if (axis.perpOffset() > plotBox.width()/2) {
                             this.anchor( getValue(labelDefaults["anchor-vertical-right"]) );
                         } else {
                             this.anchor( getValue(labelDefaults["anchor-vertical-left"]) );
                         }
                     }
                 }
-
-
             });
 
             this.respondsTo("isEqualExceptForSpacing", function (labeler) {
@@ -104,28 +106,34 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 this.iteratorMaxValue(maxDataValue);
                 this.iteratorNextValue( this.spacing().firstSpacingLocationAtOrAfter(minDataValue, this.start()) );
             });
+
             this.respondsTo("hasNext", function () {
-                if (this.iteratorNextValue() === null || this.iteratorNextValue() === undefined) {
+                var value = this.iteratorNextValue();
+                if (value === null || value === undefined) {
                     return false;
                 }
-                return this.iteratorNextValue().le(this.iteratorMaxValue());
+                return value.le(this.iteratorMaxValue());
             });
+
             this.respondsTo("peekNext", function () {
-                var value = this.iteratorNextValue();
+                var value    = this.iteratorNextValue(),
+                    maxValue = this.iteratorMaxValue();
                 if (value === null || value === undefined) {
                     return undefined;
                 }
-                if (this.iteratorMaxValue() !== undefined && value.gt(this.iteratorMaxValue())) {
+                if (maxValue !== undefined && value.gt(maxValue)) {
                     return undefined;
                 }
                 return value;
             });
+
             this.respondsTo("next", function () {
-                var value = this.iteratorNextValue();
+                var value = this.iteratorNextValue(),
+                    maxValue = this.iteratorMaxValue();
                 if (value === null || value === undefined) {
                     return undefined;
                 }
-                if (this.iteratorMaxValue() !== undefined && value.gt(this.iteratorMaxValue())) {
+                if (maxValue !== undefined && value.gt(maxValue)) {
                     return undefined;
                 }
                 this.iteratorNextValue( value.add( this.spacing() ) );
@@ -133,8 +141,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             });
 
             this.respondsTo("getLabelDensity", function (graphicsContext) {
-                var pixelSpacing              = this.spacing().getRealValue() * this.axis().axisToDataRatio(),
-                    axis                      = this.axis(),
+                var axis                      = this.axis(),
+                    pixelSpacing              = this.spacing().getRealValue() * axis.axisToDataRatio(),
                     minRealValue              = axis.dataMin().getRealValue(),
                     maxRealValue              = axis.dataMax().getRealValue(),
                     representativeRealValue   = minRealValue + 0.51234567 * (maxRealValue - minRealValue),
@@ -143,7 +151,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
                 // length of the formatted axis representative value, in pixels
                 var pixelFormattedValue = (
-                    (this.axis().orientation() === Axis.HORIZONTAL) ?
+                    (axis.orientation() === Axis.HORIZONTAL) ?
                         this.measureStringWidth(graphicsContext, representativeValueString) :
                         this.measureStringHeight(graphicsContext, representativeValueString)
                 );
@@ -174,7 +182,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             });
 
 
-            window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis.labels.label, attributes);
+            utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis.labels.label, attributes);
         });
 
     ns.Labeler = Labeler;

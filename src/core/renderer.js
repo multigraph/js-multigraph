@@ -4,8 +4,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     var rendererList,
         Renderer,
         RendererOption,
-        defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
-        attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.plot.renderer),
+        utilityFunctions = window.multigraph.utilityFunctions,
+        defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = utilityFunctions.getKeys(defaultValues.plot.renderer),
         Type = new window.multigraph.math.Enum("RendererType");
 
     Renderer = new window.jermaine.Model("Renderer", function () {
@@ -27,30 +28,31 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             // the renderer's "plot" attribute is set.  Can Jermaine be modified to allow us to write
             // a custom setter, so that we can execute this code automatically when the render's "plot"
             // attribute is set ???
-            var data;
-            if (!this.plot()) {
+            var plot = this.plot(),
+                data;
+            if (!plot) {
                 console.log("Warning: renderer.setUpMissing() called for renderer that has no plot ref");
                 // this should really eventually throw an error
                 return;
             }
 
             // for ConstantPlot, create function that always returns false, since it has no data
-            if (this.plot() instanceof ns.ConstantPlot) {
+            if (plot instanceof ns.ConstantPlot) {
                 this.isMissing = function (p) {
                     return false;
                 };
                 return;
             }
 
-            if (!this.plot().data()) {
+            if (!plot.data()) {
                 // this should eventually throw an error
                 console.log("Warning: renderer.setUpMissing() called for renderer whose plot has no data ref");
                 return;
             }
-            data = this.plot().data();
+            data = plot.data();
             this.isMissing = function (p) {
                 var i;
-                for (i=1; i<p.length; ++i) {
+                for (i = 1; i < p.length; ++i) {
                     if (data.isMissing(p[i], i)) {
                         return true;
                     }
@@ -61,7 +63,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
         this.isBuiltWith("type");
 
-        window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.plot.renderer, attributes);
+        utilityFunctions.insertDefaults(this, defaultValues.plot.renderer, attributes);
 
         this.respondsTo("transformPoint", function (input) {
             var output = [],
@@ -70,7 +72,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 i;
 
             output[0] = haxis.dataValueToAxisValue(input[0]);
-            for (i = 1; i<input.length; ++i) {
+            for (i = 1; i < input.length; ++i) {
                 output[i] = vaxis.dataValueToAxisValue(input[i]);
             }
             return output;
@@ -88,7 +90,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 throw new Error("attempt to set unknown renderer option '"+name+"'");
             }
             rendererOpts = this.options()[name]();
-            for (i=0; i<rendererOpts.size(); ++i) {
+            for (i = 0; i < rendererOpts.size(); ++i) {
                 if (equalOrUndefined(rendererOpts.at(i).min(), min) &&
                     equalOrUndefined(rendererOpts.at(i).max(), max)) {
                     rendererOpts.at(i).value(value);
@@ -105,6 +107,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
 
         this.respondsTo("setOptionFromString", function (name, stringValue, stringMin, stringMax) {
+            var plot = this.plot(),
+                type = this.type();
+
             //
             // Two blocks of code below provides support for the deprecated "dotsize" and "dotcolor"
             // options, which have been replaced by "pointsize" and "pointcolor".  Delete these blocks
@@ -117,10 +122,10 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             var warning = undefined;
             if (name === "dotsize") {
                 name = "pointsize";
-                warning = new ns.Warning('deprecated "dotsize" option used for "' + this.type() + '" renderer; use "pointsize" instead');
+                warning = new ns.Warning('deprecated "dotsize" option used for "' + type + '" renderer; use "pointsize" instead');
             } else if (name === "dotcolor") {
                 name = "pointcolor";
-                warning = new ns.Warning('deprecated "dotcolor" option used for "' + this.type() + '" renderer; use "pointcolor" instead');
+                warning = new ns.Warning('deprecated "dotcolor" option used for "' + type + '" renderer; use "pointcolor" instead');
             }
             // 
             // End of first block in support of deprecated dotsize/dotcolor options
@@ -132,16 +137,16 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 // throw an error, but for now we just quietly ignore it, to eliminate error conditions coming
                 // from unimplemented options.
                 //console.log("WARNING: renderer has no option named '" + name + "'");
-                throw new ns.Warning('"' + this.type() + '"' + ' renderer has no option named "' + name + '"');
+                throw new ns.Warning('"' + type + '"' + ' renderer has no option named "' + name + '"');
             }
             rendererOpt = new (this.optionsMetadata[name].type)();
             rendererOpt.parseValue(stringValue, this);
-            if (this.plot() && this.plot().verticalaxis()) {
+            if (plot && plot.verticalaxis()) {
                 if (stringMin !== undefined) {
-                    rendererOpt.min( ns.DataValue.parse( this.plot().verticalaxis().type(), stringMin ));
+                    rendererOpt.min( ns.DataValue.parse( plot.verticalaxis().type(), stringMin ));
                 }
                 if (stringMax !== undefined) {
-                    rendererOpt.max( ns.DataValue.parse( this.plot().verticalaxis().type(), stringMax ));
+                    rendererOpt.max( ns.DataValue.parse( plot.verticalaxis().type(), stringMax ));
                 }
             }
             this.setOption(name, rendererOpt.value(), rendererOpt.min(), rendererOpt.max());
@@ -173,7 +178,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             }
             //NOTE: options are stored in reverse order; default one is always in the '0' position.
             //  Search through them starting at the END of the list, going backwards!
-            for (i=optionList.size()-1; i>=0; --i) {
+            for (i = optionList.size()-1; i >= 0; --i) {
                 var option = optionList.at(i);
                 if (((option.min()===undefined) || (value===undefined) || option.min().le(value)) &&
                     ((option.max()===undefined) || (value===undefined) || option.max().gt(value))) {
@@ -218,7 +223,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     Renderer.create = function (type) {
         var i,
             renderer;
-        for (i=0; i<rendererList.length; ++i) {
+        for (i = 0; i < rendererList.length; ++i) {
             if (rendererList[i].type === type) {
                 renderer = new (rendererList[i].model)();
                 renderer.type(type);
@@ -247,7 +252,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
         OptionsModel    = window.jermaine.Model(OptionsModelName, function () {});
         optionsMetadata = {};
-        for (i=0; i<options.length; ++i) {
+        for (i = 0; i < options.length; ++i) {
             declareOption(options[i].name, options[i].type);
             optionsMetadata[options[i].name] = {
                 "type"    : options[i].type,
@@ -259,10 +264,11 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
         renderer.isBuiltWith(function () {
             // populate options with default values stored in options metadata (which was populated by declareOptions):
-            var opt, ropt;
-            for (opt in this.optionsMetadata) {
-                if (this.optionsMetadata.hasOwnProperty(opt)) {
-                    ropt = new (this.optionsMetadata[opt].type)(this.optionsMetadata[opt]["default"]);
+            var optionsMetadata = this.optionsMetadata,
+                opt, ropt;
+            for (opt in optionsMetadata) {
+                if (optionsMetadata.hasOwnProperty(opt)) {
+                    ropt = new (optionsMetadata[opt].type)(optionsMetadata[opt]["default"]);
                     this.options()[opt]().add( ropt );
                 }
             }

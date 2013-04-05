@@ -14,8 +14,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * @for Graph
      * @constructor
      */
-    var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
-        attributes = window.multigraph.utilityFunctions.getKeys(defaultValues),
+    var utilityFunctions = window.multigraph.utilityFunctions,
+        defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = utilityFunctions.getKeys(defaultValues),
         Graph = new window.jermaine.Model("Graph", function () {
 
             /**
@@ -143,7 +144,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             this.hasA("multigraph").which.validatesWith(function (val) {
                 return val instanceof window.multigraph.core.Multigraph;
             });
-            
+
             this.hasA("x0").which.isA("number");
             this.hasA("y0").which.isA("number");
 
@@ -185,26 +186,35 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
              * @author jrfrimme
              */
             this.respondsTo("initializeGeometry", function (width, height, graphicsContext) {
-                var i;
+                var w              = this.window(),
+                    windowBorder   = w.border(),
+                    windowMargin   = w.margin(),
+                    windowPadding  = w.padding(),
+                    plotarea       = this.plotarea(),
+                    plotareaBorder = plotarea.border(),
+                    plotareaMargin = plotarea.margin(),
+                    i;
+
                 this.windowBox( new Box(width, height) );
                 this.paddingBox( new Box(
                     ( width -
-                      ( this.window().margin().left()  + this.window().border() + this.window().padding().left() ) -
-                      ( this.window().margin().right() + this.window().border() + this.window().padding().right() )
+                      ( windowMargin.left()  + windowBorder + windowPadding.left() ) -
+                      ( windowMargin.right() + windowBorder + windowPadding.right() )
                     ),
                     ( height -
-                      ( this.window().margin().top()    + this.window().border() + this.window().padding().top() ) -
-                      ( this.window().margin().bottom() + this.window().border() + this.window().padding().bottom() )
+                      ( windowMargin.top()    + windowBorder + windowPadding.top() ) -
+                      ( windowMargin.bottom() + windowBorder + windowPadding.bottom() )
                     )
                 )
                                );
                 this.plotBox( new Box(
-                    ( this.paddingBox().width() -
-                      ( this.plotarea().margin().left() + this.plotarea().margin().right() + (2 * this.plotarea().border()))
+                    (
+                        this.paddingBox().width() -
+                            ( plotareaMargin.left() + plotareaMargin.right() + (2 * plotareaBorder))
                     ),
                     (
                         this.paddingBox().height() -
-                            ( this.plotarea().margin().top() + this.plotarea().margin().bottom() + (2 * this.plotarea().border()))
+                            ( plotareaMargin.top() + plotareaMargin.bottom() + (2 * plotareaBorder))
                     )
                 )
                             );
@@ -218,8 +228,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                     this.title().initializeGeometry(graphicsContext);
                 }
 
-                this.x0( this.window().margin().left()  + this.window().border() + this.window().padding().left() + this.plotarea().margin().left() + this.plotarea().border() );
-                this.y0( this.window().margin().bottom() + this.window().border() + this.window().padding().bottom() + this.plotarea().margin().bottom() + this.plotarea().border() );
+                this.x0( windowMargin.left()   + windowBorder + windowPadding.left()   + plotareaMargin.left()   + plotareaBorder );
+                this.y0( windowMargin.bottom() + windowBorder + windowPadding.bottom() + plotareaMargin.bottom() + plotareaBorder );
             });
 
             /**
@@ -232,7 +242,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
              */
             this.respondsTo("registerCommonDataCallback", function (callback) {
                 var i;
-                for (i=0; i<this.data().size(); ++i) {
+                for (i = 0; i < this.data().size(); ++i) {
                     this.data().at(i).addListener("dataReady", callback);
                 }
             });
@@ -246,7 +256,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             this.respondsTo("pauseAllData", function () {
                 var i;
                 // pause all this graph's data sources:
-                for (i=0; i<this.data().size(); ++i) {
+                for (i = 0; i < this.data().size(); ++i) {
                     this.data().at(i).pause();
                 }
             });
@@ -260,7 +270,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             this.respondsTo("resumeAllData", function () {
                 var i;
                 // resume all this graph's data sources:
-                for (i=0; i<this.data().size(); ++i) {
+                for (i = 0; i < this.data().size(); ++i) {
                     this.data().at(i).resume();
                 }
             });
@@ -277,10 +287,10 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             this.respondsTo("findNearestAxis", function (x, y, orientation) {
                 var foundAxis = null,
                     mindist = 9999,
-                    i,
                     axes = this.axes(),
                     naxes = this.axes().size(),
                     axis,
+                    i,
                     d;
                 for (i = 0; i < naxes; ++i) {
                     axis = axes.at(i);
@@ -288,7 +298,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                         (orientation === null) ||
                         (axis.orientation() === orientation)) {
                         d = axis.distanceToPoint(x, y);
-                        if (foundAxis===null || d < mindist) {
+                        if (foundAxis === null || d < mindist) {
                             foundAxis = axis;
                             mindist = d;
                         }
@@ -312,19 +322,21 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             this.respondsTo("variableById", function (id) {
                 // return a pointer to the variable for this graph that has the given id, if any
                 var data = this.data(),
+                    columns,
                     i,
                     j;
                 for (i = 0; i < data.size(); ++i) {
-                    for (j = 0; j < data.at(i).columns().size(); ++j) {
-                        if (data.at(i).columns().at(j).id() === id) {
-                            return data.at(i).columns().at(j);
+                    columns = data.at(i).columns();
+                    for (j = 0; j < columns.size(); ++j) {
+                        if (columns.at(j).id() === id) {
+                            return columns.at(j);
                         }
                     }
                 }
                 return undefined;
             });
 
-            window.multigraph.utilityFunctions.insertDefaults(this, defaultValues, attributes);
+            utilityFunctions.insertDefaults(this, defaultValues, attributes);
         });
 
     ns.Graph = Graph;

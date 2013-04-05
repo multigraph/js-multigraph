@@ -2,8 +2,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
     var Filter,
-        defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
-        attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.plot.filter);
+        utilityFunctions = window.multigraph.utilityFunctions,
+        defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = utilityFunctions.getKeys(defaultValues.plot.filter);
 
     Filter = new window.jermaine.Model("Filter", function () {
         this.hasMany("options").eachOfWhich.validatesWith(function (option) {
@@ -13,7 +14,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return typeof(type) === "string";
         });
 
-        window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.plot.filter, attributes);
+        utilityFunctions.insertDefaults(this, defaultValues.plot.filter, attributes);
     });
 
     ns.Filter = Filter;

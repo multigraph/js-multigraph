@@ -138,23 +138,26 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
 
         this.respondsTo("constructRequestURL", function (min, max) {
-            if (this.serviceaddress() === undefined) {
+            var serviceaddress = this.serviceaddress(),
+                formatter = this.formatter();
+
+            if (serviceaddress === undefined) {
                 throw new Error("WebServiceData.constructRequestURL: undefined service address");
             }
-            if (this.formatter() === undefined) {
+            if (formatter === undefined) {
                 throw new Error("WebServiceData.constructRequestURL: undefined formatter for column 0");
             }
             if (this.serviceaddresspattern() === undefined) {
-                if ((this.serviceaddress().indexOf("$min") < 0) &&
-                    (this.serviceaddress().indexOf("$max") < 0)) {
-                    this.serviceaddresspattern(this.serviceaddress() + "$min,$max");
+                if ((serviceaddress.indexOf("$min") < 0) &&
+                    (serviceaddress.indexOf("$max") < 0)) {
+                    this.serviceaddresspattern(serviceaddress + "$min,$max");
                 } else {
-                    this.serviceaddresspattern(this.serviceaddress());
+                    this.serviceaddresspattern(serviceaddress);
                 }
             }
             return (this.serviceaddresspattern()
-                    .replace("$min",this.formatter().format(min))
-                    .replace("$max",this.formatter().format(max)));
+                    .replace("$min", formatter.format(min))
+                    .replace("$max", formatter.format(max)));
         });
 
         this.hasA("coveredMin").which.defaultsTo(null).and.validatesWith(function (x) {

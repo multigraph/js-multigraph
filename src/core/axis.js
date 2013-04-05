@@ -7,8 +7,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      */
 
     var Axis,
-        defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
-        attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.horizontalaxis),
+        utilityFunctions = window.multigraph.utilityFunctions,
+        defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = utilityFunctions.getKeys(defaultValues.horizontalaxis),
         Orientation = new window.multigraph.math.Enum("AxisOrientation");
 
     /**
@@ -150,22 +151,28 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasA("axisToDataRatio").which.isA("number");
 
         this.respondsTo("initializeGeometry", function (graph, graphicsContext) {
-            var i;
+            var plotBox = graph.plotBox(),
+                position = this.position(),
+                base     = this.base(),
+                pixelLength,
+                i;
             if (this.orientation() === Axis.HORIZONTAL) {
-                this.pixelLength(this.length().calculateLength( graph.plotBox().width() ));
-                this.parallelOffset( this.position().x() + (this.base().x() + 1) * graph.plotBox().width()/2 - (this.anchor() + 1) * this.pixelLength() / 2 );
-                this.perpOffset( this.position().y() + (this.base().y() + 1) * graph.plotBox().height() / 2 );
+                pixelLength = this.length().calculateLength( plotBox.width() );
+                this.pixelLength(pixelLength);
+                this.parallelOffset( position.x() + (base.x() + 1) * plotBox.width()/2 - (this.anchor() + 1) * pixelLength / 2 );
+                this.perpOffset( position.y() + (base.y() + 1) * plotBox.height() / 2 );
             } else {
-                this.pixelLength( this.length().calculateLength( graph.plotBox().height() ) );
-                this.parallelOffset( this.position().y() + (this.base().y() + 1) * graph.plotBox().height()/2 - (this.anchor() + 1) * this.pixelLength() / 2 );
-                this.perpOffset( this.position().x() + (this.base().x() + 1) * graph.plotBox().width() / 2 );
+                pixelLength = this.length().calculateLength( plotBox.height() );
+                this.pixelLength(pixelLength);
+                this.parallelOffset( position.y() + (base.y() + 1) * plotBox.height()/2 - (this.anchor() + 1) * pixelLength / 2 );
+                this.perpOffset( position.x() + (base.x() + 1) * plotBox.width() / 2 );
             }
-            this.minoffset(this.minposition().calculateCoordinate(this.pixelLength()));
-            this.maxoffset(this.pixelLength() - this.maxposition().calculateCoordinate(this.pixelLength()));
+            this.minoffset(this.minposition().calculateCoordinate(pixelLength));
+            this.maxoffset(pixelLength - this.maxposition().calculateCoordinate(pixelLength));
             if (this.hasDataMin() && this.hasDataMax()) {
                 this.computeAxisToDataRatio();
             }
-            for (i=0; i<this.labelers().size(); ++i) {
+            for (i = 0; i < this.labelers().size(); ++i) {
                 this.labelers().at(i).initializeGeometry(graph);
             }
             if (this.title()) {
@@ -215,9 +222,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 currentLabelDensity = 0,
                 storedDensity = 0,
                 densityThreshold = 0.8,
-                labelers = this.labelers(),
-                nlabelers = this.labelers().size(),
-                index = this.currentLabelerIndex(),
+                labelers  = this.labelers(),
+                nlabelers = labelers.size(),
+                index     = this.currentLabelerIndex(),
                 storedIndex;
 
             if (nlabelers <= 0) {
@@ -338,69 +345,83 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
 
         this.respondsTo("doPan", function (pixelBase, pixelDisplacement) {
-            var offset,
+            var pan = this.pan(),
+                panMin = pan.min(),
+                panMax = pan.max(),
+                offset,
                 newRealMin,
                 newRealMax;
 
-            if (!this.pan().allowed()) { return; }
+            if (!pan.allowed()) { return; }
             offset = pixelDisplacement / this.axisToDataRatio();
             newRealMin = this.dataMin().getRealValue() - offset;
             newRealMax = this.dataMax().getRealValue() - offset;
-            if (this.pan().min() && newRealMin < this.pan().min().getRealValue()) {
-                newRealMax += (this.pan().min().getRealValue() - newRealMin);
-                newRealMin = this.pan().min().getRealValue();
+            
+            if (panMin && newRealMin < panMin.getRealValue()) {
+                newRealMax += (panMin.getRealValue() - newRealMin);
+                newRealMin = panMin.getRealValue();
             }
-            if (this.pan().max() && newRealMax > this.pan().max().getRealValue()) {
-                newRealMin -= (newRealMax - this.pan().max().getRealValue());
-                newRealMax = this.pan().max().getRealValue();
+            if (panMax && newRealMax > panMax.getRealValue()) {
+                newRealMin -= (newRealMax - panMax.getRealValue());
+                newRealMax = panMax.getRealValue();
             }
             this.setDataRange(ns.DataValue.create(this.type(), newRealMin),
                               ns.DataValue.create(this.type(), newRealMax));
         });
 
         this.respondsTo("doZoom", function (pixelBase, pixelDisplacement) {
-            var baseRealValue,
+            var zoom = this.zoom(),
+                pan  = this.pan(),
+                type = this.type(),
+                dataMin = this.dataMin(),
+                dataMax = this.dataMax(),
+                panMin  = pan.min(),
+                panMax  = pan.max(),
+                zoomMin = zoom.min(),
+                zoomMax = zoom.max(),
+                DataValue = ns.DataValue,
+                baseRealValue,
                 factor,
                 newMin,
                 newMax,
                 d;
-            if (!this.zoom().allowed()) {
+            if (!zoom.allowed()) {
                 return;
             }
             baseRealValue = this.axisValueToDataValue(pixelBase).getRealValue();
-            if (window.multigraph.core.DataValue.isInstance(this.zoom().anchor())) {
-                baseRealValue = this.zoom().anchor().getRealValue();
+            if (DataValue.isInstance(zoom.anchor())) {
+                baseRealValue = zoom.anchor().getRealValue();
             }
             factor = 10 * Math.abs(pixelDisplacement / (this.pixelLength() - this.maxoffset() - this.minoffset()));
             /*TODO: uncomment after this.reversed() has been implemented
             if (this.reversed()) { factor = -factor; }
             */
             if (pixelDisplacement <= 0) {
-                newMin = ns.DataValue.create(this.type(),
-                                             (this.dataMin().getRealValue() - baseRealValue) * ( 1 + factor ) + baseRealValue);
-                newMax = ns.DataValue.create(this.type(),
-                                             (this.dataMax().getRealValue() - baseRealValue) * ( 1 + factor ) + baseRealValue);
+                newMin = DataValue.create(type,
+                                          (dataMin.getRealValue() - baseRealValue) * ( 1 + factor ) + baseRealValue);
+                newMax = DataValue.create(type,
+                                          (dataMax.getRealValue() - baseRealValue) * ( 1 + factor ) + baseRealValue);
             } else {
-                newMin = ns.DataValue.create(this.type(),
-                                             (this.dataMin().getRealValue() - baseRealValue) * ( 1 - factor ) + baseRealValue);
-                newMax = ns.DataValue.create(this.type(),
-                                             (this.dataMax().getRealValue() - baseRealValue) * ( 1 - factor ) + baseRealValue);
+                newMin = DataValue.create(type,
+                                          (dataMin.getRealValue() - baseRealValue) * ( 1 - factor ) + baseRealValue);
+                newMax = DataValue.create(type,
+                                          (dataMax.getRealValue() - baseRealValue) * ( 1 - factor ) + baseRealValue);
             }
-            if (this.pan().min() && newMin.lt(this.pan().min())) {
-                newMin = this.pan().min();
+            if (panMin && newMin.lt(panMin)) {
+                newMin = panMin;
             }
-            if (this.pan().max() && newMax.gt(this.pan().max())) {
-                newMax = this.pan().max();
+            if (panMax && newMax.gt(panMax)) {
+                newMax = panMax;
             }
         
-            if ((this.dataMin().le(this.dataMax()) && newMin.lt(newMax)) ||
-                (this.dataMin().ge(this.dataMax()) && newMin.gt(newMax))) {
-                if (this.zoom().max() && (newMax.gt(newMin.add(this.zoom().max())))) {
-                    d = (newMax.getRealValue() - newMin.getRealValue() - this.zoom().max().getRealValue()) / 2;
+            if ((dataMin.le(dataMax) && newMin.lt(newMax)) ||
+                (dataMin.ge(dataMax) && newMin.gt(newMax))) {
+                if (zoomMax && (newMax.gt(newMin.add(zoomMax)))) {
+                    d = (newMax.getRealValue() - newMin.getRealValue() - zoomMax.getRealValue()) / 2;
                     newMax = newMax.addRealValue(-d);
                     newMin = newMin.addRealValue(d);
-                } else if (this.zoom().min() && (newMax.lt(newMin.add(this.zoom().min())))) {
-                    d = (this.zoom().min().getRealValue() - (newMax.getRealValue() - newMin.getRealValue())) / 2;
+                } else if (zoomMin && (newMax.lt(newMin.add(zoomMin)))) {
+                    d = (zoomMin.getRealValue() - (newMax.getRealValue() - newMin.getRealValue())) / 2;
                     newMax = newMax.addRealValue(d);
                     newMin = newMin.addRealValue(-d);
                 }
@@ -431,21 +452,26 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @author jrfrimme
          */
         this.respondsTo("distanceToPoint", function (x, y) {
-            var perpCoord     = (this.orientation() === Axis.HORIZONTAL) ? y : x;
-            var parallelCoord = (this.orientation() === Axis.HORIZONTAL) ? x : y;
-            if (parallelCoord < this.parallelOffset()) {
+            var perpCoord     = (this.orientation() === Axis.HORIZONTAL) ? y : x,
+                parallelCoord = (this.orientation() === Axis.HORIZONTAL) ? x : y,
+                parallelOffset = this.parallelOffset(),
+                perpOffset     = this.perpOffset(),
+                pixelLength    = this.pixelLength(),
+                l2dist = window.multigraph.math.util.l2dist;
+
+            if (parallelCoord < parallelOffset) {
                 // point is under or left of the axis; return L2 distance to bottom or left axis endpoint
-                return window.multigraph.math.util.l2dist(parallelCoord, perpCoord, this.parallelOffset(), this.perpOffset());
+                return l2dist(parallelCoord, perpCoord, parallelOffset, perpOffset);
             }
-            if (parallelCoord > this.parallelOffset() + this.pixelLength()) {
+            if (parallelCoord > parallelOffset + pixelLength) {
                 // point is above or right of the axis; return L2 distance to top or right axis endpoint
-                return window.multigraph.math.util.l2dist(parallelCoord, perpCoord, this.parallelOffset()+this.pixelLength(), this.perpOffset());
+                return l2dist(parallelCoord, perpCoord, parallelOffset + pixelLength, perpOffset);
             }
             // point is between the axis endpoints; return difference in perpendicular coords
-            return Math.abs(perpCoord - this.perpOffset());
+            return Math.abs(perpCoord - perpOffset);
         });
 
-        window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis, attributes);
+        utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis, attributes);
     });
     Axis.HORIZONTAL = new Orientation("horizontal");
     Axis.VERTICAL   = new Orientation("vertical");

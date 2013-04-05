@@ -1,8 +1,9 @@
 window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
-    var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
-        attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.window),
+    var utilityFunctions = window.multigraph.utilityFunctions,
+        defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = utilityFunctions.getKeys(defaultValues.window),
         Window = new window.jermaine.Model("Window", function () {
 
             this.hasA("width").which.isA("integer");
@@ -23,7 +24,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 return bordercolor instanceof window.multigraph.math.RGBColor;
             });
 
-            window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.window, attributes);
+            utilityFunctions.insertDefaults(this, defaultValues.window, attributes);
         });
 
     ns.Window = Window;

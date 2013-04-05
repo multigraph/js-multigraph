@@ -122,7 +122,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 throw new Error("Data: columnIdToDataVariable requires a string parameter");
             }
             
-            var dv = find("id", id, this.columns()) !== -1?this.columns().at(find("id", id, this.columns())):undefined;
+            var columns = this.columns(),
+                dv = find("id", id, columns) !== -1 ? columns.at(find("id", id, columns)) : undefined;
 
             if (dv === undefined) {
                 throw new Error("Data: no column with the label " + id);

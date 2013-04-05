@@ -23,7 +23,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             this.init();
             this.addListener("listenerAdded", function (event) {
                 if (event.targetType === "dataReady") {
-                    event.listener(this.array()[0][0], this.array()[this.array().length-1][0]);
+                    var data = this.array();
+                    event.listener(data[0][0], data[data.length-1][0]);
                 }
             });
         });
@@ -51,16 +52,17 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @author jrfrimme
          */
         this.respondsTo("getBounds", function (columnNumber) {
-            var i,
-                min = this.array()[0][columnNumber],
-                max = min;
+            var data = this.array(),
+                min = data[0][columnNumber],
+                max = min,
+                i;
 
-            for (i = 1; i < this.array().length; i++) {
-                if (this.array()[i][columnNumber] < min) {
-                    min = this.array()[i][columnNumber];
+            for (i = 1; i < data.length; i++) {
+                if (data[i][columnNumber] < min) {
+                    min = data[i][columnNumber];
                 }
-                if (this.array()[i][columnNumber] > max) {
-                    max = this.array()[i][columnNumber];
+                if (data[i][columnNumber] > max) {
+                    max = data[i][columnNumber];
                 }
             }
 
@@ -158,7 +160,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             currentIndex = firstIndex;
                 
             return {
-                next : function() {
+                next : function () {
                     var projection = [],
                         i;
                     if (currentIndex > lastIndex) {
@@ -170,7 +172,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                     ++currentIndex;
                     return projection;
                 },
-                hasNext : function() {
+                hasNext : function () {
                     return currentIndex <= lastIndex;
                 }
             };
@@ -229,10 +231,11 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
             // clean up each line
             for (i = 0; i < lines.length; ++i) {
-                lines[i] = lines[i].replace(/^\s+/,     "");  // remove leading whitespace
-                lines[i] = lines[i].replace(/\s+$/,     "");  // remove trailing whitespace
-                lines[i] = lines[i].replace(/\s*,\s*/g, ","); // remove any whitespace next to commas
-                lines[i] = lines[i].replace(/\s+/g,     ","); // replace any remaining whitespace runs with a comma
+                lines[i] = lines[i]
+                    .replace(/^\s+/,     "")   // remove leading whitespace
+                    .replace(/\s+$/,     "")   // remove trailing whitespace
+                    .replace(/\s*,\s*/g, ",")  // remove any whitespace next to commas
+                    .replace(/\s+/g,     ","); // replace any remaining whitespace runs with a comma
                 // now line consists of comma-separated values, with no whitespace
             }
 

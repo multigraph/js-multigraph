@@ -2,8 +2,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
     var Datatips,
-        defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
-        attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.plot.datatips);
+        utilityFunctions = window.multigraph.utilityFunctions,
+        defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = utilityFunctions.getKeys(defaultValues.plot.datatips);
 
     Datatips = new window.jermaine.Model("Datatips", function () {
         this.hasMany("variables").eachOfWhich.validateWith(function (variable) {
@@ -24,7 +25,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
         this.hasA("pad").which.isA("integer");
 
-        window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.plot.datatips, attributes);
+        utilityFunctions.insertDefaults(this, defaultValues.plot.datatips, attributes);
     });
 
     ns.Datatips = Datatips;

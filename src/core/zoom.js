@@ -1,8 +1,9 @@
 window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
-    var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
-        attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.horizontalaxis.zoom),
+    var utilityFunctions = window.multigraph.utilityFunctions,
+        defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = utilityFunctions.getKeys(defaultValues.horizontalaxis.zoom),
         Zoom = new window.jermaine.Model("Zoom", function () {
 
             this.hasA("allowed").which.isA("boolean");
@@ -16,7 +17,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 return ns.DataValue.isInstance(anchor) || anchor === null;
             });
 
-            window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis.zoom, attributes);
+            utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis.zoom, attributes);
         });
 
     ns.Zoom = Zoom;

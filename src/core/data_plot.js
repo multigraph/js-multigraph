@@ -2,8 +2,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
     var DataPlot,
-        defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
-        attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.plot);
+        utilityFunctions = window.multigraph.utilityFunctions,
+        defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = utilityFunctions.getKeys(defaultValues.plot);
 
     DataPlot = new window.jermaine.Model("DataPlot", function () {
         this.isA(ns.Plot);
@@ -20,7 +21,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return data instanceof ns.Data;
         });
 
-        window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.plot, attributes);
+        utilityFunctions.insertDefaults(this, defaultValues.plot, attributes);
 
         this.respondsTo("render", function (graph, graphicsContext) {
             // graphicsContext is an optional argument passed to DataPlot.render() by the
@@ -31,8 +32,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             var data = this.data();
             if (! data) { return; }
 
-            var haxis = this.horizontalaxis();
-            var vaxis = this.verticalaxis();
+            var haxis = this.horizontalaxis(),
+                vaxis = this.verticalaxis();
 
             if (!haxis.hasDataMin() || !haxis.hasDataMax()) {
                 // if this plot's horizontal axis does not have a min or max value yet,
@@ -40,15 +41,16 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 return;
             }
 
-            var variableIds = [];
-            var i;
-            for (i=0; i<this.variable().size(); ++i) {
-                variableIds.push( this.variable().at(i).id() );
+            var variables   = this.variable(),
+                variableIds = [],
+                i;
+            for (i = 0; i < variables.size(); ++i) {
+                variableIds.push( variables.at(i).id() );
             }
 
-            var iter = data.getIterator(variableIds, haxis.dataMin(), haxis.dataMax(), 1);
+            var iter = data.getIterator(variableIds, haxis.dataMin(), haxis.dataMax(), 1),
+                renderer = this.renderer();
 
-            var renderer = this.renderer();
             renderer.setUpMissing(); //TODO: this is awkward -- figure out a better way!
             renderer.begin(graphicsContext);
             while (iter.hasNext()) {

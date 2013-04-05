@@ -7,8 +7,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      */
 
     var Legend,
-        defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
-        attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.legend);
+        utilityFunctions = window.multigraph.utilityFunctions,
+        defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = utilityFunctions.getKeys(defaultValues.legend);
 
     /**
      * Legend is a Jermaine model that supports the rendering of Multigraph Legends.
@@ -114,7 +115,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @author jrfrimme
          */
         this.hasA("opacity").which.validatesWith(function (opacity) {
-            return window.multigraph.utilityFunctions.validateNumberRange(opacity, 0.0, 1.0);
+            return utilityFunctions.validateNumberRange(opacity, 0.0, 1.0);
         });
 
         /**
@@ -350,7 +351,11 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @todo Find out whether or not padding needs to be taken into consideration.
          */
         this.respondsTo("initializeGeometry", function (graph, graphicsContext) {
-            var widths = [],
+            var anchor     = this.anchor(),
+                base       = this.base(),
+                position   = this.position(),
+                iconOffset = this.iconOffset(),
+                widths  = [],
                 heights = [],
                 label,
                 i;
@@ -377,19 +382,19 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             this.maxLabelWidth(widths[0]);
             this.maxLabelHeight(Math.max(heights[0], this.icon().height()));
 
-            this.blockWidth(this.iconOffset() + this.icon().width() + this.labelOffset() + this.maxLabelWidth() + this.labelEnding());
-            this.blockHeight(this.iconOffset() + this.maxLabelHeight());
+            this.blockWidth(iconOffset + this.icon().width() + this.labelOffset() + this.maxLabelWidth() + this.labelEnding());
+            this.blockHeight(iconOffset + this.maxLabelHeight());
 
 // TODO: find out whether or not padding needs to be taken into consideration
             this.width((2 * this.border()) + (this.columns() * this.blockWidth()));
-            this.height((2 * this.border()) + (this.rows() * this.blockHeight()) + this.iconOffset());
+            this.height((2 * this.border()) + (this.rows() * this.blockHeight()) + iconOffset);
 
             if (this.frame() === "padding") {
-                this.x(((this.base().x() + 1) * graph.paddingBox().width()/2) - ((this.anchor().x() + 1) * this.width()/2) + this.position().x());
-                this.y(((this.base().y() + 1) * graph.paddingBox().height()/2) - ((this.anchor().y() + 1) * this.height()/2) + this.position().y());
+                this.x(((base.x() + 1) * graph.paddingBox().width()/2)  - ((anchor.x() + 1) * this.width()/2)  + position.x());
+                this.y(((base.y() + 1) * graph.paddingBox().height()/2) - ((anchor.y() + 1) * this.height()/2) + position.y());
             } else {
-                this.x(((this.base().x() + 1) * graph.plotBox().width()/2) - ((this.anchor().x() + 1) * this.width()/2) + this.position().x());
-                this.y(((this.base().y() + 1) * graph.plotBox().height()/2) - ((this.anchor().y() + 1) * this.height()/2) + this.position().y());
+                this.x(((base.x() + 1) * graph.plotBox().width()/2)     - ((anchor.x() + 1) * this.width()/2)  + position.x());
+                this.y(((base.y() + 1) * graph.plotBox().height()/2)    - ((anchor.y() + 1) * this.height()/2) + position.y());
             }
 
             return this;
@@ -408,7 +413,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
          * @author jrfrimme
          */
         this.respondsTo("render", function (graphicsContext) {
-            var blockx, blocky,
+            var plots = this.plots(),
+                icon  = this.icon(),
+                blockx, blocky,
                 iconx, icony,
                 labelx, labely,
                 plotCount = 0,
@@ -425,30 +432,30 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             this.renderLegend(graphicsContext);
 
             for (r = 0; r < this.rows(); r++) {
-                if (plotCount >= this.plots().size()) {
+                if (plotCount >= plots.size()) {
                     break;
                 }
                 blocky = this.border() + ((this.rows() - r - 1) * this.blockHeight());
                 icony  = blocky + this.iconOffset();
                 labely = icony;
                 for (c = 0; c < this.columns(); c++) {
-                    if (plotCount >= this.plots().size()) {
+                    if (plotCount >= plots.size()) {
                         break;
                     }
                     blockx = this.border() + (c * this.blockWidth());
                     iconx  = blockx + this.iconOffset();
-                    labelx = iconx + this.icon().width() + this.labelOffset();
+                    labelx = iconx + icon.width() + this.labelOffset();
 
                     // Draw the icon
-                    this.plots().at(plotCount).renderer().renderLegendIcon(graphicsContext, iconx, icony, this.icon(), this.opacity());
+                    plots.at(plotCount).renderer().renderLegendIcon(graphicsContext, iconx, icony, icon, this.opacity());
                     
                     // Draw the icon border
-                    if (this.icon().border() > 0) {
-                        this.icon().renderBorder(graphicsContext, iconx, icony, this.opacity());
+                    if (icon.border() > 0) {
+                        icon.renderBorder(graphicsContext, iconx, icony, this.opacity());
                     }
                     
                     // Write the text
-                    this.renderLabel(this.plots().at(plotCount).legend().label(), graphicsContext, labelx, labely);
+                    this.renderLabel(plots.at(plotCount).legend().label(), graphicsContext, labelx, labely);
 
                     plotCount++;
                 }
@@ -460,7 +467,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return this;
         });
 
-        window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.legend, attributes);
+        utilityFunctions.insertDefaults(this, defaultValues.legend, attributes);
     });
 
     ns.Legend = Legend;

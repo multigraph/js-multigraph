@@ -1,8 +1,11 @@
 window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
-    var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
-    attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.horizontalaxis.pan),
+    var utilityFunctions = window.multigraph.utilityFunctions,
+        defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = utilityFunctions.getKeys(defaultValues.horizontalaxis.pan),
+        Pan;
+
     Pan = new window.jermaine.Model("Pan", function () {
         this.hasA("allowed").which.isA("boolean");
         this.hasA("min").which.validatesWith(ns.DataValue.isInstanceOrNull);
@@ -16,7 +19,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         //  zoom:       allowed      anchor         min,max
         //   pan:       allowed      min,max
 
-        window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis.pan, attributes);
+        utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis.pan, attributes);
     });
 
     ns.Pan = Pan;

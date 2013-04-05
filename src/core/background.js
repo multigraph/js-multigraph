@@ -2,8 +2,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
     var Background,
-        defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
-        attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.background);
+        utilityFunctions = window.multigraph.utilityFunctions,
+        defaultValues    = utilityFunctions.getDefaultValuesFromXSD(),
+        attributes       = utilityFunctions.getKeys(defaultValues.background);
 
     Background = new window.jermaine.Model("Background", function () {
         this.hasA("color").which.validatesWith(function (color) {

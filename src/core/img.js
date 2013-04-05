@@ -1,8 +1,9 @@
 window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
 
-    var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
-        attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.background.img),
+    var utilityFunctions = window.multigraph.utilityFunctions,
+        defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = utilityFunctions.getKeys(defaultValues.background.img),
         Img = new window.jermaine.Model("Img", function () {
             this.hasA("src").which.isA("string");
             this.hasA("anchor").which.validatesWith(function (anchor) {
@@ -19,7 +20,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             });
             this.isBuiltWith("src");
 
-            window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.background.img, attributes);
+            utilityFunctions.insertDefaults(this, defaultValues.background.img, attributes);
         });
 
     Img.PADDING = "padding";
