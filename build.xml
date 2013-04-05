@@ -192,6 +192,11 @@
     <copy file="build/multigraph.js" tofile="build/stripped-multigraph.js"/>
     <!-- replace /*! with /* so ALL comments are removed -->
     <replace file="build/stripped-multigraph.js" token="/*!" value="/*"/>
+    <!-- replace .and. .which. .eachOfWhich. with . since they are equivalent in jermaine -->
+    <echo message="replacing '.and.', '.which.' and '.eachOfWhich.' with '.' since they are equivalent in jermaine"/>
+    <replace file="build/stripped-multigraph.js" token=".which." value="."/>
+    <replace file="build/stripped-multigraph.js" token=".and." value="."/>
+    <replace file="build/stripped-multigraph.js" token=".eachOfWhich." value="."/>
     <exec executable="java" failonerror="true">
       <arg line="-jar" />
       <arg path="${yuicompressor}" />
