@@ -54,7 +54,7 @@
 
     <variables>
       <variable column="0" id="datetime" type="datetime"/>
-      <variable column="1" id="number" type="number"/>
+      <variable column="1" id="number" type="number" missingvalue="-9000" missingop="eq"/>
     </variables>
     <values>
       195002,0.186
@@ -106,7 +106,7 @@
       195312,0.260
       195401,0.082
       195402,0.049
-      195403,0.269
+      195403,-9000
       195404,-0.223
       195405,-0.471
       195406,-0.528

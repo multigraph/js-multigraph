@@ -86,9 +86,13 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                 if (!fillcolor.eq(state.currentfillcolor)) {
                     var x = mathUtil.safe_interp(fillpixelbase, state.previouspoint[1], p[1], state.previouspoint[0], p[0]);
                     // base line crossing point is [x, state.fillpixelbase]
+                    // These points are pushed twice so the outline of the fill will be drawn properly,
+                    // otherwise the outline would not be drawn around the segments that cross the baseline.
+                    state.run.push( [x, fillpixelbase] );
                     state.run.push( [x, fillpixelbase] );
                     this.renderRun();
                     state.run = [];
+                    state.run.push( [x, fillpixelbase] );
                     state.run.push( [x, fillpixelbase] );
                 }
             }
