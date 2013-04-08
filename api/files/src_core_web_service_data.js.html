@@ -272,23 +272,26 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
         });
 
         this.respondsTo(&quot;constructRequestURL&quot;, function (min, max) {
-            if (this.serviceaddress() === undefined) {
+            var serviceaddress = this.serviceaddress(),
+                formatter = this.formatter();
+
+            if (serviceaddress === undefined) {
                 throw new Error(&quot;WebServiceData.constructRequestURL: undefined service address&quot;);
             }
-            if (this.formatter() === undefined) {
+            if (formatter === undefined) {
                 throw new Error(&quot;WebServiceData.constructRequestURL: undefined formatter for column 0&quot;);
             }
             if (this.serviceaddresspattern() === undefined) {
-                if ((this.serviceaddress().indexOf(&quot;$min&quot;) &lt; 0) &amp;&amp;
-                    (this.serviceaddress().indexOf(&quot;$max&quot;) &lt; 0)) {
-                    this.serviceaddresspattern(this.serviceaddress() + &quot;$min,$max&quot;);
+                if ((serviceaddress.indexOf(&quot;$min&quot;) &lt; 0) &amp;&amp;
+                    (serviceaddress.indexOf(&quot;$max&quot;) &lt; 0)) {
+                    this.serviceaddresspattern(serviceaddress + &quot;$min,$max&quot;);
                 } else {
-                    this.serviceaddresspattern(this.serviceaddress());
+                    this.serviceaddresspattern(serviceaddress);
                 }
             }
             return (this.serviceaddresspattern()
-                    .replace(&quot;$min&quot;,this.formatter().format(min))
-                    .replace(&quot;$max&quot;,this.formatter().format(max)));
+                    .replace(&quot;$min&quot;, formatter.format(min))
+                    .replace(&quot;$max&quot;, formatter.format(max)));
         });
 
         this.hasA(&quot;coveredMin&quot;).which.defaultsTo(null).and.validatesWith(function (x) {

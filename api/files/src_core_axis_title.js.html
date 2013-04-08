@@ -140,8 +140,9 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
      * @submodule core
      *&#x2F;
 
-    var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
-        attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.horizontalaxis.title),
+    var utilityFunctions = window.multigraph.utilityFunctions,
+        defaultValues    = utilityFunctions.getDefaultValuesFromXSD(),
+        attributes       = utilityFunctions.getKeys(defaultValues.horizontalaxis.title),
         AxisTitle;
 
     &#x2F;**
@@ -224,7 +225,13 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
          * @author jrfrimme
          *&#x2F;
         this.respondsTo(&quot;initializeGeometry&quot;, function (graph, graphicsContext) {
-            var titleDefaults = defaultValues.horizontalaxis.title;
+            var titleDefaults = defaultValues.horizontalaxis.title,
+                axis     = this.axis(),
+                position = this.position,
+                anchor   = this.anchor,
+                plotBox  = graph.plotBox(),
+                axisPerpOffset   = axis.perpOffset(),
+                axisIsHorizontal = (axis.orientation() === ns.Axis.HORIZONTAL);
 
             var getValue = function (valueOrFunction) {
                 if (typeof(valueOrFunction) === &quot;function&quot;) {
@@ -234,34 +241,34 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
                 }
             };
 
-            if (this.position() === undefined) {
-                if (this.axis().orientation() === ns.Axis.HORIZONTAL) {
-                    if (this.axis().perpOffset() &gt; graph.plotBox().height()&#x2F;2) {
-                        this.position( getValue(titleDefaults[&quot;position-horizontal-top&quot;]) );
+            if (position() === undefined) {
+                if (axisIsHorizontal) {
+                    if (axisPerpOffset &gt; plotBox.height()&#x2F;2) {
+                        position( getValue(titleDefaults[&quot;position-horizontal-top&quot;]) );
                     } else {
-                        this.position( getValue(titleDefaults[&quot;position-horizontal-bottom&quot;]) );
+                        position( getValue(titleDefaults[&quot;position-horizontal-bottom&quot;]) );
                     }
                 } else {
-                    if (this.axis().perpOffset() &gt; graph.plotBox().width()&#x2F;2) {
-                        this.position( getValue(titleDefaults[&quot;position-vertical-right&quot;]) );
+                    if (axisPerpOffset &gt; plotBox.width()&#x2F;2) {
+                        position( getValue(titleDefaults[&quot;position-vertical-right&quot;]) );
                     } else {
-                        this.position( getValue(titleDefaults[&quot;position-vertical-left&quot;]) );
+                        position( getValue(titleDefaults[&quot;position-vertical-left&quot;]) );
                     }
                 }
             }
 
-            if (this.anchor() === undefined) {
-                if (this.axis().orientation() === ns.Axis.HORIZONTAL) {
-                    if (this.axis().perpOffset() &gt; graph.plotBox().height()&#x2F;2) {
-                        this.anchor( getValue(titleDefaults[&quot;anchor-horizontal-top&quot;]) );
+            if (anchor() === undefined) {
+                if (axisIsHorizontal) {
+                    if (axisPerpOffset &gt; plotBox.height()&#x2F;2) {
+                        anchor( getValue(titleDefaults[&quot;anchor-horizontal-top&quot;]) );
                     } else {
-                        this.anchor( getValue(titleDefaults[&quot;anchor-horizontal-bottom&quot;]) );
+                        anchor( getValue(titleDefaults[&quot;anchor-horizontal-bottom&quot;]) );
                     }
                 } else {
-                    if (this.axis().perpOffset() &gt; graph.plotBox().width()&#x2F;2) {
-                        this.anchor( getValue(titleDefaults[&quot;anchor-vertical-right&quot;]) );
+                    if (axisPerpOffset &gt; plotBox.width()&#x2F;2) {
+                        anchor( getValue(titleDefaults[&quot;anchor-vertical-right&quot;]) );
                     } else {
-                        this.anchor( getValue(titleDefaults[&quot;anchor-vertical-left&quot;]) );
+                        anchor( getValue(titleDefaults[&quot;anchor-vertical-left&quot;]) );
                     }
                 }
             }
@@ -281,7 +288,7 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
          *&#x2F;
         this.respondsTo(&quot;render&quot;, function () {});
 
-        window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis.title, attributes);
+        utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis.title, attributes);
     });
 
     ns.AxisTitle = AxisTitle;

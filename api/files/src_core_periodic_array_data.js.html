@@ -160,8 +160,9 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
         this.isBuiltWith(&quot;columns&quot;, &quot;stringArray&quot;, &quot;period&quot;, function () {
             this.init();
             this.addListener(&quot;listenerAdded&quot;, function (event) {
+                var data = this.array();
                 if (event.targetType === &quot;dataReady&quot;) {
-                    event.listener(this.array()[0][0], this.array()[this.array().length-1][0]);
+                    event.listener(data[0][0], data[data.length-1][0]);
                 }
             });
         });
@@ -202,7 +203,8 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
          * @author jrfrimme
          *&#x2F;
         PeriodicArrayData.getArrayDataIterator = function (periodicArrayData, columnIds, min, max, buffer) {
-            var iter = {},
+            var DataValue = ns.DataValue,
+                iter = {},
                 arraySlice = [],
                 curr = 0,
                 i, j,
@@ -224,7 +226,7 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
             }
 
             &#x2F;&#x2F;min,max arguments should be data values
-            if (!ns.DataValue.isInstance(min) || !ns.DataValue.isInstance(max)) {
+            if (!DataValue.isInstance(min) || !DataValue.isInstance(max)) {
                 throw new Error(&quot;ArrayData: getIterator method requires the second and third argument to be number values&quot;);
             }
 
@@ -257,11 +259,11 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
 
             &#x2F;&#x2F; Let &#x60;baseMin&#x60; be &#x60;min&#x60; shifted &#x27;backward&#x27; by offsetRealValue; this is &#x60;min&#x60;
             &#x2F;&#x2F; relative to the same period cycle as baseValue:
-            var baseMin = ns.DataValue.create(min.type, min.getRealValue() - offsetRealValue);
+            var baseMin = DataValue.create(min.type, min.getRealValue() - offsetRealValue);
 
             &#x2F;&#x2F; find the index of the first row in the array whose column0 value is &gt;= baseMin;
             &#x2F;&#x2F; this is the data point we start with
-            for (currentIndex=0; currentIndex&lt;array.length; ++currentIndex) {
+            for (currentIndex = 0; currentIndex &lt; array.length; ++currentIndex) {
                 if (array[currentIndex][0].ge(baseMin)) {
                     break;
                 }
@@ -276,22 +278,22 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
 
             &#x2F;&#x2F; set the current value to be the column0 value at this first index, shifted
             &#x2F;&#x2F; &#x27;forward&#x27; by offsetRealValue
-            var currentValue = ns.DataValue.create(array[currentIndex][0].type, array[currentIndex][0].getRealValue() + offsetRealValue);
+            var currentValue = DataValue.create(array[currentIndex][0].type, array[currentIndex][0].getRealValue() + offsetRealValue);
 
             columnIndices = [];
-            for (j = 0;j &lt; columnIds.length; ++j) {
+            for (j = 0; j &lt; columnIds.length; ++j) {
                 var k = periodicArrayData.columnIdToColumnNumber(columnIds[j]);
                 columnIndices.push( k );
             }
 
             return {
-                next : function() {
+                next : function () {
                     var projection = [],
                         i, x;
                     if (currentIndex &lt; 0) {
                         return null;
                     }
-                    for (i=0; i&lt;columnIndices.length; ++i) {
+                    for (i = 0; i &lt; columnIndices.length; ++i) {
                         if (columnIndices[i] === 0) {
                             projection.push(currentValue);
                         } else {
@@ -312,7 +314,7 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
                     }
                     return projection;
                 },
-                hasNext : function() {
+                hasNext : function () {
                     return (currentIndex &gt;= 0);
                 }
             };

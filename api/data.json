@@ -478,7 +478,7 @@
             "submodule": "core",
             "namespace": "",
             "file": "src/core/axis.js",
-            "line": 14,
+            "line": 15,
             "description": "Axis is a Jermaine model that controls Multigraph axes.",
             "is_constructor": 1,
             "params": [
@@ -516,7 +516,7 @@
             "submodule": "core",
             "namespace": "",
             "file": "src/core/axis_title.js",
-            "line": 13,
+            "line": 14,
             "description": "Axis Title is a Jermaine model that supports the rendering of Axis Titles.",
             "is_constructor": 1,
             "params": [
@@ -596,7 +596,7 @@
             "submodule": "core",
             "namespace": "",
             "file": "src/core/graph_title.js",
-            "line": 13,
+            "line": 14,
             "description": "Title is a Jermiane model that controls Graph Titles.",
             "is_constructor": 1,
             "params": [
@@ -625,7 +625,7 @@
             "submodule": "core",
             "namespace": "",
             "file": "src/core/legend.js",
-            "line": 13,
+            "line": 14,
             "description": "Legend is a Jermaine model that supports the rendering of Multigraph Legends.\n\nThe methods for this object take a parameter called `graphicsContext`, which is a\ndriver-specific object that stores whatever state/configuration is needed by the\ndriver.  Each driver is responsible for creating its own graphicsContext object and\npassing it to these methods, which in turn pass that object on to the driver-specific\nmethods that they call.",
             "is_constructor": 1,
             "requires": [
@@ -852,7 +852,7 @@
     "classitems": [
         {
             "file": "src/core/array_data.js",
-            "line": 31,
+            "line": 32,
             "itemtype": "method",
             "name": "getIterator",
             "params": [
@@ -884,7 +884,7 @@
         },
         {
             "file": "src/core/array_data.js",
-            "line": 45,
+            "line": 46,
             "description": "Determines the upper and lower bounds of a column in a dataset.",
             "itemtype": "method",
             "name": "getBounds",
@@ -906,7 +906,7 @@
         },
         {
             "file": "src/core/array_data.js",
-            "line": 70,
+            "line": 72,
             "itemtype": "method",
             "name": "onReady",
             "params": [
@@ -921,7 +921,7 @@
         },
         {
             "file": "src/core/array_data.js",
-            "line": 75,
+            "line": 77,
             "itemtype": "method",
             "name": "getArrayDataIterator",
             "static": 1,
@@ -962,7 +962,7 @@
         },
         {
             "file": "src/core/array_data.js",
-            "line": 179,
+            "line": 181,
             "itemtype": "method",
             "name": "textToDataValuesArray",
             "static": 1,
@@ -993,7 +993,7 @@
         },
         {
             "file": "src/core/array_data.js",
-            "line": 216,
+            "line": 218,
             "itemtype": "method",
             "name": "textToStringArray",
             "static": 1,
@@ -1015,7 +1015,7 @@
         },
         {
             "file": "src/core/array_data.js",
-            "line": 259,
+            "line": 262,
             "description": "Parses an array of strings into an array of DataValues.",
             "itemtype": "method",
             "name": "textToStringArray",
@@ -1043,7 +1043,7 @@
         },
         {
             "file": "src/core/axis.js",
-            "line": 56,
+            "line": 57,
             "description": "Stores the \"min\" value from the mugl file as a string, if there was one.",
             "itemtype": "property",
             "name": "min",
@@ -1055,7 +1055,7 @@
         },
         {
             "file": "src/core/axis.js",
-            "line": 65,
+            "line": 66,
             "description": "The current min DataValue for the axis.",
             "itemtype": "property",
             "name": "dataMin",
@@ -1067,7 +1067,7 @@
         },
         {
             "file": "src/core/axis.js",
-            "line": 73,
+            "line": 74,
             "description": "Convenience method for checking to see if dataMin has been set or not",
             "itemtype": "method",
             "name": "hasDataMin",
@@ -1082,7 +1082,7 @@
         },
         {
             "file": "src/core/axis.js",
-            "line": 90,
+            "line": 91,
             "description": "Stores the \"max\" value from the mugl file as a string, if there was one.",
             "itemtype": "property",
             "name": "max",
@@ -1094,7 +1094,7 @@
         },
         {
             "file": "src/core/axis.js",
-            "line": 99,
+            "line": 100,
             "description": "The current max DataValue for the axis.",
             "itemtype": "property",
             "name": "dataMax",
@@ -1106,7 +1106,7 @@
         },
         {
             "file": "src/core/axis.js",
-            "line": 107,
+            "line": 108,
             "description": "Convenience method for checking to see if dataMax has been set or not.",
             "itemtype": "method",
             "name": "hasDataMax",
@@ -1121,7 +1121,7 @@
         },
         {
             "file": "src/core/axis.js",
-            "line": 198,
+            "line": 205,
             "description": "Decides which labeler to use: take the one with the largest density <= 0.8.\nUnless all have density > 0.8, in which case we take the first one.  This assumes\nthat the labelers list is ordered in increasing order of label density.\nThis function sets the `currentLabeler` and `currentLabelDensity` attributes.",
             "itemtype": "method",
             "name": "prepareRender",
@@ -1139,7 +1139,7 @@
         },
         {
             "file": "src/core/axis.js",
-            "line": 411,
+            "line": 432,
             "description": "Compute the distance from an axis to a point.  The point\n(x,y) is expressed in pixel coordinates in the same\ncoordinate system as the axis.\n\nWe use two different kinds of computations depending on\nwhether the point lies inside or outside the region bounded\nby the two lines perpendicular to the axis through its\nendpoints.  If the point lies inside this region, the\ndistance is simply the difference in the perpendicular\ncoordinate of the point and the perpendicular coordinate of\nthe axis.\n\nIf the point lies outside the region, then the distance is\nthe L2 distance between the point and the closest endpoint\nof the axis.",
             "itemtype": "method",
             "name": "distanceToPoint",
@@ -1328,7 +1328,7 @@
         },
         {
             "file": "src/core/axis_title.js",
-            "line": 22,
+            "line": 23,
             "description": "Pointer to the Title's parent Axis jermiane model.",
             "itemtype": "property",
             "name": "axis",
@@ -1340,7 +1340,7 @@
         },
         {
             "file": "src/core/axis_title.js",
-            "line": 32,
+            "line": 33,
             "description": "The value which is used as the title string.",
             "itemtype": "property",
             "name": "content",
@@ -1352,7 +1352,7 @@
         },
         {
             "file": "src/core/axis_title.js",
-            "line": 42,
+            "line": 43,
             "description": "The value which gives the location of the Title's anchor point to be attached to the\nbase point.",
             "itemtype": "property",
             "name": "anchor",
@@ -1364,7 +1364,7 @@
         },
         {
             "file": "src/core/axis_title.js",
-            "line": 53,
+            "line": 54,
             "description": "The value which gives the location of the base point relative to the Title's Axis.",
             "itemtype": "property",
             "name": "base",
@@ -1376,7 +1376,7 @@
         },
         {
             "file": "src/core/axis_title.js",
-            "line": 61,
+            "line": 62,
             "description": "A coordinate pair of pixel offsets for the base point.",
             "itemtype": "property",
             "name": "position",
@@ -1388,7 +1388,7 @@
         },
         {
             "file": "src/core/axis_title.js",
-            "line": 71,
+            "line": 72,
             "description": "The value which determines the rotation of the Title in degrees.",
             "itemtype": "property",
             "name": "angle",
@@ -1400,7 +1400,7 @@
         },
         {
             "file": "src/core/axis_title.js",
-            "line": 82,
+            "line": 83,
             "description": "Determines values for the `position` and `anchor` attributes if they were not set; determines the\ngeometry of the `content` attribute. Called by `Axis.initializeGeometry()`.",
             "itemtype": "method",
             "name": "initializeGeometry",
@@ -1424,7 +1424,7 @@
         },
         {
             "file": "src/core/axis_title.js",
-            "line": 141,
+            "line": 148,
             "description": "Renders the Axis Title. Overridden by implementations in graphics drivers.",
             "itemtype": "method",
             "name": "render",
@@ -1583,7 +1583,7 @@
         },
         {
             "file": "src/core/graph.js",
-            "line": 21,
+            "line": 22,
             "description": "Child model which controls the properties of the Graph's Window.",
             "itemtype": "property",
             "name": "window",
@@ -1595,7 +1595,7 @@
         },
         {
             "file": "src/core/graph.js",
-            "line": 31,
+            "line": 32,
             "description": "Child model which controls the properties of the Graph's Plotarea.",
             "itemtype": "property",
             "name": "plotarea",
@@ -1607,7 +1607,7 @@
         },
         {
             "file": "src/core/graph.js",
-            "line": 43,
+            "line": 44,
             "description": "Child model which controls the properties of the Graph's Legend.",
             "itemtype": "property",
             "name": "legend",
@@ -1619,7 +1619,7 @@
         },
         {
             "file": "src/core/graph.js",
-            "line": 53,
+            "line": 54,
             "description": "Child model which controls the properties of the Graph's Background.",
             "itemtype": "property",
             "name": "background",
@@ -1631,7 +1631,7 @@
         },
         {
             "file": "src/core/graph.js",
-            "line": 64,
+            "line": 65,
             "description": "Child model which controls the properties of the Graph's Title.",
             "itemtype": "property",
             "name": "title",
@@ -1643,7 +1643,7 @@
         },
         {
             "file": "src/core/graph.js",
-            "line": 74,
+            "line": 75,
             "description": "Jermaine Attr_List of the Graph's Axes.",
             "itemtype": "property",
             "name": "axes",
@@ -1655,7 +1655,7 @@
         },
         {
             "file": "src/core/graph.js",
-            "line": 84,
+            "line": 85,
             "description": "Jermiane Attr_List of the Graph's Plots.",
             "itemtype": "property",
             "name": "plots",
@@ -1667,7 +1667,7 @@
         },
         {
             "file": "src/core/graph.js",
-            "line": 94,
+            "line": 95,
             "description": "Jermiane Attr_List of the Graph's Data sets.",
             "itemtype": "property",
             "name": "data",
@@ -1679,7 +1679,7 @@
         },
         {
             "file": "src/core/graph.js",
-            "line": 105,
+            "line": 106,
             "description": "Stores the computed width and height of the Graph's windowBox.",
             "itemtype": "property",
             "name": "windowBox",
@@ -1691,7 +1691,7 @@
         },
         {
             "file": "src/core/graph.js",
-            "line": 115,
+            "line": 116,
             "description": "Stores the computed width and height of the Graph's paddingBox.",
             "itemtype": "property",
             "name": "paddingBox",
@@ -1703,7 +1703,7 @@
         },
         {
             "file": "src/core/graph.js",
-            "line": 125,
+            "line": 126,
             "description": "Stores the computed width and height of the Graph's plotBox.",
             "itemtype": "property",
             "name": "plotBox",
@@ -1715,7 +1715,7 @@
         },
         {
             "file": "src/core/graph.js",
-            "line": 136,
+            "line": 137,
             "description": "The containing Multigraph object",
             "itemtype": "property",
             "name": "multigraph",
@@ -1727,7 +1727,7 @@
         },
         {
             "file": "src/core/graph.js",
-            "line": 176,
+            "line": 177,
             "description": "Initializes the Graph's geometry. Determines the width and height of the Graph's `windowBox`,\n`paddingBox` and `plotBox`; calls its Axes' and Legend's implementations of\n`initializeGeometry`.",
             "itemtype": "method",
             "name": "initializeGeometry",
@@ -1755,7 +1755,7 @@
         },
         {
             "file": "src/core/graph.js",
-            "line": 225,
+            "line": 235,
             "description": "Convience function for registering callback functions on the Graph's `Data` models. Adds\n`dataReady` event listeners to each of the Graph's `Data` models.",
             "itemtype": "method",
             "name": "registerCommonDataCallback",
@@ -1773,7 +1773,7 @@
         },
         {
             "file": "src/core/graph.js",
-            "line": 240,
+            "line": 250,
             "itemtype": "method",
             "name": "pauseAllData",
             "author": "jrfrimme",
@@ -1783,7 +1783,7 @@
         },
         {
             "file": "src/core/graph.js",
-            "line": 254,
+            "line": 264,
             "itemtype": "method",
             "name": "resumeAllData",
             "author": "jrfrimme",
@@ -1793,7 +1793,7 @@
         },
         {
             "file": "src/core/graph.js",
-            "line": 268,
+            "line": 278,
             "itemtype": "method",
             "name": "findNearestAxis",
             "params": [
@@ -1817,7 +1817,7 @@
         },
         {
             "file": "src/core/graph_title.js",
-            "line": 24,
+            "line": 25,
             "description": "Pointer to the Title's parent Graph Jermaine model.",
             "itemtype": "property",
             "name": "graph",
@@ -1829,7 +1829,7 @@
         },
         {
             "file": "src/core/graph_title.js",
-            "line": 34,
+            "line": 35,
             "description": "The text of the title.",
             "itemtype": "property",
             "name": "text",
@@ -1841,7 +1841,7 @@
         },
         {
             "file": "src/core/graph_title.js",
-            "line": 44,
+            "line": 45,
             "description": "Determines if the Title is positioned relative to the Graphs `plot` or `padding`\nbox.",
             "itemtype": "property",
             "name": "frame",
@@ -1853,7 +1853,7 @@
         },
         {
             "file": "src/core/graph_title.js",
-            "line": 53,
+            "line": 54,
             "description": "The width of the border to be drawn around the title in pixel; use a value of `0`\nto not draw a border.",
             "itemtype": "property",
             "name": "border",
@@ -1865,7 +1865,7 @@
         },
         {
             "file": "src/core/graph_title.js",
-            "line": 62,
+            "line": 63,
             "description": "Background color for the Title's region.",
             "itemtype": "property",
             "name": "color",
@@ -1877,7 +1877,7 @@
         },
         {
             "file": "src/core/graph_title.js",
-            "line": 72,
+            "line": 73,
             "description": "Color for the Title's border.",
             "itemtype": "property",
             "name": "bordercolor",
@@ -1889,7 +1889,7 @@
         },
         {
             "file": "src/core/graph_title.js",
-            "line": 82,
+            "line": 83,
             "description": "Opacity of the Title's region.",
             "itemtype": "property",
             "name": "opacity",
@@ -1901,7 +1901,7 @@
         },
         {
             "file": "src/core/graph_title.js",
-            "line": 90,
+            "line": 91,
             "description": "The width of the padding between the Title's text and its border in pixels; use a\nvalue of `0` to not draw the padding.",
             "itemtype": "property",
             "name": "padding",
@@ -1913,7 +1913,7 @@
         },
         {
             "file": "src/core/graph_title.js",
-            "line": 99,
+            "line": 100,
             "description": "Determines whether the corners of the title appear rounded. If cornerradius is 0,\nwhich is the default, the corners are drawn square. If cornerradius > 0, then the\ncorners are rounded off using circles whose radius is cornerradius pixels.",
             "itemtype": "property",
             "name": "cornerradius",
@@ -1926,7 +1926,7 @@
         },
         {
             "file": "src/core/graph_title.js",
-            "line": 110,
+            "line": 111,
             "description": "A coordinate pair which gives the relative location of the Title's anchor point.",
             "itemtype": "property",
             "name": "anchor",
@@ -1938,7 +1938,7 @@
         },
         {
             "file": "src/core/graph_title.js",
-            "line": 120,
+            "line": 121,
             "description": "A coordinate pair which gives the location of the Title's base point, relative to\nits Graph's plot or padding box - determined by the `frame` attribute.",
             "itemtype": "property",
             "name": "base",
@@ -1950,7 +1950,7 @@
         },
         {
             "file": "src/core/graph_title.js",
-            "line": 131,
+            "line": 132,
             "description": "A coordinate pair of pixel offsets for the base point.",
             "itemtype": "property",
             "name": "position",
@@ -1962,7 +1962,7 @@
         },
         {
             "file": "src/core/graph_title.js",
-            "line": 141,
+            "line": 142,
             "description": "The font-size of the title. Currently is a constant.",
             "itemtype": "property",
             "name": "font-size",
@@ -1974,7 +1974,7 @@
         },
         {
             "file": "src/core/graph_title.js",
-            "line": 150,
+            "line": 151,
             "description": "Determines the geometry of the Title's text.",
             "itemtype": "method",
             "name": "initializeGeometry",
@@ -1993,7 +1993,7 @@
         },
         {
             "file": "src/core/graph_title.js",
-            "line": 164,
+            "line": 165,
             "description": "Renders the Graph Title. Overridden by implementations in graphics drivers.",
             "itemtype": "method",
             "name": "render",
@@ -2006,7 +2006,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 28,
+            "line": 29,
             "description": "The value which determines if the legend will be rendered; a value of `true` means the Legend will\nbe drawn while `false` means that it will not.",
             "itemtype": "property",
             "name": "visible",
@@ -2018,7 +2018,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 40,
+            "line": 41,
             "description": "The value which gives the location of the base point relative to the Legend's frame.",
             "itemtype": "property",
             "name": "base",
@@ -2030,7 +2030,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 51,
+            "line": 52,
             "description": "The value which gives the location of the Legend's anchor point to be attached to the base point.",
             "itemtype": "property",
             "name": "anchor",
@@ -2042,7 +2042,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 62,
+            "line": 63,
             "description": "A coordinate pair of pixel offsets for the base point.",
             "itemtype": "property",
             "name": "position",
@@ -2054,7 +2054,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 73,
+            "line": 74,
             "description": "The value which determines whether the legend is positioned relative to the plot area or the padding\nbox. A value of `plot` means the Legend will be drawn relative to the plot area while `padding` means\nthat it will the padding box.",
             "itemtype": "property",
             "name": "frame",
@@ -2066,7 +2066,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 86,
+            "line": 87,
             "description": "The value which determines the background color of the Legend.",
             "itemtype": "property",
             "name": "color",
@@ -2078,7 +2078,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 97,
+            "line": 98,
             "description": "The value which determines the bordercolor of the Legend.",
             "itemtype": "property",
             "name": "bordercolor",
@@ -2090,7 +2090,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 108,
+            "line": 109,
             "description": "The value which determines the opacity of the Legend; depending on where the Legend is positioned it\nmay obscure parts of the plot data.",
             "itemtype": "property",
             "name": "opacity",
@@ -2102,7 +2102,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 120,
+            "line": 121,
             "description": "The value which determines the thickness of the border drawn around the Legend; a value of `0` turns\nthe border off.",
             "itemtype": "property",
             "name": "border",
@@ -2114,7 +2114,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 130,
+            "line": 131,
             "description": "The value which determines the number of rows to be used for Plot entries in the Legend. If left\nunspecified then rows will be inserted to account for each Plot entry.",
             "itemtype": "property",
             "name": "rows",
@@ -2126,7 +2126,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 140,
+            "line": 141,
             "description": "The value which determines the number of columns to be used for Plot entries in the Legend. If rows\nis set while columns is left unspecified then columns will be inserted to account for each Plot\nentry.",
             "itemtype": "property",
             "name": "columns",
@@ -2138,7 +2138,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 151,
+            "line": 152,
             "description": "The value which determines whether the corners of the legend box are rounded when drawn. A value of\n`0` means that the corners will be drawn square while values greater than `0` mean that the corners\nare rounded off with circles whose radius in pixels is this value.",
             "itemtype": "property",
             "name": "cornerradius",
@@ -2150,7 +2150,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 162,
+            "line": 163,
             "description": "The value which determines the pixel width of the padding between the Legend border and its entries.",
             "itemtype": "property",
             "name": "padding",
@@ -2162,7 +2162,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 171,
+            "line": 172,
             "description": "A optional sub-model which determines the appearance of the Icons for the Plot entries.",
             "itemtype": "property",
             "name": "icon",
@@ -2174,7 +2174,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 186,
+            "line": 187,
             "description": "Pointers to Plot models that have entries in the Legend.",
             "itemtype": "property",
             "name": "plots",
@@ -2186,7 +2186,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 197,
+            "line": 198,
             "description": "Internal value which determines the number of pixels between an entries icon and its border.",
             "itemtype": "property",
             "name": "iconOffset",
@@ -2202,7 +2202,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 209,
+            "line": 210,
             "description": "Internal value which determines the number of pixels between an entries label and its icon.",
             "itemtype": "property",
             "name": "labelOffset",
@@ -2218,7 +2218,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 222,
+            "line": 223,
             "description": "Internal value which determines the number of pixels between the right end of an entries label and\nits border",
             "itemtype": "property",
             "name": "labelEnding",
@@ -2234,7 +2234,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 235,
+            "line": 236,
             "description": "Computed value of the width of the Legend.",
             "itemtype": "property",
             "name": "width",
@@ -2249,7 +2249,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 246,
+            "line": 247,
             "description": "Computed value of the height of the Legend.",
             "itemtype": "property",
             "name": "height",
@@ -2264,7 +2264,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 257,
+            "line": 258,
             "description": "Computed `x` value of the Legend's lower left corner relative to its frame.",
             "itemtype": "property",
             "name": "x",
@@ -2279,7 +2279,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 268,
+            "line": 269,
             "description": "Computed `y` value of the Legend's lower left corner relative to its frame.",
             "itemtype": "property",
             "name": "y",
@@ -2294,7 +2294,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 279,
+            "line": 280,
             "description": "Computed width of an individual plot entry.",
             "itemtype": "property",
             "name": "blockWidth",
@@ -2309,7 +2309,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 290,
+            "line": 291,
             "description": "Computed height of an individual plot entry.",
             "itemtype": "property",
             "name": "blockHeight",
@@ -2324,7 +2324,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 301,
+            "line": 302,
             "description": "Computed width of the longest label of all plot entries.",
             "itemtype": "property",
             "name": "maxLabelWidth",
@@ -2339,7 +2339,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 312,
+            "line": 313,
             "description": "Maximum value of the Icon's height and the computed height of the tallest label of all plot entries.",
             "itemtype": "property",
             "name": "maxLabelHeight",
@@ -2354,7 +2354,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 338,
+            "line": 339,
             "description": "Initializes the Legend's geometry. Determines values for the internal attributes `maxLabelWidth`,\n`maxLabelHeight`, `blockWidth`, `blockHeight`, `width`, `height`, `x` and `y`; these values\ndetermine the size and position of the legend and its various internal components, and need\nto be recomputed whenever the geometry of the containing graph changes;  this method is\ncalled by Graph.initializeGeometry().",
             "itemtype": "method",
             "name": "initializeGeometry",
@@ -2381,7 +2381,7 @@
         },
         {
             "file": "src/core/legend.js",
-            "line": 398,
+            "line": 403,
             "description": "Renders the legend; calls various driver-specific graphics functions to do the\nactual drawing of the various parts of the legend (background, borders, icons,\ntext).",
             "itemtype": "method",
             "name": "render",
@@ -2714,7 +2714,7 @@
         },
         {
             "file": "src/core/periodic_array_data.js",
-            "line": 47,
+            "line": 48,
             "itemtype": "method",
             "name": "getIterator",
             "params": [
@@ -2746,7 +2746,7 @@
         },
         {
             "file": "src/core/periodic_array_data.js",
-            "line": 59,
+            "line": 60,
             "itemtype": "method",
             "name": "getArrayDataIterator",
             "static": 1,
@@ -2989,7 +2989,7 @@
         },
         {
             "file": "src/core/web_service_data.js",
-            "line": 167,
+            "line": 170,
             "description": "Initiate requests needed to fetch data between coveredMin and coveredMax, if any.",
             "itemtype": "method",
             "name": "insureCoveredRange",
@@ -3276,7 +3276,7 @@
         },
         {
             "file": "src/graphics/raphael/axis_title.js",
-            "line": 27,
+            "line": 28,
             "description": "Renders the axis title using the Raphael driver.",
             "itemtype": "method",
             "name": "render",
@@ -3300,7 +3300,7 @@
         },
         {
             "file": "src/graphics/raphael/graph_title.js",
-            "line": 35,
+            "line": 36,
             "description": "Renders the title using the Raphael driver.",
             "itemtype": "method",
             "name": "render",

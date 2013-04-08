@@ -140,8 +140,9 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
      * @submodule core
      *&#x2F;
 
-    var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
-        attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.title),
+    var utilityFunctions = window.multigraph.utilityFunctions,
+        defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
+        attributes = utilityFunctions.getKeys(defaultValues.title),
         Title;
 
     &#x2F;**
@@ -306,7 +307,7 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
 
         this.isBuiltWith(&quot;text&quot;, &quot;graph&quot;);
 
-        window.multigraph.utilityFunctions.insertDefaults(this, defaultValues.title, attributes);
+        utilityFunctions.insertDefaults(this, defaultValues.title, attributes);
 
     });
 

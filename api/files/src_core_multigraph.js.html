@@ -205,7 +205,7 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
         this.respondsTo(&quot;addAjaxThrottle&quot;, function (pattern, requests, period, concurrent) {
             this.ajaxthrottles().push({
                 regex        : pattern ? new RegExp(pattern) : undefined,
-                ajaxthrottle : window.multigraph.jQuery.ajaxthrottle({
+                ajaxthrottle : $.ajaxthrottle({
                     numRequestsPerTimePeriod : parseInt(requests,10),
                     timePeriod               : parseInt(period, 10),
                     maxConcurrent            : parseInt(concurrent, 10)
@@ -215,7 +215,7 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
 
         this.respondsTo(&quot;getAjaxThrottle&quot;, function (url) {
             var throttle = undefined;
-            window.multigraph.jQuery.each(this.ajaxthrottles(), function() {
+            $.each(this.ajaxthrottles(), function() {
                 if (!this.regex || this.regex.test(url)) {
                     throttle = this.ajaxthrottle;
                     return false;
@@ -287,7 +287,7 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
          *&#x2F;
         this.respondsTo(&quot;initializeGeometry&quot;, function (width, height, graphicsContext) {
             var i;
-            for (i=0; i &lt; this.graphs().size(); ++i) {
+            for (i = 0; i &lt; this.graphs().size(); ++i) {
                 this.graphs().at(i).initializeGeometry(width, height, graphicsContext);
             }
         });
@@ -301,7 +301,7 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
          *&#x2F;
         this.respondsTo(&quot;registerCommonDataCallback&quot;, function (callback) {
             var i;
-            for (i=0; i &lt; this.graphs().size(); ++i) {
+            for (i = 0; i &lt; this.graphs().size(); ++i) {
                 this.graphs().at(i).registerCommonDataCallback(callback);
             }
         });
@@ -395,7 +395,7 @@ window.multigraph.util.namespace(&quot;window.multigraph.core&quot;, function (n
 
         &#x2F;&#x2F; if div is a string, assume it&#x27;s an id, and convert it to the div element itself
         if (typeof(div) === &quot;string&quot;) {
-            div = window.multigraph.jQuery(&quot;#&quot; + div)[0];
+            div = $(&quot;#&quot; + div)[0];
         }
 
         &#x2F;&#x2F;
