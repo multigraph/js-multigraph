@@ -120,6 +120,10 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             }
             // convert baseurl to a real base path, by eliminating any url args and
             // everything after the final '/'
+            if (!/^\//.test(baseurl)  && !/:\/\//.test(baseurl) && !/^\.\//.test(baseurl)) {
+                // first make sure that if baseurl is relative, it starts with './'
+                baseurl = './' + baseurl; 
+            }
             baseurl = baseurl.replace(/\?.*$/, ''); // remove everything after the first '?'
             baseurl = baseurl.replace(/\/[^\/]*$/, '/'); // remove everything after the last '/'
             return baseurl + url;
