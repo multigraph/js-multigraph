@@ -93,5 +93,21 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                 newlineCount = this.string().match(/\n/g);
             return (newlineCount !== null ? (newlineCount.length + 1) : 1) * metrics.width;
         });
+
+        Text.respondsTo("setTransform", function (context, anchor, base, position, angle) {
+            context.transform(1, 0, 0, -1, 0, 2 * base.y());
+            context.transform(1, 0, 0, 1, base.x(), base.y());
+            context.transform(1, 0, 0, 1, position.x(), -position.y());
+            context.rotate(-angle * Math.PI/180.0);
+            context.transform(1, 0, 0, 1, -anchor.x(), anchor.y());
+        });
+
+        Text.respondsTo("drawText", function (context, anchor, base, position, angle) {
+            context.save();
+            this.setTransform(context, anchor, base, position, angle);
+            context.fillText(this.string(), 0, 0);
+            context.restore();
+        });
     });
+
 });

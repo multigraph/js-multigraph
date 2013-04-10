@@ -71,18 +71,34 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         });
 
         Labeler.respondsTo("renderLabel", function (graphicsContext, value) {
-            var formattedString = new ns.Text(this.formatter().format(value)),
-                basePoint = computePixelBasePoint(this.axis(), value);
+            var anchor = this.anchor(),
+                angle  = this.angle(),
+                formattedString = new ns.Text(this.formatter().format(value)),
+                basePoint = computePixelBasePoint(this.axis(), value),
+                pixelAnchor,
+                transformString,
+                elem;
 
             formattedString.initializeGeometry({
                     "elem"  : graphicsContext.textElem,
                     "angle" : this.angle()
                 });
 
+            pixelAnchor = new window.multigraph.math.Point(
+                0.5 * formattedString.origWidth() * anchor.x(),
+                0.5 * formattedString.origHeight() * anchor.y()
+            );
+
+            elem = formattedString.drawText(graphicsContext.paper, pixelAnchor, basePoint, this.position(), this.angle())
+                .attr("fill", this.color().getHexString("#"));
+
             this.elems().push({
-                "elem" : drawText(formattedString, graphicsContext, basePoint, this.anchor(), this.position(), this.angle(), this.color()),
+                "elem" : elem,
                 "base" : basePoint
             });
+            graphicsContext.set.push(
+                elem
+            );
         });
 
         Labeler.respondsTo("redraw", function (graph, paper, values) {
@@ -152,7 +168,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
                         x : function () { return ax; },
                         y : function () { return ay; }
                     },
-                    transformString = computeTransformString(basePoint, pixelAnchor, this.position(), this.angle());
+                    transformString = formattedString.computeTransform(pixelAnchor, basePoint, this.position(), this.angle());
 
                 elem.transform(graph.transformString() + transformString);
 

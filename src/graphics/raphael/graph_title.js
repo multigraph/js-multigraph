@@ -16,19 +16,22 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         Title.hasA("previousBase");
 
         var computeTitlePixelBase = function (title) {
-            var graph = title.graph(),
-                base  = title.base(),
-                Point = window.multigraph.math.Point;
+            var graph          = title.graph(),
+                base           = title.base(),
+                paddingBox     = graph.paddingBox(),
+                plotBox        = graph.plotBox(),
+                plotareaMargin = graph.plotarea().margin(),
+                Point          = window.multigraph.math.Point;
 
             if (title.frame() === "padding") {
                 return new Point(
-                    (base.x() + 1) * (graph.paddingBox().width() / 2) -  graph.plotarea().margin().left(),
-                    (base.y() + 1) * (graph.paddingBox().height() / 2) - graph.plotarea().margin().bottom()
+                    (base.x() + 1) * (paddingBox.width() / 2) -  plotareaMargin.left(),
+                    (base.y() + 1) * (paddingBox.height() / 2) - plotareaMargin.bottom()
                 );
             } else {
                 return new Point(
-                    (base.x() + 1) * (graph.plotBox().width() / 2),
-                    (base.y() + 1) * (graph.plotBox().height() / 2)
+                    (base.x() + 1) * (plotBox.width() / 2),
+                    (base.y() + 1) * (plotBox.height() / 2)
                 );
             }
         };
@@ -44,19 +47,24 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
          * @author jrfrimme
          */
         Title.respondsTo("render", function (paper, set) {
-            var anchor  = this.anchor(),
-                border  = this.border(),
-                padding = this.padding(),
-                text    = this.text(),
+            var Point = window.multigraph.math.Point,
+                storedAnchor = this.anchor(),
+                border       = this.border(),
+                position     = this.position(),
+                padding      = this.padding(),
+                text         = this.text(),
                 w = text.origWidth(),
                 h = text.origHeight(),
-                ax = (0.5 * w + padding + border) * (anchor.x() + 1),
-                ay = (0.5 * h + padding + border) * (anchor.y() + 1),
                 base = computeTitlePixelBase(this),
-                transformString = "t" + base.x() + "," + base.y() +
-                    "s1,-1" +
-                    "t" + this.position().x() + "," + (-this.position().y()) +
-                    "t" + (-ax) + "," + ay;
+                transformString,
+                pixelAnchor;
+
+            pixelAnchor = new Point(
+                (0.5 * w + padding + border) * (storedAnchor.x() + 1),
+                (0.5 * h + padding + border) * (storedAnchor.y() + 1)
+            );
+
+            transformString = text.computeTransform(pixelAnchor, base, position, 0);
 
             this.previousBase(base);
 
@@ -83,9 +91,12 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             set.push(backgroundElem);
 
             // text
-            var textElem = paper.text(border + padding + w/2, border + padding + h/2, text.string())
-                .transform(transformString)
-                .attr({"font-size" : this.fontSize()});
+            var textPosition = new Point(
+                position.x() + border + padding + w/2,
+                position.y() + border + padding + h/2
+            ),
+                textElem = text.drawText(paper, pixelAnchor, base, textPosition, 0)
+                    .attr({"font-size" : this.fontSize()});
 
             this.textElem(textElem);
             set.push(textElem);

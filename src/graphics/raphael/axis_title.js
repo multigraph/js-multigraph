@@ -14,14 +14,15 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         AxisTitle.hasAn("elem");
 
         var computePixelBasePoint = function (labeler) {
-            var axis = labeler.axis(),
-                axisBase = (labeler.base() + 1) * (axis.pixelLength() / 2) + axis.minoffset() + axis.parallelOffset(),
-                Point = window.multigraph.math.Point;
+            var axis       = labeler.axis(),
+                axisBase   = (labeler.base() + 1) * (axis.pixelLength() / 2) + axis.minoffset() + axis.parallelOffset(),
+                perpOffset = axis.perpOffset(),
+                Point      = window.multigraph.math.Point;
 
             if (axis.orientation() === ns.Axis.HORIZONTAL) {
-                return new Point(axisBase, axis.perpOffset());
+                return new Point(axisBase, perpOffset);
             } else {
-                return new Point(axis.perpOffset(), axisBase);
+                return new Point(perpOffset, axisBase);
             }
         };
 
@@ -36,22 +37,21 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
          * @author jrfrimme
          */
         AxisTitle.respondsTo("render", function (paper, set) {
-            var content = this.content(),
-                h = content.origHeight(),
-                w = content.origWidth(),
-                ax = 0.5 * w * this.anchor().x(),
-                ay = 0.5 * h * this.anchor().y(),
-                base = computePixelBasePoint(this),
-                transformString = "t" + base.x() + "," + base.y() +
-                    "s1,-1" +
-                    "t" + this.position().x() + "," + (-this.position().y()) +
-                    "r" + (-this.angle()) +
-                    "t" + (-ax) + "," + ay;
+            var title        = this.content(),
+                storedAnchor = this.anchor(),
+                base         = computePixelBasePoint(this),
+                pixelAnchor,
+                elem;
+
+            pixelAnchor  = new window.multigraph.math.Point(
+                0.5 * title.origWidth()  * storedAnchor.x(),
+                0.5 * title.origHeight() * storedAnchor.y()
+            );
 
             this.previousBase(base);
 
-            var elem = paper.text(0, 0, content.string())
-                .transform(transformString);
+            elem = title.drawText(paper, pixelAnchor, base, this.position(), this.angle());
+
             this.elem(elem);
             set.push(elem);
         });

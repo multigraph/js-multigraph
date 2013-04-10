@@ -111,5 +111,20 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
             elem.attr("text", this.string());
             return elem.getBBox().height;
         });
+
+        Text.respondsTo("computeTransform", function (anchor, base, position, angle) {
+            return "t" + base.x() + "," + base.y() +
+                "s1,-1" +
+                "t" + position.x() + "," + (-position.y()) +
+                "r" + (-angle) +
+                "t" + (-anchor.x()) + "," + anchor.y();
+        });
+
+        Text.respondsTo("drawText", function (paper, anchor, base, position, angle) {
+            return paper.text(0, 0, this.string())
+                .transform(this.computeTransform(anchor, base, position, angle));
+        });
+
     });
+
 });

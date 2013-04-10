@@ -18,43 +18,44 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
          * @author jrfrimme
          */
         ns.Title.respondsTo("render", function (context) {
-            var Point = window.multigraph.math.Point,
-                graph     = this.graph(),
-                border    = this.border(),
-                padding   = this.padding(),
-                pointBase = this.base(),
-                text      = this.text(),
+            var Point           = window.multigraph.math.Point,
+                graph           = this.graph(),
+                border          = this.border(),
+                padding         = this.padding(),
+                storedAnchor    = this.anchor(),
+                storedBase      = this.base(),
+                position        = this.position(),
+                title           = this.text(),
                 backgroundColor = this.color().toRGBA(this.opacity()),
-                h = text.origHeight(),
-                w = text.origWidth(),
-                ax = (0.5 * w + padding + border) * (this.anchor().x() + 1),
-                ay = (0.5 * h + padding + border) * (this.anchor().y() + 1),
-            
-                base;
+                paddingBox      = graph.paddingBox(),
+                plotBox         = graph.plotBox(),
+                plotareaMargin  = graph.plotarea().margin(),
+                h = title.origHeight(),
+                w = title.origWidth(),
+                pixelAnchor = new Point(
+                    (0.5 * w + padding + border) * (storedAnchor.x() + 1),
+                    (0.5 * h + padding + border) * (storedAnchor.y() + 1)
+                ),
+                pixelBase;
 
             if (this.frame() === "padding") {
-                base = new Point(
-                    (pointBase.x() + 1) * (graph.paddingBox().width() / 2) - graph.plotarea().margin().left(),
-                    (pointBase.y() + 1) * (graph.paddingBox().height() / 2) - graph.plotarea().margin().bottom()
+                pixelBase = new Point(
+                    (storedBase.x() + 1) * (paddingBox.width() / 2)  - plotareaMargin.left(),
+                    (storedBase.y() + 1) * (paddingBox.height() / 2) - plotareaMargin.bottom()
                 );
             } else {
-                base = new Point(
-                    (pointBase.x() + 1) * (graph.plotBox().width() / 2),
-                    (pointBase.y() + 1) * (graph.plotBox().height() / 2)
+                pixelBase = new Point(
+                    (storedBase.x() + 1) * (plotBox.width() / 2),
+                    (storedBase.y() + 1) * (plotBox.height() / 2)
                 );
             }
 
             context.save();
-            context.fillStyle = "rgba(0, 0, 0, 1)";
-            context.transform(1, 0, 0, -1, 0, 2 * base.y());
-            context.transform(1, 0, 0, 1, base.x(), base.y());
-            context.transform(1, 0, 0, 1, this.position().x(), -this.position().y());
-            context.transform(1, 0, 0, 1, -ax, ay);
+            title.setTransform(context, pixelAnchor, pixelBase, position, 0);
+            context.transform(1, 0, 0, -1, 0, 0);
 
             // border
             if (border > 0) {
-                context.save();
-                context.transform(1, 0, 0, -1, 0, 0);
                 context.strokeStyle = this.bordercolor().toRGBA();
                 context.lineWidth = border;
                 context.strokeRect(
@@ -63,13 +64,9 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                     w + (2 * padding) + border,
                     h + (2 * padding) + border
                 );
-                context.restore();
             }
 
             // background
-            context.save();
-            context.transform(1, 0, 0, -1, 0, 0);
-            context.strokeStyle = backgroundColor;
             context.fillStyle = backgroundColor;
             context.fillRect(
                 border,
@@ -80,8 +77,14 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             context.restore();
 
             // text
+            context.save();
+            var textPosition = new Point(
+                position.x() + border + padding,
+                position.y() + border + padding
+            );
             context.font = this.fontSize() + " sans-serif";
-            context.fillText(text.string(), border + padding, -(border + padding));
+            context.fillStyle = "rgba(0, 0, 0, 1)";
+            title.drawText(context, pixelAnchor, pixelBase, textPosition, 0);
             context.restore();
         });
 
