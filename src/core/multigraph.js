@@ -268,6 +268,17 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             div = $("#" + div)[0];
         }
 
+        // Force the div to have the specific width or height given in the options, if any.
+        // I'm adding this code to resolve a problem with the div size sometimes not being
+        // available when src/graphics/canvas/multigraph.js:createCanvasGraphFromString()
+        // is used; see the notes in that file.
+        if (options.width !== undefined && options.width > 0) {
+            $(div).width(options.width);
+        }
+        if (options.height !== undefined && options.height > 0) {
+            $(div).height(options.height);
+        }
+
         //
         // NOTE: each of the Multigraph.create{DRIVER}Graph functions below takes an
         // "options" object argument just like Multigraph.createGraph does.  In general this

@@ -95,7 +95,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
     window.multigraph.core.Multigraph.createCanvasGraph = function (options) {
         var muglPromise,
             deferred;
-        
+
         try {
             applyMixins(options);
             muglPromise = $.ajax({
@@ -110,6 +110,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 
         muglPromise.done(function (data) {
             try {
+                // TODO: div size IS available here; see below.  What's going on???!!!
                 var multigraph = generateInitialGraph(data, options);
                 deferred.resolve(multigraph);
             } catch (e) {
@@ -126,6 +127,13 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         try {
             applyMixins(options);
             deferred = $.Deferred();
+            // TODO: figure this out!  div size is not available here?  Apparently, at this point in
+            // code execution, the browser hasn't laid things out enough for the div to have been
+            // assigned a size, at least sometimes???  But it IS available at the corresponding place in
+            // createCanvasGraph above?  This is worked around by the code in
+            // src/core/multigraph.js:createGraph() that forces the div to have the size specified in
+            // the options --- so we can work around the problem by passing an explicit size in the
+            // options.  But we need to really figure out what's going on and resolve it.
             var multigraph = generateInitialGraph(options.muglString, options);
             deferred.resolve(multigraph);
         } catch (e) {
