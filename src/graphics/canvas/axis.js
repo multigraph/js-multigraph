@@ -43,19 +43,24 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             //      below are relative to the coordinate system of that box.
 
             //
-            // Render the axis line itself
-            //
-            context.beginPath();
-            if (axisIsHorizontal) {
-                context.moveTo(parallelOffset, perpOffset);
-                context.lineTo(parallelOffset + pixelLength, perpOffset);
-            } else {
-                context.moveTo(perpOffset, parallelOffset);
-                context.lineTo(perpOffset, parallelOffset + pixelLength);
-            }
+            // Render the axis line itself, unless its linewidth() property is 0.
+            // TODO: modify this so that it correctly draws a line with the given
+            // linewidth().  At the moment, it only makes a distinction between
+            // lines of width 0, which aren't drawn at all, and lines with width > 0,
+            // which are drawn with width 1.
+            if (this.linewidth() > 0) {
+                context.beginPath();
+                if (axisIsHorizontal) {
+                    context.moveTo(parallelOffset, perpOffset);
+                    context.lineTo(parallelOffset + pixelLength, perpOffset);
+                } else {
+                    context.moveTo(perpOffset, parallelOffset);
+                    context.lineTo(perpOffset, parallelOffset + pixelLength);
+                }
 
-            context.strokeStyle = this.color().getHexString("#");
-            context.stroke();
+                context.strokeStyle = this.color().getHexString("#");
+                context.stroke();
+            }
 
             //
             // Render the tick marks and labels
