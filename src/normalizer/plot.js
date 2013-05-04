@@ -118,11 +118,13 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
                 //                        if it does - Repeat step 3
             }
 
+            if (this.datatips()) {
+                this.datatips().normalize(this);
+            }
         };
 
         ns.DataPlot.respondsTo("normalize", normalizePlot);
         ns.ConstantPlot.respondsTo("normalize", normalizePlot);
-
     });
 
 });
