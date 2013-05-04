@@ -10,7 +10,13 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 text,
                 parseTitleAttribute = function (value, attribute, preprocessor) {
                     if (ns.utilityFunctions.parseAttribute(value, attribute, preprocessor)) {
-                        nonEmptyTitle = true;
+                        // No.  Don't count the title as nonEmpty just because of attributes.
+                        // If a <title> tag has only attributes, and no content, this
+                        // function should return `undefined` so that the normalizer won't
+                        // come along later and populate the title content with the axis id.
+                        // Empty <title> content means don't draw a title at all, in which
+                        // case it's OK to just forget about any attributes that were set.
+                        //nonEmptyTitle = true;
                     }
                 };
 
