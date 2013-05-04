@@ -10,15 +10,11 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasMany("variables").eachOfWhich.validateWith(function (variable) {
             return variable instanceof ns.DatatipsVariable;
         });
-        this.hasA("format").which.validatesWith(function (format) {
-            return typeof(format) === "string";
-        });
+        this.hasA("formatString").which.isA("string");
         this.hasA("bgcolor").which.validatesWith(function (bgcolor) {
             return bgcolor instanceof window.multigraph.math.RGBColor;
         });
-        this.hasA("bgalpha").which.validatesWith(function (bgalpha) {
-            return typeof(bgalpha) === "string";
-        });
+        this.hasA("bgalpha").which.isA("number");
         this.hasA("border").which.isA("integer");
         this.hasA("bordercolor").which.validatesWith(function (bordercolor) {
             return bordercolor instanceof window.multigraph.math.RGBColor;
@@ -29,5 +25,4 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     });
 
     ns.Datatips = Datatips;
-
 });

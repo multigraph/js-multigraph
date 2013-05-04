@@ -20,12 +20,12 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     });
                 }
                 
-                parseAttribute(xml.attr("format"),      datatips.format,      parseString);
-                parseAttribute(xml.attr("bgcolor"),     datatips.bgcolor,     parseRGBColor);
-                parseAttribute(xml.attr("bgalpha"),     datatips.bgalpha,     parseString);
-                parseAttribute(xml.attr("border"),      datatips.border,      parseInteger);
-                parseAttribute(xml.attr("bordercolor"), datatips.bordercolor, parseRGBColor);
-                parseAttribute(xml.attr("pad"),         datatips.pad,         parseInteger);
+                parseAttribute(xml.attr("format"),      datatips.formatString, parseString);
+                parseAttribute(xml.attr("bgcolor"),     datatips.bgcolor,      parseRGBColor);
+                parseAttribute(xml.attr("bgalpha"),     datatips.bgalpha,      parseFloat);
+                parseAttribute(xml.attr("border"),      datatips.border,       parseInteger);
+                parseAttribute(xml.attr("bordercolor"), datatips.bordercolor,  parseRGBColor);
+                parseAttribute(xml.attr("pad"),         datatips.pad,          parseInteger);
             }
             return datatips;
         };

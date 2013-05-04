@@ -8,7 +8,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 utilityFunctions = ns.utilityFunctions;
 
             if (xml) {
-                utilityFunctions.parseAttribute(xml.attr("format"), variable.format, utilityFunctions.parseString);
+                utilityFunctions.parseAttribute(xml.attr("format"), variable.formatString, utilityFunctions.parseString);
             }
             return variable;
         };
