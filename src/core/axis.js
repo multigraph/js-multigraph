@@ -131,6 +131,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasA("tickcolor").which.validatesWith(function (color) {
             return color === null || color instanceof window.multigraph.math.RGBColor;
         });
+        this.hasA("tickwidth").which.isA("integer");
         this.hasA("tickmin").which.isA("integer");
         this.hasA("tickmax").which.isA("integer");
         this.hasA("highlightstyle").which.validatesWith(function (highlightstyle) {

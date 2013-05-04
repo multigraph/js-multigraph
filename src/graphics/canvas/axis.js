@@ -67,7 +67,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             //
             if (this.hasDataMin() && this.hasDataMax()) { // but skip if we don't yet have data values
                 if (currentLabeler) {
-                    var tickmin   = this.tickmin(),
+                    var tickwidth = this.tickwidth(),
+                        tickmin   = this.tickmin(),
                         tickmax   = this.tickmax(),
                         tickcolor = this.tickcolor();
                     context.beginPath();
@@ -76,18 +77,20 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                     while (currentLabeler.hasNext()) {
                         var v = currentLabeler.next(),
                             a = this.dataValueToAxisValue(v);
-                        if (tickcolor !== undefined && tickcolor !== null) {
-                            context.strokeStyle = tickcolor.getHexString('#');
-                        }
-                        if (axisIsHorizontal) {
-                            context.moveTo(a, perpOffset+tickmax);
-                            context.lineTo(a, perpOffset+tickmin);
-                        } else {
-                            context.moveTo(perpOffset+tickmin, a);
-                            context.lineTo(perpOffset+tickmax, a);
-                        }
-                        if (tickcolor !== undefined && tickcolor !== null) {
-                            context.restore();
+                        if (tickwidth > 0) {
+                            if (tickcolor !== undefined && tickcolor !== null) {
+                                context.strokeStyle = tickcolor.getHexString('#');
+                            }
+                            if (axisIsHorizontal) {
+                                context.moveTo(a, perpOffset+tickmax);
+                                context.lineTo(a, perpOffset+tickmin);
+                            } else {
+                                context.moveTo(perpOffset+tickmin, a);
+                                context.lineTo(perpOffset+tickmax, a);
+                            }
+                            if (tickcolor !== undefined && tickcolor !== null) {
+                                context.restore();
+                            }
                         }
                         currentLabeler.renderLabel(context, v);
                     }

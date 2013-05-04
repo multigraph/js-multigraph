@@ -138,6 +138,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 parseAttribute(xml.attr("maxoffset"),      axis.maxoffset,      parseFloat);
                 parseAttribute(xml.attr("color"),          axis.color,          parseRGBColor);
                 parseAttribute(xml.attr("tickcolor"),      axis.tickcolor,      parseRGBColor);
+                parseAttribute(xml.attr("tickwidth"),      axis.tickwidth,      parseInteger);
                 parseAttribute(xml.attr("tickmin"),        axis.tickmin,        parseInteger);
                 parseAttribute(xml.attr("tickmax"),        axis.tickmax,        parseInteger);
                 parseAttribute(xml.attr("highlightstyle"), axis.highlightstyle, parseString);
