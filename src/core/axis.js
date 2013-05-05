@@ -21,6 +21,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * @param {AxisOrientation} Orientation
      */
     Axis = new window.jermaine.Model("Axis", function () {
+
+        this.isA(ns.EventEmitter);
+
         this.hasA("title").which.validatesWith(function (title) {
             return title instanceof ns.AxisTitle;
         });
@@ -330,6 +333,10 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             if (dispatch === undefined) {
                 dispatch = true;
             }
+
+            this.emit({'type' : 'dataRangeSet',
+                       'min'  : dataValueMin,
+                       'max'  : dataValueMax});
 /*
             if (dispatch) {
                 //dispatchEvent(new AxisEvent(AxisEvent.CHANGE,min,max));  
