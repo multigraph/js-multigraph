@@ -30,7 +30,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 return anchor instanceof window.multigraph.math.Point;
             });
             this.hasA("spacing").which.validatesWith(ns.DataMeasure.isInstance);
-            this.hasA("densityfactor").which.isA("number");
+            this.hasA("densityfactor").which.isA("number").and.which.defaultsTo(1.0);
 
             this.hasA("color").which.validatesWith(function (color) {
                 return color instanceof window.multigraph.math.RGBColor;
@@ -156,7 +156,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                         this.measureStringHeight(graphicsContext, representativeValueString)
                 );
                 // return the ratio -- the fraction of the spacing taken up by the formatted string
-                return pixelFormattedValue / pixelSpacing;
+                return pixelFormattedValue / ( pixelSpacing * this.densityfactor() );
             });
 
 
