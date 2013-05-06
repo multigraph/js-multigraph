@@ -4107,6 +4107,9 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
      * @param {AxisOrientation} Orientation
      */
     Axis = new window.jermaine.Model("Axis", function () {
+
+        this.isA(ns.EventEmitter);
+
         this.hasA("title").which.validatesWith(function (title) {
             return title instanceof ns.AxisTitle;
         });
@@ -4217,6 +4220,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasA("tickcolor").which.validatesWith(function (color) {
             return color === null || color instanceof window.multigraph.math.RGBColor;
         });
+        this.hasA("tickwidth").which.isA("integer");
         this.hasA("tickmin").which.isA("integer");
         this.hasA("tickmax").which.isA("integer");
         this.hasA("highlightstyle").which.validatesWith(function (highlightstyle) {
@@ -4415,6 +4419,10 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             if (dispatch === undefined) {
                 dispatch = true;
             }
+
+            this.emit({'type' : 'dataRangeSet',
+                       'min'  : dataValueMin,
+                       'max'  : dataValueMax});
 /*
             if (dispatch) {
                 //dispatchEvent(new AxisEvent(AxisEvent.CHANGE,min,max));  
@@ -6389,7 +6397,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 return anchor instanceof window.multigraph.math.Point;
             });
             this.hasA("spacing").which.validatesWith(ns.DataMeasure.isInstance);
-            this.hasA("densityfactor").which.isA("number");
+            this.hasA("densityfactor").which.isA("number").and.which.defaultsTo(1.0);
 
             this.hasA("color").which.validatesWith(function (color) {
                 return color instanceof window.multigraph.math.RGBColor;
@@ -6515,7 +6523,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                         this.measureStringHeight(graphicsContext, representativeValueString)
                 );
                 // return the ratio -- the fraction of the spacing taken up by the formatted string
-                return pixelFormattedValue / pixelSpacing;
+                return pixelFormattedValue / ( pixelSpacing * this.densityfactor() );
             });
 
 
@@ -7410,6 +7418,17 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         // if div is a string, assume it's an id, and convert it to the div element itself
         if (typeof(div) === "string") {
             div = $("#" + div)[0];
+        }
+
+        // Force the div to have the specific width or height given in the options, if any.
+        // I'm adding this code to resolve a problem with the div size sometimes not being
+        // available when src/graphics/canvas/multigraph.js:createCanvasGraphFromString()
+        // is used; see the notes in that file.
+        if (options.width !== undefined && options.width > 0) {
+            $(div).width(options.width);
+        }
+        if (options.height !== undefined && options.height > 0) {
+            $(div).height(options.height);
         }
 
         //
@@ -9705,6 +9724,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 parseAttribute(xml.attr("maxoffset"),      axis.maxoffset,      parseFloat);
                 parseAttribute(xml.attr("color"),          axis.color,          parseRGBColor);
                 parseAttribute(xml.attr("tickcolor"),      axis.tickcolor,      parseRGBColor);
+                parseAttribute(xml.attr("tickwidth"),      axis.tickwidth,      parseInteger);
                 parseAttribute(xml.attr("tickmin"),        axis.tickmin,        parseInteger);
                 parseAttribute(xml.attr("tickmax"),        axis.tickmax,        parseInteger);
                 parseAttribute(xml.attr("highlightstyle"), axis.highlightstyle, parseString);
@@ -9759,7 +9779,13 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 text,
                 parseTitleAttribute = function (value, attribute, preprocessor) {
                     if (ns.utilityFunctions.parseAttribute(value, attribute, preprocessor)) {
-                        nonEmptyTitle = true;
+                        // No.  Don't count the title as nonEmpty just because of attributes.
+                        // If a <title> tag has only attributes, and no content, this
+                        // function should return `undefined` so that the normalizer won't
+                        // come along later and populate the title content with the axis id.
+                        // Empty <title> content means don't draw a title at all, in which
+                        // case it's OK to just forget about any attributes that were set.
+                        //nonEmptyTitle = true;
                     }
                 };
 
@@ -10431,9 +10457,14 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
 window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
     "use strict";
 
-    ns.stringToJQueryXMLObj = function (string) {
-        var $ = window.multigraph.jQuery,
-            xml = $.parseXML(string);
+    // This function really does more than just convert a string to a jquery xml obj; it also works
+    // if the argument (thingy) is already a jquery xml obj, or a raw dom xml obj.
+    ns.stringToJQueryXMLObj = function (thingy) {
+        var $ = window.multigraph.jQuery;
+        if (typeof(thingy) !== "string") {
+            return $(thingy);
+        }
+        var xml = $.parseXML(thingy);
         return $($(xml).children()[0]);
     };
 
@@ -20465,26 +20496,32 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             //      below are relative to the coordinate system of that box.
 
             //
-            // Render the axis line itself
-            //
-            context.beginPath();
-            if (axisIsHorizontal) {
-                context.moveTo(parallelOffset, perpOffset);
-                context.lineTo(parallelOffset + pixelLength, perpOffset);
-            } else {
-                context.moveTo(perpOffset, parallelOffset);
-                context.lineTo(perpOffset, parallelOffset + pixelLength);
-            }
+            // Render the axis line itself, unless its linewidth() property is 0.
+            // TODO: modify this so that it correctly draws a line with the given
+            // linewidth().  At the moment, it only makes a distinction between
+            // lines of width 0, which aren't drawn at all, and lines with width > 0,
+            // which are drawn with width 1.
+            if (this.linewidth() > 0) {
+                context.beginPath();
+                if (axisIsHorizontal) {
+                    context.moveTo(parallelOffset, perpOffset);
+                    context.lineTo(parallelOffset + pixelLength, perpOffset);
+                } else {
+                    context.moveTo(perpOffset, parallelOffset);
+                    context.lineTo(perpOffset, parallelOffset + pixelLength);
+                }
 
-            context.strokeStyle = this.color().getHexString("#");
-            context.stroke();
+                context.strokeStyle = this.color().getHexString("#");
+                context.stroke();
+            }
 
             //
             // Render the tick marks and labels
             //
             if (this.hasDataMin() && this.hasDataMax()) { // but skip if we don't yet have data values
                 if (currentLabeler) {
-                    var tickmin   = this.tickmin(),
+                    var tickwidth = this.tickwidth(),
+                        tickmin   = this.tickmin(),
                         tickmax   = this.tickmax(),
                         tickcolor = this.tickcolor();
                     context.beginPath();
@@ -20493,18 +20530,20 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
                     while (currentLabeler.hasNext()) {
                         var v = currentLabeler.next(),
                             a = this.dataValueToAxisValue(v);
-                        if (tickcolor !== undefined && tickcolor !== null) {
-                            context.strokeStyle = tickcolor.getHexString('#');
-                        }
-                        if (axisIsHorizontal) {
-                            context.moveTo(a, perpOffset+tickmax);
-                            context.lineTo(a, perpOffset+tickmin);
-                        } else {
-                            context.moveTo(perpOffset+tickmin, a);
-                            context.lineTo(perpOffset+tickmax, a);
-                        }
-                        if (tickcolor !== undefined && tickcolor !== null) {
-                            context.restore();
+                        if (tickwidth > 0) {
+                            if (tickcolor !== undefined && tickcolor !== null) {
+                                context.strokeStyle = tickcolor.getHexString('#');
+                            }
+                            if (axisIsHorizontal) {
+                                context.moveTo(a, perpOffset+tickmax);
+                                context.lineTo(a, perpOffset+tickmin);
+                            } else {
+                                context.moveTo(perpOffset+tickmin, a);
+                                context.lineTo(perpOffset+tickmax, a);
+                            }
+                            if (tickcolor !== undefined && tickcolor !== null) {
+                                context.restore();
+                            }
                         }
                         currentLabeler.renderLabel(context, v);
                     }
@@ -20981,7 +21020,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
     };
 
     var generateInitialGraph = function (mugl, options) {
-        var multigraph = window.multigraph.core.Multigraph.parseXML( window.multigraph.parser.jquery.stringToJQueryXMLObj(mugl), options.mugl, options.messageHandler );
+        var xmlObj = window.multigraph.parser.jquery.stringToJQueryXMLObj(mugl);
+        var multigraph = window.multigraph.core.Multigraph.parseXML( xmlObj, options.mugl, options.messageHandler );
         multigraph.normalize();
         multigraph.div(options.div);
         $(options.div).css("cursor" , "pointer");
@@ -20996,7 +21036,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
     window.multigraph.core.Multigraph.createCanvasGraph = function (options) {
         var muglPromise,
             deferred;
-        
+
         try {
             applyMixins(options);
             muglPromise = $.ajax({
@@ -21011,6 +21051,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 
         muglPromise.done(function (data) {
             try {
+                // TODO: div size IS available here; see below.  What's going on???!!!
                 var multigraph = generateInitialGraph(data, options);
                 deferred.resolve(multigraph);
             } catch (e) {
@@ -21027,6 +21068,13 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         try {
             applyMixins(options);
             deferred = $.Deferred();
+            // TODO: figure this out!  div size is not available here?  Apparently, at this point in
+            // code execution, the browser hasn't laid things out enough for the div to have been
+            // assigned a size, at least sometimes???  But it IS available at the corresponding place in
+            // createCanvasGraph above?  This is worked around by the code in
+            // src/core/multigraph.js:createGraph() that forces the div to have the size specified in
+            // the options --- so we can work around the problem by passing an explicit size in the
+            // options.  But we need to really figure out what's going on and resolve it.
             var multigraph = generateInitialGraph(options.muglString, options);
             deferred.resolve(multigraph);
         } catch (e) {
