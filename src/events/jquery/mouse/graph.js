@@ -32,6 +32,53 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
             }
         });
 
+
+        Graph.respondsTo("handleDatatips", function (loc, $target, width, height) {
+            var $ = window.multigraph.jQuery,
+                plots = this.plots(), plot,
+                i,
+                datatipIndex;
+
+/*
+            if (datatipsElems.length > 0) {
+                for (i = 0; i < datatipsElems.length; i++) {
+                    datatipsElems[i].remove();
+                }
+                datatipsElems = [];
+            }
+*/
+            var datatipsData;
+
+            var temp = $("<span></span>")
+                .css({
+                    "display"          : "hidden",
+//                    "display"          : "inline-block",
+                    "padding-left"     : "2px",
+                    "padding-right"    : "2px",
+                })
+                .appendTo($target);
+
+            // find first available bit of data
+            for (i = 0; i < plots.size(); i++) {
+                datatipsData = plots.at(i).getDatatipsData(loc, width, height, this, temp);
+                if (datatipsData !== undefined) {
+                    datatipIndex = i;
+                    break;
+                }
+            }
+
+            temp.remove();
+
+            // don't do anything if there is no data
+            if (datatipsData === undefined) {
+                return;
+            }
+
+            var arrowLength = 10;
+            var datatip = plots().at(datatipIndex).createDatatip(datatipsData, arrowLength);
+
+            datatip.appendTo($target);
+        });
     });
 
 });

@@ -16,6 +16,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasA("renderer").which.validatesWith(function (renderer) {
             return renderer instanceof ns.Renderer;
         });
+
     });
 
     ns.Plot = Plot;
