@@ -35,13 +35,13 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
 
         Graph.hasA("existingDatatips").which.defaultsTo(function () { return []; });
         Graph.respondsTo("handleDatatips", function (loc, width, height, $target, div) {
-            var $ = window.multigraph.jQuery,
-                plots = this.plots(), plot,
-                i,
+            var $                = window.multigraph.jQuery,
+                plots            = this.plots(),
+                existingDatatips = this.existingDatatips(),
+                plot,
+                datatipsData,
                 datatipIndex,
-                that = this;
-
-            var datatipsData;
+                i;
 
             var temp = $("<span></span>")
                 .css({
@@ -69,12 +69,12 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
             }
 
             // flag all datatips for removal
-            for (i = 0; i < this.existingDatatips().length; i++) {
-                this.existingDatatips()[i].flag = true;
+            for (i = 0; i < existingDatatips.length; i++) {
+                existingDatatips[i].flag = true;
             }
 
             // remove flags from datatips that don't need to be redrawn
-            checkDatatipExistence(datatipsData, this.existingDatatips());
+            checkDatatipExistence(datatipsData, existingDatatips);
 
             this.removeFlaggedDatatips();
 
@@ -83,9 +83,9 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
                 return;
             }
 
-            this.removeDatatips();
             var arrowLength = 10;
             var datatip = plots.at(datatipIndex).createDatatip(datatipsData, arrowLength);
+
             datatip.appendTo(div);
 
             datatip.mousedown(function (event) {
@@ -93,7 +93,7 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
             });
 
             datatipsData.elem = datatip;
-            this.existingDatatips().push(datatipsData);
+            existingDatatips.push(datatipsData);
         });
 
         var checkDatatipExistence = function (datatipData, existingData) {
