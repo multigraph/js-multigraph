@@ -45,7 +45,7 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
                 } else { // datatips handling
                     var i;
                     for (i = 0; i < graphs.size(); i++) {
-                        graphs.at(i).handleDatatips(eventLoc, $target, multigraph.width(), multigraph.height());
+                        graphs.at(i).handleDatatips(eventLoc, multigraph.width(), multigraph.height(), $target, multigraph.div());
                     }
                 }
                 mouseLast = eventLoc;

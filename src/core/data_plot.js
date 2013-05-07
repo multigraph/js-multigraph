@@ -129,7 +129,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 }
             }
 
-            var content = this.datatips().format(datap);
+            var content = this.datatips().format(datap, this.variable());
             points[minIndex].content = content;
 
             var dimensions = this.datatips().computeDimensions(content, testElem);
@@ -145,39 +145,103 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             var $ = window.multigraph.jQuery;
 
             var content = data.content,
+                type = data.type,
                 w = data.dimensions.width,
                 h = data.dimensions.height,
-                x = data.pixelp.x,
-                y = data.pixelp.y;
+                x = data.pixelp[0],
+                y = data.pixelp[1];
 //                arrowLength = data.arrowLength,
-//                offset = determineOffsets (type, x, y, w, h, arrowLength);
+            var offset = determineOffsets(type, x, y, w, h, arrowLength);
 
             var datatip = $("<div></div>").css({
                 position : "absolute",
                 clear    : "both",
-                left     : x + "px",
-                top      : y + "px"
+                left     : offset[0] + "px",
+                top      : offset[1] + "px"
             }),
-                box = $("<div>" + content + "</div>").css({
-                    "display"          : "inline-block",
-                    "background-color" : "white",
-                    "padding-left"     : "2px",
-                    "padding-right"    : "2px",
-                    "border-top"       : "2px solid black",
-                    "border-bottom"    : "2px solid black",
-                    "border-left"      : "2px solid black",
-                    "border-right"     : "2px solid black",
-                    "border-radius"    : "5px"
-                }),
-                arrow = $("<div></div>").css({
-                    width    : "0px",
-                    position : "relative"
-                });
+                box = $("<div>" + content + "</div>"),
+                arrow = $("<div>&nbsp</div>");
 
-            datatip.append(box);
+            var Datatips = ns.Datatips;
+            switch (type) {
+                case Datatips.DOWN:
+                    arrow.css({
+//                        "left"          : (w/2) + "px",
+                        "border-bottom" : arrowLength + "px solid " + this.datatips().bordercolor().getHexString("#"),
+                        "border-left"   : "5px solid transparent",
+                        "border-right"  : "5px solid transparent"
+                    });
+                    datatip.append(arrow);
+                    datatip.append(box);
+                    break;
+                case Datatips.RIGHT:
+                    arrow.css({
+                        "top"           : ((h/2) - 5) + "px",
+                        "border-bottom" : "5px solid transparent",
+                        "border-top"    : "5px solid transparent",
+                        "border-right"  : arrowLength + "px solid " + this.datatips().bordercolor().getHexString("#"),
+                        "float"         : "left"
+                    });
+                    box.css("float", "left");
+                    datatip.append(arrow);
+                    datatip.append(box);
+                    break;
+                case Datatips.UP:
+                    arrow.css({
+//                        "left"         : (w/2) + "px",
+                        "border-top"   : arrowLength + "px solid " + this.datatips().bordercolor().getHexString("#"),
+                        "border-left"  : "5px solid transparent",
+                        "border-right" : "5px solid transparent"
+                    });
+                    datatip.append(box);
+                    datatip.append(arrow);
+                    break;
+                case Datatips.LEFT:
+                    arrow.css({
+                        "top"           : ((h/2) - 5) + "px",
+                        "border-bottom" : "5px solid transparent",
+                        "border-top"    : "5px solid transparent",
+                        "border-left"   : arrowLength + "px solid " + this.datatips().bordercolor().getHexString("#"),
+                        "float"         : "left"
+                    });
+                    box.css("float", "left");
+                    datatip.append(box);
+                    datatip.append(arrow);
+                    break;
+            }
+
+            box.css({
+                "display"          : "inline-block",
+                "background-color" : this.datatips().bgcolor().toRGBA(this.datatips().bgalpha()),
+                "padding-left"     : "2px",
+                "padding-right"    : "2px",
+                "border"           : this.datatips().border() + "px solid " + this.datatips().bordercolor().getHexString("#"),
+                "border-radius"    : "5px"
+            }),
+            arrow.css({
+                height   : "0px",
+                width    : "0px",
+                position : "relative"
+            });
+
+//            datatip.append(box);
 
             return datatip;
         });
+
+        function determineOffsets (type, x, y, w, h, arrowLength) {
+            var Datatips = ns.Datatips;
+            switch (type) {
+                case Datatips.DOWN:
+                    return [x - w/2, y];
+                case Datatips.RIGHT:
+                    return [x, y - h/2];
+                case Datatips.UP:
+                    return [x - w/2, y - h - arrowLength];
+                case Datatips.LEFT:
+                    return [x - w - arrowLength, y - h/2];
+            }
+        };
 
     });
 

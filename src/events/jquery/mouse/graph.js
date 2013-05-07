@@ -33,7 +33,7 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
         });
 
 
-        Graph.respondsTo("handleDatatips", function (loc, $target, width, height) {
+        Graph.respondsTo("handleDatatips", function (loc, width, height, $target, div) {
             var $ = window.multigraph.jQuery,
                 plots = this.plots(), plot,
                 i,
@@ -56,7 +56,7 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
                     "padding-left"     : "2px",
                     "padding-right"    : "2px",
                 })
-                .appendTo($target);
+                .appendTo(div);
 
             // find first available bit of data
             for (i = 0; i < plots.size(); i++) {
@@ -75,9 +75,8 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
             }
 
             var arrowLength = 10;
-            var datatip = plots().at(datatipIndex).createDatatip(datatipsData, arrowLength);
-
-            datatip.appendTo($target);
+            var datatip = plots.at(datatipIndex).createDatatip(datatipsData, arrowLength);
+            datatip.appendTo(div);
         });
     });
 
