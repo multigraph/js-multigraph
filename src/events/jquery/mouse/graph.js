@@ -84,7 +84,9 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
             }
 
             var arrowLength = 10;
-            var datatip = plots.at(datatipIndex).createDatatip(datatipsData, arrowLength);
+            datatipsData.arrow = arrowLength;
+
+            var datatip = plots.at(datatipIndex).createDatatip(datatipsData);
 
             datatip.appendTo(div);
 

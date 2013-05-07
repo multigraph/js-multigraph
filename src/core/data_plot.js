@@ -158,7 +158,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return point;
         });
 
-        this.respondsTo("createDatatip", function (data, arrowLength) {
+        this.respondsTo("createDatatip", function (data) {
             var $           = window.multigraph.jQuery,
                 Datatips    = ns.Datatips,
                 content     = data.content,
@@ -169,6 +169,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 h           = dimensions.height,
                 x           = pixelp[0],
                 y           = pixelp[1],
+                arrowLength = data.arrow,
                 offset      = determineOffsets(type, x, y, w, h, arrowLength),
                 datatips    = this.datatips(),
                 bordercolor = datatips.bordercolor().getHexString("#");
