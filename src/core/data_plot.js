@@ -69,15 +69,13 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
 
         this.respondsTo("getDatatipsData", function (loc, graphWidth, graphHeight, graph, testElem) {
-            if (!this.datatips()) {
+            var datatips = this.datatips();
+            if (!datatips) {
                 return;
             }
-            var x = loc.x(),
-                y = loc.y(),
-                maxDistance = 20,
-                i;
 
             var data = this.data();
+
             if (!data) { return; }
 
             var haxis = this.horizontalaxis(),
@@ -90,26 +88,28 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             }
 
             var variables   = this.variable(),
-                variableIds = [];
+                variableIds = [],
+                i;
 
             for (i = 0; i < variables.size(); i++) {
                 variableIds.push( variables.at(i).id() );
             }
 
-            var iter = data.getIterator(variableIds, haxis.dataMin(), haxis.dataMax(), 1),
-                renderer = this.renderer(),
-                points = [],
+            var iter        = data.getIterator(variableIds, haxis.dataMin(), haxis.dataMax(), 1),
+                renderer    = this.renderer(),
+                points      = [],
+                x           = loc.x(),
+                y           = loc.y(),
+                maxDistance = 20,
                 curDist,
-                datap, pixelp;
+                datap;
 
             while (iter.hasNext()) {
                 datap = renderer.transformPoint(iter.next());
                 curDist = window.multigraph.math.util.l2dist(x, y, datap[0], datap[1]);
                 if (curDist < maxDistance) {
-                    pixelp = graphCoordsToPixelCoords(datap, graph, graphHeight);
                     points.push({
                         "datap"  : datap,
-                        "pixelp" : pixelp,
                         "dist"   : curDist
                     });
                 }
@@ -118,10 +118,11 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             if (points.length === 0) {
                 return;
             }
-            
+
             var minIndex = 0,
                 minDist  = points[0].dist;
 
+            // determine index of closest point to mouse
             for (i = 1; i < points.length; i++) {
                 if (points[i].dist < minDist) {
                     minIndex = i;
@@ -129,52 +130,62 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 }
             }
 
-            var axisValues = [];
-            axisValues[0] = haxis.axisValueToDataValue(points[minIndex].datap[0])
+            // cache closest point to mouse
+            var point      = points[minIndex],
+                axisValues = [];
 
-            for (i = 1; i < points[minIndex].datap.length; i++) {
-                axisValues[i] = vaxis.axisValueToDataValue(points[minIndex].datap[i])
+            // cache data for point
+            datap = point.datap;
+
+            // determine pixel location of data point
+            point.pixelp = graphCoordsToPixelCoords(datap, graph, graphHeight);
+
+            // determine real DataValues for the datapoint
+            axisValues[0] = haxis.axisValueToDataValue(datap[0]);
+            for (i = 1; i < datap.length; i++) {
+                axisValues[i] = vaxis.axisValueToDataValue(datap[i]);
             }
 
-            var content = this.datatips().format(axisValues);
-            points[minIndex].content = content;
+            var content    = datatips.format(axisValues),
+                dimensions = datatips.computeDimensions(content, testElem);
 
-            var dimensions = this.datatips().computeDimensions(content, testElem);
-            points[minIndex].dimensions = dimensions;
+            point.content = content;
+            point.dimensions = dimensions;
 
             // for now just use the first item in the results
-            points[minIndex].type = this.datatips().computeOrientation(points[minIndex], graphWidth, graphHeight)[0];
+            point.type = datatips.computeOrientation(point, graphWidth, graphHeight)[0];
 
-            return points[minIndex];
+            return point;
         });
 
         this.respondsTo("createDatatip", function (data, arrowLength) {
-            var $ = window.multigraph.jQuery;
+            var $           = window.multigraph.jQuery,
+                Datatips    = ns.Datatips,
+                content     = data.content,
+                type        = data.type,
+                dimensions  = data.dimensions,
+                pixelp      = data.pixelp,
+                w           = dimensions.width,
+                h           = dimensions.height,
+                x           = pixelp[0],
+                y           = pixelp[1],
+                offset      = determineOffsets(type, x, y, w, h, arrowLength),
+                datatips    = this.datatips(),
+                bordercolor = datatips.bordercolor().getHexString("#");
 
-            var content = data.content,
-                type = data.type,
-                w = data.dimensions.width,
-                h = data.dimensions.height,
-                x = data.pixelp[0],
-                y = data.pixelp[1];
-//                arrowLength = data.arrowLength,
-            var offset = determineOffsets(type, x, y, w, h, arrowLength);
+            var box     = $("<div>" + content + "</div>"),
+                arrow   = $("<div>&nbsp</div>"),
+                datatip = $("<div></div>").css({
+                    position : "absolute",
+                    clear    : "both",
+                    left     : offset[0] + "px",
+                    top      : offset[1] + "px"
+                });
 
-            var datatip = $("<div></div>").css({
-                position : "absolute",
-                clear    : "both",
-                left     : offset[0] + "px",
-                top      : offset[1] + "px"
-            }),
-                box = $("<div>" + content + "</div>"),
-                arrow = $("<div>&nbsp</div>");
-
-            var Datatips = ns.Datatips;
             switch (type) {
                 case Datatips.DOWN:
                     arrow.css({
-//                        "left"          : (w/2) + "px",
-                        "border-bottom" : arrowLength + "px solid " + this.datatips().bordercolor().getHexString("#"),
+                        "border-bottom" : arrowLength + "px solid " + bordercolor,
                         "border-left"   : "5px solid transparent",
                         "border-right"  : "5px solid transparent"
                     });
@@ -186,7 +197,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                         "top"           : ((h/2) - 5) + "px",
                         "border-bottom" : "5px solid transparent",
                         "border-top"    : "5px solid transparent",
-                        "border-right"  : arrowLength + "px solid " + this.datatips().bordercolor().getHexString("#"),
+                        "border-right"  : arrowLength + "px solid " + bordercolor,
                         "float"         : "left"
                     });
                     box.css("float", "left");
@@ -195,8 +206,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                     break;
                 case Datatips.UP:
                     arrow.css({
-//                        "left"         : (w/2) + "px",
-                        "border-top"   : arrowLength + "px solid " + this.datatips().bordercolor().getHexString("#"),
+                        "border-top"   : arrowLength + "px solid " + bordercolor,
                         "border-left"  : "5px solid transparent",
                         "border-right" : "5px solid transparent"
                     });
@@ -208,7 +218,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                         "top"           : ((h/2) - 5) + "px",
                         "border-bottom" : "5px solid transparent",
                         "border-top"    : "5px solid transparent",
-                        "border-left"   : arrowLength + "px solid " + this.datatips().bordercolor().getHexString("#"),
+                        "border-left"   : arrowLength + "px solid " + bordercolor,
                         "float"         : "left"
                     });
                     box.css("float", "left");
@@ -219,10 +229,10 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
             box.css({
                 "display"          : "inline-block",
-                "background-color" : this.datatips().bgcolor().toRGBA(this.datatips().bgalpha()),
+                "background-color" : datatips.bgcolor().toRGBA(datatips.bgalpha()),
                 "padding-left"     : "2px",
                 "padding-right"    : "2px",
-                "border"           : this.datatips().border() + "px solid " + this.datatips().bordercolor().getHexString("#"),
+                "border"           : datatips.border() + "px solid " + bordercolor,
                 "border-radius"    : "5px"
             }),
             arrow.css({
@@ -230,8 +240,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 width    : "0px",
                 position : "relative"
             });
-
-//            datatip.append(box);
 
             return datatip;
         });

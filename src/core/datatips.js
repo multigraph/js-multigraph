@@ -21,9 +21,6 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
         this.hasA("pad").which.isA("integer");
 
-        // DOM elements
-        this.hasMany("elems");
-
         this.respondsTo("format", function (data) {
             var formattedData = [],
                 replacementPatterns = [],
@@ -58,13 +55,15 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         });
 
         this.respondsTo("computeOrientation", function (data, graphWidth, graphHeight) {
-            var datatipWidth  = data.dimensions.width,
-                datatipHeight = data.dimensions.height,
-                baseX = data.pixelp[0],
-                baseY = data.pixelp[1],
-                offset       = 20,
-                offsetWidth  = datatipWidth  + offset,
-                offsetHeight = datatipHeight + offset;
+            var dimensions    = data.dimensions,
+                pixelp        = data.pixelp,
+                datatipWidth  = dimensions.width,
+                datatipHeight = dimensions.height,
+                baseX         = pixelp[0],
+                baseY         = pixelp[1],
+                offset        = 20,
+                offsetWidth   = datatipWidth  + offset,
+                offsetHeight  = datatipHeight + offset;
 
             baseY = graphHeight - baseY; // remove this line when baseY is taken from the lower left corner being the origin
 
