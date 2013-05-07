@@ -129,7 +129,14 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 }
             }
 
-            var content = this.datatips().format(datap, this.variable());
+            var axisValues = [];
+            axisValues[0] = haxis.axisValueToDataValue(points[minIndex].datap[0])
+
+            for (i = 1; i < points[minIndex].datap.length; i++) {
+                axisValues[i] = vaxis.axisValueToDataValue(points[minIndex].datap[i])
+            }
+
+            var content = this.datatips().format(axisValues);
             points[minIndex].content = content;
 
             var dimensions = this.datatips().computeDimensions(content, testElem);

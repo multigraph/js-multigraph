@@ -24,16 +24,14 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         // DOM elements
         this.hasMany("elems");
 
-        this.respondsTo("format", function (data, plotVariables) {
+        this.respondsTo("format", function (data) {
             var formattedData = [],
                 replacementPatterns = [],
                 output = this.formatString(),
                 i, l = data.length;
 
             for (i = 0; i < l; i++) {
-                formattedData.push(this.variables().at(i).formatter().format(
-                    ns.DataValue.create(plotVariables.at(i).type(), data[i])
-                ));
+                formattedData.push(this.variables().at(i).formatter().format(data[i]));
                 replacementPatterns.push(new RegExp("\\{" + i + "\\}", "g"));
             }
 
