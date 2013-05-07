@@ -36,8 +36,8 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
         Graph.hasA("existingDatatips").which.defaultsTo(function () { return []; });
         Graph.respondsTo("handleDatatips", function (loc, width, height, $target, div) {
             var $                = window.multigraph.jQuery,
-                plots            = this.plots(),
                 existingDatatips = this.existingDatatips(),
+                plots            = this.plots(),
                 plot,
                 datatipsData,
                 datatipIndex,
@@ -53,7 +53,11 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
 
             // find first available bit of data
             for (i = 0; i < plots.size(); i++) {
-                datatipsData = plots.at(i).getDatatipsData(loc, width, height, this, temp);
+                plot = plots.at(i);
+                if (plot instanceof ns.core.ConstantPlot) {
+                    continue;
+                }
+                datatipsData = plot.getDatatipsData(loc, width, height, this, temp);
                 if (datatipsData !== undefined) {
                     datatipIndex = i;
                     break;
