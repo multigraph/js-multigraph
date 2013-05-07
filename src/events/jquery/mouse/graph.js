@@ -38,15 +38,10 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
             var $ = window.multigraph.jQuery,
                 plots = this.plots(), plot,
                 i,
-                datatipIndex;
+                datatipIndex,
+                that = this;
 
-            var existingDatatips = this.existingDatatips();
-            if (existingDatatips.length > 0) {
-                for (i = 0; i < existingDatatips.length; i++) {
-                    existingDatatips[i].elem.remove();
-                }
-                existingDatatips = [];
-            }
+            this.removeDatatips();
 
             var datatipsData;
 
@@ -78,8 +73,23 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
             var datatip = plots.at(datatipIndex).createDatatip(datatipsData, arrowLength);
             datatip.appendTo(div);
 
+            datatip.mousedown(function (event) {
+                $target.trigger("mousedown", event);
+            });
+
             datatipsData.elem = datatip;
             this.existingDatatips().push(datatipsData);
+        });
+
+        Graph.respondsTo("removeDatatips", function () {
+            var existingDatatips = this.existingDatatips(),
+                i;
+            if (existingDatatips.length > 0) {
+                for (i = 0; i < existingDatatips.length; i++) {
+                    existingDatatips[i].elem.remove();
+                }
+                existingDatatips = [];
+            }
         });
     });
 
