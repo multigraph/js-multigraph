@@ -17,8 +17,8 @@ describe("Datatips Normalizer", function () {
     beforeEach(function () {
         window.multigraph.normalizer.mixin.apply(window.multigraph.core);
         plot = new DataPlot();
-        plot.variable().add(new DataVariable("x", 0, DataValue.NUMBER))
-        plot.variable().add(new DataVariable("y", 1, DataValue.NUMBER))
+        plot.variable().add(new DataVariable("x", 0, DataValue.NUMBER));
+        plot.variable().add(new DataVariable("y", 1, DataValue.NUMBER));
     });
 
     describe("Handling Missing Variables", function () {
@@ -41,9 +41,9 @@ describe("Datatips Normalizer", function () {
         var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD().plot.datatips.variable;
 
         plot = new DataPlot();
-        plot.variable().add(new DataVariable("x", 0, DataValue.NUMBER))
-        plot.variable().add(new DataVariable("y", 1, DataValue.NUMBER))
-        plot.variable().add(new DataVariable("y1", 2, DataValue.DATETIME))
+        plot.variable().add(new DataVariable("x", 0, DataValue.NUMBER));
+        plot.variable().add(new DataVariable("y", 1, DataValue.NUMBER));
+        plot.variable().add(new DataVariable("y1", 2, DataValue.DATETIME));
 
         datatips = new Datatips();
         datatips.variables().add((new DatatipsVariable()).formatString("hey"));
@@ -65,9 +65,9 @@ describe("Datatips Normalizer", function () {
         var defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD().plot.datatips.variable;
 
         plot = new DataPlot();
-        plot.variable().add(new DataVariable("x", 0, DataValue.NUMBER))
-        plot.variable().add(new DataVariable("y", 1, DataValue.NUMBER))
-        plot.variable().add(new DataVariable("y1", 2, DataValue.DATETIME))
+        plot.variable().add(new DataVariable("x", 0, DataValue.NUMBER));
+        plot.variable().add(new DataVariable("y", 1, DataValue.NUMBER));
+        plot.variable().add(new DataVariable("y1", 2, DataValue.DATETIME));
 
         datatips = new Datatips();
         datatips.variables().add((new DatatipsVariable()).formatString("hey"));

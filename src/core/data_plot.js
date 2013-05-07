@@ -245,7 +245,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
             return datatip;
         });
 
-        function determineOffsets (type, x, y, w, h, arrowLength) {
+        var determineOffsets = function (type, x, y, w, h, arrowLength) {
             var Datatips = ns.Datatips;
             switch (type) {
                 case Datatips.DOWN:

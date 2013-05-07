@@ -25,8 +25,8 @@ describe("Plot Datatips", function () {
     });
 
     it("should be able to set/get the bgalpha attribute", function () {
-        datatips.bgalpha(.5);
-        expect(datatips.bgalpha()).toBe(.5);
+        datatips.bgalpha(0.5);
+        expect(datatips.bgalpha()).toBe(0.5);
     });
 
     it("should be able to set/get the border attribute", function () {

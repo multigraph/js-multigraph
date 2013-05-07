@@ -47,7 +47,7 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
                 .css({
                     "display"          : "hidden",
                     "padding-left"     : "2px",
-                    "padding-right"    : "2px",
+                    "padding-right"    : "2px"
                 })
                 .appendTo(div);
 
