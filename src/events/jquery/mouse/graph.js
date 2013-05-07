@@ -41,8 +41,6 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
                 datatipIndex,
                 that = this;
 
-            this.removeDatatips();
-
             var datatipsData;
 
             var temp = $("<span></span>")
@@ -66,9 +64,26 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
 
             // don't do anything if there is no data
             if (datatipsData === undefined) {
+                this.removeDatatips();
                 return;
             }
 
+            // flag all datatips for removal
+            for (i = 0; i < this.existingDatatips().length; i++) {
+                this.existingDatatips()[i].flag = true;
+            }
+
+            // remove flags from datatips that don't need to be redrawn
+            checkDatatipExistence(datatipsData, this.existingDatatips());
+
+            this.removeFlaggedDatatips();
+
+            // don't do anything if datatip already exists
+            if (datatipsData.flag === false) {
+                return;
+            }
+
+            this.removeDatatips();
             var arrowLength = 10;
             var datatip = plots.at(datatipIndex).createDatatip(datatipsData, arrowLength);
             datatip.appendTo(div);
@@ -81,6 +96,23 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
             this.existingDatatips().push(datatipsData);
         });
 
+        var checkDatatipExistence = function (datatipData, existingData) {
+            var i, l;
+            for (i = 0, l = existingData.length; i < l; i++) {
+                if (
+                    datatipData.content   === existingData[i].content   &&
+                    datatipData.type      === existingData[i].type      &&
+                    datatipData.pixelp[0] === existingData[i].pixelp[0] &&
+                    datatipData.pixelp[1] === existingData[i].pixelp[1]
+                ) {
+                    existingData[i].flag = false;
+                    datatipData.flag = false; // do not redraw
+                    return;
+                }
+            }
+            datatipData.flag = true; // needs to be drawn
+        };
+
         Graph.respondsTo("removeDatatips", function () {
             var existingDatatips = this.existingDatatips(),
                 i;
@@ -91,6 +123,20 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
                 existingDatatips = [];
             }
         });
+
+        Graph.respondsTo("removeFlaggedDatatips", function () {
+            var existingDatatips = this.existingDatatips(),
+                i;
+            if (existingDatatips.length > 0) {
+                for (i = 0; i < existingDatatips.length; i++) {
+                    if (existingDatatips[i].flag === true) {
+                        existingDatatips[i].elem.remove();
+                        existingDatatips.splice(i, 1);
+                    }
+                }
+            }
+        });
+
     });
 
 });
