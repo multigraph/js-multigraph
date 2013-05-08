@@ -2096,14 +2096,15 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
                 },
                 "datatips":{
                     "variable": {
-                        "format": undefined
+                        "formatString-number" : "%.2f",
+                        "formatString-datetime" : "%d %n %Y"
                     },
 //                    "visible": "false",
-                    "format": undefined,
-//                    "bgcolor": "0xeeeeee",
-                    "bgalpha": "1.0",
+                    "formatString": "{0}: {1}",
+                    "bgcolor": function () { return new window.multigraph.math.RGBColor.parse("0xeeeeee"); },
+                    "bgalpha": 1.0,
                     "border": 1,
-//                    "bordercolor": "0x000000",
+                    "bordercolor": function () { return new window.multigraph.math.RGBColor.parse("0x000000"); },
                     "pad": 2
                 }
             },
@@ -3790,6 +3791,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasA("renderer").which.validatesWith(function (renderer) {
             return renderer instanceof ns.Renderer;
         });
+
     });
 
     ns.Plot = Plot;
@@ -5158,6 +5160,13 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
         attributes = utilityFunctions.getKeys(defaultValues.plot);
 
+    var graphCoordsToPixelCoords = function (graphCoords, graph, height) {
+        return [
+            graphCoords[0] + graph.x0(),
+            height - (graphCoords[1] + graph.y0())
+        ];
+    };
+
     DataPlot = new window.jermaine.Model("DataPlot", function () {
         this.isA(ns.Plot);
         this.hasMany("variable").eachOfWhich.validateWith(function (variable) {
@@ -5213,6 +5222,216 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
         });
 
+        this.respondsTo("getDatatipsData", function (loc, graphWidth, graphHeight, graph, testElem) {
+            var datatips = this.datatips();
+            if (!datatips) {
+                return;
+            }
+
+            var data = this.data();
+
+            if (!data) { return; }
+
+            var haxis = this.horizontalaxis(),
+                vaxis = this.verticalaxis();
+
+            if (!haxis.hasDataMin() || !haxis.hasDataMax()) {
+                // if this plot's horizontal axis does not have a min or max value yet,
+                // return immediately without doing anything
+                return;
+            }
+
+            var variables   = this.variable(),
+                variableIds = [],
+                i;
+
+            for (i = 0; i < variables.size(); i++) {
+                variableIds.push( variables.at(i).id() );
+            }
+
+            var iter        = data.getIterator(variableIds, haxis.dataMin(), haxis.dataMax(), 1),
+                renderer    = this.renderer(),
+                points      = [],
+                x           = loc.x(),
+                y           = loc.y(),
+                maxDistance = 20,
+                curDist,
+                datap;
+
+            while (iter.hasNext()) {
+                datap = renderer.transformPoint(iter.next());
+                curDist = window.multigraph.math.util.l2dist(x, y, datap[0], datap[1]);
+                if (curDist < maxDistance) {
+                    points.push({
+                        "datap"  : datap,
+                        "dist"   : curDist
+                    });
+                }
+            }
+
+            if (points.length === 0) {
+                return;
+            }
+
+            var minIndex = 0,
+                minDist  = points[0].dist;
+
+            // determine index of closest point to mouse
+            for (i = 1; i < points.length; i++) {
+                if (points[i].dist < minDist) {
+                    minIndex = i;
+                    minDist = points[i].dist;
+                }
+            }
+
+            // cache closest point to mouse
+            var point      = points[minIndex],
+                axisValues = [];
+
+            // cache data for point
+            datap = point.datap;
+
+            // determine pixel location of data point
+            point.pixelp = graphCoordsToPixelCoords(datap, graph, graphHeight);
+
+            // determine real DataValues for the datapoint
+            axisValues[0] = haxis.axisValueToDataValue(datap[0]);
+            for (i = 1; i < datap.length; i++) {
+                axisValues[i] = vaxis.axisValueToDataValue(datap[i]);
+            }
+
+            var content    = datatips.format(axisValues),
+                dimensions = datatips.computeDimensions(content, testElem);
+
+            point.content = content;
+            point.dimensions = dimensions;
+
+            // for now just use the first item in the results
+            point.type = datatips.computeOrientation(point, graphWidth, graphHeight)[0];
+
+            return point;
+        });
+
+        this.respondsTo("createDatatip", function (data) {
+            var $           = window.multigraph.jQuery,
+                Datatips    = ns.Datatips,
+                content     = data.content,
+                type        = data.type,
+                dimensions  = data.dimensions,
+                pixelp      = data.pixelp,
+                w           = dimensions.width,
+                h           = dimensions.height,
+                x           = pixelp[0],
+                y           = pixelp[1],
+                arrowLength = data.arrow,
+                offset      = determineOffsets(type, x, y, w, h, arrowLength),
+                datatips    = this.datatips(),
+                bordercolor = datatips.bordercolor().getHexString("#");
+
+            var box     = $("<div>" + content + "</div>"),
+                arrow   = $("<div>&nbsp</div>"),
+                datatip = $("<div></div>");
+
+            switch (type) {
+                case Datatips.DOWN:
+                    arrow.css({
+                        "left"          : ((w/2) - 5) + "px",
+                        "border-bottom" : arrowLength + "px solid " + bordercolor,
+                        "border-left"   : "5px solid transparent",
+                        "border-right"  : "5px solid transparent",
+                        "border-top"    : "0px"
+                    });
+                    datatip.append(arrow);
+                    datatip.append(box);
+                    break;
+                case Datatips.RIGHT:
+                    arrow.css({
+                        "top"           : ((h/2) - 5) + "px",
+                        "border-bottom" : "5px solid transparent",
+                        "border-top"    : "5px solid transparent",
+                        "border-right"  : arrowLength + "px solid " + bordercolor,
+                        "border-left"   : "0px",
+                        "float"         : "left"
+                    });
+                    box.css("float", "left");
+                    datatip.append(arrow);
+                    datatip.append(box);
+                    break;
+                case Datatips.UP:
+                    arrow.css({
+                        "left"          : ((w/2) - 5) + "px",
+                        "border-top"    : arrowLength + "px solid " + bordercolor,
+                        "border-left"   : "5px solid transparent",
+                        "border-right"  : "5px solid transparent",
+                        "border-bottom" : "0px"
+                    });
+                    datatip.append(box);
+                    datatip.append(arrow);
+                    break;
+                case Datatips.LEFT:
+                    arrow.css({
+                        "top"           : ((h/2) - 5) + "px",
+                        "border-bottom" : "5px solid transparent",
+                        "border-top"    : "5px solid transparent",
+                        "border-left"   : arrowLength + "px solid " + bordercolor,
+                        "border-right"  : "0px",
+                        "float"         : "left"
+                    });
+                    box.css("float", "left");
+                    datatip.append(box);
+                    datatip.append(arrow);
+                    break;
+            }
+
+            datatip.css({
+                "text-align" : "left",
+                "position"   : "absolute",
+                "clear"      : "both",
+                "left"       : offset[0] + "px",
+                "top"        : offset[1] + "px",
+                "margin"     : "0px",
+                "padding"    : "0px"
+            });
+
+            box.css({
+                "display"          : "inline-block",
+                "position"         : "relative",
+                "background-color" : datatips.bgcolor().toRGBA(datatips.bgalpha()),
+                "text-align"       : "left",
+                "margin"           : "0px",
+                "padding-left"     : "5px",
+                "padding-right"    : "5px",
+                "padding-top"      : "1px",
+                "padding-bottom"   : "1px",
+                "border"           : datatips.border() + "px solid " + bordercolor,
+                "border-radius"    : "5px"
+            }),
+
+            arrow.css({
+                "height"     : "0px",
+                "width"      : "0px",
+                "position"   : "relative",
+                "text-align" : "left",
+                "margin"     : "0px",
+                "padding"    : "0px"
+            });
+
+            return datatip;
+        });
+
+        var determineOffsets = function (type, x, y, w, h, arrowLength) {
+            var Datatips = ns.Datatips;
+            switch (type) {
+                case Datatips.DOWN:
+                    return [x - w/2, y];
+                case Datatips.RIGHT:
+                    return [x, y - h/2];
+                case Datatips.UP:
+                    return [x - w/2, y - h - arrowLength];
+                case Datatips.LEFT:
+                    return [x - w - arrowLength, y - h/2];
+            }
+        };
 
     });
 
@@ -5230,26 +5449,194 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         this.hasMany("variables").eachOfWhich.validateWith(function (variable) {
             return variable instanceof ns.DatatipsVariable;
         });
-        this.hasA("format").which.validatesWith(function (format) {
-            return typeof(format) === "string";
-        });
+        this.hasA("formatString").which.isA("string");
         this.hasA("bgcolor").which.validatesWith(function (bgcolor) {
             return bgcolor instanceof window.multigraph.math.RGBColor;
         });
-        this.hasA("bgalpha").which.validatesWith(function (bgalpha) {
-            return typeof(bgalpha) === "string";
-        });
+        this.hasA("bgalpha").which.isA("number");
         this.hasA("border").which.isA("integer");
         this.hasA("bordercolor").which.validatesWith(function (bordercolor) {
             return bordercolor instanceof window.multigraph.math.RGBColor;
         });
         this.hasA("pad").which.isA("integer");
 
+        this.respondsTo("format", function (data) {
+            var formattedData = [],
+                replacementPatterns = [],
+                output = this.formatString(),
+                i, l = data.length;
+
+            for (i = 0; i < l; i++) {
+                formattedData.push(this.variables().at(i).formatter().format(data[i]));
+                replacementPatterns.push(new RegExp("\\{" + i + "\\}", "g"));
+            }
+
+            for (i = 0; i < l; i++) {
+                output = output.replace(replacementPatterns[i], formattedData[i]);
+            }
+
+            output = output.replace(/[\n|\r]/g, "<br/>");
+
+            return output;
+        });
+
+        this.respondsTo("computeDimensions", function (content, elem) {
+            var paddingWidth  = parseInt(elem.css("padding-left"), 10) + parseInt(elem.css("padding-right"), 10),
+                paddingHeight = parseInt(elem.css("padding-top"), 10)  + parseInt(elem.css("padding-bottom"), 10),
+                border        = 2 * this.border();
+
+            elem.html(content);
+
+            return {
+                "width"  : elem.width()  + border + paddingWidth,
+                "height" : elem.height() + border + paddingHeight
+            };
+        });
+
+        this.respondsTo("computeOrientation", function (data, graphWidth, graphHeight) {
+            var dimensions    = data.dimensions,
+                pixelp        = data.pixelp,
+                datatipWidth  = dimensions.width,
+                datatipHeight = dimensions.height,
+                baseX         = pixelp[0],
+                baseY         = pixelp[1],
+                offset        = 20,
+                offsetWidth   = datatipWidth  + offset,
+                offsetHeight  = datatipHeight + offset;
+
+            baseY = graphHeight - baseY; // remove this line when baseY is taken from the lower left corner being the origin
+
+            if ( // center
+                baseX       - offsetWidth  >= 0 &&
+                graphWidth  - baseX        >= offsetWidth &&
+                baseY       - offsetHeight >= 0 &&
+                graphHeight - baseY        >= offsetHeight
+            ) {
+                return [Datatips.UP, Datatips.DOWN, Datatips.RIGHT, Datatips.LEFT];
+            } else if ( // top
+                baseX       - offsetWidth  >= 0 &&
+                graphWidth  - baseX        >= offsetWidth &&
+                baseY                      >= graphHeight - offsetHeight &&
+                graphHeight                >= baseY
+            ) {
+                return [Datatips.DOWN, Datatips.RIGHT, Datatips.LEFT, Datatips.UP];
+            } else if ( // bottom
+                baseX      - offsetWidth >= 0 &&
+                graphWidth - baseX       >= offsetWidth &&
+                offsetHeight             >= baseY &&
+                baseY                    >= 0
+            ) {
+                return [Datatips.UP, Datatips.RIGHT, Datatips.LEFT, Datatips.DOWN];
+            } else if ( // left
+                baseX                      >= 0 &&
+                offsetWidth                >= baseX &&
+                baseY       - offsetHeight >= 0 &&
+                graphHeight - baseY        >= offsetHeight
+            ) {
+                return [Datatips.RIGHT, Datatips.UP, Datatips.DOWN, Datatips.LEFT];
+            } else if ( // right
+                graphWidth                 >= baseX &&
+                offsetWidth                >= graphWidth - baseX &&
+                baseY       - offsetHeight >= 0 &&
+                graphHeight - baseY        >= offsetHeight
+            ) {
+                return [Datatips.LEFT, Datatips.UP, Datatips.DOWN, Datatips.RIGHT];
+            } else {
+                var preferences = [];
+                if (baseX < graphWidth / 2) { // left side of graph
+                    if (baseY > graphHeight / 2) { // top-left corner of graph
+                        if (baseX - datatipWidth/2 < (graphHeight - baseY) - datatipHeight/2) {
+                            // more is lost off the horizontal side than the vertical side
+                            preferences.push(Datatips.RIGHT);
+                            preferences.push(Datatips.DOWN);
+                        } else {
+                            // more is lost off the vertical side than the horizontal side
+                            preferences.push(Datatips.DOWN);
+                            preferences.push(Datatips.RIGHT);
+                        }
+                        if (baseX - offsetWidth < (graphHeight - baseY) - offsetHeight) {
+                            // more is lost off the horizontal side than the vertical side
+                            preferences.push(Datatips.UP);
+                            preferences.push(Datatips.LEFT);
+                        } else {
+                            // more is lost off the vertical side than the horizontal side
+                            preferences.push(Datatips.LEFT);
+                            preferences.push(Datatips.UP);
+                        }
+                    } else { // bottom-left corner of graph
+                        if (baseX - datatipWidth/2 < baseY - datatipHeight/2) {
+                            // more is lost off the horizontal side than the vertical side
+                            preferences.push(Datatips.RIGHT);
+                            preferences.push(Datatips.UP);
+                        } else {
+                            // more is lost off the vertical side than the horizontal side
+                            preferences.push(Datatips.UP);
+                            preferences.push(Datatips.RIGHT);
+                        }
+                        if (baseX - offsetWidth < baseY - offsetHeight) {
+                            // more is lost off the horizontal side than the vertical side
+                            preferences.push(Datatips.DOWN);
+                            preferences.push(Datatips.LEFT);
+                        } else {
+                            // more is lost off the vertical side than the horizontal side
+                            preferences.push(Datatips.LEFT);
+                            preferences.push(Datatips.DOWN);
+                        }
+                    }
+                } else { // right side of graph
+                    if (baseY > graphHeight / 2) { // top-right corner of graph
+                        if ((graphWidth - baseX) - datatipWidth/2 < (graphHeight - baseY) - datatipHeight/2) {
+                            // more is lost off the horizontal side than the vertical side
+                            preferences.push(Datatips.LEFT);
+                            preferences.push(Datatips.DOWN);
+                        } else {
+                            // more is lost off the vertical side than the horizontal side
+                            preferences.push(Datatips.DOWN);
+                            preferences.push(Datatips.LEFT);
+                        }
+                        if ((graphWidth - baseX) - offsetWidth < (graphHeight - baseY) - offsetHeight) {
+                            // more is lost off the horizontal side than the vertical side
+                            preferences.push(Datatips.UP);
+                            preferences.push(Datatips.RIGHT);
+                        } else {
+                            // more is lost off the vertical side than the horizontal side
+                            preferences.push(Datatips.RIGHT);
+                            preferences.push(Datatips.UP);
+                        }
+                    } else { // bottom-right corner of graph
+                        if ((graphWidth - baseX) - datatipWidth/2 < baseY - datatipHeight/2) {
+                            // more is lost off the horizontal side than the vertical side
+                            preferences.push(Datatips.LEFT);
+                            preferences.push(Datatips.UP);
+                        } else {
+                            // more is lost off the vertical side than the horizontal side
+                            preferences.push(Datatips.UP);
+                            preferences.push(Datatips.LEFT);
+                        }
+                        if ((graphWidth - baseX) - offsetWidth < baseY - offsetWidth) {
+                            // more is lost off the horizontal side than the vertical side
+                            preferences.push(Datatips.DOWN);
+                            preferences.push(Datatips.RIGHT);
+                        } else {
+                            // more is lost off the vertical side than the horizontal side
+                            preferences.push(Datatips.RIGHT);
+                            preferences.push(Datatips.DOWN);
+                        }
+                    }
+                }
+                return preferences;
+            }
+        });
+
         utilityFunctions.insertDefaults(this, defaultValues.plot.datatips, attributes);
     });
 
-    ns.Datatips = Datatips;
+    Datatips.UP    = "u";
+    Datatips.DOWN  = "d";
+    Datatips.LEFT  = "l";
+    Datatips.RIGHT = "r";
 
+    ns.Datatips = Datatips;
 });
 window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
@@ -5258,9 +5645,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
         defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
         attributes = utilityFunctions.getKeys(defaultValues.plot.datatips.variable),
         DatatipsVariable = new window.jermaine.Model("DatatipsVariable", function () {
-            this.hasA("format").which.validatesWith(function (format) {
-                return typeof(format) === "string";
-            });
+            this.hasA("formatString").which.isA("string");
+            this.hasA("formatter").which.validatesWith(ns.DataFormatter.isInstance);
 
             utilityFunctions.insertDefaults(this, defaultValues.plot.datatips.variable, attributes);
         });
@@ -9990,12 +10376,12 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                     });
                 }
                 
-                parseAttribute(xml.attr("format"),      datatips.format,      parseString);
-                parseAttribute(xml.attr("bgcolor"),     datatips.bgcolor,     parseRGBColor);
-                parseAttribute(xml.attr("bgalpha"),     datatips.bgalpha,     parseString);
-                parseAttribute(xml.attr("border"),      datatips.border,      parseInteger);
-                parseAttribute(xml.attr("bordercolor"), datatips.bordercolor, parseRGBColor);
-                parseAttribute(xml.attr("pad"),         datatips.pad,         parseInteger);
+                parseAttribute(xml.attr("format"),      datatips.formatString, parseString);
+                parseAttribute(xml.attr("bgcolor"),     datatips.bgcolor,      parseRGBColor);
+                parseAttribute(xml.attr("bgalpha"),     datatips.bgalpha,      parseFloat);
+                parseAttribute(xml.attr("border"),      datatips.border,       parseInteger);
+                parseAttribute(xml.attr("bordercolor"), datatips.bordercolor,  parseRGBColor);
+                parseAttribute(xml.attr("pad"),         datatips.pad,          parseInteger);
             }
             return datatips;
         };
@@ -10013,7 +10399,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 utilityFunctions = ns.utilityFunctions;
 
             if (xml) {
-                utilityFunctions.parseAttribute(xml.attr("format"), variable.format, utilityFunctions.parseString);
+                utilityFunctions.parseAttribute(xml.attr("format"), variable.formatString, utilityFunctions.parseString);
             }
             return variable;
         };
@@ -11043,6 +11429,44 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
 
     ns.mixin.add(function (ns) {
 
+        ns.Datatips.respondsTo("normalize", function (plot) {
+            var datatipsVariables = this.variables(),
+                plotVariables     = plot.variable(),
+                variable,
+                type,
+                defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD().plot.datatips.variable,
+                i;
+
+            // creates missing variables for the datatip
+            if (datatipsVariables.size() < plotVariables.size()) {
+                for (i = datatipsVariables.size(); i < plotVariables.size(); i++) {
+                    datatipsVariables.add(new ns.DatatipsVariable());
+                }
+            }
+                
+            // sets up formatters for datatips variables
+            for (i = 0; i < datatipsVariables.size(); i++) {
+                variable = datatipsVariables.at(i);
+                type = plotVariables.at(i).type();
+                if (variable.formatString() === undefined) {
+                    if (type === ns.DataValue.NUMBER) {
+                        variable.formatString(defaultValues["formatString-number"]);
+                    } else {
+                        variable.formatString(defaultValues["formatString-datetime"]);
+                    }
+                }
+                variable.formatter(ns.DataFormatter.create(type, variable.formatString()));
+            }
+        });
+
+    });
+
+});
+window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
+    "use strict";
+
+    ns.mixin.add(function (ns) {
+
         ns.Graph.respondsTo("normalize", function () {
             var HORIZONTAL = ns.Axis.HORIZONTAL,
                 VERTICAL   = ns.Axis.VERTICAL,
@@ -11434,13 +11858,17 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
                 //                  - if no unused variables exist - throw error
                 //                  - check if vertical axis needs another variable
                 //                        if it does - Repeat step 3
+                
+                if (this.datatips()) {
+                    this.datatips().normalize(this);
+                }
+
             }
 
         };
 
         ns.DataPlot.respondsTo("normalize", normalizePlot);
         ns.ConstantPlot.respondsTo("normalize", normalizePlot);
-
     });
 
 });
@@ -11559,6 +11987,120 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
             }
         });
 
+
+        Graph.hasA("existingDatatips").which.defaultsTo(function () { return []; });
+        Graph.respondsTo("handleDatatips", function (loc, width, height, $target, div) {
+            var $                = window.multigraph.jQuery,
+                existingDatatips = this.existingDatatips(),
+                plots            = this.plots(),
+                plot,
+                datatipsData,
+                datatipIndex,
+                i;
+
+            var temp = $("<span></span>")
+                .css({
+                    "display"          : "hidden",
+                    "margin"           : "0px",
+                    "padding-left"     : "5px",
+                    "padding-right"    : "5px",
+                    "padding-top"      : "1px",
+                    "padding-bottom"   : "1px"
+                })
+                .appendTo(div);
+
+            // find first available bit of data
+            for (i = 0; i < plots.size(); i++) {
+                plot = plots.at(i);
+                if (plot instanceof ns.core.ConstantPlot) {
+                    continue;
+                }
+                datatipsData = plot.getDatatipsData(loc, width, height, this, temp);
+                if (datatipsData !== undefined) {
+                    datatipIndex = i;
+                    break;
+                }
+            }
+
+            temp.remove();
+
+            // don't do anything if there is no data
+            if (datatipsData === undefined) {
+                this.removeDatatips();
+                return;
+            }
+
+            // flag all datatips for removal
+            for (i = 0; i < existingDatatips.length; i++) {
+                existingDatatips[i].flag = true;
+            }
+
+            // remove flags from datatips that don't need to be redrawn
+            checkDatatipExistence(datatipsData, existingDatatips);
+
+            this.removeFlaggedDatatips();
+
+            // don't do anything if datatip already exists
+            if (datatipsData.flag === false) {
+                return;
+            }
+
+            var arrowLength = 10;
+            datatipsData.arrow = arrowLength;
+
+            var datatip = plots.at(datatipIndex).createDatatip(datatipsData);
+
+            datatip.appendTo(div);
+
+            datatip.mousedown(function (event) {
+                $target.trigger("mousedown", event);
+            });
+
+            datatipsData.elem = datatip;
+            existingDatatips.push(datatipsData);
+        });
+
+        var checkDatatipExistence = function (datatipData, existingData) {
+            var i, l;
+            for (i = 0, l = existingData.length; i < l; i++) {
+                if (
+                    datatipData.content   === existingData[i].content   &&
+                    datatipData.type      === existingData[i].type      &&
+                    datatipData.pixelp[0] === existingData[i].pixelp[0] &&
+                    datatipData.pixelp[1] === existingData[i].pixelp[1]
+                ) {
+                    existingData[i].flag = false;
+                    datatipData.flag = false; // do not redraw
+                    return;
+                }
+            }
+            datatipData.flag = true; // needs to be drawn
+        };
+
+        Graph.respondsTo("removeDatatips", function () {
+            var existingDatatips = this.existingDatatips(),
+                i;
+            if (existingDatatips.length > 0) {
+                for (i = 0; i < existingDatatips.length; i++) {
+                    existingDatatips[i].elem.remove();
+                }
+                existingDatatips = [];
+            }
+        });
+
+        Graph.respondsTo("removeFlaggedDatatips", function () {
+            var existingDatatips = this.existingDatatips(),
+                i;
+            if (existingDatatips.length > 0) {
+                for (i = 0; i < existingDatatips.length; i++) {
+                    if (existingDatatips[i].flag === true) {
+                        existingDatatips[i].elem.remove();
+                        existingDatatips.splice(i, 1);
+                    }
+                }
+            }
+        });
+
     });
 
 });
@@ -11581,8 +12123,19 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
                                       $target.height() - (event.pageY - $target.offset().top) - multigraph.graphs().at(0).y0());
             };
 
-            $target.mousedown(function (event) {
+            $target.mousedown(function (event, datatipsEvent) {
+                if (datatipsEvent) {
+                    // if the datatips mousedown handler is triggered through the datatips handler
+                    // then the default event does not contain pageX or pageY. So the datatips handler
+                    // passes its event, which does contain pageX and pageY.
+                    event = datatipsEvent;
+                }
                 event.preventDefault();
+                var i;
+                for (i = 0; i < multigraph.graphs().size(); i++) {
+                    multigraph.graphs().at(i).removeDatatips();
+                }
+
                 mouseLast = base = eventLocationToGraphCoords(event);
                 mouseIsDown = true;
                 dragStarted = false;
@@ -11594,17 +12147,23 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
             });
 
             $target.mousemove(function (event) {
-                var eventLoc = eventLocationToGraphCoords(event);
+                var eventLoc = eventLocationToGraphCoords(event),
+                    graphs   = multigraph.graphs();
                 if (mouseIsDown) {
                     var dx = eventLoc.x() - mouseLast.x(),
                         dy = eventLoc.y() - mouseLast.y();
                     if (multigraph.graphs().size() > 0) {
                         if (!dragStarted ) {
-                            multigraph.graphs().at(0).doDragReset();
+                            graphs.at(0).doDragReset();
                         }
-                        multigraph.graphs().at(0).doDrag(multigraph, base.x(), base.y(), dx, dy, event.shiftKey);
+                        graphs.at(0).doDrag(multigraph, base.x(), base.y(), dx, dy, event.shiftKey);
                     }
                     dragStarted = true;
+                } else { // datatips handling
+                    var i;
+                    for (i = 0; i < graphs.size(); i++) {
+                        graphs.at(i).handleDatatips(eventLoc, multigraph.width(), multigraph.height(), $target, multigraph.div());
+                    }
                 }
                 mouseLast = eventLoc;
             });
@@ -11617,15 +12176,17 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
                 event.preventDefault();
             });
 
-            $target.mouseenter(function (event) {
-                mouseLast = eventLocationToGraphCoords(event);
+            $target.mouseleave(function (event) {
                 mouseIsDown = false;
                 multigraph.graphs().at(0).doDragDone();
             });
 
-            $target.mouseleave(function (event) {
-                mouseIsDown = false;
-                multigraph.graphs().at(0).doDragDone();
+            window.multigraph.jQuery(multigraph.div()).mouseleave(function (event) {
+                var graphs = multigraph.graphs(),
+                    i;
+                for (i = 0; i < graphs.size(); i++) {
+                    graphs.at(i).removeDatatips();
+                }
             });
 
         });
