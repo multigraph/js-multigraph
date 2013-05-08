@@ -1904,7 +1904,8 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
                         "angle": 0.0,
                         "spacing": undefined,
                         "densityfactor": 1.0,
-                        "color" : function () { return new window.multigraph.math.RGBColor.parse("0x000000"); }
+                        "color" : function () { return new window.multigraph.math.RGBColor.parse("0x000000"); },
+                        "visible" : true
 //                        "fontname": undefined,
 //                        "fontsize": undefined,
 //                        "fontcolor": undefined
@@ -1920,6 +1921,7 @@ window.multigraph.util.namespace("window.multigraph.utilityFunctions", function 
                     "position": function () { return new window.multigraph.math.Point(0,0); },
                     "anchor": function () { return new window.multigraph.math.Point(0,0); },
                     "color" : function () { return new window.multigraph.math.RGBColor.parse("0x000000"); },
+                    "visible" : true,
                     "defaultNumberSpacing": "10000 5000 2000 1000 500 200 100 50 20 10 5 2 1 0.1 0.01 0.001",
                     "defaultDatetimeSpacing": "1000Y 500Y 200Y 100Y 50Y 20Y 10Y 5Y 2Y 1Y 6M 3M 2M 1M 7D 3D 2D 1D 12H 6H 3H 2H 1H",
                     "function": undefined,
@@ -6403,6 +6405,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 return color instanceof window.multigraph.math.RGBColor;
             });
 
+            this.hasA("visible").which.isA("boolean").and.which.defaultsTo(true);
+
             this.isBuiltWith("axis", function () {
                 var labelsDefaults = defaultValues.horizontalaxis.labels;
                 if (this.axis().type() === DataValue.DATETIME) {
@@ -10357,6 +10361,8 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 parseLabelerAttribute(xml.attr("anchor"),        labeler.anchor,        parsePoint,                                   "anchor");
                 parseLabelerAttribute(xml.attr("densityfactor"), labeler.densityfactor, parseFloat,                                   "densityfactor");
                 parseLabelerAttribute(xml.attr("color"),         labeler.color,         math.RGBColor.parse,                          "color");
+                parseLabelerAttribute(xml.attr("visible"),       labeler.visible,       utilityFunctions.parseBoolean,                "visible");
+
             }
             return labeler;
         };
@@ -20519,8 +20525,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             // Render the tick marks and labels
             //
             if (this.hasDataMin() && this.hasDataMax()) { // but skip if we don't yet have data values
-                if (currentLabeler) {
-                    var tickwidth = this.tickwidth(),
+                if (currentLabeler && currentLabeler.visible()) { // also skip if we have no current labeler, or
+                    var tickwidth = this.tickwidth(),             //   if we do but its `visible` property is false
                         tickmin   = this.tickmin(),
                         tickmax   = this.tickmax(),
                         tickcolor = this.tickcolor();
