@@ -46,8 +46,11 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
             var temp = $("<span></span>")
                 .css({
                     "display"          : "hidden",
-                    "padding-left"     : "2px",
-                    "padding-right"    : "2px"
+                    "margin"           : "0px",
+                    "padding-left"     : "5px",
+                    "padding-right"    : "5px",
+                    "padding-top"      : "1px",
+                    "padding-bottom"   : "1px"
                 })
                 .appendTo(div);
 

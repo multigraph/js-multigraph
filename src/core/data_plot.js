@@ -176,19 +176,16 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
             var box     = $("<div>" + content + "</div>"),
                 arrow   = $("<div>&nbsp</div>"),
-                datatip = $("<div></div>").css({
-                    position : "absolute",
-                    clear    : "both",
-                    left     : offset[0] + "px",
-                    top      : offset[1] + "px"
-                });
+                datatip = $("<div></div>");
 
             switch (type) {
                 case Datatips.DOWN:
                     arrow.css({
+                        "left"          : ((w/2) - 5) + "px",
                         "border-bottom" : arrowLength + "px solid " + bordercolor,
                         "border-left"   : "5px solid transparent",
-                        "border-right"  : "5px solid transparent"
+                        "border-right"  : "5px solid transparent",
+                        "border-top"    : "0px"
                     });
                     datatip.append(arrow);
                     datatip.append(box);
@@ -199,6 +196,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                         "border-bottom" : "5px solid transparent",
                         "border-top"    : "5px solid transparent",
                         "border-right"  : arrowLength + "px solid " + bordercolor,
+                        "border-left"   : "0px",
                         "float"         : "left"
                     });
                     box.css("float", "left");
@@ -207,9 +205,11 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                     break;
                 case Datatips.UP:
                     arrow.css({
-                        "border-top"   : arrowLength + "px solid " + bordercolor,
-                        "border-left"  : "5px solid transparent",
-                        "border-right" : "5px solid transparent"
+                        "left"          : ((w/2) - 5) + "px",
+                        "border-top"    : arrowLength + "px solid " + bordercolor,
+                        "border-left"   : "5px solid transparent",
+                        "border-right"  : "5px solid transparent",
+                        "border-bottom" : "0px"
                     });
                     datatip.append(box);
                     datatip.append(arrow);
@@ -220,6 +220,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                         "border-bottom" : "5px solid transparent",
                         "border-top"    : "5px solid transparent",
                         "border-left"   : arrowLength + "px solid " + bordercolor,
+                        "border-right"  : "0px",
                         "float"         : "left"
                     });
                     box.css("float", "left");
@@ -228,18 +229,37 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                     break;
             }
 
+            datatip.css({
+                "text-align" : "left",
+                "position"   : "absolute",
+                "clear"      : "both",
+                "left"       : offset[0] + "px",
+                "top"        : offset[1] + "px",
+                "margin"     : "0px",
+                "padding"    : "0px"
+            });
+
             box.css({
                 "display"          : "inline-block",
+                "position"         : "relative",
                 "background-color" : datatips.bgcolor().toRGBA(datatips.bgalpha()),
-                "padding-left"     : "2px",
-                "padding-right"    : "2px",
+                "text-align"       : "left",
+                "margin"           : "0px",
+                "padding-left"     : "5px",
+                "padding-right"    : "5px",
+                "padding-top"      : "1px",
+                "padding-bottom"   : "1px",
                 "border"           : datatips.border() + "px solid " + bordercolor,
                 "border-radius"    : "5px"
             }),
+
             arrow.css({
-                height   : "0px",
-                width    : "0px",
-                position : "relative"
+                "height"     : "0px",
+                "width"      : "0px",
+                "position"   : "relative",
+                "text-align" : "left",
+                "margin"     : "0px",
+                "padding"    : "0px"
             });
 
             return datatip;
