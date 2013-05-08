@@ -66,8 +66,8 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
             // Render the tick marks and labels
             //
             if (this.hasDataMin() && this.hasDataMax()) { // but skip if we don't yet have data values
-                if (currentLabeler) {
-                    var tickwidth = this.tickwidth(),
+                if (currentLabeler && currentLabeler.visible()) { // also skip if we have no current labeler, or
+                    var tickwidth = this.tickwidth(),             //   if we do but its `visible` property is false
                         tickmin   = this.tickmin(),
                         tickmax   = this.tickmax(),
                         tickcolor = this.tickcolor();

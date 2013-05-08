@@ -36,6 +36,8 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 return color instanceof window.multigraph.math.RGBColor;
             });
 
+            this.hasA("visible").which.isA("boolean").and.which.defaultsTo(true);
+
             this.isBuiltWith("axis", function () {
                 var labelsDefaults = defaultValues.horizontalaxis.labels;
                 if (this.axis().type() === DataValue.DATETIME) {

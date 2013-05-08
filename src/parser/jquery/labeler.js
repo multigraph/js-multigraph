@@ -47,6 +47,8 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
                 parseLabelerAttribute(xml.attr("anchor"),        labeler.anchor,        parsePoint,                                   "anchor");
                 parseLabelerAttribute(xml.attr("densityfactor"), labeler.densityfactor, parseFloat,                                   "densityfactor");
                 parseLabelerAttribute(xml.attr("color"),         labeler.color,         math.RGBColor.parse,                          "color");
+                parseLabelerAttribute(xml.attr("visible"),       labeler.visible,       utilityFunctions.parseBoolean,                "visible");
+
             }
             return labeler;
         };
