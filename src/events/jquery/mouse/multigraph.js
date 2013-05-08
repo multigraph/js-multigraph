@@ -17,7 +17,13 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
                                       $target.height() - (event.pageY - $target.offset().top) - multigraph.graphs().at(0).y0());
             };
 
-            $target.mousedown(function (event) {
+            $target.mousedown(function (event, datatipsEvent) {
+                if (datatipsEvent) {
+                    // if the datatips mousedown handler is triggered through the datatips handler
+                    // then the default event does not contain pageX or pageY. So the datatips handler
+                    // passes its event, which does contain pageX and pageY.
+                    event = datatipsEvent;
+                }
                 event.preventDefault();
                 var i;
                 for (i = 0; i < multigraph.graphs().size(); i++) {
@@ -62,12 +68,6 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
                     multigraph.graphs().at(0).doWheelZoom(multigraph, eventLoc.x(), eventLoc.y(), delta);
                 }
                 event.preventDefault();
-            });
-
-            $target.mouseenter(function (event) {
-                mouseLast = eventLocationToGraphCoords(event);
-                mouseIsDown = false;
-                multigraph.graphs().at(0).doDragDone();
             });
 
             $target.mouseleave(function (event) {
