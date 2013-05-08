@@ -75,6 +75,14 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
                 multigraph.graphs().at(0).doDragDone();
             });
 
+            window.multigraph.jQuery(multigraph.div()).mouseleave(function (event) {
+                var graphs = multigraph.graphs(),
+                    i;
+                for (i = 0; i < graphs.size(); i++) {
+                    graphs.at(i).removeDatatips();
+                }
+            });
+
         });
 
     });
