@@ -70,8 +70,8 @@ describe("Legend", function () {
     });
 
     it("should be able to set/get the columns attribute", function () {
-        l.columns(13);
-        expect(l.columns()).toBe(13);
+        l.columns(12);
+        expect(l.columns()).toBe(12);
     });
 
     it("should be able to set/get the cornerradius attribute", function () {
