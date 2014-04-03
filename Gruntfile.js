@@ -16,8 +16,34 @@ module.exports = function(grunt) {
         banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
       },
       build: {
-		src: "build/multigraph.js",
-		dest: "build/multigraph-min-grunt.js"
+        src: "build/multigraph.js",
+        dest: "build/multigraph-min-grunt.js"
+      }
+    },
+    replace: {
+      build: {
+        options: {
+          patterns: [
+            {
+              match: '.which.',
+              replacement: '.'
+            },
+            {
+              match: '.eachOfWhich.',
+              replacement: '.'
+            },
+            {
+              match: '.and.',
+              replacement: '.'
+            }
+          ]
+        },
+        files: [
+          {
+              src: ['build/multigraph-min-grunt.js'],
+              dest: 'build/'
+          }
+        ]
       }
     },
     qunit: {
@@ -46,8 +72,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-qunit');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-replace');
 
   grunt.registerTask('test', ['jshint', 'qunit']);
+  grunt.registerTask('build', ['uglify', 'replace']);
 
   grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'uglify']);
 
