@@ -156,9 +156,9 @@ module.exports = function(grunt) {
       files: ['test/**/*.html']
     },
     jshint: {
-      files: ['Gruntfile.js', 'src/**/*.js', 'test/**/*.js'],
+      files: ['Gruntfile.js', 'src/**/*.js'],
       options: {
-        // options here to override JSHint defaults
+        ignores: ['<%= dirs.raphael %>/raphael.js'],
         globals: {
           jQuery: true,
           console: true,
