@@ -114,7 +114,7 @@ module.exports = function(grunt) {
           '<%= sections.raphael %>',
           '<%= sections.canvas %>'
         ],
-        dest: 'build/multigraph-grunt.js'
+        dest: 'build/multigraph.js'
       }
     },
     uglify: {
@@ -123,7 +123,7 @@ module.exports = function(grunt) {
       },
       build: {
         src: "build/multigraph.js",
-        dest: "build/multigraph-min-grunt.js"
+        dest: "build/multigraph-min.js"
       }
     },
     replace: {
@@ -146,7 +146,7 @@ module.exports = function(grunt) {
         },
         files: [
           {
-              src: ['build/multigraph-min-grunt.js'],
+              src: ['build/multigraph-min.js'],
               dest: 'build/'
           }
         ]
