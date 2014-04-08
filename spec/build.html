@@ -1,15 +1,15 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-  "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <html>
 <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title>Multigraph Build Jasmine Tests</title>
 
+  <link rel="shortcut icon" type="image/png" href="../lib/jasmine/jasmine-2.0.0/jasmine_favicon.png">
+  <link rel="stylesheet" type="text/css" href="../lib/jasmine/jasmine-2.0.0/jasmine.css">
 
-  <link rel="shortcut icon" type="image/png" href="../lib/jasmine/jasmine-1.2.0.rc3/jasmine_favicon.png">
-  <link rel="stylesheet" type="text/css" href="../lib/jasmine/jasmine-1.2.0.rc3/jasmine.css">
-  <script type="text/javascript" src="../lib/jasmine/jasmine-1.2.0.rc3/jasmine.js"></script>
-  <script type="text/javascript" src="../lib/jasmine/jasmine-1.2.0.rc3/jasmine-html.js"></script>
-  <script type="text/javascript" src="../lib/jasmine/jasmine-mods.js"></script>
+  <script type="text/javascript" src="../lib/jasmine/jasmine-2.0.0/jasmine.js"></script>
+  <script type="text/javascript" src="../lib/jasmine/jasmine-2.0.0/jasmine-html.js"></script>
+  <script type="text/javascript" src="../lib/jasmine/jasmine-2.0.0/boot.js"></script>
 
   <script type="text/javascript" src="../build/multigraph-min.js"></script>
 
@@ -111,35 +111,6 @@
 <script type="text/javascript" src="parser/jquery/zoom.js"></script>
 <script type="text/javascript" src="utility_functions/parsing_functions.js"></script>
 <!--END_ANT_LINES-->
-
-  <script type="text/javascript">
-    (function () {
-      var jasmineEnv = jasmine.getEnv();
-      jasmineEnv.updateInterval = 1000;
-
-      var htmlReporter = new jasmine.HtmlReporter();
-
-      jasmineEnv.addReporter(htmlReporter);
-
-      jasmineEnv.specFilter = function (spec) {
-        return htmlReporter.specFilter(spec);
-      };
-
-      var currentWindowOnload = window.onload;
-
-      window.onload = function () {
-        if (currentWindowOnload) {
-          currentWindowOnload();
-        }
-        execJasmine();
-      };
-
-      function execJasmine() {
-        jasmineEnv.execute();
-      }
-
-    })();
-  </script>
 
 </head>
 
