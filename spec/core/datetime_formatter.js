@@ -15,13 +15,13 @@ describe("DatetimeFormatter", function () {
     it("should throw an error if the format string is not valid", function () {
         expect(function () {
             var df = new DatetimeFormatter(1.234);
-        }).toThrow("format must be a string");
+        }).toThrowError("format must be a string");
         expect(function () {
             var df = new DatetimeFormatter("%2.3");
-        }).toThrow("Invalid character code for datetime formatting string");
+        }).toThrowError("Invalid character code for datetime formatting string");
         expect(function () {
             var df = new DatetimeFormatter();
-        }).toThrow("format must be a string");
+        }).toThrowError("format must be a string");
     });
 
     it("getMaxLength method should return the correct value", function () {

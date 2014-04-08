@@ -24,7 +24,7 @@ describe("Data", function () {
         it("should throw an error if the parameter is not an array of strings", function () {
             expect(function () {
                 testData = new Data(["hello", "world", "hi", "planet"]);
-            }).toThrow("Data: constructor parameter should be an array of DataVariable objects");
+            }).toThrowError("Data: constructor parameter should be an array of DataVariable objects");
         });
     });
 
@@ -32,13 +32,13 @@ describe("Data", function () {
         it("should throw an error if the parameter is not a string", function () {
             expect(function () {
                 testData.columnIdToColumnNumber(1);
-            }).toThrow("Data: columnIdToColumnNumber expects parameter to be a string");
+            }).toThrowError("Data: columnIdToColumnNumber expects parameter to be a string");
         });
 
         it("should throw an error if the column id doesn't exist", function () {
             expect(function () {
                 testData.columnIdToColumnNumber("column100");
-            }).toThrow("Data: no column with the label column100");
+            }).toThrowError("Data: no column with the label column100");
         });
 
         it("should return the column number associated with the string id", function () {
@@ -50,13 +50,13 @@ describe("Data", function () {
         it("should throw an error if the parameter is not a string", function () {
             expect(function () {
                 testData.columnIdToDataVariable(1);
-            }).toThrow("Data: columnIdToDataVariable requires a string parameter");
+            }).toThrowError("Data: columnIdToDataVariable requires a string parameter");
         });
 
         it("should throw an error if the column id doesn't exist", function () {
             expect(function () {
                 testData.columnIdToDataVariable("column100");
-            }).toThrow("Data: no column with the label column100");
+            }).toThrowError("Data: no column with the label column100");
         });
 
         it("should return a DataValue associated with the column id", function () {
@@ -70,13 +70,13 @@ describe("Data", function () {
         it("should throw an error if the parameter is not an integer", function () {
             expect(function () {
                 testData.getColumnId("hello");
-            }).toThrow("Data: getColumnId method expects an integer");
+            }).toThrowError("Data: getColumnId method expects an integer");
         });
 
         it("should throw an error if the column does not exist", function () {
             expect(function () {
                 testData.getColumnId(100);
-            }).toThrow("Data: column 100 does not exist");
+            }).toThrowError("Data: column 100 does not exist");
         });
 
         it("should return the ID associated with the column number", function () {

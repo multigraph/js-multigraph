@@ -304,38 +304,38 @@ describe("RGBColor", function () {
             it("should throw an error if a hex string is not 3 or 6 characters long", function () {
                 expect(function () {
                     rgb2 = RGBColor.parse("0x11");
-                }).toThrow("'0x11' is not a valid color");
+                }).toThrowError("'0x11' is not a valid color");
                 expect(function () {
                     rgb2 = RGBColor.parse("0x1111");
-                }).toThrow("'0x1111' is not a valid color");
+                }).toThrowError("'0x1111' is not a valid color");
                 expect(function () {
                     rgb2 = RGBColor.parse("0xab34343");
-                }).toThrow("'0xab34343' is not a valid color");
+                }).toThrowError("'0xab34343' is not a valid color");
                 expect(function () {
                     rgb2 = RGBColor.parse("0x343434");
-                }).not.toThrow("'0x343434' is not a valid color");
+                }).not.toThrowError("'0x343434' is not a valid color");
             });
             it("should throw an error if a hex string contains a character other than [0-9] or [a-f|A-F]", function () {
                 expect(function () {
                     rgb2 = RGBColor.parse("0x1222Tg");
-                }).toThrow("'0x1222Tg' is not a valid color");
+                }).toThrowError("'0x1222Tg' is not a valid color");
                 expect(function () {
                     rgb2 = RGBColor.parse("0xX2X2X2");
-                }).toThrow("'0xX2X2X2' is not a valid color");
+                }).toThrowError("'0xX2X2X2' is not a valid color");
                 expect(function () {
                     rgb2 = RGBColor.parse("0xF0`");
-                }).toThrow("'0xF0`' is not a valid color");
+                }).toThrowError("'0xF0`' is not a valid color");
             });
             it("should throw an error if a named string is not one of the specified names", function () {
                 expect(function () {
                     rgb2 = RGBColor.parse("red~ish");
-                }).toThrow("'red~ish' is not a valid color");
+                }).toThrowError("'red~ish' is not a valid color");
                 expect(function () {
                     rgb2 = RGBColor.parse("pin");
-                }).toThrow("'pin' is not a valid color");
+                }).toThrowError("'pin' is not a valid color");
                 expect(function () {
                     rgb2 = RGBColor.parse("teal");
-                }).toThrow("'teal' is not a valid color");
+                }).toThrowError("'teal' is not a valid color");
             });
         });
     });

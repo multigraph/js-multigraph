@@ -15,13 +15,13 @@ describe("NumberFormatter", function () {
     it("should throw an error if the format string is not valid", function () {
         expect(function () {
             var nf = new NumberFormatter(1.234);
-        }).toThrow("format must be a string");
+        }).toThrowError("format must be a string");
         expect(function () {
             var nf = new NumberFormatter("%2.3");
         }).toThrow("[sprintf] invalid format string");
         expect(function () {
             var nf = new NumberFormatter();
-        }).toThrow("format must be a string");
+        }).toThrowError("format must be a string");
     });
 
     it("format method should return the correct value", function () {

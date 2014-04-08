@@ -27,7 +27,7 @@ describe("Renderer", function () {
             }).not.toThrow();
             expect(function () {
                 r.type("barerrors");
-            }).toThrow("validator failed with parameter barerrors");
+            }).toThrowError("validator failed with parameter barerrors");
         });
     });
 
