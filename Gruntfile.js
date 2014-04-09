@@ -155,6 +155,45 @@ module.exports = function(grunt) {
     qunit: {
       files: ['test/**/*.html']
     },
+    tags: {
+      jasmineSource: {
+        options: {
+          scriptTemplate: '<script type="text/javascript" src="{{ path }}"></script>',
+          openTag: '<!-- start source -->',
+          closeTag: '<!-- end source -->'
+        },
+        src: [
+          '<%= sections.lib %>',
+          '<%= sections.core %>',
+          '<%= sections.parser %>',
+          '<%= sections.norm %>',
+          '<%= sections.drag %>',
+          '<%= sections.mouse %>',
+          '<%= sections.touch %>',
+          '<%= sections.raphael %>',
+          '<%= sections.canvas %>'
+        ],
+        dest: 'spec/index.html'
+      },
+      jasmineSpec: {
+        options: {
+          scriptTemplate: '<script type="text/javascript" src="{{ path }}"></script>',
+          openTag: '<!-- start spec -->',
+          closeTag: '<!-- end spec -->'
+        },
+        src: 'spec/**/*.js',
+        dest: 'spec/index.html'
+      },
+      jasmineBuildSpec: {
+        options: {
+          scriptTemplate: '<script type="text/javascript" src="{{ path }}"></script>',
+          openTag: '<!-- start spec -->',
+          closeTag: '<!-- end spec -->'
+        },
+        src: 'spec/**/*.js',
+        dest: 'spec/build.html'
+      }
+    },
     jshint: {
       files: ['Gruntfile.js', 'src/**/*.js'],
       options: {
@@ -178,6 +217,7 @@ module.exports = function(grunt) {
 //  grunt.loadNpmTasks('grunt-contrib-qunit');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-script-link-tags');
   grunt.loadNpmTasks('grunt-replace');
 
   grunt.registerTask('test', ['jshint', 'qunit']);
