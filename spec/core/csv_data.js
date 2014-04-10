@@ -31,17 +31,13 @@ describe("CSV Data", function () {
             expect(typeof(csv.filename)).toBe("function");
         });
 
-        it("should do an async request to get the csv file", function () {
+        it("should do an async request to get the csv file", function (done) {
             var spy = jasmine.createSpy();
 
-            csv = new CSVData([], "core/fixtures/csv_test1.csv");
-            csv.addListener('dataReady', spy);
-
-            waitsFor(function () {
-                return csv.dataIsReady();
-            });
-
-            runs(function () {
+            csv = new CSVData([], "../spec/core/fixtures/csv_test1.csv");
+            csv.addListener('dataReady', function() {
+                done();
+                spy();
                 expect(spy).toHaveBeenCalled();
             });
         });
@@ -54,7 +50,7 @@ describe("CSV Data", function () {
                              new DataVariable("column4", 3, DataValue.NUMBER)
                             ];
 
-            csv = new CSVData(dataVariables, "core/fixtures/csv_test1.csv");
+            csv = new CSVData(dataVariables, "../spec/core/fixtures/csv_test1.csv");
         });
 
 
@@ -65,13 +61,14 @@ describe("CSV Data", function () {
         var dataVariables,
             csv;
 
-        beforeEach(function () {
+        beforeEach(function (done) {
             dataVariables = [new DataVariable("column1", 0, DataValue.NUMBER),
                              new DataVariable("column2", 1, DataValue.NUMBER),
                              new DataVariable("column3", 2, DataValue.NUMBER),
                              new DataVariable("column4", 3, DataValue.NUMBER)
                             ];
-            csv = new CSVData(dataVariables, "core/fixtures/csv_test1.csv");
+            csv = new CSVData(dataVariables, "../spec/core/fixtures/csv_test1.csv");
+            csv.addListener('dataReady', done);
         });
 
         it("should exist", function () {
@@ -80,30 +77,23 @@ describe("CSV Data", function () {
 
         it("does the right thing", function () {
 
-            waitsFor(function () {
-                return csv.dataIsReady();
-            });
+            var row,
+            iter = csv.getIterator(['column1', 'column2', 'column3', 'column4'],
+                                   new NumberValue(1903), new NumberValue(1905));
 
-            runs(function () {
-                var row,
-                    iter = csv.getIterator(['column1', 'column2', 'column3', 'column4'],
-                                           new NumberValue(1903), new NumberValue(1905));
-
-                expect(iter.hasNext()).toBe(true);
-                row = iter.next();
-                expect(row[0] instanceof NumberValue).toBe(true);
-                expect(row[0].getRealValue()).toBe(1903);
-                expect(row[1].getRealValue()).toBe(-0.822017);
-                expect(row[2].getRealValue()).toBe(-0.591622);
-                expect(iter.hasNext()).toBe(true);
-                row = iter.next();
-                expect(row[0].getRealValue()).toBe(1904);
-                expect(iter.hasNext()).toBe(true);
-                row = iter.next();
-                expect(row[0].getRealValue()).toBe(1905);
-                expect(iter.hasNext()).toBe(false);
-            });
-
+            expect(iter.hasNext()).toBe(true);
+            row = iter.next();
+            expect(row[0] instanceof NumberValue).toBe(true);
+            expect(row[0].getRealValue()).toBe(1903);
+            expect(row[1].getRealValue()).toBe(-0.822017);
+            expect(row[2].getRealValue()).toBe(-0.591622);
+            expect(iter.hasNext()).toBe(true);
+            row = iter.next();
+            expect(row[0].getRealValue()).toBe(1904);
+            expect(iter.hasNext()).toBe(true);
+            row = iter.next();
+            expect(row[0].getRealValue()).toBe(1905);
+            expect(iter.hasNext()).toBe(false);
         });
 
     });

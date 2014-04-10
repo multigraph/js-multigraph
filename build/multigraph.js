@@ -2442,8 +2442,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
 
     ns.DataMeasure = DataMeasure;
 
-});
-window.multigraph.util.namespace("window.multigraph.core", function (ns) {
+});window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     "use strict";
     var DataFormatter = {};
     /*
@@ -17861,8 +17860,7 @@ window.Raphael.vml && function (R) {
             };
         })(method);
     }
-}(window.Raphael);
-window.multigraph.util.namespace("window.multigraph.graphics.raphael", function (ns) {
+}(window.Raphael);window.multigraph.util.namespace("window.multigraph.graphics.raphael", function (ns) {
     "use strict";
 
     /**

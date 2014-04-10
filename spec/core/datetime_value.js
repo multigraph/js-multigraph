@@ -107,7 +107,9 @@ describe("DatetimeValue", function () {
         });
 
         var testToString = function (inputString, expectedOutputString) {
-            expect(DatetimeValue.parse(inputString).toString()).toEqual(expectedOutputString);
+            it("should return " + expectedOutputString + " when processing " + inputString, function () {
+                expect(DatetimeValue.parse(inputString).toString()).toEqual(expectedOutputString);
+            });
         };
 
         testToString("20120712162554.123",   "20120712162554.123");

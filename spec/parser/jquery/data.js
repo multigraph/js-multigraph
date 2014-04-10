@@ -236,9 +236,9 @@ describe("Data parsing", function () {
             variable2IdString = "y",
             variable2ColumnString = "1",
             variable2TypeString = "number",
-            locationString = "parser/jquery/fixtures/test1.csv";
+            locationString = "../spec/parser/jquery/fixtures/test1.csv";
 
-        beforeEach(function () {
+        beforeEach(function (done) {
             xmlString = ''
                 + '<data>'
                 +   '<variables>'
@@ -259,6 +259,7 @@ describe("Data parsing", function () {
                 + '</data>';
             $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
             data = Data.parseXML($xml);
+            data.addListener('dataReady', done);
         });
 
         it("parser should return a CSVData instance", function () {
@@ -283,26 +284,21 @@ describe("Data parsing", function () {
         });
 
         it("getIterator() method should return an interator that behaves correctly", function () {
-            waitsFor(function () {
-                return data.dataIsReady();
-            });
-            runs(function () {
-                var iter = data.getIterator(["x","y"], new NumberValue(10), new NumberValue(12));
-                expect(iter).not.toBeUndefined();
-                expect(iter.hasNext()).toBe(true);
-                var values = iter.next();
-                expect(values).not.toBeUndefined();
-                expect(values.length).toEqual(2);
-                expect(values[0].getRealValue()).toEqual(10);
-                expect(values[1].getRealValue()).toEqual(11);
-                expect(iter.hasNext()).toBe(true);
-                values = iter.next();
-                expect(values).not.toBeUndefined();
-                expect(values.length).toEqual(2);
-                expect(values[0].getRealValue()).toEqual(12);
-                expect(values[1].getRealValue()).toEqual(13);
-                expect(iter.hasNext()).toBe(false);
-            });
+            var iter = data.getIterator(["x","y"], new NumberValue(10), new NumberValue(12));
+            expect(iter).not.toBeUndefined();
+            expect(iter.hasNext()).toBe(true);
+            var values = iter.next();
+            expect(values).not.toBeUndefined();
+            expect(values.length).toEqual(2);
+            expect(values[0].getRealValue()).toEqual(10);
+            expect(values[1].getRealValue()).toEqual(11);
+            expect(iter.hasNext()).toBe(true);
+            values = iter.next();
+            expect(values).not.toBeUndefined();
+            expect(values.length).toEqual(2);
+            expect(values[0].getRealValue()).toEqual(12);
+            expect(values[1].getRealValue()).toEqual(13);
+            expect(iter.hasNext()).toBe(false);
         });
 
     });

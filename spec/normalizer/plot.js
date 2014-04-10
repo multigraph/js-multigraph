@@ -415,7 +415,7 @@ describe("Plot Normalizer", function () {
 
             expect(function () {
                 plot.normalize(graph);
-            }).toThrow("Plot Normalizer: There does not exist an unused variable");
+            }).toThrowError("Plot Normalizer: There does not exist an unused variable");
 
         });
 
