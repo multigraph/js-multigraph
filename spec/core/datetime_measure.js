@@ -83,34 +83,34 @@ describe("DatetimeMeasure", function () {
         it("constructor should throw an error if first argument is not a number", function () {
             expect(function () {
                 new DatetimeMeasure("foo", DatetimeMeasure.DAY);
-            }).toThrow("Improper input for Datetime Measure's constructor");
+            }).toThrowError("Improper input for Datetime Measure's constructor");
             expect(function () {
                 new DatetimeMeasure({}, DatetimeMeasure.DAY);
-            }).toThrow("Improper input for Datetime Measure's constructor");
+            }).toThrowError("Improper input for Datetime Measure's constructor");
         });
 
         it("constructor should throw an error if second argument is not a time unit", function () {
             expect(function () {
                 new DatetimeMeasure(2, "foo");
-            }).toThrow("Improper input for Datetime Measure's constructor");
+            }).toThrowError("Improper input for Datetime Measure's constructor");
             expect(function () {
                 new DatetimeMeasure(2, {});
-            }).toThrow("Improper input for Datetime Measure's constructor");
+            }).toThrowError("Improper input for Datetime Measure's constructor");
             expect(function () {
                 new DatetimeMeasure(2);
-            }).toThrow("Improper input for Datetime Measure's constructor");
+            }).toThrowError("Improper input for Datetime Measure's constructor");
         });
 
         it("constructor should throw an error if not called with two arguments", function () {
             expect(function () {
                 new DatetimeMeasure(2);
-            }).toThrow("Improper input for Datetime Measure's constructor");
+            }).toThrowError("Improper input for Datetime Measure's constructor");
             expect(function () {
                 new DatetimeMeasure(2, DatetimeMeasure.DAY, 3);
-            }).toThrow("Datetime Measure's contructor requires exactly two arguments");
+            }).toThrowError("Datetime Measure's contructor requires exactly two arguments");
             expect(function () {
                 new DatetimeMeasure(2, DatetimeMeasure.DAY, 3, 4);
-            }).toThrow("Datetime Measure's contructor requires exactly two arguments");
+            }).toThrowError("Datetime Measure's contructor requires exactly two arguments");
         });
 
     });

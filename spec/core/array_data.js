@@ -72,7 +72,7 @@ describe("ArrayData", function () {
         it("should throw an error if the first parameter is not a string", function () {
             expect(function () {
                 iterator0 = testArrayData.getIterator("?",new NumberValue(1903), new NumberValue(1905));
-            }).toThrow("ArrayData: getIterator method requires that the first parameter be an array of strings");
+            }).toThrowError("ArrayData: getIterator method requires that the first parameter be an array of strings");
         });
 
 
@@ -91,7 +91,7 @@ describe("ArrayData", function () {
         it("should throw an error if the last parameter is not an integer", function () {
             expect(function () {
                 iterator1 = testArrayData.getIterator(['column1', 'column2', 'column3', 'column4'],new NumberValue(1903), new NumberValue(1905), "hello");
-            }).toThrow("ArrayData: getIterator method requires last argument to be an integer");
+            }).toThrowError("ArrayData: getIterator method requires last argument to be an integer");
         });
 
 
@@ -164,13 +164,13 @@ describe("ArrayData", function () {
         it("should throw an error if the parameter is not a string", function () {
             expect(function () {
                 testArrayData.columnIdToColumnNumber(1);
-            }).toThrow("Data: columnIdToColumnNumber expects parameter to be a string");
+            }).toThrowError("Data: columnIdToColumnNumber expects parameter to be a string");
         });
 
         it("should throw an error if the column id doesn't exist", function () {
             expect(function () {
                 testArrayData.columnIdToColumnNumber("column100");
-            }).toThrow("Data: no column with the label column100");
+            }).toThrowError("Data: no column with the label column100");
         });
 
         it("should return the column number associated with the string id", function () {
@@ -182,13 +182,13 @@ describe("ArrayData", function () {
         it("should throw an error if the parameter is not a string", function () {
             expect(function () {
                 testArrayData.columnIdToDataVariable(1);
-            }).toThrow("Data: columnIdToDataVariable requires a string parameter");
+            }).toThrowError("Data: columnIdToDataVariable requires a string parameter");
         });
 
         it("should throw an error if the column id doesn't exist", function () {
             expect(function () {
                 testArrayData.columnIdToDataVariable("column100");
-            }).toThrow("Data: no column with the label column100");
+            }).toThrowError("Data: no column with the label column100");
         });
 
         it("should return a DataValue associated with the column id", function () {
@@ -202,13 +202,13 @@ describe("ArrayData", function () {
         it("should throw an error if the parameter is not an integer", function () {
             expect(function () {
                 testArrayData.getColumnId("hello");
-            }).toThrow("Data: getColumnId method expects an integer");
+            }).toThrowError("Data: getColumnId method expects an integer");
         });
 
         it("should throw an error if the column does not exist", function () {
             expect(function () {
                 testArrayData.getColumnId(100);
-            }).toThrow("Data: column 100 does not exist");
+            }).toThrowError("Data: column 100 does not exist");
         });
 
         it("should return the ID associated with the column number", function () {

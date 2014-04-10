@@ -1,38 +1,32 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-  "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <html>
 <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title>Multigraph Dev Jasmine Tests</title>
 
+  <link rel="shortcut icon" type="image/png" href="../lib/jasmine/jasmine-2.0.0/jasmine_favicon.png">
+  <link rel="stylesheet" type="text/css" href="../lib/jasmine/jasmine-2.0.0/jasmine.css">
 
-  <link rel="shortcut icon" type="image/png" href="../lib/jasmine/jasmine-1.2.0.rc3/jasmine_favicon.png">
-  <link rel="stylesheet" type="text/css" href="../lib/jasmine/jasmine-1.2.0.rc3/jasmine.css">
-  <script type="text/javascript" src="../lib/jasmine/jasmine-1.2.0.rc3/jasmine.js"></script>
-  <script type="text/javascript" src="../lib/jasmine/jasmine-1.2.0.rc3/jasmine-html.js"></script>
-  <script type="text/javascript" src="../lib/jasmine/jasmine-mods.js"></script>
+  <script type="text/javascript" src="../lib/jasmine/jasmine-2.0.0/jasmine.js"></script>
+  <script type="text/javascript" src="../lib/jasmine/jasmine-2.0.0/jasmine-html.js"></script>
+  <script type="text/javascript" src="../lib/jasmine/jasmine-2.0.0/boot.js"></script>
 
 <!--
-  <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'
-            type='text/javascript'></script>
--->
-  <script type="text/javascript" src="../lib/jermaine/build/jermaine.js"></script>
-  <script type="text/javascript" src="../lib/jquery/jquery.min.js"></script>
-  <script type="text/javascript" src="../lib/ajaxthrottle/src/ajaxthrottle.js"></script>
-  <script type="text/javascript" src="../lib/jquery/jquery-embed.js"></script>
-  <script type="text/javascript" src="../lib/util/util.js"></script>
-  <script type="text/javascript" src="../lib/sprintf/sprintf-0.7-beta1.js"></script>
-  <script type="text/javascript" src="../lib/requestanimationframe/requestanimationframe.js"></script>
+  <script type="text/javascript" src="../lib/jasmine/jasmine-mods.js"></script>
+ -->
 
-<!-- 
-  The lines between BEGIN_ANT_LINES and END_ANT_LINES below are inserted/maintained automatically
-  by ant.  Do NOT edit them by hand; if you do, your edits will be lost next time ant is run.
-  If you need to modify the list of *.js files included here, first try simply running the ant
-  task that edits this file (look in build.xml to see which task that is); it constructs the list
-  of files below according to patterns, and it will pick up new files that match those patterns
-  automatically.  If you add a file that is not matched by one of the existing patterns, change
-  or add a pattern in the build.xml file to include your file.
--->
-<!--BEGIN_ANT_LINES-->
+<!-- start source -->
+<script type="text/javascript" src="../lib/jermaine/build/jermaine.js"></script>
+<script type="text/javascript" src="../lib/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../lib/ajaxthrottle/src/ajaxthrottle.js"></script>
+<script type="text/javascript" src="../lib/lightbox/lightbox.js"></script>
+<script type="text/javascript" src="../lib/jquery/jquery.mousewheel.js"></script>
+<script type="text/javascript" src="../lib/jquery/jquery-embed.js"></script>
+<script type="text/javascript" src="../lib/busy-spinner/busy_spinner.js"></script>
+<script type="text/javascript" src="../lib/error-display/build/errorDisplay.js"></script>
+<script type="text/javascript" src="../lib/util/util.js"></script>
+<script type="text/javascript" src="../lib/sprintf/sprintf-0.7-beta1.js"></script>
+<script type="text/javascript" src="../lib/requestanimationframe/requestanimationframe.js"></script>
 <script type="text/javascript" src="../src/utility_functions/defaults.js"></script>
 <script type="text/javascript" src="../src/utility_functions/parsing_functions.js"></script>
 <script type="text/javascript" src="../src/utility_functions/validation_functions.js"></script>
@@ -178,7 +172,8 @@
 <script type="text/javascript" src="../src/graphics/canvas/renderers/rangebar_renderer.js"></script>
 <script type="text/javascript" src="../src/graphics/canvas/text.js"></script>
 <script type="text/javascript" src="../src/graphics/canvas/window.js"></script>
-
+<!-- end source -->
+<!-- start spec -->
 <script type="text/javascript" src="core/array_data.js"></script>
 <script type="text/javascript" src="core/axis.js"></script>
 <script type="text/javascript" src="core/axis_binding.js"></script>
@@ -266,36 +261,7 @@
 <script type="text/javascript" src="parser/jquery/window.js"></script>
 <script type="text/javascript" src="parser/jquery/zoom.js"></script>
 <script type="text/javascript" src="utility_functions/parsing_functions.js"></script>
-<!--END_ANT_LINES-->
-
-  <script type="text/javascript">
-    (function () {
-      var jasmineEnv = jasmine.getEnv();
-      jasmineEnv.updateInterval = 1000;
-
-      var htmlReporter = new jasmine.HtmlReporter();
-
-      jasmineEnv.addReporter(htmlReporter);
-
-      jasmineEnv.specFilter = function (spec) {
-        return htmlReporter.specFilter(spec);
-      };
-
-      var currentWindowOnload = window.onload;
-
-      window.onload = function () {
-        if (currentWindowOnload) {
-          currentWindowOnload();
-        }
-        execJasmine();
-      };
-
-      function execJasmine() {
-        jasmineEnv.execute();
-      }
-
-    })();
-  </script>
+<!-- end spec -->
 
 </head>
 

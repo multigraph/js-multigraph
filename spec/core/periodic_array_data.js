@@ -39,7 +39,7 @@ describe("PeriodicArrayData", function () {
                     DatetimeMeasure.parse('1Y')
                 );
                 iterator = testPeriodicArrayData.getIterator("?",DatetimeValue.parse('2010-01-01'), DatetimeValue.parse('2010-06-01'));
-            }).toThrow("ArrayData: getIterator method requires that the first parameter be an array of strings");
+            }).toThrowError("ArrayData: getIterator method requires that the first parameter be an array of strings");
         });
 
         it("should throw an error if the last parameter is not an integer", function () {
@@ -54,7 +54,7 @@ describe("PeriodicArrayData", function () {
                     DatetimeMeasure.parse('1Y')
                 );
                 iterator = testPeriodicArrayData.getIterator(["time","temp"],DatetimeValue.parse('2010-01-01'), DatetimeValue.parse('2010-06-01'), "hello");
-            }).toThrow("ArrayData: getIterator method requires last argument to be an integer");
+            }).toThrowError("ArrayData: getIterator method requires last argument to be an integer");
         });
 
 
