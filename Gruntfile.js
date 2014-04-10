@@ -257,14 +257,14 @@ module.exports = function(grunt) {
       grunt.file.recurse(dir, processGraphicsSpec);
   });
 
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-yuidoc');
-  grunt.loadNpmTasks('grunt-script-link-tags');
   grunt.loadNpmTasks('grunt-replace');
   grunt.loadNpmTasks('grunt-run');
+  grunt.loadNpmTasks('grunt-script-link-tags');
 
   grunt.registerTask('lint', ['jshint']);
   grunt.registerTask('build', ['concat', 'uglify', 'replace']);
