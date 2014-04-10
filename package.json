@@ -29,7 +29,7 @@
   },
   "license": {
     "type": "MIT",
-    "url": "https://github.com/multigraph/js-multigraph/blob/master/LICENSE.txt"
+    "url": "https://github.com/multigraph/js-multigraph/blob/master/LICENSE"
   },
   "devDependencies": {
     "grunt": "^0.4.2",
