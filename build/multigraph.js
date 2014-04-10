@@ -11443,13 +11443,13 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
     });
 
 });
-window.multigraph.util.namespace("window.multigraph.events.jquery.draggable", function (ns) {
+window.multigraph.util.namespace("window.multigraph.events.draggable", function (ns) {
     "use strict";
 
     ns.mixin = new window.multigraph.core.Mixin();
 
 });
-window.multigraph.util.namespace("window.multigraph.events.jquery.draggable", function (ns) {
+window.multigraph.util.namespace("window.multigraph.events.draggable", function (ns) {
     "use strict";
 
     ns.mixin.add(function (ns, errorHandler) {
@@ -11518,13 +11518,13 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.draggable", fu
     });
 
 });
-window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", function (ns) {
+window.multigraph.util.namespace("window.multigraph.events.mouse", function (ns) {
     "use strict";
 
     ns.mixin = new window.multigraph.core.Mixin();
 
 });
-window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", function (ns) {
+window.multigraph.util.namespace("window.multigraph.events.mouse", function (ns) {
     "use strict";
 
     ns.mixin.add(function (ns, errorHandler) {
@@ -11561,7 +11561,7 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
     });
 
 });
-window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", function (ns) {
+window.multigraph.util.namespace("window.multigraph.events.mouse", function (ns) {
     "use strict";
 
     ns.mixin.add(function (ns) {
@@ -11783,13 +11783,13 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
     });
 
 }(window.multigraph.jQuery));
-window.multigraph.util.namespace("window.multigraph.events.jquery.touch", function (ns) {
+window.multigraph.util.namespace("window.multigraph.events.touch", function (ns) {
     "use strict";
 
     ns.mixin = new window.multigraph.core.Mixin();
 
  });
-window.multigraph.util.namespace("window.multigraph.events.jquery.touch", function (ns) {
+window.multigraph.util.namespace("window.multigraph.events.touch", function (ns) {
     "use strict";
 
     ns.mixin.add(function (ns, errorHandler) {
@@ -11834,7 +11834,7 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
     });
 
 });
-window.multigraph.util.namespace("window.multigraph.events.jquery.touch", function (ns) {
+window.multigraph.util.namespace("window.multigraph.events.touch", function (ns) {
     "use strict";
 
     ns.mixin.add(function (ns) {
@@ -19022,9 +19022,9 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
         ns.mixin.apply(window.multigraph.core);
         window.multigraph.normalizer.mixin.apply(window.multigraph.core);
-        window.multigraph.events.jquery.draggable.mixin.apply(window.multigraph);
-        window.multigraph.events.jquery.mouse.mixin.apply(window.multigraph);
-        window.multigraph.events.jquery.touch.mixin.apply(window.multigraph);
+        window.multigraph.events.draggable.mixin.apply(window.multigraph);
+        window.multigraph.events.mouse.mixin.apply(window.multigraph);
+        window.multigraph.events.touch.mixin.apply(window.multigraph);
     };
 
     var generateInitialGraph = function (mugl, options) {
@@ -21017,9 +21017,9 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         var errorHandler = options.messageHandler.error;
         window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
         ns.mixin.apply(window.multigraph.core);
-        window.multigraph.events.jquery.draggable.mixin.apply(window.multigraph, errorHandler);
-        window.multigraph.events.jquery.mouse.mixin.apply(window.multigraph, errorHandler);
-        window.multigraph.events.jquery.touch.mixin.apply(window.multigraph, errorHandler);
+        window.multigraph.events.draggable.mixin.apply(window.multigraph, errorHandler);
+        window.multigraph.events.mouse.mixin.apply(window.multigraph, errorHandler);
+        window.multigraph.events.touch.mixin.apply(window.multigraph, errorHandler);
         window.multigraph.normalizer.mixin.apply(window.multigraph.core);
     };
 
