@@ -2,7 +2,8 @@
     "project": {
         "name": "js-Multigraph",
         "description": "Multigraph's JavaScript Implementation",
-        "url": "http://www.multigraph.org/"
+        "url": "http://www.multigraph.org/",
+        "logo": "../multigraph-logo72x72.png"
     },
     "files": {
         "src/core/array_data.js": {
@@ -364,7 +365,24 @@
                 "WebServiceDataCacheNode": 1,
                 "WebServiceDataIterator": 1
             },
-            "fors": {},
+            "fors": {
+                "ArrayData": 1,
+                "Axis": 1,
+                "axisBinding": 1,
+                "AxisTitle": 1,
+                "Data": 1,
+                "EventEmitter": 1,
+                "Graph": 1,
+                "Title": 1,
+                "Legend": 1,
+                "Mixin": 1,
+                "Multigraph": 1,
+                "PeriodicArrayData": 1,
+                "Text": 1,
+                "WebServiceData": 1,
+                "WebServiceDataCacheNode": 1,
+                "WebServiceDataIterator": 1
+            },
             "is_submodule": 1,
             "namespaces": {},
             "module": "multigraph",
@@ -379,7 +397,11 @@
             "name": "canvas",
             "submodules": {},
             "classes": {},
-            "fors": {},
+            "fors": {
+                "AxisTitle": 1,
+                "Title": 1,
+                "Text": 1
+            },
             "is_submodule": 1,
             "namespaces": {},
             "module": "multigraph",
@@ -394,7 +416,11 @@
             "name": "raphael",
             "submodules": {},
             "classes": {},
-            "fors": {},
+            "fors": {
+                "AxisTitle": 1,
+                "Title": 1,
+                "Text": 1
+            },
             "is_submodule": 1,
             "namespaces": {},
             "module": "multigraph",
@@ -409,7 +435,9 @@
             "classes": {
                 "Displacement": 1
             },
-            "fors": {},
+            "fors": {
+                "Displacement": 1
+            },
             "is_submodule": 1,
             "namespaces": {},
             "module": "multigraph",
@@ -426,7 +454,9 @@
             "classes": {
                 "ParsingFunctions": 1
             },
-            "fors": {},
+            "fors": {
+                "ParsingFunctions": 1
+            },
             "is_submodule": 1,
             "namespaces": {},
             "module": "multigraph",
@@ -1043,7 +1073,7 @@
         },
         {
             "file": "src/core/axis.js",
-            "line": 57,
+            "line": 60,
             "description": "Stores the \"min\" value from the mugl file as a string, if there was one.",
             "itemtype": "property",
             "name": "min",
@@ -1055,7 +1085,7 @@
         },
         {
             "file": "src/core/axis.js",
-            "line": 66,
+            "line": 69,
             "description": "The current min DataValue for the axis.",
             "itemtype": "property",
             "name": "dataMin",
@@ -1067,7 +1097,7 @@
         },
         {
             "file": "src/core/axis.js",
-            "line": 74,
+            "line": 77,
             "description": "Convenience method for checking to see if dataMin has been set or not",
             "itemtype": "method",
             "name": "hasDataMin",
@@ -1082,7 +1112,7 @@
         },
         {
             "file": "src/core/axis.js",
-            "line": 91,
+            "line": 94,
             "description": "Stores the \"max\" value from the mugl file as a string, if there was one.",
             "itemtype": "property",
             "name": "max",
@@ -1094,7 +1124,7 @@
         },
         {
             "file": "src/core/axis.js",
-            "line": 100,
+            "line": 103,
             "description": "The current max DataValue for the axis.",
             "itemtype": "property",
             "name": "dataMax",
@@ -1106,7 +1136,7 @@
         },
         {
             "file": "src/core/axis.js",
-            "line": 108,
+            "line": 111,
             "description": "Convenience method for checking to see if dataMax has been set or not.",
             "itemtype": "method",
             "name": "hasDataMax",
@@ -1121,7 +1151,7 @@
         },
         {
             "file": "src/core/axis.js",
-            "line": 205,
+            "line": 209,
             "description": "Decides which labeler to use: take the one with the largest density <= 0.8.\nUnless all have density > 0.8, in which case we take the first one.  This assumes\nthat the labelers list is ordered in increasing order of label density.\nThis function sets the `currentLabeler` and `currentLabelDensity` attributes.",
             "itemtype": "method",
             "name": "prepareRender",
@@ -1139,7 +1169,7 @@
         },
         {
             "file": "src/core/axis.js",
-            "line": 432,
+            "line": 440,
             "description": "Compute the distance from an axis to a point.  The point\n(x,y) is expressed in pixel coordinates in the same\ncoordinate system as the axis.\n\nWe use two different kinds of computations depending on\nwhether the point lies inside or outside the region bounded\nby the two lines perpendicular to the axis through its\nendpoints.  If the point lies inside this region, the\ndistance is simply the difference in the perpendicular\ncoordinate of the point and the perpendicular coordinate of\nthe axis.\n\nIf the point lies outside the region, then the distance is\nthe L2 distance between the point and the closest endpoint\nof the axis.",
             "itemtype": "method",
             "name": "distanceToPoint",
@@ -2515,7 +2545,7 @@
         },
         {
             "file": "src/core/multigraph.js",
-            "line": 128,
+            "line": 132,
             "description": "The busy spinner",
             "itemtype": "property",
             "name": "busySpinner",
@@ -2527,7 +2557,7 @@
         },
         {
             "file": "src/core/multigraph.js",
-            "line": 144,
+            "line": 148,
             "description": "Initializes the Multigraph's geometry by calling the `initializeGeometry` function of\neach of its graph children.",
             "itemtype": "method",
             "name": "initializeGeometry",
@@ -2555,7 +2585,7 @@
         },
         {
             "file": "src/core/multigraph.js",
-            "line": 161,
+            "line": 165,
             "description": "Convience function for registering callback functions for data becoming ready.",
             "itemtype": "method",
             "name": "registerCommonDataCallback",
@@ -2573,7 +2603,7 @@
         },
         {
             "file": "src/core/multigraph.js",
-            "line": 177,
+            "line": 181,
             "description": "Determines if the browser supports canvas elements.",
             "itemtype": "method",
             "name": "browserHasCanvasSupport",
@@ -2587,7 +2617,7 @@
         },
         {
             "file": "src/core/multigraph.js",
-            "line": 200,
+            "line": 204,
             "description": "Creates a Multigraph according to specified options. Returns a\njQuery `promise` which interacts with the multigraph through its\n`done` function.",
             "itemtype": "method",
             "name": "createGraph",
@@ -2641,7 +2671,7 @@
         },
         {
             "file": "src/core/multigraph.js",
-            "line": 330,
+            "line": 345,
             "description": "`window.multigraph.create` is an alias for `window.multigraph.core.Multigraph.createGraph`.",
             "itemtype": "method",
             "name": "window.multigraph.create",
@@ -2691,7 +2721,7 @@
         },
         {
             "file": "src/core/multigraph.js",
-            "line": 375,
+            "line": 390,
             "description": "Creates default error and warning functions for multigraph.",
             "itemtype": "method",
             "name": "createDefaultMessageHandlers",
@@ -3276,7 +3306,7 @@
         },
         {
             "file": "src/graphics/raphael/axis_title.js",
-            "line": 28,
+            "line": 29,
             "description": "Renders the axis title using the Raphael driver.",
             "itemtype": "method",
             "name": "render",
@@ -3300,7 +3330,7 @@
         },
         {
             "file": "src/graphics/raphael/graph_title.js",
-            "line": 36,
+            "line": 39,
             "description": "Renders the title using the Raphael driver.",
             "itemtype": "method",
             "name": "render",
