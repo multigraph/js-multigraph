@@ -236,7 +236,7 @@ describe("Data parsing", function () {
             variable2IdString = "y",
             variable2ColumnString = "1",
             variable2TypeString = "number",
-            locationString = "../spec/parser/jquery/fixtures/test1.csv";
+            locationString = "../spec/parser/fixtures/test1.csv";
 
         beforeEach(function (done) {
             xmlString = ''
