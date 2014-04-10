@@ -19,7 +19,7 @@ describe("Axis Title parsing", function () {
         contentString = "A Title";
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
+        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
         xmlString = ''
             + '<title'
             +    ' angle="' + angleString + '"'
@@ -29,7 +29,7 @@ describe("Axis Title parsing", function () {
             +    '>'
             +      contentString
             + '</title>';
-        $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+        $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
         title = AxisTitle.parseXML($xml, axis);
     });
 
@@ -68,7 +68,7 @@ describe("Axis Title parsing", function () {
 
     it("should return `undefined` when parsing an empty title tag, ie `<title/>`", function () {
         xmlString = '<title/>';
-        $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+        $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
         title = AxisTitle.parseXML($xml, axis);
         expect(title).toBe(undefined);
     });

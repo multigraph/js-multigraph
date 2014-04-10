@@ -20,7 +20,7 @@ describe("Multigraph parsing", function () {
         $xml;
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
+        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
     });
 
     describe("with graph subtags", function () {
@@ -404,7 +404,7 @@ describe("Multigraph parsing", function () {
                 +     '</graph>'
                 + '</mugl>';
 
-            $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+            $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
             mg = Multigraph.parseXML($xml);
         });
 
@@ -720,7 +720,7 @@ describe("Multigraph parsing", function () {
                 +     '</data>'
                 + '</mugl>';
 
-            $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+            $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
             mg = Multigraph.parseXML($xml);
         });
 

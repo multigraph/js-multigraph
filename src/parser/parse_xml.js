@@ -1,4 +1,4 @@
-window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser", function (ns) {
     "use strict";
 
     // This function really does more than just convert a string to a jquery xml obj; it also works

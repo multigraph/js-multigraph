@@ -14,9 +14,9 @@ describe("Background parsing", function () {
         colorString = "0x123456";
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
+        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
         xmlString = '<background color="' + colorString + '"/>',
-        $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+        $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
         background = Background.parseXML($xml);
     });
 
@@ -50,7 +50,7 @@ describe("Background parsing", function () {
                 +      ' position="' + positionString + '"'
                 +      '/>'
                 + '</background>';
-            $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+            $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
             background = Background.parseXML($xml);
         });
 

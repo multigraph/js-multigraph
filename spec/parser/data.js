@@ -17,7 +17,7 @@ describe("Data parsing", function () {
         data;
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
+        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
     });
 
     it("Data model should have a parseXML method", function () {
@@ -55,7 +55,7 @@ describe("Data parsing", function () {
                 +     valuesString
                 +   '</values>'
                 + '</data>';
-            $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+            $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
             data = Data.parseXML($xml);
         });
 
@@ -136,7 +136,7 @@ describe("Data parsing", function () {
                 +     "1903,-0.49,1.21,1.05,1.30,1.36,1.68,-0.30,-0.48,-1.28,-1.71,-1.73,-1.90\n"
                 +   '</values>'
                 + '</data>';
-            $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+            $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
             data = Data.parseXML($xml);
             data.normalize();
         });
@@ -210,7 +210,7 @@ describe("Data parsing", function () {
                 +     '2010-10-01,10'
                 +   '</values>'
                 + '</data>';
-            $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+            $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
             data = Data.parseXML($xml);
         });
 
@@ -257,7 +257,7 @@ describe("Data parsing", function () {
                 +       ' location="' + locationString + '"'
                 +       '/>'
                 + '</data>';
-            $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+            $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
             data = Data.parseXML($xml);
             data.addListener('dataReady', done);
         });

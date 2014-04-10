@@ -31,7 +31,7 @@ describe("DataPlot parsing", function () {
         variable3;
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
+        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
     });
 
     describe("Axis parsing", function () {
@@ -55,7 +55,7 @@ describe("DataPlot parsing", function () {
                 +       ' ref="' + verticalaxisIdString + '"'
                 +       '/>'
                 + '</plot>';
-            $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+            $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
             plot = Plot.parseXML($xml, graph);
 
             expect(plot).not.toBeUndefined();
@@ -68,7 +68,7 @@ describe("DataPlot parsing", function () {
 
         it("should throw an error if an axis with the ref's id is not in the graph", function () {
             xmlString = '<plot><horizontalaxis ref="x2"/><verticalaxis ref="y"/></plot>';
-            $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+            $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
             expect( function () {
                 Plot.parseXML($xml, graph);
             }).toThrow(new Error("Plot Horizontal Axis Error: The graph does not contain an axis with an id of 'x2'"));
@@ -110,7 +110,7 @@ describe("DataPlot parsing", function () {
                 +         '/>'
                 +     '</verticalaxis>'
                 + '</plot>';
-            $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+            $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
             plot = Plot.parseXML($xml, graph);
             expect(plot).not.toBeUndefined();
             expect(plot instanceof DataPlot).toBe(true);
@@ -140,7 +140,7 @@ describe("DataPlot parsing", function () {
                 +         '/>'
                 +     '</verticalaxis>'
                 + '</plot>';
-            $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+            $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
             expect( function () {
                 Plot.parseXML($xml, graph);
             }).toThrow(new Error("Plot Variable Error: No Data tag contains a variable with an id of '" + missingVariableIdString + "'"));
@@ -160,7 +160,7 @@ describe("DataPlot parsing", function () {
                 +       ' label="' + labelString + '"'
                 +       '/>'
                 + '</plot>';
-            $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+            $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
             plot = Plot.parseXML($xml);
             expect(plot).not.toBeUndefined();
             expect(plot instanceof DataPlot).toBe(true);
@@ -185,7 +185,7 @@ describe("DataPlot parsing", function () {
                 +       ' type="' + rendererTypeString + '"'
                 +       '/>'
                 + '</plot>';
-            $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+            $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
             plot = Plot.parseXML($xml);
             expect(plot).not.toBeUndefined();
             expect(plot instanceof DataPlot).toBe(true);
@@ -213,7 +213,7 @@ describe("DataPlot parsing", function () {
                 +         '/>'
                 +   '</renderer>'
                 + '</plot>';
-            $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+            $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
             plot = Plot.parseXML($xml);
             expect(plot).not.toBeUndefined();
             expect(plot instanceof DataPlot).toBe(true);
@@ -241,7 +241,7 @@ describe("DataPlot parsing", function () {
                 +       ' type="' + typeString + '"'
                 +       '/>'
                 + '</plot>';
-            $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+            $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
             plot = Plot.parseXML($xml);
             expect(plot).not.toBeUndefined();
             expect(plot instanceof DataPlot).toBe(true);
@@ -261,7 +261,7 @@ describe("DataPlot parsing", function () {
                 +         '/>'
                 +   '</filter>'
                 + '</plot>';
-            $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+            $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
             plot = Plot.parseXML($xml);
             expect(plot).not.toBeUndefined();
             expect(plot instanceof DataPlot).toBe(true);
@@ -296,7 +296,7 @@ describe("DataPlot parsing", function () {
                 +       ' pad="' + padString + '"'
                 +       '/>'
                 + '</plot>';
-            $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+            $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
             plot = Plot.parseXML($xml);
             expect(plot).not.toBeUndefined();
             expect(plot instanceof DataPlot).toBe(true);
@@ -331,7 +331,7 @@ describe("DataPlot parsing", function () {
                 +         '/>'
                 +   '</datatips>'
                 + '</plot>';
-            $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+            $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
             plot = Plot.parseXML($xml);
             expect(plot).not.toBeUndefined();
             expect(plot instanceof DataPlot).toBe(true);
@@ -428,7 +428,7 @@ describe("DataPlot parsing", function () {
                 +       ' pad="1"'
                 +       '/>'
                 + '</plot>';
-            $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+            $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
             plot = Plot.parseXML($xml, graph);
         });
 

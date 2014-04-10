@@ -23,7 +23,7 @@ describe("Axis Label parsing", function () {
         axisType = DataValue.NUMBER;
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
+        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
         xmlString = ''
             + '<label'
             +    ' start="' + startString + '"'
@@ -34,7 +34,7 @@ describe("Axis Label parsing", function () {
             +    ' spacing="' + spacingString + '"'
             +    ' densityfactor="' + densityfactorString + '"'
             +    '/>';
-        $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+        $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
         labeler = Labeler.parseXML($xml, (new Axis(Axis.HORIZONTAL)).type(axisType));
     });
 

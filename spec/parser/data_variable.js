@@ -16,7 +16,7 @@ describe("Data DataVariable parsing", function () {
         missingopString = "eq";
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
+        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
         xmlString = ''
             + '<variable'
             +     ' id="x"'
@@ -25,7 +25,7 @@ describe("Data DataVariable parsing", function () {
             +     ' missingvalue="1990"'
             +     ' missingop="eq"'
             +     '/>';
-        $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+        $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
         variable = DataVariable.parseXML($xml);
     });
 

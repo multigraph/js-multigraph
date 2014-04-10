@@ -13,13 +13,13 @@ describe("Axis Grid parsing", function () {
         visibleBool = false;
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
+        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
         xmlString = ''
             + '<grid'
             +     ' color="' + colorString + '"'
             +     ' visible="' + visibleBool + '"'
             +     '/>';
-        $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+        $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
         grid = Grid.parseXML($xml);
     });
 

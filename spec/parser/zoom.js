@@ -18,7 +18,7 @@ describe("Axis Zoom parsing", function () {
         type = "number";
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
+        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
         xmlString = ''
             + '<zoom'
             +     ' allowed="' + allowedString + '"'
@@ -26,7 +26,7 @@ describe("Axis Zoom parsing", function () {
             +     ' max="' + maxString + '"'
             +     ' anchor="' + anchorString + '"'
             +     '/>',
-        $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+        $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
         zoom = Zoom.parseXML($xml, type);
     });
 

@@ -12,12 +12,12 @@ describe("Plot Filter parsing", function () {
         typeString = "number";
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
+        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
         xmlString = ''
             + '<filter'
             +     ' type="' + typeString + '"'
             +     '/>';
-        $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+        $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
         filter = Filter.parseXML($xml);
     });
 
@@ -46,7 +46,7 @@ describe("Plot Filter parsing", function () {
                     +       ' value="' + option1ValueString + '"'
                     +       '/>'
                     + '</filter>';
-                $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+                $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
                 filter = Filter.parseXML($xml);
             });
 
@@ -90,7 +90,7 @@ describe("Plot Filter parsing", function () {
                     +       ' value="' + option3ValueString + '"'
                     +       '/>'
                     + '</filter>';
-                $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+                $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
                 filter = Filter.parseXML($xml);
             });
 

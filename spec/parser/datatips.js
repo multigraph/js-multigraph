@@ -18,7 +18,7 @@ describe("Plot Datatips parsing", function () {
         padString = "1";
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
+        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
         xmlString = ''
             + '<datatips'
             +     ' bgcolor="' + bgcolorString + '"'
@@ -28,7 +28,7 @@ describe("Plot Datatips parsing", function () {
             +     ' border="' + borderString + '"'
             +     ' pad="' + padString + '"'
             +     '/>';
-        $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+        $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
         datatips = Datatips.parseXML($xml);
     });
 
@@ -79,7 +79,7 @@ describe("Plot Datatips parsing", function () {
                     +       ' format="' + variable1FormatString + '"'
                     +       '/>'
                     + '</datatips>';
-                $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+                $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
                 datatips = Datatips.parseXML($xml);
             });
 
@@ -121,7 +121,7 @@ describe("Plot Datatips parsing", function () {
                     +       ' format="' + variable3FormatString + '"'
                     +       '/>'
                     + '</datatips>';
-                $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+                $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
                 datatips = Datatips.parseXML($xml);
             });
 

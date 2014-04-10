@@ -26,7 +26,7 @@ describe("Graph Title parsing", function () {
         text = "Graph Title";
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
+        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
         xmlString = ''
             + '<title'
             +     ' color="' + colorString + '"'
@@ -42,7 +42,7 @@ describe("Graph Title parsing", function () {
             +     '>'
             +       text
             + '</title>',
-        $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+        $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
         title = Title.parseXML($xml, graph);
     });
 

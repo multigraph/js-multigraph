@@ -17,7 +17,7 @@ describe("Background Img parsing", function () {
 
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
+        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
         xmlString = ''
             + '<img'
             +    ' src="' + srcString + '"'
@@ -26,7 +26,7 @@ describe("Background Img parsing", function () {
             +    ' base="' + baseString + '"'
             +    ' position="' + positionString + '"'
             +    '/>',
-        $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+        $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
         image = Img.parseXML($xml);
     });
 

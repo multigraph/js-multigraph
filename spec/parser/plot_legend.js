@@ -14,13 +14,13 @@ describe("PlotLegend parsing", function () {
         labelString = "curly";
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
+        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
         xmlString = ''
             + '<legend'
             +     ' visible="' + visibleBool + '"'
             +     ' label="' + labelString + '"'
             +     '/>';
-        $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+        $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
         legend = PlotLegend.parseXML($xml, new DataPlot());
     });
 

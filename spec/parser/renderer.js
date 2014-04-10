@@ -15,12 +15,12 @@ describe("Plot Renderer parsing", function () {
         typeString = "pointline";
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
+        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
         xmlString = ''
             + '<renderer'
             +     ' type="' + typeString + '"'
             +     '/>',
-        $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+        $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
         renderer = Renderer.parseXML($xml);
     });
 
@@ -48,7 +48,7 @@ describe("Plot Renderer parsing", function () {
                     +       ' value="' + option1ValueString + '"'
                     +       '/>'
                     + '</renderer>';
-                $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+                $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
                 renderer = Renderer.parseXML($xml);
             });
 
@@ -105,7 +105,7 @@ describe("Plot Renderer parsing", function () {
                     +       ' value="' + option4ValueString + '"'
                     +       '/>'
                     + '</renderer>';
-                $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+                $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
                 renderer = Renderer.parseXML($xml, plot);
             });
 

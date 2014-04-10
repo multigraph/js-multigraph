@@ -227,8 +227,8 @@ describe("Graph parsing", function () {
         $xml;
 
     beforeEach(function () {        
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
-        $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
+        $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
         graph = Graph.parseXML($xml);
     });
 

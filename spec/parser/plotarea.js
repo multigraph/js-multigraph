@@ -17,7 +17,7 @@ describe("Plotarea parsing", function () {
         borderString = "0";
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
+        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
         xmlString = ''
             + '<plotarea'
             +     ' margintop="' + margintopString + '"'
@@ -27,7 +27,7 @@ describe("Plotarea parsing", function () {
             +     ' bordercolor="' + bordercolorString + '"'
             +     ' border="' + borderString + '"'
             +     '/>',
-        $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+        $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
         plotarea = Plotarea.parseXML($xml);
     });
 

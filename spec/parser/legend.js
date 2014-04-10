@@ -26,7 +26,7 @@ describe("Legend parsing", function () {
         legend;
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
+        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
         xmlString = ''
             + '<legend'
             +     ' color="' + colorString + '"'
@@ -43,7 +43,7 @@ describe("Legend parsing", function () {
             +     ' cornerradius="' + cornerradiusString + '"'
             +     ' padding="' + paddingString + '"'
             +     '/>';
-        $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+        $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
         legend = Legend.parseXML($xml);
     });
 
@@ -131,7 +131,7 @@ describe("Legend parsing", function () {
                 +         ' border="' + borderString + '"'
                 +     '/>'
                 + '</legend>';
-            $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+            $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
             legend = Legend.parseXML($xml);
         });
 

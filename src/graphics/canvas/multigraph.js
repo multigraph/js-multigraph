@@ -71,7 +71,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 
     var applyMixins = function (options) {
         var errorHandler = options.messageHandler.error;
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
+        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
         ns.mixin.apply(window.multigraph.core);
         window.multigraph.events.jquery.draggable.mixin.apply(window.multigraph, errorHandler);
         window.multigraph.events.jquery.mouse.mixin.apply(window.multigraph, errorHandler);
@@ -80,7 +80,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
     };
 
     var generateInitialGraph = function (mugl, options) {
-        var xmlObj = window.multigraph.parser.jquery.stringToJQueryXMLObj(mugl);
+        var xmlObj = window.multigraph.parser.stringToJQueryXMLObj(mugl);
         var multigraph = window.multigraph.core.Multigraph.parseXML( xmlObj, options.mugl, options.messageHandler );
         multigraph.normalize();
         multigraph.div(options.div);

@@ -18,7 +18,7 @@ describe("Window parsing", function () {
         borderString = "0";
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
+        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
         xmlString = ''
             + '<window'
             +     ' margin="' + marginString + '"'
@@ -28,7 +28,7 @@ describe("Window parsing", function () {
             +     ' height="' + heightString + '"'
             +     ' border="' + borderString + '"'
             +     '/>',
-        $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+        $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
         windowModel = Window.parseXML($xml);
     });
 

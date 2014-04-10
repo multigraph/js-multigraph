@@ -12,13 +12,13 @@ describe("Plot Filter Option parsing", function () {
         valueString = "12";
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
+        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
         xmlString = ''
             + '<option'
             +     ' name="' + nameString + '"'
             +     ' value="' + valueString + '"'
             +     '/>';
-        $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+        $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
         option = FilterOption.parseXML($xml);
     });
 

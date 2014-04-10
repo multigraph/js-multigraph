@@ -11,12 +11,12 @@ describe("DatatipsVariable parsing", function () {
         formatString = "number";
 
     beforeEach(function () {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
+        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
         xmlString = ''
             + '<variable'
             +     ' format="' + formatString + '"'
             +     '/>',
-        $xml = window.multigraph.parser.jquery.stringToJQueryXMLObj(xmlString);
+        $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
         variable = DatatipsVariable.parseXML($xml);
     });
 
