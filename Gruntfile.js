@@ -223,7 +223,7 @@ module.exports = function(grunt) {
     },
     watch: {
       files: ['<%= jshint.files %>'],
-      tasks: ['jshint', 'qunit']
+      tasks: ['jshint']
     }
   });
 
@@ -252,8 +252,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-replace');
   grunt.loadNpmTasks('grunt-run');
 
-  grunt.registerTask('test', ['jshint']);
+  grunt.registerTask('lint', ['jshint']);
   grunt.registerTask('build', ['concat', 'uglify', 'replace']);
+  grunt.registerTask('spec', ['run:makegraphicstests', 'tags']);
 
   grunt.registerTask('default', ['concat', 'uglify', 'replace']);
 
