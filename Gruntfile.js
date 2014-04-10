@@ -98,22 +98,45 @@ module.exports = function(grunt) {
         ]
       ]
     },
+    files: {
+      all: [
+        '<%= sections.lib %>',
+        '<%= sections.core %>',
+        '<%= sections.parser %>',
+        '<%= sections.norm %>',
+        '<%= sections.drag %>',
+        '<%= sections.mouse %>',
+        '<%= sections.touch %>',
+        '<%= sections.raphael %>',
+        '<%= sections.canvas %>'
+      ],
+      canvas: [
+        '<%= sections.lib %>',
+        '<%= sections.core %>',
+        '<%= sections.parser %>',
+        '<%= sections.norm %>',
+        '<%= sections.drag %>',
+        '<%= sections.mouse %>',
+        '<%= sections.touch %>',
+        '<%= sections.canvas %>'
+      ],
+      raphael: [
+        '<%= sections.lib %>',
+        '<%= sections.core %>',
+        '<%= sections.parser %>',
+        '<%= sections.norm %>',
+        '<%= sections.drag %>',
+        '<%= sections.mouse %>',
+        '<%= sections.touch %>',
+        '<%= sections.raphael %>'
+      ]
+    },
     concat: {
       options: {
         separator: ''
       },
       build: {
-        src: [
-          '<%= sections.lib %>',
-          '<%= sections.core %>',
-          '<%= sections.parser %>',
-          '<%= sections.norm %>',
-          '<%= sections.drag %>',
-          '<%= sections.mouse %>',
-          '<%= sections.touch %>',
-          '<%= sections.raphael %>',
-          '<%= sections.canvas %>'
-        ],
+        src: '<%= files.all %>',
         dest: 'build/multigraph.js'
       }
     },
@@ -162,17 +185,7 @@ module.exports = function(grunt) {
           openTag: '<!-- start source -->',
           closeTag: '<!-- end source -->'
         },
-        src: [
-          '<%= sections.lib %>',
-          '<%= sections.core %>',
-          '<%= sections.parser %>',
-          '<%= sections.norm %>',
-          '<%= sections.drag %>',
-          '<%= sections.mouse %>',
-          '<%= sections.touch %>',
-          '<%= sections.raphael %>',
-          '<%= sections.canvas %>'
-        ],
+        src: '<%= files.all %>',
         dest: 'spec/index.html'
       },
       jasmineSpec: {
@@ -210,6 +223,23 @@ module.exports = function(grunt) {
       files: ['<%= jshint.files %>'],
       tasks: ['jshint', 'qunit']
     }
+  });
+
+  var graphicsSpecs = ['spec/graphics/canvas', 'spec/graphics/raphael'];
+  function processGraphicsSpec (abspath, rootdir, subdir, filename) {
+    var renderer = rootdir.split('/').pop();
+    grunt.config(['tags', renderer + '-' + filename], {
+      options: {
+        scriptTemplate: '<script type="text/javascript" src="{{ path }}"></script>',
+        openTag: '<!-- start source -->',
+        closeTag: '<!-- end source -->'
+      },
+      src: '<%= files.' + renderer + ' %>',
+      dest: abspath
+    });
+  };
+  graphicsSpecs.forEach(function (dir) {
+      grunt.file.recurse(dir, processGraphicsSpec);
   });
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
