@@ -14,7 +14,7 @@ module.exports = function(grunt) {
       raphael: 'src/graphics/raphael',
       canvas: 'src/graphics/canvas',
       norm: 'src/normalizer',
-      parser: 'src/parser/jquery'
+      parser: 'src/parser'
     },
     sections: {
       lib: [
