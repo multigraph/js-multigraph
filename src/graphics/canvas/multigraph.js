@@ -73,9 +73,9 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         var errorHandler = options.messageHandler.error;
         window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
         ns.mixin.apply(window.multigraph.core);
-        window.multigraph.events.jquery.draggable.mixin.apply(window.multigraph, errorHandler);
-        window.multigraph.events.jquery.mouse.mixin.apply(window.multigraph, errorHandler);
-        window.multigraph.events.jquery.touch.mixin.apply(window.multigraph, errorHandler);
+        window.multigraph.events.draggable.mixin.apply(window.multigraph, errorHandler);
+        window.multigraph.events.mouse.mixin.apply(window.multigraph, errorHandler);
+        window.multigraph.events.touch.mixin.apply(window.multigraph, errorHandler);
         window.multigraph.normalizer.mixin.apply(window.multigraph.core);
     };
 

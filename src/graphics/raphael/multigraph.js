@@ -135,9 +135,9 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
         window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
         ns.mixin.apply(window.multigraph.core);
         window.multigraph.normalizer.mixin.apply(window.multigraph.core);
-        window.multigraph.events.jquery.draggable.mixin.apply(window.multigraph);
-        window.multigraph.events.jquery.mouse.mixin.apply(window.multigraph);
-        window.multigraph.events.jquery.touch.mixin.apply(window.multigraph);
+        window.multigraph.events.draggable.mixin.apply(window.multigraph);
+        window.multigraph.events.mouse.mixin.apply(window.multigraph);
+        window.multigraph.events.touch.mixin.apply(window.multigraph);
     };
 
     var generateInitialGraph = function (mugl, options) {

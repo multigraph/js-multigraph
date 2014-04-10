@@ -1,4 +1,4 @@
-window.multigraph.util.namespace("window.multigraph.events.jquery.touch", function (ns) {
+window.multigraph.util.namespace("window.multigraph.events.touch", function (ns) {
     "use strict";
 
     ns.mixin.add(function (ns, errorHandler) {

@@ -1,4 +1,4 @@
-window.multigraph.util.namespace("window.multigraph.events.jquery.draggable", function (ns) {
+window.multigraph.util.namespace("window.multigraph.events.draggable", function (ns) {
     "use strict";
 
     ns.mixin = new window.multigraph.core.Mixin();

@@ -1,4 +1,4 @@
-window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", function (ns) {
+window.multigraph.util.namespace("window.multigraph.events.mouse", function (ns) {
     "use strict";
 
     ns.mixin = new window.multigraph.core.Mixin();
