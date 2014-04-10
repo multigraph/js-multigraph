@@ -8,7 +8,8 @@
                 "grunt-contrib-concat": "^0.3.0",
                 "grunt-script-link-tags": "^0.0.5",
                 "grunt-replace": "^0.7.6",
-                "grunt-run": "^0.2.1"
+                "grunt-run": "^0.2.1",
+                "grunt-contrib-yuidoc": "^0.5.2"
         }
 
 }

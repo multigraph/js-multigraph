@@ -224,6 +224,19 @@ module.exports = function(grunt) {
     watch: {
       files: ['<%= jshint.files %>'],
       tasks: ['jshint']
+    },
+    yuidoc: {
+      multigraph: {
+          "name": "js-Multigraph",
+          "description": "Multigraph's JavaScript Implementation",
+          "url": "http://www.multigraph.org/",
+          "logo": "../multigraph-logo72x72.png",
+          "options":{
+              "paths": "src",
+              "exclude": ".DS_Store,.svn,CVS,.git,build_rollup_tmp,build_tmp,src/valuetype/spec,src/valuetype/speedtest",
+              "outdir": "api"
+          }
+      }
     }
   });
 
@@ -248,6 +261,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-yuidoc');
   grunt.loadNpmTasks('grunt-script-link-tags');
   grunt.loadNpmTasks('grunt-replace');
   grunt.loadNpmTasks('grunt-run');
