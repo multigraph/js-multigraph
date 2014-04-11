@@ -154,23 +154,39 @@ module.exports = function(grunt) {
         options: {
           patterns: [
             {
-              match: '.which.',
+              match: /\.and\./g,
               replacement: '.'
             },
             {
-              match: '.eachOfWhich.',
+              match: /\.eachOfWhich\./g,
               replacement: '.'
             },
             {
-              match: '.and.',
+              match: /\.which\./g,
               replacement: '.'
+            },
+            {
+              match: /\.hasAn/g,
+              replacement: '.hasA'
+            },
+            {
+              match: /\.defaultsTo/g,
+              replacement: '.dflt'
+            },
+            {
+              match: /\.respondsTo/g,
+              replacement: '.rspd'
+            },
+            {
+              match: /\.validatesWith/g,
+              replacement: '.vlds'
             }
           ]
         },
         files: [
           {
               src: ['build/multigraph-min.js'],
-              dest: 'build/'
+              dest: 'build/multigraph-min.js'
           }
         ]
       }
