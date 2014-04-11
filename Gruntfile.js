@@ -2,19 +2,29 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+    banner: '/*! <%= pkg.name %> - v<%= pkg.version %>\n' +
+            ' * http://<%= pkg.homepage %>/\n' +
+            ' * Copyright (c) <%= grunt.template.today("yyyy") %> ' +
+            'University of North Carolina at Asheville; Licensed MIT\n' +
+            ' *\n' +
+            ' * Multigraph includes the following projects\n' +
+            ' * jQuery v1.8.2 | jquery.org/license (jquery.com)\n' +
+            ' * jQuery.mousewheel.js v3.0.6 | (c) 2011 Brandon Aaron (http://brandonaaron.net)\n' +
+            ' * sprintf() for JavaScript v0.7-beta1 | (c) Alexandru Marasteanu <alexaholic [at) gmail (dot] com>)] (http://www.diveintojavascript.com/projects/javascript-sprintf)\n' +
+            ' */\n',
     dirs: {
       lib: 'lib',
       core: 'src/core',
       math: 'src/math',
       util: 'src/utility_functions',
-      event: 'src/events/jquery',
-      drag: 'src/events/jquery/draggable',
-      mouse: 'src/events/jquery/mouse',
-      touch: 'src/events/jquery/touch',
+      event: 'src/events',
+      drag: 'src/events/draggable',
+      mouse: 'src/events/mouse',
+      touch: 'src/events/touch',
       raphael: 'src/graphics/raphael',
       canvas: 'src/graphics/canvas',
       norm: 'src/normalizer',
-      parser: 'src/parser/jquery'
+      parser: 'src/parser'
     },
     sections: {
       lib: [
@@ -133,6 +143,7 @@ module.exports = function(grunt) {
     },
     concat: {
       options: {
+        banner: '<%= banner %>',
         separator: ''
       },
       build: {
@@ -142,7 +153,7 @@ module.exports = function(grunt) {
     },
     uglify: {
       options: {
-        banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+        banner: '<%= banner %>',
       },
       build: {
         src: "build/multigraph.js",
@@ -154,23 +165,39 @@ module.exports = function(grunt) {
         options: {
           patterns: [
             {
-              match: '.which.',
+              match: /\.and\./g,
               replacement: '.'
             },
             {
-              match: '.eachOfWhich.',
+              match: /\.eachOfWhich\./g,
               replacement: '.'
             },
             {
-              match: '.and.',
+              match: /\.which\./g,
               replacement: '.'
+            },
+            {
+              match: /\.hasAn/g,
+              replacement: '.hasA'
+            },
+            {
+              match: /\.defaultsTo/g,
+              replacement: '.dflt'
+            },
+            {
+              match: /\.respondsTo/g,
+              replacement: '.rspd'
+            },
+            {
+              match: /\.validatesWith/g,
+              replacement: '.vlds'
             }
           ]
         },
         files: [
           {
               src: ['build/multigraph-min.js'],
-              dest: 'build/'
+              dest: 'build/multigraph-min.js'
           }
         ]
       }

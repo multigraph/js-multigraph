@@ -132,16 +132,16 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
     });
 
     var applyMixins = function (options) {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
+        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
         ns.mixin.apply(window.multigraph.core);
         window.multigraph.normalizer.mixin.apply(window.multigraph.core);
-        window.multigraph.events.jquery.draggable.mixin.apply(window.multigraph);
-        window.multigraph.events.jquery.mouse.mixin.apply(window.multigraph);
-        window.multigraph.events.jquery.touch.mixin.apply(window.multigraph);
+        window.multigraph.events.draggable.mixin.apply(window.multigraph);
+        window.multigraph.events.mouse.mixin.apply(window.multigraph);
+        window.multigraph.events.touch.mixin.apply(window.multigraph);
     };
 
     var generateInitialGraph = function (mugl, options) {
-        var multigraph = window.multigraph.core.Multigraph.parseXML( window.multigraph.parser.jquery.stringToJQueryXMLObj(mugl), options.mugl, options.messageHandler );
+        var multigraph = window.multigraph.core.Multigraph.parseXML( window.multigraph.parser.stringToJQueryXMLObj(mugl), options.mugl, options.messageHandler );
         multigraph.normalize();
         multigraph.div(options.div);
         window.multigraph.jQuery(options.div).css({
