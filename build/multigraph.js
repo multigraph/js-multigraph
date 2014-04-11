@@ -1,3 +1,12 @@
+/*! Multigraph - v4.3.0
+ * http://multigraph.github.io/
+ * Copyright (c) 2014 University of North Carolina at Asheville; Licensed MIT
+ *
+ * Multigraph includes the following projects
+ * jQuery v1.8.2 jquery.com | jquery.org/license
+ * jQuery.mousewheel.js v3.0.6 | (c) 2011 Brandon Aaron (http://brandonaaron.net)
+ * sprintf() for JavaScript v0.7-beta1 | (c) Alexandru Marasteanu <alexaholic [at) gmail (dot] com>)] (http://www.diveintojavascript.com/projects/javascript-sprintf)
+ */
 if (!Array.prototype.indexOf) {
     Array.prototype.indexOf = function (searchElement /*, fromIndex */ ) {
         "use strict";
