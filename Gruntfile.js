@@ -7,14 +7,14 @@ module.exports = function(grunt) {
       core: 'src/core',
       math: 'src/math',
       util: 'src/utility_functions',
-      event: 'src/events/jquery',
-      drag: 'src/events/jquery/draggable',
-      mouse: 'src/events/jquery/mouse',
-      touch: 'src/events/jquery/touch',
+      event: 'src/events',
+      drag: 'src/events/draggable',
+      mouse: 'src/events/mouse',
+      touch: 'src/events/touch',
       raphael: 'src/graphics/raphael',
       canvas: 'src/graphics/canvas',
       norm: 'src/normalizer',
-      parser: 'src/parser/jquery'
+      parser: 'src/parser'
     },
     sections: {
       lib: [

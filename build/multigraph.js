@@ -8996,7 +8996,7 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
                 success  : function (data) {
                     // if data contains a <values> tag, extract its text string value
                     if (data.indexOf("<values>") > 0) {
-                        data = window.multigraph.parser.jquery.stringToJQueryXMLObj(data).find("values").text();
+                        data = window.multigraph.parser.stringToJQueryXMLObj(data).find("values").text();
                     }
                     node.parseData(that.getColumns(), data);
 
@@ -9581,13 +9581,13 @@ window.multigraph.util.namespace("window.multigraph.core", function (ns) {
     ns.Zoom = Zoom;
 
 });
-window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser", function (ns) {
     "use strict";
 
     ns.mixin = new window.multigraph.core.Mixin();
 
 });
-window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser", function (ns) {
     "use strict";
 
     ns.mixin.add(function (ns, parse) {
@@ -9770,7 +9770,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
     });
 
 });
-window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser", function (ns) {
     "use strict";
 
     ns.mixin.add(function (ns, parse) {
@@ -9813,7 +9813,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
     });
 
 });
-window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser", function (ns) {
     "use strict";
 
     ns.mixin.add(function (ns, parse) {
@@ -9834,7 +9834,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
     });
 
 });
-window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser", function (ns) {
     "use strict";
 
     ns.mixin.add(function (ns, parse) {
@@ -9942,7 +9942,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
     });
 
 });
-window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser", function (ns) {
     "use strict";
 
     ns.mixin.add(function (ns, parse) {
@@ -9967,7 +9967,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
     });
 
 });
-window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser", function (ns) {
     "use strict";
 
     ns.mixin.add(function (ns, parse) {
@@ -10002,7 +10002,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
     });
 
 });
-window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser", function (ns) {
     "use strict";
 
     ns.mixin.add(function (ns, parse) {
@@ -10020,7 +10020,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
     });
 
 });
-window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser", function (ns) {
     "use strict";
 
     ns.mixin.add(function (ns, parse) {
@@ -10045,7 +10045,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
     });
 
 });
-window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser", function (ns) {
     "use strict";
 
     ns.mixin.add(function (ns, parse) {
@@ -10062,7 +10062,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
     });
 
 });
-window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser", function (ns) {
     "use strict";
 
     ns.mixin.add(function (ns, parse) {
@@ -10194,7 +10194,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
 
 });
 
-window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser", function (ns) {
     "use strict";
 
     ns.mixin.add(function (ns, parse) {
@@ -10231,7 +10231,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
     });
 
 });
-window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser", function (ns) {
     "use strict";
 
     ns.mixin.add(function (ns, parse) {
@@ -10261,7 +10261,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
     });
 
 });
-window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser", function (ns) {
     "use strict";
 
     ns.mixin.add(function (ns, parse) {
@@ -10282,7 +10282,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
     });
 
 });
-window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser", function (ns) {
     "use strict";
 
     ns.mixin.add(function (ns, parse) {
@@ -10311,7 +10311,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
     });
 
 });
-window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser", function (ns) {
     "use strict";
 
     ns.mixin.add(function (ns, parse) {
@@ -10369,7 +10369,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
     });
 
 });
-window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser", function (ns) {
     "use strict";
 
     ns.mixin.add(function (ns, parse) {
@@ -10409,7 +10409,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
     });
 
 });
-window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser", function (ns) {
     "use strict";
 
     ns.mixin.add(function (ns, parse) {
@@ -10438,7 +10438,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
 
 });
 
-window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser", function (ns) {
     "use strict";
 
     ns.mixin.add(function (ns, parse) {
@@ -10459,7 +10459,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
     });
 
 });
-window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser", function (ns) {
     "use strict";
 
     // This function really does more than just convert a string to a jquery xml obj; it also works
@@ -10474,7 +10474,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
     };
 
 });
-window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser", function (ns) {
     "use strict";
 
     ns.mixin.add(function (ns, parse) {
@@ -10588,7 +10588,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
     });
 
 });
-window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser", function (ns) {
     "use strict";
 
     ns.mixin.add(function (ns, parse) {
@@ -10618,7 +10618,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
     });
 
 });
-window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser", function (ns) {
     "use strict";
 
     ns.mixin.add(function (ns, parse) {
@@ -10645,7 +10645,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
     });
 
 });
-window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser", function (ns) {
     "use strict";
 
     ns.mixin.add(function (ns, parse) {
@@ -10733,7 +10733,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
     });
 
 });
-window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser", function (ns) {
     "use strict";
 
     ns.mixin.add(function (ns, parse) {
@@ -10775,7 +10775,7 @@ window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns
     });
 
 });
-window.multigraph.util.namespace("window.multigraph.parser.jquery", function (ns) {
+window.multigraph.util.namespace("window.multigraph.parser", function (ns) {
     "use strict";
 
     ns.mixin.add(function (ns, parse) {
@@ -11443,13 +11443,13 @@ window.multigraph.util.namespace("window.multigraph.normalizer", function (ns) {
     });
 
 });
-window.multigraph.util.namespace("window.multigraph.events.jquery.draggable", function (ns) {
+window.multigraph.util.namespace("window.multigraph.events.draggable", function (ns) {
     "use strict";
 
     ns.mixin = new window.multigraph.core.Mixin();
 
 });
-window.multigraph.util.namespace("window.multigraph.events.jquery.draggable", function (ns) {
+window.multigraph.util.namespace("window.multigraph.events.draggable", function (ns) {
     "use strict";
 
     ns.mixin.add(function (ns, errorHandler) {
@@ -11518,13 +11518,13 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.draggable", fu
     });
 
 });
-window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", function (ns) {
+window.multigraph.util.namespace("window.multigraph.events.mouse", function (ns) {
     "use strict";
 
     ns.mixin = new window.multigraph.core.Mixin();
 
 });
-window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", function (ns) {
+window.multigraph.util.namespace("window.multigraph.events.mouse", function (ns) {
     "use strict";
 
     ns.mixin.add(function (ns, errorHandler) {
@@ -11561,7 +11561,7 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
     });
 
 });
-window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", function (ns) {
+window.multigraph.util.namespace("window.multigraph.events.mouse", function (ns) {
     "use strict";
 
     ns.mixin.add(function (ns) {
@@ -11783,13 +11783,13 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.mouse", functi
     });
 
 }(window.multigraph.jQuery));
-window.multigraph.util.namespace("window.multigraph.events.jquery.touch", function (ns) {
+window.multigraph.util.namespace("window.multigraph.events.touch", function (ns) {
     "use strict";
 
     ns.mixin = new window.multigraph.core.Mixin();
 
  });
-window.multigraph.util.namespace("window.multigraph.events.jquery.touch", function (ns) {
+window.multigraph.util.namespace("window.multigraph.events.touch", function (ns) {
     "use strict";
 
     ns.mixin.add(function (ns, errorHandler) {
@@ -11834,7 +11834,7 @@ window.multigraph.util.namespace("window.multigraph.events.jquery.touch", functi
     });
 
 });
-window.multigraph.util.namespace("window.multigraph.events.jquery.touch", function (ns) {
+window.multigraph.util.namespace("window.multigraph.events.touch", function (ns) {
     "use strict";
 
     ns.mixin.add(function (ns) {
@@ -19019,16 +19019,16 @@ window.multigraph.util.namespace("window.multigraph.graphics.raphael", function 
     });
 
     var applyMixins = function (options) {
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
+        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
         ns.mixin.apply(window.multigraph.core);
         window.multigraph.normalizer.mixin.apply(window.multigraph.core);
-        window.multigraph.events.jquery.draggable.mixin.apply(window.multigraph);
-        window.multigraph.events.jquery.mouse.mixin.apply(window.multigraph);
-        window.multigraph.events.jquery.touch.mixin.apply(window.multigraph);
+        window.multigraph.events.draggable.mixin.apply(window.multigraph);
+        window.multigraph.events.mouse.mixin.apply(window.multigraph);
+        window.multigraph.events.touch.mixin.apply(window.multigraph);
     };
 
     var generateInitialGraph = function (mugl, options) {
-        var multigraph = window.multigraph.core.Multigraph.parseXML( window.multigraph.parser.jquery.stringToJQueryXMLObj(mugl), options.mugl, options.messageHandler );
+        var multigraph = window.multigraph.core.Multigraph.parseXML( window.multigraph.parser.stringToJQueryXMLObj(mugl), options.mugl, options.messageHandler );
         multigraph.normalize();
         multigraph.div(options.div);
         window.multigraph.jQuery(options.div).css({
@@ -21015,16 +21015,16 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
 
     var applyMixins = function (options) {
         var errorHandler = options.messageHandler.error;
-        window.multigraph.parser.jquery.mixin.apply(window.multigraph, "parseXML");
+        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
         ns.mixin.apply(window.multigraph.core);
-        window.multigraph.events.jquery.draggable.mixin.apply(window.multigraph, errorHandler);
-        window.multigraph.events.jquery.mouse.mixin.apply(window.multigraph, errorHandler);
-        window.multigraph.events.jquery.touch.mixin.apply(window.multigraph, errorHandler);
+        window.multigraph.events.draggable.mixin.apply(window.multigraph, errorHandler);
+        window.multigraph.events.mouse.mixin.apply(window.multigraph, errorHandler);
+        window.multigraph.events.touch.mixin.apply(window.multigraph, errorHandler);
         window.multigraph.normalizer.mixin.apply(window.multigraph.core);
     };
 
     var generateInitialGraph = function (mugl, options) {
-        var xmlObj = window.multigraph.parser.jquery.stringToJQueryXMLObj(mugl);
+        var xmlObj = window.multigraph.parser.stringToJQueryXMLObj(mugl);
         var multigraph = window.multigraph.core.Multigraph.parseXML( xmlObj, options.mugl, options.messageHandler );
         multigraph.normalize();
         multigraph.div(options.div);
