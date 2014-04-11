@@ -2,6 +2,16 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+    banner: '/*! <%= pkg.name %> - v<%= pkg.version %>\n' +
+            ' * http://<%= pkg.homepage %>/\n' +
+            ' * Copyright (c) <%= grunt.template.today("yyyy") %> ' +
+            'University of North Carolina at Asheville; Licensed MIT\n' +
+            ' *\n' +
+            ' * Multigraph includes the following projects\n' +
+            ' * jQuery v1.8.2 | jquery.org/license (jquery.com)\n' +
+            ' * jQuery.mousewheel.js v3.0.6 | (c) 2011 Brandon Aaron (http://brandonaaron.net)\n' +
+            ' * sprintf() for JavaScript v0.7-beta1 | (c) Alexandru Marasteanu <alexaholic [at) gmail (dot] com>)] (http://www.diveintojavascript.com/projects/javascript-sprintf)\n' +
+            ' */\n',
     dirs: {
       lib: 'lib',
       core: 'src/core',
@@ -133,6 +143,7 @@ module.exports = function(grunt) {
     },
     concat: {
       options: {
+        banner: '<%= banner %>',
         separator: ''
       },
       build: {
@@ -142,7 +153,7 @@ module.exports = function(grunt) {
     },
     uglify: {
       options: {
-        banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+        banner: '<%= banner %>',
       },
       build: {
         src: "build/multigraph.js",
