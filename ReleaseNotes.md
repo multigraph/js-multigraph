@@ -1,3 +1,9 @@
+Version 4.3rc1 (2014-04-22)
+---------------------------
+
+* converts from ant to grunt for building
+* includes various features added for use in global climate dashboard
+
 Version 4.2 (2013-04-08)
 ---------------------------
 
