@@ -79,6 +79,7 @@ sub get_release_tags {
             # store all the tags for this commit in the %tags hash
             my %tags = ();
             foreach my $tag (split(/\s*,\s*/, $tagstring)) {
+                $tag =~ s/^tag:\s+//;
                 $tags{$tag} = 1;
             }
             # run though all the tags in the %tags hash, looking for ones
