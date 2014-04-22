@@ -3,7 +3,7 @@
  * Copyright (c) 2014 University of North Carolina at Asheville; Licensed MIT
  *
  * Multigraph includes the following projects
- * jQuery v1.8.2 jquery.com | jquery.org/license
+ * jQuery v1.8.2 | jquery.org/license (jquery.com)
  * jQuery.mousewheel.js v3.0.6 | (c) 2011 Brandon Aaron (http://brandonaaron.net)
  * sprintf() for JavaScript v0.7-beta1 | (c) Alexandru Marasteanu <alexaholic [at) gmail (dot] com>)] (http://www.diveintojavascript.com/projects/javascript-sprintf)
  */
