@@ -1,33 +1,28 @@
-window.multigraph.util.namespace("window.multigraph.core", function (ns) {
-    "use strict";
+var DatatipsVariable = require('./datatips_variable.js'),
+    utilityFunctions = require('../util/utilityFunctions.js'),
+    defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
+    attributes = utilityFunctions.getKeys(defaultValues.plot.datatips);
 
-    var Datatips,
-        utilityFunctions = window.multigraph.utilityFunctions,
-        defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
-        attributes = utilityFunctions.getKeys(defaultValues.plot.datatips);
-
-    Datatips = new window.jermaine.Model("Datatips", function () {
-        this.hasMany("variables").eachOfWhich.validateWith(function (variable) {
-            return variable instanceof ns.DatatipsVariable;
-        });
-        this.hasA("format").which.validatesWith(function (format) {
-            return typeof(format) === "string";
-        });
-        this.hasA("bgcolor").which.validatesWith(function (bgcolor) {
-            return bgcolor instanceof window.multigraph.math.RGBColor;
-        });
-        this.hasA("bgalpha").which.validatesWith(function (bgalpha) {
-            return typeof(bgalpha) === "string";
-        });
-        this.hasA("border").which.isA("integer");
-        this.hasA("bordercolor").which.validatesWith(function (bordercolor) {
-            return bordercolor instanceof window.multigraph.math.RGBColor;
-        });
-        this.hasA("pad").which.isA("integer");
-
-        utilityFunctions.insertDefaults(this, defaultValues.plot.datatips, attributes);
+var Datatips = new window.jermaine.Model("Datatips", function () {
+    this.hasMany("variables").eachOfWhich.validateWith(function (variable) {
+        return variable instanceof DatatipsVariable;
     });
+    this.hasA("format").which.validatesWith(function (format) {
+        return typeof(format) === "string";
+    });
+    this.hasA("bgcolor").which.validatesWith(function (bgcolor) {
+        return bgcolor instanceof window.multigraph.math.RGBColor;
+    });
+    this.hasA("bgalpha").which.validatesWith(function (bgalpha) {
+        return typeof(bgalpha) === "string";
+    });
+    this.hasA("border").which.isA("integer");
+    this.hasA("bordercolor").which.validatesWith(function (bordercolor) {
+        return bordercolor instanceof window.multigraph.math.RGBColor;
+    });
+    this.hasA("pad").which.isA("integer");
 
-    ns.Datatips = Datatips;
-
+    utilityFunctions.insertDefaults(this, defaultValues.plot.datatips, attributes);
 });
+
+module.exports = Datatips;

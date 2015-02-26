@@ -1,18 +1,15 @@
-window.multigraph.util.namespace("window.multigraph.core", function (ns) {
-    "use strict";
+var Text = require('./text.js'),
+    utilityFunctions = require('../util/utilityFunctions.js'),
+    defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
+    attributes = utilityFunctions.getKeys(defaultValues.plot.legend);
 
-    var utilityFunctions = window.multigraph.utilityFunctions,
-        defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
-        attributes = utilityFunctions.getKeys(defaultValues.plot.legend),
-        PlotLegend = new window.jermaine.Model("PlotLegend", function () {
-            this.hasA("visible").which.isA("boolean");
-            this.hasA("label").which.validatesWith(function (label) {
-                return label instanceof ns.Text;
-            });
+var PlotLegend = new window.jermaine.Model("PlotLegend", function () {
+    this.hasA("visible").which.isA("boolean");
+    this.hasA("label").which.validatesWith(function (label) {
+        return label instanceof Text;
+    });
 
-            utilityFunctions.insertDefaults(this, defaultValues.plot.legend, attributes);
-        });
-
-    ns.PlotLegend = PlotLegend;
-
+    utilityFunctions.insertDefaults(this, defaultValues.plot.legend, attributes);
 });
+
+module.exports = PlotLegend;

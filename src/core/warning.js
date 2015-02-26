@@ -1,9 +1,7 @@
-window.multigraph.util.namespace("window.multigraph.core", function (ns) {
-    "use strict";
+var Warning = function(message) {
+    this.message = message;
+};
 
-    ns.Warning = function(message) {
-        this.message = message;
-    };
-    ns.Warning.prototype = new Error();
+Warning.prototype = new Error();
 
-});
+module.exports  = Warning;

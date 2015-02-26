@@ -1,25 +1,24 @@
-window.multigraph.util.namespace("window.multigraph.core", function (ns) {
-    "use strict";
+var DataMeasure = require('./data_measure.js'),
+    DataValue = require('./data_value.js');
 
-    var utilityFunctions = window.multigraph.utilityFunctions,
-        defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
-        attributes = utilityFunctions.getKeys(defaultValues.horizontalaxis.zoom),
-        Zoom = new window.jermaine.Model("Zoom", function () {
+var utilityFunctions = require('../util/utilityFunctions.js'),
+    defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
+    attributes = utilityFunctions.getKeys(defaultValues.horizontalaxis.zoom);
 
-            this.hasA("allowed").which.isA("boolean");
-            this.hasA("min").which.validatesWith(function (min) {
-                return ns.DataMeasure.isInstance(min);
-            });
-            this.hasA("max").which.validatesWith(function (max) {
-                return ns.DataMeasure.isInstance(max);
-            });
-            this.hasA("anchor").which.validatesWith(function (anchor) {
-                return ns.DataValue.isInstance(anchor) || anchor === null;
-            });
+var Zoom = new window.jermaine.Model("Zoom", function () {
 
-            utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis.zoom, attributes);
-        });
+    this.hasA("allowed").which.isA("boolean");
+    this.hasA("min").which.validatesWith(function (min) {
+        return DataMeasure.isInstance(min);
+    });
+    this.hasA("max").which.validatesWith(function (max) {
+        return DataMeasure.isInstance(max);
+    });
+    this.hasA("anchor").which.validatesWith(function (anchor) {
+        return DataValue.isInstance(anchor) || anchor === null;
+    });
 
-    ns.Zoom = Zoom;
-
+    utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis.zoom, attributes);
 });
+
+ns.Zoom = Zoom;

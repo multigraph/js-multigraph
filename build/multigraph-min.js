@@ -1,6 +1,6 @@
 /*! Multigraph - v4.3.0
  * http://multigraph.github.io/
- * Copyright (c) 2014 University of North Carolina at Asheville; Licensed MIT
+ * Copyright (c) 2015 University of North Carolina at Asheville; Licensed MIT
  *
  * Multigraph includes the following projects
  * jQuery v1.8.2 | jquery.org/license (jquery.com)

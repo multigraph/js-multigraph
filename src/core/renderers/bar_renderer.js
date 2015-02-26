@@ -49,60 +49,59 @@
 //     DESCRIPTION:          Bars which are less wide, in pixels, than
 //                           this number do not render their outlines.
 //                           
-window.multigraph.util.namespace("window.multigraph.core", function (ns) {
-    "use strict";
+var Renderer = require('../renderer.js'),
+    RGBColor = require('../../math/rgb_color.js'),
+    DataMeasure = require('../data_measure.js'),
+    utilityFunctions = require('../../util/utilityFunctions.js'),
+    defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
+    attributes = utilityFunctions.getKeys(defaultValues.plot.renderer);
 
-    var BarRenderer,
-        defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
-        attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.plot.renderer);
-
-    BarRenderer = new window.jermaine.Model("BarRenderer", function () {
-        this.isA(ns.Renderer);
-        this.hasA("numberOfVariables").which.defaultsTo(2);
-    });
-
-    ns.Renderer.declareOptions(BarRenderer, "BarRendererOptions", [
-        {
-            "name"          : "barwidth",
-            "type"          : ns.Renderer.HorizontalDataMeasureOption,
-            "default"       : new ns.DataMeasure.parse("number", 0)
-        },
-        {
-            "name"          : "baroffset",
-            "type"          : ns.Renderer.NumberOption,
-            "default"       : 0
-        },
-        {
-            "name"          : "barbase",
-            "type"          : ns.Renderer.VerticalDataValueOption,
-            "default"       : null
-        },
-        {
-            "name"          : "fillcolor",
-            "type"          : ns.Renderer.RGBColorOption,
-            "default"       : new window.multigraph.math.RGBColor(0,0,0)
-        },
-        {
-            "name"          : "fillopacity",
-            "type"          : ns.Renderer.NumberOption,
-            "default"       : 1.0
-        },
-        {
-            "name"          : "linecolor",
-            "type"          : ns.Renderer.RGBColorOption,
-            "default"       : new window.multigraph.math.RGBColor(0,0,0)
-        },
-        {
-            "name"          : "hidelines",
-            "type"          : ns.Renderer.NumberOption,
-            "default"       : 2
-        }
-    ]);
-
-    ns.Renderer.BAR = new ns.Renderer.Type("bar");
-
-    ns.Renderer.addType({"type"  : ns.Renderer.Type.parse("bar"),
-                         "model" : BarRenderer});
-
-    ns.BarRenderer = BarRenderer;
+var BarRenderer = new window.jermaine.Model("BarRenderer", function () {
+    this.isA(Renderer);
+    this.hasA("numberOfVariables").which.defaultsTo(2);
 });
+
+Renderer.declareOptions(BarRenderer, "BarRendererOptions", [
+    {
+        "name"          : "barwidth",
+        "type"          : Renderer.HorizontalDataMeasureOption,
+        "default"       : new DataMeasure.parse("number", 0)
+    },
+    {
+        "name"          : "baroffset",
+        "type"          : Renderer.NumberOption,
+        "default"       : 0
+    },
+    {
+        "name"          : "barbase",
+        "type"          : Renderer.VerticalDataValueOption,
+        "default"       : null
+    },
+    {
+        "name"          : "fillcolor",
+        "type"          : Renderer.RGBColorOption,
+        "default"       : new RGBColor(0,0,0)
+    },
+    {
+        "name"          : "fillopacity",
+        "type"          : Renderer.NumberOption,
+        "default"       : 1.0
+    },
+    {
+        "name"          : "linecolor",
+        "type"          : Renderer.RGBColorOption,
+        "default"       : new RGBColor(0,0,0)
+    },
+    {
+        "name"          : "hidelines",
+        "type"          : Renderer.NumberOption,
+        "default"       : 2
+    }
+]);
+
+Renderer.BAR = new Renderer.Type("bar");
+
+Renderer.addType({"type"  : Renderer.Type.parse("bar"),
+                  "model" : BarRenderer});
+
+module.exports = BarRenderer;

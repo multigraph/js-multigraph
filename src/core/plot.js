@@ -1,22 +1,20 @@
-window.multigraph.util.namespace("window.multigraph.core", function (ns) {
-    "use strict";
+var PlotLegend = require('./plot_legend.js'),
+    Axis = require('./axis.js'),
+    Renderer = require('./renderer.js');
 
-    var Plot;
-
-    Plot = new window.jermaine.Model("Plot", function () {
-        this.hasA("legend").which.validatesWith(function (legend) {
-            return legend instanceof ns.PlotLegend;
-        });
-        this.hasA("horizontalaxis").which.validatesWith(function (axis) {
-            return axis instanceof ns.Axis;
-        });
-        this.hasA("verticalaxis").which.validatesWith(function (axis) {
-            return axis instanceof ns.Axis;
-        });
-        this.hasA("renderer").which.validatesWith(function (renderer) {
-            return renderer instanceof ns.Renderer;
-        });
+var Plot = new window.jermaine.Model("Plot", function () {
+    this.hasA("legend").which.validatesWith(function (legend) {
+        return legend instanceof PlotLegend;
     });
-
-    ns.Plot = Plot;
+    this.hasA("horizontalaxis").which.validatesWith(function (axis) {
+        return axis instanceof Axis;
+    });
+    this.hasA("verticalaxis").which.validatesWith(function (axis) {
+        return axis instanceof Axis;
+    });
+    this.hasA("renderer").which.validatesWith(function (renderer) {
+        return renderer instanceof Renderer;
+    });
 });
+
+module.exports = Plot;

@@ -49,58 +49,59 @@
 //     DESCRIPTION:          Bars which are less wide, in pixels, than
 //                           this number do not render their outlines.
 // 
-window.multigraph.util.namespace("window.multigraph.core", function (ns) {
-    "use strict";
+var Renderer = require('../renderer.js'),
+    RGBColor = require('../../math/rgb_color.js'),
+    DataMeasure = require('../data_measure.js'),
+    utilityFunctions = require('../../util/utilityFunctions.js'),
+    defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
+    attributes = utilityFunctions.getKeys(defaultValues.plot.renderer);
 
-    var RangeBarRenderer;
-
-    RangeBarRenderer = new window.jermaine.Model("RangeBarRenderer", function () {
-        this.isA(ns.Renderer);
-        this.hasA("numberOfVariables").which.defaultsTo(3);
-    });
-
-    ns.Renderer.declareOptions(RangeBarRenderer, "RangeBarRendererOptions", [
-        {
-            "name"          : "barwidth",
-            "type"          : ns.Renderer.HorizontalDataMeasureOption,
-            "default"       : new ns.DataMeasure.parse("number", 0)
-        },
-        {
-            "name"          : "baroffset",
-            "type"          : ns.Renderer.NumberOption,
-            "default"       : 0
-        },
-        {
-            "name"          : "fillcolor",
-            "type"          : ns.Renderer.RGBColorOption,
-            "default"       : window.multigraph.math.RGBColor.parse("0x808080")
-        },
-        {
-            "name"          : "fillopacity",
-            "type"          : ns.Renderer.NumberOption,
-            "default"       : 1.0
-        },
-        {
-            "name"          : "linecolor",
-            "type"          : ns.Renderer.RGBColorOption,
-            "default"       : new window.multigraph.math.RGBColor(0,0,0)
-        },
-        {
-            "name"          : "linewidth",
-            "type"          : ns.Renderer.NumberOption,
-            "default"       : 1
-        },
-        {
-            "name"          : "hidelines",
-            "type"          : ns.Renderer.NumberOption,
-            "default"       : 2
-        }
-    ]);
-
-    ns.Renderer.RANGEBAR = new ns.Renderer.Type("rangebar");
-
-    ns.Renderer.addType({"type"  : ns.Renderer.Type.parse("rangebar"),
-                         "model" : RangeBarRenderer});
-
-    ns.RangeBarRenderer = RangeBarRenderer;
+var RangeBarRenderer = new window.jermaine.Model("RangeBarRenderer", function () {
+    this.isA(Renderer);
+    this.hasA("numberOfVariables").which.defaultsTo(3);
 });
+
+Renderer.declareOptions(RangeBarRenderer, "RangeBarRendererOptions", [
+    {
+        "name"          : "barwidth",
+        "type"          : Renderer.HorizontalDataMeasureOption,
+        "default"       : new DataMeasure.parse("number", 0)
+    },
+    {
+        "name"          : "baroffset",
+        "type"          : Renderer.NumberOption,
+        "default"       : 0
+    },
+    {
+        "name"          : "fillcolor",
+        "type"          : Renderer.RGBColorOption,
+        "default"       : RGBColor.parse("0x808080")
+    },
+    {
+        "name"          : "fillopacity",
+        "type"          : Renderer.NumberOption,
+        "default"       : 1.0
+    },
+    {
+        "name"          : "linecolor",
+        "type"          : Renderer.RGBColorOption,
+        "default"       : new RGBColor(0,0,0)
+    },
+    {
+        "name"          : "linewidth",
+        "type"          : Renderer.NumberOption,
+        "default"       : 1
+    },
+    {
+        "name"          : "hidelines",
+        "type"          : Renderer.NumberOption,
+        "default"       : 2
+    }
+]);
+
+Renderer.RANGEBAR = new Renderer.Type("rangebar");
+
+Renderer.addType({"type"  : Renderer.Type.parse("rangebar"),
+                  "model" : RangeBarRenderer});
+
+module.exports = RangeBarRenderer;

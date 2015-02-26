@@ -60,66 +60,64 @@
 //     DATA TYPE:            number
 //     DEFAULT VALUE:        1
 //     DESCRIPTION:          Opacity used for the fill area.
-// 
-window.multigraph.util.namespace("window.multigraph.core", function (ns) {
-    "use strict";
+//
 
-    var BandRenderer;
+var Renderer = require('../renderer.js'),
+    RGBColor = require('../../math/rgb_color.js');
 
-    BandRenderer = new window.jermaine.Model("BandRenderer", function () {
-        this.isA(ns.Renderer);
-        this.hasA("numberOfVariables").which.defaultsTo(3);
-    });
-
-    BandRenderer.GRAY = parseInt("80", 16) / 255;
-
-    ns.Renderer.declareOptions(BandRenderer, "BandRendererOptions", [
-        {
-            "name"          : "linecolor",
-            "type"          : ns.Renderer.RGBColorOption,
-            "default"       : new window.multigraph.math.RGBColor(0,0,0)
-        },
-        {
-            "name"          : "linewidth",
-            "type"          : ns.Renderer.NumberOption,
-            "default"       : 1
-        },
-        {
-            "name"          : "line1color",
-            "type"          : ns.Renderer.RGBColorOption,
-            "default"       : null
-        },
-        {
-            "name"          : "line1width",
-            "type"          : ns.Renderer.NumberOption,
-            "default"       : -1
-        },
-        {
-            "name"          : "line2color",
-            "type"          : ns.Renderer.RGBColorOption,
-            "default"       : null
-        },
-        {
-            "name"          : "line2width",
-            "type"          : ns.Renderer.NumberOption,
-            "default"       : -1
-        },
-        {
-            "name"          : "fillcolor",
-            "type"          : ns.Renderer.RGBColorOption,
-            "default"       : new window.multigraph.math.RGBColor(BandRenderer.GRAY,BandRenderer.GRAY,BandRenderer.GRAY)
-        },
-        {
-            "name"          : "fillopacity",
-            "type"          : ns.Renderer.NumberOption,
-            "default"       : 1.0
-        }
-    ]);
-
-    ns.Renderer.BAND = new ns.Renderer.Type("band");
-
-    ns.Renderer.addType({"type"  : ns.Renderer.Type.parse("band"),
-                         "model" : BandRenderer});
-
-    ns.BandRenderer = BandRenderer;
+var BandRenderer = new window.jermaine.Model("BandRenderer", function () {
+    this.isA(Renderer);
+    this.hasA("numberOfVariables").which.defaultsTo(3);
 });
+
+BandRenderer.GRAY = parseInt("80", 16) / 255;
+
+Renderer.declareOptions(BandRenderer, "BandRendererOptions", [
+    {
+        "name"          : "linecolor",
+        "type"          : Renderer.RGBColorOption,
+        "default"       : new RGBColor(0,0,0)
+    },
+    {
+        "name"          : "linewidth",
+        "type"          : Renderer.NumberOption,
+        "default"       : 1
+    },
+    {
+        "name"          : "line1color",
+        "type"          : Renderer.RGBColorOption,
+        "default"       : null
+    },
+    {
+        "name"          : "line1width",
+        "type"          : Renderer.NumberOption,
+        "default"       : -1
+    },
+    {
+        "name"          : "line2color",
+        "type"          : Renderer.RGBColorOption,
+        "default"       : null
+    },
+    {
+        "name"          : "line2width",
+        "type"          : Renderer.NumberOption,
+        "default"       : -1
+    },
+    {
+        "name"          : "fillcolor",
+        "type"          : Renderer.RGBColorOption,
+        "default"       : new RGBColor(BandRenderer.GRAY,BandRenderer.GRAY,BandRenderer.GRAY)
+    },
+    {
+        "name"          : "fillopacity",
+        "type"          : Renderer.NumberOption,
+        "default"       : 1.0
+    }
+]);
+
+Renderer.BAND = new Renderer.Type("band");
+
+Renderer.addType({"type"  : Renderer.Type.parse("band"),
+                  "model" : BandRenderer});
+
+module.exports = BandRenderer;

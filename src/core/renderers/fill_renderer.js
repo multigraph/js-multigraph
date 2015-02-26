@@ -44,57 +44,57 @@
 //                           fillbase is specified, the fill will extend
 //                           down to the bottom of the plot area.
 // 
-window.multigraph.util.namespace("window.multigraph.core", function (ns) {
-    "use strict";
+var Renderer = require('../renderer.js'),
+    RGBColor = require('../../math/rgb_color.js'),
+    utilityFunctions = require('../../util/utilityFunctions.js'),
+    defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
+    attributes = utilityFunctions.getKeys(defaultValues.plot.renderer),
+    defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
+    attributes = utilityFunctions.getKeys(defaultValues.plot.renderer);
 
-    var FillRenderer,
-        defaultValues = window.multigraph.utilityFunctions.getDefaultValuesFromXSD(),
-        attributes = window.multigraph.utilityFunctions.getKeys(defaultValues.plot.renderer);
-
-    FillRenderer = new window.jermaine.Model("FillRenderer", function () {
-        this.isA(ns.Renderer);
-        this.hasA("numberOfVariables").which.defaultsTo(2);
-    });
-
-    FillRenderer.GRAY = parseInt("80", 16) / 255;
-
-    ns.Renderer.declareOptions(FillRenderer, "FillRendererOptions", [
-        {
-            "name"          : "linecolor",
-            "type"          : ns.Renderer.RGBColorOption,
-            "default"       : new window.multigraph.math.RGBColor(0,0,0)
-        },
-        {
-            "name"          : "linewidth",
-            "type"          : ns.Renderer.NumberOption,
-            "default"       : 1
-        },
-        {
-            "name"          : "fillcolor",
-            "type"          : ns.Renderer.RGBColorOption,
-            "default"       : new window.multigraph.math.RGBColor(FillRenderer.GRAY,FillRenderer.GRAY,FillRenderer.GRAY)
-        },
-        {
-            "name"          : "downfillcolor",
-            "type"          : ns.Renderer.RGBColorOption,
-            "default"       : null
-        },
-        {
-            "name"          : "fillopacity",
-            "type"          : ns.Renderer.NumberOption,
-            "default"       : 1.0
-        },
-        {
-            "name"          : "fillbase",
-            "type"          : ns.Renderer.VerticalDataValueOption,
-            "default"       : null
-        }
-    ]);
-
-    ns.Renderer.FILL = new ns.Renderer.Type("fill");
-
-    ns.Renderer.addType({"type"  : ns.Renderer.Type.parse("fill"),
-                         "model" : FillRenderer});
-
-    ns.FillRenderer = FillRenderer;
+var FillRenderer = new window.jermaine.Model("FillRenderer", function () {
+    this.isA(Renderer);
+    this.hasA("numberOfVariables").which.defaultsTo(2);
 });
+
+FillRenderer.GRAY = parseInt("80", 16) / 255;
+
+Renderer.declareOptions(FillRenderer, "FillRendererOptions", [
+    {
+        "name"          : "linecolor",
+        "type"          : Renderer.RGBColorOption,
+        "default"       : new RGBColor(0,0,0)
+    },
+    {
+        "name"          : "linewidth",
+        "type"          : Renderer.NumberOption,
+        "default"       : 1
+    },
+    {
+        "name"          : "fillcolor",
+        "type"          : Renderer.RGBColorOption,
+        "default"       : new RGBColor(FillRenderer.GRAY,FillRenderer.GRAY,FillRenderer.GRAY)
+    },
+    {
+        "name"          : "downfillcolor",
+        "type"          : Renderer.RGBColorOption,
+        "default"       : null
+    },
+    {
+        "name"          : "fillopacity",
+        "type"          : Renderer.NumberOption,
+        "default"       : 1.0
+    },
+    {
+        "name"          : "fillbase",
+        "type"          : Renderer.VerticalDataValueOption,
+        "default"       : null
+    }
+]);
+
+Renderer.FILL = new Renderer.Type("fill");
+
+Renderer.addType({"type"  : Renderer.Type.parse("fill"),
+                  "model" : FillRenderer});
+
+module.exports = FillRenderer;

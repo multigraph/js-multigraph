@@ -1,24 +1,22 @@
-window.multigraph.util.namespace("window.multigraph.core", function (ns) {
-    "use strict";
+var DataValue = require('./data_value.js');
 
-    var utilityFunctions = window.multigraph.utilityFunctions,
-        defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
-        attributes = utilityFunctions.getKeys(defaultValues.data.variables.variable),
-        DataVariable = new window.jermaine.Model("DataVariable", function () {
-            this.hasA("id").which.isA("string");
-            this.hasA("column").which.isA("integer");
-            this.hasA("type").which.isOneOf(ns.DataValue.types()).and.defaultsTo(ns.DataValue.NUMBER);
-            this.hasA("data").which.validatesWith(function (data) {
-                return data instanceof window.multigraph.core.Data;
-            });
-            this.hasA("missingvalue").which.validatesWith(ns.DataValue.isInstance);
+var utilityFunctions = require('../util/utilityFunctions.js'),
+    defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
+    attributes = utilityFunctions.getKeys(defaultValues.data.variables.variable);
 
-            this.hasA("missingop").which.isOneOf(ns.DataValue.comparators());
-            this.isBuiltWith("id", "%column", "%type");
+var DataVariable = new window.jermaine.Model("DataVariable", function () {
+    this.hasA("id").which.isA("string");
+    this.hasA("column").which.isA("integer");
+    this.hasA("type").which.isOneOf(DataValue.types()).and.defaultsTo(DataValue.NUMBER);
+    this.hasA("data").which.validatesWith(function (data) {
+        return data instanceof window.multigraph.core.Data;
+    });
+    this.hasA("missingvalue").which.validatesWith(DataValue.isInstance);
 
-            utilityFunctions.insertDefaults(this, defaultValues.data.variables.variable, attributes);
-        });
+    this.hasA("missingop").which.isOneOf(DataValue.comparators());
+    this.isBuiltWith("id", "%column", "%type");
 
-    ns.DataVariable = DataVariable;
-
+    utilityFunctions.insertDefaults(this, defaultValues.data.variables.variable, attributes);
 });
+
+module_exports = DataVariable;
