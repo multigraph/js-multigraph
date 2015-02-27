@@ -9,7 +9,6 @@ describe("DataPlot", function () {
         Filter = window.multigraph.core.Filter,
         FilterOption = window.multigraph.core.FilterOption,
         Renderer = window.multigraph.core.Renderer,
-        RendererOption = window.multigraph.core.RendererOption,
         Datatips = window.multigraph.core.Datatips,
         DatatipsVariable = window.multigraph.core.DatatipsVariable,
         DataVariable = window.multigraph.core.DataVariable,
