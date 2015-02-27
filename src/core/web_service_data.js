@@ -5,7 +5,9 @@ var Data = require('./data.js'),
     DataFormatter = require('./data_formatter.js'),
     ArrayData = require('./array_data.js'),
     WebServiceDataCacheNode = require('./web_service_data_cache_node.js'),
-    WebServiceDataIterator = require('./web_service_data_iterator.js');
+    WebServiceDataIterator = require('./web_service_data_iterator.js'),
+    ParseXML = require('../parser/parse_xml.js'),
+    $ = require('jquery');
 
 var WebServiceData = Model(function () {
     this.isA(Data);
@@ -25,7 +27,7 @@ var WebServiceData = Model(function () {
             this.formatter(DataFormatter.create(column0Type, this.format()));
         }
         if (this.ajaxthrottle() === undefined) {
-            this.ajaxthrottle(window.multigraph.jQuery);
+            this.ajaxthrottle($);
         }
     });
 
@@ -213,7 +215,7 @@ var WebServiceData = Model(function () {
             success  : function (data) {
                 // if data contains a <values> tag, extract its text string value
                 if (data.indexOf("<values>") > 0) {
-                    data = window.multigraph.parser.stringToJQueryXMLObj(data).find("values").text();
+                    data = ParseXML.stringToJQueryXMLObj(data).find("values").text();
                 }
                 node.parseData(that.getColumns(), data);
 

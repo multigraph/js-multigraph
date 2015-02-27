@@ -3,7 +3,7 @@ var Model = require('../../lib/jermaine/src/core/model.js');
 var DatetimeValue = require('./datetime_value.js'),
     Enum = require('../math/enum.js');
 
-var DatetimeUnit = new Enum("DatetimeUnit");
+var DatetimeUnit = require('./datetime_unit.js');
 
 var DatetimeMeasure = function (measure, unit) {
     if (typeof(measure) !== "number" || DatetimeMeasure.isUnit(unit) !== true) {
@@ -26,28 +26,28 @@ DatetimeMeasure.prototype.negative = function () {
 DatetimeMeasure.prototype.getRealValue = function () {
     var factor;
     switch (this.unit) {
-    case DatetimeMeasure.MILLISECOND:
+    case DatetimeUnit.MILLISECOND:
         factor = 1;
         break;
-    case DatetimeMeasure.SECOND:
+    case DatetimeUnit.SECOND:
         factor = 1000;
         break;
-    case DatetimeMeasure.MINUTE:
+    case DatetimeUnit.MINUTE:
         factor = 60000;
         break;
-    case DatetimeMeasure.HOUR:
+    case DatetimeUnit.HOUR:
         factor = 3600000;
         break;
-    case DatetimeMeasure.DAY:
+    case DatetimeUnit.DAY:
         factor = 86400000;
         break;
-    case DatetimeMeasure.WEEK:
+    case DatetimeUnit.WEEK:
         factor = 604800000;
         break;
-    case DatetimeMeasure.MONTH:
+    case DatetimeUnit.MONTH:
         factor = 2592000000;
         break;
-    case DatetimeMeasure.YEAR:
+    case DatetimeUnit.YEAR:
         factor = 31536000000;
         break;
     }
@@ -106,16 +106,10 @@ DatetimeMeasure.findTickmarkWithMonthSpacing = function (/*DatetimeValue*/value,
  */
 DatetimeMeasure.prototype.firstSpacingLocationAtOrAfter = function (/*DatetimeValue*/value, /*DatetimeValue*/alignment)  {
     switch (this.unit) {
-    case DatetimeMeasure.MONTH:
+    case DatetimeUnit.MONTH:
         return DatetimeMeasure.findTickmarkWithMonthSpacing(value, alignment, this.measure);
-    case DatetimeMeasure.YEAR:
+    case DatetimeUnit.YEAR:
         return DatetimeMeasure.findTickmarkWithMonthSpacing(value, alignment, this.measure * 12);
-        //case DatetimeMeasure.MILLISECOND:
-        //case DatetimeMeasure.SECOND:
-        //case DatetimeMeasure.MINUTE:
-        //case DatetimeMeasure.HOUR:
-        //case DatetimeMeasure.DAY:
-        //case DatetimeMeasure.WEEK:
     default:
         return DatetimeMeasure.findTickmarkWithMillisecondSpacing(value.getRealValue(), alignment.getRealValue(), this.getRealValue());
     }
@@ -140,13 +134,5 @@ DatetimeMeasure.prototype.toString = function () {
     return this.measure.toString() + this.unit.toString();
 };
 
-DatetimeMeasure.MILLISECOND = new DatetimeUnit("ms");
-DatetimeMeasure.SECOND      = new DatetimeUnit("s");
-DatetimeMeasure.MINUTE      = new DatetimeUnit("m");
-DatetimeMeasure.HOUR        = new DatetimeUnit("H");
-DatetimeMeasure.DAY         = new DatetimeUnit("D");
-DatetimeMeasure.WEEK        = new DatetimeUnit("W");
-DatetimeMeasure.MONTH       = new DatetimeUnit("M");
-DatetimeMeasure.YEAR        = new DatetimeUnit("Y");
 
 module.exports = DatetimeMeasure;

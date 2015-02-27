@@ -21,7 +21,7 @@ Point.parse = function (string) {
     if (!ar || (ar.length !== 4)) {
         throw new Error("cannot parse string '"+string+"' as a Point");
     }
-    return new ns.Point(parseFloat(ar[1]), parseFloat(ar[3]));
+    return new Point(parseFloat(ar[1]), parseFloat(ar[3]));
 };
 
 module.exports = Point;

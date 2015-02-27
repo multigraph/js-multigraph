@@ -10,8 +10,6 @@ var Model = require('../../lib/jermaine/src/core/model.js');
 
 var $ = require('jquery');
 
-var Graph = require('./graph.js');
-
 /**
  * The Multigraph Jermaine model is the root class for the js-multigraph project.
  *
@@ -29,6 +27,7 @@ var Multigraph = new Model("Multigraph", function () {
      * @author jrfrimme
      */
     this.hasMany("graphs").eachOfWhich.validateWith(function (graph) {
+        var Graph = require('./graph.js');
         return graph instanceof Graph;
     });
 

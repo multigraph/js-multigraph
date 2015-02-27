@@ -1,7 +1,6 @@
 var Model = require('../../lib/jermaine/src/core/model.js');
 
 var DataValue = require('./data_value.js'),
-    Axis = require('./axis.js'),
     DataFormatter = require('./data_formatter.js'),
     DataMeasure = require('./data_measure.js'),
     Point = require('../math/point.js'),
@@ -21,6 +20,7 @@ var Labeler = new Model("Labeler", function () {
     };
 
     this.hasA("axis").which.validatesWith(function (axis) {
+        var Axis = require('./axis.js');
         return axis instanceof Axis;
     });
     this.hasA("formatter").which.validatesWith(DataFormatter.isInstance);
@@ -53,7 +53,8 @@ var Labeler = new Model("Labeler", function () {
     this.respondsTo("initializeGeometry", function (graph) {
         var axis    = this.axis(),
             plotBox = graph.plotBox(),
-            labelDefaults = defaultValues.horizontalaxis.labels.label;
+            labelDefaults = defaultValues.horizontalaxis.labels.label,
+            Axis = require('./axis.js');
 
         if (this.position() === undefined) {
             if (axis.orientation() === Axis.HORIZONTAL) {
@@ -152,7 +153,8 @@ var Labeler = new Model("Labeler", function () {
             maxRealValue              = axis.dataMax().getRealValue(),
             representativeRealValue   = minRealValue + 0.51234567 * (maxRealValue - minRealValue),
             representativeValue       = DataValue.create(axis.type(), representativeRealValue ),
-            representativeValueString = this.formatter().format(representativeValue);
+            representativeValueString = this.formatter().format(representativeValue),
+            Axis                      = require('./axis.js');
 
         // length of the formatted axis representative value, in pixels
         var pixelFormattedValue = (

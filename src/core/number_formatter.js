@@ -1,6 +1,6 @@
 var Model = require('../../lib/jermaine/src/core/model.js');
 
-/*global sprintf */
+var sprintf = require('sprintf');
 
 var NumberFormatter = function (format) {
     var testString;

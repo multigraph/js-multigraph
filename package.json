@@ -41,5 +41,8 @@
     "grunt-replace": "^0.7.6",
     "grunt-run": "^0.2.1",
     "grunt-script-link-tags": "^0.0.5"
+  },
+  "dependencies": {
+    "sprintf": "^0.1.5"
   }
 }

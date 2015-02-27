@@ -16,10 +16,10 @@ DataFormatter.isInstance = function (obj) {
  * Create a new DataFormatter subtype of a given type
  */
 DataFormatter.create = function (type, format) {
-    if (type === ns.DataValue.NUMBER) {
-        return new ns.NumberFormatter(format);
-    } else if (type === ns.DataValue.DATETIME) {
-        return new ns.DatetimeFormatter(format);
+    if (type === DataValue.NUMBER) {
+        return new NumberFormatter(format);
+    } else if (type === DataValue.DATETIME) {
+        return new DatetimeFormatter(format);
     }
     throw new Error("attempt to create an unknown DataFormatter type");
 };

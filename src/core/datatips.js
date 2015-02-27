@@ -2,6 +2,7 @@ var Model = require('../../lib/jermaine/src/core/model.js');
 
 var DatatipsVariable = require('./datatips_variable.js'),
     utilityFunctions = require('../util/utilityFunctions.js'),
+    RGBColor = require('../math/rgb_color.js'),
     defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
     attributes = utilityFunctions.getKeys(defaultValues.plot.datatips);
 
@@ -13,14 +14,14 @@ var Datatips = new Model("Datatips", function () {
         return typeof(format) === "string";
     });
     this.hasA("bgcolor").which.validatesWith(function (bgcolor) {
-        return bgcolor instanceof window.multigraph.math.RGBColor;
+        return bgcolor instanceof RGBColor;
     });
     this.hasA("bgalpha").which.validatesWith(function (bgalpha) {
         return typeof(bgalpha) === "string";
     });
     this.hasA("border").which.isA("integer");
     this.hasA("bordercolor").which.validatesWith(function (bordercolor) {
-        return bordercolor instanceof window.multigraph.math.RGBColor;
+        return bordercolor instanceof RGBColor;
     });
     this.hasA("pad").which.isA("integer");
 

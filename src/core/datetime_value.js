@@ -1,7 +1,8 @@
 var Model = require('../../lib/jermaine/src/core/model.js');
 
 var DataValue = require('./data_value.js'),
-    DatetimeMeasure = require('./datetime_measure.js');
+    DatetimeUnit = require('./datetime_unit.js'),
+    sprintf = require('sprintf');
 
 var DatetimeValue = function (value) {
     if (typeof(value) !== "number") {
@@ -113,28 +114,28 @@ DatetimeValue.prototype.addRealValue = function ( realValueIncr ) {
 DatetimeValue.prototype.add = function ( /*DataMeasure*/ measure) {
     var date = new DatetimeValue(this.getRealValue());
     switch (measure.unit) {
-    case DatetimeMeasure.MILLISECOND:
+    case DatetimeUnit.MILLISECOND:
         date.value.setUTCMilliseconds(date.value.getUTCMilliseconds() + measure.measure);
         break;
-    case DatetimeMeasure.SECOND:
+    case DatetimeUnit.SECOND:
         date.value.setUTCSeconds(date.value.getUTCSeconds() + measure.measure);
         break;
-    case DatetimeMeasure.MINUTE:
+    case DatetimeUnit.MINUTE:
         date.value.setUTCMinutes(date.value.getUTCMinutes() + measure.measure);
         break;
-    case DatetimeMeasure.HOUR:
+    case DatetimeUnit.HOUR:
         date.value.setUTCHours(date.value.getUTCHours() + measure.measure);
         break;
-    case DatetimeMeasure.DAY:
+    case DatetimeUnit.DAY:
         date.value.setUTCDate(date.value.getUTCDate() + measure.measure);
         break;
-    case DatetimeMeasure.WEEK:
+    case DatetimeUnit.WEEK:
         date.value.setUTCDate(date.value.getUTCDate() + measure.measure * 7);
         break;
-    case DatetimeMeasure.MONTH:
+    case DatetimeUnit.MONTH:
         date.value.setUTCMonth(date.value.getUTCMonth() + measure.measure);
         break;
-    case DatetimeMeasure.YEAR:
+    case DatetimeUnit.YEAR:
         date.value.setUTCFullYear(date.value.getUTCFullYear() + measure.measure);
         break;
     }

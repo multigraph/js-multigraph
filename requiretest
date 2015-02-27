@@ -1,0 +1,66 @@
+#! /usr/bin/perl
+
+@files = (
+    "src/core/array_data.js",
+    "src/core/axis_binding.js",
+    "src/core/axis.js",
+    "src/core/axis_title.js",
+    "src/core/background.js",
+    "src/core/constant_plot.js",
+    "src/core/csv_data.js",
+    "src/core/data_formatter.js",
+    "src/core/data.js",
+    "src/core/data_measure.js",
+    "src/core/data_plot.js",
+    "src/core/datatips.js",
+    "src/core/datatips_variable.js",
+    "src/core/data_value.js",
+    "src/core/data_variable.js",
+    "src/core/datetime_formatter.js",
+    "src/core/datetime_measure.js",
+    "src/core/datetime_value.js",
+    "src/core/event_emitter.js",
+    "src/core/filter.js",
+    "src/core/filter_option.js",
+    "src/core/graph.js",
+    "src/core/grid.js",
+    "src/core/icon.js",
+    "src/core/img.js",
+    "src/core/labeler.js",
+    "src/core/legend.js",
+    "src/core/mixin.js",
+    "src/core/multigraph.js",
+
+#>> "src/core/number_formatter.js",
+
+    "src/core/number_measure.js",
+    "src/core/number_value.js",
+    "src/core/pan.js",
+    "src/core/periodic_array_data.js",
+    "src/core/plotarea.js",
+    "src/core/plot.js",
+    "src/core/plot_legend.js",
+    "src/core/renderer.js",
+
+    "src/core/renderers/band_renderer.js",
+    "src/core/renderers/bar_renderer.js",
+    "src/core/renderers/fill_renderer.js",
+    "src/core/renderers/pointline_renderer.js",
+    "src/core/renderers/rangebar_renderer.js",
+    "src/core/text.js",
+    "src/core/title.js",
+#>> "src/core/warning.js",
+    "src/core/web_service_data_cache_node.js",
+    "src/core/web_service_data_iterator.js",
+    "src/core/web_service_data.js",
+    "src/core/window.js",
+    "src/core/zoom.js");
+
+foreach $file (@files) {
+    open(OUT, ">foo.js");
+    print OUT "function isEmpty(x) { return (Object.keys(x).length === 0); }\n";
+    print OUT "var foo = require('./$file');\n";
+    print OUT "if (isEmpty(foo)) { console.log('BAD: $file'); } else { console.log('GOOD: $file'); }\n";
+    close(OUT);
+    system("node foo.js");
+}

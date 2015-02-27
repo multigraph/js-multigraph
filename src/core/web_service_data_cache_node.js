@@ -51,7 +51,7 @@ var WebServiceDataCacheNode = Model(function () {
      * @author jrfrimme
      */
     this.hasA("data").which.defaultsTo(null).and.validatesWith(function (data) {
-        var ValidationFunctions = require('../util/validationFunctions.js');
+        var validationFunctions = require('../util/validationFunctions.js');
         // accept null
         if (data === null) { return true; }
         // only accept arrays

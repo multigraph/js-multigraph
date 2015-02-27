@@ -1,7 +1,6 @@
 var Model = require('../../lib/jermaine/src/core/model.js');
 
-var Graph = require('./graph.js'),
-    Text = require('./text.js'),
+var Text = require('./text.js'),
     RGBColor = require('../math/rgb_color.js'),
     Point = require('../math/point.js'),
     utilityFunctions = require('../util/utilityFunctions.js'),
@@ -27,6 +26,7 @@ var Title = new Model("GraphTitle", function () {
      * @author jrfrimme
      */
     this.hasA("graph").which.validatesWith(function (graph) {
+        var Graph = require('./graph.js');
         return graph instanceof Graph;
     });
     /**
