@@ -3,10 +3,10 @@
 describe("Axis Title", function () {
     "use strict";
 
-    var Axis = window.multigraph.core.Axis,
-        AxisTitle = window.multigraph.core.AxisTitle,
-        Text = window.multigraph.core.Text,
-        Point = window.multigraph.math.Point,
+    var Axis = require('../../src/core/axis.js'),
+        AxisTitle = require('../../src/core/axis_title.js'),
+        Text = require('../../src/core/text.js'),
+        Point = require('../../src/math/point.js'),
         title;
 
     beforeEach(function () {
@@ -58,9 +58,9 @@ describe("Axis Title", function () {
     describe("methods", function () {
 
         describe("initializeGeometry", function () {
-            var Graph = window.multigraph.core.Graph,
-                Box = window.multigraph.math.Box,
-                titleDefaults = window.multigraph.utilityFunctions.getDefaultValuesFromXSD().horizontalaxis.title,
+            var Graph = require('../../src/core/graph.js'),
+                Box = require('../../src/math/box.js'),
+                titleDefaults = require('../../src/util/utilityFunctions').getDefaultValuesFromXSD().horizontalaxis.title,
                 graph,
                 axis;
 
