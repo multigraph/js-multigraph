@@ -1,0 +1,82 @@
+#! /usr/bin/perl
+
+@files = qw(axis.js  data.js  graph.js  labeler.js  legend.js  multigraph.js  plot.js);
+
+$repls = [
+{ 't' => 'window.multigraph.core.Zoom',                              'r' => "require('../../src/core/zoom.js')" },
+{ 't' => 'window.multigraph.core.Window',                            'r' => "require('../../src/core/window.js')" },
+{ 't' => 'window.multigraph.core.WebServiceDataIterator',            'r' => "require('../../src/core/web_service_data_iterator.js')" },
+{ 't' => 'window.multigraph.core.WebServiceDataCacheNode',           'r' => "require('../../src/core/web_service_data_cache_node.js')" },
+{ 't' => 'window.multigraph.core.WebServiceData',                    'r' => "require('../../src/core/web_service_data.js')" },
+{ 't' => 'window.multigraph.core.Warning',                           'r' => "require('../../src/core/warning.js')" },
+{ 't' => 'window.multigraph.core.Title',                             'r' => "require('../../src/core/title.js')" },
+{ 't' => 'window.multigraph.core.Text',                              'r' => "require('../../src/core/text.js')" },
+{ 't' => 'window.multigraph.core.Renderer',                          'r' => "require('../../src/core/renderer.js')" },
+{ 't' => 'window.multigraph.core.RangeBarRenderer',                  'r' => "require('../../src/core/renderers/rangebar_renderer.js')" },
+{ 't' => 'window.multigraph.core.PointlineRenderer',                 'r' => "require('../../src/core/renderers/pointline_renderer.js')" },
+{ 't' => 'window.multigraph.core.PlotLegend',                        'r' => "require('../../src/core/plot_legend.js')" },
+{ 't' => 'window.multigraph.core.Plotarea',                          'r' => "require('../../src/core/plotarea.js')" },
+{ 't' => 'window.multigraph.core.Plot',                              'r' => "require('../../src/core/plot.js')" },
+{ 't' => 'window.multigraph.core.PeriodicArrayData',                 'r' => "require('../../src/core/periodic_array_data.js')" },
+{ 't' => 'window.multigraph.core.Pan',                               'r' => "require('../../src/core/pan.js')" },
+{ 't' => 'window.multigraph.core.NumberValue',                       'r' => "require('../../src/core/number_value.js')" },
+{ 't' => 'window.multigraph.core.NumberMeasure',                     'r' => "require('../../src/core/number_measure.js')" },
+{ 't' => 'window.multigraph.core.NumberFormatter',                   'r' => "require('../../src/core/number_formatter.js')" },
+{ 't' => 'window.multigraph.core.Multigraph',                        'r' => "require('../../src/core/multigraph.js')" },
+{ 't' => 'window.multigraph.core.Legend',                            'r' => "require('../../src/core/legend.js')" },
+{ 't' => 'window.multigraph.core.Labeler',                           'r' => "require('../../src/core/labeler.js')" },
+{ 't' => 'window.multigraph.core.Img',                               'r' => "require('../../src/core/img.js')" },
+{ 't' => 'window.multigraph.core.Icon',                              'r' => "require('../../src/core/icon.js')" },
+{ 't' => 'window.multigraph.core.Grid',                              'r' => "require('../../src/core/grid.js')" },
+{ 't' => 'window.multigraph.core.Graph',                             'r' => "require('../../src/core/graph.js')" },
+{ 't' => 'window.multigraph.core.FilterOption',                      'r' => "require('../../src/core/filter_option.js')" },
+{ 't' => 'window.multigraph.core.Filter',                            'r' => "require('../../src/core/filter.js')" },
+{ 't' => 'window.multigraph.core.FillRenderer',                      'r' => "require('../../src/core/renderers/fillrenderer.js')" },
+{ 't' => 'window.multigraph.core.EventEmitter',                      'r' => "require('../../src/core/event_emitter.js')" },
+{ 't' => 'window.multigraph.core.DatetimeValue',                     'r' => "require('../../src/core/datetime_value.js')" },
+{ 't' => 'window.multigraph.core.DatetimeMeasure',                   'r' => "require('../../src/core/datetime_measure.js')" },
+{ 't' => 'window.multigraph.core.DatetimeFormatter',                 'r' => "require('../../src/core/datetime_formatter.js')" },
+{ 't' => 'window.multigraph.core.DataVariable',                      'r' => "require('../../src/core/data_variable.js')" },
+{ 't' => 'window.multigraph.core.DataValue',                         'r' => "require('../../src/core/data_value.js')" },
+{ 't' => 'window.multigraph.core.DatatipsVariable',                  'r' => "require('../../src/core/datatips_variable.js')" },
+{ 't' => 'window.multigraph.core.Datatips',                          'r' => "require('../../src/core/datatips.js')" },
+{ 't' => 'window.multigraph.core.DataPlot',                          'r' => "require('../../src/core/data_plot.js')" },
+{ 't' => 'window.multigraph.core.DataMeasure',                       'r' => "require('../../src/core/data_measure.js')" },
+
+{ 't' => 'window.multigraph.core.DataFormatter',                     'r' => "require('../../src/core/data_formatter.js')" },
+{ 't' => 'window.multigraph.core.Data',                              'r' => "require('../../src/core/data.js')" },
+{ 't' => 'window.multigraph.core.CSVData',                           'r' => "require('../../src/core/csv_data.js')" },
+{ 't' => 'window.multigraph.core.ConstantPlot',                      'r' => "require('../../src/core/constant_plot.js')" },
+{ 't' => 'window.multigraph.core.BarRenderer',                       'r' => "require('../../src/core/renderers/bar_renderer.js')" },
+{ 't' => 'window.multigraph.core.BandRenderer',                      'r' => "require('../../src/core/renderers/band_renderer.js')" },
+{ 't' => 'window.multigraph.core.Background',                        'r' => "require('../../src/core/background.js')" },
+{ 't' => 'window.multigraph.core.AxisTitle',                         'r' => "require('../../src/core/axis_title.js')" },
+{ 't' => 'window.multigraph.core.Axis',                              'r' => "require('../../src/core/axis.js')" },
+
+{ 't' => 'window.multigraph.math.Box',                               'r' => "require('../../src/math/box.js')" },
+{ 't' => 'window.multigraph.math.Point',                             'r' => "require('../../src/math/point.js')" },
+{ 't' => 'window.multigraph.math.RGBColor',                          'r' => "require('../../src/math/rgb_color.js')" },
+
+{ 't' => 'window.multigraph.utilityFunctions',                       'r' => "require('../../src/util/utilityFunctions.js')" },
+
+
+    ];
+
+for $file (@files) {
+    print "$file\n";
+    open(IN, "<$file");
+    $contents = "";
+    while (<IN>) {
+        $contents .= $_;
+    }    
+    close(IN);
+    for $repl (@$repls) {
+        $t = $repl->{'t'};
+        $r = $repl->{'r'};
+        $contents =~ s/\Q$t\E/$r/g;
+    }
+    $file =~ s/\.js$//;
+    open(OUT, ">${file}-spec.js");
+    print OUT $contents;
+    close(OUT);
+}

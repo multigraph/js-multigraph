@@ -11,7 +11,7 @@ Util.safe_interp = function (x, x0, x1, y0, y1) {
     // same as "interp", but if the line is vertical (x0 === x1), return
     // the average of the two y values, rather than NaN
     if (x0 === x1) { return (y0 + y1) / 2; }
-    return ns.util.interp(x, x0, x1, y0, y1);
+    return Util.interp(x, x0, x1, y0, y1);
 };
 
 Util.l2dist = function (x1, y1, x2, y2) {
