@@ -1,3 +1,15 @@
+// Use Enum to create objects that act like enumerations in other languages (such as Java).
+// 
+// Usage is like this:
+// 
+//   var Suit = Enum("Suit");
+//   var clubs = new Suit("clubs");
+//   var diamonds = new Suit("diamonds");
+//   var spades = new Suit("spades");
+//   var hearts = new Suit("hearts");
+// 
+//   var c = Suit.parse("clubs");  # c is guaranteed to equal the clubs variable from above
+// 
 var Enum = function (name) {
 
     var instances = {};

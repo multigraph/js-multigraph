@@ -11,7 +11,8 @@ var DataVariable = new Model("DataVariable", function () {
     this.hasA("column").which.isA("integer");
     this.hasA("type").which.isOneOf(DataValue.types()).and.defaultsTo(DataValue.NUMBER);
     this.hasA("data").which.validatesWith(function (data) {
-        return data instanceof window.multigraph.core.Data;
+        var Data = require('./data.js');
+        return data instanceof Data;
     });
     this.hasA("missingvalue").which.validatesWith(DataValue.isInstance);
 
@@ -21,4 +22,4 @@ var DataVariable = new Model("DataVariable", function () {
     utilityFunctions.insertDefaults(this, defaultValues.data.variables.variable, attributes);
 });
 
-module_exports = DataVariable;
+module.exports = DataVariable;

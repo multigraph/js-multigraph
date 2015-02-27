@@ -1,9 +1,6 @@
 var Model = require('../../lib/jermaine/src/core/model.js');
 
-var Plot = require('./plot.js'),
-    Warning = require('./warning.js'),
-    DataValue = require('./data_value.js'),
-    DataMeasure = require('./data_measure.js'),
+var Warning = require('./warning.js'),
     Enum = require('../math/enum.js'),
     rendererList,
     utilityFunctions = require('../util/utilityFunctions.js'),
@@ -15,6 +12,7 @@ var Plot = require('./plot.js'),
 var Renderer = new Model("Renderer", function () {
     this.hasA("type").which.validatesWith(Type.isInstance);
     this.hasA("plot").which.validatesWith(function (plot) {
+        var Plot = require('./plot.js');
         return plot instanceof Plot;
     });
     this.hasA("numberOfVariables").which.isA("number");
@@ -113,7 +111,8 @@ var Renderer = new Model("Renderer", function () {
 
     this.respondsTo("setOptionFromString", function (name, stringValue, stringMin, stringMax) {
         var plot = this.plot(),
-            type = this.type();
+            type = this.type(),
+            DataValue = require('./data_value.js');
 
         //
         // Two blocks of code below provides support for the deprecated "dotsize" and "dotcolor"
@@ -283,6 +282,7 @@ Renderer.declareOptions = function (renderer, OptionsModelName, options) {
 
 
 Renderer.Option = new Model("Renderer.Option", function () {
+    var DataValue = require('./data_value.js');
     this.hasA("min").which.validatesWith(DataValue.isInstance);
     this.hasA("max").which.validatesWith(DataValue.isInstance);
 });
@@ -324,6 +324,7 @@ Renderer.NumberOption = new Model("Renderer.NumberOption", function () {
 Renderer.DataValueOption = new Model("Renderer.DataValueOption", function () {
     this.isA(Renderer.Option);
     this.hasA("value").which.validatesWith(function (value) {
+        var DataValue = require('./data_value.js');
         return DataValue.isInstance(value) || value === null;
     });
     this.isBuiltWith("value");
@@ -339,6 +340,7 @@ Renderer.VerticalDataValueOption = new Model("Renderer.DataValueOption", functio
     this.isA(Renderer.DataValueOption);
     this.isBuiltWith("value");
     this.respondsTo("parseValue", function (string, renderer) {
+        var DataValue = require('./data_value.js');
         this.value( DataValue.parse(renderer.plot().verticalaxis().type(), string) );
     });
     
@@ -348,6 +350,7 @@ Renderer.HorizontalDataValueOption = new Model("Renderer.DataValueOption", funct
     this.isA(Renderer.DataValueOption);
     this.isBuiltWith("value");
     this.respondsTo("parseValue", function (string, renderer) {
+        var DataValue = require('./data_value.js');
         this.value( DataValue.parse(renderer.plot().horizontalaxis().type(), string) );
     });
     
@@ -356,6 +359,7 @@ Renderer.HorizontalDataValueOption = new Model("Renderer.DataValueOption", funct
 Renderer.DataMeasureOption = new Model("Renderer.DataMeasureOption", function () {
     this.isA(Renderer.Option);
     this.hasA("value").which.validatesWith(function (value) {
+        var DataMeasure = require('./data_measure.js');
         return DataMeasure.isInstance(value) || value === null;
     });
     this.isBuiltWith("value");
@@ -370,6 +374,7 @@ Renderer.DataMeasureOption = new Model("Renderer.DataMeasureOption", function ()
 Renderer.VerticalDataMeasureOption = new Model("Renderer.DataMeasureOption", function () {
     this.isA(Renderer.DataMeasureOption);
     this.respondsTo("parseValue", function (string, renderer) {
+        var DataMeasure = require('./data_measure.js');
         this.value( DataMeasure.parse(renderer.plot().verticalaxis().type(), string) );
     });
     
@@ -379,6 +384,7 @@ Renderer.HorizontalDataMeasureOption = new Model("Renderer.DataMeasureOption", f
     this.isA(Renderer.DataMeasureOption);
     this.isBuiltWith("value");
     this.respondsTo("parseValue", function (string, renderer) {
+        var DataMeasure = require('./data_measure.js');
         this.value( DataMeasure.parse(renderer.plot().horizontalaxis().type(), string) );
     });
     

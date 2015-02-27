@@ -27,7 +27,6 @@ utilityFunctions.getDefaultValuesFromXSD = function () {
     
     var DatetimeValue = require('../core/datetime_value.js'),
         NumberValue = require('../core/number_value.js'),
-        Renderer = require('../core/renderer.js'),
         Displacement = require('../math/displacement.js'),
         Insets = require('../math/insets.js'),
         Point = require('../math/point.js'),
@@ -324,7 +323,10 @@ utilityFunctions.getDefaultValuesFromXSD = function () {
                     "min": undefined,
                     "max": undefined
                 },
-                "type": function () { return Renderer.Type.parse("line"); }
+                "type": function () {
+                    var Renderer = require('../core/renderer.js');
+                    return Renderer.Type.parse("line");
+                }
             },
             "datatips":{
                 "variable": {
