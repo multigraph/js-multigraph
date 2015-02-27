@@ -1,3 +1,5 @@
+var Model = require('../../lib/jermaine/src/core/model.js');
+
 var Data = require('./data.js'),
     DataValue = require('./data_value.js');
 
@@ -8,7 +10,7 @@ var Data = require('./data.js'),
  * @param {array} columns A array of DataVariables
  * @param {array} stringArray A array of strings which will later be parsed into DataValues
  */
-var ArrayData = window.jermaine.Model(function () {
+var ArrayData = Model(function () {
     var ArrayData = this; // huh?  This shadows the ArrayData defined on the previous line.
     //                       Is that intended/correct?  Probably, but need to check for sure.
     //                       mbp Wed Feb 25 18:31:15 2015

@@ -1,3 +1,5 @@
+var Model = require('../../lib/jermaine/src/core/model.js');
+
 /**
  * A WebServiceDataCacheNode represents a single node in the
  * doubly-linked list holding the data for a WebServiceDataCache.
@@ -39,7 +41,7 @@
 var DataValue = require('./data_value.js'),
     ArrayData = require('./array_data.js');
 
-var WebServiceDataCacheNode = window.jermaine.Model(function () {
+var WebServiceDataCacheNode = Model(function () {
 
     /**
      * The actual data for this node.

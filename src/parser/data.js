@@ -18,7 +18,7 @@ window.multigraph.util.namespace("window.multigraph.parser", function (ns) {
 
                 adap = $(xml).attr("adapter");
                 if (adap !== undefined && adap !== "") {
-                    adapter = window.multigraph.adapters[adap];
+                    adapter = window.multigraph.adapters[adap]; // Multigraph.adapters()
                     if (adapter === undefined) {
                         throw new Error("Missing data adapater: " + adapter);
                     }

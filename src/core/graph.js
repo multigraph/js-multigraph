@@ -1,3 +1,5 @@
+var Model = require('../../lib/jermaine/src/core/model.js');
+
 var Axis = require('./axis.js'),
     Background = require('./background.js'),
     Data = require('./data.js'),
@@ -15,12 +17,12 @@ var Axis = require('./axis.js'),
  * @for Graph
  * @constructor
  */
-var utilityFunctions = require('../util/utilityFunction.js'),
+var utilityFunctions = require('../util/utilityFunctions.js'),
     defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
     attributes = utilityFunctions.getKeys(defaultValues),
     Multigraph = require('./multigraph.js');
 
-var Graph = new window.jermaine.Model("Graph", function () {
+var Graph = new Model("Graph", function () {
     /**
      * Child model which controls the properties of the Graph's Window.
      *

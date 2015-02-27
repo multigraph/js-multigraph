@@ -1,8 +1,10 @@
+var Model = require('../../lib/jermaine/src/core/model.js');
+
 var ArrayData = require('./array_data.js'),
     DataMeasure = require('./data_measure.js'),
     DataValue = require('./data_value.js');
 
-var PeriodicArrayData = window.jermaine.Model(function () {
+var PeriodicArrayData = Model(function () {
     var PeriodicArrayData = this,
         emptyIterator = {
             "next"    : function () {},

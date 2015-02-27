@@ -1,3 +1,5 @@
+var Model = require('../../lib/jermaine/src/core/model.js');
+
 /**
  * The Mixin model provides a convenient way for Jermaine
  * applications to "mix in" additional functionality to a model,
@@ -28,7 +30,7 @@
  * @for Mixin
  * @author mbp
  */
-var Mixin = new window.jermaine.Model("Mixin", function () {
+var Mixin = new Model("Mixin", function () {
 
     /**
      * The internal list of functions to be applied.

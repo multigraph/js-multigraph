@@ -1,3 +1,5 @@
+var Model = require('../../lib/jermaine/src/core/model.js');
+
 NumberValue = require('./number_value.js');
 
 // Fudge factor for floating point comparisons:

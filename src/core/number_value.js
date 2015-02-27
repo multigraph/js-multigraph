@@ -1,3 +1,5 @@
+var Model = require('../../lib/jermaine/src/core/model.js');
+
 DataValue = require('./data_value.js');
 
 var NumberValue = function (value) {

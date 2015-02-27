@@ -1,3 +1,5 @@
+var Model = require('../../lib/jermaine/src/core/model.js');
+
 var DataValue = require('./data_value.js'),
     NumberFormatter = require('./number_formatter.js'),
     DatetimeFormatter = require('./datetime_formatter.js');

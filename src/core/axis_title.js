@@ -1,9 +1,9 @@
+var Model = require('../../lib/jermaine/src/core/model.js');
+
 var utilityFunctions = require('../util/utilityFunctions.js'),
     defaultValues    = utilityFunctions.getDefaultValuesFromXSD(),
     attributes       = utilityFunctions.getKeys(defaultValues.horizontalaxis.title),
-    Axis             = require('./axis.js'),
-    Text             = require('./text.js'),
-    Point            = require('./math/point.js');
+    Point            = require('../math/point.js');
 
 /**
  * Axis Title is a Jermaine model that supports the rendering of Axis Titles.
@@ -13,7 +13,8 @@ var utilityFunctions = require('../util/utilityFunctions.js'),
  * @constructor
  * @param {Axis} axis
  */
-var AxisTitle = new window.jermaine.Model("AxisTitle", function () {
+var AxisTitle = new Model("AxisTitle", function () {
+    
     /**
      * Pointer to the Title's parent Axis jermiane model.
      *
@@ -22,6 +23,7 @@ var AxisTitle = new window.jermaine.Model("AxisTitle", function () {
      * @author jrfrimme
      */
     this.hasA("axis").which.validatesWith(function (axis) {
+        var Axis = require('./axis.js');
         return axis instanceof Axis;
     });
     /**
@@ -32,6 +34,7 @@ var AxisTitle = new window.jermaine.Model("AxisTitle", function () {
      * @author jrfrimme
      */
     this.hasA("content").which.validatesWith(function (content) {
+        var Text = require('./text.js');
         return content instanceof Text;
     });
     /**
@@ -85,6 +88,7 @@ var AxisTitle = new window.jermaine.Model("AxisTitle", function () {
      * @author jrfrimme
      */
     this.respondsTo("initializeGeometry", function (graph, graphicsContext) {
+        var Axis = require('./axis.js');
         var titleDefaults = defaultValues.horizontalaxis.title,
             axis     = this.axis(),
             position = this.position,

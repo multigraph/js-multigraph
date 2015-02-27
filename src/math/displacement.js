@@ -1,3 +1,6 @@
+var Model = require('../../lib/jermaine/src/core/model.js'),
+    validationFunctions = require('../util/validationFunctions.js');
+
 var Displacement = {};
 /**
  * A Displacement represents a geometric position along a line
@@ -46,10 +49,10 @@ var Displacement = {};
  * @param {Number} a
  * @param {Integer} b (OPTIONAL)
  */
-Displacement = new window.jermaine.Model("Displacement", function () {
+Displacement = new Model("Displacement", function () {
     
     this.hasA("a").which.validatesWith(function (a) {
-        return window.multigraph.utilityFunctions.validateNumberRange(a, -1.0, 1.0);
+        return validationFunctions.validateNumberRange(a, -1.0, 1.0);
     });
     this.hasA("b").which.isA("integer").and.defaultsTo(0);
     this.isBuiltWith("a", "%b");

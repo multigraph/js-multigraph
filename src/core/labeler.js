@@ -1,3 +1,5 @@
+var Model = require('../../lib/jermaine/src/core/model.js');
+
 var DataValue = require('./data_value.js'),
     Axis = require('./axis.js'),
     DataFormatter = require('./data_formatter.js'),
@@ -8,7 +10,7 @@ var DataValue = require('./data_value.js'),
     defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
     attributes = utilityFunctions.getKeys(defaultValues.horizontalaxis.labels.label);
 
-var Labeler = new window.jermaine.Model("Labeler", function () {
+var Labeler = new Model("Labeler", function () {
 
     var getValue = function (valueOrFunction) {
         if (typeof(valueOrFunction) === "function") {

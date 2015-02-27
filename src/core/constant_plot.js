@@ -1,10 +1,13 @@
-var utilityFunctions = require('../util/utilityFunctions.js'),
-    defaultValues    = utilityFunctions.getDefaultValuesFromXSD(),
-    attributes       = utilityFunctions.getKeys(defaultValues.plot),
-    Plot             = require('./plot.js'),
-    DataValue        = require('./data_value.js');
+var Model = require('../../lib/jermaine/src/core/model.js');
 
-var ConstantPlot = new window.jermaine.Model("ConstantPlot", function () {
+
+var ConstantPlot = new Model("ConstantPlot", function () {
+    var utilityFunctions = require('../util/utilityFunctions.js'),
+        defaultValues    = utilityFunctions.getDefaultValuesFromXSD(),
+        attributes       = utilityFunctions.getKeys(defaultValues.plot),
+        Plot             = require('./plot.js'),
+        DataValue        = require('./data_value.js');
+
     this.isA(Plot);
     this.hasA("constantValue").which.validatesWith(DataValue.isInstance);
 

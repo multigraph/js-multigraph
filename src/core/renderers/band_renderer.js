@@ -1,3 +1,5 @@
+var Model = require('../../../lib/jermaine/src/core/model.js');
+
 // The Band renderer is a 2-variable renderer which fills the region
 // between two data lines with a solid color, and draws a line segment
 // between consecutive data points in each line.
@@ -65,7 +67,7 @@
 var Renderer = require('../renderer.js'),
     RGBColor = require('../../math/rgb_color.js');
 
-var BandRenderer = new window.jermaine.Model("BandRenderer", function () {
+var BandRenderer = new Model("BandRenderer", function () {
     this.isA(Renderer);
     this.hasA("numberOfVariables").which.defaultsTo(3);
 });

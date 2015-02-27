@@ -1,3 +1,5 @@
+var Model = require('../../lib/jermaine/src/core/model.js');
+
 /**
  * Core functionality for the javascript implementation of multigraph.
  *
@@ -6,12 +8,9 @@
  * @main core
  */
 
-var $ = window.multigraph.jQuery;
+var $ = require('jquery');
 
 var Graph = require('./graph.js');
-
-// define empty object for holding data adpaters
-window.multigraph.adapters = {};
 
 /**
  * The Multigraph Jermaine model is the root class for the js-multigraph project.
@@ -20,7 +19,7 @@ window.multigraph.adapters = {};
  * @for Multigraph
  * @constructor
  */
-var Multigraph = new window.jermaine.Model("Multigraph", function () {
+var Multigraph = new Model("Multigraph", function () {
 
     /**
      * Jermiane Attr_List of all the graphs in a Multigraph.
@@ -424,6 +423,13 @@ Multigraph.createDefaultMessageHandlers = function (div) {
             });
         }
     };
+};
+
+// define empty object for holding data adpaters
+var adapters = {};
+
+Multigraph.adapters = function() {
+  return adapters;
 };
 
 module.exports = Multigraph;

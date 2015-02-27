@@ -1,3 +1,5 @@
+var Model = require('../../lib/jermaine/src/core/model.js');
+
 /**
  * Text is a Jermaine model that supports storing and determining metrics of
  * strings in different graphics contexts.
@@ -7,7 +9,7 @@
  * @constructor
  * @param string {String} The string stored in the Text model
  */
-var Text = new window.jermaine.Model("Text", function () {
+var Text = new Model("Text", function () {
     this.isBuiltWith("string");
 
     /**

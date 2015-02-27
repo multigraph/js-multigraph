@@ -1,5 +1,4 @@
-var NumberValue = require('./number_value.js'),
-    DatetimeValue = require('./datetime_value.js');
+var Model = require('../../lib/jermaine/src/core/model.js');
 
 /*
  * DataValue is a POJSO (plain old javascript object) that simply
@@ -57,6 +56,9 @@ DataValue.isInstanceOrNull = function (obj) {
  * Create a new DataValue subtype of a given type from a real value
  */
 DataValue.create = function (type, realValue) {
+    var NumberValue = require('./number_value.js'),
+        DatetimeValue = require('./datetime_value.js');
+
     if (type === DataValue.NUMBER) {
         return new NumberValue(realValue);
     } else if (type === DataValue.DATETIME) {
@@ -69,6 +71,9 @@ DataValue.create = function (type, realValue) {
  * Create a new DataValue subtype of a given type by parsing a string
  */
 DataValue.parse = function (type, string) {
+    var NumberValue = require('./number_value.js'),
+        DatetimeValue = require('./datetime_value.js');
+
     if (type === DataValue.NUMBER) {
         return NumberValue.parse(string);
     } else if (type === DataValue.DATETIME) {

@@ -1,3 +1,5 @@
+var Model = require('../../lib/jermaine/src/core/model.js');
+
 var utilityFunctions = require('../util/utilityFunctions.js'),
     defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
     attributes = utilityFunctions.getKeys(defaultValues.horizontalaxis),
@@ -6,16 +8,19 @@ var utilityFunctions = require('../util/utilityFunctions.js'),
     RGBColor = require('../math/rgb_color.js'),
     Enum = require('../math/enum.js'),
     EventEmitter = require('./event_emitter.js'),
-    AxisBinding = require('./axisbinding.js'),
+    AxisBinding = require('./axis_binding.js'),
     AxisTitle = require('./axis_title.js'),
     DataValue = require('./data_value.js'),
     Grid = require('./grid.js'),
     Labeler = require('./labeler.js'),
     Pan = require('./pan.js'),
     Zoom = require('./zoom.js'),
+
+    Util = require('../math/util.js'),
+
     Orientation = new Enum("AxisOrientation");
 
-var Axis = new window.jermaine.Model("Axis", function () {
+var Axis = new Model("Axis", function () {
 
     this.isA(EventEmitter);
 
@@ -40,16 +45,16 @@ var Axis = new window.jermaine.Model("Axis", function () {
     this.hasAn("id").which.isA("string");
     this.hasA("type").which.isOneOf(DataValue.types());
     this.hasA("length").which.validatesWith(function (length) {
-        return length instanceof window.multigraph.math.Displacement;
+        return length instanceof Displacement;
     });
     this.hasA("position").which.validatesWith(function (position) {
-        return position instanceof window.multigraph.math.Point;
+        return position instanceof Point;
     });
     this.hasA("pregap").which.isA("number");
     this.hasA("postgap").which.isA("number");
     this.hasAn("anchor").which.isA("number");
     this.hasA("base").which.validatesWith(function (base) {
-        return base instanceof window.multigraph.math.Point;
+        return base instanceof Point;
     });
 
     /**
@@ -83,7 +88,7 @@ var Axis = new window.jermaine.Model("Axis", function () {
     
     this.hasA("minoffset").which.isA("number");
     this.hasA("minposition").which.validatesWith(function (minposition) {
-        return minposition instanceof window.multigraph.math.Displacement;
+        return minposition instanceof Displacement;
     });
 
     /**
@@ -118,16 +123,16 @@ var Axis = new window.jermaine.Model("Axis", function () {
 
     this.hasA("maxoffset").which.isA("number");
     this.hasA("maxposition").which.validatesWith(function (maxposition) {
-        return maxposition instanceof window.multigraph.math.Displacement;
+        return maxposition instanceof Displacement;
     });
 
 
     this.hasA("positionbase").which.isA("string"); // deprecated
     this.hasA("color").which.validatesWith(function (color) {
-        return color instanceof window.multigraph.math.RGBColor;
+        return color instanceof RGBColor;
     });
     this.hasA("tickcolor").which.validatesWith(function (color) {
-        return color === null || color instanceof window.multigraph.math.RGBColor;
+        return color === null || color instanceof RGBColor;
     });
     this.hasA("tickwidth").which.isA("integer");
     this.hasA("tickmin").which.isA("integer");
@@ -460,7 +465,7 @@ var Axis = new window.jermaine.Model("Axis", function () {
             parallelOffset = this.parallelOffset(),
             perpOffset     = this.perpOffset(),
             pixelLength    = this.pixelLength(),
-            l2dist = window.multigraph.math.util.l2dist;
+            l2dist         = Util.l2dist;
 
         if (parallelCoord < parallelOffset) {
             // point is under or left of the axis; return L2 distance to bottom or left axis endpoint

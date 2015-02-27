@@ -1,4 +1,6 @@
-var AxisBinding = new window.jermaine.Model("AxisBinding", function () {
+var Model = require('../../lib/jermaine/src/core/model.js');
+
+var AxisBinding = new Model("AxisBinding", function () {
     var AxisBinding = this;
     
     AxisBinding.instances = {};

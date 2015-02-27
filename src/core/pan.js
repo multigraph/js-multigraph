@@ -1,10 +1,12 @@
+var Model = require('../../lib/jermaine/src/core/model.js');
+
 DataValue = require('./data_value.js');
 
 var utilityFunctions = require('../util/utilityFunctions.js'),
     defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
     attributes = utilityFunctions.getKeys(defaultValues.horizontalaxis.pan);
 
-var Pan = new window.jermaine.Model("Pan", function () {
+var Pan = new Model("Pan", function () {
     this.hasA("allowed").which.isA("boolean");
     this.hasA("min").which.validatesWith(DataValue.isInstanceOrNull);
     this.hasA("max").which.validatesWith(DataValue.isInstanceOrNull);

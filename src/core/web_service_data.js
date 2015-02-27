@@ -1,3 +1,5 @@
+var Model = require('../../lib/jermaine/src/core/model.js');
+
 var Data = require('./data.js'),
     DataValue = require('./data_value.js'),
     DataFormatter = require('./data_formatter.js'),
@@ -5,7 +7,7 @@ var Data = require('./data.js'),
     WebServiceDataCacheNode = require('./web_service_data_cache_node.js'),
     WebServiceDataIterator = require('./web_service_data_iterator.js');
 
-var WebServiceData = window.jermaine.Model(function () {
+var WebServiceData = Model(function () {
     this.isA(Data);
     this.hasA("serviceaddress").which.isA("string");
     this.hasA("serviceaddresspattern").which.isA("string");
@@ -353,7 +355,7 @@ var WebServiceData = window.jermaine.Model(function () {
         return new WebServiceDataIterator(columnIndices, initialNode, initialIndex, finalNode, finalIndex);
     });
 
-    this.hasA("paused").which.isA("booleaeen").and.defaultsTo(false);
+    this.hasA("paused").which.isA("boolean").and.defaultsTo(false);
     this.respondsTo("pause", function() {
         this.paused(true);
     });

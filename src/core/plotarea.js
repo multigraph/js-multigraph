@@ -1,10 +1,12 @@
+var Model = require('../../lib/jermaine/src/core/model.js');
+
 var RGBColor = require('../math/rgb_color.js'),
     Insets = require('../math/insets.js'),
     utilityFunctions = require('../util/utilityFunctions.js'),
     defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
     attributes = utilityFunctions.getKeys(defaultValues.plotarea);
 
-var Plotarea = new window.jermaine.Model("Plotarea", function () {
+var Plotarea = new Model("Plotarea", function () {
 
     this.hasA("margin").which.validatesWith(function (margin) {
         return margin instanceof Insets;

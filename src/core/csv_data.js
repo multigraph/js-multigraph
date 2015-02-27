@@ -1,6 +1,8 @@
+var Model = require('../../lib/jermaine/src/core/model.js');
+
 var ArrayData = require('./array_data.js');
 
-var CSVData = window.jermaine.Model(function () {
+var CSVData = Model(function () {
 
     this.isA(ArrayData);
     this.hasA("filename").which.isA("string");

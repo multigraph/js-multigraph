@@ -1,3 +1,5 @@
+var Model = require('../../lib/jermaine/src/core/model.js');
+
 var DataValue = require('./data_value.js'),
     DatetimeMeasure = require('./datetime_measure.js');
 
@@ -12,7 +14,7 @@ DatetimeValue.prototype.getRealValue = function () {
     return this.value.getTime();
 };
 
-DatetimeValue.prototype.type = ns.DataValue.DATETIME;
+DatetimeValue.prototype.type = DataValue.DATETIME;
 
 DatetimeValue.prototype.clone = function() {
     return new DatetimeValue(this.getRealValue());
@@ -111,28 +113,28 @@ DatetimeValue.prototype.addRealValue = function ( realValueIncr ) {
 DatetimeValue.prototype.add = function ( /*DataMeasure*/ measure) {
     var date = new DatetimeValue(this.getRealValue());
     switch (measure.unit) {
-    case ns.DatetimeMeasure.MILLISECOND:
+    case DatetimeMeasure.MILLISECOND:
         date.value.setUTCMilliseconds(date.value.getUTCMilliseconds() + measure.measure);
         break;
-    case ns.DatetimeMeasure.SECOND:
+    case DatetimeMeasure.SECOND:
         date.value.setUTCSeconds(date.value.getUTCSeconds() + measure.measure);
         break;
-    case ns.DatetimeMeasure.MINUTE:
+    case DatetimeMeasure.MINUTE:
         date.value.setUTCMinutes(date.value.getUTCMinutes() + measure.measure);
         break;
-    case ns.DatetimeMeasure.HOUR:
+    case DatetimeMeasure.HOUR:
         date.value.setUTCHours(date.value.getUTCHours() + measure.measure);
         break;
-    case ns.DatetimeMeasure.DAY:
+    case DatetimeMeasure.DAY:
         date.value.setUTCDate(date.value.getUTCDate() + measure.measure);
         break;
-    case ns.DatetimeMeasure.WEEK:
+    case DatetimeMeasure.WEEK:
         date.value.setUTCDate(date.value.getUTCDate() + measure.measure * 7);
         break;
-    case ns.DatetimeMeasure.MONTH:
+    case DatetimeMeasure.MONTH:
         date.value.setUTCMonth(date.value.getUTCMonth() + measure.measure);
         break;
-    case ns.DatetimeMeasure.YEAR:
+    case DatetimeMeasure.YEAR:
         date.value.setUTCFullYear(date.value.getUTCFullYear() + measure.measure);
         break;
     }

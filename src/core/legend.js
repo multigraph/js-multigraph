@@ -1,8 +1,11 @@
+var Model = require('../../lib/jermaine/src/core/model.js');
+
 var Point = require('../math/point.js'),
     RGBColor = require('../math/rgb_color.js'),
     Icon = require('./icon.js'),
     Plot = require('./plot.js'),
     utilityFunctions = require('../util/utilityFunctions.js'),
+    validationFunctions = require('../util/validationFunctions.js'),
     defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
     attributes = utilityFunctions.getKeys(defaultValues.legend);
 
@@ -20,7 +23,7 @@ var Point = require('../math/point.js'),
  * @constructor
  * @requires Point,RGBColor,Plot,Icon
  */
-var Legend = new window.jermaine.Model("Legend", function () {
+var Legend = new Model("Legend", function () {
     /**
      * The value which determines if the legend will be rendered; a value of `true` means the Legend will
      * be drawn while `false` means that it will not.
@@ -110,7 +113,7 @@ var Legend = new window.jermaine.Model("Legend", function () {
      * @author jrfrimme
      */
     this.hasA("opacity").which.validatesWith(function (opacity) {
-        return utilityFunctions.validateNumberRange(opacity, 0.0, 1.0);
+        return validationFunctions.validateNumberRange(opacity, 0.0, 1.0);
     });
 
     /**

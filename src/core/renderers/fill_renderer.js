@@ -1,3 +1,5 @@
+var Model = require('../../../lib/jermaine/src/core/model.js');
+
 // The Fill renderer is a 1-variable renderer which connects consecutive
 // non-missing data points with line segments with a solid fill between
 // the lines and the horizontal axis.
@@ -52,7 +54,7 @@ var Renderer = require('../renderer.js'),
     defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
     attributes = utilityFunctions.getKeys(defaultValues.plot.renderer);
 
-var FillRenderer = new window.jermaine.Model("FillRenderer", function () {
+var FillRenderer = new Model("FillRenderer", function () {
     this.isA(Renderer);
     this.hasA("numberOfVariables").which.defaultsTo(2);
 });

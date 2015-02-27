@@ -1,3 +1,5 @@
+var Model = require('../../../lib/jermaine/src/core/model.js');
+
 // The Bar renderer is a 1-variable renderer which draws a bar at each
 // non-missing data point with an outline around the bar and a solid
 // fill between the bar and the horizontal axis.
@@ -56,7 +58,7 @@ var Renderer = require('../renderer.js'),
     defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
     attributes = utilityFunctions.getKeys(defaultValues.plot.renderer);
 
-var BarRenderer = new window.jermaine.Model("BarRenderer", function () {
+var BarRenderer = new Model("BarRenderer", function () {
     this.isA(Renderer);
     this.hasA("numberOfVariables").which.defaultsTo(2);
 });

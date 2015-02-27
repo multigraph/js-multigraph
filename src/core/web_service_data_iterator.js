@@ -1,3 +1,5 @@
+var Model = require('../../lib/jermaine/src/core/model.js');
+
 /**
  * An iterator for stepping through data values stored in a linked list of
  * WebServiceDataCacheNodes.  The constructor takes 5 arguments:
@@ -23,7 +25,7 @@
 var WebServiceDataCacheNode = require('./web_service_data_cache_node.js'),
     ValidationFunctions = require('../util/validationFunctions.js');
 
-var WebServiceDataIterator = window.jermaine.Model(function () {
+var WebServiceDataIterator = Model(function () {
     var WebServiceDataIterator = this;
 
     this.hasA("currentNode").which.validatesWith(function(x) {

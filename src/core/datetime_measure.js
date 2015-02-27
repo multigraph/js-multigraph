@@ -1,3 +1,5 @@
+var Model = require('../../lib/jermaine/src/core/model.js');
+
 var DatetimeValue = require('./datetime_value.js'),
     Enum = require('../math/enum.js');
 

@@ -1,15 +1,17 @@
-var utilityFunctions = require('../util/utilityFunction.js');
+var Model = require('../../lib/jermaine/src/core/model.js');
 
-var RGBColor = new window.jermaine.Model("RGBColor", function () {
+var validationFunctions = require('../util/validationFunctions.js');
+
+var RGBColor = new Model("RGBColor", function () {
     
     this.hasA("r").which.validatesWith(function (r) {
-        return utilityFunctions.validateNumberRange(r, 0, 1.0);
+        return validationFunctions.validateNumberRange(r, 0, 1.0);
     });
     this.hasA("g").which.validatesWith(function (g) {
-        return utilityFunctions.validateNumberRange(g, 0, 1.0);
+        return validationFunctions.validateNumberRange(g, 0, 1.0);
     });
     this.hasA("b").which.validatesWith(function (b) {
-        return utilityFunctions.validateNumberRange(b, 0, 1.0);
+        return validationFunctions.validateNumberRange(b, 0, 1.0);
     });
     
     var numberToHex = function (number) {

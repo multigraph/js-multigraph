@@ -25,14 +25,22 @@ utilityFunctions.insertDefaults = function (elem, defaults, attributes) {
 
 utilityFunctions.getDefaultValuesFromXSD = function () {
     
+    var DatetimeValue = require('../core/datetime_value.js'),
+        NumberValue = require('../core/number_value.js'),
+        Renderer = require('../core/renderer.js'),
+        Displacement = require('../math/displacement.js'),
+        Insets = require('../math/insets.js'),
+        Point = require('../math/point.js'),
+        RGBColor = require('../math/rgb_color.js');
+
     return {
         "window": {
             //              "width": undefined,
             //              "height": undefined,
             "border": 2,
-            "margin" : function () { return new window.multigraph.math.Insets(/*top*/2, /*left*/2, /*bottom*/2, /*right*/2); },
-            "padding": function () { return new window.multigraph.math.Insets(/*top*/5, /*left*/5, /*bottom*/5, /*right*/5); },
-            "bordercolor": function () { return new window.multigraph.math.RGBColor.parse("0x000000"); }
+            "margin" : function () { return new Insets(/*top*/2, /*left*/2, /*bottom*/2, /*right*/2); },
+            "padding": function () { return new Insets(/*top*/5, /*left*/5, /*bottom*/5, /*right*/5); },
+            "bordercolor": function () { return new RGBColor.parse("0x000000"); }
         },
         "legend": {
             "icon" : {
@@ -41,12 +49,12 @@ utilityFunctions.getDefaultValuesFromXSD = function () {
                 "border": 1
             },
             "visible": null,
-            "base": function () { return new window.multigraph.math.Point(1,1); },
-            "anchor": function () { return new window.multigraph.math.Point(1,1); },
-            "position": function () { return new window.multigraph.math.Point(0,0); },
+            "base": function () { return new Point(1,1); },
+            "anchor": function () { return new Point(1,1); },
+            "position": function () { return new Point(0,0); },
             "frame": "plot",
-            "color": function () { return new window.multigraph.math.RGBColor.parse("0xffffff"); },
-            "bordercolor": function () { return new window.multigraph.math.RGBColor.parse("0x000000"); },
+            "color": function () { return new RGBColor.parse("0xffffff"); },
+            "bordercolor": function () { return new RGBColor.parse("0x000000"); },
             "opacity": 1.0,
             "border": 1,
             "rows": undefined,
@@ -57,31 +65,31 @@ utilityFunctions.getDefaultValuesFromXSD = function () {
         "background": {
             "img": {
                 "src": undefined,
-                "anchor": function () { return new window.multigraph.math.Point(-1,-1); },
-                "base": function () { return new window.multigraph.math.Point(-1,-1); },
-                "position": function () { return new window.multigraph.math.Point(0,0); },
+                "anchor": function () { return new Point(-1,-1); },
+                "base": function () { return new Point(-1,-1); },
+                "position": function () { return new Point(0,0); },
                 "frame": "padding"
             },
             "color": "0xffffff"
         },
         "plotarea": {
-            "margin" : function () { return new window.multigraph.math.Insets(/*top*/10 , /*left*/38, /*bottom*/35, /*right*/35); },
+            "margin" : function () { return new Insets(/*top*/10 , /*left*/38, /*bottom*/35, /*right*/35); },
             "border": 0,
             "color" : null,
-            "bordercolor": function () { return new window.multigraph.math.RGBColor.parse("0xeeeeee"); }
+            "bordercolor": function () { return new RGBColor.parse("0xeeeeee"); }
         },
         "title": {
             "text"         : undefined,
             "frame"        : "padding",
             "border"       : 0,
-            "color"        : function () { return new window.multigraph.math.RGBColor.parse("0xffffff"); },
-            "bordercolor"  : function () { return new window.multigraph.math.RGBColor.parse("0x000000"); },
+            "color"        : function () { return new RGBColor.parse("0xffffff"); },
+            "bordercolor"  : function () { return new RGBColor.parse("0x000000"); },
             "opacity"      : 1.0,
             "padding"      : 0,
             "cornerradius" : 15,
-            "anchor"       : function () { return new window.multigraph.math.Point(0,1); },
-            "base"         : function () { return new window.multigraph.math.Point(0,1); },
-            "position"     : function () { return new window.multigraph.math.Point(0,0); }
+            "anchor"       : function () { return new Point(0,1); },
+            "base"         : function () { return new Point(0,1); },
+            "position"     : function () { return new Point(0,0); }
         },
         "horizontalaxis": {
             "title": {
@@ -93,15 +101,15 @@ utilityFunctions.getDefaultValuesFromXSD = function () {
                 "base" : 0,
                 "position": undefined,
 
-                "position-horizontal-top"    : function () { return new window.multigraph.math.Point(0, 15); },
-                "position-horizontal-bottom" : function () { return new window.multigraph.math.Point(0, -18); },
-                "position-vertical-right"    : function () { return new window.multigraph.math.Point(33, 0); },
-                "position-vertical-left"     : function () { return new window.multigraph.math.Point(-25, 0); },
+                "position-horizontal-top"    : function () { return new Point(0, 15); },
+                "position-horizontal-bottom" : function () { return new Point(0, -18); },
+                "position-vertical-right"    : function () { return new Point(33, 0); },
+                "position-vertical-left"     : function () { return new Point(-25, 0); },
 
-                "anchor-horizontal-top"      : function () { return new window.multigraph.math.Point(0, -1); },
-                "anchor-horizontal-bottom"   : function () { return new window.multigraph.math.Point(0, 1); },
-                "anchor-vertical-right"      : function () { return new window.multigraph.math.Point(-1, 0); },
-                "anchor-vertical-left"       : function () { return new window.multigraph.math.Point(1, 0); },
+                "anchor-horizontal-top"      : function () { return new Point(0, -1); },
+                "anchor-horizontal-bottom"   : function () { return new Point(0, 1); },
+                "anchor-vertical-right"      : function () { return new Point(-1, 0); },
+                "anchor-vertical-left"       : function () { return new Point(1, 0); },
 
                 "angle": 0
             },
@@ -115,20 +123,20 @@ utilityFunctions.getDefaultValuesFromXSD = function () {
                     "position": undefined,
                     "anchor": undefined,
 
-                    "position-horizontal-top"    : function () { return new window.multigraph.math.Point(0, 5); },
-                    "position-horizontal-bottom" : function () { return new window.multigraph.math.Point(0, -5); },
-                    "position-vertical-right"    : function () { return new window.multigraph.math.Point(5, 0); },
-                    "position-vertical-left"     : function () { return new window.multigraph.math.Point(-8, 0); },
+                    "position-horizontal-top"    : function () { return new Point(0, 5); },
+                    "position-horizontal-bottom" : function () { return new Point(0, -5); },
+                    "position-vertical-right"    : function () { return new Point(5, 0); },
+                    "position-vertical-left"     : function () { return new Point(-8, 0); },
 
-                    "anchor-horizontal-top"      : function () { return new window.multigraph.math.Point(0, -1); },
-                    "anchor-horizontal-bottom"   : function () { return new window.multigraph.math.Point(0, 1); },
-                    "anchor-vertical-right"      : function () { return new window.multigraph.math.Point(-1, 0); },
-                    "anchor-vertical-left"       : function () { return new window.multigraph.math.Point(1, 0); },
+                    "anchor-horizontal-top"      : function () { return new Point(0, -1); },
+                    "anchor-horizontal-bottom"   : function () { return new Point(0, 1); },
+                    "anchor-vertical-right"      : function () { return new Point(-1, 0); },
+                    "anchor-vertical-left"       : function () { return new Point(1, 0); },
 
                     "angle": 0.0,
                     "spacing": undefined,
                     "densityfactor": 1.0,
-                    "color" : function () { return new window.multigraph.math.RGBColor.parse("0x000000"); },
+                    "color" : function () { return new RGBColor.parse("0x000000"); },
                     "visible" : true
                     //                        "fontname": undefined,
                     //                        "fontsize": undefined,
@@ -139,12 +147,12 @@ utilityFunctions.getDefaultValuesFromXSD = function () {
                 //                    "fontcolor": "0x000000",
                 //                    "format": "%1d",
                 //                    "visible": "true",
-                "start-number": function () { return new window.multigraph.core.NumberValue(0); },
-                "start-datetime": function () { return new window.multigraph.core.DatetimeValue(0); },
+                "start-number": function () { return new NumberValue(0); },
+                "start-datetime": function () { return new DatetimeValue(0); },
                 "angle": 0.0,
-                "position": function () { return new window.multigraph.math.Point(0,0); },
-                "anchor": function () { return new window.multigraph.math.Point(0,0); },
-                "color" : function () { return new window.multigraph.math.RGBColor.parse("0x000000"); },
+                "position": function () { return new Point(0,0); },
+                "anchor": function () { return new Point(0,0); },
+                "color" : function () { return new RGBColor.parse("0x000000"); },
                 "visible" : true,
                 "defaultNumberSpacing": "10000 5000 2000 1000 500 200 100 50 20 10 5 2 1 0.1 0.01 0.001",
                 "defaultDatetimeSpacing": "1000Y 500Y 200Y 100Y 50Y 20Y 10Y 5Y 2Y 1Y 6M 3M 2M 1M 7D 3D 2D 1D 12H 6H 3H 2H 1H",
@@ -152,7 +160,7 @@ utilityFunctions.getDefaultValuesFromXSD = function () {
                 "densityfactor": undefined
             },
             "grid": {
-                "color": function () { return new window.multigraph.math.RGBColor.parse("0xeeeeee"); },
+                "color": function () { return new RGBColor.parse("0xeeeeee"); },
                 "visible": false
             },
             "pan": {
@@ -174,23 +182,23 @@ utilityFunctions.getDefaultValuesFromXSD = function () {
             "id": undefined,
             "type": "number",
             //                "length": 1.0,
-            "length" : function () { return new window.multigraph.math.Displacement(1,0); },
-            "position": function () { return new window.multigraph.math.Point(0,0); },
+            "length" : function () { return new Displacement(1,0); },
+            "position": function () { return new Point(0,0); },
             "pregap": 0,
             "postgap": 0,
             "anchor": -1,
-            "base": function () { return new window.multigraph.math.Point(-1,-1); },
+            "base": function () { return new Point(-1,-1); },
             "min": "auto",
             "minoffset": 0,
             //"minposition": -1,
-            "minposition": function () { return new window.multigraph.math.Displacement(-1,0); },
+            "minposition": function () { return new Displacement(-1,0); },
             "max": "auto",
             "maxoffset": 0,
             //"maxposition": 1,
-            "maxposition": function () { return new window.multigraph.math.Displacement(1,0); },
+            "maxposition": function () { return new Displacement(1,0); },
             "positionbase": undefined,
             //                "color": "0x000000",
-            "color": function () { return new window.multigraph.math.RGBColor(0,0,0); },
+            "color": function () { return new RGBColor(0,0,0); },
             "tickmin": -3,
             "tickmax": 3,
             "tickcolor": null,
@@ -204,8 +212,8 @@ utilityFunctions.getDefaultValuesFromXSD = function () {
                 //                    "fontname": "default",
                 //                    "fontsize": "12",
                 //                    "fontcolor": "0x000000",
-                "anchor": function () { return new window.multigraph.math.Point(0,-20); },
-                "position": function () { return new window.multigraph.math.Point(0,1); },
+                "anchor": function () { return new Point(0,-20); },
+                "position": function () { return new Point(0,1); },
                 "angle": "0"
             },
             "labels": {
@@ -316,7 +324,7 @@ utilityFunctions.getDefaultValuesFromXSD = function () {
                     "min": undefined,
                     "max": undefined
                 },
-                "type": function () { return window.multigraph.core.Renderer.Type.parse("line"); }
+                "type": function () { return Renderer.Type.parse("line"); }
             },
             "datatips":{
                 "variable": {
