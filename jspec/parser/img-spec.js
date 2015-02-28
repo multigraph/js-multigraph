@@ -4,8 +4,11 @@
 describe("Background Img parsing", function () {
     "use strict";
 
-    var Img = window.multigraph.core.Img,
-        Point = window.multigraph.math.Point,
+    require('../../src/parser/jquery_xml_parser.js');
+
+    var Img = require('../../src/core/img.js'),
+        Point = require('../../src/math/point.js'),
+        ParseXML = require('../../src/parser/parse_xml.js'),
         xmlString,
         $xml,
         image,
@@ -17,7 +20,6 @@ describe("Background Img parsing", function () {
 
 
     beforeEach(function () {
-        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
         xmlString = ''
             + '<img'
             +    ' src="' + srcString + '"'
@@ -26,7 +28,7 @@ describe("Background Img parsing", function () {
             +    ' base="' + baseString + '"'
             +    ' position="' + positionString + '"'
             +    '/>',
-        $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+        $xml = ParseXML.stringToJQueryXMLObj(xmlString);
         image = Img.parseXML($xml);
     });
 
