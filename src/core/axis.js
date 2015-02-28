@@ -5,9 +5,11 @@ var utilityFunctions = require('../util/utilityFunctions.js'),
     attributes = utilityFunctions.getKeys(defaultValues.horizontalaxis),
     Displacement = require('../math/displacement.js'),
     Point = require('../math/point.js'),
+    DataMeasure = require('../core/data_measure.js'),
     RGBColor = require('../math/rgb_color.js'),
     Enum = require('../math/enum.js'),
     EventEmitter = require('./event_emitter.js'),
+    Text = require('../core/text.js'),
     AxisBinding = require('./axis_binding.js'),
     AxisTitle = require('./axis_title.js'),
     DataValue = require('./data_value.js'),
@@ -477,6 +479,45 @@ var Axis = new Model("Axis", function () {
         }
         // point is between the axis endpoints; return difference in perpendicular coords
         return Math.abs(perpCoord - perpOffset);
+    });
+
+
+    this.respondsTo("normalize", function (graph) {
+        var i,
+            title,
+            label;
+
+        //
+        // Handles title tags
+        //
+        if (this.title() && this.title().content() === undefined) {
+            this.title().content(new Text(this.id()));
+        }
+
+        //
+        // Handles missing labelers
+        //
+        if (this.labelers().size() === 0) {
+            var defaultValues = (utilityFunctions.getDefaultValuesFromXSD()).horizontalaxis.labels,
+                spacingString = this.type() === DataValue.NUMBER ?
+                    defaultValues.defaultNumberSpacing :
+                    defaultValues.defaultDatetimeSpacing,
+                spacingStrings = spacingString.split(/\s+/);
+
+            for (i = 0; i < spacingStrings.length; i++) {
+                label = new Labeler(this);
+                label.spacing(DataMeasure.parse(this.type(), spacingStrings[i]));
+                this.labelers().add(label);
+            }
+        }
+
+        //
+        // normalizes the labelers
+        //
+        for (i = 0; i < this.labelers().size(); i++) {
+            this.labelers().at(i).normalize();
+        }
+
     });
 
     utilityFunctions.insertDefaults(this, defaultValues.horizontalaxis, attributes);

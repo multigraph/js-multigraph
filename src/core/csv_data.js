@@ -1,6 +1,7 @@
 var Model = require('../../lib/jermaine/src/core/model.js');
 
-var ArrayData = require('./array_data.js');
+var ArrayData = require('./array_data.js'),
+    $ = require('jquery');
 
 var CSVData = Model(function () {
 
@@ -34,7 +35,7 @@ var CSVData = Model(function () {
             ajaxthrottle = this.ajaxthrottle();
 
         if (ajaxthrottle === undefined) {
-            ajaxthrottle = window.multigraph.jQuery;
+            ajaxthrottle = $;
         }
 
         this.adapter(ArrayData);
