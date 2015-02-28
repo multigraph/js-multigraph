@@ -1,21 +1,16 @@
-window.multigraph.util.namespace("window.multigraph.parser", function (ns) {
-    "use strict";
+var Pan = require('../core/pan.js');
 
-    ns.mixin.add(function (ns, parse) {
-        
-        ns.core.Pan[parse] = function (xml, type) {
-            var pan = new ns.core.Pan(),
-                utilityFunctions = ns.utilityFunctions,
-                parseAttribute   = utilityFunctions.parseAttribute,
-                parseDataValue   = utilityFunctions.parseDataValue;
-            if (xml) {
-                parseAttribute(xml.attr("allowed"), pan.allowed, utilityFunctions.parseBoolean);
-                parseAttribute(xml.attr("min"),     pan.min,     parseDataValue(type));
-                parseAttribute(xml.attr("max"),     pan.max,     parseDataValue(type));
-            }
-            return pan;
-        };
-        
-    });
+Pan.parseXML = function (xml, type) {
+    var pan = new Pan(),
+        parsingFunctions = require('../util/parsingFunctions.js'),
+        parseAttribute   = parsingFunctions.parseAttribute,
+        parseDataValue   = parsingFunctions.parseDataValue;
+    if (xml) {
+        parseAttribute(xml.attr("allowed"), pan.allowed, parsingFunctions.parseBoolean);
+        parseAttribute(xml.attr("min"),     pan.min,     parseDataValue(type));
+        parseAttribute(xml.attr("max"),     pan.max,     parseDataValue(type));
+    }
+    return pan;
+};
 
-});
+module.exports = Pan;

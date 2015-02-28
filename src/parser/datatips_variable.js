@@ -1,18 +1,13 @@
-window.multigraph.util.namespace("window.multigraph.parser", function (ns) {
-    "use strict";
+var DatatipsVariable = require('../core/datatips_variable.js');
 
-    ns.mixin.add(function (ns, parse) {
-        
-        ns.core.DatatipsVariable[parse] = function (xml) {
-            var variable = new ns.core.DatatipsVariable(),
-                utilityFunctions = ns.utilityFunctions;
+DatatipsVariable.parseXML = function (xml) {
+    var variable = new DatatipsVariable(),
+        parsingFunctions = require('../util/parsingFunctions.js');
 
-            if (xml) {
-                utilityFunctions.parseAttribute(xml.attr("format"), variable.format, utilityFunctions.parseString);
-            }
-            return variable;
-        };
-        
-    });
+    if (xml) {
+        parsingFunctions.parseAttribute(xml.attr("format"), variable.format, parsingFunctions.parseString);
+    }
+    return variable;
+};
 
-});
+module.exports = DatatipsVariable;

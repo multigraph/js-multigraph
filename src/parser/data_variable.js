@@ -1,25 +1,20 @@
-window.multigraph.util.namespace("window.multigraph.parser", function (ns) {
-    "use strict";
+var DataVariable = require('../core/data_variable.js');
 
-    ns.mixin.add(function (ns, parse) {
-        
-        ns.core.DataVariable[parse] = function (xml, data) {
-            var variable,
-                utilityFunctions = ns.utilityFunctions,
-                parseAttribute   = utilityFunctions.parseAttribute,
-                DataValue        = ns.core.DataValue,
-                attr;
+DataVariable.parseXML = function (xml, data) {
+    var variable,
+        parsingFunctions = require('../util/parsingFunctions.js'),
+        parseAttribute   = parsingFunctions.parseAttribute,
+        DataValue        = require('../core/data_value.js'),
+        attr;
 
-            if (xml && xml.attr("id")) {
-                variable = new ns.core.DataVariable(xml.attr("id"));
-                parseAttribute(xml.attr("column"),       variable.column,       utilityFunctions.parseInteger);
-                parseAttribute(xml.attr("type"),         variable.type,         DataValue.parseType);
-                parseAttribute(xml.attr("missingvalue"), variable.missingvalue, utilityFunctions.parseDataValue(variable.type()));
-                parseAttribute(xml.attr("missingop"),    variable.missingop,    DataValue.parseComparator);
-            }
-            return variable;
-        };
-        
-    });
+    if (xml && xml.attr("id")) {
+        variable = new DataVariable(xml.attr("id"));
+        parseAttribute(xml.attr("column"),       variable.column,       parsingFunctions.parseInteger);
+        parseAttribute(xml.attr("type"),         variable.type,         DataValue.parseType);
+        parseAttribute(xml.attr("missingvalue"), variable.missingvalue, parsingFunctions.parseDataValue(variable.type()));
+        parseAttribute(xml.attr("missingop"),    variable.missingop,    DataValue.parseComparator);
+    }
+    return variable;
+};
 
-});
+module.exports = DataVariable;

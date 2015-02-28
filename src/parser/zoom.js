@@ -1,31 +1,26 @@
-window.multigraph.util.namespace("window.multigraph.parser", function (ns) {
-    "use strict";
+var Zoom = require('../core/zoom.js');
 
-    ns.mixin.add(function (ns, parse) {
-        
-        ns.core.Zoom[parse] = function (xml, type) {
-            var core = ns.core,
-                zoom = new core.Zoom(),
-                utilityFunctions = ns.utilityFunctions,
-                parseAttribute   = utilityFunctions.parseAttribute,
-                parseDataMeasure = utilityFunctions.parseDataMeasure,
-                attr;
-            if (xml) {
-                parseAttribute(xml.attr("allowed"), zoom.allowed, utilityFunctions.parseBoolean);
-                parseAttribute(xml.attr("min"),     zoom.min,     parseDataMeasure(type));
-                parseAttribute(xml.attr("max"),     zoom.max,     parseDataMeasure(type));
-                attr = xml.attr("anchor");
-                if (attr !== undefined) {
-                    if (attr.toLowerCase() === "none") {
-                        zoom.anchor(null);
-                    } else {
-                        zoom.anchor( core.DataValue.parse(type, attr) );
-                    }
-                }
+Zoom.parseXML = function (xml, type) {
+    var zoom             = new Zoom(),
+        DataValue        = require('../core/data_value.js'),
+        parsingFunctions = require('../util/parsingFunctions.js'),
+        parseAttribute   = parsingFunctions.parseAttribute,
+        parseDataMeasure = parsingFunctions.parseDataMeasure,
+        attr;
+    if (xml) {
+        parseAttribute(xml.attr("allowed"), zoom.allowed, parsingFunctions.parseBoolean);
+        parseAttribute(xml.attr("min"),     zoom.min,     parseDataMeasure(type));
+        parseAttribute(xml.attr("max"),     zoom.max,     parseDataMeasure(type));
+        attr = xml.attr("anchor");
+        if (attr !== undefined) {
+            if (attr.toLowerCase() === "none") {
+                zoom.anchor(null);
+            } else {
+                zoom.anchor( DataValue.parse(type, attr) );
             }
-            return zoom;
-        };
-        
-    });
+        }
+    }
+    return zoom;
+};
 
-});
+module.exports = Zoom;

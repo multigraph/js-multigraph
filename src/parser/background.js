@@ -1,21 +1,20 @@
-window.multigraph.util.namespace("window.multigraph.parser", function (ns) {
-    "use strict";
+var Background = require('../core/background.js');
 
-    ns.mixin.add(function (ns, parse) {
+Background.parseXML = function (xml, multigraph) {
+    var background       = new Background(),
+        parsingFunctions = require('../util/parsingFunctions.js'),
+        RGBColor         = require('../math/rgb_color.js'),
+        Img              = require('../core/img.js'),
+        child;
 
-        ns.core.Background[parse] = function (xml, multigraph) {
-            var background = new ns.core.Background(),
-                child;
-            if (xml) {
-                ns.utilityFunctions.parseAttribute(xml.attr("color"), background.color, ns.math.RGBColor.parse);
-                child = xml.find("img");
-                if (child.length > 0) {
-                    background.img(ns.core.Img[parse](child, multigraph));
-                }
-            }
-            return background;
-        };
+    if (xml) {
+        parsingFunctions.parseAttribute(xml.attr("color"), background.color, RGBColor.parse);
+        child = xml.find("img");
+        if (child.length > 0) {
+            background.img(Img[parse](child, multigraph));
+        }
+    }
+    return background;
+};
 
-    });
-
-});
+module.exports = Background;

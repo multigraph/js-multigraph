@@ -1,25 +1,21 @@
-window.multigraph.util.namespace("window.multigraph.parser", function (ns) {
-    "use strict";
+var Filter = require('../core/filter.js');
 
-    ns.mixin.add(function (ns, parse) {
+Filter.parseXML = function (xml) {
+    var filter = new Filter(),
+        $ = require('jquery'),
+        FilterOption = require('../core/filter_option.js'),
+        parsingFunctions = require('../util/parsingFunctions.js'),
+        child;
+    if (xml) {
+        child = xml.find("option");
+        if (child.length > 0) {
+            $.each(child, function (i, e) {
+                filter.options().add( FilterOption.parseXML($(e)) );
+            });
+        }
+        parsingFunctions.parseAttribute(xml.attr("type"), filter.type, parsingFunctions.parseString);
+    }
+    return filter;
+};
 
-        ns.core.Filter[parse] = function (xml) {
-            var filter = new ns.core.Filter(),
-                $ = ns.jQuery,
-                utilityFunctions = ns.utilityFunctions,
-                child;
-            if (xml) {
-                child = xml.find("option");
-                if (child.length > 0) {
-                    $.each(child, function (i, e) {
-                        filter.options().add( ns.core.FilterOption[parse]($(e)) );
-                    });
-                }
-                utilityFunctions.parseAttribute(xml.attr("type"), filter.type, utilityFunctions.parseString);
-            }
-            return filter;
-        };
-
-    });
-
-});
+module.exports = Filter;

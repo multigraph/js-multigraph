@@ -11,3 +11,5 @@ ParseXML.stringToJQueryXMLObj = function (thingy) {
 };
 
 module.exports = ParseXML;
+
+module.exports = ParseXML;

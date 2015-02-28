@@ -1,6 +1,33 @@
 #! /usr/bin/perl
 
 @files = (
+    "src/parser/axis.js",
+    "src/parser/axis_title.js",
+    "src/parser/background.js",
+    "src/parser/data.js",
+    "src/parser/datatips.js",
+    "src/parser/datatips_variable.js",
+    "src/parser/data_variable.js",
+    "src/parser/filter.js",
+    "src/parser/filter_option.js",
+    "src/parser/graph.js",
+    "src/parser/title.js",
+    "src/parser/grid.js",
+    "src/parser/icon.js",
+    "src/parser/img.js",
+    "src/parser/labeler.js",
+    "src/parser/legend.js",
+    "src/parser/multigraph.js",
+    "src/parser/pan.js",
+    "src/parser/parse_xml.js",
+    "src/parser/plotarea.js",
+    "src/parser/plot.js",
+    "src/parser/plot_legend.js",
+    "src/parser/renderer.js",
+    "src/parser/window.js",
+    "src/parser/zoom.js",
+
+
     "src/core/array_data.js",
     "src/core/axis_binding.js",
     "src/core/axis.js",
