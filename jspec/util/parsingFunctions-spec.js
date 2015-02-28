@@ -1,11 +1,13 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
 /*jshint laxbreak:true */
 
+var parsingFunctions = require('../../src/util/parsingFunctions.js');
+
 describe("parsing utility functions", function () {
     "use strict";
 
     describe("parseBoolean", function () {
-        var parseBoolean = window.multigraph.utilityFunctions.parseBoolean;
+        var parseBoolean = parsingFunctions.parseBoolean;
 
         it("should return true when passed the string 'true'", function () {
             expect(parseBoolean("true")).toEqual(true);
