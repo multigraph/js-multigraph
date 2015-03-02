@@ -12,8 +12,8 @@ describe("Graph Normalizer", function () {
         graph;
 
     beforeEach(function () {
-        var NormalizerMixin = require('../../src/normalizer/normalizer_mixin.js');
-        NormalizerMixin.apply();
+        //var NormalizerMixin = require('../../src/normalizer/normalizer_mixin.js');
+        //NormalizerMixin.apply();
         graph = new Graph();
         graph.data().add(new Data([new DataVariable("x", 0, DataValue.NUMBER), new DataVariable("y", 1, DataValue.NUMBER), new DataVariable("y1", 2, DataValue.NUMBER)]));
     });

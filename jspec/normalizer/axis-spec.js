@@ -14,8 +14,8 @@ describe("Axis Normalizer", function () {
         vaxis;
     
     beforeEach(function () {
-        var NormalizerMixin = require('../../src/normalizer/normalizer_mixin.js');
-        NormalizerMixin.apply();
+        //var NormalizerMixin = require('../../src/normalizer/normalizer_mixin.js');
+        //NormalizerMixin.apply();
         haxis = (new Axis(Axis.HORIZONTAL)).id("x");
         vaxis = (new Axis(Axis.VERTICAL)).id("y");
     });

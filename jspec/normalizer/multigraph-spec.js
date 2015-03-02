@@ -16,8 +16,8 @@ describe("Multigraph Normalizer", function () {
         variable3;
 
     beforeEach(function () {
-        var NormalizerMixin = require('../../src/normalizer/normalizer_mixin.js');
-        NormalizerMixin.apply();
+        //var NormalizerMixin = require('../../src/normalizer/normalizer_mixin.js');
+        //NormalizerMixin.apply();
         mg = new Multigraph();
         graph = new Graph();
         variable1 = new DataVariable("x");

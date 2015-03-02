@@ -33,8 +33,8 @@ describe("Data Normalizer", function () {
         vaxis;
     
     beforeEach(function () {
-        var NormalizerMixin = require('../../src/normalizer/normalizer_mixin.js');
-        NormalizerMixin.apply();
+        //var NormalizerMixin = require('../../src/normalizer/normalizer_mixin.js');
+        //NormalizerMixin.apply();
         variable1 = new DataVariable("ax", 0, DataValue.NUMBER);
         variable2 = new DataVariable("ay", 1, DataValue.NUMBER);
         variable3 = new DataVariable("ay1", 2, DataValue.NUMBER);

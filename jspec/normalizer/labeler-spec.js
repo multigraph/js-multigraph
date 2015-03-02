@@ -17,8 +17,8 @@ describe("Labeler Normalizer", function () {
         datetimeaxis;
     
     beforeEach(function () {
-        var NormalizerMixin = require('../../src/normalizer/normalizer_mixin.js');
-        NormalizerMixin.apply();
+        //var NormalizerMixin = require('../../src/normalizer/normalizer_mixin.js');
+        //NormalizerMixin.apply();
         numberaxis = (new Axis(Axis.HORIZONTAL)).type(DataValue.NUMBER);
         datetimeaxis = (new Axis(Axis.VERTICAL)).type(DataValue.DATETIME);
         numberlabel = new Labeler(numberaxis);

@@ -12,8 +12,8 @@ describe("Legend Normalizer", function () {
         plot1, plot2, plot3, plot4;
 
     beforeEach(function () {
-        var NormalizerMixin = require('../../src/normalizer/normalizer_mixin.js');
-        NormalizerMixin.apply();
+        //var NormalizerMixin = require('../../src/normalizer/normalizer_mixin.js');
+        //NormalizerMixin.apply();
         legend = new Legend();
         plot1 = new DataPlot();
         plot2 = new DataPlot();
