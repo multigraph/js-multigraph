@@ -1,7 +1,8 @@
 // This file uses jQuery.  A valid jQuery object must be passed to the
 // function returned by requiring this file.
 module.exports = function($) {
-    var Axis = require('../core/axis.js');
+    var Axis = require('../core/axis.js'),
+        pF = require('../util/parsingFunctions.js');
 
     var parseLabels = function (xml, axis) {
         var spacingStrings = [],
@@ -13,7 +14,7 @@ module.exports = function($) {
             DataValue = require('../core/data_value.js'),
             utilityFunctions = require('../util/utilityFunctions.js'),
             i;
-        spacingString = $.trim(labelsTag.attr("spacing"));
+        spacingString = $.trim(pF.getXMLAttr(labelsTag,"spacing"));
         if (spacingString !== "") {
             spacingStrings = spacingString.split(/\s+/);
         }
@@ -29,7 +30,7 @@ module.exports = function($) {
             // And loop over each <label> tag, creating labelers for each, splitting multiple
             // spacings on the same <label> tag into multiple labelers:
             $.each(labelTags, function (j, e) {
-                spacingString = $.trim($(e).attr("spacing"));
+                spacingString = $.trim(pF.getXMLAttr($(e), "spacing"));
                 spacingStrings = [];
                 if (spacingString !== "") {
                     spacingStrings = spacingString.split(/\s+/);
@@ -64,12 +65,11 @@ module.exports = function($) {
             Pan = require('../core/pan.js'),
             Zoom = require('../core/zoom.js'),
             AxisBinding = require('../core/axis_binding.js'),
-            parsingFunctions = require('../util/parsingFunctions.js'),
 
             axis              = new Axis(orientation),
-            parseAttribute    = parsingFunctions.parseAttribute,
-            parseInteger      = parsingFunctions.parseInteger,
-            parseString       = parsingFunctions.parseString,
+            parseAttribute    = pF.parseAttribute,
+            parseInteger      = pF.parseInteger,
+            parseString       = pF.parseString,
             parseDisplacement = Displacement.parse,
             parsePoint        = Point.parse,
             parseRGBColor     = RGBColor.parse,
@@ -78,9 +78,9 @@ module.exports = function($) {
 
         if (xml) {
 
-            parseAttribute(xml.attr("id"),     axis.id,     parseString);
-            parseAttribute(xml.attr("type"),   axis.type,   DataValue.parseType);
-            parseAttribute(xml.attr("length"), axis.length, parseDisplacement);
+            parseAttribute(pF.getXMLAttr(xml, "id"),     axis.id,     parseString);
+            parseAttribute(pF.getXMLAttr(xml, "type"),   axis.type,   DataValue.parseType);
+            parseAttribute(pF.getXMLAttr(xml, "length"), axis.length, parseDisplacement);
 
             //
             // The following provides support for the deprecated "positionbase" axis attribute;
@@ -88,7 +88,7 @@ module.exports = function($) {
             // support for the deprecated attribute, delete this block of code:
             //
             (function () {
-                var positionbase = xml.attr("positionbase");
+                var positionbase = pF.getXMLAttr(xml, "positionbase");
                 if (positionbase) {
                     messageHandler.warning('Use of deprecated axis attribute "positionbase"; use "base" attribute instead');
                     if ((positionbase === "left") || (positionbase === "bottom")) {
@@ -105,7 +105,7 @@ module.exports = function($) {
             // attribute.
             //
 
-            attr = xml.attr("position");
+            attr = pF.getXMLAttr(xml, "position");
             if (attr !== undefined) {
                 try {
                     axis.position(parsePoint(attr));
@@ -126,30 +126,30 @@ module.exports = function($) {
                 }
             }
 
-            axis.min(xml.attr("min"));
+            axis.min(pF.getXMLAttr(xml, "min"));
             if (axis.min() !== "auto") {
                 axis.dataMin(DataValue.parse(axis.type(), axis.min()));
             }
-            axis.max(xml.attr("max"));
+            axis.max(pF.getXMLAttr(xml, "max"));
             if (axis.max() !== "auto") {
                 axis.dataMax(DataValue.parse(axis.type(), axis.max()));
             }
 
-            parseAttribute(xml.attr("pregap"),         axis.pregap,         parseFloat);
-            parseAttribute(xml.attr("postgap"),        axis.postgap,        parseFloat);
-            parseAttribute(xml.attr("anchor"),         axis.anchor,         parseFloat);
-            parseAttribute(xml.attr("base"),           axis.base,           parsePoint);
-            parseAttribute(xml.attr("minposition"),    axis.minposition,    parseDisplacement);
-            parseAttribute(xml.attr("maxposition"),    axis.maxposition,    parseDisplacement);
-            parseAttribute(xml.attr("minoffset"),      axis.minoffset,      parseFloat);
-            parseAttribute(xml.attr("maxoffset"),      axis.maxoffset,      parseFloat);
-            parseAttribute(xml.attr("color"),          axis.color,          parseRGBColor);
-            parseAttribute(xml.attr("tickcolor"),      axis.tickcolor,      parseRGBColor);
-            parseAttribute(xml.attr("tickwidth"),      axis.tickwidth,      parseInteger);
-            parseAttribute(xml.attr("tickmin"),        axis.tickmin,        parseInteger);
-            parseAttribute(xml.attr("tickmax"),        axis.tickmax,        parseInteger);
-            parseAttribute(xml.attr("highlightstyle"), axis.highlightstyle, parseString);
-            parseAttribute(xml.attr("linewidth"),      axis.linewidth,      parseInteger);
+            parseAttribute(pF.getXMLAttr(xml, "pregap"),         axis.pregap,         parseFloat);
+            parseAttribute(pF.getXMLAttr(xml, "postgap"),        axis.postgap,        parseFloat);
+            parseAttribute(pF.getXMLAttr(xml, "anchor"),         axis.anchor,         parseFloat);
+            parseAttribute(pF.getXMLAttr(xml, "base"),           axis.base,           parsePoint);
+            parseAttribute(pF.getXMLAttr(xml, "minposition"),    axis.minposition,    parseDisplacement);
+            parseAttribute(pF.getXMLAttr(xml, "maxposition"),    axis.maxposition,    parseDisplacement);
+            parseAttribute(pF.getXMLAttr(xml, "minoffset"),      axis.minoffset,      parseFloat);
+            parseAttribute(pF.getXMLAttr(xml, "maxoffset"),      axis.maxoffset,      parseFloat);
+            parseAttribute(pF.getXMLAttr(xml, "color"),          axis.color,          parseRGBColor);
+            parseAttribute(pF.getXMLAttr(xml, "tickcolor"),      axis.tickcolor,      parseRGBColor);
+            parseAttribute(pF.getXMLAttr(xml, "tickwidth"),      axis.tickwidth,      parseInteger);
+            parseAttribute(pF.getXMLAttr(xml, "tickmin"),        axis.tickmin,        parseInteger);
+            parseAttribute(pF.getXMLAttr(xml, "tickmax"),        axis.tickmax,        parseInteger);
+            parseAttribute(pF.getXMLAttr(xml, "highlightstyle"), axis.highlightstyle, parseString);
+            parseAttribute(pF.getXMLAttr(xml, "linewidth"),      axis.linewidth,      parseInteger);
             
             child = xml.find("title");
             if (child.length > 0)                    { axis.title(AxisTitle.parseXML(child, axis));     }
@@ -164,9 +164,9 @@ module.exports = function($) {
 
             child = xml.find("binding");
             if (child.length > 0) {
-                var bindingIdAttr  = child.attr("id"),
-                    bindingMinAttr = child.attr("min"),
-                    bindingMaxAttr = child.attr("max"),
+                var bindingIdAttr  = pF.getXMLAttr(child,"id"),
+                    bindingMinAttr = pF.getXMLAttr(child,"min"),
+                    bindingMaxAttr = pF.getXMLAttr(child,"max"),
                     bindingMinDataValue = DataValue.parse(axis.type(), bindingMinAttr),
                     bindingMaxDataValue = DataValue.parse(axis.type(), bindingMaxAttr);
                 if (typeof(bindingIdAttr) !== "string" || bindingIdAttr.length <= 0) {

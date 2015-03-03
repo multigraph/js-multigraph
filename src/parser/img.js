@@ -2,12 +2,12 @@ var Img = require('../core/img.js');
 
 Img.parseXML = function (xml, multigraph) {
     var img,
-        parsingFunctions = require('../util/parsingFunctions.js'),
+        pF = require('../util/parsingFunctions.js'),
         Point            = require('../math/point.js'),
-        parseAttribute   = parsingFunctions.parseAttribute,
+        parseAttribute   = pF.parseAttribute,
         parsePoint       = Point.parse;
-    if (xml && xml.attr("src") !== undefined) {
-        var src = xml.attr("src");
+    if (xml && pF.getXMLAttr(xml,"src") !== undefined) {
+        var src = pF.getXMLAttr(xml,"src");
         if (!src) {
             throw new Error('img elment requires a "src" attribute value');
         }
@@ -15,10 +15,10 @@ Img.parseXML = function (xml, multigraph) {
             src = multigraph.rebaseUrl(src);
         }
         img = new Img(src);
-        parseAttribute(xml.attr("anchor"),   img.anchor,   parsePoint);
-        parseAttribute(xml.attr("base"),     img.base,     parsePoint);
-        parseAttribute(xml.attr("position"), img.position, parsePoint);
-        parseAttribute(xml.attr("frame"),    img.frame,    function (value) { return value.toLowerCase(); });
+        parseAttribute(pF.getXMLAttr(xml,"anchor"),   img.anchor,   parsePoint);
+        parseAttribute(pF.getXMLAttr(xml,"base"),     img.base,     parsePoint);
+        parseAttribute(pF.getXMLAttr(xml,"position"), img.position, parsePoint);
+        parseAttribute(pF.getXMLAttr(xml,"frame"),    img.frame,    function (value) { return value.toLowerCase(); });
     }
     return img;
 };

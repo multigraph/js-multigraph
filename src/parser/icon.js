@@ -2,13 +2,13 @@ var Icon = require('../core/icon.js');
 
 Icon.parseXML = function (xml) {
     var icon = new Icon(),
-        parsingFunctions = require('../util/parsingFunctions.js'),
-        parseAttribute   = parsingFunctions.parseAttribute,
-        parseInteger     = parsingFunctions.parseInteger;
+        pF = require('../util/parsingFunctions.js'),
+        parseAttribute   = pF.parseAttribute,
+        parseInteger     = pF.parseInteger;
     if (xml) {
-        parseAttribute(xml.attr("height"), icon.height, parseInteger);
-        parseAttribute(xml.attr("width"),  icon.width,  parseInteger);
-        parseAttribute(xml.attr("border"), icon.border, parseInteger);
+        parseAttribute(pF.getXMLAttr(xml,"height"), icon.height, parseInteger);
+        parseAttribute(pF.getXMLAttr(xml,"width"),  icon.width,  parseInteger);
+        parseAttribute(pF.getXMLAttr(xml,"border"), icon.border, parseInteger);
     }
     return icon;
 };

@@ -4,11 +4,11 @@ Title.parseXML = function (xml, graph) {
     var Point            = require('../math/point.js'),
         RGBColor         = require('../math/rgb_color.js'),
         Text             = require('../core/text.js'),
-        parsingFunctions = require('../util/parsingFunctions.js'),
+        pF               = require('../util/parsingFunctions.js'),
         parsePoint       = Point.parse,
         parseRGBColor    = RGBColor.parse,
-        parseAttribute   = parsingFunctions.parseAttribute,
-        parseInteger     = parsingFunctions.parseInteger,
+        parseAttribute   = pF.parseAttribute,
+        parseInteger     = pF.parseInteger,
         title;
 
     if (xml) {
@@ -18,16 +18,16 @@ Title.parseXML = function (xml, graph) {
         } else {
             return undefined;
         }                
-        parseAttribute(xml.attr("frame"),        title.frame,        function (value) { return value.toLowerCase(); });
-        parseAttribute(xml.attr("border"),       title.border,       parseInteger);
-        parseAttribute(xml.attr("color"),        title.color,        parseRGBColor);
-        parseAttribute(xml.attr("bordercolor"),  title.bordercolor,  parseRGBColor);
-        parseAttribute(xml.attr("opacity"),      title.opacity,      parseFloat);
-        parseAttribute(xml.attr("padding"),      title.padding,      parseInteger);
-        parseAttribute(xml.attr("cornerradius"), title.cornerradius, parseInteger);
-        parseAttribute(xml.attr("anchor"),       title.anchor,       parsePoint);
-        parseAttribute(xml.attr("base"),         title.base,         parsePoint);
-        parseAttribute(xml.attr("position"),     title.position,     parsePoint);
+        parseAttribute(pF.getXMLAttr(xml,"frame"),        title.frame,        function (value) { return value.toLowerCase(); });
+        parseAttribute(pF.getXMLAttr(xml,"border"),       title.border,       parseInteger);
+        parseAttribute(pF.getXMLAttr(xml,"color"),        title.color,        parseRGBColor);
+        parseAttribute(pF.getXMLAttr(xml,"bordercolor"),  title.bordercolor,  parseRGBColor);
+        parseAttribute(pF.getXMLAttr(xml,"opacity"),      title.opacity,      parseFloat);
+        parseAttribute(pF.getXMLAttr(xml,"padding"),      title.padding,      parseInteger);
+        parseAttribute(pF.getXMLAttr(xml,"cornerradius"), title.cornerradius, parseInteger);
+        parseAttribute(pF.getXMLAttr(xml,"anchor"),       title.anchor,       parsePoint);
+        parseAttribute(pF.getXMLAttr(xml,"base"),         title.base,         parsePoint);
+        parseAttribute(pF.getXMLAttr(xml,"position"),     title.position,     parsePoint);
     }
     return title;
 };

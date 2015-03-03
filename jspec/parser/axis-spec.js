@@ -4,27 +4,31 @@
 describe("Axis parsing", function () {
     "use strict";
 
-    var Axis = window.multigraph.core.Axis,
-        AxisBinding = window.multigraph.core.AxisBinding,
-        AxisTitle = window.multigraph.core.AxisTitle,
-        Labels = window.multigraph.core.Labels,
-        Labeler = window.multigraph.core.Labeler,
-        Grid = window.multigraph.core.Grid,
-        Pan = window.multigraph.core.Pan,
-        Zoom = window.multigraph.core.Zoom,
-        DataFormatter = window.multigraph.core.DataFormatter,
-        DataMeasure = window.multigraph.core.DataMeasure,
-        DataValue = window.multigraph.core.DataValue,
-        Text = window.multigraph.core.Text,
-        Displacement = window.multigraph.math.Displacement,
-        Point = window.multigraph.math.Point,
-        RGBColor = window.multigraph.math.RGBColor,
+    var Axis = require('../../src/core/axis.js'),
+        AxisBinding = require('../../src/core/axis_binding.js'),
+        AxisTitle = require('../../src/core/axis_title.js'),
+        Labeler = require('../../src/core/labeler.js'),
+        Grid = require('../../src/core/grid.js'),
+        Pan = require('../../src/core/pan.js'),
+        Zoom = require('../../src/core/zoom.js'),
+        DataFormatter = require('../../src/core/data_formatter.js'),
+        DataMeasure = require('../../src/core/data_measure.js'),
+        DataValue = require('../../src/core/data_value.js'),
+        Text = require('../../src/core/text.js'),
+        utiltityFunctions = require('../../src/util/utilityFunctions.js'),
+        Displacement = require('../../src/math/displacement.js'),
+        Point = require('../../src/math/point.js'),
+        RGBColor = require('../../src/math/rgb_color.js'),
+        JQueryXMLParser,
         xmlString,
         $xml,
         axis;
 
+    var $, jqw = require('../node_jquery_helper.js').createJQuery();
+    beforeEach(function() { $ = jqw.$; });
+
     beforeEach(function () {
-        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
+        JQueryXMLParser = require('../../src/parser/jquery_xml_parser.js')($);
     });
 
     describe("without child tags", function () {
@@ -73,7 +77,7 @@ describe("Axis parsing", function () {
                 +     ' maxposition="' + maxpositionString + '"'
                 +     '/>';
 
-            $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+            $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
             axis = Axis.parseXML($xml, Axis.HORIZONTAL);
         });
 
@@ -208,7 +212,7 @@ describe("Axis parsing", function () {
                 +   '</title>'
                 + '</verticalaxis>';
 
-            $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+            $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
             axis = Axis.parseXML($xml, Axis.VERTICAL);
         });
 
@@ -282,12 +286,12 @@ describe("Axis parsing", function () {
                     +      '/>'
                     + '</verticalaxis>';
 
-                $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+                $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
                 axis = Axis.parseXML($xml, Axis.VERTICAL);
             });
 
             it("should be able to parse a axis with a Labels child from XML", function () {
-                $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+                $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
                 axis = Axis.parseXML($xml, Axis.VERTICAL);
                 expect(axis).not.toBeUndefined();
                 expect(axis instanceof Axis).toBe(true);
@@ -313,7 +317,7 @@ describe("Axis parsing", function () {
             });
 
             it("should properly parse axis models from XML with a labels child tag, a type of 'number' and no spacing attribute", function () {
-                var defaultValues = (window.multigraph.utilityFunctions.getDefaultValuesFromXSD()).horizontalaxis.labels,
+                var defaultValues = (utilityFunctions.getDefaultValuesFromXSD()).horizontalaxis.labels,
                     spacingStrings   = defaultValues.defaultNumberSpacing.split(/\s+/),
 
                 xmlString = '<verticalaxis'
@@ -329,7 +333,7 @@ describe("Axis parsing", function () {
                     +      '/>'
                     + '</verticalaxis>';
 
-                $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+                $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
                 axis = Axis.parseXML($xml, Axis.VERTICAL);
 
                 for (i = 0; i < axis.labelers().size(); i++) {
@@ -346,7 +350,7 @@ describe("Axis parsing", function () {
             });
 
             it("should properly parse axis models from XML with a labels child tag, a type of 'datetime' and no spacing attribute", function () {
-                var defaultValues = (window.multigraph.utilityFunctions.getDefaultValuesFromXSD()).horizontalaxis.labels,
+                var defaultValues = (utilityFunctions.getDefaultValuesFromXSD()).horizontalaxis.labels,
                     spacingStrings = defaultValues.defaultDatetimeSpacing.split(/\s+/),
                     datetimeFormatString = "%Y-%M-%D %H:%i",
                     datetimeStartString = "0";
@@ -364,7 +368,7 @@ describe("Axis parsing", function () {
                     +      '/>'
                     + '</verticalaxis>';
 
-                $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+                $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
                 axis = Axis.parseXML($xml, Axis.VERTICAL);
 
                 for (i = 0; i < axis.labelers().size(); i++) {
@@ -435,7 +439,7 @@ describe("Axis parsing", function () {
                     +  '</labels>'
                     + '</verticalaxis>';
 
-                $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+                $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
                 axis = Axis.parseXML($xml, Axis.VERTICAL);
             });
 
@@ -511,7 +515,7 @@ describe("Axis parsing", function () {
                     +      '/>'
                     + '</verticalaxis>';
 
-                $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+                $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
                 axis = Axis.parseXML($xml, Axis.VERTICAL);
             });
 
@@ -563,7 +567,7 @@ describe("Axis parsing", function () {
                 +      '/>'
                 + '</verticalaxis>';
 
-            $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+            $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
             axis = Axis.parseXML($xml, Axis.VERTICAL);
         });
 
@@ -618,7 +622,7 @@ describe("Axis parsing", function () {
                 +     '/>'
                 + '</verticalaxis>';
             
-            $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+            $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
             axis = Axis.parseXML($xml, Axis.VERTICAL);
         });
 
@@ -647,7 +651,7 @@ describe("Axis parsing", function () {
                     +   '<binding id="ybinding" min="0" max="10"/>'
                     + '</verticalaxis>'
             );
-            $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+            $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
         });
 
         it("should be able to parse an axis with a <binding> tag", function () {
@@ -665,7 +669,7 @@ describe("Axis parsing", function () {
                     +   '<binding id="ybinding" min="0" max="100"/>'
                     + '</verticalaxis>'
             );
-            var $xml2 = window.multigraph.parser.stringToJQueryXMLObj(xmlString2);
+            var $xml2 = JQueryXMLParser.stringToJQueryXMLObj(xmlString2);
             axis = Axis.parseXML($xml, Axis.VERTICAL);
             var axis2 = Axis.parseXML($xml2, Axis.VERTICAL);
 
@@ -780,7 +784,7 @@ describe("Axis parsing", function () {
                          + '</verticalaxis>'
                         );
 
-            $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+            $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
             axis = Axis.parseXML($xml, Axis.VERTICAL);
         });
 
@@ -847,19 +851,19 @@ describe("Axis parsing", function () {
     describe("dataMin/dataMax handling", function () {
 
         it("axis with min=\"auto\" should return false for hasDataMin()", function () {
-            var axis = Axis.parseXML(window.multigraph.parser.stringToJQueryXMLObj('<verticalaxis min="auto"/>'), Axis.VERTICAL);
+            var axis = Axis.parseXML(JQueryXMLParser.stringToJQueryXMLObj('<verticalaxis min="auto"/>'), Axis.VERTICAL);
             expect(axis.hasDataMin()).toBe(false);
         });
         it("axis with min=\"0\" should return true for hasDataMin()", function () {
-            var axis = Axis.parseXML(window.multigraph.parser.stringToJQueryXMLObj('<verticalaxis min="0"/>'), Axis.VERTICAL);
+            var axis = Axis.parseXML(JQueryXMLParser.stringToJQueryXMLObj('<verticalaxis min="0"/>'), Axis.VERTICAL);
             expect(axis.hasDataMin()).toBe(true);
         });
         it("axis with max=\"auto\" should return false for hasDataMax()", function () {
-            var axis = Axis.parseXML(window.multigraph.parser.stringToJQueryXMLObj('<verticalaxis max="auto"/>'), Axis.VERTICAL);
+            var axis = Axis.parseXML(JQueryXMLParser.stringToJQueryXMLObj('<verticalaxis max="auto"/>'), Axis.VERTICAL);
             expect(axis.hasDataMax()).toBe(false);
         });
         it("axis with max=\"1\" should return true for hasDataMax()", function () {
-            var axis = Axis.parseXML(window.multigraph.parser.stringToJQueryXMLObj('<verticalaxis max="1"/>'), Axis.VERTICAL);
+            var axis = Axis.parseXML(JQueryXMLParser.stringToJQueryXMLObj('<verticalaxis max="1"/>'), Axis.VERTICAL);
             expect(axis.hasDataMax()).toBe(true);
         });
 

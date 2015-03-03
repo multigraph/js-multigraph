@@ -3,15 +3,16 @@ var Zoom = require('../core/zoom.js');
 Zoom.parseXML = function (xml, type) {
     var zoom             = new Zoom(),
         DataValue        = require('../core/data_value.js'),
-        parsingFunctions = require('../util/parsingFunctions.js'),
-        parseAttribute   = parsingFunctions.parseAttribute,
-        parseDataMeasure = parsingFunctions.parseDataMeasure,
+        DataMeasure      = require('../core/data_measure.js'),
+        pF               = require('../util/parsingFunctions.js'),
+        parseAttribute   = pF.parseAttribute,
+        parseDataMeasure = function(v) { return DataMeasure.parse(type, v); }, //pF.parseDataMeasure
         attr;
     if (xml) {
-        parseAttribute(xml.attr("allowed"), zoom.allowed, parsingFunctions.parseBoolean);
-        parseAttribute(xml.attr("min"),     zoom.min,     parseDataMeasure(type));
-        parseAttribute(xml.attr("max"),     zoom.max,     parseDataMeasure(type));
-        attr = xml.attr("anchor");
+        parseAttribute(pF.getXMLAttr(xml,"allowed"), zoom.allowed, pF.parseBoolean);
+        parseAttribute(pF.getXMLAttr(xml,"min"),     zoom.min,     parseDataMeasure);
+        parseAttribute(pF.getXMLAttr(xml,"max"),     zoom.max,     parseDataMeasure);
+        attr = pF.getXMLAttr(xml,"anchor");
         if (attr !== undefined) {
             if (attr.toLowerCase() === "none") {
                 zoom.anchor(null);

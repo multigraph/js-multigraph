@@ -10,6 +10,7 @@ module.exports = function($) {
             PeriodicArrayData = require('../core/periodic_array_data.js'),
             CSVData = require('../core/csv_data.js'),
             WebServiceData = require('../core/web_service_data.js'),
+            pF = require('../util/parsingFunctions.js'),
             variables_xml,
             defaultMissingvalueString,
             defaultMissingopString,
@@ -19,7 +20,7 @@ module.exports = function($) {
 
         if (xml) {
 
-            adap = $(xml).attr("adapter");
+            adap = pF.getXMLAttr($(xml),"adapter");
             if (adap !== undefined && adap !== "") {
                 adapter = window.multigraph.adapters[adap]; // Multigraph.adapters()
                 if (adapter === undefined) {
@@ -29,8 +30,8 @@ module.exports = function($) {
 
             // parse the <variables> section
             variables_xml = xml.find("variables");
-            defaultMissingvalueString = variables_xml.attr("missingvalue");
-            defaultMissingopString    = variables_xml.attr("missingop");
+            defaultMissingvalueString = pF.getXMLAttr(variables_xml,"missingvalue");
+            defaultMissingopString    = pF.getXMLAttr(variables_xml,"missingop");
 
             var variables = variables_xml.find(">variable");
             if (variables.length > 0) {
@@ -44,7 +45,7 @@ module.exports = function($) {
                 period,
                 repeat_xml = $(xml.find(">repeat"));
             if (repeat_xml.length > 0) {
-                var periodString = $(repeat_xml).attr("period");
+                var periodString = pF.getXMLAttr($(repeat_xml),"period");
                 if (periodString === undefined || periodString === "") {
                     messageHandler.warning("<repeat> tag requires a 'period' attribute; data treated as non-repeating");
                 } else {
@@ -70,7 +71,7 @@ module.exports = function($) {
             var csv_xml = $(xml.find(">csv"));
             if (csv_xml.length > 0) {
                 csv_xml = csv_xml[0];
-                var filename = $(csv_xml).attr("location");
+                var filename = pF.getXMLAttr($(csv_xml),"location");
                 data = new CSVData(dataVariables,
                                    multigraph ? multigraph.rebaseUrl(filename) : filename,
                                    messageHandler,
@@ -81,12 +82,12 @@ module.exports = function($) {
             var service_xml = $(xml.find(">service"));
             if (service_xml.length > 0) {
                 service_xml = $(service_xml[0]);
-                var location = service_xml.attr("location");
+                var location = pF.getXMLAttr(service_xml,"location");
                 data = new WebServiceData(dataVariables,
                                           multigraph ? multigraph.rebaseUrl(location) : location,
                                           messageHandler,
                                           multigraph ? multigraph.getAjaxThrottle(location) : undefined);
-                var format = service_xml.attr("format");
+                var format = pF.getXMLAttr(service_xml,"format");
                 if (format) {
                     data.format(format);
                 }

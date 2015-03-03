@@ -7,11 +7,11 @@ module.exports = function($) {
         var datatips         = new Datatips(),
             RGBColor         = require('../math/rgb_color.js'),
             DatatipsVariable = require('../core/datatips_variable.js'),
-            parsingFunctions = require('../util/parsingFunctions.js'),
+            pF = require('../util/parsingFunctions.js'),
             parseRGBColor    = RGBColor.parse,
-            parseAttribute   = parsingFunctions.parseAttribute,
-            parseInteger     = parsingFunctions.parseInteger,
-            parseString      = parsingFunctions.parseString,
+            parseAttribute   = pF.parseAttribute,
+            parseInteger     = pF.parseInteger,
+            parseString      = pF.parseString,
             child;
         if (xml) {
             child = xml.find("variable");
@@ -21,12 +21,12 @@ module.exports = function($) {
                 });
             }
             
-            parseAttribute(xml.attr("format"),      datatips.format,      parseString);
-            parseAttribute(xml.attr("bgcolor"),     datatips.bgcolor,     parseRGBColor);
-            parseAttribute(xml.attr("bgalpha"),     datatips.bgalpha,     parseString);
-            parseAttribute(xml.attr("border"),      datatips.border,      parseInteger);
-            parseAttribute(xml.attr("bordercolor"), datatips.bordercolor, parseRGBColor);
-            parseAttribute(xml.attr("pad"),         datatips.pad,         parseInteger);
+            parseAttribute(pF.getXMLAttr(xml,"format"),      datatips.format,      parseString);
+            parseAttribute(pF.getXMLAttr(xml,"bgcolor"),     datatips.bgcolor,     parseRGBColor);
+            parseAttribute(pF.getXMLAttr(xml,"bgalpha"),     datatips.bgalpha,     parseString);
+            parseAttribute(pF.getXMLAttr(xml,"border"),      datatips.border,      parseInteger);
+            parseAttribute(pF.getXMLAttr(xml,"bordercolor"), datatips.bordercolor, parseRGBColor);
+            parseAttribute(pF.getXMLAttr(xml,"pad"),         datatips.pad,         parseInteger);
         }
         return datatips;
     };

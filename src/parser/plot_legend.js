@@ -2,13 +2,13 @@ var PlotLegend = require('../core/plot_legend.js');
 
 PlotLegend.parseXML = function (xml, plot) {
     var legend           = new PlotLegend(),
-        parsingFunctions = require('../util/parsingFunctions.js'),
+        pF               = require('../util/parsingFunctions.js'),
         Text             = require('../core/text.js'),
-        parseAttribute   = parsingFunctions.parseAttribute,
+        parseAttribute   = pF.parseAttribute,
         child;
     if (xml) {
-        parseAttribute(xml.attr("visible"), legend.visible, parsingFunctions.parseBoolean);
-        parseAttribute(xml.attr("label"),   legend.label,   function (value) { return new Text(value); });
+        parseAttribute(pF.getXMLAttr(xml,"visible"), legend.visible, pF.parseBoolean);
+        parseAttribute(pF.getXMLAttr(xml,"label"),   legend.label,   function (value) { return new Text(value); });
     }
 
     if (legend.label() === undefined) {

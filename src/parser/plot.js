@@ -11,6 +11,7 @@ module.exports = function($) {
             Renderer     = require('../core/renderer.js'),
             Filter       = require('../core/filter.js'),
             Datatips     = require('../core/datatips.js'),
+            pF           = require('../util/parsingFunctions.js'),
             plot,
             haxis,
             vaxis,
@@ -20,18 +21,18 @@ module.exports = function($) {
 
             // populate verticalaxis from xml
             child = xml.find(">verticalaxis");
-            if (child.length === 1 && child.attr("ref") !== undefined) {
+            if (child.length === 1 && pF.getXMLAttr(child,"ref") !== undefined) {
                 if (graph) {
-                    vaxis = graph.axisById(child.attr("ref"));
+                    vaxis = graph.axisById(pF.getXMLAttr(child,"ref"));
                     if (vaxis === undefined) {
-                        throw new Error("Plot Vertical Axis Error: The graph does not contain an axis with an id of '" + child.attr("ref") + "'");
+                        throw new Error("Plot Vertical Axis Error: The graph does not contain an axis with an id of '" + pF.getXMLAttr(child,"ref") + "'");
                     }
                 }
             }
 
             child = xml.find("verticalaxis constant");
             if (child.length > 0) {
-                var constantValueString = child.attr("value");
+                var constantValueString = pF.getXMLAttr(child,"value");
                 if (constantValueString === undefined) {
                     throw new Error("Constant Plot Error: A 'value' attribute is needed to define a Constant Plot");
                 }
@@ -44,13 +45,13 @@ module.exports = function($) {
 
             // populate horizontalaxis from xml
             child = xml.find(">horizontalaxis");
-            if (child.length === 1 && child.attr("ref") !== undefined) {
+            if (child.length === 1 && pF.getXMLAttr(child,"ref") !== undefined) {
                 if (graph) {
-                    haxis = graph.axisById(child.attr("ref"));
+                    haxis = graph.axisById(pF.getXMLAttr(child,"ref"));
                     if (haxis !== undefined) {
                         plot.horizontalaxis(haxis);
                     } else {
-                        throw new Error("Plot Horizontal Axis Error: The graph does not contain an axis with an id of '" + child.attr("ref") + "'");
+                        throw new Error("Plot Horizontal Axis Error: The graph does not contain an axis with an id of '" + pF.getXMLAttr(child,"ref") + "'");
                     }
                 }
             }
@@ -69,7 +70,7 @@ module.exports = function($) {
                 if (child.length > 0) {
                     if (graph) {
                         $.each(child, function (i, e) {
-                            attr = $(e).attr("ref");
+                            attr = pF.getXMLAttr($(e),"ref");
                             variable = graph.variableById( attr );
                             if (variable !== undefined) {
                                 plot.data( variable.data() );

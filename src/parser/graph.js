@@ -1,7 +1,8 @@
 // This file uses jQuery.  A valid jQuery object must be passed to the
 // function returned by requiring this file.
 module.exports = function($) {
-    var Graph = require('../core/graph.js');
+    var Graph = require('../core/graph.js'),
+        pF = require('../util/parsingFunctions.js');
 
     /*
      * This function traverses an XML document looking for attributes values involving deprecated
@@ -16,10 +17,10 @@ module.exports = function($) {
             colorNameIsDeprecated = RGBColor.colorNameIsDeprecated,
             dep;
         if (xml.nodeName === "option") {
-            if (/color/.test($xml.attr('name'))) {
-                dep = colorNameIsDeprecated($xml.attr('value'));
+            if (/color/.test(pF.getXMLAttr($xml,'name'))) {
+                dep = colorNameIsDeprecated(pF.getXMLAttr($xml,'value'));
                 if (dep) {
-                    messageHandler.warning('Warning: color string "' + $xml.attr('value') + '" is deprecated; use "' + dep + '" instead');
+                    messageHandler.warning('Warning: color string "' + pF.getXMLAttr($xml,'value') + '" is deprecated; use "' + dep + '" instead');
                 }
             }
         }
@@ -117,10 +118,10 @@ module.exports = function($) {
              }
              */
             $.each(xml.find(">throttle"), function (i, e) {
-                var pattern    = $(e).attr('pattern')    ? $(e).attr('pattern')    : defaults.throttle.pattern,
-                    requests   = $(e).attr('requests')   ? $(e).attr('requests')   : defaults.throttle.requests,
-                    period     = $(e).attr('period')     ? $(e).attr('period')     : defaults.throttle.period,
-                    concurrent = $(e).attr('concurrent') ? $(e).attr('concurrent') : defaults.throttle.concurrent;
+                var pattern    = pF.getXMLAttr($(e),'pattern')    ? pF.getXMLAttr($(e),'pattern')    : defaults.throttle.pattern,
+                    requests   = pF.getXMLAttr($(e),'requests')   ? pF.getXMLAttr($(e),'requests')   : defaults.throttle.requests,
+                    period     = pF.getXMLAttr($(e),'period')     ? pF.getXMLAttr($(e),'period')     : defaults.throttle.period,
+                    concurrent = pF.getXMLAttr($(e),'concurrent') ? pF.getXMLAttr($(e),'concurrent') : defaults.throttle.concurrent;
                 multigraph.addAjaxThrottle(pattern, requests, period, concurrent);
             });
             $.each(xml.find(">data"), function (i, e) {

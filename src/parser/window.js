@@ -5,23 +5,23 @@ Window.parseXML = function (xml) {
     //  which screws up the references to window.multigraph.* below!
     var w = new Window(),
         RGBColor         = require('../math/rgb_color.js'),
-        parsingFunctions = require('../util/parsingFunctions.js'),
-        parseAttribute   = parsingFunctions.parseAttribute,
-        parseInteger     = parsingFunctions.parseInteger,
+        pF               = require('../util/parsingFunctions.js'),
+        parseAttribute   = pF.parseAttribute,
+        parseInteger     = pF.parseInteger,
         attr;
     if (xml) {
-        parseAttribute(xml.attr("width"),  w.width,  parseInteger);
-        parseAttribute(xml.attr("height"), w.height, parseInteger);
-        parseAttribute(xml.attr("border"), w.border, parseInteger);
+        parseAttribute(pF.getXMLAttr(xml,"width"),  w.width,  parseInteger);
+        parseAttribute(pF.getXMLAttr(xml,"height"), w.height, parseInteger);
+        parseAttribute(pF.getXMLAttr(xml,"border"), w.border, parseInteger);
 
-        attr = xml.attr("margin");
+        attr = pF.getXMLAttr(xml,"margin");
         if (attr !== undefined) {
             (function (m) {
                 w.margin().set(m,m,m,m);
             }(parseInt(attr, 10)));
         }
 
-        attr = xml.attr("padding");
+        attr = pF.getXMLAttr(xml,"padding");
         if (attr !== undefined) {
             (function (m) {
                 w.padding().set(m,m,m,m);
@@ -30,7 +30,7 @@ Window.parseXML = function (xml) {
 
         // removed deprecated color name check from commit #17665e2
         //    jrfrimme Tues Apr 2 11:47 2013
-        parseAttribute(xml.attr("bordercolor"), w.bordercolor, RGBColor.parse);
+        parseAttribute(pF.getXMLAttr(xml,"bordercolor"), w.bordercolor, RGBColor.parse);
     }
     return w;
 };

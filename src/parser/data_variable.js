@@ -2,17 +2,18 @@ var DataVariable = require('../core/data_variable.js');
 
 DataVariable.parseXML = function (xml, data) {
     var variable,
-        parsingFunctions = require('../util/parsingFunctions.js'),
-        parseAttribute   = parsingFunctions.parseAttribute,
+        pF = require('../util/parsingFunctions.js'),
+        parseAttribute   = pF.parseAttribute,
         DataValue        = require('../core/data_value.js'),
         attr;
 
-    if (xml && xml.attr("id")) {
-        variable = new DataVariable(xml.attr("id"));
-        parseAttribute(xml.attr("column"),       variable.column,       parsingFunctions.parseInteger);
-        parseAttribute(xml.attr("type"),         variable.type,         DataValue.parseType);
-        parseAttribute(xml.attr("missingvalue"), variable.missingvalue, parsingFunctions.parseDataValue(variable.type()));
-        parseAttribute(xml.attr("missingop"),    variable.missingop,    DataValue.parseComparator);
+    if (xml && pF.getXMLAttr(xml,"id")) {
+        variable = new DataVariable(pF.getXMLAttr(xml,"id"));
+        parseAttribute(pF.getXMLAttr(xml,"column"),       variable.column,       pF.parseInteger);
+        parseAttribute(pF.getXMLAttr(xml,"type"),         variable.type,         DataValue.parseType);
+        //parseAttribute(pF.getXMLAttr(xml,"missingvalue"), variable.missingvalue, pF.parseDataValue(variable.type()));
+        parseAttribute(pF.getXMLAttr(xml,"missingvalue"), variable.missingvalue, function(v) { return DataValue.parse(variable.type(), v); });
+        parseAttribute(pF.getXMLAttr(xml,"missingop"),    variable.missingop,    DataValue.parseComparator);
     }
     return variable;
 };

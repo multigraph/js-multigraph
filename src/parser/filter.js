@@ -6,7 +6,7 @@ module.exports = function($) {
     Filter.parseXML = function (xml) {
         var filter = new Filter(),
             FilterOption = require('../core/filter_option.js'),
-            parsingFunctions = require('../util/parsingFunctions.js'),
+            pF = require('../util/parsingFunctions.js'),
             child;
         if (xml) {
             child = xml.find("option");
@@ -15,7 +15,7 @@ module.exports = function($) {
                     filter.options().add( FilterOption.parseXML($(e)) );
                 });
             }
-            parsingFunctions.parseAttribute(xml.attr("type"), filter.type, parsingFunctions.parseString);
+            pF.parseAttribute(pF.getXMLAttr(xml,"type"), filter.type, pF.parseString);
         }
         return filter;
     };

@@ -4,12 +4,12 @@ AxisTitle.parseXML = function (xml, axis) {
     var title = new AxisTitle(axis),
         Text = require('../core/text.js'),
         Point = require('../math/point.js'),
-        parsingFunctions = require('../util/parsingFunctions.js');
+        pF = require('../util/parsingFunctions.js'),
         nonEmptyTitle = false,
         parsePoint = Point.parse,
         text,
         parseTitleAttribute = function (value, attribute, preprocessor) {
-            if (parsingFunctions.parseAttribute(value, attribute, preprocessor)) {
+            if (pF.parseAttribute(value, attribute, preprocessor)) {
                 // No.  Don't count the title as nonEmpty just because of attributes.
                 // If a <title> tag has only attributes, and no content, this
                 // function should return `undefined` so that the normalizer won't
@@ -26,10 +26,10 @@ AxisTitle.parseXML = function (xml, axis) {
             title.content(new Text(text));
             nonEmptyTitle = true;
         }
-        parseTitleAttribute(xml.attr("anchor"),   title.anchor,   parsePoint);
-        parseTitleAttribute(xml.attr("base"),     title.base,     parseFloat);
-        parseTitleAttribute(xml.attr("position"), title.position, parsePoint);
-        parseTitleAttribute(xml.attr("angle"),    title.angle,    parseFloat);
+        parseTitleAttribute(pF.getXMLAttr(xml,"anchor"),   title.anchor,   parsePoint);
+        parseTitleAttribute(pF.getXMLAttr(xml,"base"),     title.base,     parseFloat);
+        parseTitleAttribute(pF.getXMLAttr(xml,"position"), title.position, parsePoint);
+        parseTitleAttribute(pF.getXMLAttr(xml,"angle"),    title.angle,    parseFloat);
     }
 
     if (nonEmptyTitle === true) { 

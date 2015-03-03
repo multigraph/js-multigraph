@@ -2,10 +2,10 @@ var DatatipsVariable = require('../core/datatips_variable.js');
 
 DatatipsVariable.parseXML = function (xml) {
     var variable = new DatatipsVariable(),
-        parsingFunctions = require('../util/parsingFunctions.js');
+        pF = require('../util/parsingFunctions.js');
 
     if (xml) {
-        parsingFunctions.parseAttribute(xml.attr("format"), variable.format, parsingFunctions.parseString);
+        pF.parseAttribute(pF.getXMLAttr(xml,"format"), variable.format, pF.parseString);
     }
     return variable;
 };

@@ -7,14 +7,15 @@ module.exports = function($) {
         var DataValue   = require('../core/data_value.js'),
             NumberValue = require('../core/number_value.js'),
             Warning     = require('../core/warning.js'),
+            pF          = require('../util/parsingFunctions.js'),
             rendererType,
             renderer,
             opt;
 
-        if (xml && xml.attr("type") !== undefined) {
-            rendererType = Renderer.Type.parse(xml.attr("type"));
+        if (xml && pF.getXMLAttr(xml,"type") !== undefined) {
+            rendererType = Renderer.Type.parse(pF.getXMLAttr(xml,"type"));
             if (!Renderer.Type.isInstance(rendererType)) {
-                throw new Error("unknown renderer type '" + xml.attr("type") + "'");
+                throw new Error("unknown renderer type '" + pF.getXMLAttr(xml,"type") + "'");
             }
             renderer = Renderer.create(rendererType);
             renderer.plot(plot);
@@ -38,10 +39,10 @@ module.exports = function($) {
                             column = columns.at(i);
                             if (column.type() === DataValue.NUMBER) {
                                 if (missingValueOption.length > 0 && (column.missingvalue() === undefined)) {
-                                    column.missingvalue(NumberValue.parse(missingValueOption.attr("value")));
+                                    column.missingvalue(NumberValue.parse(pF.getXMLAttr(missingValueOption,"value")));
                                 }
                                 if (missingOpOption.length > 0 && (column.missingop() === undefined)) {
-                                    column.missingop(DataValue.parseComparator(missingOpOption.attr("value")));
+                                    column.missingop(DataValue.parseComparator(pF.getXMLAttr(missingOpOption,"value")));
                                 }
                             }
                         }
@@ -66,10 +67,10 @@ module.exports = function($) {
 
                 $.each(xml.find(">option"), function (i, e) {
                     try {
-                        renderer.setOptionFromString($(e).attr("name"),
-                                                     $(e).attr("value"),
-                                                     $(e).attr("min"),
-                                                     $(e).attr("max"));
+                        renderer.setOptionFromString(pF.getXMLAttr($(e),"name"),
+                                                     pF.getXMLAttr($(e),"value"),
+                                                     pF.getXMLAttr($(e),"min"),
+                                                     pF.getXMLAttr($(e),"max"));
                     } catch (e) {
                         if (e instanceof Warning) {
                             messageHandler.warning(e);
