@@ -2,7 +2,7 @@ var Background = require('../core/background.js');
 
 Background.parseXML = function (xml, multigraph) {
     var background       = new Background(),
-        pF = require('../util/parsingFunctions.js'),
+        pF               = require('../util/parsingFunctions.js'),
         RGBColor         = require('../math/rgb_color.js'),
         Img              = require('../core/img.js'),
         child;
@@ -11,7 +11,7 @@ Background.parseXML = function (xml, multigraph) {
         pF.parseAttribute(pF.getXMLAttr(xml,"color"), background.color, RGBColor.parse);
         child = xml.find("img");
         if (child.length > 0) {
-            background.img(Img[parse](child, multigraph));
+            background.img(Img.parseXML(child, multigraph));
         }
     }
     return background;

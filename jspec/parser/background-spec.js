@@ -4,19 +4,26 @@
 describe("Background parsing", function () {
     "use strict";
 
-    var Background = window.multigraph.core.Background,
-        Img = window.multigraph.core.Img,
-        Point = window.multigraph.math.Point,
-        RGBColor = window.multigraph.math.RGBColor,
+    var Background = require('../../src/core/background.js'),
+        Img = require('../../src/core/img.js'),
+        Point = require('../../src/math/point.js'),
+        RGBColor = require('../../src/math/rgb_color.js'),
         xmlString,
         $xml,
         background,
         colorString = "0x123456";
 
+    var $, jqw = require('../node_jquery_helper.js').createJQuery();
+    beforeEach(function() { $ = jqw.$; });
+
+    var JQueryXMLParser;
     beforeEach(function () {
-        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
+        JQueryXMLParser = require('../../src/parser/jquery_xml_parser.js')($);
+    });
+
+    beforeEach(function () {
         xmlString = '<background color="' + colorString + '"/>',
-        $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+        $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
         background = Background.parseXML($xml);
     });
 
@@ -50,7 +57,7 @@ describe("Background parsing", function () {
                 +      ' position="' + positionString + '"'
                 +      '/>'
                 + '</background>';
-            $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+            $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
             background = Background.parseXML($xml);
         });
 
