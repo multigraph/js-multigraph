@@ -2,7 +2,7 @@
 
 describe("WebServiceData", function () {
     "use strict";
-    var WebServiceData = require('../../src/core/web_service_data.js'),
+    var WebServiceData,
         WebServiceDataCacheNode = require('../../src/core/web_service_data_cache_node.js'),
         WebServiceDataIterator = require('../../src/core/web_service_data_iterator.js'),
         NumberValue = require('../../src/core/number_value.js'),
@@ -11,6 +11,14 @@ describe("WebServiceData", function () {
         DataVariable = require('../../src/core/data_variable.js'),
         DataValue = require('../../src/core/data_value.js'),
         typeOf = require('../../src/util/validationFunctions.js').typeOf;
+
+    var $, jqw = require('../node_jquery_helper.js').createJQuery();
+    beforeEach(function() { $ = jqw.$; });
+
+    beforeEach(function() {
+        WebServiceData = require('../../src/core/web_service_data.js')($);
+    });
+
 
     describe("model", function () {
 

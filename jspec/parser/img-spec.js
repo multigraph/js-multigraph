@@ -6,13 +6,8 @@
 //});
 
 
-var jsdom = require('jsdom'),
-    DOMParser = require('xmldom').DOMParser;
-
 describe("Background Img parsing", function () {
     "use strict";
-
-    //require('../../src/parser/jquery_xml_parser.js');
 
     var Img = require('../../src/core/img.js'),
         Point = require('../../src/math/point.js'),
@@ -24,34 +19,23 @@ describe("Background Img parsing", function () {
         anchorString = "1,1",
         baseString = "0,0",
         positionString = "-1,1",
-        ParseXML,
-        $;
+        JQueryXMLParser;
 
-    require('../../src/parser/img.js');
+    var $, jqw = require('../node_jquery_helper.js').createJQuery();
+    beforeEach(function() { $ = jqw.$; });
 
-    beforeEach(function(done){
-        jsdom.env({
-            html: '<html><body></body></html>',
-            scripts: [process.cwd() + '/lib/jquery/jquery.min.js'],
-            done: function(err, window) {
-                jsdom.getVirtualConsole(window).sendTo(console);
-                if (err) console.log(err);
-                $ = window.jQuery;
-                window.DOMParser = DOMParser;
-                ParseXML = require('../../src/parser/parse_xml.js')($),
-                xmlString = ''
-                    + '<?xml version="1.0" encoding="UTF-8"?><img'
-                    +    ' src="' + srcString + '"'
-                    +    ' frame="' + frameString + '"'
-                    +    ' anchor="' + anchorString + '"'
-                    +    ' base="' + baseString + '"'
-                    +    ' position="' + positionString + '"'
-                    +    '></img>';
-                var $xml = ParseXML.stringToJQueryXMLObj(xmlString);
-                image = Img.parseXML($xml);
-                done();
-            }
-        });
+    beforeEach(function() {
+        JQueryXMLParser = require('../../src/parser/jquery_xml_parser.js')($),
+        xmlString = ''
+            + '<?xml version="1.0" encoding="UTF-8"?><img'
+            +    ' src="' + srcString + '"'
+            +    ' frame="' + frameString + '"'
+            +    ' anchor="' + anchorString + '"'
+            +    ' base="' + baseString + '"'
+            +    ' position="' + positionString + '"'
+            +    '></img>';
+        var $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
+        image = Img.parseXML($xml);
     });
 
     it("should be able to parse a background from XML", function () {

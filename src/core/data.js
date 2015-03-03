@@ -317,12 +317,18 @@ var Data = new Model(function () {
     };
 
     this.prototype.normalize = function () {
-        var CSVData = require('./csv_data.js'),
-            ArrayData = require('./array_data.js'),
-            WebServiceData = require('./web_service_data.js'),
+        var ArrayData = require('./array_data.js'),
             sortedVariables   = [],
             unsortedVariables = [],
-            isCsvOrWebService = this instanceof CSVData || this instanceof WebServiceData;
+            //  mbp Tue Mar  3 10:51:40 2015:
+            //    avoid requiring web_service_data.js and csv_data.js here because they have
+            //    a dependency on jQuery; also avoid instanceof
+            //CSVData = require('./csv_data.js'),
+            //WebServiceData = require('./web_service_data.js'),
+            //isCsvOrWebService = this instanceof CSVData || this instanceof WebServiceData,
+            isWebServiceData = (typeof(this.serviceaddress) === "function"),
+            isCSVData = (typeof(this.filename) === "function"),
+            isCsvOrWebService = isWebServiceData || isCSVData;
 
         // Handles missing variable tags if the data tag has a 'csv' or 'service' tag
         if (isCsvOrWebService) {

@@ -5,8 +5,8 @@ describe("Data Normalizer", function () {
 
     var Data = require('../../src/core/data.js'),
         ArrayData = require('../../src/core/array_data.js'),
-        CSVData = require('../../src/core/csv_data.js'),
-        WebServiceData = require('../../src/core/web_service_data.js'),
+        CSVData,
+        WebServiceData,
         DataVariable = require('../../src/core/data_variable.js'),
         DataValue = require('../../src/core/data_value.js'),
         NumberValue = require('../../src/core/number_value.js'),
@@ -23,7 +23,6 @@ describe("Data Normalizer", function () {
         row, numValueRow, col,
         rawData, numberValueData;
 
-
     var Axis = require('../../src/core/axis.js'),
         Title = require('../../src/core/axis_title.js'),
         Labeler = require('../../src/core/labeler.js'),
@@ -31,6 +30,15 @@ describe("Data Normalizer", function () {
         DatetimeMeasure = require('../../src/core/datetime_measure.js'),
         haxis,
         vaxis;
+
+    var $, jqw = require('../node_jquery_helper.js').createJQuery();
+    beforeEach(function() { $ = jqw.$; });
+
+    beforeEach(function() {
+        CSVData = require('../../src/core/csv_data.js')($);
+        WebServiceData = require('../../src/core/web_service_data.js')($);
+    });
+
     
     beforeEach(function () {
         //var NormalizerMixin = require('../../src/normalizer/normalizer_mixin.js');
