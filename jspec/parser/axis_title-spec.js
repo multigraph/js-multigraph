@@ -4,10 +4,10 @@
 describe("Axis Title parsing", function () {
     "use strict";
 
-    var Axis = window.multigraph.core.Axis,
-        AxisTitle = window.multigraph.core.AxisTitle,
-        Text = window.multigraph.core.Text,
-        Point = window.multigraph.math.Point,
+    var Axis = require('../../src/core/axis.js'),
+        AxisTitle = require('../../src/core/axis_title.js'),
+        Text = require('../../src/core/text.js'),
+        Point = require('../../src/math/point.js'),
         xmlString,
         $xml,
         axis = new Axis(Axis.HORIZONTAL),
@@ -16,10 +16,17 @@ describe("Axis Title parsing", function () {
         anchorString = "1,1",
         baseString = "0",
         positionString = "-1,1",
-        contentString = "A Title";
+        contentString = "A Title",
+        JQueryXMLParser;
+
+    var $, jqw = require('../node_jquery_helper.js').createJQuery();
+    beforeEach(function() { $ = jqw.$; });
 
     beforeEach(function () {
-        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
+        JQueryXMLParser = require('../../src/parser/jquery_xml_parser.js')($);
+    });
+
+    beforeEach(function () {
         xmlString = ''
             + '<title'
             +    ' angle="' + angleString + '"'
@@ -29,7 +36,7 @@ describe("Axis Title parsing", function () {
             +    '>'
             +      contentString
             + '</title>';
-        $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+        $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
         title = AxisTitle.parseXML($xml, axis);
     });
 
@@ -68,7 +75,7 @@ describe("Axis Title parsing", function () {
 
     it("should return `undefined` when parsing an empty title tag, ie `<title/>`", function () {
         xmlString = '<title/>';
-        $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+        $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
         title = AxisTitle.parseXML($xml, axis);
         expect(title).toBe(undefined);
     });
