@@ -4,7 +4,7 @@ describe("Multigraph Normalizer", function () {
     "use strict";
 
     var Graph = require('../../src/core/graph.js'),
-        Multigraph = require('../../src/core/multigraph.js'),
+        Multigraph,
         Data = require('../../src/core/data.js'),
         Axis = require('../../src/core/axis.js'),
         DataVariable = require('../../src/core/data_variable.js'),    
@@ -14,6 +14,14 @@ describe("Multigraph Normalizer", function () {
         variable1,
         variable2,
         variable3;
+
+    var $, jqw = require('../node_jquery_helper.js').createJQuery();
+    beforeEach(function() { $ = jqw.$; });
+
+    var JQueryXMLParser;
+    beforeEach(function () {
+        Multigraph = require('../../src/core/multigraph.js')($);
+    });
 
     beforeEach(function () {
         //var NormalizerMixin = require('../../src/normalizer/normalizer_mixin.js');

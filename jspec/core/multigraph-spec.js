@@ -4,9 +4,17 @@ describe("Multigraph", function () {
     "use strict";
 
     var Graph = require('../../src/core/graph.js'),
-        Multigraph = require('../../src/core/multigraph.js'),
+        Multigraph,
         Axis = require('../../src/core/axis.js'),
         mg;
+
+    var $, jqw = require('../node_jquery_helper.js').createJQuery();
+    beforeEach(function() { $ = jqw.$; });
+
+    var JQueryXMLParser;
+    beforeEach(function () {
+        Multigraph = require('../../src/core/multigraph.js')($);
+    });
 
     beforeEach(function () {
         mg = new Multigraph();

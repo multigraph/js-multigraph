@@ -8,8 +8,9 @@ module.exports = function($) {
             DataVariable = require('../core/data_variable.js'),
             DataMeasure = require('../core/data_measure.js'),
             PeriodicArrayData = require('../core/periodic_array_data.js'),
-            CSVData = require('../core/csv_data.js'),
-            WebServiceData = require('../core/web_service_data.js'),
+            CSVData = require('../core/csv_data.js')($),
+            WebServiceData = require('../core/web_service_data.js')($),
+            Multigraph = require('../core/multigraph.js')($),
             pF = require('../util/parsingFunctions.js'),
             variables_xml,
             defaultMissingvalueString,
@@ -22,9 +23,9 @@ module.exports = function($) {
 
             adap = pF.getXMLAttr($(xml),"adapter");
             if (adap !== undefined && adap !== "") {
-                adapter = window.multigraph.adapters[adap]; // Multigraph.adapters()
+                adapter = (Multigraph.adapters())[adap];
                 if (adapter === undefined) {
-                    throw new Error("Missing data adapater: " + adapter);
+                    throw new Error("Missing data adapater: " + adap);
                 }
             }
 
