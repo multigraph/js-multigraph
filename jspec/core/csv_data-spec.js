@@ -2,15 +2,20 @@
 
 describe("CSV Data", function () {
     "use strict";
-    var CSVData = window.multigraph.core.CSVData,
-        NumberValue = window.multigraph.core.NumberValue,
-        DataVariable = window.multigraph.core.DataVariable,
-        DataValue = window.multigraph.core.DataValue,
+    var CSVData,
+        NumberValue = require('../../src/core/number_value.js'),
+        DataVariable = require('../../src/core/data_variable.js'),
+        DataValue = require('../../src/core/data_value.js'),
         testArrayData;
 
+    var $, jqw = require('../node_jquery_helper.js').createJQuery();
+    beforeEach(function() { $ = jqw.$; });
+
+    var JQueryXMLParser;
     beforeEach(function () {
-        window.multigraph.normalizer.mixin.apply(window.multigraph.core);
+        CSVData = require('../../src/core/csv_data.js')($);
     });
+
 
     describe("constructor", function () {
         var csv;
@@ -34,7 +39,7 @@ describe("CSV Data", function () {
         it("should do an async request to get the csv file", function (done) {
             var spy = jasmine.createSpy();
 
-            csv = new CSVData([], "../spec/core/fixtures/csv_test1.csv");
+            csv = new CSVData([], "file://" + __dirname + "/fixtures/csv_test1.csv");
             csv.addListener('dataReady', function() {
                 done();
                 spy();
@@ -50,7 +55,7 @@ describe("CSV Data", function () {
                              new DataVariable("column4", 3, DataValue.NUMBER)
                             ];
 
-            csv = new CSVData(dataVariables, "../spec/core/fixtures/csv_test1.csv");
+            csv = new CSVData(dataVariables, "file://" + __dirname + "/fixtures/csv_test1.csv");
         });
 
 
@@ -67,16 +72,18 @@ describe("CSV Data", function () {
                              new DataVariable("column3", 2, DataValue.NUMBER),
                              new DataVariable("column4", 3, DataValue.NUMBER)
                             ];
-            csv = new CSVData(dataVariables, "../spec/core/fixtures/csv_test1.csv");
-            csv.addListener('dataReady', done);
+            csv = new CSVData(dataVariables, "file://" + __dirname + "/fixtures/csv_test1.csv");
+            csv.addListener('dataReady', function() {
+                csv.normalize();
+                done();
+            });
         });
 
         it("should exist", function () {
-            expect(typeof(csv.getIterator)).toBe("function");
+            expect(typeof(csv.getIterator)).toEqual("function");
         });
 
         it("does the right thing", function () {
-
             var row,
             iter = csv.getIterator(['column1', 'column2', 'column3', 'column4'],
                                    new NumberValue(1903), new NumberValue(1905));

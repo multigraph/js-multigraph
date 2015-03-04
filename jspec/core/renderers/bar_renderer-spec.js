@@ -3,13 +3,14 @@
 describe("BarRenderer", function () {
     "use strict";
 
-    var Renderer = window.multigraph.core.Renderer,
-        BarRenderer = window.multigraph.core.BarRenderer,
-        Axis = window.multigraph.core.Axis,
-        DataValue = window.multigraph.core.DataValue,
-        DataMeasure = window.multigraph.core.DataMeasure,
-        NumberValue = window.multigraph.core.NumberValue,
-        DataPlot = window.multigraph.core.DataPlot,
+    var Renderer = require('../../../src/core/renderer.js'),
+        BarRenderer = require('../../../src/core/renderers/bar_renderer.js'),
+        Axis = require('../../../src/core/axis.js'),
+        DataValue = require('../../../src/core/data_value.js'),
+        DataMeasure = require('../../../src/core/data_measure.js'),
+        NumberValue = require('../../../src/core/number_value.js'),
+        DataPlot = require('../../../src/core/data_plot.js'),
+        RGBColor = require('../../../src/math/rgb_color.js'),
         r;
 
     beforeEach(function () {
@@ -72,25 +73,25 @@ describe("BarRenderer", function () {
 
     it("should be able to get the default value of the 'fillcolor' option",  function () {
         var fillcolor = r.getOptionValue("fillcolor");
-        expect(fillcolor instanceof window.multigraph.math.RGBColor).toBe(true);
+        expect(fillcolor instanceof RGBColor).toBe(true);
         expect(fillcolor.getHexString()).toEqual("0x000000");
     });
     it("should be able to set/get the 'fillcolor' option",  function () {
-        r.setOption("fillcolor", window.multigraph.math.RGBColor.parse("0x123456"));
+        r.setOption("fillcolor", RGBColor.parse("0x123456"));
         var fillcolor = r.getOptionValue("fillcolor");
-        expect(fillcolor instanceof window.multigraph.math.RGBColor).toBe(true);
+        expect(fillcolor instanceof RGBColor).toBe(true);
         expect(fillcolor.getHexString()).toEqual("0x123456");
     });
 
     it("should be able to get the default value of the 'linecolor' option",  function () {
         var linecolor = r.getOptionValue("linecolor");
-        expect(linecolor instanceof window.multigraph.math.RGBColor).toBe(true);
+        expect(linecolor instanceof RGBColor).toBe(true);
         expect(linecolor.getHexString()).toEqual("0x000000");
     });
     it("should be able to set/get the 'linecolor' option",  function () {
-        r.setOption("linecolor", window.multigraph.math.RGBColor.parse("0x123456"));
+        r.setOption("linecolor", RGBColor.parse("0x123456"));
         var linecolor = r.getOptionValue("linecolor");
-        expect(linecolor instanceof window.multigraph.math.RGBColor).toBe(true);
+        expect(linecolor instanceof RGBColor).toBe(true);
         expect(linecolor.getHexString()).toEqual("0x123456");
     });
 

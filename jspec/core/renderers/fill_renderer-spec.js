@@ -3,12 +3,13 @@
 describe("FillRenderer", function () {
     "use strict";
 
-    var Renderer = window.multigraph.core.Renderer,
-        FillRenderer = window.multigraph.core.FillRenderer,
-        Axis = window.multigraph.core.Axis,
-        DataValue = window.multigraph.core.DataValue,
-        NumberValue = window.multigraph.core.NumberValue,
-        DataPlot = window.multigraph.core.DataPlot,
+    var Renderer = require('../../../src/core/renderer.js'),
+        FillRenderer = require('../../../src/core/renderers/fill_renderer.js'),
+        Axis = require('../../../src/core/axis.js'),
+        DataValue = require('../../../src/core/data_value.js'),
+        NumberValue = require('../../../src/core/number_value.js'),
+        DataPlot = require('../../../src/core/data_plot.js'),
+        RGBColor = require('../../../src/math/rgb_color.js'),
         r;
 
     beforeEach(function () {
@@ -28,13 +29,13 @@ describe("FillRenderer", function () {
 
     it("should be able to get the default value of the 'linecolor' option",  function () {
         var linecolor = r.getOptionValue("linecolor");
-        expect(linecolor instanceof window.multigraph.math.RGBColor).toBe(true);
+        expect(linecolor instanceof RGBColor).toBe(true);
         expect(linecolor.getHexString()).toEqual("0x000000");
     });
     it("should be able to set/get the 'linecolor' option",  function () {
-        r.setOption("linecolor", window.multigraph.math.RGBColor.parse("0x123456"));
+        r.setOption("linecolor", RGBColor.parse("0x123456"));
         var linecolor = r.getOptionValue("linecolor");
-        expect(linecolor instanceof window.multigraph.math.RGBColor).toBe(true);
+        expect(linecolor instanceof RGBColor).toBe(true);
         expect(linecolor.getHexString()).toEqual("0x123456");
     });
 
@@ -52,13 +53,13 @@ describe("FillRenderer", function () {
 
     it("should be able to get the default value of the 'fillcolor' option",  function () {
         var fillcolor = r.getOptionValue("fillcolor");
-        expect(fillcolor instanceof window.multigraph.math.RGBColor).toBe(true);
+        expect(fillcolor instanceof RGBColor).toBe(true);
         expect(fillcolor.getHexString()).toEqual("0x808080");
     });
     it("should be able to set/get the 'fillcolor' option",  function () {
-        r.setOption("fillcolor", window.multigraph.math.RGBColor.parse("0x123456"));
+        r.setOption("fillcolor", RGBColor.parse("0x123456"));
         var fillcolor = r.getOptionValue("fillcolor");
-        expect(fillcolor instanceof window.multigraph.math.RGBColor).toBe(true);
+        expect(fillcolor instanceof RGBColor).toBe(true);
         expect(fillcolor.getHexString()).toEqual("0x123456");
     });
 
@@ -67,9 +68,9 @@ describe("FillRenderer", function () {
         expect(downfillcolor).toBe(null);
     });
     it("should be able to set/get the 'downfillcolor' option",  function () {
-        r.setOption("downfillcolor", window.multigraph.math.RGBColor.parse("0x123456"));
+        r.setOption("downfillcolor", RGBColor.parse("0x123456"));
         var downfillcolor = r.getOptionValue("downfillcolor");
-        expect(downfillcolor instanceof window.multigraph.math.RGBColor).toBe(true);
+        expect(downfillcolor instanceof RGBColor).toBe(true);
         expect(downfillcolor.getHexString()).toEqual("0x123456");
     });
 

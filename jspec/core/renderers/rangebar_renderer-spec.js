@@ -1,20 +1,20 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
 
-describe("FillRenderer", function () {
+describe("RangeBarRenderer", function () {
     "use strict";
 
-    var Renderer = require('../../src/core/renderer.js'),
-        FillRenderer = require('../../src/core/renderers/fillrenderer.js'),
-        Axis = require('../../src/core/axis.js'),
-        DataValue = require('../../src/core/data_value.js'),
-        NumberValue = require('../../src/core/number_value.js'),
-        DataPlot = require('../../src/core/data_plot.js'),
+    var Renderer = require('../../../src/core/renderer.js'),
+        RangeBarRenderer = require('../../../src/core/renderers/rangebar_renderer.js'),
+        Axis = require('../../../src/core/axis.js'),
+        DataValue = require('../../../src/core/data_value.js'),
+        NumberValue = require('../../../src/core/number_value.js'),
+        DataPlot = require('../../../src/core/data_plot.js'),
+        RGBColor = require('../../../src/math/rgb_color.js'),
         r;
 
     beforeEach(function () {
-        var vaxis;
         r = (
-            (new FillRenderer())
+            (new RangeBarRenderer())
                 .plot((new DataPlot())
                       .verticalaxis( (new Axis(Axis.VERTICAL)).type(DataValue.NUMBER) )
                       .horizontalaxis( (new Axis(Axis.HORIZONTAL)).type(DataValue.NUMBER) )
@@ -22,19 +22,19 @@ describe("FillRenderer", function () {
         );
     }); 
 
-    it("should be able to create a FillRenderer", function () {
-        expect(r instanceof FillRenderer).toBe(true);
+    it("should be able to create a RangeBarRenderer", function () {
+        expect(r instanceof RangeBarRenderer).toBe(true);
     });
 
     it("should be able to get the default value of the 'linecolor' option",  function () {
         var linecolor = r.getOptionValue("linecolor");
-        expect(linecolor instanceof require('../../src/math/rgb_color.js')).toBe(true);
+        expect(linecolor instanceof RGBColor).toBe(true);
         expect(linecolor.getHexString()).toEqual("0x000000");
     });
     it("should be able to set/get the 'linecolor' option",  function () {
-        r.setOption("linecolor", require('../../src/math/rgb_color.js').parse("0x123456"));
+        r.setOption("linecolor", RGBColor.parse("0x123456"));
         var linecolor = r.getOptionValue("linecolor");
-        expect(linecolor instanceof require('../../src/math/rgb_color.js')).toBe(true);
+        expect(linecolor instanceof RGBColor).toBe(true);
         expect(linecolor.getHexString()).toEqual("0x123456");
     });
 
@@ -52,25 +52,25 @@ describe("FillRenderer", function () {
 
     it("should be able to get the default value of the 'fillcolor' option",  function () {
         var fillcolor = r.getOptionValue("fillcolor");
-        expect(fillcolor instanceof require('../../src/math/rgb_color.js')).toBe(true);
+        expect(fillcolor instanceof RGBColor).toBe(true);
         expect(fillcolor.getHexString()).toEqual("0x808080");
     });
     it("should be able to set/get the 'fillcolor' option",  function () {
-        r.setOption("fillcolor", require('../../src/math/rgb_color.js').parse("0x123456"));
+        r.setOption("fillcolor", RGBColor.parse("0x123456"));
         var fillcolor = r.getOptionValue("fillcolor");
-        expect(fillcolor instanceof require('../../src/math/rgb_color.js')).toBe(true);
+        expect(fillcolor instanceof RGBColor).toBe(true);
         expect(fillcolor.getHexString()).toEqual("0x123456");
     });
-
-    it("should be able to get the default value of the 'downfillcolor' option",  function () {
-        var downfillcolor = r.getOptionValue("downfillcolor");
-        expect(downfillcolor).toBe(null);
-    });
-    it("should be able to set/get the 'downfillcolor' option",  function () {
-        r.setOption("downfillcolor", require('../../src/math/rgb_color.js').parse("0x123456"));
-        var downfillcolor = r.getOptionValue("downfillcolor");
-        expect(downfillcolor instanceof require('../../src/math/rgb_color.js')).toBe(true);
-        expect(downfillcolor.getHexString()).toEqual("0x123456");
+    it("separate instances should have separate 'fillcolor' values",  function () {
+        var r2 = (
+            (new RangeBarRenderer())
+                .plot((new DataPlot())
+                      .verticalaxis( (new Axis(Axis.VERTICAL)).type(DataValue.NUMBER) )
+                      .horizontalaxis( (new Axis(Axis.HORIZONTAL)).type(DataValue.NUMBER) )
+                     )
+        );
+        r.setOption("fillcolor", new RGBColor(1,1,1));
+        expect(r2.getOptionValue("fillcolor").r()).not.toEqual(1); // since r2 fillcolor is still default 0x808080
     });
 
     it("should be able to get the default value of the 'fillopacity' option",  function () {
@@ -83,21 +83,6 @@ describe("FillRenderer", function () {
         var fillopacity = r.getOptionValue("fillopacity");
         expect(typeof(fillopacity)).toEqual("number");
         expect(fillopacity).toEqual(0.75);
-    });
-
-    it("should be able to get the default value of the 'fillbase' option",  function () {
-        var fillbase = r.getOptionValue("fillbase");
-        expect(fillbase).toBe(null);
-    });
-    it("should be able to set/get the 'fillbase' option using NumberValue",  function () {
-        r.setOptionFromString("fillbase", 7.45);
-        var fillbase = r.getOptionValue("fillbase");
-        expect(DataValue.isInstance(fillbase)).toBe(true);
-        expect(typeof(fillbase.getRealValue())).toBe("number");
-        expect(fillbase.getRealValue()).toEqual(7.45);
-    });
-    xit("should be able to set/get the 'fillbase' option using DatetimeValue",  function () {
-        r.verticalaxis().type("datetime");
     });
 
     it("should throw an error if we try to get the value of an invalid option", function () {

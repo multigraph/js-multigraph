@@ -3,12 +3,13 @@
 describe("PointlineRenderer", function () {
     "use strict";
 
-    var Renderer = require('../../src/core/renderer.js'),
-        PointlineRenderer = require('../../src/core/renderers/pointline_renderer.js'),
-        Axis = require('../../src/core/axis.js'),
-        DataValue = require('../../src/core/data_value.js'),
-        NumberValue = require('../../src/core/number_value.js'),
-        DataPlot = require('../../src/core/data_plot.js'),
+    var Renderer = require('../../../src/core/renderer.js'),
+        PointlineRenderer = require('../../../src/core/renderers/pointline_renderer.js'),
+        Axis = require('../../../src/core/axis.js'),
+        DataValue = require('../../../src/core/data_value.js'),
+        NumberValue = require('../../../src/core/number_value.js'),
+        DataPlot = require('../../../src/core/data_plot.js'),
+        RGBColor = require('../../../src/math/rgb_color.js'),
         r;
 
     beforeEach(function () {
@@ -27,13 +28,13 @@ describe("PointlineRenderer", function () {
 
     it("should be able to get the default value of the 'linecolor' option",  function () {
         var linecolor = r.getOptionValue("linecolor");
-        expect(linecolor instanceof require('../../src/math/rgb_color.js')).toBe(true);
+        expect(linecolor instanceof RGBColor).toBe(true);
         expect(linecolor.getHexString()).toEqual("0x000000");
     });
     it("should be able to set/get the 'linecolor' option",  function () {
-        r.setOption("linecolor", require('../../src/math/rgb_color.js').parse("0x123456"));
+        r.setOption("linecolor", RGBColor.parse("0x123456"));
         var linecolor = r.getOptionValue("linecolor");
-        expect(linecolor instanceof require('../../src/math/rgb_color.js')).toBe(true);
+        expect(linecolor instanceof RGBColor).toBe(true);
         expect(linecolor.getHexString()).toEqual("0x123456");
     });
 
@@ -80,13 +81,13 @@ describe("PointlineRenderer", function () {
 
     it("should be able to get the default value of the 'pointcolor' option",  function () {
         var pointcolor = r.getOptionValue("pointcolor");
-        expect(pointcolor instanceof require('../../src/math/rgb_color.js')).toBe(true);
+        expect(pointcolor instanceof RGBColor).toBe(true);
         expect(pointcolor.getHexString()).toEqual("0x000000");
     });
     it("should be able to set/get the 'pointcolor' option",  function () {
-        r.setOption("pointcolor", require('../../src/math/rgb_color.js').parse("0x345678"));
+        r.setOption("pointcolor", RGBColor.parse("0x345678"));
         var pointcolor = r.getOptionValue("pointcolor");
-        expect(pointcolor instanceof require('../../src/math/rgb_color.js')).toBe(true);
+        expect(pointcolor instanceof RGBColor).toBe(true);
         expect(pointcolor.getHexString()).toEqual("0x345678");
     });
 
@@ -116,13 +117,13 @@ describe("PointlineRenderer", function () {
 
     it("should be able to get the default value of the 'pointoutlinecolor' option",  function () {
         var pointoutlinecolor = r.getOptionValue("pointoutlinecolor");
-        expect(pointoutlinecolor instanceof require('../../src/math/rgb_color.js')).toBe(true);
+        expect(pointoutlinecolor instanceof RGBColor).toBe(true);
         expect(pointoutlinecolor.getHexString()).toEqual("0x000000");
     });
     it("should be able to set/get the 'pointoutlinecolor' option",  function () {
-        r.setOption("pointoutlinecolor", require('../../src/math/rgb_color.js').parse("0x56789a"));
+        r.setOption("pointoutlinecolor", RGBColor.parse("0x56789a"));
         var pointoutlinecolor = r.getOptionValue("pointoutlinecolor");
-        expect(pointoutlinecolor instanceof require('../../src/math/rgb_color.js')).toBe(true);
+        expect(pointoutlinecolor instanceof RGBColor).toBe(true);
         expect(pointoutlinecolor.getHexString()).toEqual("0x56789a");
     });
 

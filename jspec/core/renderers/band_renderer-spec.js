@@ -3,12 +3,13 @@
 describe("BandRenderer", function () {
     "use strict";
 
-    var Renderer = window.multigraph.core.Renderer,
-        BandRenderer = window.multigraph.core.BandRenderer,
-        Axis = window.multigraph.core.Axis,
-        DataValue = window.multigraph.core.DataValue,
-        NumberValue = window.multigraph.core.NumberValue,
-        DataPlot = window.multigraph.core.DataPlot,
+    var Renderer = require('../../../src/core/renderer.js'),
+        BandRenderer = require('../../../src/core/renderers/band_renderer.js'),
+        Axis = require('../../../src/core/axis.js'),
+        DataValue = require('../../../src/core/data_value.js'),
+        NumberValue = require('../../../src/core/number_value.js'),
+        DataPlot = require('../../../src/core/data_plot.js'),
+        RGBColor = require('../../../src/math/rgb_color.js'),
         r;
 
     beforeEach(function () {
@@ -28,13 +29,13 @@ describe("BandRenderer", function () {
 
     it("should be able to get the default value of the 'linecolor' option",  function () {
         var linecolor = r.getOptionValue("linecolor");
-        expect(linecolor instanceof window.multigraph.math.RGBColor).toBe(true);
+        expect(linecolor instanceof RGBColor).toBe(true);
         expect(linecolor.getHexString()).toEqual("0x000000");
     });
     it("should be able to set/get the 'linecolor' option",  function () {
-        r.setOption("linecolor", window.multigraph.math.RGBColor.parse("0x123456"));
+        r.setOption("linecolor", RGBColor.parse("0x123456"));
         var linecolor = r.getOptionValue("linecolor");
-        expect(linecolor instanceof window.multigraph.math.RGBColor).toBe(true);
+        expect(linecolor instanceof RGBColor).toBe(true);
         expect(linecolor.getHexString()).toEqual("0x123456");
     });
     it("should be able to get the default value of the 'line1color' option",  function () {
@@ -42,9 +43,9 @@ describe("BandRenderer", function () {
         expect(line1color).toBe(null);
     });
     it("should be able to set/get the 'line1color' option",  function () {
-        r.setOption("line1color", window.multigraph.math.RGBColor.parse("0x123456"));
+        r.setOption("line1color", RGBColor.parse("0x123456"));
         var line1color = r.getOptionValue("line1color");
-        expect(line1color instanceof window.multigraph.math.RGBColor).toBe(true);
+        expect(line1color instanceof RGBColor).toBe(true);
         expect(line1color.getHexString()).toEqual("0x123456");
     });
     it("should be able to get the default value of the 'line2color' option",  function () {
@@ -52,9 +53,9 @@ describe("BandRenderer", function () {
         expect(line2color).toBe(null);
     });
     it("should be able to set/get the 'line2color' option",  function () {
-        r.setOption("line2color", window.multigraph.math.RGBColor.parse("0x123456"));
+        r.setOption("line2color", RGBColor.parse("0x123456"));
         var line2color = r.getOptionValue("line2color");
-        expect(line2color instanceof window.multigraph.math.RGBColor).toBe(true);
+        expect(line2color instanceof RGBColor).toBe(true);
         expect(line2color.getHexString()).toEqual("0x123456");
     });
 
@@ -96,13 +97,13 @@ describe("BandRenderer", function () {
 
     it("should be able to get the default value of the 'fillcolor' option",  function () {
         var fillcolor = r.getOptionValue("fillcolor");
-        expect(fillcolor instanceof window.multigraph.math.RGBColor).toBe(true);
+        expect(fillcolor instanceof RGBColor).toBe(true);
         expect(fillcolor.getHexString()).toEqual("0x808080");
     });
     it("should be able to set/get the 'fillcolor' option",  function () {
-        r.setOption("fillcolor", window.multigraph.math.RGBColor.parse("0x123456"));
+        r.setOption("fillcolor", RGBColor.parse("0x123456"));
         var fillcolor = r.getOptionValue("fillcolor");
-        expect(fillcolor instanceof window.multigraph.math.RGBColor).toBe(true);
+        expect(fillcolor instanceof RGBColor).toBe(true);
         expect(fillcolor.getHexString()).toEqual("0x123456");
     });
 
