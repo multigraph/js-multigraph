@@ -1,18 +1,16 @@
-window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (ns) {
-    "use strict";
+module.exports = function() {
+    var Window = require('../../core/window.js');
 
-    ns.mixin.add(function (ns) {
+    if (typeof(Window.render)==="function") { return Window; }
 
-        ns.Window.respondsTo("render", function (context, width, height) {
-            var m = this.margin().left();
+    Window.respondsTo("render", function (context, width, height) {
+        var m = this.margin().left();
 
-            context.save();
-            context.fillStyle = this.bordercolor().getHexString("#");
-            context.fillRect(m, m, width - 2*m, height - 2*m);
-            context.restore();
-        });
-
+        context.save();
+        context.fillStyle = this.bordercolor().getHexString("#");
+        context.fillRect(m, m, width - 2*m, height - 2*m);
+        context.restore();
     });
 
-});
-
+    return Window;
+};

@@ -1,45 +1,44 @@
-window.multigraph.util.namespace("window.multigraph.events.touch", function (ns) {
-    "use strict";
+module.exports = function($, window, errorHandler) {
+    var Graph = require('../../core/graph.js'),
+        Axis = require('../../core/axis.js');
 
-    ns.mixin.add(function (ns, errorHandler) {
+    if (typeof(Graph.doFirstPinchZoom)==="function") { return Graph; }
 
-        ns.core.Graph.respondsTo("doFirstPinchZoom", function (multigraph, bx, by, dx, dy, totalx, totaly) {
-            var dragAxis = this.dragAxis,
-                dragOrientation = this.dragOrientation,
-                Axis = ns.core.Axis,
-                HORIZONTAL = Axis.HORIZONTAL,
-                VERTICAL   = Axis.VERTICAL;
+    ns.core.Graph.respondsTo("doFirstPinchZoom", function (multigraph, bx, by, dx, dy, totalx, totaly) {
+        var dragAxis = this.dragAxis,
+            dragOrientation = this.dragOrientation,
+            HORIZONTAL = Axis.HORIZONTAL,
+            VERTICAL   = Axis.VERTICAL;
 
-// TODO: this try...catch is just to remind myself how to apply, make sure this is correct later
-            try {
-                if (!this.dragStarted()) {
-                    if (totalx > totaly) {
-                        dragOrientation(HORIZONTAL);
-                    } else {
-                        dragOrientation(VERTICAL);
-                    }
-                    dragAxis(this.findNearestAxis(bx, by, dragOrientation()));
-                    if (dragAxis() === null) {
-                        dragOrientation( (dragOrientation() === HORIZONTAL) ? VERTICAL : HORIZONTAL );
-                        dragAxis( this.findNearestAxis(bx, by, dragOrientation()) );
-                    }
-                    this.dragStarted(true);
-                }
-
-                // do the action
-                if (dragOrientation() === HORIZONTAL) {
-                    dragAxis().doZoom(bx, dx);
+        // TODO: this try...catch is just to remind myself how to apply, make sure this is correct later
+        try {
+            if (!this.dragStarted()) {
+                if (totalx > totaly) {
+                    dragOrientation(HORIZONTAL);
                 } else {
-                    dragAxis().doZoom(by, dy);
+                    dragOrientation(VERTICAL);
                 }
-
-                // draw everything
-                multigraph.redraw();
-            } catch (e) {
-                errorHandler(e);
+                dragAxis(this.findNearestAxis(bx, by, dragOrientation()));
+                if (dragAxis() === null) {
+                    dragOrientation( (dragOrientation() === HORIZONTAL) ? VERTICAL : HORIZONTAL );
+                    dragAxis( this.findNearestAxis(bx, by, dragOrientation()) );
+                }
+                this.dragStarted(true);
             }
-        });
 
+            // do the action
+            if (dragOrientation() === HORIZONTAL) {
+                dragAxis().doZoom(bx, dx);
+            } else {
+                dragAxis().doZoom(by, dy);
+            }
+
+            // draw everything
+            multigraph.redraw();
+        } catch (e) {
+            errorHandler(e);
+        }
     });
 
-});
+    return Graph;
+};

@@ -1,87 +1,84 @@
-window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (ns) {
-    "use strict";
+module.exports = function($, window) {
+    var Multigraph = require('../../core/multigraph.js')($),
+        Point = require('../../math/point.js');
 
-    var $ = window.multigraph.jQuery;
+    if (typeof(Multigraph.render)==="function") { return Multigraph; }
 
-    ns.mixin.add(function (ns) {
-        var Multigraph = ns.Multigraph;
+    Multigraph.hasA("canvas");  // canvas object itself (the '<canvas>' tag itself)
+    Multigraph.hasA("context"); // canvas context object
+    Multigraph.hasA("width").which.isA("number");
+    Multigraph.hasA("height").which.isA("number");
 
-        Multigraph.hasA("canvas");  // canvas object itself (the '<canvas>' tag itself)
-        Multigraph.hasA("context"); // canvas context object
-        Multigraph.hasA("width").which.isA("number");
-        Multigraph.hasA("height").which.isA("number");
-
-        Multigraph.respondsTo("redraw", function () {
-            var that = this;
-            window.requestAnimationFrame(function () {
-                that.render();
-            });
+    Multigraph.respondsTo("redraw", function () {
+        var that = this;
+        window.requestAnimationFrame(function () {
+            that.render();
         });
-
-        Multigraph.respondsTo("init", function () {
-            var $div = $(this.div());
-            this.width($div.width());
-            this.height($div.height());
-            if (this.width() > 0 && this.height() > 0) {
-                // create the canvas
-                $("<canvas width=\""+this.width()+"\" height=\""+this.height()+"\"/>")
-                    .appendTo($div);
-
-                this.initializeSurface();
-
-                this.busySpinner($('<div style="position:absolute;top:50%;left:50%;margin-top:-16px;margin-left:-16px"></div>') .
-                                  appendTo($div) .
-                                  busy_spinner());
-            }
-            this.render();
-        });
-
-        Multigraph.respondsTo("render", function () {
-            var context = this.context(),
-                width   = this.width(),
-                height  = this.height(),
-                i;
-            context.setTransform(1, 0, 0, 1, 0, 0);
-            context.transform(1, 0, 0, -1, 0, height);
-            context.clearRect(0, 0, width, height);
-            this.initializeGeometry(width, height, {"context" : context});
-            for (i = 0; i < this.graphs().size(); ++i) {
-                this.graphs().at(i).render(context, width, height);
-            }
-        });
-
-        Multigraph.respondsTo("registerEvents", function () {
-            var canvas = this.canvas();
-            this.registerMouseEvents(canvas);
-            this.registerTouchEvents(canvas);
-        });
-
-        Multigraph.respondsTo("resizeSurface", function (width, height) {
-            var canvas = this.context().canvas;
-            canvas.width  = width;
-            canvas.height = height;
-        });
-
-        Multigraph.respondsTo("initializeSurface", function () {
-            this.canvas(window.multigraph.jQuery(this.div()).children("canvas")[0]);
-            this.context(this.canvas().getContext("2d"));
-        });
-
     });
 
-    var applyMixins = function (options) {
-        var errorHandler = options.messageHandler.error;
-        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
-        ns.mixin.apply(window.multigraph.core);
-        window.multigraph.events.draggable.mixin.apply(window.multigraph, errorHandler);
-        window.multigraph.events.mouse.mixin.apply(window.multigraph, errorHandler);
-        window.multigraph.events.touch.mixin.apply(window.multigraph, errorHandler);
-        window.multigraph.normalizer.mixin.apply(window.multigraph.core);
-    };
+    Multigraph.respondsTo("init", function () {
+        var $div = $(this.div());
+        this.width($div.width());
+        this.height($div.height());
+        if (this.width() > 0 && this.height() > 0) {
+            // create the canvas
+            $("<canvas width=\""+this.width()+"\" height=\""+this.height()+"\"/>")
+                .appendTo($div);
+
+            this.initializeSurface();
+
+            this.busySpinner($('<div style="position:absolute;top:50%;left:50%;margin-top:-16px;margin-left:-16px"></div>') .
+                             appendTo($div) .
+                             busy_spinner());
+        }
+        this.render();
+    });
+
+    Multigraph.respondsTo("render", function () {
+        var context = this.context(),
+            width   = this.width(),
+            height  = this.height(),
+            i;
+        context.setTransform(1, 0, 0, 1, 0, 0);
+        context.transform(1, 0, 0, -1, 0, height);
+        context.clearRect(0, 0, width, height);
+        this.initializeGeometry(width, height, {"context" : context});
+        for (i = 0; i < this.graphs().size(); ++i) {
+            this.graphs().at(i).render(context, width, height);
+        }
+    });
+
+    Multigraph.respondsTo("registerEvents", function () {
+        var canvas = this.canvas();
+        this.registerMouseEvents(canvas);
+        this.registerTouchEvents(canvas);
+    });
+
+    Multigraph.respondsTo("resizeSurface", function (width, height) {
+        var canvas = this.context().canvas;
+        canvas.width  = width;
+        canvas.height = height;
+    });
+
+    Multigraph.respondsTo("initializeSurface", function () {
+        this.canvas($(this.div()).children("canvas")[0]);
+        this.context(this.canvas().getContext("2d"));
+    });
+
+    //    var applyMixins = function (options) {
+    //        var errorHandler = options.messageHandler.error;
+    //        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
+    //        ns.mixin.apply(window.multigraph.core);
+    //        window.multigraph.events.draggable.mixin.apply(window.multigraph, errorHandler);
+    //        window.multigraph.events.mouse.mixin.apply(window.multigraph, errorHandler);
+    //        window.multigraph.events.touch.mixin.apply(window.multigraph, errorHandler);
+    //        window.multigraph.normalizer.mixin.apply(window.multigraph.core);
+    //    };
 
     var generateInitialGraph = function (mugl, options) {
-        var xmlObj = window.multigraph.parser.stringToJQueryXMLObj(mugl);
-        var multigraph = window.multigraph.core.Multigraph.parseXML( xmlObj, options.mugl, options.messageHandler );
+        var JQueryXMLParser = require('../../parser/jquery_xml_parser.js')($);
+        var xmlObj = JQueryXMLParser.stringToJQueryXMLObj(mugl);
+        var multigraph = Multigraph.parseXML( xmlObj, options.mugl, options.messageHandler );
         multigraph.normalize();
         multigraph.div(options.div);
         $(options.div).css("cursor" , "pointer");
@@ -93,7 +90,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         return multigraph;
     };
 
-    window.multigraph.core.Multigraph.createCanvasGraph = function (options) {
+    Multigraph.createCanvasGraph = function (options) {
         var muglPromise,
             deferred;
 
@@ -122,7 +119,7 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         return deferred.promise();
     };
 
-    window.multigraph.core.Multigraph.createCanvasGraphFromString = function (options) {
+    Multigraph.createCanvasGraphFromString = function (options) {
         var deferred;
         
         try {
@@ -144,4 +141,6 @@ window.multigraph.util.namespace("window.multigraph.graphics.canvas", function (
         return deferred.promise();
     };
 
-});
+    return Multigraph;
+};
+

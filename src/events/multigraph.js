@@ -1,7 +1,11 @@
-(function ($) {
-    "use strict";
+// This file uses jQuery.  A valid jQuery object must be passed to the
+// function returned by requiring this file.
+var _INCLUDED = false;
+module.exports = function($, window, errorHandler) {
 
-    var core = window.multigraph.util.namespace("window.multigraph.core");
+    if (_INCLUDED) { return; } else { _INCLUDED = true; }
+    
+    var Multigraph = require('../core/multigraph.js')($);
 
     var methods = {
         multigraph : function () {
@@ -21,7 +25,7 @@
                 options.div = this;
                 if ( ! data ) {
                     $this.data('multigraph', {
-                        multigraph : core.Multigraph.createGraph(options)
+                        multigraph : Multigraph.createGraph(options)
                     });
                 }
                 return this;
@@ -83,10 +87,10 @@
              // don't default to canvas here any more; Multigraph.createGraph now does
              // browser detection and will default to canvas if possible, otherwise
              // to raphael
-            if (driver === undefined) {
-                driver = "canvas";
-            }
-            */
+             if (driver === undefined) {
+             driver = "canvas";
+             }
+             */
 
             options = {
                 'div'    : this,
@@ -113,9 +117,9 @@
                         m.render();
                     });
                     var timeout= window.setTimeout(function () {
-                            lightboxData.contents.lightbox("resize");
-                            window.clearTimeout(timeout);
-                        }, 50);
+                        lightboxData.contents.lightbox("resize");
+                        window.clearTimeout(timeout);
+                    }, 50);
                 },
                 postclose : function () {
                     var lightboxData = this.data("lightbox");
@@ -147,4 +151,4 @@
 
     });
 
-}(window.multigraph.jQuery));
+};
