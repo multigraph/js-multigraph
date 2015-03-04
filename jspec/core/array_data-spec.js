@@ -46,13 +46,10 @@ describe("ArrayData", function () {
         testArrayData.array(numberValueData);
     });
 
-    describe("constructor", function () {
+    xdescribe("constructor", function () {
         xit("should throw an error if the first parameter is not a list of DataVariable objects", function () {
-
         });
-
         xit("should throw an error if the second parameter is not an array of arrays of NumberValue objects", function () {
-
         });
     });
 

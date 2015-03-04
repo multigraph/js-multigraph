@@ -139,10 +139,10 @@ describe("Axis", function () {
             expect(a.min()).toBe("17");
         });
 
-        xit("should throw an error if the parameter is not a number, datetime or 'auto'", function () {
+        it("should throw an error if the parameter is not a string", function () {
             expect(function () {
                 a.min(true);
-            }).toThrow(new Error("true should be a number"));
+            }).toThrow(new Error("true should be a string"));
         });
 
     });
@@ -169,10 +169,10 @@ describe("Axis", function () {
             expect(a.max()).toBe("94");
         });
 
-        xit("should throw an error if the parameter is not a number, datetime or 'auto'", function () {
+        it("should throw an error if the parameter is not a string", function () {
             expect(function () {
-                a.max("the-max");
-            }).toThrow(new Error("the-max should be a number"));
+                a.max(4);
+            }).toThrow(new Error("4 should be a string"));
         });
 
     });

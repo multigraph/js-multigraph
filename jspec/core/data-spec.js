@@ -111,10 +111,4 @@ describe("Data", function () {
         //no op, should be in subobject
     });
 
-    describe("onReady method", function () {
-        xit("should throw an error if the parameter is not a function", function () {
-
-        });
-    });
-
 });

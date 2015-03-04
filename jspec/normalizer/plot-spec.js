@@ -506,8 +506,7 @@ describe("Plot Normalizer", function () {
                 expect(plot.variable().size()).toEqual(2);
             });
 
-            // TODO: enable this spec once the point renderer has been enabled
-            xit("should insert 2 variables for a point renderer", function () {
+            it("should insert 2 variables for a point renderer", function () {
                 graph.data().add(new Data([variable1, variable2, variable3, variable4, variable5]));
                 
                 rendererType = Renderer.Type.parse("point");
@@ -555,8 +554,7 @@ describe("Plot Normalizer", function () {
                 expect(plot.variable().size()).toEqual(3);
             });
 
-            // TODO: enable this spec once the rangebar renderer has been enabled
-            xit("should insert 3 variables for a rangebar renderer", function () {
+            it("should insert 3 variables for a rangebar renderer", function () {
                 graph.data().add(new Data([variable1, variable2, variable3, variable4, variable5]));
                 
                 rendererType = Renderer.Type.parse("rangebar");
