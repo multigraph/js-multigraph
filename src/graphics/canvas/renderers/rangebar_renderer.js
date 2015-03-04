@@ -1,6 +1,6 @@
 var _INCLUDED = false;
 module.exports = function() {
-    var RangeBarRenderer = require('../../core/renderers/rangebar_renderer.js');
+    var RangeBarRenderer = require('../../../core/renderers/rangebar_renderer.js');
 
     if (_INCLUDED) { return RangeBarRenderer; }
     _INCLUDED = true;

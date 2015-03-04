@@ -1,18 +1,20 @@
 module.exports = function() {
-    var Labeler = require('../../core/Labeler.js'),
+    var Labeler = require('../../core/labeler.js'),
+        Text = require('../../core/text.js'),
+        Axis = require('../../core/axis.js'),
         Point = require('../../math/point.js');
 
     if (typeof(Labeler.renderLabel)==="function") { return Labeler; }
 
     Labeler.respondsTo("measureStringWidth", function (context, string) {
-        return (new ns.Text(string)).initializeGeometry({
+        return (new Text(string)).initializeGeometry({
             "context" : context,
             "angle"   : this.angle()
         }).rotatedWidth();
     });
 
     Labeler.respondsTo("measureStringHeight", function (context, string) {
-        return (new ns.Text(string)).initializeGeometry({
+        return (new Text(string)).initializeGeometry({
             "context" : context,
             "angle"   : this.angle()
         }).rotatedHeight();
@@ -24,7 +26,7 @@ module.exports = function() {
             angle           = this.angle(),
             perpOffset      = axis.perpOffset(),
             a               = axis.dataValueToAxisValue(value),
-            formattedString = new ns.Text(this.formatter().format(value)),
+            formattedString = new Text(this.formatter().format(value)),
             pixelAnchor,
             base;
 
@@ -38,7 +40,7 @@ module.exports = function() {
             0.5 * formattedString.origHeight() * (storedAnchor.y() + 1)
         );
 
-        if (axis.orientation() === ns.Axis.HORIZONTAL) {
+        if (axis.orientation() === Axis.HORIZONTAL) {
             base = new Point(a, perpOffset);
         } else {
             base = new Point(perpOffset, a);

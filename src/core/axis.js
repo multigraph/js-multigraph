@@ -389,7 +389,6 @@ var Axis = new Model("Axis", function () {
             panMax  = pan.max(),
             zoomMin = zoom.min(),
             zoomMax = zoom.max(),
-            DataValue = DataValue,
             baseRealValue,
             factor,
             newMin,

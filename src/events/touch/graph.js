@@ -4,7 +4,7 @@ module.exports = function($, window, errorHandler) {
 
     if (typeof(Graph.doFirstPinchZoom)==="function") { return Graph; }
 
-    ns.core.Graph.respondsTo("doFirstPinchZoom", function (multigraph, bx, by, dx, dy, totalx, totaly) {
+    Graph.respondsTo("doFirstPinchZoom", function (multigraph, bx, by, dx, dy, totalx, totaly) {
         var dragAxis = this.dragAxis,
             dragOrientation = this.dragOrientation,
             HORIZONTAL = Axis.HORIZONTAL,

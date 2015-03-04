@@ -95,7 +95,8 @@ module.exports = function($, window) {
             deferred;
 
         try {
-            applyMixins(options);
+            //applyMixins(options);
+            require('../../events/all.js')($, window, options.messageHandler.error);
             muglPromise = $.ajax({
                 "url"      : options.mugl,
                 "dataType" : "text"

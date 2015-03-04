@@ -1,5 +1,5 @@
 module.exports = function() {
-    var Legend = require('../../core/Legend.js'),
+    var Legend = require('../../core/legend.js'),
         Point = require('../../math/point.js');
 
     if (typeof(Legend.renderLegend)==="function") { return Legend; }

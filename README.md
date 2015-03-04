@@ -26,6 +26,12 @@ npm install
 
 # 6. run the unit tests
 jasmine-node jspec
+
+# 7. build the browser-runnable JS file
+make
+
+# 8. view a working graph using the file you just built:
+#       load 'spec/graphics/canvas/newtest.html' in a browser
 ```
 
 Note that you might have to `sudo npm install -g jasmine-node` on your computer, if you don't

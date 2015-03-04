@@ -1,6 +1,6 @@
 var _INCLUDED = false;
 module.exports = function() {
-    var BandRenderer = require('../../core/renderers/band_renderer.js');
+    var BandRenderer = require('../../../core/renderers/band_renderer.js');
 
     if (_INCLUDED) { return BandRenderer; }
     _INCLUDED = true;

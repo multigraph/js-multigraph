@@ -1,6 +1,6 @@
 var _INCLUDED = false;
 module.exports = function() {
-    var BarRenderer = require('../../core/renderers/bar_renderer.js');
+    var BarRenderer = require('../../../core/renderers/bar_renderer.js');
 
     if (_INCLUDED) { return BarRenderer; }
     _INCLUDED = true;

@@ -1,6 +1,7 @@
 var _INCLUDED = false;
 module.exports = function() {
-    var PointlineRenderer = require('../../core/renderers/pointline_renderer.js');
+    var PointlineRenderer = require('../../../core/renderers/pointline_renderer.js'),
+        Renderer = require('../../../core/renderer.js');
 
     if (_INCLUDED) { return PointlineRenderer; }
     _INCLUDED = true;
@@ -24,11 +25,11 @@ module.exports = function() {
         };
 
         // turns off points for line renderers
-        if (this.type() === ns.Renderer.LINE) {
+        if (this.type() === Renderer.LINE) {
             settings.pointsize = 0;
         }
         // turns off lines for point renderers
-        if (this.type() === ns.Renderer.POINT) {
+        if (this.type() === Renderer.POINT) {
             settings.linewidth = 0;
         }
         this.settings(settings);

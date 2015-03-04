@@ -11,7 +11,7 @@ module.exports = function($, window, errorHandler) {
         try {
             this.pauseAllData();
             var axis = this.findNearestAxis(x, y);
-            if (axis.orientation() === ns.core.Axis.HORIZONTAL) {
+            if (axis.orientation() === Axis.HORIZONTAL) {
                 axis.doZoom(x, 4*delta);
             } else {
                 axis.doZoom(y, 4*delta);
