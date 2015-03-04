@@ -3,6 +3,10 @@
 module.exports = function($) {
     var Datatips = require('../core/datatips.js');
 
+    // if parseXML method already has been defined, which would be the case if this
+    // function was previously called, just return immediately
+    if (typeof(Datatips.parseXML)==="function") { return Datatips; };
+
     Datatips.parseXML = function (xml) {
         var datatips         = new Datatips(),
             RGBColor         = require('../math/rgb_color.js'),

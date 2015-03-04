@@ -3,6 +3,10 @@
 module.exports = function($) {
     var Plot = require('../core/plot.js');
 
+    // if parseXML method already has been defined, which would be the case if this
+    // function was previously called, just return immediately
+    if (typeof(Plot.parseXML)==="function") { return Plot; };
+
     Plot.parseXML = function (xml, graph, messageHandler) {
         var DataPlot     = require('../core/data_plot.js'),
             PlotLegend   = require('../core/plot_legend.js'),

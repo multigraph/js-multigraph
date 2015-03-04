@@ -4,6 +4,10 @@ module.exports = function($) {
     var Axis = require('../core/axis.js'),
         pF = require('../util/parsingFunctions.js');
 
+    // if parseXML method already has been defined, which would be the case if this
+    // function was previously called, just return immediately
+    if (typeof(Axis.parseXML)==="function") { return Axis; };
+
     var parseLabels = function (xml, axis) {
         var spacingStrings = [],
             spacingString,

@@ -3,6 +3,10 @@
 module.exports = function($) {
     var Data = require('../core/data.js');
 
+    // if parseXML method already has been defined, which would be the case if this
+    // function was previously called, just return immediately
+    if (typeof(Data.parseXML)==="function") { return Data; };
+
     Data.parseXML = function (xml, multigraph, messageHandler) {
         var ArrayData = require('../core/array_data.js'),
             DataVariable = require('../core/data_variable.js'),

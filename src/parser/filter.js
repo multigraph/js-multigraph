@@ -3,6 +3,10 @@
 module.exports = function($) {
     var Filter = require('../core/filter.js');
 
+    // if parseXML method already has been defined, which would be the case if this
+    // function was previously called, just return immediately
+    if (typeof(Filter.parseXML)==="function") { return Filter; };
+
     Filter.parseXML = function (xml) {
         var filter = new Filter(),
             FilterOption = require('../core/filter_option.js'),

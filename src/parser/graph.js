@@ -4,6 +4,10 @@ module.exports = function($) {
     var Graph = require('../core/graph.js'),
         pF = require('../util/parsingFunctions.js');
 
+    // if parseXML method already has been defined, which would be the case if this
+    // function was previously called, just return immediately
+    if (typeof(Graph.parseXML)==="function") { return Graph; };
+
     /*
      * This function traverses an XML document looking for attributes values involving deprecated
      * color names and issues a warning about each one found.  Remove this function when removing

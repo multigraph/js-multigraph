@@ -3,6 +3,10 @@
 module.exports = function($) {
     var Renderer = require('../core/renderer.js');
 
+    // if parseXML method already has been defined, which would be the case if this
+    // function was previously called, just return immediately
+    if (typeof(Renderer.parseXML)==="function") { return Renderer; };
+
     Renderer.parseXML = function (xml, plot, messageHandler) {
         var DataValue   = require('../core/data_value.js'),
             NumberValue = require('../core/number_value.js'),

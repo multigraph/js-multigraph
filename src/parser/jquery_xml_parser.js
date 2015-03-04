@@ -6,7 +6,11 @@
 //      var ParseXML = require('parse_xml.js')($);
 //      ParseXML.stringToJQueryXMLObj(...);
 //
+var JQueryXMLParser;
 module.exports = function($) {
+    if (typeof(JQueryXMLParser)!="undefined") { return JQueryXMLParser; };
+
+    JQueryXMLParser = {};
 
     require('./axis.js')($);
     require('./data.js')($);
@@ -33,8 +37,6 @@ module.exports = function($) {
     require('./title.js');
     require('./window.js');
     require('./zoom.js');
-
-    var JQueryXMLParser = {};
 
     JQueryXMLParser.stringToJQueryXMLObj = function (thingy) {
         if (typeof(thingy) !== "string") {
