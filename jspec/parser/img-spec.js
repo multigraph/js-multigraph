@@ -1,11 +1,6 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
 /*jshint laxbreak:true */
 
-//var jquery_preload = require('../../src/jquery_preload.js');
-//jquery_preload.with_jquery(function() {
-//});
-
-
 describe("Background Img parsing", function () {
     "use strict";
 
