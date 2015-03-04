@@ -4,9 +4,9 @@
 describe("Axis Zoom parsing", function () {
     "use strict";
 
-    var Zoom = window.multigraph.core.Zoom,
-        DataMeasure = window.multigraph.core.DataMeasure,
-        DataValue = window.multigraph.core.DataValue,
+    var Zoom = require('../../src/core/zoom.js'),
+        DataMeasure = require('../../src/core/data_measure.js'),
+        DataValue = require('../../src/core/data_value.js'),
         xmlString,
         $xml,
         zoom,
@@ -17,8 +17,15 @@ describe("Axis Zoom parsing", function () {
         anchorString = "1",
         type = "number";
 
+    var $, jqw = require('../node_jquery_helper.js').createJQuery();
+    beforeEach(function() { $ = jqw.$; });
+
+    var JQueryXMLParser;
     beforeEach(function () {
-        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
+        JQueryXMLParser = require('../../src/parser/jquery_xml_parser.js')($);
+    });
+
+    beforeEach(function () {
         xmlString = ''
             + '<zoom'
             +     ' allowed="' + allowedString + '"'
@@ -26,7 +33,7 @@ describe("Axis Zoom parsing", function () {
             +     ' max="' + maxString + '"'
             +     ' anchor="' + anchorString + '"'
             +     '/>',
-        $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+        $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
         zoom = Zoom.parseXML($xml, type);
     });
 

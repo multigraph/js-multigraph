@@ -4,8 +4,8 @@
 describe("Plotarea parsing", function () {
     "use strict";
 
-    var Plotarea = window.multigraph.core.Plotarea,
-        RGBColor = window.multigraph.math.RGBColor,
+    var Plotarea = require('../../src/core/plotarea.js'),
+        RGBColor = require('../../src/math/rgb_color.js'),
         xmlString,
         $xml,
         plotarea,
@@ -16,8 +16,15 @@ describe("Plotarea parsing", function () {
         bordercolorString = "0x111223",
         borderString = "0";
 
+    var $, jqw = require('../node_jquery_helper.js').createJQuery();
+    beforeEach(function() { $ = jqw.$; });
+
+    var JQueryXMLParser;
     beforeEach(function () {
-        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
+        JQueryXMLParser = require('../../src/parser/jquery_xml_parser.js')($);
+    });
+
+    beforeEach(function () {
         xmlString = ''
             + '<plotarea'
             +     ' margintop="' + margintopString + '"'
@@ -27,7 +34,7 @@ describe("Plotarea parsing", function () {
             +     ' bordercolor="' + bordercolorString + '"'
             +     ' border="' + borderString + '"'
             +     '/>',
-        $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+        $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
         plotarea = Plotarea.parseXML($xml);
     });
 

@@ -1,13 +1,12 @@
 // This file uses jQuery.  A valid jQuery object must be passed to the
 // function returned by requiring this file.
 module.exports = function($) {
-    var Multigraph = require('../core/multigraph.js');
+    var Multigraph = require('../core/multigraph.js')($);
 
     Multigraph.parseXML = function (xml, mugl, messageHandler) {
         var multigraph = new Multigraph(),
             graphs     = multigraph.graphs(),
             Graph      = require('../core/graph.js'),
-            $          = require('jquery'),
             child;
         multigraph.mugl(mugl); // set the mugl url
         if (xml) {

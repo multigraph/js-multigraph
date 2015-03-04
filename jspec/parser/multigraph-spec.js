@@ -4,23 +4,28 @@
 describe("Multigraph parsing", function () {
     "use strict";
 
-    var ArrayData = window.multigraph.core.ArrayData,
-        Axis = window.multigraph.core.Axis,
-        Background = window.multigraph.core.Background,
-        DataPlot = window.multigraph.core.DataPlot,
-        Graph = window.multigraph.core.Graph,
-        Icon = window.multigraph.core.Icon,
-        Legend = window.multigraph.core.Legend,
-        Multigraph = window.multigraph.core.Multigraph,
-        Plotarea = window.multigraph.core.Plotarea,
-        Title = window.multigraph.core.Title,
-        Window = window.multigraph.core.Window,
+    var ArrayData = require('../../src/core/array_data.js'),
+        Axis = require('../../src/core/axis.js'),
+        Background = require('../../src/core/background.js'),
+        DataPlot = require('../../src/core/data_plot.js'),
+        Graph = require('../../src/core/graph.js'),
+        Icon = require('../../src/core/icon.js'),
+        Legend = require('../../src/core/legend.js'),
+        Multigraph,
+        Plotarea = require('../../src/core/plotarea.js'),
+        Title = require('../../src/core/title.js'),
+        Window = require('../../src/core/window.js'),
         mg,
         xmlString,
         $xml;
 
+    var $, jqw = require('../node_jquery_helper.js').createJQuery();
+    beforeEach(function() { $ = jqw.$; });
+
+    var JQueryXMLParser;
     beforeEach(function () {
-        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
+        JQueryXMLParser = require('../../src/parser/jquery_xml_parser.js')($);
+        Multigraph = require('../../src/core/multigraph.js')($);
     });
 
     describe("with graph subtags", function () {
@@ -404,7 +409,7 @@ describe("Multigraph parsing", function () {
                 +     '</graph>'
                 + '</mugl>';
 
-            $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+            $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
             mg = Multigraph.parseXML($xml);
         });
 
@@ -720,7 +725,7 @@ describe("Multigraph parsing", function () {
                 +     '</data>'
                 + '</mugl>';
 
-            $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+            $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
             mg = Multigraph.parseXML($xml);
         });
 

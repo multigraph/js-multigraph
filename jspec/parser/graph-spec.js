@@ -4,15 +4,15 @@
 describe("Graph parsing", function () {
     "use strict";
 
-    var ArrayData = window.multigraph.core.ArrayData,
-        Axis = window.multigraph.core.Axis,
-        Background = window.multigraph.core.Background,
-        DataPlot = window.multigraph.core.DataPlot,
-        Graph = window.multigraph.core.Graph,
-        Legend = window.multigraph.core.Legend,
-        Plotarea = window.multigraph.core.Plotarea,
-        Title = window.multigraph.core.Title,
-        Window = window.multigraph.core.Window,
+    var ArrayData = require('../../src/core/array_data.js'),
+        Axis = require('../../src/core/axis.js'),
+        Background = require('../../src/core/background.js'),
+        DataPlot = require('../../src/core/data_plot.js'),
+        Graph = require('../../src/core/graph.js'),
+        Legend = require('../../src/core/legend.js'),
+        Plotarea = require('../../src/core/plotarea.js'),
+        Title = require('../../src/core/title.js'),
+        Window = require('../../src/core/window.js'),
         graph,
         xmlString =  ''
             + '<graph>'
@@ -226,9 +226,16 @@ describe("Graph parsing", function () {
             + '</graph>',
         $xml;
 
+    var $, jqw = require('../node_jquery_helper.js').createJQuery();
+    beforeEach(function() { $ = jqw.$; });
+
+    var JQueryXMLParser;
+    beforeEach(function () {
+        JQueryXMLParser = require('../../src/parser/jquery_xml_parser.js')($);
+    });
+
     beforeEach(function () {        
-        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
-        $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+        $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
         graph = Graph.parseXML($xml);
     });
 

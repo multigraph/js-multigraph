@@ -18,11 +18,15 @@ describe("Background Img parsing", function () {
         frameString = "plot",
         anchorString = "1,1",
         baseString = "0,0",
-        positionString = "-1,1",
-        JQueryXMLParser;
+        positionString = "-1,1";
 
     var $, jqw = require('../node_jquery_helper.js').createJQuery();
     beforeEach(function() { $ = jqw.$; });
+
+    var JQueryXMLParser;
+    beforeEach(function () {
+        JQueryXMLParser = require('../../src/parser/jquery_xml_parser.js')($);
+    });
 
     beforeEach(function() {
         JQueryXMLParser = require('../../src/parser/jquery_xml_parser.js')($),

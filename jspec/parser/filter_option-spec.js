@@ -4,21 +4,28 @@
 describe("Plot Filter Option parsing", function () {
     "use strict";
 
-    var FilterOption = window.multigraph.core.FilterOption,
+    var FilterOption = require('../../src/core/filter_option.js'),
         xmlString,
         $xml,
         option,
         nameString = "dotsize",
         valueString = "12";
 
+    var $, jqw = require('../node_jquery_helper.js').createJQuery();
+    beforeEach(function() { $ = jqw.$; });
+
+    var JQueryXMLParser;
     beforeEach(function () {
-        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
+        JQueryXMLParser = require('../../src/parser/jquery_xml_parser.js')($);
+    });
+
+    beforeEach(function () {
         xmlString = ''
             + '<option'
             +     ' name="' + nameString + '"'
             +     ' value="' + valueString + '"'
             +     '/>';
-        $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+        $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
         option = FilterOption.parseXML($xml);
     });
 

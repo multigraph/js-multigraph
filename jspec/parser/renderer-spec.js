@@ -4,23 +4,30 @@
 describe("Plot Renderer parsing", function () {
     "use strict";
 
-    var Renderer = window.multigraph.core.Renderer,
-        Option = window.multigraph.core.Renderer.Option,
-        Axis = window.multigraph.core.Axis,
-        DataPlot = window.multigraph.core.DataPlot,
-        DataValue = window.multigraph.core.DataValue,
+    var Renderer = require('../../src/core/renderer.js'),
+        Option = require('../../src/core/renderer.js').Option,
+        Axis = require('../../src/core/axis.js'),
+        DataPlot = require('../../src/core/data_plot.js'),
+        DataValue = require('../../src/core/data_value.js'),
         xmlString,
         $xml,
         renderer,
         typeString = "pointline";
 
+    var $, jqw = require('../node_jquery_helper.js').createJQuery();
+    beforeEach(function() { $ = jqw.$; });
+
+    var JQueryXMLParser;
     beforeEach(function () {
-        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
+        JQueryXMLParser = require('../../src/parser/jquery_xml_parser.js')($);
+    });
+
+    beforeEach(function () {
         xmlString = ''
             + '<renderer'
             +     ' type="' + typeString + '"'
             +     '/>',
-        $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+        $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
         renderer = Renderer.parseXML($xml);
     });
 
@@ -48,7 +55,7 @@ describe("Plot Renderer parsing", function () {
                     +       ' value="' + option1ValueString + '"'
                     +       '/>'
                     + '</renderer>';
-                $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+                $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
                 renderer = Renderer.parseXML($xml);
             });
 
@@ -105,7 +112,7 @@ describe("Plot Renderer parsing", function () {
                     +       ' value="' + option4ValueString + '"'
                     +       '/>'
                     + '</renderer>';
-                $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+                $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
                 renderer = Renderer.parseXML($xml, plot);
             });
 

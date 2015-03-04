@@ -1,6 +1,9 @@
 // This file uses jQuery.  A valid jQuery object must be passed to the
 // function returned by requiring this file.
+var WebServiceData;
 module.exports = function($) {
+    if (typeof(WebServiceData) !== "undefined") { return WebServiceData; }
+
     var Model = require('../../lib/jermaine/src/core/model.js');
 
     var Data = require('./data.js'),
@@ -10,7 +13,7 @@ module.exports = function($) {
         WebServiceDataCacheNode = require('./web_service_data_cache_node.js'),
         WebServiceDataIterator = require('./web_service_data_iterator.js');
 
-    var WebServiceData = Model(function () {
+    WebServiceData = Model(function () {
         this.isA(Data);
         this.hasA("serviceaddress").which.isA("string");
         this.hasA("serviceaddresspattern").which.isA("string");
@@ -374,4 +377,3 @@ module.exports = function($) {
 
     return WebServiceData;
 };
-

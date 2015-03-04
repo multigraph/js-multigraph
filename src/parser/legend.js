@@ -6,17 +6,17 @@ Legend.parseXML = function (xml) {
         Point            = require('../math/point.js'),
         RGBColor         = require('../math/rgb_color.js'),
         Icon             = require('../core/icon.js'),
-        parseAttribute   = parsingFuctions.parseAttribute,
-        parseInteger     = parsingFuctions.parseInteger,
+        parseAttribute   = pF.parseAttribute,
+        parseInteger     = pF.parseInteger,
         parsePoint       = Point.parse,
         parseRGBColor    = RGBColor.parse,
         child;
     if (xml) {
-        parseAttribute(pF.getXMLAttr(xml,"visible"),      legend.visible,      parsingFuctions.parseBoolean);
+        parseAttribute(pF.getXMLAttr(xml,"visible"),      legend.visible,      pF.parseBoolean);
         parseAttribute(pF.getXMLAttr(xml,"base"),         legend.base,         parsePoint);
         parseAttribute(pF.getXMLAttr(xml,"anchor"),       legend.anchor,       parsePoint);
         parseAttribute(pF.getXMLAttr(xml,"position"),     legend.position,     parsePoint);
-        parseAttribute(pF.getXMLAttr(xml,"frame"),        legend.frame,        parsingFuctions.parseString);
+        parseAttribute(pF.getXMLAttr(xml,"frame"),        legend.frame,        pF.parseString);
         parseAttribute(pF.getXMLAttr(xml,"color"),        legend.color,        parseRGBColor);
         parseAttribute(pF.getXMLAttr(xml,"bordercolor"),  legend.bordercolor,  parseRGBColor);
         parseAttribute(pF.getXMLAttr(xml,"opacity"),      legend.opacity,      parseFloat);

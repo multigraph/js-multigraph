@@ -4,20 +4,27 @@
 describe("Plot Filter parsing", function () {
     "use strict";
 
-    var Filter = window.multigraph.core.Filter,
-        FilterOption = window.multigraph.core.FilterOption,
+    var Filter = require('../../src/core/filter.js'),
+        FilterOption = require('../../src/core/filter_option.js'),
         xmlString,
         $xml,
         filter,
         typeString = "number";
 
+    var $, jqw = require('../node_jquery_helper.js').createJQuery();
+    beforeEach(function() { $ = jqw.$; });
+
+    var JQueryXMLParser;
     beforeEach(function () {
-        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
+        JQueryXMLParser = require('../../src/parser/jquery_xml_parser.js')($);
+    });
+
+    beforeEach(function () {
         xmlString = ''
             + '<filter'
             +     ' type="' + typeString + '"'
             +     '/>';
-        $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+        $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
         filter = Filter.parseXML($xml);
     });
 
@@ -46,7 +53,7 @@ describe("Plot Filter parsing", function () {
                     +       ' value="' + option1ValueString + '"'
                     +       '/>'
                     + '</filter>';
-                $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+                $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
                 filter = Filter.parseXML($xml);
             });
 
@@ -90,7 +97,7 @@ describe("Plot Filter parsing", function () {
                     +       ' value="' + option3ValueString + '"'
                     +       '/>'
                     + '</filter>';
-                $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+                $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
                 filter = Filter.parseXML($xml);
             });
 

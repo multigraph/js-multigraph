@@ -4,19 +4,26 @@
 describe("DatatipsVariable parsing", function () {
     "use strict";
 
-    var DatatipsVariable = window.multigraph.core.DatatipsVariable,
+    var DatatipsVariable = require('../../src/core/datatips_variable.js'),
         xmlString,
         $xml,
         variable,
         formatString = "number";
 
+    var $, jqw = require('../node_jquery_helper.js').createJQuery();
+    beforeEach(function() { $ = jqw.$; });
+
+    var JQueryXMLParser;
     beforeEach(function () {
-        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
+        JQueryXMLParser = require('../../src/parser/jquery_xml_parser.js')($);
+    });
+
+    beforeEach(function () {
         xmlString = ''
             + '<variable'
             +     ' format="' + formatString + '"'
             +     '/>',
-        $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+        $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
         variable = DatatipsVariable.parseXML($xml);
     });
 

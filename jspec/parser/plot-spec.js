@@ -4,22 +4,22 @@
 describe("DataPlot parsing", function () {
     "use strict";
 
-    var Plot = window.multigraph.core.Plot,
-        DataPlot = window.multigraph.core.DataPlot,
-        Graph = window.multigraph.core.Graph,
-        Axis = window.multigraph.core.Axis,
-        Data = window.multigraph.core.Data,
-        ArrayData = window.multigraph.core.ArrayData,
-        Datatips = window.multigraph.core.Datatips,
-        DatatipsVariable = window.multigraph.core.DatatipsVariable,
-        DataVariable = window.multigraph.core.DataVariable,
-        Filter = window.multigraph.core.Filter,
-        FilterOption = window.multigraph.core.FilterOption,
-        PlotLegend = window.multigraph.core.PlotLegend,
-        Renderer = window.multigraph.core.Renderer,
-        RendererOption = window.multigraph.core.Renderer.Option,
-        Text = window.multigraph.core.Text,
-        RGBColor = window.multigraph.math.RGBColor,
+    var Plot = require('../../src/core/plot.js'),
+        DataPlot = require('../../src/core/data_plot.js'),
+        Graph = require('../../src/core/graph.js'),
+        Axis = require('../../src/core/axis.js'),
+        Data = require('../../src/core/data.js'),
+        ArrayData = require('../../src/core/array_data.js'),
+        Datatips = require('../../src/core/datatips.js'),
+        DatatipsVariable = require('../../src/core/datatips_variable.js'),
+        DataVariable = require('../../src/core/data_variable.js'),
+        Filter = require('../../src/core/filter.js'),
+        FilterOption = require('../../src/core/filter_option.js'),
+        PlotLegend = require('../../src/core/plot_legend.js'),
+        Renderer = require('../../src/core/renderer.js'),
+        RendererOption = require('../../src/core/renderer.js').Option,
+        Text = require('../../src/core/text.js'),
+        RGBColor = require('../../src/math/rgb_color.js'),
         xmlString,
         $xml,
         plot,
@@ -30,8 +30,12 @@ describe("DataPlot parsing", function () {
         variable2,
         variable3;
 
+    var $, jqw = require('../node_jquery_helper.js').createJQuery();
+    beforeEach(function() { $ = jqw.$; });
+
+    var JQueryXMLParser;
     beforeEach(function () {
-        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
+        JQueryXMLParser = require('../../src/parser/jquery_xml_parser.js')($);
     });
 
     describe("Axis parsing", function () {
@@ -55,7 +59,7 @@ describe("DataPlot parsing", function () {
                 +       ' ref="' + verticalaxisIdString + '"'
                 +       '/>'
                 + '</plot>';
-            $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+            $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
             plot = Plot.parseXML($xml, graph);
 
             expect(plot).not.toBeUndefined();
@@ -68,7 +72,7 @@ describe("DataPlot parsing", function () {
 
         it("should throw an error if an axis with the ref's id is not in the graph", function () {
             xmlString = '<plot><horizontalaxis ref="x2"/><verticalaxis ref="y"/></plot>';
-            $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+            $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
             expect( function () {
                 Plot.parseXML($xml, graph);
             }).toThrow(new Error("Plot Horizontal Axis Error: The graph does not contain an axis with an id of 'x2'"));
@@ -110,7 +114,7 @@ describe("DataPlot parsing", function () {
                 +         '/>'
                 +     '</verticalaxis>'
                 + '</plot>';
-            $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+            $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
             plot = Plot.parseXML($xml, graph);
             expect(plot).not.toBeUndefined();
             expect(plot instanceof DataPlot).toBe(true);
@@ -140,7 +144,7 @@ describe("DataPlot parsing", function () {
                 +         '/>'
                 +     '</verticalaxis>'
                 + '</plot>';
-            $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+            $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
             expect( function () {
                 Plot.parseXML($xml, graph);
             }).toThrow(new Error("Plot Variable Error: No Data tag contains a variable with an id of '" + missingVariableIdString + "'"));
@@ -160,7 +164,7 @@ describe("DataPlot parsing", function () {
                 +       ' label="' + labelString + '"'
                 +       '/>'
                 + '</plot>';
-            $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+            $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
             plot = Plot.parseXML($xml);
             expect(plot).not.toBeUndefined();
             expect(plot instanceof DataPlot).toBe(true);
@@ -185,7 +189,7 @@ describe("DataPlot parsing", function () {
                 +       ' type="' + rendererTypeString + '"'
                 +       '/>'
                 + '</plot>';
-            $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+            $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
             plot = Plot.parseXML($xml);
             expect(plot).not.toBeUndefined();
             expect(plot instanceof DataPlot).toBe(true);
@@ -213,7 +217,7 @@ describe("DataPlot parsing", function () {
                 +         '/>'
                 +   '</renderer>'
                 + '</plot>';
-            $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+            $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
             plot = Plot.parseXML($xml);
             expect(plot).not.toBeUndefined();
             expect(plot instanceof DataPlot).toBe(true);
@@ -241,7 +245,7 @@ describe("DataPlot parsing", function () {
                 +       ' type="' + typeString + '"'
                 +       '/>'
                 + '</plot>';
-            $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+            $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
             plot = Plot.parseXML($xml);
             expect(plot).not.toBeUndefined();
             expect(plot instanceof DataPlot).toBe(true);
@@ -261,7 +265,7 @@ describe("DataPlot parsing", function () {
                 +         '/>'
                 +   '</filter>'
                 + '</plot>';
-            $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+            $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
             plot = Plot.parseXML($xml);
             expect(plot).not.toBeUndefined();
             expect(plot instanceof DataPlot).toBe(true);
@@ -296,7 +300,7 @@ describe("DataPlot parsing", function () {
                 +       ' pad="' + padString + '"'
                 +       '/>'
                 + '</plot>';
-            $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+            $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
             plot = Plot.parseXML($xml);
             expect(plot).not.toBeUndefined();
             expect(plot instanceof DataPlot).toBe(true);
@@ -331,7 +335,7 @@ describe("DataPlot parsing", function () {
                 +         '/>'
                 +   '</datatips>'
                 + '</plot>';
-            $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+            $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
             plot = Plot.parseXML($xml);
             expect(plot).not.toBeUndefined();
             expect(plot instanceof DataPlot).toBe(true);
@@ -428,7 +432,7 @@ describe("DataPlot parsing", function () {
                 +       ' pad="1"'
                 +       '/>'
                 + '</plot>';
-            $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+            $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
             plot = Plot.parseXML($xml, graph);
         });
 

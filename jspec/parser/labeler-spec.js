@@ -4,12 +4,12 @@
 describe("Axis Label parsing", function () {
     "use strict";
 
-    var Labeler = window.multigraph.core.Labeler,
-        Axis = window.multigraph.core.Axis,
-        DataFormatter = window.multigraph.core.DataFormatter,
-        DataMeasure = window.multigraph.core.DataMeasure,
-        DataValue = window.multigraph.core.DataValue,
-        Point = window.multigraph.math.Point,
+    var Labeler = require('../../src/core/labeler.js'),
+        Axis = require('../../src/core/axis.js'),
+        DataFormatter = require('../../src/core/data_formatter.js'),
+        DataMeasure = require('../../src/core/data_measure.js'),
+        DataValue = require('../../src/core/data_value.js'),
+        Point = require('../../src/math/point.js'),
         xmlString,
         $xml,
         labeler,
@@ -22,8 +22,15 @@ describe("Axis Label parsing", function () {
         densityfactorString = "0.9",
         axisType = DataValue.NUMBER;
 
+    var $, jqw = require('../node_jquery_helper.js').createJQuery();
+    beforeEach(function() { $ = jqw.$; });
+
+    var JQueryXMLParser;
     beforeEach(function () {
-        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
+        JQueryXMLParser = require('../../src/parser/jquery_xml_parser.js')($);
+    });
+
+    beforeEach(function () {
         xmlString = ''
             + '<label'
             +    ' start="' + startString + '"'
@@ -34,7 +41,7 @@ describe("Axis Label parsing", function () {
             +    ' spacing="' + spacingString + '"'
             +    ' densityfactor="' + densityfactorString + '"'
             +    '/>';
-        $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+        $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
         labeler = Labeler.parseXML($xml, (new Axis(Axis.HORIZONTAL)).type(axisType));
     });
 

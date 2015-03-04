@@ -22,8 +22,7 @@ var Axis = require('./axis.js'),
  */
 var utilityFunctions = require('../util/utilityFunctions.js'),
     defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
-    attributes = utilityFunctions.getKeys(defaultValues),
-    Multigraph = require('./multigraph.js');
+    attributes = utilityFunctions.getKeys(defaultValues);
 
 var Graph = new Model("Graph", function () {
     /**
@@ -149,7 +148,11 @@ var Graph = new Model("Graph", function () {
      * @author mbp
      */
     this.hasA("multigraph").which.validatesWith(function (val) {
-        return val instanceof Multigraph;
+        //avoid using instanceof, so we don't have to require('multigraph.js') above!!!
+        //return val instanceof Multigraph;
+        //Just check for busySpinnerLevel function, since that's the part of the
+        //multigraph that we use (duck typing).
+        return (typeof(val.busySpinnerLevel) == "function");
     });
 
     this.hasA("x0").which.isA("number");

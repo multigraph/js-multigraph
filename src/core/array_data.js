@@ -85,6 +85,7 @@ var ArrayData = Model(function () {
      * @author jrfrimme
      */
     ArrayData.getArrayDataIterator = function (arrayData, columnIds, min, max, buffer) {
+
         var i, j,
             firstIndex, lastIndex,
             currentIndex,

@@ -4,8 +4,8 @@
 describe("Axis Pan parsing", function () {
     "use strict";
 
-    var Pan = window.multigraph.core.Pan,
-        DataValue = window.multigraph.core.DataValue,
+    var Pan = require('../../src/core/pan.js'),
+        DataValue = require('../../src/core/data_value.js'),
         xmlString,
         $xml,
         pan,
@@ -15,15 +15,22 @@ describe("Axis Pan parsing", function () {
         maxString = "5",
         type = "number";
 
+    var $, jqw = require('../node_jquery_helper.js').createJQuery();
+    beforeEach(function() { $ = jqw.$; });
+
+    var JQueryXMLParser;
     beforeEach(function () {
-        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
+        JQueryXMLParser = require('../../src/parser/jquery_xml_parser.js')($);
+    });
+
+    beforeEach(function () {
         xmlString = ''
             + '<pan'
             +    ' allowed="' + allowedString + '"'
             +    ' min="' + minString + '"'
             +    ' max="' + maxString + '"'
             +    '/>';
-        $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+        $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
         pan = Pan.parseXML($xml, type);
     });
 

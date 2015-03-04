@@ -44,8 +44,7 @@ module.exports = function($) {
 
 
     Graph.parseXML = function (xml, multigraph, messageHandler) {
-        var core  = ns.core,
-            graph = new Graph(),
+        var graph = new Graph(),
             Axis  = require('../core/axis.js'),
             Window = require('../core/window.js'),
             Legend = require('../core/legend.js'),
@@ -54,7 +53,7 @@ module.exports = function($) {
             Title = require('../core/title.js'),
             Data = require('../core/data.js'),
             Plot = require('../core/plot.js'),
-            utilityFunctions = require('../util/utiltityFunctions.js'),
+            utilityFunctions = require('../util/utilityFunctions.js'),
             defaults = utilityFunctions.getDefaultValuesFromXSD(),
             child;
 

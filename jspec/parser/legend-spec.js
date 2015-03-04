@@ -4,10 +4,10 @@
 describe("Legend parsing", function () {
     "use strict";
 
-    var Legend = window.multigraph.core.Legend,
-        Icon = window.multigraph.core.Icon,
-        Point = window.multigraph.math.Point,
-        RGBColor = window.multigraph.math.RGBColor,
+    var Legend = require('../../src/core/legend.js'),
+        Icon = require('../../src/core/icon.js'),
+        Point = require('../../src/math/point.js'),
+        RGBColor = require('../../src/math/rgb_color.js'),
         xmlString,
         colorString = "0x56839c",
         bordercolorString = "0x941394",
@@ -25,8 +25,15 @@ describe("Legend parsing", function () {
         $xml,
         legend;
 
+    var $, jqw = require('../node_jquery_helper.js').createJQuery();
+    beforeEach(function() { $ = jqw.$; });
+
+    var JQueryXMLParser;
     beforeEach(function () {
-        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
+        JQueryXMLParser = require('../../src/parser/jquery_xml_parser.js')($);
+    });
+
+    beforeEach(function () {
         xmlString = ''
             + '<legend'
             +     ' color="' + colorString + '"'
@@ -43,7 +50,7 @@ describe("Legend parsing", function () {
             +     ' cornerradius="' + cornerradiusString + '"'
             +     ' padding="' + paddingString + '"'
             +     '/>';
-        $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+        $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
         legend = Legend.parseXML($xml);
     });
 
@@ -131,7 +138,7 @@ describe("Legend parsing", function () {
                 +         ' border="' + borderString + '"'
                 +     '/>'
                 + '</legend>';
-            $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+            $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
             legend = Legend.parseXML($xml);
         });
 

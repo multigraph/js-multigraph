@@ -4,23 +4,30 @@
 describe("PlotLegend parsing", function () {
     "use strict";
 
-    var PlotLegend = window.multigraph.core.PlotLegend,
-        DataPlot = window.multigraph.core.DataPlot,
-        Text = window.multigraph.core.Text,
+    var PlotLegend = require('../../src/core/plot_legend.js'),
+        DataPlot = require('../../src/core/data_plot.js'),
+        Text = require('../../src/core/text.js'),
         xmlString,
         $xml,
         legend,
         visibleBool = true,
         labelString = "curly";
 
+    var $, jqw = require('../node_jquery_helper.js').createJQuery();
+    beforeEach(function() { $ = jqw.$; });
+
+    var JQueryXMLParser;
     beforeEach(function () {
-        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
+        JQueryXMLParser = require('../../src/parser/jquery_xml_parser.js')($);
+    });
+
+    beforeEach(function () {
         xmlString = ''
             + '<legend'
             +     ' visible="' + visibleBool + '"'
             +     ' label="' + labelString + '"'
             +     '/>';
-        $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+        $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
         legend = PlotLegend.parseXML($xml, new DataPlot());
     });
 

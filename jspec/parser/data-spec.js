@@ -29,7 +29,7 @@ describe("Data parsing", function () {
     });
 
 
-    xit("Data model should have a parseXML method", function () {
+    it("Data model should have a parseXML method", function () {
         expect(typeof(Data.parseXML)).toBe("function");
     });
 
@@ -66,15 +66,16 @@ describe("Data parsing", function () {
                 + '</data>';
             $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
             data = Data.parseXML($xml);
+            //data.normalize();
         });
 
-        /*!!*/xit("parser should return an ArrayData instance", function () {
+        it("parser should return an ArrayData instance", function () {
             expect(data).not.toBeUndefined();
             expect(data instanceof Data).toBe(true);
             expect(data instanceof ArrayData).toBe(true);
         });
 
-        /*!!*/xit("data columns should be correctly set up", function () {
+        it("data columns should be correctly set up", function () {
             expect(data.columns().size()).toEqual(2);
             expect(data.columns().at(0) instanceof DataVariable).toBe(true);
             expect(data.columns().at(0).id()).toEqual(variable1IdString);
@@ -84,7 +85,7 @@ describe("Data parsing", function () {
             expect(data.columns().at(1).type()).toEqual(DataValue.parseType(variable2TypeString));
         });
 
-        /*!!*/xit("stringArray should be correctly set up", function () {
+        it("stringArray should be correctly set up", function () {
             expect(data.stringArray()).not.toBeUndefined();
             expect(data.stringArray().length).toEqual(valuesString.match(/\n/g).length + 1);
             expect(data.stringArray().join("\n")).toEqual(valuesString);
@@ -92,7 +93,8 @@ describe("Data parsing", function () {
         });
 
         // TODO : move this spec onto core or normalizer
-        /*!!*/xit("getIterator() method should return an interator that behaves correctly", function () {
+        it("getIterator() method should return an interator that behaves correctly", function () {
+            data.normalize();
             var iter = data.getIterator(["x","y"], new NumberValue(3), new NumberValue(5));
             expect(iter).not.toBeUndefined();
             expect(iter.hasNext()).toBe(true);
@@ -150,13 +152,13 @@ describe("Data parsing", function () {
             data.normalize();
         });
         
-        /*!!*/it("parser should return an ArrayData instance", function () {
+        it("parser should return an ArrayData instance", function () {
             expect(data).not.toBeUndefined();
             expect(data instanceof Data).toBe(true);
             expect(data instanceof ArrayData).toBe(true);
         });
         
-        /*!!*/xit("data columns should be correctly set up", function () {
+        it("data columns should be correctly set up", function () {
             expect(data.columns().size()).toEqual(2);
             expect(data.columns().at(0) instanceof DataVariable).toBe(true);
             expect(data.columns().at(0).id()).toEqual('time');
@@ -166,7 +168,7 @@ describe("Data parsing", function () {
             expect(data.columns().at(1).type()).toEqual(DataValue.parseType('number'));
         });
 
-        /*!!*/xit("getIterator() method should return an interator that behaves correctly", function () {
+        it("getIterator() method should return an interator that behaves correctly", function () {
             var iter = data.getIterator(["time","pdsi"], DatetimeValue.parse('190001'), DatetimeValue.parse('190112'));
             expect(iter).not.toBeUndefined();
             expect(iter.hasNext()).toBe(true);
@@ -223,14 +225,14 @@ describe("Data parsing", function () {
             data = Data.parseXML($xml);
         });
 
-        /*!!*/xit("parser should return an PeriodicArrayData instance", function () {
+        it("parser should return an PeriodicArrayData instance", function () {
             expect(data).not.toBeUndefined();
             expect(data instanceof Data).toBe(true);
             expect(data instanceof ArrayData).toBe(true);
             expect(data instanceof PeriodicArrayData).toBe(true);
         });
 
-        /*!!*/xit("the period should be correct", function () {
+        it("the period should be correct", function () {
             expect(data.period().getRealValue()).toEqual(31536000000);
         });
 
@@ -245,7 +247,7 @@ describe("Data parsing", function () {
             variable2IdString = "y",
             variable2ColumnString = "1",
             variable2TypeString = "number",
-            locationString = "../spec/parser/fixtures/test1.csv";
+            locationString = "file://" + __dirname + "/fixtures/test1.csv";
 
         beforeEach(function (done) {
             xmlString = ''
@@ -268,21 +270,23 @@ describe("Data parsing", function () {
                 + '</data>';
             $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
             data = Data.parseXML($xml);
-            data.addListener('dataReady', done);
+            data.addListener('dataReady', function() {
+                done();
+            });
         });
 
-        /*!!*/xit("parser should return a CSVData instance", function () {
+        it("parser should return a CSVData instance", function () {
             expect(data).not.toBeUndefined();
             expect(data instanceof Data).toBe(true);
             expect(data instanceof ArrayData).toBe(true);
             expect(data instanceof CSVData).toBe(true);
         });
 
-        /*!!*/xit("filename attribute should be correctly set", function () {
+        it("filename attribute should be correctly set", function () {
             expect(data.filename()).toEqual(locationString);
         });
 
-        /*!!*/xit("data columns should be correctly set up", function () {
+        it("data columns should be correctly set up", function () {
             expect(data.columns().size()).toEqual(2);
             expect(data.columns().at(0) instanceof DataVariable).toBe(true);
             expect(data.columns().at(0).id()).toEqual(variable1IdString);
@@ -292,7 +296,7 @@ describe("Data parsing", function () {
             expect(data.columns().at(1).type()).toEqual(DataValue.parseType(variable2TypeString));
         });
 
-        /*!!*/xit("getIterator() method should return an interator that behaves correctly", function () {
+        it("getIterator() method should return an interator that behaves correctly", function () {
             var iter = data.getIterator(["x","y"], new NumberValue(10), new NumberValue(12));
             expect(iter).not.toBeUndefined();
             expect(iter.hasNext()).toBe(true);

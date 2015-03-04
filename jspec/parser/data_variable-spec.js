@@ -4,8 +4,8 @@
 describe("Data DataVariable parsing", function () {
     "use strict";
 
-    var DataVariable = window.multigraph.core.DataVariable,
-        DataValue = window.multigraph.core.DataValue,
+    var DataVariable = require('../../src/core/data_variable.js'),
+        DataValue = require('../../src/core/data_value.js'),
         xmlString,
         $xml,
         variable,
@@ -15,8 +15,15 @@ describe("Data DataVariable parsing", function () {
         missingvalueString = "1990",
         missingopString = "eq";
 
+    var $, jqw = require('../node_jquery_helper.js').createJQuery();
+    beforeEach(function() { $ = jqw.$; });
+
+    var JQueryXMLParser;
     beforeEach(function () {
-        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
+        JQueryXMLParser = require('../../src/parser/jquery_xml_parser.js')($);
+    });
+
+    beforeEach(function () {
         xmlString = ''
             + '<variable'
             +     ' id="x"'
@@ -25,7 +32,7 @@ describe("Data DataVariable parsing", function () {
             +     ' missingvalue="1990"'
             +     ' missingop="eq"'
             +     '/>';
-        $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+        $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
         variable = DataVariable.parseXML($xml);
     });
 

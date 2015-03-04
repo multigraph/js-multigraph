@@ -1,10 +1,13 @@
 // This file uses jQuery.  A valid jQuery object must be passed to the
 // function returned by requiring this file.
+var CSVData;
 module.exports = function($) {
+    if (typeof(CSVData) !== "undefined") { return CSVData; }
+
     var Model = require('../../lib/jermaine/src/core/model.js'),
         ArrayData = require('./array_data.js');
 
-    var CSVData = Model(function () {
+    CSVData = Model(function () {
 
         this.isA(ArrayData);
         this.hasA("filename").which.isA("string");

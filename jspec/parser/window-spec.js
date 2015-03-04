@@ -4,9 +4,9 @@
 describe("Window parsing", function () {
     "use strict";
 
-    var Window = window.multigraph.core.Window,
-        Insets = window.multigraph.math.Insets,
-        RGBColor = window.multigraph.math.RGBColor,
+    var Window = require('../../src/core/window.js'),
+        Insets = require('../../src/math/insets.js'),
+        RGBColor = require('../../src/math/rgb_color.js'),
         xmlString,
         $xml,
         windowModel,
@@ -17,8 +17,15 @@ describe("Window parsing", function () {
         heightString = "97",
         borderString = "0";
 
+    var $, jqw = require('../node_jquery_helper.js').createJQuery();
+    beforeEach(function() { $ = jqw.$; });
+
+    var JQueryXMLParser;
     beforeEach(function () {
-        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
+        JQueryXMLParser = require('../../src/parser/jquery_xml_parser.js')($);
+    });
+
+    beforeEach(function () {
         xmlString = ''
             + '<window'
             +     ' margin="' + marginString + '"'
@@ -28,7 +35,7 @@ describe("Window parsing", function () {
             +     ' height="' + heightString + '"'
             +     ' border="' + borderString + '"'
             +     '/>',
-        $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+        $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
         windowModel = Window.parseXML($xml);
     });
 

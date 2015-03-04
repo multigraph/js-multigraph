@@ -4,7 +4,7 @@
 describe("Legend Icon parsing", function () {
     "use strict";
 
-    var Icon = window.multigraph.core.Icon,
+    var Icon = require('../../src/core/icon.js'),
         xmlString,
         $xml,
         icon,
@@ -12,15 +12,22 @@ describe("Legend Icon parsing", function () {
         widthString = "59",
         borderString = "7";
 
+    var $, jqw = require('../node_jquery_helper.js').createJQuery();
+    beforeEach(function() { $ = jqw.$; });
+
+    var JQueryXMLParser;
     beforeEach(function () {
-        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
+        JQueryXMLParser = require('../../src/parser/jquery_xml_parser.js')($);
+    });
+
+    beforeEach(function () {
         xmlString = ''
             + '<icon'
             +    ' height="' + heightString + '"'
             +    ' width="' + widthString + '"'
             +    ' border="' + borderString + '"'
             +    '/>',
-        $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+        $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
         icon = Icon.parseXML($xml);
     });
 

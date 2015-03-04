@@ -12,6 +12,8 @@ module.exports = function($) {
             renderer,
             opt;
 
+        require('../core/renderers/all_renderers.js');
+
         if (xml && pF.getXMLAttr(xml,"type") !== undefined) {
             rendererType = Renderer.Type.parse(pF.getXMLAttr(xml,"type"));
             if (!Renderer.Type.isInstance(rendererType)) {

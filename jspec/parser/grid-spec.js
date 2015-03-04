@@ -4,22 +4,29 @@
 describe("Axis Grid parsing", function () {
     "use strict";
 
-    var Grid = window.multigraph.core.Grid,
-        RGBColor = window.multigraph.math.RGBColor,
+    var Grid = require('../../src/core/grid.js'),
+        RGBColor = require('../../src/math/rgb_color.js'),
         xmlString,
         $xml,
         grid,
         colorString = "0x984545",
         visibleBool = false;
 
+    var $, jqw = require('../node_jquery_helper.js').createJQuery();
+    beforeEach(function() { $ = jqw.$; });
+
+    var JQueryXMLParser;
     beforeEach(function () {
-        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
+        JQueryXMLParser = require('../../src/parser/jquery_xml_parser.js')($);
+    });
+
+    beforeEach(function () {
         xmlString = ''
             + '<grid'
             +     ' color="' + colorString + '"'
             +     ' visible="' + visibleBool + '"'
             +     '/>';
-        $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+        $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
         grid = Grid.parseXML($xml);
     });
 

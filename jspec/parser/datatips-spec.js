@@ -4,9 +4,9 @@
 describe("Plot Datatips parsing", function () {
     "use strict";
 
-    var Datatips = window.multigraph.core.Datatips,
-        DatatipsVariable = window.multigraph.core.DatatipsVariable,
-        RGBColor = window.multigraph.math.RGBColor,
+    var Datatips = require('../../src/core/datatips.js'),
+        DatatipsVariable = require('../../src/core/datatips_variable.js'),
+        RGBColor = require('../../src/math/rgb_color.js'),
         xmlString,
         $xml,
         datatips,
@@ -17,8 +17,15 @@ describe("Plot Datatips parsing", function () {
         borderString = "2",
         padString = "1";
 
+    var $, jqw = require('../node_jquery_helper.js').createJQuery();
+    beforeEach(function() { $ = jqw.$; });
+
+    var JQueryXMLParser;
     beforeEach(function () {
-        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
+        JQueryXMLParser = require('../../src/parser/jquery_xml_parser.js')($);
+    });
+
+    beforeEach(function () {
         xmlString = ''
             + '<datatips'
             +     ' bgcolor="' + bgcolorString + '"'
@@ -28,7 +35,7 @@ describe("Plot Datatips parsing", function () {
             +     ' border="' + borderString + '"'
             +     ' pad="' + padString + '"'
             +     '/>';
-        $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+        $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
         datatips = Datatips.parseXML($xml);
     });
 
@@ -79,7 +86,7 @@ describe("Plot Datatips parsing", function () {
                     +       ' format="' + variable1FormatString + '"'
                     +       '/>'
                     + '</datatips>';
-                $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+                $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
                 datatips = Datatips.parseXML($xml);
             });
 
@@ -121,7 +128,7 @@ describe("Plot Datatips parsing", function () {
                     +       ' format="' + variable3FormatString + '"'
                     +       '/>'
                     + '</datatips>';
-                $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+                $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
                 datatips = Datatips.parseXML($xml);
             });
 

@@ -4,11 +4,11 @@
 describe("Graph Title parsing", function () {
     "use strict";
 
-    var Title = window.multigraph.core.Title,
-        Graph = window.multigraph.core.Graph,
-        Text = window.multigraph.core.Text,
-        Point = window.multigraph.math.Point,
-        RGBColor = window.multigraph.math.RGBColor,
+    var Title = require('../../src/core/title.js'),
+        Graph = require('../../src/core/graph.js'),
+        Text = require('../../src/core/text.js'),
+        Point = require('../../src/math/point.js'),
+        RGBColor = require('../../src/math/rgb_color.js'),
         xmlString,
         $xml,
         title,
@@ -25,8 +25,15 @@ describe("Graph Title parsing", function () {
         positionString ="-1,1",
         text = "Graph Title";
 
+    var $, jqw = require('../node_jquery_helper.js').createJQuery();
+    beforeEach(function() { $ = jqw.$; });
+
+    var JQueryXMLParser;
     beforeEach(function () {
-        window.multigraph.parser.mixin.apply(window.multigraph, "parseXML");
+        JQueryXMLParser = require('../../src/parser/jquery_xml_parser.js')($);
+    });
+
+    beforeEach(function () {
         xmlString = ''
             + '<title'
             +     ' color="' + colorString + '"'
@@ -42,7 +49,7 @@ describe("Graph Title parsing", function () {
             +     '>'
             +       text
             + '</title>',
-        $xml = window.multigraph.parser.stringToJQueryXMLObj(xmlString);
+        $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
         title = Title.parseXML($xml, graph);
     });
 
