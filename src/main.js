@@ -1,3 +1,10 @@
+require('../lib/ajaxthrottle/src/ajaxthrottle.js');
+require('../lib/lightbox/lightbox.js');
+require('../lib/jquery/jquery.mousewheel.js');
+require('../lib/busy-spinner/busy_spinner.js');
+require('../lib/error-display/build/errorDisplay.js');
+require('../lib/requestanimationframe/requestanimationframe.js');
+
 require('./parser/jquery_xml_parser.js')($);
 require('./graphics/canvas/all.js')($, window);
 
