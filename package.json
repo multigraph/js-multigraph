@@ -1,55 +1,57 @@
 {
-    "name": "Multigraph",
-    "version": "4.3.0",
-    "homepage": "multigraph.github.io",
-    "author": "UNC Asheville's NEMAC",
-    "contributors": [
-        {
-            "name": "Mark Phillips",
-            "email": "mphillip@unca.edu"
-        },
-        {
-            "name": "John Frimmel",
-            "email": "jrfrimme@unca.edu"
-        },
-        {
-            "name": "Semmy Purewal",
-            "email": "semmypurewal@gmail.com"
-        },
-        {
-            "name": "Danielle Betke"
-        }
-    ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/multigraph/js-multigraph.git"
+  "name": "Multigraph",
+  "version": "4.3.0",
+  "homepage": "multigraph.github.io",
+  "author": "UNC Asheville's NEMAC",
+  "contributors": [
+    {
+      "name": "Mark Phillips",
+      "email": "mphillip@unca.edu"
     },
-    "bugs": {
-        "url": "https://github.com/multigraph/js-multigraph/issues"
+    {
+      "name": "John Frimmel",
+      "email": "jrfrimme@unca.edu"
     },
-    "license": {
-        "type": "MIT",
-        "url": "https://github.com/multigraph/js-multigraph/blob/master/LICENSE"
+    {
+      "name": "Semmy Purewal",
+      "email": "semmypurewal@gmail.com"
     },
-    "devDependencies": {
-        "grunt": "^0.4.2",
-        "grunt-contrib-concat": "^0.3.0",
-        "grunt-contrib-jshint": "~0.6.3",
-        "grunt-contrib-uglify": "~0.2.2",
-        "grunt-contrib-watch": "~0.6.1",
-        "grunt-contrib-yuidoc": "^0.5.2",
-        "grunt-replace": "^0.7.6",
-        "grunt-run": "^0.2.1",
-        "grunt-script-link-tags": "^0.0.5",
-        "jsdom": "^3.1.2",
-        "xmldom": "^0.1.19",
-        "xmlhttprequest": "^1.7.0"
-    },
-    "dependencies": {
-        "sprintf": "^0.1.5"
-    },
-    "scripts": {
-        "update-graphics-tests" : "node scripts/update-graphics-tests.js",
-        "test" : "jasmine-node spec"
+    {
+      "name": "Danielle Betke"
     }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/multigraph/js-multigraph.git"
+  },
+  "bugs": {
+    "url": "https://github.com/multigraph/js-multigraph/issues"
+  },
+  "license": {
+    "type": "MIT",
+    "url": "https://github.com/multigraph/js-multigraph/blob/master/LICENSE"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.2",
+    "grunt-contrib-concat": "^0.3.0",
+    "grunt-contrib-jshint": "~0.6.3",
+    "grunt-contrib-uglify": "~0.2.2",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-contrib-yuidoc": "^0.5.2",
+    "grunt-replace": "^0.7.6",
+    "grunt-run": "^0.2.1",
+    "grunt-script-link-tags": "^0.0.5",
+    "jsdom": "^3.1.2",
+    "walk": "^2.3.9",
+    "xmldom": "^0.1.19",
+    "xmlhttprequest": "^1.7.0"
+  },
+  "dependencies": {
+    "sprintf": "^0.1.5"
+  },
+  "scripts": {
+    "update-graphics-tests": "node scripts/update-graphics-tests.js",
+    "update-browser-unit-tests": "node scripts/update-browser-unit-tests",
+    "test": "jasmine-node spec"
+  }
 }

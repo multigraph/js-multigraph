@@ -18,7 +18,8 @@ describe("Data parsing", function () {
         $xml,
         data;
 
-    var $, jqw = require('../node_jquery_helper.js').createJQuery();
+    var NodeJQueryHelper = require('../node_jquery_helper.js');
+    var $, jqw = NodeJQueryHelper.createJQuery();
     beforeEach(function() { $ = jqw.$; });
 
     var JQueryXMLParser;
@@ -247,7 +248,8 @@ describe("Data parsing", function () {
             variable2IdString = "y",
             variable2ColumnString = "1",
             variable2TypeString = "number",
-            locationString = "file://" + __dirname + "/fixtures/test1.csv";
+            //locationString = "file://" + __dirname + "/fixtures/test1.csv";
+            locationString = NodeJQueryHelper.localFileURL(__dirname, "/fixtures/test1.csv");
 
         beforeEach(function (done) {
             xmlString = ''

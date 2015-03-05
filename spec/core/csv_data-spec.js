@@ -8,7 +8,8 @@ describe("CSV Data", function () {
         DataValue = require('../../src/core/data_value.js'),
         testArrayData;
 
-    var $, jqw = require('../node_jquery_helper.js').createJQuery();
+    var NodeJQueryHelper = require('../node_jquery_helper.js');
+    var $, jqw = NodeJQueryHelper.createJQuery();
     beforeEach(function() { $ = jqw.$; });
 
     var JQueryXMLParser;
@@ -38,8 +39,8 @@ describe("CSV Data", function () {
 
         it("should do an async request to get the csv file", function (done) {
             var spy = jasmine.createSpy();
-
-            csv = new CSVData([], "file://" + __dirname + "/fixtures/csv_test1.csv");
+            csv = new CSVData([], NodeJQueryHelper.localFileURL(__dirname, "/fixtures/csv_test1.csv"));
+                              //"file://" + __dirname + "/fixtures/csv_test1.csv");
             csv.addListener('dataReady', function() {
                 done();
                 spy();
@@ -55,7 +56,9 @@ describe("CSV Data", function () {
                              new DataVariable("column4", 3, DataValue.NUMBER)
                             ];
 
-            csv = new CSVData(dataVariables, "file://" + __dirname + "/fixtures/csv_test1.csv");
+            //csv = new CSVData(dataVariables, "file://" + __dirname + "/fixtures/csv_test1.csv");
+            csv = new CSVData(dataVariables, NodeJQueryHelper.localFileURL(__dirname, "/fixtures/csv_test1.csv"));
+
         });
 
 
@@ -72,7 +75,8 @@ describe("CSV Data", function () {
                              new DataVariable("column3", 2, DataValue.NUMBER),
                              new DataVariable("column4", 3, DataValue.NUMBER)
                             ];
-            csv = new CSVData(dataVariables, "file://" + __dirname + "/fixtures/csv_test1.csv");
+            //csv = new CSVData(dataVariables, "file://" + __dirname + "/fixtures/csv_test1.csv");
+            csv = new CSVData(dataVariables, NodeJQueryHelper.localFileURL(__dirname, "/fixtures/csv_test1.csv"));
             csv.addListener('dataReady', function() {
                 csv.normalize();
                 done();

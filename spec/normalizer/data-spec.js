@@ -31,7 +31,8 @@ describe("Data Normalizer", function () {
         haxis,
         vaxis;
 
-    var $, jqw = require('../node_jquery_helper.js').createJQuery();
+    var NodeJQueryHelper = require('../node_jquery_helper.js');
+    var $, jqw = NodeJQueryHelper.createJQuery();
     beforeEach(function() { $ = jqw.$; });
 
     beforeEach(function() {
@@ -321,7 +322,8 @@ describe("Data Normalizer", function () {
         //mbp xyzzy
         it("should create a variable for each column that doen't have one up to the last specified column. ie if columns 0, 1, and 3 are specified then a variable should be created for column 2", function () {
             csvdata = new CSVData([variable1, variable4],
-                                  "file://" + __dirname + "/../core/fixtures/csv_test1.csv",
+                                  NodeJQueryHelper.localFileURL(__dirname, "/../core/fixtures/csv_test1.csv"),
+                                  //"file://" + __dirname + "/../core/fixtures/csv_test1.csv",
                                   function (e) { throw e; });
             expect(csvdata.columns().size()).toEqual(2);
             csvdata.normalize();
@@ -331,7 +333,8 @@ describe("Data Normalizer", function () {
         //mbp xyzzy
         it("should create a variable with the correct defaults for each column that doen't have one up to the last specified column", function () {
             csvdata = new CSVData([variable1, variable4],
-                                  "file://" + __dirname + "/../core/fixtures/csv_test1.csv",
+                                  NodeJQueryHelper.localFileURL(__dirname, "/../core/fixtures/csv_test1.csv"),
+                                  //"file://" + __dirname + "/../core/fixtures/csv_test1.csv",
                                   function (e) { throw e; });
             expect(csvdata.columns().at(0)).toBe(variable1);
             expect(csvdata.columns().at(1)).toBe(variable4);
@@ -347,7 +350,8 @@ describe("Data Normalizer", function () {
         //mbp xyzzy
         it("should properly sort the variables into column order", function () {
             csvdata = new CSVData([variable3, variable1, variable4, variable2],
-                                  "file://" + __dirname + "/../core/fixtures/csv_test1.csv",
+                                  NodeJQueryHelper.localFileURL(__dirname, "/../core/fixtures/csv_test1.csv"),
+                                  //"file://" + __dirname + "/../core/fixtures/csv_test1.csv",
                                   function (e) { throw e; });
             expect(csvdata.columns().at(0)).toBe(variable3);
             expect(csvdata.columns().at(1)).toBe(variable1);
