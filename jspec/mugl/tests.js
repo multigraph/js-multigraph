@@ -27,7 +27,24 @@ module.exports = {
         { "mugl": "crn-webservice.xml",          "width": 1000, "height": 400 },
         { "mugl": "acis-webservice.xml",         "width": 1000, "height": 400 },
         { "mugl": "multigraph-logo.xml",         "width": 500,  "height": 500 },
-        // Note: the 'js' property is an array of additional JS files that should be loaded in the browser for a specific MUGL
-        { "mugl": "drought.xml",                 "width": 800,  "height": 500,   "js": ["../../aux/data_adapters/drought.js"] },
-        { "mugl": "drought-csv.xml",             "width": 800,  "height": 500,   "js": ["../../aux/data_adapters/drought.js"] }
+
+        // The 'js' property is an array of additional JS files that should be loaded in the browser for a specific MUGL
+        { "mugl": "drought.xml",                 "js": ["../../aux/data_adapters/drought.js"] },
+        { "mugl": "drought-csv.xml",             "js": ["../../aux/data_adapters/drought.js"] },
+
+        // The "error" property indicates that a MUGL file contains an error; these are for
+        // testing how Multigraph handles/displays MUGL errors:
+        { "mugl" : "error-axis_ref_invalid.xml",               "error" : true },
+        { "mugl" : "error-column_data_error.xml",              "error" : true },
+        { "mugl" : "error-extra_data_columns.xml",             "error" : true },
+        { "mugl" : "error-incorrect_renderer.xml",             "error" : true },
+        { "mugl" : "error-invalid-constant-plot.xml",          "error" : true },
+        { "mugl" : "error-invalid_csv_location.xml",           "error" : true },
+        { "mugl" : "error-missing_data_columns.xml",           "error" : true },
+        { "mugl" : "error-missing_data_value.xml",             "error" : true },
+        { "mugl" : "error-missing_data.xml",                   "error" : true },
+        { "mugl" : "error-multiple_errors.xml",                "error" : true },
+        { "mugl" : "error-weather2.xml",                       "error" : true },
+        { "mugl" : "error-wrong_variable_refs.xml",            "error" : true }
+
     ]};      

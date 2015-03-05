@@ -97,14 +97,23 @@ $(document).ready(function() {
         dataType: "json",
         success: function(tests) {
 
-            tests.forEach(function(test,i) {
-                var size = test_size(test);
-                var $a = $("<a class=test"+i+" href='#'>" + test.mugl + " @ " + size.width + " X " + size.height + "</a>");
-                $a.click(function() {
-                    render(tests, i);
-                });
-                $("<div></div>").append($a).appendTo($("#testlist"));
-            });
+            var good_tests  = tests.filter(function(t) { return !t.error; });
+            var error_tests = tests.filter(function(t) { return t.error; });
+
+            function append_test(offset) {
+                return function append_test(test,i) {
+                    var size = test_size(test);
+                    var $a = $("<a class=test"+(i+offset)+" href='#'>" + test.mugl + " @ " + size.width + " X " + size.height + "</a>");
+                    $a.click(function() {
+                        render(tests, i+offset);
+                    });
+                    $("<div></div>").append($a).appendTo($("#testlist"));
+                };
+            }
+
+            good_tests.forEach(append_test(0));
+            $("#testlist").append("<h3>Error Tests:</h3>");
+            error_tests.forEach(append_test(good_tests.length));
 
             var m = window.location.toString().match(/.*test=([^&#]+)/);
             var initial_test_n = 0;
