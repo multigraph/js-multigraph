@@ -9,7 +9,7 @@ to add the file to the test suite:
 npm run update-graphics-tesst
 ```
 
-To view the test suite, point your browser to the file `jspec/graphics/index.html`.
+To view the test suite, point your browser to the file `spec/graphics/index.html`.
 
 By default, graphics tests are rendered at a size of 800 x 500 pixels. To
 force a different size for a particular MUGL file, make an entry in the file

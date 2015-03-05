@@ -50,6 +50,6 @@
     },
     "scripts": {
         "update-graphics-tests" : "node scripts/update-graphics-tests.js",
-        "test" : "jasmine-node jspec"
+        "test" : "jasmine-node spec"
     }
 }

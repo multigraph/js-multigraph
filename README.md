@@ -33,9 +33,9 @@ npm test
 make
 
 # 8. Add a new MUGL file for testing:
-#    create a new *.xml file in jspec/mugl, optionally edit jspec/mugl/tests.js
+#    create a new *.xml file in spec/mugl, optionally edit spec/mugl/tests.js
 npm run update-graphics-tests
 
 # 9. View the graph test suite:
-#       load the file jspec/graphics/index.html in a browser
+#       load the file spec/graphics/index.html in a browser
 ```

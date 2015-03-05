@@ -1,7 +1,7 @@
 var fs    = require('fs'),
-    tests = require('../jspec/mugl/tests.js').tests;
+    tests = require('../spec/mugl/tests.js').tests;
 
-fs.readdir('jspec/mugl', function(err, files) {
+fs.readdir('spec/mugl', function(err, files) {
     if (err) {
         console.log(err);
         return;
@@ -28,9 +28,9 @@ fs.readdir('jspec/mugl', function(err, files) {
 
     tests = tests.concat(error_tests);
 
-    fs.writeFile('jspec/graphics/tests.json', JSON.stringify(tests), function() {
-        console.log('Wrote jspec/graphics/tests.json.');
-        console.log('Graphics tests updated; view them by browsing to "jspec/graphics/index.html".');
+    fs.writeFile('spec/graphics/tests.json', JSON.stringify(tests), function() {
+        console.log('Wrote pec/graphics/tests.json.');
+        console.log('Graphics tests updated; view them by browsing to "spec/graphics/index.html".');
     });
 
 });
