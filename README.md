@@ -6,7 +6,17 @@ For more information about using Multigraph, see http://www.multigraph.org.
 Development
 ===========
 
-To work on the _nodify_ branch of Multigraph:
+To work on the _nodify_ branch of Multigraph, prepare your computer by
+installing the required dev tools.  These tools are not needed for simply
+viewing Multigraph graphs, but they are needed for working on the Multigraph
+code. (The only thing needed for viewing a graph is a browser).
+
+* npm
+* nodejs
+* sudo npm install -g browserify
+* sudo npm install -g uglify-js
+
+Then, to obtain and work with the code, do the following:
 
 ```bash
 # 1. Clone the repo:
