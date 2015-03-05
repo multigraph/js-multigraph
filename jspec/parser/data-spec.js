@@ -118,7 +118,7 @@ describe("Data parsing", function () {
 
         beforeEach(function() {
             // define an adapter
-            (Multigraph.adapters())['drought'] = {
+            Multigraph.installDataAdapter('drought', {
                 textToStringArray : function (dataVariables, text) {
                     var stringArray = [],
                         stringValuesThisRow,
@@ -133,7 +133,7 @@ describe("Data parsing", function () {
                     }
                     return stringArray;
                 }
-            };
+            });
             xmlString = ''
                 + '<data adapter="drought">'
                 +   '<variables>'

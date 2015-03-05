@@ -39,14 +39,48 @@ $(document).ready(function() {
         $("div#multigraph-container").append("<div>");
         $("div#multigraph-container div").width(size.width);
         $("div#multigraph-container div").height(size.height);
-        $("div#multigraph-container div").multigraph({
-            'mugl' : "../mugl/" + tests[n].mugl
-        });
 
         $("#testlist a").removeClass("selected");
         $("#testlist a.test"+n).addClass("selected");
 
         window.history.replaceState({}, "RDV", "./?test="+tests[n].mugl);
+
+        function create_multigraph() {
+            $("div#multigraph-container div").multigraph({
+                'mugl' : "../mugl/" + tests[n].mugl
+            });
+        }
+
+        var nOutstanding = 0;
+
+        function incrOutstanding() {
+            ++nOutstanding;
+        }
+        function decrOutstanding() {
+            --nOutstanding;
+            if (nOutstanding === 0) {
+                create_multigraph();
+            }
+        }
+
+
+        incrOutstanding();
+        if (tests[n].js) {
+            tests[n].js.forEach(function(js) {
+                incrOutstanding();
+                (function(d, script) {
+                    script = d.createElement('script');
+                    script.type = 'text/javascript';
+                    script.async = true;
+                    script.onload = function(){
+                        decrOutstanding();
+                    };
+                    script.src = js;
+                    d.getElementsByTagName('head')[0].appendChild(script);
+                }(document));
+            });
+        }
+        decrOutstanding();
     }
 
 

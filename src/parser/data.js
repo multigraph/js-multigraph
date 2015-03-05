@@ -27,7 +27,7 @@ module.exports = function($) {
 
             adap = pF.getXMLAttr($(xml),"adapter");
             if (adap !== undefined && adap !== "") {
-                adapter = (Multigraph.adapters())[adap];
+                adapter = Multigraph.getDataAdapter(adap);
                 if (adapter === undefined) {
                     throw new Error("Missing data adapater: " + adap);
                 }

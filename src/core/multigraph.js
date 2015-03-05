@@ -429,11 +429,19 @@ module.exports = function($) {
     };
 
     // define empty object for holding data adpaters
-    Multigraph._adapters = {};
+    Multigraph._dataAdapters = {};
 
-    Multigraph.adapters = function() {
-        return Multigraph._adapters;
+    Multigraph.installDataAdapter = function(name, adapter) {
+        Multigraph._dataAdapters[name] = adapter;
     };
+
+    Multigraph.getDataAdapter = function(name) {
+        return Multigraph._dataAdapters[name];
+    };
+
+    // so that data adpaters, or other JS code interacting with Multigraph,
+    // may have access to sprintf:
+    Multigraph.sprintf = require('sprintf');
 
     return Multigraph;
 };

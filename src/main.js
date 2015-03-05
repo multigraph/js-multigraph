@@ -15,4 +15,4 @@ require('./graphics/canvas/all.js')($, window);
 require('./events/multigraph.js')($, window, undefined);
 
 // leave the Multigraph object available in the `Multigraph` global var:
-window.Multigraph = require('./core/multigraph.js');
+window.Multigraph = require('./core/multigraph.js')($);
