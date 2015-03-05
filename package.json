@@ -49,6 +49,7 @@
         "sprintf": "^0.1.5"
     },
     "scripts": {
-        "update-graphics-tests" : "node scripts/update-graphics-tests.js"
+        "update-graphics-tests" : "node scripts/update-graphics-tests.js",
+        "test" : "jasmine-node jspec"
     }
 }

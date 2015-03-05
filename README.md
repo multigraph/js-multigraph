@@ -1,7 +1,7 @@
 Multigraph
 ==========
 
-For more information about using Multigraph, see multigraph.github.com.
+For more information about using Multigraph, see http://www.multigraph.org.
 
 Development
 ===========
@@ -9,30 +9,33 @@ Development
 To work on the _nodify_ branch of Multigraph:
 
 ```bash
-# 1. clone the repo
+# 1. Clone the repo:
 git clone git@github.com:embeepea/js-multigraph
 
-# 2. cd into it
+# 2. Cd into it:
 cd js-multigraph
 
-# 3. check out the 'nodify' branch
+# 3. Check out the 'nodify' branch:
 git checkout nodify
 
-# 4. initialize git submodules
+# 4. Initialize git submodules:
 git submodule update --init --recursive
 
-# 5. install npm modules
+# 5. Install npm modules:
 npm install
 
-# 6. run the unit tests
-jasmine-node jspec
+# 6. Run the unit tests (note that you might have to
+#       sudo npm install -g jasmine-node
+#    on your computer, if you don't already have _jasmine-node_ installed):
+npm test
 
-# 7. build the browser-runnable JS file
+# 7. Build the browser-runnable JS files (multigraph.js, and multigraph-standalone.js):
 make
 
-# 8. view a working graph using the file you just built:
-#       load 'spec/graphics/canvas/newtest.html' in a browser
-```
+# 8. Add a new MUGL file for testing:
+#    create a new *.xml file in jspec/mugl, optionally edit jspec/mugl/tests.js
+npm run update-graphics-tests
 
-Note that you might have to `sudo npm install -g jasmine-node` on your computer, if you don't
-already have _jasmine-node_ installed.
+# 9. View the graph test suite:
+#       load the file jspec/graphics/index.html in a browser
+```
