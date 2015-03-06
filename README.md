@@ -75,3 +75,8 @@ npm run update-graphics-tests
 ```
 
 to update the tests, then browse `spec/graphics/index.html`.
+
+### Build everything (bundled and minified, with and without JQuery):
+```
+npm run build-all
+```
