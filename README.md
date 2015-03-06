@@ -54,9 +54,6 @@ npm run build
 
 ### Update and run the unit tests in a browser
 
-This uses the bundled multigraph.js file, so be sure to `npm run build` to make
-sure that the tests are run against the latest version of the code.
-
 ```bash
 npm run update-browser-unit-tests
 ```
