@@ -1,4 +1,4 @@
-var Model = require('../../lib/jermaine/src/core/model.js');
+var jermaine = require('../../lib/jermaine/src/jermaine.js');
 
 var Axis = require('./axis.js'),
     Background = require('./background.js'),
@@ -24,7 +24,7 @@ var utilityFunctions = require('../util/utilityFunctions.js'),
     defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
     attributes = utilityFunctions.getKeys(defaultValues);
 
-var Graph = new Model("Graph", function () {
+var Graph = new jermaine.Model("Graph", function () {
     /**
      * Child model which controls the properties of the Graph's Window.
      *

@@ -1,8 +1,8 @@
-var Model = require('../../lib/jermaine/src/core/model.js');
+var jermaine = require('../../lib/jermaine/src/jermaine.js');
 
 var validationFunctions = require('../util/validationFunctions.js');
 
-var RGBColor = new Model("RGBColor", function () {
+var RGBColor = new jermaine.Model("RGBColor", function () {
     
     this.hasA("r").which.validatesWith(function (r) {
         return validationFunctions.validateNumberRange(r, 0, 1.0);

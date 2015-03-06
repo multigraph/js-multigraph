@@ -1,4 +1,4 @@
-var Model = require('../../lib/jermaine/src/core/model.js');
+var jermaine = require('../../lib/jermaine/src/jermaine.js');
 
 var Point = require('../math/point.js');
 
@@ -6,7 +6,7 @@ var utilityFunctions = require('../util/utilityFunctions.js'),
     defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
     attributes = utilityFunctions.getKeys(defaultValues.background.img);
 
-var Img = new Model("Img", function () {
+var Img = new jermaine.Model("Img", function () {
     this.hasA("src").which.isA("string");
     this.hasA("anchor").which.validatesWith(function (anchor) {
         return anchor instanceof Point;

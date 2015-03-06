@@ -1,4 +1,4 @@
-var Model = require('../../lib/jermaine/src/core/model.js');
+var jermaine = require('../../lib/jermaine/src/jermaine.js');
 
 /**
  * Text is a Jermaine model that supports storing and determining metrics of
@@ -9,7 +9,7 @@ var Model = require('../../lib/jermaine/src/core/model.js');
  * @constructor
  * @param string {String} The string stored in the Text model
  */
-var Text = new Model("Text", function () {
+var Text = new jermaine.Model("Text", function () {
     this.isBuiltWith("string");
 
     /**

@@ -1,4 +1,4 @@
-var Model = require('../../lib/jermaine/src/core/model.js');
+var jermaine = require('../../lib/jermaine/src/jermaine.js');
 
 var Insets = require('../math/insets.js'),
     RGBColor = require('../math/rgb_color.js'),
@@ -6,7 +6,7 @@ var Insets = require('../math/insets.js'),
     defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
     attributes = utilityFunctions.getKeys(defaultValues.window);
 
-var Window = new Model("Window", function () {
+var Window = new jermaine.Model("Window", function () {
 
     this.hasA("width").which.isA("integer");
 

@@ -1,6 +1,6 @@
-var Model = require('../../lib/jermaine/src/core/model.js');
+var jermaine = require('../../lib/jermaine/src/jermaine.js');
 
-var Insets = new Model("Insets", function () {
+var Insets = new jermaine.Model("Insets", function () {
     this.hasA("top").which.isA("number");
     this.hasA("left").which.isA("number");
     this.hasA("bottom").which.isA("number");

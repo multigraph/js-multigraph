@@ -1,10 +1,10 @@
-var Model = require('../../lib/jermaine/src/core/model.js');
+var jermaine = require('../../lib/jermaine/src/jermaine.js');
 
 var PlotLegend = require('./plot_legend.js'),
     Axis = require('./axis.js'),
     Renderer = require('./renderer.js');
 
-var Plot = new Model("Plot", function () {
+var Plot = new jermaine.Model("Plot", function () {
     this.hasA("legend").which.validatesWith(function (legend) {
         return legend instanceof PlotLegend;
     });

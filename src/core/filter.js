@@ -1,4 +1,4 @@
-var Model = require('../../lib/jermaine/src/core/model.js');
+var jermaine = require('../../lib/jermaine/src/jermaine.js');
 
 var FilterOption = require('./filter_option.js');
 
@@ -6,7 +6,7 @@ var utilityFunctions = require('../util/utilityFunctions.js'),
     defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
     attributes = utilityFunctions.getKeys(defaultValues.plot.filter);
 
-var Filter = new Model("Filter", function () {
+var Filter = new jermaine.Model("Filter", function () {
     this.hasMany("options").eachOfWhich.validatesWith(function (option) {
         return option instanceof FilterOption;
     });

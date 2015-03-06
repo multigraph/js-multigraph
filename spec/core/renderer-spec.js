@@ -95,8 +95,8 @@ describe("Renderer", function () {
         var TestRenderer;
 
         beforeEach(function () {
-            var Model = require('../../lib/jermaine/src/core/model.js');
-            TestRenderer = new Model("TestRenderer", function () {
+            var jermaine = require('../../lib/jermaine/src/jermaine.js');
+            TestRenderer = new jermaine.Model("TestRenderer", function () {
                 this.isA(Renderer);
             });
         });

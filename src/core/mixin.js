@@ -1,4 +1,4 @@
-var Model = require('../../lib/jermaine/src/core/model.js');
+var jermaine = require('../../lib/jermaine/src/jermaine.js');
 
 /**
  * The Mixin model provides a convenient way for Jermaine
@@ -30,7 +30,7 @@ var Model = require('../../lib/jermaine/src/core/model.js');
  * @for Mixin
  * @author mbp
  */
-var Mixin = new Model("Mixin", function () {
+var Mixin = new jermaine.Model("Mixin", function () {
 
     /**
      * The internal list of functions to be applied.

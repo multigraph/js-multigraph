@@ -1,4 +1,4 @@
-var Model = require('../../lib/jermaine/src/core/model.js');
+var jermaine = require('../../lib/jermaine/src/jermaine.js');
 
 /**
  * EventEmitter is a Jermaine model that supports basic event emitting /
@@ -82,7 +82,7 @@ var Model = require('../../lib/jermaine/src/core/model.js');
  * @for EventEmitter
  * @constructor
  * @example
- *     var Person = new Model(function() {
+ *     var Person = new jermaine.Model(function() {
  *         this.isA(EventEmitter);
  *         this.hasA("name").which.isA("string");
  *         this.respondsTo("say", function(something) {
@@ -110,7 +110,7 @@ var Model = require('../../lib/jermaine/src/core/model.js');
  *         Mark said Alright
  *         Mark said Goodbye
  */
-var EventEmitter = new Model(function () {
+var EventEmitter = new jermaine.Model(function () {
     // listeners is a plain old JS object whose keys are events
     // types (strings); the value associated with each key is the
     // list of registered listener functions for that event type.

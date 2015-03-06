@@ -1,4 +1,4 @@
-var Model = require('../../../lib/jermaine/src/core/model.js');
+var jermaine = require('../../../lib/jermaine/src/jermaine.js');
 
 // The Band renderer is a 2-variable renderer which fills the region
 // between two data lines with a solid color, and draws a line segment
@@ -67,7 +67,7 @@ var Model = require('../../../lib/jermaine/src/core/model.js');
 var Renderer = require('../renderer.js'),
     RGBColor = require('../../math/rgb_color.js');
 
-var BandRenderer = new Model("BandRenderer", function () {
+var BandRenderer = new jermaine.Model("BandRenderer", function () {
     this.isA(Renderer);
     this.hasA("numberOfVariables").which.defaultsTo(3);
 });

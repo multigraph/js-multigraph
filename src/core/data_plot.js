@@ -1,4 +1,4 @@
-var Model = require('../../lib/jermaine/src/core/model.js');
+var jermaine = require('../../lib/jermaine/src/jermaine.js');
 
 var Plot = require('./plot.js'),
     DataVariable = require('./data_variable.js'),
@@ -9,7 +9,7 @@ var Plot = require('./plot.js'),
     defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
     attributes = utilityFunctions.getKeys(defaultValues.plot);
 
-var DataPlot = new Model("DataPlot", function () {
+var DataPlot = new jermaine.Model("DataPlot", function () {
     this.isA(Plot);
     this.hasMany("variable").eachOfWhich.validateWith(function (variable) {
         return variable instanceof DataVariable || variable === null;

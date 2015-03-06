@@ -1,6 +1,6 @@
-var Model = require('../../lib/jermaine/src/core/model.js');
+var jermaine = require('../../lib/jermaine/src/jermaine.js');
 
-var Point = new Model("Point", function () {
+var Point = new jermaine.Model("Point", function () {
     this.hasA("x").which.isA("number");
     this.hasA("y").which.isA("number");
     this.isBuiltWith("x", "y");

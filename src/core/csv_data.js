@@ -4,10 +4,10 @@ var CSVData;
 module.exports = function($) {
     if (typeof(CSVData) !== "undefined") { return CSVData; }
 
-    var Model = require('../../lib/jermaine/src/core/model.js'),
+    var jermaine = require('../../lib/jermaine/src/jermaine.js'),
         ArrayData = require('./array_data.js');
 
-    CSVData = Model(function () {
+    CSVData = new jermaine.Model(function () {
 
         this.isA(ArrayData);
         this.hasA("filename").which.isA("string");

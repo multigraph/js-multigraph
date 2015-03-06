@@ -1,4 +1,4 @@
-var Model = require('../../lib/jermaine/src/core/model.js');
+var jermaine = require('../../lib/jermaine/src/jermaine.js');
 
 var Point = require('../math/point.js'),
     RGBColor = require('../math/rgb_color.js'),
@@ -23,7 +23,7 @@ var Point = require('../math/point.js'),
  * @constructor
  * @requires Point,RGBColor,Plot,Icon
  */
-var Legend = new Model("Legend", function () {
+var Legend = new jermaine.Model("Legend", function () {
     /**
      * The value which determines if the legend will be rendered; a value of `true` means the Legend will
      * be drawn while `false` means that it will not.

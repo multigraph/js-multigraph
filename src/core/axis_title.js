@@ -1,4 +1,4 @@
-var Model = require('../../lib/jermaine/src/core/model.js');
+var jermaine = require('../../lib/jermaine/src/jermaine.js');
 
 var utilityFunctions = require('../util/utilityFunctions.js'),
     defaultValues    = utilityFunctions.getDefaultValuesFromXSD(),
@@ -13,7 +13,7 @@ var utilityFunctions = require('../util/utilityFunctions.js'),
  * @constructor
  * @param {Axis} axis
  */
-var AxisTitle = new Model("AxisTitle", function () {
+var AxisTitle = new jermaine.Model("AxisTitle", function () {
     
     /**
      * Pointer to the Title's parent Axis jermiane model.

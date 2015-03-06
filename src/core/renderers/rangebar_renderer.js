@@ -1,4 +1,4 @@
-var Model = require('../../../lib/jermaine/src/core/model.js');
+var jermaine = require('../../../lib/jermaine/src/jermaine.js');
 
 // The RangeBar renderer is a 2-variable renderer which draws a
 // vertical bar between two data values, and optionally outlines
@@ -58,7 +58,7 @@ var Renderer = require('../renderer.js'),
     defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
     attributes = utilityFunctions.getKeys(defaultValues.plot.renderer);
 
-var RangeBarRenderer = new Model("RangeBarRenderer", function () {
+var RangeBarRenderer = new jermaine.Model("RangeBarRenderer", function () {
     this.isA(Renderer);
     this.hasA("numberOfVariables").which.defaultsTo(3);
 });

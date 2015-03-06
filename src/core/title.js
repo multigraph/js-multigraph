@@ -1,4 +1,4 @@
-var Model = require('../../lib/jermaine/src/core/model.js');
+var jermaine = require('../../lib/jermaine/src/jermaine.js');
 
 var Text = require('./text.js'),
     RGBColor = require('../math/rgb_color.js'),
@@ -17,7 +17,7 @@ var Text = require('./text.js'),
  * @param {Graph} graph
  * @author jrfrimme
  */
-var Title = new Model("GraphTitle", function () {
+var Title = new jermaine.Model("GraphTitle", function () {
     /**
      * Pointer to the Title's parent Graph Jermaine model.
      *

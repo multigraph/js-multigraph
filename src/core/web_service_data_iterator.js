@@ -1,4 +1,4 @@
-var Model = require('../../lib/jermaine/src/core/model.js');
+var jermaine = require('../../lib/jermaine/src/jermaine.js');
 
 /**
  * An iterator for stepping through data values stored in a linked list of
@@ -25,7 +25,7 @@ var Model = require('../../lib/jermaine/src/core/model.js');
 var WebServiceDataCacheNode = require('./web_service_data_cache_node.js'),
     ValidationFunctions = require('../util/validationFunctions.js');
 
-var WebServiceDataIterator = Model(function () {
+var WebServiceDataIterator = new jermaine.Model(function () {
     var WebServiceDataIterator = this;
 
     this.hasA("currentNode").which.validatesWith(function(x) {

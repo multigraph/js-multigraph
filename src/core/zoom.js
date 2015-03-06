@@ -1,4 +1,4 @@
-var Model = require('../../lib/jermaine/src/core/model.js');
+var jermaine = require('../../lib/jermaine/src/jermaine.js');
 
 var DataMeasure = require('./data_measure.js'),
     DataValue = require('./data_value.js');
@@ -7,7 +7,7 @@ var utilityFunctions = require('../util/utilityFunctions.js'),
     defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
     attributes = utilityFunctions.getKeys(defaultValues.horizontalaxis.zoom);
 
-var Zoom = new Model("Zoom", function () {
+var Zoom = new jermaine.Model("Zoom", function () {
 
     this.hasA("allowed").which.isA("boolean");
     this.hasA("min").which.validatesWith(function (min) {

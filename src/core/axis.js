@@ -1,4 +1,5 @@
-var Model = require('../../lib/jermaine/src/core/model.js');
+//var jermaine = require('../../lib/jermaine/src/jermaine.js');
+var jermaine = require('../../lib/jermaine/src/jermaine.js');
 
 var utilityFunctions = require('../util/utilityFunctions.js'),
     defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
@@ -22,7 +23,7 @@ var utilityFunctions = require('../util/utilityFunctions.js'),
 
     Orientation = new Enum("AxisOrientation");
 
-var Axis = new Model("Axis", function () {
+var Axis = new jermaine.Model("Axis", function () {
 
     this.isA(EventEmitter);
 

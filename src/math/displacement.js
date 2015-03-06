@@ -1,4 +1,4 @@
-var Model = require('../../lib/jermaine/src/core/model.js'),
+var jermaine = require('../../lib/jermaine/src/jermaine.js'),
     validationFunctions = require('../util/validationFunctions.js');
 
 var Displacement = {};
@@ -49,7 +49,7 @@ var Displacement = {};
  * @param {Number} a
  * @param {Integer} b (OPTIONAL)
  */
-Displacement = new Model("Displacement", function () {
+Displacement = new jermaine.Model("Displacement", function () {
     
     this.hasA("a").which.validatesWith(function (a) {
         return validationFunctions.validateNumberRange(a, -1.0, 1.0);

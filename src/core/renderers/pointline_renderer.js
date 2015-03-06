@@ -1,4 +1,4 @@
-var Model = require('../../../lib/jermaine/src/core/model.js');
+var jermaine = require('../../../lib/jermaine/src/jermaine.js');
 
 // The Pointline renderer is a 1-variable renderer which draws a shape
 // at each non-missing data point, and connects consecutive
@@ -68,7 +68,7 @@ var Renderer = require('../renderer.js'),
     defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
     attributes = utilityFunctions.getKeys(defaultValues.plot.renderer);
 
-var PointlineRenderer = new Model("PointlineRenderer", function () {
+var PointlineRenderer = new jermaine.Model("PointlineRenderer", function () {
     this.isA(Renderer);
     this.hasA("numberOfVariables").which.defaultsTo(2);
     //
@@ -124,7 +124,7 @@ PointlineRenderer.serializeShape = function (shape) {
     return shape;
 };
 
-PointlineRenderer.ShapeOption = new Model("PointlineRenderer.ShapeOption", function () {
+PointlineRenderer.ShapeOption = new jermaine.Model("PointlineRenderer.ShapeOption", function () {
     this.isA(Renderer.Option);
     this.hasA("value").which.validatesWith(PointlineRenderer.isShape);
     this.isBuiltWith("value");

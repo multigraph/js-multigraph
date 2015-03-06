@@ -1,4 +1,4 @@
-var Model = require('../../lib/jermaine/src/core/model.js');
+var jermaine = require('../../lib/jermaine/src/jermaine.js');
 
 var DataValue = require('./data_value.js'),
     NumberMeasure = require('./number_measure.js'),

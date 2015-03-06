@@ -1,4 +1,4 @@
-var Model = require('../../lib/jermaine/src/core/model.js');
+var jermaine = require('../../lib/jermaine/src/jermaine.js');
 
 var DatatipsVariable = require('./datatips_variable.js'),
     utilityFunctions = require('../util/utilityFunctions.js'),
@@ -6,7 +6,7 @@ var DatatipsVariable = require('./datatips_variable.js'),
     defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
     attributes = utilityFunctions.getKeys(defaultValues.plot.datatips);
 
-var Datatips = new Model("Datatips", function () {
+var Datatips = new jermaine.Model("Datatips", function () {
     this.hasMany("variables").eachOfWhich.validateWith(function (variable) {
         return variable instanceof DatatipsVariable;
     });

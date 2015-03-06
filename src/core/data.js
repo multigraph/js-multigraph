@@ -1,10 +1,10 @@
-var Model = require('../../lib/jermaine/src/core/model.js');
+var jermaine = require('../../lib/jermaine/src/jermaine.js');
 
 var EventEmitter = require('./event_emitter.js'),
     DataValue = require('../core/data_value.js'),
     DataVariable = require('./data_variable.js');
 
-var Data = new Model(function () {
+var Data = new jermaine.Model(function () {
     
     this.isA(EventEmitter);
 

@@ -1,4 +1,4 @@
-var Model = require('../../lib/jermaine/src/core/model.js');
+var jermaine = require('../../lib/jermaine/src/jermaine.js');
 
 /**
  * A WebServiceDataCacheNode represents a single node in the
@@ -41,7 +41,7 @@ var Model = require('../../lib/jermaine/src/core/model.js');
 var DataValue = require('./data_value.js'),
     ArrayData = require('./array_data.js');
 
-var WebServiceDataCacheNode = Model(function () {
+var WebServiceDataCacheNode = new jermaine.Model(function () {
 
     /**
      * The actual data for this node.

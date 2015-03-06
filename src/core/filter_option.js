@@ -1,10 +1,10 @@
-var Model = require('../../lib/jermaine/src/core/model.js');
+var jermaine = require('../../lib/jermaine/src/jermaine.js');
 
 var utilityFunctions = require('../util/utilityFunctions.js'),
     defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
     attributes = utilityFunctions.getKeys(defaultValues.plot.filter.option);
 
-var FilterOption = new Model("FilterOption", function () {
+var FilterOption = new jermaine.Model("FilterOption", function () {
     this.hasA("name").which.validatesWith(function (name) {
         return typeof(name) === "string";
     });

@@ -4,7 +4,7 @@ var WebServiceData;
 module.exports = function($) {
     if (typeof(WebServiceData) !== "undefined") { return WebServiceData; }
 
-    var Model = require('../../lib/jermaine/src/core/model.js');
+    var jermaine = require('../../lib/jermaine/src/jermaine.js');
 
     var Data = require('./data.js'),
         DataValue = require('./data_value.js'),
@@ -13,7 +13,7 @@ module.exports = function($) {
         WebServiceDataCacheNode = require('./web_service_data_cache_node.js'),
         WebServiceDataIterator = require('./web_service_data_iterator.js');
 
-    WebServiceData = Model(function () {
+    WebServiceData = new jermaine.Model(function () {
         this.isA(Data);
         this.hasA("serviceaddress").which.isA("string");
         this.hasA("serviceaddresspattern").which.isA("string");

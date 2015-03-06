@@ -1,7 +1,7 @@
-var Model = require('../../lib/jermaine/src/core/model.js');
+var jermaine = require('../../lib/jermaine/src/jermaine.js');
 
 
-var ConstantPlot = new Model("ConstantPlot", function () {
+var ConstantPlot = new jermaine.Model("ConstantPlot", function () {
     var utilityFunctions = require('../util/utilityFunctions.js'),
         defaultValues    = utilityFunctions.getDefaultValuesFromXSD(),
         attributes       = utilityFunctions.getKeys(defaultValues.plot),

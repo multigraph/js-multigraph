@@ -4,7 +4,7 @@ var Multigraph;
 module.exports = function($) {
     if (typeof(Multigraph) !== "undefined") { return Multigraph; }
 
-    var Model = require('../../lib/jermaine/src/core/model.js');
+    var jermaine = require('../../lib/jermaine/src/jermaine.js');
 
     /**
      * The Multigraph Jermaine model is the root class for the js-multigraph project.
@@ -13,7 +13,7 @@ module.exports = function($) {
      * @for Multigraph
      * @constructor
      */
-    Multigraph = new Model("Multigraph", function () {
+    Multigraph = new jermaine.Model("Multigraph", function () {
 
         /**
          * Jermiane Attr_List of all the graphs in a Multigraph.

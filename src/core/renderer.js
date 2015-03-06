@@ -1,4 +1,4 @@
-var Model = require('../../lib/jermaine/src/core/model.js');
+var jermaine = require('../../lib/jermaine/src/jermaine.js');
 
 var Warning = require('./warning.js'),
     Enum = require('../math/enum.js'),
@@ -9,7 +9,7 @@ var Warning = require('./warning.js'),
     Type = new Enum("RendererType"),
     RGBColor = require('../math/rgb_color.js');
 
-var Renderer = new Model("Renderer", function () {
+var Renderer = new jermaine.Model("Renderer", function () {
     this.hasA("type").which.validatesWith(Type.isInstance);
     this.hasA("plot").which.validatesWith(function (plot) {
         var Plot = require('./plot.js');
@@ -254,7 +254,7 @@ Renderer.declareOptions = function (renderer, OptionsModelName, options) {
             });
         };
 
-    OptionsModel    = Model(OptionsModelName, function () {});
+    OptionsModel    = new jermaine.Model(OptionsModelName, function () {});
     optionsMetadata = {};
     for (i = 0; i < options.length; ++i) {
         declareOption(options[i].name, options[i].type);
@@ -281,14 +281,14 @@ Renderer.declareOptions = function (renderer, OptionsModelName, options) {
 };
 
 
-Renderer.Option = new Model("Renderer.Option", function () {
+Renderer.Option = new jermaine.Model("Renderer.Option", function () {
     var DataValue = require('./data_value.js');
     this.hasA("min").which.validatesWith(DataValue.isInstance);
     this.hasA("max").which.validatesWith(DataValue.isInstance);
 });
 
 
-Renderer.RGBColorOption = new Model("Renderer.RGBColorOption", function () {
+Renderer.RGBColorOption = new jermaine.Model("Renderer.RGBColorOption", function () {
     this.isA(Renderer.Option);
     this.hasA("value").which.validatesWith(function (v) {
         return v instanceof RGBColor || v === null;
@@ -306,7 +306,7 @@ Renderer.RGBColorOption = new Model("Renderer.RGBColorOption", function () {
 
 });
 
-Renderer.NumberOption = new Model("Renderer.NumberOption", function () {
+Renderer.NumberOption = new jermaine.Model("Renderer.NumberOption", function () {
     this.isA(Renderer.Option);
     this.hasA("value").which.isA("number");
     this.isBuiltWith("value");
@@ -321,7 +321,7 @@ Renderer.NumberOption = new Model("Renderer.NumberOption", function () {
     });
 });
 
-Renderer.DataValueOption = new Model("Renderer.DataValueOption", function () {
+Renderer.DataValueOption = new jermaine.Model("Renderer.DataValueOption", function () {
     this.isA(Renderer.Option);
     this.hasA("value").which.validatesWith(function (value) {
         var DataValue = require('./data_value.js');
@@ -336,7 +336,7 @@ Renderer.DataValueOption = new Model("Renderer.DataValueOption", function () {
     });
 });
 
-Renderer.VerticalDataValueOption = new Model("Renderer.DataValueOption", function () {
+Renderer.VerticalDataValueOption = new jermaine.Model("Renderer.DataValueOption", function () {
     this.isA(Renderer.DataValueOption);
     this.isBuiltWith("value");
     this.respondsTo("parseValue", function (string, renderer) {
@@ -346,7 +346,7 @@ Renderer.VerticalDataValueOption = new Model("Renderer.DataValueOption", functio
     
 });
 
-Renderer.HorizontalDataValueOption = new Model("Renderer.DataValueOption", function () {
+Renderer.HorizontalDataValueOption = new jermaine.Model("Renderer.DataValueOption", function () {
     this.isA(Renderer.DataValueOption);
     this.isBuiltWith("value");
     this.respondsTo("parseValue", function (string, renderer) {
@@ -356,7 +356,7 @@ Renderer.HorizontalDataValueOption = new Model("Renderer.DataValueOption", funct
     
 });
 
-Renderer.DataMeasureOption = new Model("Renderer.DataMeasureOption", function () {
+Renderer.DataMeasureOption = new jermaine.Model("Renderer.DataMeasureOption", function () {
     this.isA(Renderer.Option);
     this.hasA("value").which.validatesWith(function (value) {
         var DataMeasure = require('./data_measure.js');
@@ -371,7 +371,7 @@ Renderer.DataMeasureOption = new Model("Renderer.DataMeasureOption", function ()
     });
 });
 
-Renderer.VerticalDataMeasureOption = new Model("Renderer.DataMeasureOption", function () {
+Renderer.VerticalDataMeasureOption = new jermaine.Model("Renderer.DataMeasureOption", function () {
     this.isA(Renderer.DataMeasureOption);
     this.respondsTo("parseValue", function (string, renderer) {
         var DataMeasure = require('./data_measure.js');
@@ -380,7 +380,7 @@ Renderer.VerticalDataMeasureOption = new Model("Renderer.DataMeasureOption", fun
     
 });
 
-Renderer.HorizontalDataMeasureOption = new Model("Renderer.DataMeasureOption", function () {
+Renderer.HorizontalDataMeasureOption = new jermaine.Model("Renderer.DataMeasureOption", function () {
     this.isA(Renderer.DataMeasureOption);
     this.isBuiltWith("value");
     this.respondsTo("parseValue", function (string, renderer) {
