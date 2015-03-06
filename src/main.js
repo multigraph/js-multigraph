@@ -20,6 +20,10 @@ require('./events/multigraph.js')($, window, undefined);
 // window.multigraph object which exposes a bunch of objects/functions from the
 // Multigraph code.
 var Multigraph = require('./core/multigraph.js')($);
+var utilityFunctions = require('./util/utilityFunctions.js');
+var parsingFunctions = require('./util/parsingFunctions.js');
+var validationFunctions = require('./util/validationFunctions.js');
+
 window.multigraph = {
     'core' : {
         'Multigraph':                	Multigraph,
@@ -95,6 +99,22 @@ window.multigraph = {
             'stringToJQueryXMLObj' : (require('./parser/jquery_xml_parser.js')($)).stringToJQueryXMLObj
         }
     },
+
+    'utilityFunctions' : {
+        'getKeys' 					: utilityFunctions.getKeys,
+        'insertDefaults' 			: utilityFunctions.insertDefaults,
+        'getDefaultValuesFromXSD' 	: utilityFunctions.getDefaultValuesFromXSD,
+        
+        'parseAttribute' 			: parsingFunctions.parseAttribute,
+        'parseString' 				: parsingFunctions.parseString,
+        'parseInteger' 				: parsingFunctions.parseInteger,
+        'parseBoolean' 				: parsingFunctions.parseBoolean,
+        'getXMLAttr' 				: parsingFunctions.getXMLAttr,
+        
+        'validateNumberRange' 		: validationFunctions.validateNumberRange,
+        'typeOf' 					: validationFunctions.typeOf
+    },
+
     'jQuery' : $
 };
 window.sprintf = require('sprintf');
