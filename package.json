@@ -50,8 +50,10 @@
     "sprintf": "^0.1.5"
   },
   "scripts": {
-    "update-graphics-tests": "node scripts/update-graphics-tests.js",
-    "update-browser-unit-tests": "node scripts/update-browser-unit-tests",
-    "test": "jasmine-node spec"
+      "build" : "browserify src/main.js -d > multigraph.js",
+      "build-all" : "browserify src/main.js -d > multigraph.js ; browserify src/main-standalone.js -d > multigraph-standalone.js ; uglifyjs < multigraph.js > multigraph-min.js ; uglifyjs < multigraph-standalone.js > multigraph-standalone-min.js",
+      "update-graphics-tests": "node scripts/update-graphics-tests.js",
+      "update-browser-unit-tests": "node scripts/update-browser-unit-tests",
+      "test": "jasmine-node spec"
   }
 }
