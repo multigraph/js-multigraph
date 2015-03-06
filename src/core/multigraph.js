@@ -179,28 +179,28 @@ module.exports = function($) {
 
     });
 
-    //    /**
-    //     * Determines if the browser supports canvas elements.
-    //     *
-    //     * @method browserHasCanvasSupport
-    //     * @private
-    //     * @static
-    //     * @author jrfrimme
-    //     */
-    //    ns.browserHasCanvasSupport = function () {
-    //        return (
-    //                (!!window.HTMLCanvasElement) &&
-    //                (!!window.CanvasRenderingContext2D) &&
-    //                (function (elem) {
-    //                    return !!(elem.getContext && elem.getContext('2d'));
-    //                }(document.createElement('canvas')))
-    //            );
-    //    };
-    //
-    //    ns.browserHasSVGSupport = function () {
-    //        return !!document.createElementNS &&
-    //            !!document.createElementNS('http://www.w3.org/2000/svg', "svg").createSVGRect;
-    //    };
+    /**
+     * Determines if the browser supports canvas elements.
+     *
+     * @method browserHasCanvasSupport
+     * @private
+     * @static
+     * @author jrfrimme
+     */
+    Multigraph.browserHasCanvasSupport = function () {
+        return (
+                (!!window.HTMLCanvasElement) &&
+                (!!window.CanvasRenderingContext2D) &&
+                (function (elem) {
+                    return !!(elem.getContext && elem.getContext('2d'));
+                }(document.createElement('canvas')))
+            );
+    };
+    
+    Multigraph.browserHasSVGSupport = function () {
+        return !!document.createElementNS &&
+            !!document.createElementNS('http://www.w3.org/2000/svg', "svg").createSVGRect;
+    };
 
     /**
      * Creates a Multigraph according to specified options. Returns a

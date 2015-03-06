@@ -90,6 +90,8 @@ window.multigraph = {
     'parser' : {
         'stringToJQueryXMLObj' : require('./parser/jquery_xml_parser.js').stringToJQueryXMLObj
     },
+    'browserHasCanvasSupport' : Multigraph.browserHasCanvasSupport,
+    'browserHasSVGSupport'    : Multigraph.browserHasSVGSupport,
     'jQuery' : $
 };
 window.sprintf = require('sprintf');
