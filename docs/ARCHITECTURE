@@ -1,3 +1,10 @@
+This file contains miscellaneous notes from the early days of the design
+of js-multigraph (2012).  What is written here is not necessarily true 
+or reflected in the current code --- it's just a summary of notes from
+various conversations we had while designing Multigraph.
+
+=========================================================================
+
 EVENT CATCHER
   Registers listeners for basic events; the listeners call the event-to-action translator code below.
 
