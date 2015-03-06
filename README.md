@@ -7,15 +7,17 @@ Development
 ===========
 
 To work on the _nodify_ branch of Multigraph, prepare your computer by
-installing the required dev tools.  These tools are not needed for simply
-viewing Multigraph graphs, but they are needed for working on the Multigraph
-code. (The only thing needed for viewing a graph is a browser).
+installing the required dev tools:
 
 * npm
 * nodejs
 * browserify (`sudo npm install -g browserify`)
 * uglify-js (`sudo npm install -g uglify-js`)
 * jasmine-node (for running the unit tests, `sudo npm install -g uglify-js`)
+
+These tools are not needed for simply viewing Multigraph graphs, but
+they are needed for working on the Multigraph code. (The only thing
+needed for viewing a graph is a browser).
 
 Then, to obtain and work with the code, use the following steps.
 
