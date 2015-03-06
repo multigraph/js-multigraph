@@ -73,7 +73,10 @@ window.multigraph = {
         'WebServiceDataCacheNode':      require('./core/web_service_data_cache_node.js'),
         'WebServiceDataIterator':       require('./core/web_service_data_iterator.js'),
         'Window':                       require('./core/window.js'),
-        'Zoom':                         require('./core/zoom.js')
+        'Zoom':                         require('./core/zoom.js'),
+
+        'browserHasCanvasSupport' : Multigraph.browserHasCanvasSupport,
+        'browserHasSVGSupport'    : Multigraph.browserHasSVGSupport
     },
 
     'create': Multigraph.create,
@@ -90,8 +93,6 @@ window.multigraph = {
     'parser' : {
         'stringToJQueryXMLObj' : require('./parser/jquery_xml_parser.js').stringToJQueryXMLObj
     },
-    'browserHasCanvasSupport' : Multigraph.browserHasCanvasSupport,
-    'browserHasSVGSupport'    : Multigraph.browserHasSVGSupport,
     'jQuery' : $
 };
 window.sprintf = require('sprintf');

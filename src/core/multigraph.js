@@ -188,6 +188,9 @@ module.exports = function($) {
      * @author jrfrimme
      */
     Multigraph.browserHasCanvasSupport = function () {
+        // Warning: this function uses the global variables `window` and `document`
+        // --- it does not rely on these variables being passed in as is the
+        // case with '$' above.
         return (
                 (!!window.HTMLCanvasElement) &&
                 (!!window.CanvasRenderingContext2D) &&
@@ -198,6 +201,9 @@ module.exports = function($) {
     };
     
     Multigraph.browserHasSVGSupport = function () {
+        // Warning: this function uses the global variable `document`
+        // --- it does not rely on this variable being passed in as is the
+        // case with '$' above.
         return !!document.createElementNS &&
             !!document.createElementNS('http://www.w3.org/2000/svg', "svg").createSVGRect;
     };
