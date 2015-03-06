@@ -32,21 +32,10 @@
     "url": "https://github.com/multigraph/js-multigraph/blob/master/LICENSE"
   },
   "devDependencies": {
-    "grunt": "^0.4.2",
-    "grunt-contrib-concat": "^0.3.0",
-    "grunt-contrib-jshint": "~0.6.3",
-    "grunt-contrib-uglify": "~0.2.2",
-    "grunt-contrib-watch": "~0.6.1",
-    "grunt-contrib-yuidoc": "^0.5.2",
-    "grunt-replace": "^0.7.6",
-    "grunt-run": "^0.2.1",
-    "grunt-script-link-tags": "^0.0.5",
     "jsdom": "^3.1.2",
     "walk": "^2.3.9",
     "xmldom": "^0.1.19",
-    "xmlhttprequest": "^1.7.0"
-  },
-  "dependencies": {
+    "xmlhttprequest": "^1.7.0",
     "sprintf": "^0.1.5"
   },
   "scripts": {
