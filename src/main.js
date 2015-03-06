@@ -91,7 +91,9 @@ window.multigraph = {
         'util': 			require('./math/util.js')
     },
     'parser' : {
-        'stringToJQueryXMLObj' : require('./parser/jquery_xml_parser.js').stringToJQueryXMLObj
+        'jquery' : {
+            'stringToJQueryXMLObj' : require('./parser/jquery_xml_parser.js').stringToJQueryXMLObj
+        }
     },
     'jQuery' : $
 };
