@@ -41,8 +41,8 @@
   "scripts": {
       "build" : "browserify src/main.js -d > build/multigraph.js",
       "build-all" : "browserify src/main.js -d > build/multigraph.js ; browserify src/main-standalone.js -d > build/multigraph-standalone.js ; uglifyjs < build/multigraph.js > build/multigraph-min.js ; uglifyjs < build/multigraph-standalone.js > build/multigraph-standalone-min.js",
-      "update-graphics-tests": "node scripts/update-graphics-tests.js",
-      "update-browser-unit-tests": "node scripts/update-browser-unit-tests",
+      "build-tests": "node scripts/build-tests.js",
+      "build-graph-tests": "node scripts/build-graph-tests.js",
       "test": "jasmine-node spec"
   }
 }

@@ -28,9 +28,9 @@ fs.readdir('spec/mugl', function(err, files) {
 
     tests = tests.concat(error_tests);
 
-    fs.writeFile('spec/graphics/tests.json', JSON.stringify(tests), function() {
-        console.log('Wrote pec/graphics/tests.json.');
-        console.log('Graphics tests updated; view them by browsing to "spec/graphics/index.html".');
+    fs.writeFile('spec/graphs/tests.json', JSON.stringify(tests), function() {
+        console.log('Wrote spec/graphs/tests.json.');
+        console.log('Graph test suite updated; view it by browsing to "spec/graphs/index.html".');
     });
 
 });
