@@ -26,6 +26,11 @@ if (typeof(window) != "undefined") {
     NodeJQueryHelper.createJQuery = function() {
         var jQueryWrapper = {};
         beforeEach(function(done){
+            // Found this technique at:
+            //    http://syropia.net/journal/testing-jquery-code-with-jasmine-and-gulp
+            // Other techniques:
+            //    http://rjzaworski.com/2012/07/testing-with-node-jasmine-and-require-js-part-ii/
+            //    http://digitalbush.com/2011/03/29/testing-jquery-plugins-with-node-js-and-jasmine/
             jsdom.env({
                 html: '<html><body></body></html>',
                 scripts: [process.cwd() + '/lib/jquery/jquery.min.js'],
