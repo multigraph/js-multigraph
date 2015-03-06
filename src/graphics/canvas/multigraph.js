@@ -124,7 +124,8 @@ module.exports = function($, window) {
         var deferred;
         
         try {
-            applyMixins(options);
+            //applyMixins(options);
+            require('../../events/all.js')($, window, options.messageHandler.error);
             deferred = $.Deferred();
             // TODO: figure this out!  div size is not available here?  Apparently, at this point in
             // code execution, the browser hasn't laid things out enough for the div to have been
