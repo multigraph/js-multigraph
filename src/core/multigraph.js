@@ -388,7 +388,7 @@ module.exports = function($) {
      * @static
      * @author jrfrimme
      */
-    //    window.multigraph.create = Multigraph.createGraph;
+    Multigraph.create = Multigraph.createGraph;
 
     /**
      * Creates default error and warning functions for multigraph.
