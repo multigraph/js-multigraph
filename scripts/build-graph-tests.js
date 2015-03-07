@@ -26,6 +26,15 @@ fs.readdir('spec/mugl', function(err, files) {
         }
     });
 
+    function cmpTests(a,b) {
+        if (a.mugl < b.mugl) { return -1; }
+        if (a.mugl === b.mugl) { return 0; }
+        return 1;
+    }
+
+    tests.sort(cmpTests);
+    error_tests.sort(cmpTests);
+
     tests = tests.concat(error_tests);
 
     fs.writeFile('spec/graphs/tests.json', JSON.stringify(tests), function() {

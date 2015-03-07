@@ -1,0 +1,135 @@
+<mugl>
+  <background color="0xF7F7F2"/>
+    <legend visible="true" rows="1" border="0" opacity="0" position="-370 43"/>
+    <window margin="0" padding="0" border="1.5" bordercolor="0x000000"/>
+    <plotarea margintop="45" marginleft="38" marginbottom="40" marginright="15"/>
+
+    <horizontalaxis id="Time" min="201304111130" max="201304131130" length="1" base="-1,-1" anchor="-1" tickmin="-5" tickmax="5" type="datetime">
+    <labels format="%H:%i%L%n%d" spacing="1M 7D 1D 12H 6H 4H 2H 1H 30m 10m 5m" position="0 2"/>
+      <grid color="0xC9C9C1"/>
+      <title anchor="0 1" position="0 -20">Time</title>
+      <binding id="xBinding" min="201304111130" max="201304131130"/>
+    </horizontalaxis>
+
+    <verticalaxis   id="°F"  min="-5" max="35" length="1">
+      <labels format="%.0f" start="0" spacing="100 20 10 5 2 1 0.5 0.2 0.1 0.05 0.02 0.01" anchor="0,0" position="-10,0" angle="0" />
+      <grid color="0xC9C9C1"/>
+      <title angle="90" anchor="0 1" position="-30 0">Fahrenheit</title>
+    </verticalaxis>
+
+    <plot>
+      <horizontalaxis ref="Time">
+        <variable ref="Time"/>
+      </horizontalaxis>
+      <verticalaxis ref="°F">
+        <variable ref="Temperature"/>
+      </verticalaxis>
+      <renderer type="pointline">
+        <option name="linecolor" value="0xD12913"/>
+        <option name="linewidth" value="3"/>
+        <option name="pointshape" value="circle"/>
+        <option name="pointoutlinewidth" value="2"/>
+        <option name="pointoutlinecolor" value="0xD12913"/>
+        <option name="pointcolor" value="0xffffff"/>
+        <option name="pointopacity" value="1.0"/>
+        <option name="pointsize" value="3"/>
+      </renderer>
+    </plot>
+
+    <plot>
+      <horizontalaxis ref="Time">
+        <variable ref="Time"/>
+      </horizontalaxis>
+      <verticalaxis ref="°F">
+        <variable ref="Dewpoint"/>
+      </verticalaxis>
+      <renderer type="pointline">
+        <option name="linecolor" value="0x0A82D1"/>
+        <option name="linewidth" value="3"/>
+        <option name="pointshape" value="circle"/>
+        <option name="pointoutlinewidth" value="2"/>
+        <option name="pointoutlinecolor" value="0x0A82D1"/>
+        <option name="pointcolor" value="0xffffff"/>
+        <option name="pointopacity" value="1.0"/>
+        <option name="pointsize" value="3"/>
+      </renderer>
+    </plot>
+
+    <plot>
+      <horizontalaxis ref="Time">
+        <variable ref="Time"/>
+      </horizontalaxis>
+      <verticalaxis ref="°F">
+        <variable ref="Wind Chill"/>
+      </verticalaxis>
+      <renderer type="pointline">
+        <option name="linecolor" value="0x8D07E0"/>
+        <option name="linewidth" value="3"/>
+        <option name="pointshape" value="circle"/>
+        <option name="pointoutlinewidth" value="2"/>
+        <option name="pointoutlinecolor" value="0x8D07E0"/>
+        <option name="pointcolor" value="0xffffff"/>
+        <option name="pointopacity" value="1.0"/>
+        <option name="pointsize" value="3"/>
+      </renderer>
+    </plot>
+
+    <data>
+      <variables>
+        <variable column="0" id="Time" type="datetime"/>
+        <variable column="1" id="Temperature"/>
+        <variable column="2" id="Dewpoint"/>
+        <variable column="3" id="Wind Chill"/>
+      </variables>
+      <values>
+201304111200,16,6,8
+201304111300,19,6,8
+201304111400,21,4,13
+201304111500,23,4,13
+201304111600,24,3,13
+201304111700,25,3,16
+201304111800,26,4,16
+201304111900,26,5,16
+201304112000,26,6,15
+201304112100,25,7,15
+201304112200,23,7,15
+201304112300,21,7,8
+201304120000,19,7,8
+201304120100,17,7,8
+201304120200,15,6,2
+201304120300,14,7,2
+201304120400,12,6,2
+201304120500,11,6,-1
+201304120600,10,5,-1
+201304120700,10,6,-1
+201304120800,11,6,3
+201304120900,13,7,3
+201304121000,16,8,3
+201304121100,19,8,14
+201304121200,22,7,14
+201304121300,24,6,14
+201304121400,27,5,22
+201304121500,29,5,22
+201304121600,30,4,22
+201304121700,31,5,24
+201304121800,32,5,24
+201304121900,32,6,24
+201304122000,31,7,20
+201304122100,30,9,20
+201304122200,27,8,20
+201304122300,25,9,12
+201304130000,23,10,12
+201304130100,21,9,12
+201304130200,19,9,4
+201304130300,17,8,4
+201304130400,15,7,4
+201304130500,14,7,0
+201304130600,12,6,0
+201304130700,11,6,0
+201304130800,11,6,3
+201304130900,13,7,3
+201304131000,16,8,3
+201304131100,20,9,19
+      </values>
+    </data>
+</mugl>

@@ -1,0 +1,95 @@
+<mugl>
+  <background color="0xF7F7F2"/>
+    <legend visible="true" rows="1" border="0" opacity="0" position="-660 43"/>
+    <window margin="0" padding="0" border="1.5" bordercolor="0x000000"/>
+    <plotarea margintop="45" marginleft="38" marginbottom="40" marginright="15"/>
+
+    <horizontalaxis id="Time" length="1" base="-1,-1" anchor="-1" tickmin="-5" tickmax="5" type="datetime">
+    <labels format="%H:%i%L%n%d" spacing="1M 7D 1D 12H 6H 4H 2H 1H 30m 10m 5m" position="0 2"/>
+      <grid color="0xC9C9C1"/>
+      <title anchor="0 1" position="0 -20">Time</title>
+      <binding id="xBinding" min="201304111130" max="201304131130"/>
+    </horizontalaxis>
+
+    <verticalaxis   id="°F"  min="0" max="15" length="1">
+      <labels format="%.0f" start="0" spacing="100 20 10 5 2 1 0.5 0.2 0.1 0.05 0.02 0.01" anchor="0,0" position="-10,0" angle="0" />
+      <grid color="0xC9C9C1"/>
+      <title angle="90" anchor="0 1" position="-30 0">Wind (mph)</title>
+    </verticalaxis>
+
+    <plot>
+      <horizontalaxis ref="Time">
+        <variable ref="Time"/>
+      </horizontalaxis>
+      <verticalaxis ref="°F">
+        <variable ref="Wind"/>
+      </verticalaxis>
+      <renderer type="pointline">
+        <option name="linecolor" value="0xD19D0D"/>
+        <option name="linewidth" value="3"/>
+        <option name="pointshape" value="circle"/>
+        <option name="pointoutlinewidth" value="2"/>
+        <option name="pointoutlinecolor" value="0xD19D0D"/>
+        <option name="pointcolor" value="0xffffff"/>
+        <option name="pointopacity" value="1.0"/>
+        <option name="pointsize" value="3"/>
+      </renderer>
+    </plot>
+
+    <data>
+      <variables>
+        <variable column="0" id="Time" type="datetime"/>
+        <variable column="1" id="Wind"/>
+      </variables>
+      <values>
+201304111200,6
+201304111300,6
+201304111400,8
+201304111500,8
+201304111600,9
+201304111700,9
+201304111800,9
+201304111900,9
+201304112000,9
+201304112100,9
+201304112200,9
+201304112300,9
+201304120000,9
+201304120100,8
+201304120200,8
+201304120300,8
+201304120400,7
+201304120500,7
+201304120600,7
+201304120700,7
+201304120800,7
+201304120900,7
+201304121000,6
+201304121100,6
+201304121200,7
+201304121300,7
+201304121400,7
+201304121500,8
+201304121600,8
+201304121700,8
+201304121800,11
+201304121900,11
+201304122000,11
+201304122100,11
+201304122200,11
+201304122300,11
+201304130000,11
+201304130100,11
+201304130200,11
+201304130300,11
+201304130400,9
+201304130500,9
+201304130600,9
+201304130700,7
+201304130800,7
+201304130900,7
+201304131000,3
+201304131100,3
+      </values>
+    </data>
+</mugl>

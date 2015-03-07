@@ -1,0 +1,98 @@
+<mugl>
+  <background color="0xFAFAEB"/>
+    <window margin="0" padding="5" border="0" bordercolor="0x000000"/>
+    <plotarea margintop="10" marginleft="60" marginbottom="25" marginright="15"/>
+
+    <horizontalaxis id="Buncombe County" min="0" max="10" length="1" base="-1,-1" anchor="-1">
+      <labels densityfactor="0.5" format="" spacing="1000"/>
+      <pan allowed="no"/>
+      <zoom allowed="no"/>
+      <title position="-285 -10"/>
+    </horizontalaxis>
+
+    <horizontalaxis id="Madison County" min="0" max="10" length="1" base="-1,-1" anchor="-1">
+      <labels densityfactor="0.5" format="" spacing="1000"/>
+      <pan allowed="no"/>
+      <zoom allowed="no"/>
+      <title position="0 -10"/>
+    </horizontalaxis>
+
+    <horizontalaxis id="Henderson County" min="0" max="10" length="1" base="-1,-1" anchor="-1">
+      <labels densityfactor="0.5" format="" spacing="1000"/>
+      <pan allowed="no"/>
+      <zoom allowed="no"/>
+      <title position="-145 -10"/>
+    </horizontalaxis>
+
+    <horizontalaxis id="Transylvania County" min="0" max="10" length="1" base="-1,-1" anchor="-1">
+      <labels densityfactor="0.5" format="" spacing="1000"/>
+      <pan allowed="no"/>
+      <zoom allowed="no"/>
+      <title position="145 -10"/>
+    </horizontalaxis>
+
+    <horizontalaxis id="North Carolina" min="0" max="10" length="1" base="-1,-1" anchor="-1">
+      <labels densityfactor="0.5" format="" spacing="1000"/>
+      <pan allowed="no"/>
+      <zoom allowed="no"/>
+      <title position="285 -10"/>
+    </horizontalaxis>
+
+    <verticalaxis   id="y"  min="0" max="100" length="1">
+      <title anchor="0 -4" angle="90" position="-40 0">Population Percentage, 2010</title>
+      <labels densityfactor="0.1" format="%.1f" spacing="5000 1000 500 100 50 20 10 5 2 1 .5 .1"/>
+      <grid/>
+      <pan min="0"/>
+    </verticalaxis>
+
+    <plot>
+      <legend label="% Males =15 Years, Currently Separated or Divorced"/>
+      <horizontalaxis ref="Buncombe County">
+        <variable ref="x"/>
+      </horizontalaxis>
+      <verticalaxis ref="y">
+        <variable ref="y1"/>
+      </verticalaxis>
+      <renderer type="bar">
+        <option name="linecolor" value="0x1D2473"/>
+        <option name="fillcolor" value="0x6066AB"/>
+        <option name="barwidth" value="0.5"/>
+        <option name="baroffset" value="0"/>
+        <option name="barbase" value="0"/>
+        <option name="hidelines" value="2"/>
+      </renderer>
+    </plot>
+
+    <plot>
+      <legend label="% Females =15 Years, Currently Separated or Divorced"/>
+      <horizontalaxis ref="Buncombe County">
+        <variable ref="x"/>
+      </horizontalaxis>
+      <verticalaxis ref="y">
+        <variable ref="y2"/>
+      </verticalaxis>
+      <renderer type="bar">
+        <option name="linecolor" value="0x731D72"/>
+        <option name="fillcolor" value="0xAB60A8"/>
+        <option name="barwidth" value="0.5"/>
+        <option name="baroffset" value="37"/>
+        <option name="barbase" value="0"/>
+        <option name="hidelines" value="2"/>
+      </renderer>
+    </plot>
+
+    <data>
+      <variables>
+        <variable column="0" id="x"/>
+        <variable column="1" id="y1" missingvalue="-9000" missingop="le"/>
+        <variable column="2" id="y2" missingvalue="-9000" missingop="le"/>
+      </variables>
+      <values>
+0.5, 13.9, 16.5
+2.5, 10.3, 14.4
+4.5, 11.0, 13.3
+6.5, 13.3, 13.5
+8.5, 11.7, 14.8
+      </values>
+    </data>
+</mugl>

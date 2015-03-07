@@ -1,0 +1,185 @@
+<mugl>
+  <legend visible="true" opacity="0" rows="2" border="0" position="0 80"/>
+  <background color="0xEBF8FC"/>
+  <window margin="0" padding="5" border="0.01" bordercolor="0x000000"/>
+  <plotarea margintop="80" marginleft="60" marginbottom="35" marginright="40"/>
+
+  <horizontalaxis id="x" min="1984" max="2006" length="1" base="-1,-1" anchor="-1">
+    <labels format="%.0f" start="0" angle="0" position="10 -10" anchor="1 0" spacing="5"/>
+  </horizontalaxis>
+
+  <verticalaxis id="y1"  min="0" max="220000" length="1">
+    <title angle="90" position="-50 0" anchor="0 -1">County Population</title>
+    <binding id="ybinding" min="0" max="220000"/>
+    <labels format="%.0f" start="0" angle="0" position="-10 0" anchor="1 0" spacing="50000 10000 5000 1000 500 250 100 50"/>
+  </verticalaxis>
+
+  <verticalaxis id="y2" length="1" base="1 -1">
+    <title angle="270" position="30 0" anchor="0 -1">Self-Supplied Withdrawls (Mgal/d)</title>
+    <binding id="ybinding" min="0" max="30"/>
+    <labels format="%.0f" start="0" angle="0" position="20 0" anchor="1 0" spacing="10 5 1 0.5 0.1 0.01"/>
+  </verticalaxis>
+
+  <plot>
+    <legend label="Pop, Buncombe"/>
+    <horizontalaxis ref="x">
+      <variable ref="x"/>
+    </horizontalaxis>
+    <verticalaxis ref="y1">
+      <variable ref="b1"/>
+    </verticalaxis>
+    <renderer type="pointline">
+      <option name="linecolor" value="0x68038C"/>
+      <option name="linewidth" value="5"/>
+      <option name="pointsize" value="4"/>
+      <option name="pointcolor" value="0xEBF8FC"/>
+      <option name="pointoutlinewidth" value="3"/>
+      <option name="pointoutlinecolor" value="0x68038C"/>
+    </renderer>
+  </plot>
+<plot>
+    <legend label="Self-Supp. Withdrawls, Buncombe"/>
+    <horizontalaxis ref="x">
+      <variable ref="x"/>
+    </horizontalaxis>
+    <verticalaxis ref="y2">
+      <variable ref="b2"/>
+    </verticalaxis>
+    <renderer type="pointline">
+      <option name="linecolor" value="0xC35DE8"/>
+      <option name="linewidth" value="5"/>
+      <option name="pointsize" value="4"/>
+      <option name="pointcolor" value="0xEBF8FC"/>
+      <option name="pointoutlinewidth" value="3"/>
+      <option name="pointoutlinecolor" value="0xC35DE8"/>
+    </renderer>
+  </plot>
+
+  <plot>
+    <legend label="Pop, Henderson"/>
+    <horizontalaxis ref="x">
+      <variable ref="x"/>
+    </horizontalaxis>
+    <verticalaxis ref="y1">
+      <variable ref="h1"/>
+    </verticalaxis>
+    <renderer type="pointline">
+      <option name="linecolor" value="0xD9790B"/>
+      <option name="linewidth" value="5"/>
+      <option name="pointsize" value="4"/>
+      <option name="pointcolor" value="0xEBF8FC"/>
+      <option name="pointoutlinewidth" value="3"/>
+      <option name="pointoutlinecolor" value="0xD9790B"/>
+    </renderer>
+  </plot>
+<plot>
+    <legend label="Self-Supp. Withdrawls, Henderson"/>
+    <horizontalaxis ref="x">
+      <variable ref="x"/>
+    </horizontalaxis>
+    <verticalaxis ref="y2">
+      <variable ref="h2"/>
+    </verticalaxis>
+    <renderer type="pointline">
+      <option name="linecolor" value="0xE6AD6C"/>
+      <option name="linewidth" value="5"/>
+      <option name="pointsize" value="4"/>
+      <option name="pointcolor" value="0xEBF8FC"/>
+      <option name="pointoutlinewidth" value="3"/>
+      <option name="pointoutlinecolor" value="0xE6AD6C"/>
+    </renderer>
+  </plot>
+
+  <plot>
+    <legend label="Pop, Madison"/>
+    <horizontalaxis ref="x">
+      <variable ref="x"/>
+    </horizontalaxis>
+    <verticalaxis ref="y1">
+      <variable ref="m1"/>
+    </verticalaxis>
+    <renderer type="pointline">
+      <option name="linecolor" value="0x167502"/>
+      <option name="linewidth" value="5"/>
+      <option name="pointsize" value="4"/>
+      <option name="pointcolor" value="0xEBF8FC"/>
+      <option name="pointoutlinewidth" value="3"/>
+      <option name="pointoutlinecolor" value="0x167502"/>
+    </renderer>
+  </plot>
+<plot>
+    <legend label="Self-Supp. Withdrawls, Madison"/>
+    <horizontalaxis ref="x">
+      <variable ref="x"/>
+    </horizontalaxis>
+    <verticalaxis ref="y2">
+      <variable ref="m2"/>
+    </verticalaxis>
+    <renderer type="pointline">
+      <option name="linecolor" value="0x7AD169"/>
+      <option name="linewidth" value="5"/>
+      <option name="pointsize" value="4"/>
+      <option name="pointcolor" value="0xEBF8FC"/>
+      <option name="pointoutlinewidth" value="3"/>
+      <option name="pointoutlinecolor" value="0x7AD169"/>
+    </renderer>
+  </plot>
+
+  <plot>
+    <legend label="Pop, Transylvania"/>
+    <horizontalaxis ref="x">
+      <variable ref="x"/>
+    </horizontalaxis>
+    <verticalaxis ref="y1">
+      <variable ref="t1"/>
+    </verticalaxis>
+    <renderer type="pointline">
+      <option name="linecolor" value="0xB31D09"/>
+      <option name="linewidth" value="5"/>
+      <option name="pointsize" value="4"/>
+      <option name="pointcolor" value="0xEBF8FC"/>
+      <option name="pointoutlinewidth" value="3"/>
+      <option name="pointoutlinecolor" value="0xB31D09"/>
+    </renderer>
+  </plot>
+<plot>
+    <legend label="Self-Supp. Withdrawls, Transylvania"/>
+    <horizontalaxis ref="x">
+      <variable ref="x"/>
+    </horizontalaxis>
+    <verticalaxis ref="y2">
+      <variable ref="t2"/>
+    </verticalaxis>
+    <renderer type="pointline">
+      <option name="linecolor" value="0xD67467"/>
+      <option name="linewidth" value="5"/>
+      <option name="pointsize" value="4"/>
+      <option name="pointcolor" value="0xEBF8FC"/>
+      <option name="pointoutlinewidth" value="3"/>
+      <option name="pointoutlinecolor" value="0xD67467"/>
+    </renderer>
+  </plot>
+
+  <data>
+    <variables>
+      <variable column="0" id="x"/>
+      <variable column="1" id="b1" missingvalue="-9000" missingop="le"/>
+      <variable column="2" id="b2" missingvalue="-9000" missingop="le"/>
+      <variable column="3" id="h1" missingvalue="-9000" missingop="le"/>
+      <variable column="4" id="h2" missingvalue="-9000" missingop="le"/>
+      <variable column="5" id="m1" missingvalue="-9000" missingop="le"/>
+      <variable column="6" id="m2" missingvalue="-9000" missingop="le"/>
+      <variable column="7" id="t1" missingvalue="-9000" missingop="le"/>
+      <variable column="8" id="t2" missingvalue="-9000" missingop="le"/>
+    </variables>
+    <values>
+
+1985, 168000,22.10, 66200,7.75, 17300,1.14, 25700,1.00
+1990, 174820,24.94, 69290,6.57, 16950,1.37, 25520,1.51
+1995, 189510,24.26, 76700,5.86, 17940,0.48, 27340,1.50
+2000, 206330,24.66, 89170,8.45, 19640,0.67, 29330,1.60
+2005, 218876,20.96, 97217,8.04, 20256,0.53, 29626,1.42
+
+    </values>
+  </data>
+</mugl>

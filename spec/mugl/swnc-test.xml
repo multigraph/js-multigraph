@@ -1,0 +1,158 @@
+<mugl>
+  <background color="0xF5FAFA">
+   <img src="http://dev.nemac.org/~jrfrimme/aswoff/graphs/images/map_swnc.png" frame="plot" anchor="0,0" base="0,0"/>
+  </background>
+  <window border="0" margin="0" padding="0"/>
+  <legend visible="true" opacity="0" border="0" columns="2" position="-440,5"/>
+  <plotarea marginbottom="35" marginleft="50" marginright="15" margintop="10"/>
+
+  <horizontalaxis  color="0x3A3D3D" highlightstyle="labels" id="roomaxis" linewidth="0" max="9.5" min="0.5" tickmax="0" tickmin="-4">
+    <labels color="0x3A3D3D"/>
+    <grid color="0xDAE0E0"/>
+    <title>Number of Rooms per Housing Unit</title>
+    <pan allowed="no"/>
+    <zoom allowed="no"/>
+  </horizontalaxis>
+
+  <verticalaxis  color="0x3A3D3D" highlightstyle="labels" id="houseaxis" linewidth="0" max="10000" min="0" tickmax="0" tickmin="-4" type="number">
+    <labels densityfactor="0.5" format="%.0f" color="0x3A3D3D" spacing="500 250 100 50 20 10 5 2 1"/>
+    <grid color="0xDAE0E0"/>
+    <title anchor="0 -4" angle="90" position="-25 0">Number of Housing Units</title>
+  </verticalaxis>
+
+ <plot>
+    <horizontalaxis ref="roomaxis">
+      <variable ref="Number of Rooms"/>
+    </horizontalaxis>
+    <verticalaxis ref="houseaxis">
+      <variable ref="Haywood County"/>
+    </verticalaxis>
+    <renderer type="pointline">
+      <option name="linecolor" value="0xEB9800"/>
+      <option name="pointoutlinecolor" value="0xEB9800"/>
+      <option name="pointcolor" value="0xEB9800"/>
+      <option name="linewidth" value="2"/>
+      <option name="pointsize" value="2.5"/>
+    </renderer>
+  </plot>
+
+  <plot>
+    <horizontalaxis ref="roomaxis">
+      <variable ref="Number of Rooms"/>
+    </horizontalaxis>
+    <verticalaxis ref="houseaxis">
+      <variable ref="Cherokee County"/>
+    </verticalaxis>
+    <renderer type="pointline">
+      <option name="linecolor" value="0xad1fff"/>
+      <option name="pointoutlinecolor" value="0xad1fff"/>
+      <option name="pointcolor" value="0xad1fff"/>
+      <option name="linewidth" value="2"/>
+      <option name="pointsize" value="2.5"/>
+    </renderer>
+   </plot>
+
+  <plot>
+    <horizontalaxis ref="roomaxis">
+      <variable ref="Number of Rooms"/>
+    </horizontalaxis>
+    <verticalaxis ref="houseaxis">
+      <variable ref="Clay County"/>
+    </verticalaxis>
+    <renderer type="pointline">
+      <option name="linecolor" value="0x00EB98"/>
+      <option name="pointoutlinecolor" value="0x00EB98"/>
+      <option name="pointcolor" value="0x00EB98"/>
+      <option name="linewidth" value="2"/>
+      <option name="pointsize" value="2.5"/>
+    </renderer>
+   </plot>
+
+  <plot>
+    <horizontalaxis ref="roomaxis">
+      <variable ref="Number of Rooms"/>
+    </horizontalaxis>
+    <verticalaxis ref="houseaxis">
+      <variable ref="Graham County"/>
+    </verticalaxis>
+    <renderer type="pointline">
+      <option name="linecolor" value="0xEB0053"/>
+      <option name="pointoutlinecolor" value="0xEB0053"/>
+      <option name="pointcolor" value="0xEB0053"/>
+      <option name="linewidth" value="2"/>
+      <option name="pointsize" value="2.5"/>
+    </renderer>
+   </plot>
+
+  <plot>
+    <horizontalaxis ref="roomaxis">
+      <variable ref="Number of Rooms"/>
+    </horizontalaxis>
+    <verticalaxis ref="houseaxis">
+      <variable ref="Jackson County"/>
+    </verticalaxis>
+    <renderer type="pointline">
+      <option name="linecolor" value="0x2300EB"/>
+      <option name="pointoutlinecolor" value="0x2300EB"/>
+      <option name="pointcolor" value="0x2300EB"/>
+      <option name="linewidth" value="2"/>
+      <option name="pointsize" value="2.5"/>
+    </renderer>
+   </plot>
+
+  <plot>
+    <horizontalaxis ref="roomaxis">
+      <variable ref="Number of Rooms"/>
+    </horizontalaxis>
+    <verticalaxis ref="houseaxis">
+      <variable ref="Macon County"/>
+    </verticalaxis>
+    <renderer type="pointline">
+      <option name="linecolor" value="0x00C8EB"/>
+      <option name="pointoutlinecolor" value="0x00C8EB"/>
+      <option name="pointcolor" value="0x00C8EB"/>
+      <option name="linewidth" value="2"/>
+      <option name="pointsize" value="2.5"/>
+    </renderer>
+   </plot>
+
+  <plot>
+    <horizontalaxis ref="roomaxis">
+      <variable ref="Number of Rooms"/>
+    </horizontalaxis>
+    <verticalaxis ref="houseaxis">
+      <variable ref="Swain County"/>
+    </verticalaxis>
+    <renderer type="pointline">
+      <option name="linecolor" value="0x9FC932"/>
+      <option name="pointoutlinecolor" value="0x9FC932"/>
+      <option name="pointcolor" value="0x9FC932"/>
+      <option name="linewidth" value="2"/>
+      <option name="pointsize" value="2.5"/>
+    </renderer>
+   </plot>
+
+  <data>
+    <variables>
+      <variable column="0" id="Number of Rooms"/>
+      <variable column="1" id="Cherokee County"/>
+      <variable column="2" id="Haywood County"/>
+      <variable column="3" id="Clay County"/>
+      <variable column="4" id="Graham County"/>
+      <variable column="5" id="Jackson County"/>
+      <variable column="6" id="Macon County"/>
+      <variable column="7" id="Swain County"/>
+    </variables>
+    <values>
+1,0079,0218,0066,0058,0487,0328,0084
+2,0186,0379,0075,0176,0546,0526,0130
+3,0887,2137,0461,0350,1416,1620,0755
+4,2962,6903,1245,1003,6185,5724,1662
+5,4746,8912,1829,1706,6577,6043,2639
+6,4738,7400,1662,1558,4839,4818,2068
+7,1894,3859,0789,0641,2633,2770,0438
+8,1134,2216,0436,0215,1359,1337,0455
+9,0734,2565,0517,0182,1589,1803,0425
+    </values>
+  </data>
+</mugl>

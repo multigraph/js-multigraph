@@ -1,0 +1,111 @@
+<mugl>
+
+  <window border="0" margin="0" padding="0"/>
+  <legend visible="false"/>
+  <background color="0x111111"/>
+
+  <horizontalaxis id="Date" type="datetime" min="200500" max="200901">
+    <labels densityfactor="0.5" format="%n %y" spacing="10Y 5Y 1Y 6M 4M 2M 1M" angle="45" position="-11,-14" anchor="0,1" color="0xeeeeee"/>
+    <title/>
+    <grid color="0x333333"/>
+  </horizontalaxis>
+
+  <verticalaxis   id="y"  min="0" max="101">
+    <labels densityfactor="0.5" format="%.1f" spacing="10000 5000 2000 1000 100 50 20 10 5 2 1 0.5 0.25 0.1" color="0xeeeeee"/>
+    <title/>
+    <grid color="0x333333"/>
+  </verticalaxis>
+
+   <plot>
+    <horizontalaxis ref="Date">
+      <variable ref="datetime"/>
+    </horizontalaxis>
+    <verticalaxis ref="y">
+      <variable ref="y1"/>
+    </verticalaxis>
+    <renderer type="pointline">
+      <option name="linecolor" value="0x07CCEB"/>
+      <option name="linewidth" value="4"/>
+      <option name="pointsize" value="4"/>
+      <option name="pointcolor" value="0x111111"/>
+      <option name="pointoutlinewidth" value="2"/>
+      <option name="pointoutlinecolor" value="0x07CCEB"/>
+    </renderer>
+  </plot>
+
+
+  <plot>
+    <horizontalaxis ref="Date">
+      <variable ref="datetime"/>
+    </horizontalaxis>
+    <verticalaxis ref="y">
+      <variable ref="y"/>
+    </verticalaxis>
+    <renderer type="pointline">
+      <option name="linecolor" value="0xEB2607"/>
+      <option name="linewidth" value="4"/>
+      <option name="pointsize" value="4"/>
+      <option name="pointcolor" value="0x111111"/>
+      <option name="pointoutlinewidth" value="2"/>
+      <option name="pointoutlinecolor" value="0xEB2607"/>
+    </renderer>
+  </plot>
+
+    <data>
+      <variables>
+        <variable column="0" type="datetime" id="datetime"/>
+        <variable column="1" id="y"/>
+        <variable column="2" id="y1"/>
+      </variables>
+      <values>
+200501,18,76
+200502,23,72
+200503,22,65
+200504,26,59
+200505,11,58
+200506,18,54
+200507,20,50
+200508,28,46
+200509,14,43
+200510,22,41
+200511,22,47
+200512,24,53
+200601,11,56
+200602,14,51
+200603,27,45
+200604,17,40
+200605,19,36
+200606,25,34
+200607,22,32
+200608,16,27
+200609,19,31
+200610,28,35
+200611,12,37
+200612,11,42
+200701,24,45
+200702,17,48
+200703,14,54
+200704,25,60
+200705,19,69
+200706,16,76
+200707,12,78
+200708,14,83
+200709,19,85
+200710,17,88
+200711,14,89
+200712,13,92
+200801,23,88
+200802,14,80
+200803,25,72
+200804,24,62
+200805,27,40
+200806,15,32
+200807,25,26
+200808,21,19
+200809,26,16
+200810,23,12
+200811,27,8
+200812,14,6
+      </values>
+    </data>
+</mugl>

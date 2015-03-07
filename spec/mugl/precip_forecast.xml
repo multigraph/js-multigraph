@@ -1,0 +1,135 @@
+<mugl>
+  <background color="0xF7F7F2"/>
+    <legend visible="true" rows="1" border="0" opacity="0" position="-335 43"/>
+    <window margin="0" padding="0" border="1.5" bordercolor="0x000000"/>
+    <plotarea margintop="45" marginleft="38" marginbottom="40" marginright="15"/>
+
+    <horizontalaxis id="Time" length="1" base="-1,-1" anchor="-1" tickmin="-5" tickmax="5" type="datetime">
+    <labels format="%H:%i%L%n%d" spacing="1M 7D 1D 12H 6H 4H 2H 1H 30m 10m 5m" position="0 2"/>
+      <grid color="0xC9C9C1"/>
+      <title anchor="0 1" position="0 -20">Time</title>
+      <binding id="xBinding" min="201304111130" max="201304131130"/>
+    </horizontalaxis>
+
+    <verticalaxis   id="°F"  min="-5" max="100" length="1">
+      <labels format="%.0f" start="0" spacing="100 20 10 5 2 1 0.5 0.2 0.1 0.05 0.02 0.01" anchor="0,0" position="-10,0" angle="0" />
+      <grid color="0xC9C9C1"/>
+      <title angle="90" anchor="0 1" position="-30 0">percent (%)</title>
+    </verticalaxis>
+
+    <plot>
+      <horizontalaxis ref="Time">
+        <variable ref="Time"/>
+      </horizontalaxis>
+      <verticalaxis ref="°F">
+        <variable ref="Sky Cover"/>
+      </verticalaxis>
+      <renderer type="pointline">
+        <option name="linecolor" value="0xC41899"/>
+        <option name="linewidth" value="3"/>
+        <option name="pointshape" value="circle"/>
+        <option name="pointoutlinewidth" value="2"/>
+        <option name="pointoutlinecolor" value="0xC41899"/>
+        <option name="pointcolor" value="0xffffff"/>
+        <option name="pointopacity" value="1.0"/>
+        <option name="pointsize" value="3"/>
+      </renderer>
+    </plot>
+
+    <plot>
+      <horizontalaxis ref="Time">
+        <variable ref="Time"/>
+      </horizontalaxis>
+      <verticalaxis ref="°F">
+        <variable ref="Pcpn. Potential"/>
+      </verticalaxis>
+      <renderer type="pointline">
+        <option name="linecolor" value="0x0A38CF"/>
+        <option name="linewidth" value="3"/>
+        <option name="pointshape" value="circle"/>
+        <option name="pointoutlinewidth" value="2"/>
+        <option name="pointoutlinecolor" value="0x0A38CF"/>
+        <option name="pointcolor" value="0xffffff"/>
+        <option name="pointopacity" value="1.0"/>
+        <option name="pointsize" value="3"/>
+      </renderer>
+    </plot>
+
+    <plot>
+      <horizontalaxis ref="Time">
+        <variable ref="Time"/>
+      </horizontalaxis>
+      <verticalaxis ref="°F">
+        <variable ref="Rel. Humidity"/>
+      </verticalaxis>
+      <renderer type="pointline">
+        <option name="linecolor" value="0x25A15B"/>
+        <option name="linewidth" value="3"/>
+        <option name="pointshape" value="circle"/>
+        <option name="pointoutlinewidth" value="2"/>
+        <option name="pointoutlinecolor" value="0x25A15B"/>
+        <option name="pointcolor" value="0xffffff"/>
+        <option name="pointopacity" value="1.0"/>
+        <option name="pointsize" value="3"/>
+      </renderer>
+    </plot>
+
+    <data>
+      <variables>
+        <variable column="0" id="Time" type="datetime"/>
+        <variable column="1" id="Sky Cover"/>
+        <variable column="2" id="Pcpn. Potential"/>
+        <variable column="3" id="Rel. Humidity"/>
+      </variables>
+      <values>
+201304111200,67,0,64
+201304111300,67,0,56
+201304111400,61,0,48
+201304111500,61,0,43
+201304111600,61,0,40
+201304111700,61,0,38
+201304111800,61,0,38
+201304111900,61,0,40
+201304112000,45,0,42
+201304112100,45,0,46
+201304112200,45,0,50
+201304112300,45,0,54
+201304120000,45,0,59
+201304120100,45,0,64
+201304120200,38,0,68
+201304120300,38,0,72
+201304120400,38,0,75
+201304120500,38,0,79
+201304120600,38,0,81
+201304120700,38,0,82
+201304120800,22,0,81
+201304120900,22,0,76
+201304121000,22,0,69
+201304121100,22,0,61
+201304121200,22,0,53
+201304121300,22,0,45
+201304121400,16,0,39
+201304121500,16,0,35
+201304121600,16,0,33
+201304121700,16,0,32
+201304121800,16,0,32
+201304121900,16,0,33
+201304122000,8,0,35
+201304122100,8,0,40
+201304122200,8,0,45
+201304122300,8,0,51
+201304130000,8,0,56
+201304130100,8,0,60
+201304130200,8,0,64
+201304130300,3,0,68
+201304130400,3,0,71
+201304130500,3,0,73
+201304130600,3,0,78
+201304130700,3,0,81
+201304130800,3,0,81
+201304130900,0,0,77
+201304131000,0,0,70
+201304131100,0,0,62
+      </values>
+    </data>
+</mugl>

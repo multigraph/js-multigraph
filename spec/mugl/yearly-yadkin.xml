@@ -1,0 +1,152 @@
+<mugl>
+  <background color="0xE8F9FC">
+  </background>
+    <legend visible="true" rows="2" border="0" opacity="0" anchor="-1 1" base="-1 1" position="0 50">
+      <icon height="15" width="15"/>
+    </legend>
+    <window margin="0" padding="0" border="1.5" bordercolor="0x000000"/>
+    <plotarea margintop="50" marginleft="42" marginbottom="40" marginright="15"/>
+
+    <horizontalaxis id="Time" length="1" base="-1,-1" anchor="-1" tickmin="-5" tickmax="5" type="datetime">
+    <labels>
+      <label format="%Y" spacing="100Y 50Y 20Y 10Y 5Y 2Y 1Y"/>
+      <label format="%n %y" spacing="6M 3M 2M 1M"/>
+    </labels>      <grid color="0xB3F1FF"/>
+      <title anchor="0 1" position="0 -20">Time</title>
+      <binding id="xBinding" min="196210" max="201401"/>
+    </horizontalaxis>
+
+    <verticalaxis   id="y"  min="250" max="15000" length="1">
+      <labels format="%.1f" start="0" spacing="500 250 100 20 10 5 2 1 0.5 0.2 0.1" anchor="0,0" position="-18,0" angle="0" />
+      <grid color="0xB3F1FF"/>
+      <title angle="90" anchor="0 1" position="-42, 0">Flow Rate (kcfps)</title>
+    </verticalaxis>
+
+    <plot>
+      <horizontalaxis ref="Time">
+        <variable ref="Time"/>
+      </horizontalaxis>
+      <verticalaxis ref="y">
+        <variable ref="Yadkin River, Wilkesboro"/>
+      </verticalaxis>
+      <renderer type="line">
+        <option name="linecolor" value="0x00A6FF"/>
+        <option name="linewidth" value="3"/>
+      </renderer>
+    </plot>
+
+<plot>
+      <horizontalaxis ref="Time">
+        <variable ref="Time"/>
+      </horizontalaxis>
+      <verticalaxis ref="y">
+        <variable ref="Yadkin River, Elkin"/>
+      </verticalaxis>
+      <renderer type="line">
+        <option name="linecolor" value="0x0080C4"/>
+        <option name="linewidth" value="3"/>
+      </renderer>
+</plot>
+
+<plot>
+      <horizontalaxis ref="Time">
+        <variable ref="Time"/>
+      </horizontalaxis>
+      <verticalaxis ref="y">
+        <variable ref="Yadkin River, Enon"/>
+      </verticalaxis>
+      <renderer type="line">
+        <option name="linecolor" value="0x005A8A"/>
+        <option name="linewidth" value="3"/>
+      </renderer>
+</plot>
+
+<plot>
+      <horizontalaxis ref="Time">
+        <variable ref="Time"/>
+      </horizontalaxis>
+      <verticalaxis ref="y">
+        <variable ref="Yadkin River, Yadkin College"/>
+      </verticalaxis>
+      <renderer type="line">
+        <option name="linecolor" value="0x003D5E"/>
+        <option name="linewidth" value="3"/>
+      </renderer>
+</plot>
+
+<plot>
+      <horizontalaxis ref="Time">
+        <variable ref="Time"/>
+      </horizontalaxis>
+      <verticalaxis ref="y">
+        <variable ref="Pee Dee River, Rockingham"/>
+      </verticalaxis>
+      <renderer type="line">
+        <option name="linecolor" value="0x000000"/>
+        <option name="linewidth" value="3"/>
+      </renderer>
+</plot>
+
+    <data>
+    <variables missingvalue="-9000" missingop="eq">
+        <variable column="0" id="Time" type="datetime"/>
+        <variable column="1" id="Yadkin River, Wilkesboro"/>
+        <variable column="2" id="Yadkin River, Elkin"/>
+        <variable column="3" id="Yadkin River, Enon"/>
+        <variable column="4" id="Yadkin River, Yadkin College"/>
+        <variable column="5" id="Pee Dee River, Rockingham"/>
+    </variables>
+      <values>
+        1963  646.7  -9000  -9000  2837   7297
+        1964  562.8  -9000  -9000  2458   7474
+        1965  888.8  1545   2808   3625   10240
+        1966  670.3  1084   1909   2417   5729
+        1967  605.5  1005   1635   1935   4319
+        1968  659.2  1088   1903   2279   6104
+        1969  773.9  1182   2024   2465   6414
+        1970  858.2  1275   2179   2622   6179
+        1971  801.8  1261   2332   2917   8371
+        1972  1027   1701   3315   4049   10110
+        1973  1220   1951   3605   4524   12050
+        1974  1188   1818   3337   4007   9516
+        1975  1158   1749   3256   3919   13000
+        1976  923.4  1373   2461   2711   6683
+        1977  855.6  1426   2336   2743   8428
+        1978  1147   1921   3183   3840   10630
+        1979  1121   1800   3315   4203   11430
+        1980  1173   1860   3118   3775   9925
+        1981  503.8  758.0  1338   1591   3944
+        1982  601.7  1037   2142   2574   7572
+        1983  1072   1697   2843   3361   9196
+        1984  1008   1723   3183   3989   11730
+        1985  513.1  880.9  1626   2015   5447
+        1986  509.2  823.4  1536   1838   4480
+        1987  887.8  1498   2910   3621   8991
+        1988  393.5  698.1  1332   1775   4565
+        1989  606.2  1034   2074   2813   8652
+        1990  1147   1687   3361   4395   10930
+        1991  1092   1787   3362   4449   12210
+        1992  784.9  1303   2442   3050   6497
+        1993  1142   1819   3440   4394   11690
+        1994  983.0  1480   2746   3530   7538
+        1995  966.3  1369   2276   3003   7680
+        1996  969.2  1524   2737   3505   9286
+        1997  939.9  1468   2595   -9000  8841
+        1998  961.2  1587   2657   3474   10760
+        1999  492.3  850.9  1529   1880   4482
+        2000  438.4  790.8  1379   1783   4956
+        2001  346.5  595.4  1071   1330   2926
+        2002  335.7  507.9  951.8  1116   2310
+        2003  1220   1874   3525   4435   14980
+        2004  909.9  1501   2609   3007   6562
+        2005  904.7  1439   2610   3001   7115
+        2006  553.5  937.9  1778   2249   4866
+        2007  593.2  987.0  1996   2489   6835
+        2008  338.6  565.4  1142   1476   3591
+        2009  671.1  1130   1896   2262   5795
+        2010  934.2  1491   2742   3486   9340
+        2011  589.2  1017   1843   2302   4123
+        2012  678.0  1176   2208   2621   5430
+      </values>
+    </data>
+  </mugl>

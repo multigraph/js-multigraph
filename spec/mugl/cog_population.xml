@@ -1,0 +1,527 @@
+<mugl>
+    <background color="0xFAFAEB"/>
+    <legend border="0" opacity="0" columns="8" position="30 80">
+      <icon width="15" height="15" border="1"/>
+    </legend>
+    <window margin="0" padding="5" border="0" bordercolor="0x000000"/>
+    <plotarea margintop="80" marginleft="60" marginbottom="25" marginright="15"/>
+
+    <horizontalaxis id="Land of Sky" min="0" max="5.5" length="1" base="-1,-1" anchor="-1">
+      <labels densityfactor="0.5" format="" spacing="1000"/>
+      <pan allowed="no"/>
+      <zoom allowed="no"/>
+      <title position="-260 -10"/>
+    </horizontalaxis>
+
+    <horizontalaxis id="High Country" min="0" max="5.5" length="1" base="-1,-1" anchor="-1">
+      <labels densityfactor="0.5" format="" spacing="1000"/>
+      <pan allowed="no"/>
+      <zoom allowed="no"/>
+      <title position="-130 -10"/>
+    </horizontalaxis>
+
+    <horizontalaxis id="Isothermal" min="0" max="5.5" length="1" base="-1,-1" anchor="-1">
+      <labels densityfactor="0.5" format="" spacing="1000"/>
+      <pan allowed="no"/>
+      <zoom allowed="no"/>
+      <title position="0 -10"/>
+    </horizontalaxis>
+
+    <horizontalaxis id="Southwestern" min="0" max="5.5" length="1" base="-1,-1" anchor="-1">
+      <labels densityfactor="0.5" format="" spacing="1000"/>
+      <pan allowed="no"/>
+      <zoom allowed="no"/>
+      <title position="130 -10"/>
+    </horizontalaxis>
+
+    <horizontalaxis id="Western Piedmont" min="0" max="5.5" length="1" base="-1,-1" anchor="-1">
+      <labels densityfactor="0.5" format="" spacing="1000"/>
+      <pan allowed="no"/>
+      <zoom allowed="no"/>
+      <title position="260 -10"/>
+    </horizontalaxis>
+
+    <verticalaxis   id="y"  min="0" max="400000" length="1">
+      <title anchor="0 -4" angle="90" position="-40 0">Population, 2010</title>
+      <labels densityfactor="0.1" format="%.0f" spacing="100000 5000 1000 500 100 50 20 10 5 2 1"/>
+      <pan min="0"/>
+    </verticalaxis>
+
+
+/*--Land of Sky------------------------------------------------------------------*/
+
+    <plot>
+      <legend label="Buncombe"/>
+      <horizontalaxis ref="Land of Sky">
+        <variable ref="x"/>
+      </horizontalaxis>
+      <verticalaxis ref="y">
+        <variable ref="bunc"/>
+      </verticalaxis>
+      <renderer type="bar">
+        <option name="linecolor" value="0xC99C14"/>
+        <option name="fillcolor" value="0xE0C77B"/>
+        <option name="barwidth" value="0.5"/>
+        <option name="baroffset" value="0"/>
+        <option name="hidelines" value="2"/>
+      </renderer>
+    </plot>
+
+    <plot>
+      <legend label="Madison"/>
+      <horizontalaxis ref="Land of Sky">
+        <variable ref="x"/>
+      </horizontalaxis>
+      <verticalaxis ref="y">
+        <variable ref="madi"/>
+      </verticalaxis>
+      <renderer type="bar">
+        <option name="linecolor" value="0xA1A624"/>
+        <option name="fillcolor" value="0xD3D674"/>
+        <option name="barwidth" value="0.5"/>
+        <option name="barbase" value="238318"/>
+        <option name="hidelines" value="2"/>
+      </renderer>
+    </plot>
+
+    <plot>
+      <legend label="Henderson"/>
+      <horizontalaxis ref="Land of Sky">
+        <variable ref="x"/>
+      </horizontalaxis>
+      <verticalaxis ref="y">
+        <variable ref="hend"/>
+      </verticalaxis>
+      <renderer type="bar">
+        <option name="linecolor" value="0xA16533"/>
+        <option name="fillcolor" value="0xD1A988"/>
+        <option name="barwidth" value="0.5"/>
+        <option name="barbase" value="259082"/>
+        <option name="hidelines" value="2"/>
+      </renderer>
+    </plot>
+
+    <plot>
+      <legend label="Transylvania"/>
+      <horizontalaxis ref="Land of Sky">
+        <variable ref="x"/>
+      </horizontalaxis>
+      <verticalaxis ref="y">
+        <variable ref="tran"/>
+      </verticalaxis>
+      <renderer type="bar">
+        <option name="linecolor" value="0x708A21"/>
+        <option name="fillcolor" value="0xB1C478"/>
+        <option name="barwidth" value="0.5"/>
+        <option name="barbase" value="365822"/>
+        <option name="hidelines" value="2"/>
+      </renderer>
+    </plot>
+
+
+/*--High Country------------------------------------------------------------------*/
+
+    <plot>
+      <legend label="Wilkes"/>
+      <horizontalaxis ref="High Country">
+        <variable ref="x"/>
+      </horizontalaxis>
+      <verticalaxis ref="y">
+        <variable ref="wilk"/>
+      </verticalaxis>
+      <renderer type="bar">
+        <option name="linecolor" value="0xC99C14"/>
+        <option name="fillcolor" value="0xE0C77B"/>
+        <option name="barwidth" value="0.5"/>
+        <option name="baroffset" value="0"/>
+        <option name="hidelines" value="2"/>
+      </renderer>
+    </plot>
+
+    <plot>
+      <legend label="Watauga"/>
+      <horizontalaxis ref="High Country">
+        <variable ref="x"/>
+      </horizontalaxis>
+      <verticalaxis ref="y">
+        <variable ref="wata"/>
+      </verticalaxis>
+      <renderer type="bar">
+        <option name="linecolor" value="0xA1A624"/>
+        <option name="fillcolor" value="0xD3D674"/>
+        <option name="barwidth" value="0.5"/>
+        <option name="barbase" value="69340"/>
+        <option name="hidelines" value="2"/>
+      </renderer>
+    </plot>
+    
+    <plot>
+      <legend label="Mitchell"/>
+      <horizontalaxis ref="High Country">
+        <variable ref="x"/>
+      </horizontalaxis>
+      <verticalaxis ref="y">
+        <variable ref="mitc"/>
+      </verticalaxis>
+      <renderer type="bar">
+        <option name="linecolor" value="0xA16533"/>
+        <option name="fillcolor" value="0xD1A988"/>
+        <option name="barwidth" value="0.5"/>
+        <option name="barbase" value="120419"/>
+        <option name="hidelines" value="2"/>
+      </renderer>
+    </plot>
+
+    <plot>
+      <legend label="Yancey"/>
+      <horizontalaxis ref="High Country">
+        <variable ref="x"/>
+      </horizontalaxis>
+      <verticalaxis ref="y">
+        <variable ref="yanc"/>
+      </verticalaxis>
+      <renderer type="bar">
+        <option name="linecolor" value="0x708A21"/>
+        <option name="fillcolor" value="0xB1C478"/>
+        <option name="barwidth" value="0.5"/>
+        <option name="barbase" value="135998"/>
+        <option name="hidelines" value="2"/>
+      </renderer>
+    </plot>
+
+    <plot>
+      <legend label="Ashe"/>
+      <horizontalaxis ref="High Country">
+        <variable ref="x"/>
+      </horizontalaxis>
+      <verticalaxis ref="y">
+        <variable ref="ashe"/>
+      </verticalaxis>
+      <renderer type="bar">
+        <option name="linecolor" value="0x156A70"/>
+        <option name="fillcolor" value="0x58868A"/>
+        <option name="barwidth" value="0.5"/>
+        <option name="barbase" value="153816"/>
+        <option name="hidelines" value="2"/>
+      </renderer>
+    </plot>
+
+    <plot>
+      <legend label="Avery"/>
+      <horizontalaxis ref="High Country">
+        <variable ref="x"/>
+      </horizontalaxis>
+      <verticalaxis ref="y">
+        <variable ref="aver"/>
+      </verticalaxis>
+      <renderer type="bar">
+        <option name="linecolor" value="0x651873"/>
+        <option name="fillcolor" value="0x7F5F85"/>
+        <option name="barwidth" value="0.5"/>
+        <option name="barbase" value="171613"/>
+        <option name="hidelines" value="2"/>
+      </renderer>
+    </plot>
+
+    <plot>
+      <legend label="Alleghany"/>
+      <horizontalaxis ref="High Country">
+        <variable ref="x"/>
+      </horizontalaxis>
+      <verticalaxis ref="y">
+        <variable ref="alle"/>
+      </verticalaxis>
+      <renderer type="bar">
+        <option name="linecolor" value="0x6E6316"/>
+        <option name="fillcolor" value="0xA8A271"/>
+        <option name="barwidth" value="0.5"/>
+        <option name="barbase" value="198894"/>
+        <option name="hidelines" value="2"/>
+      </renderer>
+    </plot>
+
+
+/*--Isothermal------------------------------------------------------------------*/
+
+    <plot>
+      <legend label="Cleveland"/>
+      <horizontalaxis ref="Isothermal">
+        <variable ref="x"/>
+      </horizontalaxis>
+      <verticalaxis ref="y">
+        <variable ref="clev"/>
+      </verticalaxis>
+      <renderer type="bar">
+        <option name="linecolor" value="0xC99C14"/>
+        <option name="fillcolor" value="0xE0C77B"/>
+        <option name="barwidth" value="0.5"/>
+        <option name="baroffset" value="0"/>
+        <option name="hidelines" value="2"/>
+      </renderer>
+    </plot>
+
+    <plot>
+      <legend label="McDowell"/>
+      <horizontalaxis ref="Isothermal">
+        <variable ref="x"/>
+      </horizontalaxis>
+      <verticalaxis ref="y">
+        <variable ref="mcdo"/>
+      </verticalaxis>
+      <renderer type="bar">
+        <option name="linecolor" value="0xA1A624"/>
+        <option name="fillcolor" value="0xD3D674"/>
+        <option name="barwidth" value="0.5"/>
+        <option name="barbase" value="98078"/>
+        <option name="hidelines" value="2"/>
+      </renderer>
+    </plot>
+    
+    <plot>
+      <legend label="Polk"/>
+      <horizontalaxis ref="Isothermal">
+        <variable ref="x"/>
+      </horizontalaxis>
+      <verticalaxis ref="y">
+        <variable ref="polk"/>
+      </verticalaxis>
+      <renderer type="bar">
+        <option name="linecolor" value="0xA16533"/>
+        <option name="fillcolor" value="0xD1A988"/>
+        <option name="barwidth" value="0.5"/>
+        <option name="barbase" value="143074"/>
+        <option name="hidelines" value="2"/>
+      </renderer>
+    </plot>
+
+    <plot>
+      <legend label="Rutherford"/>
+      <horizontalaxis ref="Isothermal">
+        <variable ref="x"/>
+      </horizontalaxis>
+      <verticalaxis ref="y">
+        <variable ref="ruth"/>
+      </verticalaxis>
+      <renderer type="bar">
+        <option name="linecolor" value="0x708A21"/>
+        <option name="fillcolor" value="0xB1C478"/>
+        <option name="barwidth" value="0.5"/>
+        <option name="barbase" value="163584"/>
+        <option name="hidelines" value="2"/>
+      </renderer>
+    </plot>
+
+
+/*--Southwestern------------------------------------------------------------------*/
+
+    <plot>
+      <legend label="Haywood"/>
+      <horizontalaxis ref="Southwestern">
+        <variable ref="x"/>
+      </horizontalaxis>
+      <verticalaxis ref="y">
+        <variable ref="hayw"/>
+      </verticalaxis>
+      <renderer type="bar">
+        <option name="linecolor" value="0xC99C14"/>
+        <option name="fillcolor" value="0xE0C77B"/>
+        <option name="barwidth" value="0.5"/>
+        <option name="baroffset" value="0"/>
+        <option name="hidelines" value="2"/>
+      </renderer>
+    </plot>
+
+    <plot>
+      <legend label="Jackson"/>
+      <horizontalaxis ref="Southwestern">
+        <variable ref="x"/>
+      </horizontalaxis>
+      <verticalaxis ref="y">
+        <variable ref="jack"/>
+      </verticalaxis>
+      <renderer type="bar">
+        <option name="linecolor" value="0xA1A624"/>
+        <option name="fillcolor" value="0xD3D674"/>
+        <option name="barwidth" value="0.5"/>
+        <option name="barbase" value="59036"/>
+        <option name="hidelines" value="2"/>
+      </renderer>
+    </plot>
+    
+    <plot>
+      <legend label="Macon"/>
+      <horizontalaxis ref="Southwestern">
+        <variable ref="x"/>
+      </horizontalaxis>
+      <verticalaxis ref="y">
+        <variable ref="maco"/>
+      </verticalaxis>
+      <renderer type="bar">
+        <option name="linecolor" value="0xA16533"/>
+        <option name="fillcolor" value="0xD1A988"/>
+        <option name="barwidth" value="0.5"/>
+        <option name="barbase" value="099307"/>
+        <option name="hidelines" value="2"/>
+      </renderer>
+    </plot>
+
+    <plot>
+      <legend label="Cherokee"/>
+      <horizontalaxis ref="Southwestern">
+        <variable ref="x"/>
+      </horizontalaxis>
+      <verticalaxis ref="y">
+        <variable ref="cher"/>
+      </verticalaxis>
+      <renderer type="bar">
+        <option name="linecolor" value="0x708A21"/>
+        <option name="fillcolor" value="0xB1C478"/>
+        <option name="barwidth" value="0.5"/>
+        <option name="barbase" value="133229"/>
+        <option name="hidelines" value="2"/>
+      </renderer>
+    </plot>
+
+    <plot>
+      <legend label="Swain"/>
+      <horizontalaxis ref="Southwestern">
+        <variable ref="x"/>
+      </horizontalaxis>
+      <verticalaxis ref="y">
+        <variable ref="swai"/>
+      </verticalaxis>
+      <renderer type="bar">
+        <option name="linecolor" value="0x156A70"/>
+        <option name="fillcolor" value="0x58868A"/>
+        <option name="barwidth" value="0.5"/>
+        <option name="barbase" value="160673"/>
+        <option name="hidelines" value="2"/>
+      </renderer>
+    </plot>
+
+    <plot>
+      <legend label="Clay"/>
+      <horizontalaxis ref="Southwestern">
+        <variable ref="x"/>
+      </horizontalaxis>
+      <verticalaxis ref="y">
+        <variable ref="clay"/>
+      </verticalaxis>
+      <renderer type="bar">
+        <option name="linecolor" value="0x651873"/>
+        <option name="fillcolor" value="0x7F5F85"/>
+        <option name="barwidth" value="0.5"/>
+        <option name="barbase" value="174654"/>
+        <option name="hidelines" value="2"/>
+      </renderer>
+    </plot>
+
+    <plot>
+      <legend label="Graham"/>
+      <horizontalaxis ref="Southwestern">
+        <variable ref="x"/>
+      </horizontalaxis>
+      <verticalaxis ref="y">
+        <variable ref="grah"/>
+      </verticalaxis>
+      <renderer type="bar">
+        <option name="linecolor" value="0x6E6316"/>
+        <option name="fillcolor" value="0xA8A271"/>
+        <option name="barwidth" value="0.5"/>
+        <option name="barbase" value="185241"/>
+        <option name="hidelines" value="2"/>
+      </renderer>
+    </plot>
+
+/*--Western Piedmont------------------------------------------------------------------*/
+
+    <plot>
+      <legend label="Burke"/>
+      <horizontalaxis ref="Western Piedmont">
+        <variable ref="x"/>
+      </horizontalaxis>
+      <verticalaxis ref="y">
+        <variable ref="burk"/>
+      </verticalaxis>
+      <renderer type="bar">
+        <option name="linecolor" value="0xC99C14"/>
+        <option name="fillcolor" value="0xE0C77B"/>
+        <option name="barwidth" value="0.5"/>
+        <option name="baroffset" value="0"/>
+        <option name="hidelines" value="2"/>
+      </renderer>
+    </plot>
+
+    <plot>
+      <legend label="Caldwell"/>
+      <horizontalaxis ref="Western Piedmont">
+        <variable ref="x"/>
+      </horizontalaxis>
+      <verticalaxis ref="y">
+        <variable ref="cald"/>
+      </verticalaxis>
+      <renderer type="bar">
+        <option name="linecolor" value="0xA1A624"/>
+        <option name="fillcolor" value="0xD3D674"/>
+        <option name="barwidth" value="0.5"/>
+        <option name="barbase" value="90912"/>
+        <option name="hidelines" value="2"/>
+      </renderer>
+    </plot>
+    
+    <plot>
+      <legend label="Alexander"/>
+      <horizontalaxis ref="Western Piedmont">
+        <variable ref="x"/>
+      </horizontalaxis>
+      <verticalaxis ref="y">
+        <variable ref="alex"/>
+      </verticalaxis>
+      <renderer type="bar">
+        <option name="linecolor" value="0xA16533"/>
+        <option name="fillcolor" value="0xD1A988"/>
+        <option name="barwidth" value="0.5"/>
+        <option name="barbase" value="173941"/>
+        <option name="hidelines" value="2"/>
+      </renderer>
+    </plot>
+
+
+    <data>
+      <variables>
+        <variable column="0" id="x"/>
+        <variable column="1" id="bunc" missingvalue="-9000" missingop="le"/>
+        <variable column="2" id="madi" missingvalue="-9000" missingop="le"/>
+        <variable column="3" id="hend" missingvalue="-9000" missingop="le"/>
+        <variable column="4" id="tran" missingvalue="-9000" missingop="le"/>
+        <variable column="5" id="wilk" missingvalue="-9000" missingop="le"/>
+        <variable column="6" id="wata" missingvalue="-9000" missingop="le"/>
+        <variable column="7" id="mitc" missingvalue="-9000" missingop="le"/>
+        <variable column="8" id="yanc" missingvalue="-9000" missingop="le"/>
+        <variable column="9" id="ashe" missingvalue="-9000" missingop="le"/>
+        <variable column="10" id="aver" missingvalue="-9000" missingop="le"/>
+        <variable column="11" id="alle" missingvalue="-9000" missingop="le"/>
+        <variable column="12" id="clev" missingvalue="-9000" missingop="le"/>
+        <variable column="13" id="mcdo" missingvalue="-9000" missingop="le"/>
+        <variable column="14" id="polk" missingvalue="-9000" missingop="le"/>
+        <variable column="15" id="ruth" missingvalue="-9000" missingop="le"/>
+        <variable column="16" id="hayw" missingvalue="-9000" missingop="le"/>
+        <variable column="17" id="jack" missingvalue="-9000" missingop="le"/>
+        <variable column="18" id="maco" missingvalue="-9000" missingop="le"/>
+        <variable column="19" id="cher" missingvalue="-9000" missingop="le"/>
+        <variable column="20" id="swai" missingvalue="-9000" missingop="le"/>
+        <variable column="21" id="clay" missingvalue="-9000" missingop="le"/>
+        <variable column="22" id="grah" missingvalue="-9000" missingop="le"/>
+        <variable column="23" id="burk" missingvalue="-9000" missingop="le"/>
+        <variable column="24" id="cald" missingvalue="-9000" missingop="le"/>
+        <variable column="25" id="alex" missingvalue="-9000" missingop="le"/>
+      </variables>
+      <values>
+0.5, 238318, 259082, 365822, 398912,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000
+1.5,  -9000,  -9000,  -9000,  -9000, 069340, 120419, 135998, 153816, 171613, 198894, 210049,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000
+2.5,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000, 098078, 143074, 163584, 231394,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000
+3.5,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000, 059036, 099307, 133229, 160673, 174654, 185241, 194102,  -9000,  -9000,  -9000
+4.5,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000,  -9000, 090912, 173941, 211139
+      </values>
+    </data>
+</mugl>
