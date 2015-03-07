@@ -93,7 +93,7 @@ $(document).ready(function() {
     }
 
     $.ajax({
-        url: "tests.json",
+        url: "graphs.json",
         dataType: "json",
         success: function(tests) {
 
