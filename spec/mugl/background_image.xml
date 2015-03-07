@@ -1,6 +1,6 @@
 <mugl>
   <background color="0xcccccc">
-    <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/7/79/NOAA_logo.svg/200px-NOAA_logo.svg.png" frame="plot" anchor="0,0" base="0,0"/>
+    <img src="./images/200px-NOAA_logo.svg.png" frame="plot" anchor="0,0" base="0,0"/>
   </background>
   <window margin="0" padding="0" border="5" bordercolor="0x000000"/>
   <plotarea margintop="10" marginleft="238" marginbottom="35" marginright="35" border="3" bordercolor="0x00ff0f"/>
