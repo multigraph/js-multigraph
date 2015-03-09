@@ -6,7 +6,7 @@ For more information about using Multigraph, see http://www.multigraph.org.
 Development
 ===========
 
-To work on the _nodify_ branch of Multigraph, prepare your computer by
+To work on the Multigraph code, prepare your computer by
 installing the required dev tools:
 
 * npm
@@ -25,11 +25,6 @@ Then, to obtain and work with the code, use the following steps.
 ### Clone the repo
 ```bash
 git clone git@github.com:embeepea/js-multigraph
-```
-
-### Check out the 'nodify' branch:
-```bash
-git checkout nodify
 ```
 
 ### Initialize the git submodules
