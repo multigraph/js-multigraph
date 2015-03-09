@@ -50,7 +50,7 @@ npm run build
 ### Update and run the unit tests in a browser
 
 ```bash
-npm run update-browser-unit-tests
+npm run build-tests
 ```
 
 After doing this, browse `spec/index.html` to run the tests in the browser.
@@ -66,7 +66,7 @@ the comments in `spec/mugl/README.md` for details.  After adding a new *.xml fil
 and/or editing `spec/mugl/tests.js`, run the command
 
 ```bash
-npm run update-graphics-tests
+npm run build-graph-tests
 ```
 
 to update the tests, then browse `spec/graphics/index.html`.
