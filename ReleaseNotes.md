@@ -1,3 +1,15 @@
+Version 5.0.1 (2015-03-09)
+---------------------------
+
+* converts source code to node.js-style 'require' modules instead of jermaine namespaces
+* enables command-line execution of unit tests using jasmine-node
+* revises the way test graphs are handled
+* converts from grunt to npm for building
+* creates new "nojq" version of distributed JS files that do not include jQuery
+* this release is supposed to otherwise be 100% backward-compatible with previous versions;
+  please submit an issue in the Github issue queue at https://github.com/multigraph/js-multigraph/issues
+  if you notice any problems
+
 Version 4.3rc1 (2014-04-22)
 ---------------------------
 
