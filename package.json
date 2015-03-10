@@ -1,12 +1,12 @@
 {
-  "name": "Multigraph",
-  "version": "4.3.0",
-  "homepage": "multigraph.github.io",
-  "author": "UNC Asheville's NEMAC",
+  "name": "multigraph",
+  "version": "5.0.1",
+  "homepage": "multigraph.org",
+  "author": "Mark Phillips",
   "contributors": [
     {
       "name": "Mark Phillips",
-      "email": "mphillip@unca.edu"
+      "email": "mbp@geomtech.com"
     },
     {
       "name": "John Frimmel",
@@ -36,6 +36,8 @@
     "walk": "^2.3.9",
     "xmldom": "^0.1.19",
     "xmlhttprequest": "^1.7.0",
+  },
+  "dependencies": {
     "sprintf": "^0.1.5"
   },
   "scripts": {
