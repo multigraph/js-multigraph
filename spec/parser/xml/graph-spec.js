@@ -1,7 +1,7 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
 /*jshint  laxbreak:true */
 
-describe("Graph parsing", function () {
+describe("Graph XML parsing", function () {
     "use strict";
 
     var ArrayData = require('../../../src/core/array_data.js'),

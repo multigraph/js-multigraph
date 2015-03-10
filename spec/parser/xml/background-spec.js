@@ -1,7 +1,7 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
 /*jshint laxbreak:true */
 
-describe("Background parsing", function () {
+describe("Background XML parsing", function () {
     "use strict";
 
     var Background = require('../../../src/core/background.js'),

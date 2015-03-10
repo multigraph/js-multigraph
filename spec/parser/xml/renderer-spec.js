@@ -1,7 +1,7 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
 /*jshint laxbreak:true */
 
-describe("Plot Renderer parsing", function () {
+describe("Plot Renderer XML parsing", function () {
     "use strict";
 
     var Renderer = require('../../../src/core/renderer.js'),

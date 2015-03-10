@@ -1,7 +1,7 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
 /*jshint laxbreak:true */
 
-describe("DatatipsVariable parsing", function () {
+describe("DatatipsVariable XML parsing", function () {
     "use strict";
 
     var DatatipsVariable = require('../../../src/core/datatips_variable.js'),

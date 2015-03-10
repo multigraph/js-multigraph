@@ -1,7 +1,7 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
 /*jshint laxbreak:true */
 
-describe("Background Img parsing", function () {
+describe("Background Img XML parsing", function () {
     "use strict";
 
     var Img = require('../../../src/core/img.js'),

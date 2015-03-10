@@ -1,7 +1,7 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
 /*jshint laxbreak:true */
 
-describe("PlotLegend parsing", function () {
+describe("PlotLegend XML parsing", function () {
     "use strict";
 
     var PlotLegend = require('../../../src/core/plot_legend.js'),

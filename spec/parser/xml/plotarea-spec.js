@@ -1,7 +1,7 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
 /*jshint laxbreak:true */
 
-describe("Plotarea parsing", function () {
+describe("Plotarea XML parsing", function () {
     "use strict";
 
     var Plotarea = require('../../../src/core/plotarea.js'),

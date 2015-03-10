@@ -1,7 +1,7 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
 /*jshint laxbreak:true */
 
-describe("Axis Pan parsing", function () {
+describe("Axis Pan XML parsing", function () {
     "use strict";
 
     var Pan = require('../../../src/core/pan.js'),

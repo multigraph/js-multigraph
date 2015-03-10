@@ -1,7 +1,7 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
 /*jshint laxbreak:true */
 
-describe("Axis Grid parsing", function () {
+describe("Axis Grid XML parsing", function () {
     "use strict";
 
     var Grid = require('../../../src/core/grid.js'),

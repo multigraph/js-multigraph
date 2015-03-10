@@ -1,7 +1,7 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
 /*jshint  laxbreak:true */
 
-describe("Data DataVariable parsing", function () {
+describe("Data DataVariable XML parsing", function () {
     "use strict";
 
     var DataVariable = require('../../../src/core/data_variable.js'),

@@ -1,7 +1,7 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
 /*jshint laxbreak:true */
 
-describe("Graph Title parsing", function () {
+describe("Graph Title XML parsing", function () {
     "use strict";
 
     var Title = require('../../../src/core/title.js'),

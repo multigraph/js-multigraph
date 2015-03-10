@@ -1,7 +1,7 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
 /*jshint laxbreak:true */
 
-describe("Axis Label parsing", function () {
+describe("Axis Label XML parsing", function () {
     "use strict";
 
     var Labeler = require('../../../src/core/labeler.js'),

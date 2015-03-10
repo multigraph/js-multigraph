@@ -1,7 +1,7 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
 /*jshint laxbreak:true */
 
-describe("Plot Datatips parsing", function () {
+describe("Plot Datatips XML parsing", function () {
     "use strict";
 
     var Datatips = require('../../../src/core/datatips.js'),

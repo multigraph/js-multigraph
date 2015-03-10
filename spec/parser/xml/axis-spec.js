@@ -1,7 +1,7 @@
 /*global xdescribe, describe, xit, beforeEach, expect, it, jasmine */
 /*jshint laxbreak:true */
 
-describe("Axis parsing", function () {
+describe("Axis XML parsing", function () {
     "use strict";
 
     var Axis = require('../../../src/core/axis.js'),

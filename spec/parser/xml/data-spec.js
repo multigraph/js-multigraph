@@ -1,7 +1,7 @@
 /*global describe, it, beforeEach, expect, xit, jasmine, waitsFor, runs */
 /*jshint  laxbreak:true */
 
-describe("Data parsing", function () {
+describe("Data XML parsing", function () {
     "use strict";
 
     var Data = require('../../../src/core/data.js'),

@@ -1,7 +1,7 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
 /*jshint laxbreak:true */
 
-describe("Window parsing", function () {
+describe("Window XML parsing", function () {
     "use strict";
 
     var Window = require('../../../src/core/window.js'),

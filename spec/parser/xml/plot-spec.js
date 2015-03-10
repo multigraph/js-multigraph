@@ -1,7 +1,7 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
 /*jshint laxbreak:true */
 
-describe("DataPlot parsing", function () {
+describe("DataPlot XML parsing", function () {
     "use strict";
 
     var Plot = require('../../../src/core/plot.js'),

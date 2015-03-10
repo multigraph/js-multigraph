@@ -1,7 +1,7 @@
 /*global describe, it, beforeEach, expect, xit, jasmine */
 /*jshint laxbreak:true */
 
-describe("Plot Filter parsing", function () {
+describe("Plot Filter XML parsing", function () {
     "use strict";
 
     var Filter = require('../../../src/core/filter.js'),
