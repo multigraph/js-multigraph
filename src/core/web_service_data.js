@@ -201,7 +201,7 @@ module.exports = function($) {
             var node,
                 requestURL,
                 that = this,
-                JQueryXMLParser = require('../parser/jquery_xml_parser.js')($);
+                JQueryXMLParser = require('../parser/xml/jquery_xml_parser.js')($);
 
             // create the cache node that will hold the data in this range
             node = new WebServiceDataCacheNode(min, max);

@@ -76,7 +76,7 @@ module.exports = function($, window) {
     //    };
 
     var generateInitialGraph = function (mugl, options) {
-        var JQueryXMLParser = require('../../parser/jquery_xml_parser.js')($);
+        var JQueryXMLParser = require('../../parser/xml/jquery_xml_parser.js')($);
         var xmlObj = JQueryXMLParser.stringToJQueryXMLObj(mugl);
         var multigraph = Multigraph.parseXML( xmlObj, options.mugl, options.messageHandler );
         multigraph.normalize();
