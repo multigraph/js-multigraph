@@ -1,8 +1,14 @@
 var Window = require('../../core/window.js');
 
+// <window
+//       width="INTEGER"
+//       height="INTEGER"
+//       border="INTEGER(2)"
+//       bordercolor="COLOR(black)"
+//       margin="INTEGER(2)"
+//       padding="INTEGER(5)">
+//   </window>
 Window.parseXML = function (xml) {
-    //WARNING: do not declare a local var named "window" here; it masks the global 'window' object,
-    //  which screws up the references to window.multigraph.* below!
     var w = new Window(),
         RGBColor         = require('../../math/rgb_color.js'),
         pF               = require('../../util/parsingFunctions.js'),

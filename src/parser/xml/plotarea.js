@@ -1,5 +1,14 @@
 var Plotarea = require('../../core/plotarea.js');
 
+//  <plotarea
+//     marginbottom="INTEGER(35)"
+//     marginleft="INTEGER(38)"
+//     margintop="INTEGER(10)"
+//     marginright="INTEGER(35)"
+//     border="INTEGER(0)"
+//     bordercolor="COLOR(0xeeeeee)"
+//     color="COLOR">
+//  </plotarea>
 Plotarea.parseXML = function (xml) {
     var plotarea = new Plotarea(),
         margin = plotarea.margin(),
