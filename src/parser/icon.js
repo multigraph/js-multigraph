@@ -1,6 +1,8 @@
 var Icon = require('../core/icon.js');
 
+// <icon border="2" width="30" height="20"/>
 Icon.parseXML = function (xml) {
+
     var icon = new Icon(),
         pF = require('../util/parsingFunctions.js'),
         parseAttribute   = pF.parseAttribute,
@@ -13,11 +15,10 @@ Icon.parseXML = function (xml) {
     return icon;
 };
 
+// "icon" : { "border": 2, "width": 30, "height": 20 }
 Icon.parseJSON = function (json) {
     var icon = new Icon(),
-        pF = require('../util/parsingFunctions.js'),
-        parseAttribute   = pF.parseAttribute,
-        parseInteger     = pF.parseInteger;
+        parseAttribute = require('../util/parsingFunctions.js').parseAttribute;
     if (json) {
         parseAttribute(json.height, icon.height);
         parseAttribute(json.width,  icon.width);
