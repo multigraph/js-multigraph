@@ -1,5 +1,6 @@
 var Img = require('../../core/img.js');
 
+//   <img src="foo.png" anchor="-1 5" base="3 12" position="-2 3" frame="padding"/>
 Img.parseXML = function (xml, multigraph) {
     var img,
         pF = require('../../util/parsingFunctions.js'),

@@ -1,22 +1,21 @@
 var Grid = require('../../core/grid.js');
 
-// <grid color="#ff00ff" visible="true"/>
-Grid.parseXML = function (xml) {
+// "grid": { "color": "#ff00ff", visible: true }
+Grid.parseJSON = function (json) {
     var grid             = new Grid(),
         RGBColor         = require('../../math/rgb_color.js'),
-        pF               = require('../../util/parsingFunctions.js'),
-        parseAttribute   = pF.parseAttribute,
+        parseAttribute   = require('../../util/parsingFunctions.js').parseAttribute,
         attr;
-    if (xml) {
-        parseAttribute(pF.getXMLAttr(xml,"color"), grid.color, RGBColor.parse);
+    if (json) {
+        parseAttribute(json.color, grid.color, RGBColor.parse);
         //NOTE: visible attribute should default to true when parsing, so that
-        //      the presence of a <grid> tag at all will turn on a grid.  In
+        //      the presence of a "grid" property at all will turn on a grid.  In
         //      the Grid object itself, though, the default for the visible
         //      attribute is false, so that when we create a default grid object
         //      in code (as opposed to parsing), it defaults to not visible.
-        attr = pF.getXMLAttr(xml,"visible");
+        attr = json.visible;
         if (attr !== undefined) {
-            grid.visible(pF.parseBoolean(attr));
+            grid.visible(attr);
         } else {
             grid.visible(true);
         }

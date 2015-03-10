@@ -1,5 +1,8 @@
 var Background = require('../../core/background.js');
 
+// <background color="#ffff00">
+//   <img src="foo.png" anchor="-1 5" base="3 12" position="-2 3" frame="padding"/>
+// </background>
 Background.parseXML = function (xml, multigraph) {
     var background       = new Background(),
         pF               = require('../../util/parsingFunctions.js'),
