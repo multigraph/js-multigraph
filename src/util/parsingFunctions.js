@@ -30,7 +30,7 @@ var ParsingFunctions = {};
  */
 ParsingFunctions.parseAttribute = function (value, attribute, preprocessor) {
     if (value !== undefined) {
-        attribute(preprocessor(value));
+        attribute((preprocessor !== undefined) ? preprocessor(value) : value);
         return true;
     }
     return false;
