@@ -1,23 +1,27 @@
 var Labeler = require('../../core/labeler.js');
 
-// <labels
-//   format="STRING"
-//   start="DATAVALUE(0)"
-//   angle="DOUBLE(0)"
-//   position="POINT"
-//   anchor="POINT"
-//   color="COLOR(black)"
-//   spacing="STRING"
-//   densityfactor="DOUBLE(1.0)">
-//     <label format="STRING" start="STRING" angle="DOUBLE" position="POINT" anchor="POINT" spacing="STRING" densityfactor="DOUBLE">
-//     <label format="STRING" start="STRING" angle="DOUBLE" position="POINT" anchor="POINT" spacing="STRING" densityfactor="DOUBLE">
-// </label>
-Labeler.parseXML = function (xml, axis, defaults, spacing) {
+// "labels" : {
+//   "format: STRING,
+//   "start" : DATAVALUE(0),
+//   "angle" : DOUBLE(0),
+//   "position" : POINT,
+//   "anchor" : POINT,
+//   "color" : COLOR(black),
+//   "spacing" : STRING,
+//   "densityfactor" : DOUBLE(1.0),
+//   "label" : [
+//     { "format": "%Y", "start": STRING, "angle": 45, "position": [2,3],
+//       "anchor": [1,1], "spacing": "1Y", "densityfactor": 0.2 },
+//     { "format": "%M", "start": STRING, "angle": 45, "position": [2,3],
+//       "anchor": [1,1], "spacing": ["1M", "1D"], "densityfactor": 9.0 }
+//   ]
+// }
+Labeler.parseJSON = function (json, axis, defaults, spacing) {
     // This parser takes an optional final argument, spacing, which is a string representing
     // the spacing to be parsed for the labeler.  If that argument is not present, the spacing
-    // value is taken from the xml object.  If a spacing argument is present, it is parsed
+    // value is taken from the json object.  If a spacing argument is present, it is parsed
     // and used to set the spacing attribute of the Labeler object, and in this case, any
-    // spacing value present in the xml is ignored.
+    // spacing value present in the json is ignored.
     //
     // If the spacing argument has the value null, the resulting labeler will have no spacing
     // attribute set at all.
@@ -28,7 +32,7 @@ Labeler.parseXML = function (xml, axis, defaults, spacing) {
         DataValue = require('../../core/data_value.js'),
         DataFormatter = require('../../core/data_formatter.js'),
         pF = require('../../util/parsingFunctions.js'),
-        parsePoint = Point.parse;
+        parseJSONPoint = function(p) { return new Point(p[0], p[1]); };
 
     // `parseAttribute` returns true or false depending on whether or not it set the attribute.
     // If it did not and if the `defaults` object exists then the attribute is set to the
@@ -49,25 +53,25 @@ Labeler.parseXML = function (xml, axis, defaults, spacing) {
         };
     };
 
-    if (xml) {
+    if (json) {
         labeler = new Labeler(axis);
         if (spacing !== null) {
             if (spacing === undefined) {
-                spacing = pF.getXMLAttr(xml,"spacing");
+                spacing = json.spacing;
             }
             //NOTE: spacing might still === undefined at this point
             parseLabelerAttribute(spacing, labeler.spacing,
                                   function(v) { return DataMeasure.parse(axis.type(), v); }, //pF.parseDataMeasure(),
                                   "spacing");
         }
-        parseLabelerAttribute(pF.getXMLAttr(xml,"format"),        labeler.formatter,     parseDataFormatter(axis.type()),              "formatter");
-        parseLabelerAttribute(pF.getXMLAttr(xml,"start"),         labeler.start,         parseDataValue(axis.type()),                  "start");
-        parseLabelerAttribute(pF.getXMLAttr(xml,"angle"),         labeler.angle,         parseFloat,                                   "angle");
-        parseLabelerAttribute(pF.getXMLAttr(xml,"position"),      labeler.position,      parsePoint,                                   "position");
-        parseLabelerAttribute(pF.getXMLAttr(xml,"anchor"),        labeler.anchor,        parsePoint,                                   "anchor");
-        parseLabelerAttribute(pF.getXMLAttr(xml,"densityfactor"), labeler.densityfactor, parseFloat,                                   "densityfactor");
-        parseLabelerAttribute(pF.getXMLAttr(xml,"color"),         labeler.color,         RGBColor.parse,                               "color");
-        parseLabelerAttribute(pF.getXMLAttr(xml,"visible"),       labeler.visible,       pF.parseBoolean,                "visible");
+        parseLabelerAttribute(json.format,        labeler.formatter,     parseDataFormatter(axis.type()),              "formatter");
+        parseLabelerAttribute(json.start,         labeler.start,         parseDataValue(axis.type()),                  "start");
+        parseLabelerAttribute(json.angle,         labeler.angle,         undefined,                                    "angle");
+        parseLabelerAttribute(json.position,      labeler.position,      parseJSONPoint,                               "position");
+        parseLabelerAttribute(json.anchor,        labeler.anchor,        parseJSONPoint,                               "anchor");
+        parseLabelerAttribute(json.densityfactor, labeler.densityfactor, undefined,                                    "densityfactor");
+        parseLabelerAttribute(json.color,         labeler.color,         RGBColor.parse,                               "color");
+        parseLabelerAttribute(json.visible,       labeler.visible,       pF.parseBoolean,                              "visible");
 
     }
     return labeler;
