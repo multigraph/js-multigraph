@@ -1,5 +1,6 @@
 var Pan = require('../../core/pan.js');
 
+// <pan allowed="true" min="-100" max="100"/>
 Pan.parseXML = function (xml, type) {
     var pan            = new Pan(),
         pF             = require('../../util/parsingFunctions.js'),

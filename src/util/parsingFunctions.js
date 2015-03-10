@@ -101,14 +101,18 @@ ParsingFunctions.parseInteger = function (value) {
  * @return {Boolean}
  */
 ParsingFunctions.parseBoolean = function (param) {
-    switch (param.toLowerCase()) {
-    case "true":
-    case "yes":
-        return true;
-    case "false":
-    case "no":
-        return false;
-    default:
+    if (typeof(param) === "string") {
+        switch (param.toLowerCase()) {
+        case "true":
+        case "yes":
+            return true;
+        case "false":
+        case "no":
+            return false;
+        default:
+            return param;
+        }
+    } else {
         return param;
     }
 };
