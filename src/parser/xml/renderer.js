@@ -7,6 +7,16 @@ module.exports = function($) {
     // function was previously called, just return immediately
     if (typeof(Renderer.parseXML)==="function") { return Renderer; };
 
+    // <renderer
+    //     type="RENDERERTYPE(line)">
+    //   <option
+    //       name="STRING!"
+    //       value="STRING!"
+    //       min="DATAVALUE"
+    //       max="DATAVALUE">
+    //   </option>
+    //   ...
+    // </renderer>
     Renderer.parseXML = function (xml, plot, messageHandler) {
         var DataValue   = require('../../core/data_value.js'),
             NumberValue = require('../../core/number_value.js'),
