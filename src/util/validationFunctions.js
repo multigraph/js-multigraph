@@ -22,4 +22,8 @@ ValidationFunctions.typeOf = function(value) {
     return s;
 };
 
+ValidationFunctions.isNumberNotNaN = function(x) {
+    return (typeof(x) === "number") && (x === x);
+};
+
 module.exports = ValidationFunctions;

@@ -45,6 +45,7 @@ ParsingFunctions.parseAttribute = function (value, attribute, preprocessor) {
  * @return {String}
  */
 ParsingFunctions.parseString = function (value) {
+console.log("warning: deprecated ParsingFunctions.parseString called; remove this once it isn't called any more.\n");
     return value;
 };
 

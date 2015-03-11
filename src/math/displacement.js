@@ -78,12 +78,12 @@ Displacement.regExp = /^([\+\-]?[0-9\.]+)([+\-])([0-9\.+\-]+)$/;
  *     "+A"   ==>  a=A  b=0
  *     "-A"   ==>  a=-A b=0
  * 
- * @method parse
- * @param {String} string
- * @static
- * @author jrfrimme
+ * If the input argument is not a string, it is coerced into one.
  */
 Displacement.parse = function (string) {
+    if (typeof(string) !== "string") {
+        string = String(string);
+    }
     var ar = Displacement.regExp.exec(string),
         d,
         a,

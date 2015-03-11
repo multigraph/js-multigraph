@@ -1,5 +1,21 @@
 // This file uses jQuery.  A valid jQuery object must be passed to the
 // function returned by requiring this file.
+
+//  <horizontalaxis id="STRING" type="DATATYPE(number)" length="RELLEN(1.0)" base="POINT(-1,1)" anchor="DOUBLE(-1)" position="POINT(0,0)"
+//      min="DATAVALUEORAUTO(auto)" max="DATAVALUEORAUTO(auto)" minposition="RELPOS(-1.0)" maxposition="RELPOS(1.0)" color="COLOR(black)" linewidth="INTEGER(1)"
+//      tickmin="INTEGER(-3)" tickmax="INTEGER(3)" tickcolor="COLOR(black)">
+//    <labels format="STRING" start="DATAVALUE(0)" angle="DOUBLE(0)" position="POINT" anchor="POINT" color="COLOR(black)" spacing="STRING" densityfactor="DOUBLE(1.0)">
+//        <label format="STRING" start="STRING" angle="DOUBLE" position="POINT" anchor="POINT" spacing="STRING" densityfactor="DOUBLE">
+//        <label format="STRING" start="STRING" angle="DOUBLE" position="POINT" anchor="POINT" spacing="STRING" densityfactor="DOUBLE">
+//      </label>
+//    </labels>
+//    <title base="DOUBLE(0)" anchor="POINT" position="POINT" angle="DOUBLE(0)">TITLETEXT</title>
+//    <grid color="COLOR(0xeeeeee)" visible="BOOLEAN(false)" />
+//    <pan allowed="BOOLEAN(yes)" min="DATAVALUE" max="DATAVALUE" />
+//    <zoom allowed="BOOLEAN(yes)" min="DATAMEASURE" max="DATAMEASURE" anchor="DATAVALUE" />
+//    <binding id="STRING!" min="DATAVALUE!" max="DATAVALUE!" />
+//  </horizontalaxis>
+
 module.exports = function($) {
     var Axis = require('../../core/axis.js'),
         pF = require('../../util/parsingFunctions.js');

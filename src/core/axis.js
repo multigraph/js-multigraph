@@ -62,10 +62,8 @@ var Axis = new jermaine.Model("Axis", function () {
 
     /**
      * Stores the "min" value from the mugl file as a string, if there was one.
-     *
-     * @property min
-     * @type {String}
-     * @author jrfrimme
+     * This value is stored as a string, rather than as a number or a DataValue,
+     * because it might have the value "auto".
      */
     this.hasA("min").which.isA("string");
 
@@ -96,10 +94,8 @@ var Axis = new jermaine.Model("Axis", function () {
 
     /**
      * Stores the "max" value from the mugl file as a string, if there was one.
-     *
-     * @property max
-     * @type {String}
-     * @author jrfrimme
+     * This value is stored as a string, rather than as a number or a DataValue,
+     * because it might have the value "auto".
      */
     this.hasA("max").which.isA("string");
 
