@@ -17,6 +17,7 @@ var Datatips = new jermaine.Model("Datatips", function () {
         return bgcolor instanceof RGBColor;
     });
     this.hasA("bgalpha").which.validatesWith(function (bgalpha) {
+        // why is this a string?  consider changing it to be a number.  mbp Wed Mar 11 15:48:23 2015
         return typeof(bgalpha) === "string";
     });
     this.hasA("border").which.isA("integer");

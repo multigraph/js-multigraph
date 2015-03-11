@@ -1,3 +1,4 @@
+
 // This file uses jQuery.  A valid jQuery object must be passed to the
 // function returned by requiring this file.
 module.exports = function($) {
@@ -7,6 +8,17 @@ module.exports = function($) {
     // function was previously called, just return immediately
     if (typeof(Datatips.parseXML)==="function") { return Datatips; };
 
+    // <datatips
+    //   format="STRING!"
+    //   bgcolor="COLOR"
+    //   bgalpha="DOUBLE"
+    //   border="INTEGER"
+    //   bordercolor="COLOR"
+    //   pad="INTEGER">
+    //   <variable
+    //     format="STRING!">
+    //   </variable>
+    // </datatips>
     Datatips.parseXML = function (xml) {
         var datatips         = new Datatips(),
             RGBColor         = require('../../math/rgb_color.js'),
