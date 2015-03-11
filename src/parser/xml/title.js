@@ -1,5 +1,18 @@
 var Title = require('../../core/title.js');
 
+//  <title
+//      base="POINT(0,1)"
+//      anchor="POINT(0,1)"
+//      position="POINT(0,0)"
+//      frame="FRAME(padding)"
+//      color="COLOR(white)"
+//      opacity="DOUBLE(1.0)"
+//      border="INTEGER(0)"
+//      bordercolor="COLOR(black)"
+//      padding="INTEGER(0)"
+//      cornerradius="INTEGER(15)"
+//      fontsize="INTEGER">
+//  </title>
 Title.parseXML = function (xml, graph) {
     var Point            = require('../../math/point.js'),
         RGBColor         = require('../../math/rgb_color.js'),
