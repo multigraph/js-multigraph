@@ -7,6 +7,11 @@ module.exports = function($) {
     // function was previously called, just return immediately
     if (typeof(Filter.parseXML)==="function") { return Filter; };
 
+    // <filter type="STRING">
+    //    <option name="STRING!" value="STRING!"/>
+    //    <option name="STRING!" value="STRING!"/>
+    //    ...
+    // </filter>
     Filter.parseXML = function (xml) {
         var filter = new Filter(),
             FilterOption = require('../../core/filter_option.js'),

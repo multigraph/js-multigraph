@@ -1,5 +1,6 @@
 var FilterOption = require('../../core/filter_option.js');
 
+// <option name="STRING!" value="STRING!"/>
 FilterOption.parseXML = function (xml) {
     var pF     = require('../../util/parsingFunctions.js'),
         option = new FilterOption();
