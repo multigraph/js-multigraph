@@ -153,8 +153,11 @@ utilityFunctions.getDefaultValuesFromXSD = function () {
                 "anchor": function () { return new Point(0,0); },
                 "color" : function () { return new RGBColor.parse("0x000000"); },
                 "visible" : true,
-                "defaultNumberSpacing": "10000 5000 2000 1000 500 200 100 50 20 10 5 2 1 0.1 0.01 0.001",
-                "defaultDatetimeSpacing": "1000Y 500Y 200Y 100Y 50Y 20Y 10Y 5Y 2Y 1Y 6M 3M 2M 1M 7D 3D 2D 1D 12H 6H 3H 2H 1H",
+                //"defaultNumberSpacing": "10000 5000 2000 1000 500 200 100 50 20 10 5 2 1 0.1 0.01 0.001",
+                //"defaultDatetimeSpacing": "1000Y 500Y 200Y 100Y 50Y 20Y 10Y 5Y 2Y 1Y 6M 3M 2M 1M 7D 3D 2D 1D 12H 6H 3H 2H 1H",
+                "defaultNumberSpacing": [10000, 5000, 2000, 1000, 500, 200, 100, 50, 20, 10, 5, 2, 1, 0.1, 0.01, 0.001],
+                "defaultDatetimeSpacing": ["1000Y", "500Y", "200Y", "100Y", "50Y", "20Y", "10Y", "5Y", "2Y", "1Y", "6M",
+                                           "3M", "2M", "1M", "7D", "3D", "2D", "1D", "12H", "6H", "3H", "2H", "1H"],
                 "function": undefined,
                 "densityfactor": undefined
             },

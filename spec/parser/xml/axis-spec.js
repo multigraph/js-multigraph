@@ -318,20 +318,19 @@ describe("Axis XML parsing", function () {
 
             it("should properly parse axis models from XML with a labels child tag, a type of 'number' and no spacing attribute", function () {
                 var defaultValues = (utilityFunctions.getDefaultValuesFromXSD()).horizontalaxis.labels,
-                    spacingStrings   = defaultValues.defaultNumberSpacing.split(/\s+/),
-
-                xmlString = '<verticalaxis'
-                    +   ' type="number"'
-                    +    '>'
-                    +  '<labels'
-                    +     ' start="' + startString + '"'
-                    +     ' angle="' + angleString +'"'
-                    +     ' format="' + formatString +'"'
-                    +     ' anchor="' + anchorString +'"'
-                    +     ' position="' + positionString +'"'
-                    +     ' densityfactor="' + densityfactorString +'"'
-                    +      '/>'
-                    + '</verticalaxis>';
+                    spacings   = defaultValues.defaultNumberSpacing,
+                    xmlString = '<verticalaxis'
+                        +   ' type="number"'
+                        +    '>'
+                        +  '<labels'
+                        +     ' start="' + startString + '"'
+                        +     ' angle="' + angleString +'"'
+                        +     ' format="' + formatString +'"'
+                        +     ' anchor="' + anchorString +'"'
+                        +     ' position="' + positionString +'"'
+                        +     ' densityfactor="' + densityfactorString +'"'
+                        +      '/>'
+                        + '</verticalaxis>';
 
                 $xml = JQueryXMLParser.stringToJQueryXMLObj(xmlString);
                 axis = Axis.parseXML($xml, Axis.VERTICAL);
@@ -345,13 +344,13 @@ describe("Axis XML parsing", function () {
                     expect(axis.labelers().at(i).anchor().x()).toEqual((Point.parse(anchorString)).x());
                     expect(axis.labelers().at(i).anchor().y()).toEqual((Point.parse(anchorString)).y());
                     expect(axis.labelers().at(i).densityfactor()).toEqual(parseFloat(densityfactorString));
-                    expect(axis.labelers().at(i).spacing().getRealValue()).toEqual((DataMeasure.parse(axis.type(), spacingStrings[i])).getRealValue());
+                    expect(axis.labelers().at(i).spacing().getRealValue()).toEqual((DataMeasure.parse(axis.type(), spacings[i])).getRealValue());
                 }
             });
 
             it("should properly parse axis models from XML with a labels child tag, a type of 'datetime' and no spacing attribute", function () {
                 var defaultValues = (utilityFunctions.getDefaultValuesFromXSD()).horizontalaxis.labels,
-                    spacingStrings = defaultValues.defaultDatetimeSpacing.split(/\s+/),
+                    spacings = defaultValues.defaultDatetimeSpacing,
                     datetimeFormatString = "%Y-%M-%D %H:%i",
                     datetimeStartString = "0";
 
@@ -380,7 +379,7 @@ describe("Axis XML parsing", function () {
                     expect(axis.labelers().at(i).anchor().x()).toEqual((Point.parse(anchorString)).x());
                     expect(axis.labelers().at(i).anchor().y()).toEqual((Point.parse(anchorString)).y());
                     expect(axis.labelers().at(i).densityfactor()).toEqual(parseFloat(densityfactorString));
-                    expect(axis.labelers().at(i).spacing().getRealValue()).toEqual((DataMeasure.parse(axis.type(), spacingStrings[i])).getRealValue());
+                    expect(axis.labelers().at(i).spacing().getRealValue()).toEqual((DataMeasure.parse(axis.type(), spacings[i])).getRealValue());
                 }
             });
 

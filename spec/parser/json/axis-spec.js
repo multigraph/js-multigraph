@@ -304,7 +304,7 @@ describe("Axis JSON parsing", function () {
 
             it("should properly parse axis models from XML with a labels child tag, a type of 'number' and no spacing attribute", function () {
                 var defaultValues = (utilityFunctions.getDefaultValuesFromXSD()).horizontalaxis.labels,
-                    spacings   = defaultValues.defaultNumberSpacing.split(/\s+/),
+                    spacings   = defaultValues.defaultNumberSpacing;
 
                     json = {
                         "type"   : "number",
@@ -335,7 +335,7 @@ describe("Axis JSON parsing", function () {
 
             it("should properly parse axis models from XML with a labels child tag, a type of 'datetime' and no spacing attribute", function () {
                 var defaultValues = (utilityFunctions.getDefaultValuesFromXSD()).horizontalaxis.labels,
-                    spacings = defaultValues.defaultDatetimeSpacing.split(/\s+/),
+                    spacings = defaultValues.defaultDatetimeSpacing,
                     datetimeFormat = "%Y-%M-%D %H:%i",
                     datetimeStart = "0";
 

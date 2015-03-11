@@ -495,14 +495,13 @@ var Axis = new jermaine.Model("Axis", function () {
         //
         if (this.labelers().size() === 0) {
             var defaultValues = (utilityFunctions.getDefaultValuesFromXSD()).horizontalaxis.labels,
-                spacingString = this.type() === DataValue.NUMBER ?
+                defaultSpacings = this.type() === DataValue.NUMBER ?
                     defaultValues.defaultNumberSpacing :
-                    defaultValues.defaultDatetimeSpacing,
-                spacingStrings = spacingString.split(/\s+/);
+                    defaultValues.defaultDatetimeSpacing;
 
-            for (i = 0; i < spacingStrings.length; i++) {
+            for (i = 0; i < defaultSpacings.length; i++) {
                 label = new Labeler(this);
-                label.spacing(DataMeasure.parse(this.type(), spacingStrings[i]));
+                label.spacing(DataMeasure.parse(this.type(), defaultSpacings[i]));
                 this.labelers().add(label);
             }
         }

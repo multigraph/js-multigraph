@@ -70,12 +70,11 @@ var parseLabels = function (json, axis) {
         // Otherwise create labelers using the default spacing, with the other values
         // from the <labels> tag
         var defaultValues = (uF.getDefaultValuesFromXSD()).horizontalaxis.labels;
-        spacingString = axis.type() === DataValue.NUMBER ?
-            defaultValues.defaultNumberSpacing :
-            defaultValues.defaultDatetimeSpacing;
-        spacingStrings = spacingString.split(/\s+/);
-        for (i = 0; i < spacingStrings.length; ++i) {
-            labelers.add(Labeler.parseJSON(json.labels, axis, undefined, spacingStrings[i]));
+        var defaultSpacings = axis.type() === DataValue.NUMBER ?
+                defaultValues.defaultNumberSpacing :
+                defaultValues.defaultDatetimeSpacing;
+        for (i = 0; i < defaultSpacings.length; ++i) {
+            labelers.add(Labeler.parseJSON(json.labels, axis, undefined, defaultSpacings[i]));
         }
     }
 };
