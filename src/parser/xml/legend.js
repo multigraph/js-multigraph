@@ -1,5 +1,25 @@
 var Legend = require('../../core/legend.js');
 
+// <legend
+//     visible="BOOLEAN"
+//     base="POINT(1,1)"
+//     anchor="POINT(1,1)"
+//     position="POINT(0,0)"
+//     frame="FRAME(padding)"
+//     color="COLOR(white)"
+//     opacity="DOUBLE(1.0)"
+//     border="INTEGER(1)"
+//     bordercolor="COLOR(black)"
+//     rows="INTEGER"
+//     columns="INTEGER"
+//     cornerradius="INTEGER(0)"
+//     padding="INTEGER(0)">
+//   <icon
+//       width="INTEGER(40)"
+//       height="INTEGER(30)"
+//       border="INTEGER(1)">
+//   </icon>
+// </legend>
 Legend.parseXML = function (xml) {
     var legend           = new Legend(),
         pF               = require('../../util/parsingFunctions.js'),
