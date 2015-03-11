@@ -1,15 +1,15 @@
 var PlotLegend = require('../../core/plot_legend.js');
 
-// <legend visible="BOOLEAN" label="STRING" />
-PlotLegend.parseXML = function (xml, plot) {
+// "legend" : { "visible" : BOOLEAN,  "label" : "STRING" }
+PlotLegend.parseJSON = function (json, plot) {
     var legend           = new PlotLegend(),
         pF               = require('../../util/parsingFunctions.js'),
         Text             = require('../../core/text.js'),
         parseAttribute   = pF.parseAttribute,
         child;
-    if (xml) {
-        parseAttribute(pF.getXMLAttr(xml,"visible"), legend.visible, pF.parseBoolean);
-        parseAttribute(pF.getXMLAttr(xml,"label"),   legend.label,   function (value) { return new Text(value); });
+    if (json) {
+        parseAttribute(json.visible, legend.visible, pF.parseBoolean);
+        parseAttribute(json.label,   legend.label,   function (value) { return new Text(value); });
     }
 
     if (legend.label() === undefined) {
