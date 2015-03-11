@@ -5,32 +5,33 @@ module.exports = function($) {
 
     // if parseXML method already has been defined, which would be the case if this
     // function was previously called, just return immediately
-    if (typeof(Data.parseXML)==="function") { return Data; };
+    if (typeof(Data.parseJSON)==="function") { return Data; };
 
-    // <data>
-    //   <variables
-    //       missingvalue="DATAVALUE"
-    //       missingop="COMPARATOR">
-    //     <variable
-    //         id="STRING!"
-    //         column="INTEGER"
-    //         type="DATATYPE(number)"
-    //         missingvalue="STRING"
-    //         missingop="COMPARATOR">
-    //     </variable>
-    //   </variables>
-    //   <repeat period="STRING"/>
-    //   <values>
-    //   </values>
-    //   <csv
-    //       location="STRING!">
-    //   </csv>
-    //   <service
-    //       location="STRING!"
-    //       format="STRING">
-    //   </service>
-    // </data>
-    Data.parseXML = function (xml, multigraph, messageHandler) {
+    // "data" : {
+    //   "adapter"      : STRING,
+    //   "missingvalue" : "DATAVALUE",
+    //   "missingop"    : "COMPARATOR">,
+    //   "variables" : [
+    //         { "id" : STRING!, "column" : INTEGER, "type" : DATATYPE(number), "missingvalue" : STRING, "missingop" : COMPARATOR }
+    //         { "id" : STRING!, "column" : INTEGER, "type" : DATATYPE(number), "missingvalue" : STRING, "missingop" : COMPARATOR }
+    //         ...
+    //   ],
+    //   "repeat" : { "period" : STRING },
+    //   "repeat" : STRING,
+    //   "values" : [
+    //      [ 3.2, 1.4, ...],
+    //      [ 5.1, 7.8, ...],
+    //      ...
+    //   ],
+    //   "csv" : STRING,
+    //   "csv" : { "location" : STRING },
+    //   "service" : STRING,
+    //   "service" : {
+    //       "location" : STRING!
+    //       "format"   : STRING
+    //   }
+    // }
+    Data.parseJSON = function (json, multigraph, messageHandler) {
         var ArrayData = require('../../core/array_data.js'),
             DataVariable = require('../../core/data_variable.js'),
             DataMeasure = require('../../core/data_measure.js'),
@@ -39,16 +40,18 @@ module.exports = function($) {
             WebServiceData = require('../../core/web_service_data.js')($),
             Multigraph = require('../../core/multigraph.js')($),
             pF = require('../../util/parsingFunctions.js'),
-            variables_xml,
+            vF = require('../../util/validationFunctions.js'),
             defaultMissingvalueString,
             defaultMissingopString,
             dataVariables = [],
             data,
             adap, adapter = ArrayData;
 
-        if (xml) {
+        require('./data_variable.js'); // so that DataVariable.parseJSON method is defined when needed below
 
-            adap = pF.getXMLAttr($(xml),"adapter");
+        if (json) {
+
+            adap = json.adapter;
             if (adap !== undefined && adap !== "") {
                 adapter = Multigraph.getDataAdapter(adap);
                 if (adapter === undefined) {
@@ -56,38 +59,32 @@ module.exports = function($) {
                 }
             }
 
-            // parse the <variables> section
-            variables_xml = xml.find("variables");
-            defaultMissingvalueString = pF.getXMLAttr(variables_xml,"missingvalue");
-            defaultMissingopString    = pF.getXMLAttr(variables_xml,"missingop");
+            defaultMissingvalueString = json.missingvalue;
+            defaultMissingopString    = json.missingop;
 
-            var variables = variables_xml.find(">variable");
-            if (variables.length > 0) {
-                $.each(variables, function (i, e) {
-                    dataVariables.push( DataVariable.parseXML($(e)) );
+            if (json.variables) {
+                json.variables.forEach(function(variable) {
+                    dataVariables.push(DataVariable.parseJSON(variable));
                 });
             }
 
             // check to see if we have a <repeat> section, and if so, grab the period from it
             var haveRepeat = false,
-                period,
-                repeat_xml = $(xml.find(">repeat"));
-            if (repeat_xml.length > 0) {
-                var periodString = pF.getXMLAttr($(repeat_xml),"period");
-                if (periodString === undefined || periodString === "") {
-                    messageHandler.warning("<repeat> tag requires a 'period' attribute; data treated as non-repeating");
+                period;
+            if ("repeat" in json) {
+                var periodProp = (vF.typeOf(json.repeat) === 'object') ? json.repeat.period : json.repeat;
+                if (periodProp === undefined || periodProp === "") {
+                    messageHandler.warning("repeat requires a period; data treated as non-repeating");
                 } else {
-                    period = DataMeasure.parse(dataVariables[0].type(),
-                                               periodString);
+                    period = DataMeasure.parse(dataVariables[0].type(), periodProp);
                     haveRepeat = true;
                 }
             }
 
             // if we have a <values> section, parse it and return an ArrayData instance:
-            var values_xml = $(xml.find(">values"));
-            if (values_xml.length > 0) {
-                values_xml = values_xml[0];
-                var stringValues = adapter.textToStringArray(dataVariables, $(values_xml).text());
+            if (json.values) {
+                // Note this does not use the data adapter -- not supported for inline json data
+                var stringValues = json.values;
                 if (haveRepeat) {
                     data = new PeriodicArrayData(dataVariables, stringValues, period);
                 } else {
@@ -96,10 +93,8 @@ module.exports = function($) {
             }
 
             // if we have a <csv> section, parse it and return a CSVData instance:
-            var csv_xml = $(xml.find(">csv"));
-            if (csv_xml.length > 0) {
-                csv_xml = csv_xml[0];
-                var filename = pF.getXMLAttr($(csv_xml),"location");
+            if (json.csv) {
+                var filename = (vF.typeOf(json.csv) === 'object') ? json.csv.location : json.csv;
                 data = new CSVData(dataVariables,
                                    multigraph ? multigraph.rebaseUrl(filename) : filename,
                                    messageHandler,
@@ -107,17 +102,14 @@ module.exports = function($) {
             }
 
             // if we have a <service> section, parse it and return a WebServiceData instance:
-            var service_xml = $(xml.find(">service"));
-            if (service_xml.length > 0) {
-                service_xml = $(service_xml[0]);
-                var location = pF.getXMLAttr(service_xml,"location");
+            if (json.service) {
+                var location = (vF.typeOf(json.service) === 'object') ? json.service.location : json.service;
                 data = new WebServiceData(dataVariables,
                                           multigraph ? multigraph.rebaseUrl(location) : location,
                                           messageHandler,
                                           multigraph ? multigraph.getAjaxThrottle(location) : undefined);
-                var format = pF.getXMLAttr(service_xml,"format");
-                if (format) {
-                    data.format(format);
+                if (vF.typeOf(json.service) === 'object' && ("format" in json.service)) {
+                    data.format(json.service.format);
                 }
             }
         }
@@ -131,10 +123,11 @@ module.exports = function($) {
             }
             data.adapter(adapter);
         }
-
+        
         return data;
     };
 
     return Data;
 };
+
 

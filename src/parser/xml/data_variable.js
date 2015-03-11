@@ -1,5 +1,12 @@
 var DataVariable = require('../../core/data_variable.js');
 
+//  <variable
+//      id="STRING!"
+//      column="INTEGER"
+//      type="DATATYPE(number)"
+//      missingvalue="STRING"
+//      missingop="COMPARATOR">
+//  </variable>
 DataVariable.parseXML = function (xml, data) {
     var variable,
         pF = require('../../util/parsingFunctions.js'),

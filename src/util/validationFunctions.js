@@ -6,6 +6,7 @@ ValidationFunctions.validateNumberRange = function (number, lowerBound, upperBou
 
 // This function, from http://javascript.crockford.com/remedial.html, should correctly
 // return 'array' for any Array object, including [].
+// Returns 'object' for any JS object.
 ValidationFunctions.typeOf = function(value) {
     var s = typeof value;
     if (s === 'object') {
