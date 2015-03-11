@@ -89,7 +89,6 @@ module.exports = function($) {
             axis              = new Axis(orientation),
             parseAttribute    = pF.parseAttribute,
             parseInteger      = pF.parseInteger,
-            parseString       = pF.parseString,
             parseDisplacement = Displacement.parse,
             parsePoint        = Point.parse,
             parseRGBColor     = RGBColor.parse,
@@ -98,7 +97,7 @@ module.exports = function($) {
 
         if (xml) {
 
-            parseAttribute(pF.getXMLAttr(xml, "id"),     axis.id,     parseString);
+            parseAttribute(pF.getXMLAttr(xml, "id"),     axis.id);
             parseAttribute(pF.getXMLAttr(xml, "type"),   axis.type,   DataValue.parseType);
             parseAttribute(pF.getXMLAttr(xml, "length"), axis.length, parseDisplacement);
 
@@ -168,7 +167,7 @@ module.exports = function($) {
             parseAttribute(pF.getXMLAttr(xml, "tickwidth"),      axis.tickwidth,      parseInteger);
             parseAttribute(pF.getXMLAttr(xml, "tickmin"),        axis.tickmin,        parseInteger);
             parseAttribute(pF.getXMLAttr(xml, "tickmax"),        axis.tickmax,        parseInteger);
-            parseAttribute(pF.getXMLAttr(xml, "highlightstyle"), axis.highlightstyle, parseString);
+            parseAttribute(pF.getXMLAttr(xml, "highlightstyle"), axis.highlightstyle);
             parseAttribute(pF.getXMLAttr(xml, "linewidth"),      axis.linewidth,      parseInteger);
             
             child = xml.find("title");

@@ -106,7 +106,6 @@ window.multigraph = {
         'getDefaultValuesFromXSD' 	: utilityFunctions.getDefaultValuesFromXSD,
         
         'parseAttribute' 			: parsingFunctions.parseAttribute,
-        'parseString' 				: parsingFunctions.parseString,
         'parseInteger' 				: parsingFunctions.parseInteger,
         'parseBoolean' 				: parsingFunctions.parseBoolean,
         'getXMLAttr' 				: parsingFunctions.getXMLAttr,

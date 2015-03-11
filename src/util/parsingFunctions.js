@@ -37,19 +37,6 @@ ParsingFunctions.parseAttribute = function (value, attribute, preprocessor) {
 };
 
 /**
- * Parses String attributes.
- *
- * @method parseString
- * @param {String} value
- * @static
- * @return {String}
- */
-ParsingFunctions.parseString = function (value) {
-console.log("warning: deprecated ParsingFunctions.parseString called; remove this once it isn't called any more.\n");
-    return value;
-};
-
-/**
  * Parses a string argument with a radix of 10 and returns an integer.
  *
  * @method parseInteger

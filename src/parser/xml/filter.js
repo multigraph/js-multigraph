@@ -19,7 +19,7 @@ module.exports = function($) {
                     filter.options().add( FilterOption.parseXML($(e)) );
                 });
             }
-            pF.parseAttribute(pF.getXMLAttr(xml,"type"), filter.type, pF.parseString);
+            pF.parseAttribute(pF.getXMLAttr(xml,"type"), filter.type);
         }
         return filter;
     };

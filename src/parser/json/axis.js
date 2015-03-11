@@ -95,7 +95,6 @@ Axis.parseJSON = function (json, orientation, messageHandler, multigraph) {
 
         axis              = new Axis(orientation),
         parseAttribute    = pF.parseAttribute,
-        parseString       = pF.parseString,
         parseDisplacement = Displacement.parse,
         parseJSONPoint    = function(p) { return new Point(p[0], p[1]); },
         parseRGBColor     = RGBColor.parse,

@@ -16,7 +16,7 @@ Legend.parseXML = function (xml) {
         parseAttribute(pF.getXMLAttr(xml,"base"),         legend.base,         parsePoint);
         parseAttribute(pF.getXMLAttr(xml,"anchor"),       legend.anchor,       parsePoint);
         parseAttribute(pF.getXMLAttr(xml,"position"),     legend.position,     parsePoint);
-        parseAttribute(pF.getXMLAttr(xml,"frame"),        legend.frame,        pF.parseString);
+        parseAttribute(pF.getXMLAttr(xml,"frame"),        legend.frame);
         parseAttribute(pF.getXMLAttr(xml,"color"),        legend.color,        parseRGBColor);
         parseAttribute(pF.getXMLAttr(xml,"bordercolor"),  legend.bordercolor,  parseRGBColor);
         parseAttribute(pF.getXMLAttr(xml,"opacity"),      legend.opacity,      parseFloat);
