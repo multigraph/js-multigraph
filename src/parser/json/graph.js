@@ -58,25 +58,34 @@ module.exports = function($) {
                 graph.title( Title.parseJSON(json.title, graph) );
             }
 
-            if (json.horizontalaxis) {
-                if (vF.typeOf(json.horizontalaxis) === 'array') {
-                    json.horizontalaxis.forEach(function(axis) {
+            var haxes = json.horizontalaxis ? json.horizontalaxis : json.horizontalaxes;
+            if (json.horizontalaxis && json.horizontalaxes) {
+                throw new Error("graph may not have both 'horizontalaxis' and 'horizontalaxes'");
+            }
+            if (haxes) {
+                if (vF.typeOf(haxes) === 'array') {
+                    haxes.forEach(function(axis) {
                         graph.axes().add( Axis.parseJSON(axis, Axis.HORIZONTAL, messageHandler, graph.multigraph()) );
                     });
                 } else {
-                    graph.axes().add( Axis.parseJSON(json.horizontalaxis, Axis.HORIZONTAL, messageHandler, graph.multigraph()) );
+                    graph.axes().add( Axis.parseJSON(haxes, Axis.HORIZONTAL, messageHandler, graph.multigraph()) );
                 }
             }
 
-            if (json.verticalaxis) {
-                if (vF.typeOf(json.verticalaxis) === 'array') {
-                    json.verticalaxis.forEach(function(axis) {
+            var vaxes = json.verticalaxis ? json.verticalaxis : json.verticalaxes;
+            if (json.verticalaxis && json.verticalaxes) {
+                throw new Error("graph may not have both 'verticalaxis' and 'verticalaxes'");
+            }
+            if (vaxes) {
+                if (vF.typeOf(vaxes) === 'array') {
+                    vaxes.forEach(function(axis) {
                         graph.axes().add( Axis.parseJSON(axis, Axis.VERTICAL, messageHandler, graph.multigraph()) );
                     });
                 } else {
-                    graph.axes().add( Axis.parseJSON(json.verticalaxis, Axis.VERTICAL, messageHandler, graph.multigraph()) );
+                    graph.axes().add( Axis.parseJSON(vaxes, Axis.VERTICAL, messageHandler, graph.multigraph()) );
                 }
             }
+
 
             function addAjaxThrottle(t) {
                 var pattern    = t.pattern    ? t.pattern    : defaults.throttle.pattern,
@@ -85,11 +94,15 @@ module.exports = function($) {
                     concurrent = t.concurrent ? t.concurrent : defaults.throttle.concurrent;
                 multigraph.addAjaxThrottle(pattern, requests, period, concurrent);
             }
-            if (json.throttle) {
-                if (vF.typeOf(json.throttle) === 'array') {
-                    json.throttle.forEach(addAjaxThrottle);
+            var throttles = json.throttle ? json.throttle : json.throttles;
+            if (json.throttle && json.throttles) {
+                throw new Error("graph may not have both 'throttle' and 'throttles'");
+            }
+            if (throttles) {
+                if (vF.typeOf(throttles) === 'array') {
+                    throttles.forEach(addAjaxThrottle);
                 } else {
-                    addAjaxThrottle(json.throttle);
+                    addAjaxThrottle(throttles);
                 }
             }
 
@@ -103,13 +116,17 @@ module.exports = function($) {
                 }
             }
 
-            if (json.plot) {
-                if (vF.typeOf(json.plot) === 'array') {
-                    json.plot.forEach(function(plot) {
+            var plots = json.plot ? json.plot : json.plots;
+            if (json.plot && json.plots) {
+                throw new Error("graph may not have both 'plot' and 'plots'");
+            }
+            if (plots) {
+                if (vF.typeOf(plots) === 'array') {
+                    plots.forEach(function(plot) {
                         graph.plots().add( Plot.parseJSON(plot, graph, messageHandler) );
                     });
                 } else {
-                    graph.plots().add( Plot.parseJSON(json.plot, graph, messageHandler) );
+                    graph.plots().add( Plot.parseJSON(plots, graph, messageHandler) );
                 }
             }
 
