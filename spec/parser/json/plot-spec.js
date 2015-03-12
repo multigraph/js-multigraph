@@ -169,13 +169,12 @@ describe("DataPlot JSON parsing", function () {
             json = {
                 "renderer" : {
                     "type" : "pointline",
-                    "options" : [
-                        { "name" : rendererOption1Name, "value" : 3 },
-                        { "name" : rendererOption2Name, "value" : "circle" },
-                        { "name" : rendererOption3Name, "value" : 7}
-                    ]
+                    "options" : {}
                 }
             };
+            json.renderer.options[rendererOption1Name] =  3;
+            json.renderer.options[rendererOption2Name] =  "circle";
+            json.renderer.options[rendererOption3Name] =  7;
             plot = Plot.parseJSON(json);
             expect(plot).not.toBeUndefined();
             expect(plot instanceof DataPlot).toBe(true);
@@ -211,11 +210,11 @@ describe("DataPlot JSON parsing", function () {
             json = {
                 "filter" : {
                     "type" : type,
-                    "options" : [
-                        { "name" : option1Name, "value" : option1Value }
-                    ]
+                    "options" : {}
                 }
             };
+            json.filter.options[option1Name] =  option1Value;
+
             plot = Plot.parseJSON(json);
             expect(plot).not.toBeUndefined();
             expect(plot instanceof DataPlot).toBe(true);
@@ -322,11 +321,7 @@ describe("DataPlot JSON parsing", function () {
                 },
                 "renderer" : {
                     "type": "pointline",
-                    "options" : [
-                        { "name": "linewidth", "value": 7 },
-                        { "name": "pointshape", "value": "triangle" },
-                        { "name": "pointsize", "value": 3 }
-                    ]
+                    "options" : {}
                 },
                 "filter" : {
                     "type": "pointline",
@@ -345,6 +340,10 @@ describe("DataPlot JSON parsing", function () {
                     "pad": 1
                 }
             };
+            json.renderer.options["linewidth"] =  7;
+            json.renderer.options["pointshape"] =  "triangle";
+            json.renderer.options["pointsize"] =  3;
+
             plot = Plot.parseJSON(json, graph);
         });
 

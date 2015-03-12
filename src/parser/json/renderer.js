@@ -41,31 +41,16 @@ Renderer.parseJSON = function (json, plot, messageHandler) {
         renderer.plot(plot);
 
         if (json.options) {
-            if (vF.typeOf(json.options) === 'array') {
-                json.options.forEach(function(option) {
-                    try {
-                        renderer.setOptionFromString(option.name, option.value, option.min, option.max);
-                    } catch (e) {
-                        if (e instanceof Warning) {
-                            messageHandler.warning(e);
-                        } else {
-                            throw e;
-                        }
-                    }
-                });
-            } else {
-                for (opt in json.options) {
-                    if (json.options.hasOwnProperty(opt)) {
-                        if (vF.typeOf(json.options[opt]) === 'array') {
-                            json.options[opt].forEach(function(subopt) {
-                                setOption(opt, subopt.value, subopt.min, subopt.max);
-                            });
-                        } else {
-                            setOption(opt, json.options[opt]);
-                        }
+            for (opt in json.options) {
+                if (json.options.hasOwnProperty(opt)) {
+                    if (vF.typeOf(json.options[opt]) === 'array') {
+                        json.options[opt].forEach(function(subopt) {
+                            setOption(opt, subopt.value, subopt.min, subopt.max);
+                        });
+                    } else {
+                        setOption(opt, json.options[opt]);
                     }
                 }
-
             }
         }
 

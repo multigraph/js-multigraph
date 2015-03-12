@@ -37,8 +37,9 @@ describe("Plot Renderer JSON parsing", function () {
             beforeEach(function () {
                 json = {
                     "type" : "pointline",
-                    "options" : [ { "name" : option1Name, "value" : option1Value } ]
+                    "options" : {}
                 };
+                json.options[option1Name] = option1Value;
                 renderer = Renderer.parseJSON(json);
             });
 
@@ -74,15 +75,17 @@ describe("Plot Renderer JSON parsing", function () {
             beforeEach(function () {
                 json = {
                     "type" : "pointline",
-                    "options" : [
-                        { "name" : option1Name, "value" : option1Value },
-                        { "name" : option2Name, "value" : option2Value, "min" : option2Min },
-                        { "name" : option3Name, "value" : option3Value, "max" : option3Max },
-                        { "name" : option4Name, "value" : option4Value }
-                    ]
+                    "options" : {}
                 };
+
+                json.options[option1Name] = option1Value;
+                json.options[option2Name] = [ {"value" : option2Value, "min" : option2Min }, {"value" : option3Value, "max" : option3Max } ];
+                // note that option2Name===option3Name, so these must be combined into one
+                json.options[option4Name] = option4Value;
+
                 renderer = Renderer.parseJSON(json, plot);
             });
+
 
             it("should be able to parse a renderer with multiple option child tags from JSON", function () {
                 expect(renderer).not.toBeUndefined();

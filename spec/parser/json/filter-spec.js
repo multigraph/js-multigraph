@@ -35,8 +35,9 @@ describe("Plot Filter JSON parsing", function () {
             beforeEach(function () {
                 json = {
                     "type" : "number",
-                    "options" : [ { "name" : option1Name, "value" : option1Value } ]
+                    "options" : {}
                 };
+                json.options[option1Name] = option1Value;
                 filter = Filter.parseJSON(json);
             });
 
@@ -65,12 +66,12 @@ describe("Plot Filter JSON parsing", function () {
             beforeEach(function () {
                 json = {
                     "type" : "number",
-                    "options" : [
-                        { "name" : option1Name, "value" : option1Value },
-                        { "name" : option2Name, "value" : option2Value },
-                        { "name" : option3Name, "value" : option3Value }
-                    ]
+                    "options" : {}
                 };
+                json.options[option1Name] =  option1Value;
+                json.options[option2Name] =  option2Value;
+                json.options[option3Name] =  option3Value;
+
                 filter = Filter.parseJSON(json);
             });
 
