@@ -14,11 +14,12 @@ var Plot = require('../../core/plot.js');
 //   },
 //   "renderer" : {
 //     "type" : RENDERERTYPE(line),
-//     "options" : [
-//         { "name": STRING!, "value": STRING!, "min": DATAVALUE, "max": DATAVALUE },
-//         { "name": STRING!, "value": STRING!, "min": DATAVALUE, "max": DATAVALUE },
+//     "options" : {
+//         "option1": value1,
+//         "option2": value2,
+//         "option3": [ { "value": value3, "min": DATAVALUE, "max" : DATAVALUE }, .. ]
 //         ...
-//     ],
+//     },
 //   },
 //   "datatips" : {
 //     "format"           : STRING!,
@@ -30,6 +31,18 @@ var Plot = require('../../core/plot.js');
 //     "variable-formats" : [ STRING!, ... ]
 //   }
 // }
+//
+// Alternately, instead of the "renderer" section, the "plot" section may instead contain
+// the following (at the top level of the "plot" object):
+// 
+//   "style" : RENDERERTYPE(line),
+//   "options" : {
+//       "option1": value1,
+//       "option2": value2,
+//       "option3": [ { "value": value3, "min": DATAVALUE, "max" : DATAVALUE }, .. ]
+//       ...
+//   },
+// 
 Plot.parseJSON = function (json, graph, messageHandler) {
     var DataPlot     = require('../../core/data_plot.js'),
         PlotLegend   = require('../../core/plot_legend.js'),
@@ -114,8 +127,23 @@ Plot.parseJSON = function (json, graph, messageHandler) {
             plot.legend(PlotLegend.parseJSON(undefined, plot));
         }
 
+        if (("renderer" in json) && (("style" in json) || ("options" in json))) {
+            throw new Error("plot may not contain both 'renderer' and 'style', or 'renderer' and 'options'");
+        }
+
         if ("renderer" in json) {
             plot.renderer(Renderer.parseJSON(json.renderer, plot, messageHandler));
+        } else if ("style" in json) {
+            // json.options may or may not be present here
+            plot.renderer(Renderer.parseJSON(
+                { "type" : json.style, "options" : json.options },
+                plot, messageHandler));
+        } else if ("options" in json) {
+            // json.options is present, but json.style is not here
+            // json.options may or may not be present here
+            plot.renderer(Renderer.parseJSON(
+                { "type" : "line", "options" : json.options },
+                plot, messageHandler));
         }
 
         if ("filter" in json) {

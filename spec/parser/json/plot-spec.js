@@ -371,4 +371,43 @@ describe("DataPlot JSON parsing", function () {
 
     });
 
+
+    describe("plot style/options as an alternative to renderer", function () {
+
+        beforeEach(function () {
+            graph = new Graph();
+
+            json = {
+                "style": "pointline",
+                "options" : {
+                    linewidth: 7,
+                    pointshape: "triangle",
+                    pointsize: 3
+                }
+            };
+
+            plot = Plot.parseJSON(json, graph);
+        });
+
+        it("should be able to parse a plot from JSON", function () {
+            expect(plot).not.toBeUndefined();
+            expect(plot instanceof DataPlot).toBe(true);
+        });
+
+        it("should be able to properly parse a plot from JSON", function () {
+            expect(plot.renderer().options()["linewidth"]().size()).toEqual(1);
+            expect(plot.renderer().options()["linewidth"]().at(0) instanceof RendererOption).toBe(true);
+            expect(plot.renderer().getOptionValue("linewidth")).toEqual(7);
+
+            expect(plot.renderer().options()["pointshape"]().size()).toEqual(1);
+            expect(plot.renderer().options()["pointshape"]().at(0) instanceof RendererOption).toBe(true);
+            expect(plot.renderer().getOptionValue("pointshape")).toEqual("triangle");
+
+            expect(plot.renderer().options()["pointsize"]().size()).toEqual(1);
+            expect(plot.renderer().options()["pointsize"]().at(0) instanceof RendererOption).toBe(true);
+            expect(plot.renderer().getOptionValue("pointsize")).toEqual(3);
+        });
+
+    });
+
 });
