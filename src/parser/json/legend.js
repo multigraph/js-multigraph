@@ -30,6 +30,8 @@ Legend.parseJSON = function (json) {
         parseAttribute   = pF.parseAttribute,
         parseJSONPoint   = function(p) { return new Point(p[0], p[1]); };
 
+    require('./icon.js'); // for Icon.parseJSON below
+
     if (json) {
         parseAttribute(json.visible,      legend.visible,      pF.parseBoolean);
         parseAttribute(json.base,         legend.base,         parseJSONPoint);
