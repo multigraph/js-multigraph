@@ -6,6 +6,7 @@ require('../lib/error-display/build/errorDisplay.js');
 require('../lib/requestanimationframe/requestanimationframe.js');
 
 require('./parser/xml/jquery_xml_parser.js')($);
+require('./parser/json/json_parser.js')($);
 require('./graphics/canvas/all.js')($, window);
 
 // This forces ./events/multigraph.js to load, which is where the 'main' program

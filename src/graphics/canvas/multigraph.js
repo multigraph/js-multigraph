@@ -1,6 +1,7 @@
 module.exports = function($, window) {
     var Multigraph = require('../../core/multigraph.js')($),
-        Point = require('../../math/point.js');
+        Point = require('../../math/point.js'),
+        vF = require('../../util/validationFunctions.js');
 
     if (typeof(Multigraph.render)==="function") { return Multigraph; }
 
@@ -75,10 +76,30 @@ module.exports = function($, window) {
     //        window.multigraph.normalizer.mixin.apply(window.multigraph.core);
     //    };
 
+    // Return true iff the string `s` looks like a json object.
+    // This simply checks to see if the first non-whitespace char is a '{' or '['.
+    function looks_like_json(s) {
+        return /^\s*[{\[]/.test(s);
+    }
+
     var generateInitialGraph = function (mugl, options) {
         var JQueryXMLParser = require('../../parser/xml/jquery_xml_parser.js')($);
-        var xmlObj = JQueryXMLParser.stringToJQueryXMLObj(mugl);
-        var multigraph = Multigraph.parseXML( xmlObj, options.mugl, options.messageHandler );
+        require('../../parser/json/json_parser.js')($);
+        var multigraph;
+
+        if (vF.typeOf(mugl) === 'string') {
+            if (looks_like_json(mugl)) {
+                //http://stackoverflow.com/questions/4935632/parse-json-in-javascript
+                var obj = JSON && JSON.parse(mugl) || $.parseJSON(mugl);
+                multigraph = Multigraph.parseJSON( obj, options.mugl, options.messageHandler );
+            } else {
+                var xmlObj = JQueryXMLParser.stringToJQueryXMLObj(mugl);
+                multigraph = Multigraph.parseXML( xmlObj, options.mugl, options.messageHandler );
+            }
+        } else {
+            multigraph = Multigraph.parseJSON( mugl, options.mugl, options.messageHandler );
+        }
+
         multigraph.normalize();
         multigraph.div(options.div);
         $(options.div).css("cursor" , "pointer");
