@@ -7,6 +7,29 @@ module.exports = function($) {
     // function was previously called, just return immediately
     if (typeof(Plot.parseXML)==="function") { return Plot; };
 
+    // <plot>
+    //   <legend
+    //       visible="BOOLEAN"
+    //       label="STRING">
+    //   </legend>
+    //   <horizontalaxis ref="STRING!">
+    //     <variable ref="STRING!" />
+    //   </horizontalaxis>
+    //   <verticalaxis ref="STRING!">
+    //     <variable ref="STRING" />
+    //     <constant value="DATAVALUE"/>
+    //   </verticalaxis>
+    //   <renderer type="RENDERERTYPE(line)">
+    //     <option name="STRING!" value="STRING!" min="DATAVALUE" max="DATAVALUE"/>
+    //     <option name="STRING!" value="STRING!" min="DATAVALUE" max="DATAVALUE"/>
+    //     ...
+    //   </renderer>
+    //   <datatips format="STRING!" bgcolor="COLOR" bgalpha="DOUBLE" border="INTEGER" bordercolor="COLOR" pad="INTEGER">
+    //     <variable format="STRING!" />
+    //     <variable format="STRING!" />
+    //     ...
+    //   </datatips>
+    // </plot>
     Plot.parseXML = function (xml, graph, messageHandler) {
         var DataPlot     = require('../../core/data_plot.js'),
             PlotLegend   = require('../../core/plot_legend.js'),
@@ -85,7 +108,7 @@ module.exports = function($) {
                         });
                     }
                 }
-            }
+                }
 
             // populate legend from xml
             child = xml.find("legend");
