@@ -32,7 +32,6 @@ var Axis = require('../../core/axis.js'),
     vF = require('../../util/validationFunctions.js'),
     uF = require('../../util/utilityFunctions.js');
 
-//mbp TODO: change this so that it takes json.labels...:
 var parseLabels = function (json, axis) {
     var spacings,
         labelers  = axis.labelers(),
@@ -41,23 +40,23 @@ var parseLabels = function (json, axis) {
         i;
 
     spacings = [];
-    if (json.labels !== undefined) {
-        if (json.labels.spacing !== undefined) {
-            spacings = vF.typeOf(json.labels.spacing) === 'array' ? json.labels.spacing : [ json.labels.spacing ];
+    if (json !== undefined) {
+        if (json.spacing !== undefined) {
+            spacings = vF.typeOf(json.spacing) === 'array' ? json.spacing : [ json.spacing ];
         }
     }
     if (spacings.length > 0) {
         // If there was a spacing attr on the <labels> tag, create a new labeler for
         // each spacing present in it, using the other values from the <labels> tag
         for (i = 0; i < spacings.length; ++i) {
-            labelers.add(Labeler.parseJSON(json.labels, axis, undefined, spacings[i]));
+            labelers.add(Labeler.parseJSON(json, axis, undefined, spacings[i]));
         }
-    } else if (json.labels !== undefined && json.labels.label !== undefined && json.labels.label.length > 0) {
+    } else if (json !== undefined && json.label !== undefined && json.label.length > 0) {
         // If there are <label> tags, parse the <labels> tag to get default values
-        var defaults = Labeler.parseJSON(json.labels, axis, undefined, null);
+        var defaults = Labeler.parseJSON(json, axis, undefined, null);
         // And loop over each <label> tag, creating labelers for each, splitting multiple
         // spacings on the same <label> tag into multiple labelers:
-        json.labels.label.forEach(function(e) {
+        json.label.forEach(function(e) {
             var spacing = [];
             if (e.spacing !== undefined) {
                 spacing = vF.typeOf(e.spacing) === 'array' ? e.spacing : [ e.spacing ];
@@ -74,7 +73,7 @@ var parseLabels = function (json, axis) {
                 defaultValues.defaultNumberSpacing :
                 defaultValues.defaultDatetimeSpacing;
         for (i = 0; i < defaultSpacings.length; ++i) {
-            labelers.add(Labeler.parseJSON(json.labels, axis, undefined, defaultSpacings[i]));
+            labelers.add(Labeler.parseJSON(json, axis, undefined, defaultSpacings[i]));
         }
     }
 };
@@ -209,7 +208,7 @@ Axis.parseJSON = function (json, orientation, messageHandler, multigraph) {
         }
 
         if (json.labels) {
-            parseLabels(json, axis);
+            parseLabels(json.labels, axis);
         }
 
         if (json.binding) {
