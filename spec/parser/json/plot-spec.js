@@ -44,15 +44,10 @@ describe("DataPlot JSON parsing", function () {
 
         it("should be able to parse a plot with axis children from JSON", function () {
             json = {
-                "horizontalaxis" : {
-                    "ref" : horizontalaxisId
-                },
-                "verticalaxis" : {
-                    "ref" : verticalaxisId
-                }
+                "horizontalaxis" : horizontalaxisId,
+                "verticalaxis" : verticalaxisId
             };
             plot = Plot.parseJSON(json, graph);
-
             expect(plot).not.toBeUndefined();
             expect(plot instanceof DataPlot).toBe(true);
             expect(plot.horizontalaxis() instanceof Axis).toBe(true);
@@ -62,7 +57,7 @@ describe("DataPlot JSON parsing", function () {
         });
 
         it("should throw an error if an axis with the ref's id is not in the graph", function () {
-            json = { "horizontalaxis" : { "ref": "x2" }, "verticalaxis": { "ref": "y" } };
+            json = { "horizontalaxis" : "x2" , "verticalaxis": "y" };
             expect( function () {
                 Plot.parseJSON(json, graph);
             }).toThrow(new Error("Plot Horizontal Axis Error: The graph does not contain an axis with an id of 'x2'"));
@@ -89,12 +84,8 @@ describe("DataPlot JSON parsing", function () {
 
         it("should be able to parse a plot with variable children from JSON", function () {
             json = {
-                "horizontalaxis" : {
-                    "variables" : [ variable1Id ]
-                },
-                "verticalaxis" : {
-                    "variables" : [variable2Id, variable3Id]
-                }
+                "horizontalaxis" : [ variable1Id ],
+                "verticalaxis" : [variable2Id, variable3Id]
             };
             plot = Plot.parseJSON(json, graph);
             expect(plot).not.toBeUndefined();
@@ -110,16 +101,12 @@ describe("DataPlot JSON parsing", function () {
 
         it("should throw an error if a variable with the ref's id is not in the graph", function () {
             json = {
-                "horizontalaxis" : {
-                    "variables" : [ variable1Id ]
-                },
-                "verticalaxis" : {
-                    "variables" : [missingVariableId, variable3Id ]
-                }
+                "horizontalaxis" : variable1Id,
+                "verticalaxis" : [missingVariableId, variable3Id ]
             };
             expect( function () {
                 Plot.parseJSON(json, graph);
-            }).toThrow(new Error("Plot Variable Error: No Data tag contains a variable with an id of '" + missingVariableId + "'"));
+            }).toThrow();
         });
 
     });
@@ -307,14 +294,8 @@ describe("DataPlot JSON parsing", function () {
             graph.data().add(new ArrayData([variable1,variable2,variable3], []));
 
             json = {
-                "horizontalaxis" : {
-                    "ref": horizontalaxisId,
-                    "variables" : [ variable1Id ]
-                },
-                "verticalaxis" : {
-                    "ref": verticalaxisId ,
-                    "variables" : [ variable2Id, variable3Id ]
-                },
+                "horizontalaxis" : {},  // populated below
+                "verticalaxis" : {},  // populated below
                 "legend" : {
                     "visible": true,
                     "label": "plot"
@@ -343,6 +324,8 @@ describe("DataPlot JSON parsing", function () {
             json.renderer.options["linewidth"] =  7;
             json.renderer.options["pointshape"] =  "triangle";
             json.renderer.options["pointsize"] =  3;
+            json.horizontalaxis[horizontalaxisId] = [ variable1Id ];
+            json.verticalaxis[verticalaxisId] = [ variable2Id, variable3Id ];
 
             plot = Plot.parseJSON(json, graph);
         });

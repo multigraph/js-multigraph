@@ -178,28 +178,16 @@ describe("Graph JSON parsing", function () {
             ],
             "plot" : [
                 {
-                    "horizontalaxis" : {
-                        "ref" : "x",
-                        "variables" : [ "x" ]
-                    },
-                    "verticalaxis" : {
-                        "ref" : "y",
-                        "variables" : [ "y" ]
-                    },
+                    "horizontalaxis" : { "x" : [ "x" ] },
+                    "verticalaxis" : { "y" : [ "y" ] },
                     "legend" : {
                         "visible" : true,
                         "label" : "y"
                     }
                 },
                 {
-                    "horizontalaxis" : {
-                        "ref" : "x2",
-                        "variables" : [ "x" ]
-                    },
-                    "verticalaxis" : {
-                        "ref" : "y2",
-                        "variables" : [ "y" ]
-                    },
+                    "horizontalaxis" : { "x2" : [ "x" ] },
+                    "verticalaxis" : { "y2" : [ "y" ] },
                     "legend" : {
                         "visible" : true,
                         "label" : "y"

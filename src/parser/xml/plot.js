@@ -90,7 +90,6 @@ module.exports = function($) {
                 if (xml.find("horizontalaxis variable").length === 0) {
                     plot.variable().add(null);
                 }
-
                 //TODO: defer population of variables until normalizer has executed
                 // populate axis variables from xml
                 child = xml.find("horizontalaxis variable, verticalaxis variable");

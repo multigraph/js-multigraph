@@ -1,5 +1,6 @@
 utilityFunctions = {};
 
+// Why not use Object.getKeys() ??  mbp Fri Mar 13 00:21:57 2015
 utilityFunctions.getKeys = function (obj) {
     var keys = [],
         key;
@@ -23,6 +24,11 @@ utilityFunctions.insertDefaults = function (elem, defaults, attributes) {
     return elem;
 };
 
+
+// This should be renamed; the name 'getDefaultValuesFromXSD' is a holdover from when we
+// had an XSD that contained default values, and this function consulted it.  Or maybe
+// we never actually had that, but intended to implement it?  In any case, it seems clear
+// we won't be using an XSD here, so this should be renamed.  mbp Fri Mar 13 00:23:42 2015
 utilityFunctions.getDefaultValuesFromXSD = function () {
     
     var DatetimeValue = require('../core/datetime_value.js'),
