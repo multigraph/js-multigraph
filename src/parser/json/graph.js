@@ -40,7 +40,7 @@ module.exports = function($) {
                 graph.window( Window.parseJSON(json.window) );
             }
 
-            if (json.legend) {
+            if ("legend" in json) {
                 graph.legend( Legend.parseJSON(json.legend) );
             } else {
                 graph.legend( Legend.parseJSON() );

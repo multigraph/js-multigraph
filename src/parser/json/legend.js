@@ -32,7 +32,9 @@ Legend.parseJSON = function (json) {
 
     require('./icon.js'); // for Icon.parseJSON below
 
-    if (json) {
+    if (typeof(json) === "boolean") {
+        parseAttribute(json, legend.visible);
+    } else if (json) {
         parseAttribute(json.visible,      legend.visible,      pF.parseBoolean);
         parseAttribute(json.base,         legend.base,         parseJSONPoint);
         parseAttribute(json.anchor,       legend.anchor,       parseJSONPoint);
