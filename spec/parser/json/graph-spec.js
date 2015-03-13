@@ -13,8 +13,17 @@ describe("Graph JSON parsing", function () {
         Plotarea = require('../../../src/core/plotarea.js'),
         Title = require('../../../src/core/title.js'),
         Window = require('../../../src/core/window.js'),
-        graph,
-        json = {
+        graph;
+
+    var $, jqw = require('../../node_jquery_helper.js').createJQuery();
+    beforeEach(function() { $ = jqw.$; });
+
+    beforeEach(function () {
+        require('../../../src/parser/json/graph.js')($);
+    });
+
+    describe("basic parsing", function() {
+        var json = {
             "window" : {
                 "margin" : 1,
                 "padding" : 10,
@@ -206,43 +215,99 @@ describe("Graph JSON parsing", function () {
             }
         };
 
-    var $, jqw = require('../../node_jquery_helper.js').createJQuery();
-    beforeEach(function() { $ = jqw.$; });
 
-    beforeEach(function () {
-        require('../../../src/parser/json/graph.js')($);
+        beforeEach(function () {        
+            graph = Graph.parseJSON(json);
+        });
+
+        it("should be able to parse a graph from JSON", function () {
+            expect(graph).not.toBeUndefined();
+            expect(graph instanceof Graph).toBe(true);
+        });
+
+        it("should properly parse a graph from JSON", function () {
+            expect(graph.window() instanceof Window).toBe(true);
+            expect(graph.legend() instanceof Legend).toBe(true);
+            expect(graph.legend() instanceof Legend).toBe(true);
+            expect(graph.plotarea() instanceof Plotarea).toBe(true);
+            expect(graph.background() instanceof Background).toBe(true);
+            expect(graph.title() instanceof Title).toBe(true);
+            expect(graph.axes().size()).toEqual(4);
+            expect(graph.axes().at(0) instanceof Axis).toBe(true);
+            expect(graph.axes().at(0).orientation()).toEqual(Axis.HORIZONTAL);
+            expect(graph.axes().at(1) instanceof Axis).toBe(true);
+            expect(graph.axes().at(1).orientation()).toEqual(Axis.HORIZONTAL);
+            expect(graph.axes().at(2) instanceof Axis).toBe(true);
+            expect(graph.axes().at(2).orientation()).toEqual(Axis.VERTICAL);
+            expect(graph.axes().at(3) instanceof Axis).toBe(true);
+            expect(graph.axes().at(3).orientation()).toEqual(Axis.VERTICAL);
+            expect(graph.plots().size()).toEqual(2);
+            expect(graph.plots().at(0) instanceof DataPlot).toBe(true);
+            expect(graph.plots().at(1) instanceof DataPlot).toBe(true);
+            expect(graph.data().size()).toEqual(1);
+            expect(graph.data().at(0) instanceof ArrayData).toBe(true);
+        });
+
     });
 
-    beforeEach(function () {        
-        graph = Graph.parseJSON(json);
-    });
 
-    it("should be able to parse a graph from JSON", function () {
-        expect(graph).not.toBeUndefined();
-        expect(graph instanceof Graph).toBe(true);
-    });
+    describe("plot axis/variable parsing", function() {
 
-    it("should properly parse a graph from JSON", function () {
-        expect(graph.window() instanceof Window).toBe(true);
-        expect(graph.legend() instanceof Legend).toBe(true);
-        expect(graph.legend() instanceof Legend).toBe(true);
-        expect(graph.plotarea() instanceof Plotarea).toBe(true);
-        expect(graph.background() instanceof Background).toBe(true);
-        expect(graph.title() instanceof Title).toBe(true);
-        expect(graph.axes().size()).toEqual(4);
-        expect(graph.axes().at(0) instanceof Axis).toBe(true);
-        expect(graph.axes().at(0).orientation()).toEqual(Axis.HORIZONTAL);
-        expect(graph.axes().at(1) instanceof Axis).toBe(true);
-        expect(graph.axes().at(1).orientation()).toEqual(Axis.HORIZONTAL);
-        expect(graph.axes().at(2) instanceof Axis).toBe(true);
-        expect(graph.axes().at(2).orientation()).toEqual(Axis.VERTICAL);
-        expect(graph.axes().at(3) instanceof Axis).toBe(true);
-        expect(graph.axes().at(3).orientation()).toEqual(Axis.VERTICAL);
-        expect(graph.plots().size()).toEqual(2);
-        expect(graph.plots().at(0) instanceof DataPlot).toBe(true);
-        expect(graph.plots().at(1) instanceof DataPlot).toBe(true);
-        expect(graph.data().size()).toEqual(1);
-        expect(graph.data().at(0) instanceof ArrayData).toBe(true);
+        it("should handle plot axis case 1 syntax", function () {
+            graph = Graph.parseJSON({
+                "horizontalaxis" : { "id" : "x", "type" : "number" },
+                "verticalaxis"   : { "id" : "y", "type" : "number" },
+                "plot" : { "horizontalaxis" : { "x" : [ "x" ] }, // var ids in array
+                           "verticalaxis"   : { "y" : [ "y" ] } },
+                "data" : { "variables" : [ { "id" : "x", "column": 0, "type": "number" },
+                                           { "id" : "y", "column": 1, "type": "number" } ],
+                           "values" : [[3,4],[5,6]] }
+            });
+            expect(graph.axes().at(0).id()).toEqual("x");
+            expect(graph.axes().at(1).id()).toEqual("y");
+            expect(graph.plots().at(0).horizontalaxis().id()).toEqual("x");
+            expect(graph.plots().at(0).verticalaxis().id()).toEqual("y");
+            expect(graph.plots().at(0).variable().at(0).id()).toEqual("x");
+            expect(graph.plots().at(0).variable().at(1).id()).toEqual("y");
+        });
+
+        it("should handle plot axis case 2 syntax", function () {
+            graph = Graph.parseJSON({
+                "horizontalaxis" : { "id" : "x", "type" : "number" },
+                "verticalaxis"   : { "id" : "y", "type" : "number" },
+                "plot" : { "horizontalaxis" : { "x" :  "x"  }, // var id not in array
+                           "verticalaxis"   : { "y" : [ "y" ] } },
+                "data" : { "variables" : [ { "id" : "x", "column": 0, "type": "number" },
+                                           { "id" : "y", "column": 1, "type": "number" } ],
+                           "values" : [[3,4],[5,6]] }
+            });
+            expect(graph.axes().at(0).id()).toEqual("x");
+            expect(graph.axes().at(1).id()).toEqual("y");
+            expect(graph.plots().at(0).horizontalaxis().id()).toEqual("x");
+            expect(graph.plots().at(0).verticalaxis().id()).toEqual("y");
+            expect(graph.plots().at(0).variable().at(0).id()).toEqual("x");
+            expect(graph.plots().at(0).variable().at(1).id()).toEqual("y");
+        });
+
+        it("should handle plot axis case 2 syntax", function () {
+            graph = Graph.parseJSON({
+                "horizontalaxis" : { "id" : "x", "type" : "number" },
+                "verticalaxis"   : { "id" : "y", "type" : "number" },
+                "plot" : { "horizontalaxis" : "x", // axis id with no var ids
+                           "verticalaxis"   : { "y" : [ "y" ] } },
+                "data" : { "variables" : [ { "id" : "x", "column": 0, "type": "number" },
+                                           { "id" : "y", "column": 1, "type": "number" } ],
+                           "values" : [[3,4],[5,6]] }
+            });
+            graph.normalize();
+            expect(graph.axes().at(0).id()).toEqual("x");
+            expect(graph.axes().at(1).id()).toEqual("y");
+            expect(graph.plots().at(0).horizontalaxis().id()).toEqual("x");
+            expect(graph.plots().at(0).verticalaxis().id()).toEqual("y");
+            expect(graph.plots().at(0).variable().at(0).id()).toEqual("x");
+            expect(graph.plots().at(0).variable().at(1).id()).toEqual("y");
+        });
+
     });
 
 });
