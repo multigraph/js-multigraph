@@ -182,8 +182,16 @@ Axis.parseJSON = function (json, orientation, messageHandler, multigraph) {
         parseAttribute(json.highlightstyle, axis.highlightstyle);
         parseAttribute(json.linewidth,      axis.linewidth);
         
-        if (json.title) {
-            axis.title(AxisTitle.parseJSON(json.title, axis));
+        if ("title" in json) {
+            if (typeof(json.title) === 'boolean') {
+                if (json.title) {
+                    axis.title(new AxisTitle(axis));
+                    } else {
+                        axis.title(AxisTitle.parseJSON({}, axis));
+                    }
+            } else {
+                axis.title(AxisTitle.parseJSON(json.title, axis));
+            }
         } else {
             axis.title(new AxisTitle(axis));
         }
