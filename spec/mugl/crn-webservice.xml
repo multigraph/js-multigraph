@@ -9,10 +9,10 @@
                   pregap="0"
                   postgap="0"
                   type="datetime"
-                  min="2009011116"
-                  max="2009011216">
+                  min="2015-03-01-08-00"
+                  max="2015-03-04-08-00">
     <title/>
-    <labels format="%h:00%L%d %n%L%Y" start="0" angle="0" anchor="0 1" spacing="2M 1M 7D 5D 2D 24H 12H 6H 1H 30m 1m" />
+    <labels format="%h:00%L%d %n%L%Y" start="0" angle="0" anchor="0 1" spacing="2M 1M 7D 5D 2D 24H 12H 6H 3H 2H 1H 30m 1m" />
     <binding id="timebinding" min="2009011116" max="2009011216"/>
     <grid/>
   </horizontalaxis>
@@ -83,7 +83,7 @@
       <variable ref="solarad"/>
     </verticalaxis>
     <renderer type="fill">
-      <option name="linecolor" value="#ffaaaa"/>
+      <option name="linecolor" value="#990000"/>
       <option name="fillcolor" value="#ffaaaa"/>
     </renderer>
   </plot>
@@ -112,14 +112,16 @@
     <verticalaxis ref="temp">
       <variable ref="temp"/>
     </verticalaxis>
-    <renderer type="line">
+    <renderer type="pointline">
       <option name="linecolor" value="blue"/>
-      <option name="pointcolor"  value="black"/>
-      <option name="pointsize"   value="0"/>
-      <option name="linewidth" value="3"/>
+      <option name="linewidth" value="1"/>
+      <option name="pointcolor"  value="blue"/>
+      <option name="pointsize"   value="1"/>
+      <option name="pointoutlinecolor"   value="blue"/>
     </renderer>
   </plot>
 
+<!--
   <plot>
     <legend label="Surface Temp"/>
     <horizontalaxis ref="time">
@@ -135,6 +137,7 @@
       <option name="linewidth" value="3"/>
     </renderer>
   </plot>
+-->
   
   <plot>
     <legend label="Wind Speed"/>
@@ -144,17 +147,21 @@
     <verticalaxis ref="windspd">
       <variable ref="windspd"/>
     </verticalaxis>
-    <renderer type="line">
+    <renderer type="pointline">
       <option name="linecolor" value="black"/>
+      <option name="linewidth" value="1"/>
+      <option name="pointcolor"  value="black"/>
+      <option name="pointsize"   value="1"/>
+      <option name="pointoutlinecolor"   value="black"/>
     </renderer>
   </plot>
   
 
   <throttle
-      pattern="^http://www.multigraph.org"
-      requests="4"
-      period="5000"
-      concurrent="4"/>
+      pattern="^http://crndata.multigraph.org"
+      requests="1"
+      period="1000"
+      concurrent="1"/>
   
   <data>
     <variables>
@@ -163,7 +170,7 @@
       <variable id="sur_temp" column="2" type="number"/>
       <variable id="windspd"  column="3" type="number"/>
     </variables>
-    <service location="http://www.multigraph.org/data/examples/demo3/crndata.cgi/1026/SOLARAD,SUR_TEMP,WINDSPD/"/>
+    <service location="http://crndata.multigraph.org/data/1026/SOLARAD,SUR_TEMP,WINDSPD/"/>
   </data>
   
   <data>
@@ -172,7 +179,7 @@
       <variable column="1" id="temp"/>
       <variable column="2" id="precip"/>
     </variables>
-    <service location="http://www.multigraph.org/data/examples/demo3/crndata.cgi/1026/T5,P5/"/>
+    <service location="http://crndata.multigraph.org/data/1026/T5,P5/"/>
   </data>
 
 </mugl>

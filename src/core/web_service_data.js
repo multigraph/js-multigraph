@@ -217,7 +217,7 @@ module.exports = function($) {
             this.ajaxthrottle().ajax({
                 url      : requestURL,
                 dataType : "text",
-                success  : function (data) {
+                success  : function (data, textStatus, jqXHR) {
                     // if data contains a <values> tag, extract its text string value
                     if (data.indexOf("<values>") > 0) {
                         data = JQueryXMLParser.stringToJQueryXMLObj(data).find("values").text();
