@@ -59,7 +59,7 @@ module.exports = function($) {
                 }
             }
 
-            defaultMissingvalueString = json.missingvalue;
+            defaultMissingvalueString = String(json.missingvalue);
             defaultMissingopString    = json.missingop;
 
             if (json.variables) {
