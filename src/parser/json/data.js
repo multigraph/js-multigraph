@@ -59,7 +59,12 @@ module.exports = function($) {
                 }
             }
 
-            defaultMissingvalueString = String(json.missingvalue);
+            // be sure to leave defaultMissingvalueString undefined if
+            // json.missingvalue is undefined, otherwise the String cast
+            // here will result in the string "undefined", which wreaks havoc!
+            if (json.missingvalue) {
+                defaultMissingvalueString = String(json.missingvalue);
+            }
             defaultMissingopString    = json.missingop;
 
             if (json.variables) {
