@@ -70,7 +70,7 @@ DatetimeValue.parse = function (string) {
             // handles the case of "0", which parser should convert to the Unix epoch
             Y = 1970;
         } else {
-            throw new Error("Incorrect input format for Datetime Value's parse method");
+            throw new Error("Incorrect input format for Datetime Value's parse method:" + string);
         }
     } else {
         throw new Error("Datetime Value's parse method requires its parameter to be a string");
