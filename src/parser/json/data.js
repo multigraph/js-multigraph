@@ -41,6 +41,7 @@ module.exports = function($) {
             Multigraph = require('../../core/multigraph.js')($),
             pF = require('../../util/parsingFunctions.js'),
             vF = require('../../util/validationFunctions.js'),
+            uF = require('../../util/utilityFunctions.js'),
             defaultMissingvalueString,
             defaultMissingopString,
             dataVariables = [],
@@ -63,7 +64,7 @@ module.exports = function($) {
             // json.missingvalue is undefined, otherwise the String cast
             // here will result in the string "undefined", which wreaks havoc!
             if (json.missingvalue) {
-                defaultMissingvalueString = String(json.missingvalue);
+                defaultMissingvalueString = uF.coerceToString(json.missingvalue);
             }
             defaultMissingopString    = json.missingop;
 

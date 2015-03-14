@@ -12,6 +12,7 @@ Filter.parseJSON = function (json) {
     var filter = new Filter(),
         FilterOption = require('../../core/filter_option.js'),
         pF = require('../../util/parsingFunctions.js'),
+        uF = require('../../util/utilityFunctions.js'),
         o;
 
     require('./filter_option.js'); // so that FilterOption.parseJSON will exist below
@@ -22,7 +23,7 @@ Filter.parseJSON = function (json) {
                 if (json.options.hasOwnProperty(opt)) {
                     o = new FilterOption();
                     o.name(opt);
-                    o.value(String(json.options[opt]));
+                    o.value(uF.coerceToString(json.options[opt]));
                     filter.options().add( o );
                 }
             }

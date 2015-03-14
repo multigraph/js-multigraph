@@ -14,6 +14,7 @@ Datatips.parseJSON = function (json) {
         RGBColor         = require('../../math/rgb_color.js'),
         DatatipsVariable = require('../../core/datatips_variable.js'),
         pF               = require('../../util/parsingFunctions.js'),
+        uF               = require('../../util/utilityFunctions.js'),
         parseRGBColor    = RGBColor.parse,
         parseAttribute   = pF.parseAttribute,
         parseInteger     = pF.parseInteger,
@@ -30,7 +31,7 @@ Datatips.parseJSON = function (json) {
         parseAttribute(json.format,      datatips.format);
         parseAttribute(json.bgcolor,     datatips.bgcolor,     parseRGBColor);
         if (json.bgalpha) {
-            parseAttribute(String(json.bgalpha),     datatips.bgalpha);
+            parseAttribute(uF.coerceToString(json.bgalpha),     datatips.bgalpha);
         }
         parseAttribute(json.border,      datatips.border);
         parseAttribute(json.bordercolor, datatips.bordercolor, parseRGBColor);

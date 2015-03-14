@@ -153,13 +153,13 @@ Axis.parseJSON = function (json, orientation, messageHandler, multigraph) {
         // of the Axis object require strings.  See the comments about these properties in src/core/axis.js
         // for a discussion of why this is the case.
         if ("min" in json) {
-            axis.min(String(json.min));
+            axis.min(uF.coerceToString(json.min));
         }
         if (axis.min() !== "auto") {
             axis.dataMin(DataValue.parse(axis.type(), axis.min()));
         }
         if ("max" in json) {
-            axis.max(String(json.max));
+            axis.max(uF.coerceToString(json.max));
         }
         if (axis.max() !== "auto") {
             axis.dataMax(DataValue.parse(axis.type(), axis.max()));

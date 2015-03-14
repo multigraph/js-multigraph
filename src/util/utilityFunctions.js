@@ -12,6 +12,15 @@ utilityFunctions.getKeys = function (obj) {
     return keys;
 };
 
+// coerce a value to a string, but not if it is the undefined value
+utilityFunctions.coerceToString = function(s) {
+    if (typeof(s) !== 'undefined') {
+        return String(s);
+    } else {
+        return s;
+    }
+};
+
 utilityFunctions.insertDefaults = function (elem, defaults, attributes) {
     var i;
     for (i = 0; i < attributes.length; i++) {
