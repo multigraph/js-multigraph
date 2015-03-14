@@ -86,7 +86,6 @@ module.exports = function($, window) {
         var JQueryXMLParser = require('../../parser/xml/jquery_xml_parser.js')($);
         require('../../parser/json/json_parser.js')($);
         var multigraph;
-
         if (vF.typeOf(mugl) === 'string') {
             if (looks_like_json(mugl)) {
                 //http://stackoverflow.com/questions/4935632/parse-json-in-javascript
@@ -99,6 +98,7 @@ module.exports = function($, window) {
         } else {
             multigraph = Multigraph.parseJSON( mugl, options.mugl, options.messageHandler );
         }
+
 
         multigraph.normalize();
         multigraph.div(options.div);
@@ -125,7 +125,9 @@ module.exports = function($, window) {
 
             deferred = $.Deferred();
         } catch (e) {
-            options.messageHandler.error(e);
+//console.log('at c 1');
+throw e;
+//            options.messageHandler.error(e);
         }
 
         muglPromise.done(function (data) {
@@ -134,7 +136,9 @@ module.exports = function($, window) {
                 var multigraph = generateInitialGraph(data, options);
                 deferred.resolve(multigraph);
             } catch (e) {
-                options.messageHandler.error(e);
+//console.log('at c 2');
+throw e;
+//                options.messageHandler.error(e);
             }
         });
 
@@ -158,7 +162,9 @@ module.exports = function($, window) {
             var multigraph = generateInitialGraph(options.muglString, options);
             deferred.resolve(multigraph);
         } catch (e) {
-            options.messageHandler.error(e);
+//console.log('at c 3');
+throw e;
+//            options.messageHandler.error(e);
         }
 
         return deferred.promise();
