@@ -199,11 +199,11 @@ Axis.parseJSON = function (json, orientation, messageHandler, multigraph) {
             axis.grid(Grid.parseJSON(json.grid));
         }
 
-        if (json.pan) {
+        if ("pan" in json) {
             axis.pan(Pan.parseJSON(json.pan, axis.type()));
         }
 
-        if (json.zoom) {
+        if ("zoom" in json) {
             axis.zoom(Zoom.parseJSON(json.zoom, axis.type()));
         }
 

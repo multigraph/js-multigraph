@@ -5,11 +5,14 @@ Zoom.parseJSON = function (json, type) {
         DataValue        = require('../../core/data_value.js'),
         DataMeasure      = require('../../core/data_measure.js'),
         pF               = require('../../util/parsingFunctions.js'),
+        vF               = require('../../util/validationFunctions.js'),
         parseAttribute   = pF.parseAttribute,
         parseBoolean     = pF.parseBoolean,
         parseDataMeasure = function(v) { return DataMeasure.parse(type, v); }, //pF.parseDataMeasure
         attr;
-    if (json) {
+    if (vF.typeOf(json) === 'boolean') {
+        parseAttribute(json,         zoom.allowed, parseBoolean);
+    } else if (json) {
         parseAttribute(json.allowed, zoom.allowed, parseBoolean);
         parseAttribute(json.min,     zoom.min,     parseDataMeasure);
         parseAttribute(json.max,     zoom.max,     parseDataMeasure);
