@@ -158,6 +158,12 @@ var Graph = new jermaine.Model("Graph", function () {
     this.hasA("x0").which.isA("number");
     this.hasA("y0").which.isA("number");
 
+    this.hasA("filter").which.validatesWith(function(filter) {
+        return ((typeof(filter) === 'undefined')
+                ||
+                ((typeof(filter.reset) === 'function') && (typeof(filter.filter) === 'function')));
+    });
+
     this.isBuiltWith(function () {
         this.window( new Window() );
         this.plotarea( new Plotarea() );

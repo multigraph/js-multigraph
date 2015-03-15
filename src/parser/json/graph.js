@@ -15,6 +15,7 @@ module.exports = function($) {
             Legend = require('../../core/legend.js'),
             Background = require('../../core/background.js'),
             Plotarea = require('../../core/plotarea.js'),
+            ConsecutiveDistanceFilter = require('../../core/consecutive_distance_filter.js'),
             Title = require('../../core/title.js'),
             Data = require('../../core/data.js'),
             Plot = require('../../core/plot.js'),
@@ -56,6 +57,21 @@ module.exports = function($) {
 
             if (json.title) {
                 graph.title( Title.parseJSON(json.title, graph) );
+            }
+
+            if ("filter" in json) {
+                    if (vF.typeOf(json.filter) === 'object') {
+                        if ((typeof(json.filter.type) !== 'undefined') && (json.filter.type !== 'consecutivedistance')) {
+                            throw new Error('unknown filter type: ' + json.filter.type);
+                        }
+                        graph.filter(new ConsecutiveDistanceFilter(json.filter));
+                    } else {
+                        if (vF.typeOf(json.filter) !== 'boolean') {
+                            throw new Error('invalid filter property: ' + json.filter);
+                        } else if (json.filter) {
+                            graph.filter(new ConsecutiveDistanceFilter({}));
+                        }
+                    }
             }
 
             var haxes = json.horizontalaxis ? json.horizontalaxis : json.horizontalaxes;

@@ -40,6 +40,10 @@ module.exports = function() {
             context.lineWidth = settings.linewidth;
             context.strokeStyle = settings.linecolor.getHexString("#");
         }
+
+        if (this.filter()) {
+            this.filter().reset();
+        }
     });
     PointlineRenderer.respondsTo("dataPoint", function (datap) {
         var settings = this.settings(),
@@ -50,6 +54,11 @@ module.exports = function() {
             return;
         }
         p = this.transformPoint(datap);
+        if (this.filter()) {
+            if (this.filter().filter(datap, p)) {
+                return;
+            }
+        }
         if (settings.linewidth > 0) {
             if (settings.first) {
                 context.moveTo(p[0], p[1]);

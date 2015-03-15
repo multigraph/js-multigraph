@@ -17,6 +17,12 @@ var Renderer = new jermaine.Model("Renderer", function () {
     });
     this.hasA("numberOfVariables").which.isA("number");
 
+    this.hasA("filter").which.validatesWith(function(filter) {
+        return ((typeof(filter) === 'undefined')
+                ||
+                ((typeof(filter.reset) === 'function') && (typeof(filter.filter) === 'function')));
+    });
+
     this.respondsTo("setUpMissing", function () {
         // A call to this method results in the addition (or replacement) of a method called "isMissing()"
         // that can be used to test whether a value meets the "missing" criteria of one of this renderer's

@@ -56,16 +56,17 @@ var Plot = require('../../core/plot.js');
 //   },
 // 
 Plot.parseJSON = function (json, graph, messageHandler) {
-    var DataPlot      = require('../../core/data_plot.js'),
-        PlotLegend    = require('../../core/plot_legend.js'),
-        ConstantPlot  = require('../../core/constant_plot.js'),
-        DataValue     = require('../../core/data_value.js'),
-        DateTimeValue = require('../../core/datetime_value.js'),
-        Renderer      = require('../../core/renderer.js'),
-        Filter        = require('../../core/filter.js'),
-        Datatips      = require('../../core/datatips.js'),
-        pF            = require('../../util/parsingFunctions.js'),
-        vF            = require('../../util/validationFunctions.js'),
+    var DataPlot                  = require('../../core/data_plot.js'),
+        PlotLegend                = require('../../core/plot_legend.js'),
+        ConstantPlot              = require('../../core/constant_plot.js'),
+        DataValue                 = require('../../core/data_value.js'),
+        DateTimeValue             = require('../../core/datetime_value.js'),
+        Renderer                  = require('../../core/renderer.js'),
+        Filter                    = require('../../core/filter.js'),
+        ConsecutiveDistanceFilter = require('../../core/consecutive_distance_filter.js'),
+        Datatips                  = require('../../core/datatips.js'),
+        pF                        = require('../../util/parsingFunctions.js'),
+        vF                        = require('../../util/validationFunctions.js'),
         plot,
         haxis,
         vaxis,
@@ -447,7 +448,24 @@ Plot.parseJSON = function (json, graph, messageHandler) {
         }
 
         if ("filter" in json) {
-            plot.filter(Filter.parseJSON(json.filter));
+            if (vF.typeOf(json.filter) === 'object') {
+                if ((typeof(json.filter.type) !== 'undefined') && (json.filter.type !== 'consecutivedistance')) {
+                    throw new Error('unknown filter type: ' + json.filter.type);
+                }
+                plot.renderer().filter(new ConsecutiveDistanceFilter(json.filter));
+            } else if (vF.typeOf(json.filter) === 'boolean') {
+                if (json.filter) {
+                    if (graph && graph.filter()) {
+                        plot.renderer().filter(graph.filter());
+                    } else {
+                        plot.renderer().filter(new ConsecutiveDistanceFilter({}));
+                    }
+                }
+            } else {
+                throw new Error('invalid filter property: ' + json.filter);
+            }
+        } else if (graph && graph.filter()) {
+            plot.renderer().filter(graph.filter());
         }
 
         if ("datatips" in json) {
