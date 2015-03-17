@@ -59,13 +59,13 @@
       <variable column="3" id="normal_maxt"/>
       <variable column="4" id="normal_mint"/>
     </variables>
-    <service location="http://acis.multigraph.org/acisdata/13881-1/maxt,mint,normal_maxt,normal_mint/"/>
+    <service location="http://data.multigraph.org/acis/13881-1/maxt,mint,normal_maxt,normal_mint/"/>
   </data>
 
   <throttle
-      pattern="^http://acis.multigraph.org"
+      pattern="^http://data.multigraph.org"
       requests="1"
-      period="5000"
+      period="1000"
       concurrent="1"/>
 
 </mugl>

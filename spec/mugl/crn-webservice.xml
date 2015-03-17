@@ -158,7 +158,7 @@
   
 
   <throttle
-      pattern="^http://crndata.multigraph.org"
+      pattern="^http://data.multigraph.org"
       requests="1"
       period="1000"
       concurrent="1"/>
@@ -170,7 +170,7 @@
       <variable id="sur_temp" column="2" type="number"/>
       <variable id="windspd"  column="3" type="number"/>
     </variables>
-    <service location="http://crndata.multigraph.org/data/1026/SOLARAD,SUR_TEMP,WINDSPD/"/>
+    <service location="http://data.multigraph.org/crn/1026/SOLARAD,SUR_TEMP,WINDSPD/"/>
   </data>
   
   <data>
@@ -179,7 +179,7 @@
       <variable column="1" id="temp"/>
       <variable column="2" id="precip"/>
     </variables>
-    <service location="http://crndata.multigraph.org/data/1026/T5,P5/"/>
+    <service location="http://data.multigraph.org/crn/1026/T5,P5/"/>
   </data>
 
 </mugl>

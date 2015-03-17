@@ -83,8 +83,8 @@ module.exports = {
         { "mugl": "dashboard-soi.xml",           "width": 800,  "height": 400, "web": true },
         { "mugl": "dashboard-sun.xml",           "width": 800,  "height": 400, "web": true },
         { "mugl": "dashboard-temp.xml",          "width": 800,  "height": 400, "web": true },
-        { "mugl": "crn-webservice.xml",          "width": 1000, "height": 400, "web": false },
-        { "mugl": "acis-webservice.xml",         "width": 1000, "height": 400 },
+        { "mugl": "crn-webservice.xml",          "width": 1000, "height": 400, "web": true },
+        { "mugl": "acis-webservice.xml",         "width": 1000, "height": 400, "web": true },
         { "mugl": "multigraph-logo.xml",         "width": 500,  "height": 500, "web": true },
 
         // The 'js' property is an array of additional JS files that should be loaded in the browser for a specific MUGL
