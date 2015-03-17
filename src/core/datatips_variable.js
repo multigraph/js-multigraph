@@ -2,12 +2,12 @@ var jermaine = require('../../lib/jermaine/src/jermaine.js');
 
 var utilityFunctions = require('../util/utilityFunctions.js'),
     defaultValues = utilityFunctions.getDefaultValuesFromXSD(),
-    attributes = utilityFunctions.getKeys(defaultValues.plot.datatips.variable);
+    attributes = utilityFunctions.getKeys(defaultValues.plot.datatips.variable),
+    DataFormatter = require('./data_formatter.js');
 
 var DatatipsVariable = new jermaine.Model("DatatipsVariable", function () {
-    this.hasA("format").which.validatesWith(function (format) {
-        return typeof(format) === "string";
-    });
+    this.hasA("formatString").which.isA("string");
+    this.hasA("formatter").which.validatesWith(DataFormatter.isInstance);
 
     utilityFunctions.insertDefaults(this, defaultValues.plot.datatips.variable, attributes);
 });

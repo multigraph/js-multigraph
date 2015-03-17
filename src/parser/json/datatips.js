@@ -23,16 +23,14 @@ Datatips.parseJSON = function (json) {
         if (json["variable-formats"]) {
             json["variable-formats"].forEach(function(fmt) {
                 var dtv = new DatatipsVariable();
-                dtv.format(fmt);
+                dtv.formatString(fmt);
                 datatips.variables().add(dtv);
             });
         }
         
-        parseAttribute(json.format,      datatips.format);
+        parseAttribute(json.format,      datatips.formatString);
         parseAttribute(json.bgcolor,     datatips.bgcolor,     parseRGBColor);
-        if (json.bgalpha) {
-            parseAttribute(uF.coerceToString(json.bgalpha),     datatips.bgalpha);
-        }
+        parseAttribute(json.bgalpha,     datatips.bgalpha);
         parseAttribute(json.border,      datatips.border);
         parseAttribute(json.bordercolor, datatips.bordercolor, parseRGBColor);
         parseAttribute(json.pad,         datatips.pad);

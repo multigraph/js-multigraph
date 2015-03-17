@@ -307,8 +307,8 @@ describe("DataPlot XML parsing", function () {
             expect(plot.datatips() instanceof Datatips).toBe(true);
             expect(plot.datatips().bgcolor().getHexString("0x")).toEqual((RGBColor.parse(bgcolorString)).getHexString("0x"));
             expect(plot.datatips().bordercolor().getHexString("0x")).toEqual((RGBColor.parse(bordercolorString)).getHexString("0x"));
-            expect(plot.datatips().format()).toEqual(formatString);
-            expect(plot.datatips().bgalpha()).toEqual(bgalphaString);
+            expect(plot.datatips().formatString()).toEqual(formatString);
+            expect(plot.datatips().bgalpha()).toEqual(parseFloat(bgalphaString));
             expect(plot.datatips().border()).toEqual(parseInt(borderString, 10));
             expect(plot.datatips().pad()).toEqual(parseInt(padString, 10));
         });
@@ -342,11 +342,11 @@ describe("DataPlot XML parsing", function () {
             expect(plot.datatips() instanceof Datatips).toBe(true);
             expect(plot.datatips().variables().size()).toEqual(3);
             expect(plot.datatips().variables().at(0) instanceof DatatipsVariable).toBe(true);
-            expect(plot.datatips().variables().at(0).format()).toEqual(datatipsVariable1FormatString);
+            expect(plot.datatips().variables().at(0).formatString()).toEqual(datatipsVariable1FormatString);
             expect(plot.datatips().variables().at(1) instanceof DatatipsVariable).toBe(true);
-            expect(plot.datatips().variables().at(1).format()).toEqual(datatipsVariable2FormatString);
+            expect(plot.datatips().variables().at(1).formatString()).toEqual(datatipsVariable2FormatString);
             expect(plot.datatips().variables().at(2) instanceof DatatipsVariable).toBe(true);
-            expect(plot.datatips().variables().at(2).format()).toEqual(datatipsVariable3FormatString);
+            expect(plot.datatips().variables().at(2).formatString()).toEqual(datatipsVariable3FormatString);
         });
 
     });

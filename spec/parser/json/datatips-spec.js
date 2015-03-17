@@ -11,7 +11,7 @@ describe("Plot Datatips JSON parsing", function () {
         bgcolor = "0x123456",
         bordercolor = "0xfffbbb",
         format = "number",
-        bgalpha = 1,
+        bgalpha = 1.0,
         border = 2,
         pad = 1,
         json;
@@ -35,8 +35,8 @@ describe("Plot Datatips JSON parsing", function () {
         expect(datatips instanceof Datatips).toBe(true);
     });
 
-    it("should be able to parse a datatips from JSON and read its 'format' attribute", function () {
-        expect(datatips.format()).toEqual(format);
+    it("should be able to parse a datatips from JSON and read its 'formatString' attribute", function () {
+        expect(datatips.formatString()).toEqual(format);
     });
 
     it("should be able to parse a datatips from JSON and read its 'bgcolor' attribute", function () {
@@ -44,7 +44,7 @@ describe("Plot Datatips JSON parsing", function () {
     });
 
     it("should be able to parse a datatips from JSON and read its 'bgalpha' attribute", function () {
-        expect(datatips.bgalpha()).toEqual(String(bgalpha));
+        expect(datatips.bgalpha()).toEqual(bgalpha);
     });
 
     it("should be able to parse a datatips from JSON and read its 'border' attribute", function () {
@@ -84,7 +84,7 @@ describe("Plot Datatips JSON parsing", function () {
             it("should properly parse the variable children of a datatips with a variable child tag from JSON", function () {
                 expect(datatips.variables().size()).toEqual(1);
                 expect(datatips.variables().at(0) instanceof DatatipsVariable).toBe(true);
-                expect(datatips.variables().at(0).format()).toEqual(variable1Format);
+                expect(datatips.variables().at(0).formatString()).toEqual(variable1Format);
             });
 
         });
@@ -115,11 +115,11 @@ describe("Plot Datatips JSON parsing", function () {
             it("should properly parse the variable children of a datatips with multiple variable child tags from JSON", function () {
                 expect(datatips.variables().size()).toEqual(3);
                 expect(datatips.variables().at(0) instanceof DatatipsVariable).toBe(true);
-                expect(datatips.variables().at(0).format()).toEqual(variable1Format);
+                expect(datatips.variables().at(0).formatString()).toEqual(variable1Format);
                 expect(datatips.variables().at(1) instanceof DatatipsVariable).toBe(true);
-                expect(datatips.variables().at(1).format()).toEqual(variable2Format);
+                expect(datatips.variables().at(1).formatString()).toEqual(variable2Format);
                 expect(datatips.variables().at(2) instanceof DatatipsVariable).toBe(true);
-                expect(datatips.variables().at(2).format()).toEqual(variable3Format);
+                expect(datatips.variables().at(2).formatString()).toEqual(variable3Format);
             });
 
         });

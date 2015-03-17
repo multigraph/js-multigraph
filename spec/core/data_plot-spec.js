@@ -13,6 +13,7 @@ describe("DataPlot", function () {
         DatatipsVariable = require('../../src/core/datatips_variable.js'),
         DataVariable = require('../../src/core/data_variable.js'),
         Text = require('../../src/core/text.js'),
+        RGBColor = require('../../src/math/rgb_color.js'),
         p;
 
     beforeEach(function () {
@@ -214,7 +215,7 @@ describe("DataPlot", function () {
 
     });
 
-    describe("Datatips", function () {
+ describe("Datatips", function () {
         var datatips;
 
         beforeEach(function () {
@@ -229,20 +230,20 @@ describe("DataPlot", function () {
         it("should be able to add datatips with attributes and children to a DataPlot", function () {
             var variable = new DatatipsVariable(),
                 variable2 = new DatatipsVariable();
-            datatips.format("number")
-                .bgcolor(require('../../src/math/rgb_color.js').parse("0xAABBCC"))
-                .bgalpha("2")
+            datatips.formatString("{0} {0} {0}")
+                .bgcolor(RGBColor.parse("0xAABBCC"))
+                .bgalpha(0.2)
                 .border(7)
-                .bordercolor(require('../../src/math/rgb_color.js').parse("0x123421"))
+                .bordercolor(RGBColor.parse("0x123421"))
                 .pad(4);
-            variable.format("datetime");
+            variable.formatString("%d %n %Y");
             datatips.variables().add(variable);
-            variable2.format("number");
+            variable2.formatString("%.2f");
             datatips.variables().add(variable2);
             p.datatips(datatips);
-            expect(p.datatips().format()).toBe("number");
+            expect(p.datatips().formatString()).toBe("{0} {0} {0}");
             expect(p.datatips().bgcolor().getHexString()).toBe("0xaabbcc");
-            expect(p.datatips().bgalpha()).toBe("2");
+            expect(p.datatips().bgalpha()).toBe(0.2);
             expect(p.datatips().border()).toBe(7);
             expect(p.datatips().bordercolor().getHexString()).toBe("0x123421");
             expect(p.datatips().pad()).toBe(4);
@@ -256,25 +257,25 @@ describe("DataPlot", function () {
             datatips.variables().add(variable);
             p.datatips(datatips);
 
-            p.datatips().format("datetime")
-                .bgcolor(require('../../src/math/rgb_color.js').parse("0xAABBDC"))
-                .bgalpha("3")
+            p.datatips().formatString("{0} : {1} {1}")
+                .bgcolor(RGBColor.parse("0xAABBDC"))
+                .bgalpha(0.5)
                 .border(8)
-                .bordercolor(require('../../src/math/rgb_color.js').parse("0xD23421"))
+                .bordercolor(RGBColor.parse("0xD23421"))
                 .pad(4);
 
-            variable2.format("number");
+            variable2.formatString("%1d");
             p.datatips().variables().add(variable2);
-            p.datatips().variables().at(0).format("number");
+            p.datatips().variables().at(0).formatString("%4f");
 
-            expect(p.datatips().format()).toBe("datetime");
+            expect(p.datatips().formatString()).toBe("{0} : {1} {1}");
             expect(p.datatips().bgcolor().getHexString()).toBe("0xaabbdc");
-            expect(p.datatips().bgalpha()).toBe("3");
+            expect(p.datatips().bgalpha()).toBe(0.5);
             expect(p.datatips().border()).toBe(8);
             expect(p.datatips().bordercolor().getHexString()).toBe("0xd23421");
             expect(p.datatips().pad()).toBe(4);
-            expect(p.datatips().variables().at(0).format()).toBe("number");
-            expect(p.datatips().variables().at(1).format()).toBe("number");
+            expect(p.datatips().variables().at(0).formatString()).toBe("%4f");
+            expect(p.datatips().variables().at(1).formatString()).toBe("%1d");
         });
 
     });

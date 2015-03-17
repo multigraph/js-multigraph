@@ -36,9 +36,9 @@ module.exports = function($) {
                 });
             }
             
-            parseAttribute(pF.getXMLAttr(xml,"format"),      datatips.format);
+            parseAttribute(pF.getXMLAttr(xml,"format"),      datatips.formatString);
             parseAttribute(pF.getXMLAttr(xml,"bgcolor"),     datatips.bgcolor,     parseRGBColor);
-            parseAttribute(pF.getXMLAttr(xml,"bgalpha"),     datatips.bgalpha);
+            parseAttribute(pF.getXMLAttr(xml,"bgalpha"),     datatips.bgalpha,     parseFloat);
             parseAttribute(pF.getXMLAttr(xml,"border"),      datatips.border,      parseInteger);
             parseAttribute(pF.getXMLAttr(xml,"bordercolor"), datatips.bordercolor, parseRGBColor);
             parseAttribute(pF.getXMLAttr(xml,"pad"),         datatips.pad,         parseInteger);

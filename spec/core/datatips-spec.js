@@ -4,29 +4,32 @@ describe("Plot Datatips", function () {
     "use strict";
 
     var Datatips = require('../../src/core/datatips.js'),
+        DatatipsVariable = require('../../src/core/datatips_variable.js'),
+        RGBColor = require('../../src/math/rgb_color.js'),
         datatips;
 
     beforeEach(function () {
         datatips = new Datatips();
     }); 
 
+
     it("should be able to create a Datatips", function () {
         expect(datatips instanceof Datatips).toBe(true);
     });
 
-    it("should be able to set/get the format attribute", function () {
-        datatips.format("small");
-        expect(datatips.format()).toBe("small");
+    it("should be able to set/get the formatString attribute", function () {
+        datatips.formatString("{0}: {1} {1} {1}");
+        expect(datatips.formatString()).toBe("{0}: {1} {1} {1}");
     });
 
     it("should be able to set/get the bgcolor attribute", function () {
-        datatips.bgcolor(require('../../src/math/rgb_color.js').parse("0x999678"));
+        datatips.bgcolor(RGBColor.parse("0x999678"));
         expect(datatips.bgcolor().getHexString()).toBe("0x999678");
     });
 
     it("should be able to set/get the bgalpha attribute", function () {
-        datatips.bgalpha(".5");
-        expect(datatips.bgalpha()).toBe(".5");
+        datatips.bgalpha(0.5);
+        expect(datatips.bgalpha()).toBe(0.5);
     });
 
     it("should be able to set/get the border attribute", function () {
@@ -35,7 +38,7 @@ describe("Plot Datatips", function () {
     });
 
     it("should be able to set/get the bordercolor attribute", function () {
-        datatips.bordercolor(require('../../src/math/rgb_color.js').parse("0x121756"));
+        datatips.bordercolor(RGBColor.parse("0x121756"));
         expect(datatips.bordercolor().getHexString()).toBe("0x121756");
     });
 
@@ -45,7 +48,7 @@ describe("Plot Datatips", function () {
     });
 
     describe("Datatips Variable", function () {
-        var Variable = require('../../src/core/datatips_variable.js'),
+        var Variable = DatatipsVariable,
             variable;
 
         beforeEach(function () {
@@ -66,7 +69,7 @@ describe("Plot Datatips", function () {
         });
 
         it("should be able to add an Variable with attributes to a Datatips", function () {
-            variable.format("tiny");
+            variable.formatString("tiny");
             datatips.variables().add(variable);
             expect(datatips.variables().at(0)).toBe(variable);
         });
@@ -74,9 +77,9 @@ describe("Plot Datatips", function () {
         it("should be able to add multiple Variables with attributes to a Datatips", function () {
             var variable2 = new Variable(),
                 variable3 = new Variable();
-            variable.format("big");
-            variable2.format("tiny");
-            variable3.format("medium");
+            variable.formatString("big");
+            variable2.formatString("tiny");
+            variable3.formatString("medium");
             datatips.variables().add(variable);
             datatips.variables().add(variable3);
             datatips.variables().add(variable2);
@@ -87,8 +90,8 @@ describe("Plot Datatips", function () {
 
         it("should be able to set/get attributes of an Variable added to a Datatips", function () {
             datatips.variables().add(variable);
-            datatips.variables().at(0).format("small");
-            expect(datatips.variables().at(0).format()).toBe("small");
+            datatips.variables().at(0).formatString("small");
+            expect(datatips.variables().at(0).formatString()).toBe("small");
         });
 
     });

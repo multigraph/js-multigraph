@@ -1,6 +1,7 @@
 var _INCLUDED = false;
 module.exports = function() {
-    var FillRenderer = require('../../../core/renderers/fill_renderer.js');
+    var FillRenderer = require('../../../core/renderers/fill_renderer.js'),
+        mathUtil = require('../../../math/util.js');
 
     if (_INCLUDED) { return FillRenderer; }
     _INCLUDED = true;

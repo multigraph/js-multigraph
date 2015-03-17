@@ -348,16 +348,17 @@ utilityFunctions.getDefaultValuesFromXSD = function () {
             },
             "datatips":{
                 "variable": {
-                    "format": undefined
+                    "formatString-number" : "%.2f",
+                    "formatString-datetime" : "%d %n %Y"
                 },
                 //                    "visible": "false",
-                "format": undefined,
-                //                    "bgcolor": "0xeeeeee",
-                "bgalpha": "1.0",
+                "formatString": "{0}: {1}",
+                "bgcolor": function () { return RGBColor.parse("0xeeeeee"); },
+                "bgalpha": 1.0,
                 "border": 1,
-                //                    "bordercolor": "0x000000",
+                "bordercolor": function () { return RGBColor.parse("0x000000"); },
                 "pad": 2
-            }
+            },
         },
         "throttle": {
             "pattern"    : "",

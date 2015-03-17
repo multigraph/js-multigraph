@@ -133,6 +133,10 @@ var Plot = new jermaine.Model("Plot", function () {
             //                  - if no unused variables exist - throw error
             //                  - check if vertical axis needs another variable
             //                        if it does - Repeat step 3
+
+            if (this.datatips()) {
+                this.datatips().normalize(this);
+            }
         }
 
     });

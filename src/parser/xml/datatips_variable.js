@@ -5,7 +5,7 @@ DatatipsVariable.parseXML = function (xml) {
         pF = require('../../util/parsingFunctions.js');
 
     if (xml) {
-        pF.parseAttribute(pF.getXMLAttr(xml,"format"), variable.format);
+        pF.parseAttribute(pF.getXMLAttr(xml,"format"), variable.formatString);
     }
     return variable;
 };

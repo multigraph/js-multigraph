@@ -32,8 +32,8 @@ describe("DatatipsVariable XML parsing", function () {
         expect(variable instanceof DatatipsVariable).toBe(true);
     });
 
-    it("should be able to parse a variable from XML and read its 'format' attribute", function () {
-        expect(variable.format()).toEqual(formatString);
+    it("should be able to parse a variable from XML and read its 'formatString' attribute", function () {
+        expect(variable.formatString()).toEqual(formatString);
     });
 
 });
