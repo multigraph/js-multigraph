@@ -3,6 +3,7 @@ Version 5.1.0 (2015-03-17)
 
 * includes initial ability to read MUGL in JSON format; not yet documented
 * implements datatips
+* implements rudimentary filter capability, presently for pointline renderer only
 
 Version 5.0.1 (2015-03-09)
 ---------------------------
