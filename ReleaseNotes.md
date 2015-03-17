@@ -1,3 +1,8 @@
+Version 5.1.1 (2015-03-17)
+---------------------------
+
+* update crn-webservice, acis-webservice example graphs with new working data service
+
 Version 5.1.0 (2015-03-17)
 ---------------------------
 
