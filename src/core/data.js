@@ -8,6 +8,8 @@ var Data = new jermaine.Model(function () {
     
     this.isA(EventEmitter);
 
+    this.hasAn("id").which.isA("string");
+
     /**
      * Searches through a jermaine attr_list of DataVariables (columns) for
      * an entry having a given id or column number.
@@ -70,7 +72,7 @@ var Data = new jermaine.Model(function () {
 
     this.hasA("defaultMissingvalue").which.isA("string");
     this.hasA("defaultMissingop").which.isA("string").and.defaultsTo("eq");
-    this.hasA("adapter");
+    this.hasAn("adapter");
 
     /**
      * Initialization function --- should be called from isBuiltWith initializer.  This is split

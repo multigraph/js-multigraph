@@ -166,6 +166,7 @@ describe("Data JSON parsing", function () {
 
         beforeEach(function (done) {
             json = {
+                "id" : "fred",
                 "variables" : [
                     { "id" : variable1Id, "column" : variable1Column, "type" : variable1Type },
                     { "id" : variable2Id, "column" : variable2Column, "type" : variable2Type }
@@ -183,6 +184,10 @@ describe("Data JSON parsing", function () {
             expect(data instanceof Data).toBe(true);
             expect(data instanceof ArrayData).toBe(true);
             expect(data instanceof CSVData).toBe(true);
+        });
+
+        it("CSVData should have correct id property", function () {
+            expect(data.id()).toEqual("fred");
         });
 
         it("filename attribute should be correctly set", function () {

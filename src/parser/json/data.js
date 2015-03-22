@@ -118,6 +118,11 @@ module.exports = function($) {
                     data.format(json.service.format);
                 }
             }
+
+            // if the json contains an "id" property, pass it on to our data object:
+            if ("id" in json) {
+                data.id(json.id);
+            }
         }
 
         if (data) {
