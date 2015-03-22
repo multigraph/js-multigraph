@@ -29,7 +29,7 @@ $(document).ready(function() {
         }
 
         $("#muglname a").text(tests[n].mugl);
-        $("#muglname a").attr('href', "../mugl/"+tests[n].mugl );
+        $("#muglname a").attr('href', "../json-mugl/"+tests[n].mugl );
 
         var size = test_size(tests[n]);
 
@@ -47,7 +47,7 @@ $(document).ready(function() {
 
         function create_multigraph() {
             $("div#multigraph-container div").multigraph({
-                'mugl' : "../mugl/" + tests[n].mugl
+                'mugl' : "../json-mugl/" + tests[n].mugl
             });
         }
 
