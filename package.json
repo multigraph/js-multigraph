@@ -41,8 +41,8 @@
     "sprintf": "^0.1.5"
   },
   "scripts": {
-      "build" : "browserify src/main.js -d > build/multigraph-nojq.js",
-      "build-all" : "browserify src/main.js -d > build/multigraph-nojq.js ; browserify src/main-with-jquery.js -d > build/multigraph.js ; uglifyjs < build/multigraph-nojq.js > build/multigraph-nojq-min.js ; uglifyjs < build/multigraph.js > build/multigraph-min.js",
+      "build" : "ulimit -n 2560 ; browserify src/main.js -d > build/multigraph-nojq.js",
+      "build-all" : "ulimit -n 2560 ; browserify src/main.js -d > build/multigraph-nojq.js ; browserify src/main-with-jquery.js -d > build/multigraph.js ; uglifyjs < build/multigraph-nojq.js > build/multigraph-nojq-min.js ; uglifyjs < build/multigraph.js > build/multigraph-min.js",
       "build-tests": "node scripts/build-tests.js",
       "build-graph-tests": "node scripts/build-graph-tests.js",
       "test": "jasmine-node spec"
