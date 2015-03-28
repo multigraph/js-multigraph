@@ -1,39 +1,58 @@
-{
-    "window": {
-        "margin": INTEGER // pixel size of window margin,
-        "padding": INTEGER // pixel size of window padding
-        "border": INTEGER // pixel size of window border,
+var mugl = {
+    "window" : {
+        "margin"      : INTEGER, // pixel size of window margin
+        "padding"     : INTEGER, // pixel size of window padding
+        "border"      : INTEGER, // pixel size of window border
         "bordercolor" : COLOR // color to use when drawing window border
     },
     "plotarea": {
-        "marginbottom": INTEGER // pixel size of plotarea bottom margin ,
-        "marginleft": INTEGER // pixel size of plotarea left margin ,
-        "marginright": INTEGER // pixel size of plotarea right margin ,
-        "margintop": INTEGER // pixel size of plotarea top margin 
+        "marginbottom" : INTEGER, // pixel size of plotarea bottom margin
+        "marginleft"   : INTEGER, // pixel size of plotarea left margin
+        "marginright"  : INTEGER, // pixel size of plotarea right margin
+        "margintop"    : INTEGER // pixel size of plotarea top margin
     },
-
     "legend": { // may also be true/false
-        "anchor": [INTEGER,INTEGER] // coordinates of legend anchor  point,
-        "base": [INTEGER,INTEGER] // coordinates of legend base  point,
-        "border": INTEGER // pixel size of legend border 
+        "anchor"     : [INTEGER,INTEGER], // coordinates of legend anchor point
+        "base"       : [INTEGER,INTEGER], // coordinates of legend base point
+        "border"     : INTEGER, // pixel size of legend border
         "icon": {
-            "border": INTEGER // pixel size of border to draw around legend icons 
-            "height": INTEGER // pixel height of legend icons 
-            "width": INTEGER // pixel width of legend icons 
+            "border" : INTEGER, // pixel size of border to draw around legend icons
+            "height" : INTEGER, // pixel height of legend icons
+            "width"  : INTEGER // pixel width of legend icons
         },
-        "position": [INTEGER,INTEGER], // coordinates of legend position 
-        "rows": INTEGER, // number of rows to use in legend 
-        "columns": INTEGER, // number of columns to use in legend 
-        "visible": BOOLEAN, // whether to draw legend at all
-        "frame": FRAME, // frame of reference for base
-        "color": COLOR, // background color of legend 
-        "opacity": DOUBLE, // legend background opacity
+        "position"   : [INTEGER,INTEGER], // coordinates of legend position
+        "rows"       : INTEGER, // number of rows to use in legend
+        "columns"    : INTEGER, // number of columns to use in legend
+        "visible"    : BOOLEAN, // whether to draw legend at all
+        "frame"      : FRAME, // frame of reference for base
+        "color"      : COLOR, // background color of legend
+        "opacity"    : DOUBLE, // legend background opacity
         "bordercolor": COLOR, // color to use when drawing border
-        "padding": INTEGER
+        "padding"    : INTEGER
     },
-
 
     "data": [
+        {
+            "filter"  : "threshold-count",
+            "options" : {
+                "in-period"    : "1D",
+                "out-period"   : "1M",
+                "in-variable"  : "max_temp",
+                "op"           :  ">=",
+                "threshold"    :  90
+            },
+            "variables" : {
+                {
+                    "id": STRING
+                    "type": "datetime"
+                    "source": STRING
+                },
+                {
+                    "id": "temp",
+                    "type": "number"
+                },
+            },
+        },
         {
             "service": {
                 "location": "http://crndata.multigraph.org/data/1026/SOLARAD,SUR_TEMP,WINDSPD/"

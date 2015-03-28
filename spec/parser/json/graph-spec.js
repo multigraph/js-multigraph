@@ -310,4 +310,87 @@ describe("Graph JSON parsing", function () {
 
     });
 
+    describe("checking variable id lookup by dotted data_id.variable_id notation", function() {
+        var json = {
+            "horizontalaxis" : { "id" : "x", "type" : "number" },
+            "verticalaxis" :  { "id" : "y", "type" : "number" },
+            "plot" : {
+                "horizontalaxis" : { "x" : "x" },
+                "verticalaxis" : { "y" :  "y" }
+            },
+            "data" : [
+                {
+                    "id" : "data1",
+                    "variables" : [
+                        { "id" : "x", "column": 0, "type": "number", "missingop": "eq" },
+                        { "id" : "y", "column": 1, "type": "number", "missingop": "eq" }
+                    ],
+                    "values" : [
+                        [3,4],
+                        [5,6]
+                    ]
+                },
+                {
+                    "id" : "data2",
+                    "variables" : [
+                        { "id" : "foo1", "column": 0, "type": "number", "missingop": "eq" },
+                        { "id" : "foo2", "column": 1, "type": "number", "missingop": "eq" },
+                        { "id" : "x",    "column": 2, "type": "number", "missingop": "eq" },
+                        { "id" : "y",    "column": 3, "type": "number", "missingop": "eq" }
+                    ],
+                    "values" : [
+                        [3,4],
+                        [5,6]
+                    ]
+                }
+            ]
+        };
+
+
+        beforeEach(function () {        
+            graph = Graph.parseJSON(json);
+        });
+
+        it("should have two data objects", function () {
+            expect(graph.data().size()).toEqual(2);
+        });
+
+        it("should have data objects with ids 'data1,data2'", function () {
+            expect(graph.dataById("data1")).not.toBeUndefined();
+            expect(graph.dataById("data2")).not.toBeUndefined();
+        });
+
+        it("should not have a data object with id 'fooya'", function () {
+            expect(graph.dataById("fooya")).toBeUndefined();
+        });
+
+        it("should be able to look up variables with ids data1.x, data1.y", function () {
+            expect(graph.variableById("data1.x")).not.toBeUndefined();
+            expect(graph.variableById("data1.y")).not.toBeUndefined();
+        });
+
+        it("should be able to look up variables with ids data2.foo1, data2.foo2, data2.x, data2.y", function () {
+            expect(graph.variableById("data2.foo1")).not.toBeUndefined();
+            expect(graph.variableById("data2.foo2")).not.toBeUndefined();
+            expect(graph.variableById("data2.x")).not.toBeUndefined();
+            expect(graph.variableById("data2.y")).not.toBeUndefined();
+        });
+
+        it("variables with ids data1.x, data1.y should have the correct column numbers", function () {
+            expect(graph.variableById("data1.x").column()).toEqual(0);
+            expect(graph.variableById("data1.y").column()).toEqual(1);
+        });
+
+        it("variables with ids data2.foo1, data2.foo2, data2.x, data2.y should have the correct column numbers", function () {
+            expect(graph.variableById("data2.foo1").column()).toEqual(0);
+            expect(graph.variableById("data2.foo2").column()).toEqual(1);
+            expect(graph.variableById("data2.x").column()).toEqual(2);
+            expect(graph.variableById("data2.y").column()).toEqual(3);
+        });
+
+    });
+
+
+
+
 });

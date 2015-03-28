@@ -10,7 +10,8 @@ var Axis = require('./axis.js'),
     Window = require('./window.js'),
     Box = require('../math/box.js'),
     DataPlot = require('../core/data_plot.js'),
-    AxisBinding = require('../core/axis_binding.js');
+    AxisBinding = require('../core/axis_binding.js'),
+    varaible_id_regex = /^([^\.]+)\.(.+)$/;
 
 
 /**
@@ -335,21 +336,48 @@ var Graph = new jermaine.Model("Graph", function () {
         return undefined;
     });
 
-    this.respondsTo("variableById", function (id) {
-        // return a pointer to the variable for this graph that has the given id, if any
-        var data = this.data(),
-            columns,
-            i,
-            j;
-        for (i = 0; i < data.size(); ++i) {
-            columns = data.at(i).columns();
-            for (j = 0; j < columns.size(); ++j) {
-                if (columns.at(j).id() === id) {
-                    return columns.at(j);
-                }
+
+    this.respondsTo("dataById", function(id) { // 'id' is a string id of a data object
+        // Return a reference to the data object associated with the given graph having the given id
+        var datas = this.data(),
+            data;
+        for (i = 0; i < datas.size(); ++i) {
+            data = datas.at(i);
+            if (data.id() === id) {
+                return data;
             }
         }
         return undefined;
+    });
+
+    this.respondsTo("variableById", function (id) {
+        // return a pointer to the variable for this graph that has the given id, if any
+        var datas,
+            re = /^([^\.]+)\.(.+)$/,
+            m = id.match(re),
+            data_id,
+            var_id,
+            data,
+            columns,
+            i, j;
+
+        if (m) {
+            data_id = m[1];
+            var_id = m[2];
+            data = this.dataById(data_id);
+            return data.columnIdToDataVariable(var_id);
+        } else {
+            datas = this.data();
+            for (i = 0; i < datas.size(); ++i) {
+                columns = datas.at(i).columns();
+                for (j = 0; j < columns.size(); ++j) {
+                    if (columns.at(j).id() === id) {
+                        return columns.at(j);
+                    }
+                }
+            }
+            return undefined;
+        }
     });
 
     this.respondsTo("normalize", function () {
