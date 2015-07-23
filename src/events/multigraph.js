@@ -22,6 +22,14 @@ module.exports = function($, window, errorHandler) {
             return this.each(function () {
                 var $this = $(this),
                     data = $this.data('multigraph');
+                if (!("mugl" in options) && !("muglString" in options)) {
+                    // if options contains neigther "mugl" nor "muglString",
+                    // assume it's a JSON mugl object, so pass it on as
+                    // the value of "muglString":
+                    options = {
+                        muglString: options
+                    };
+                }
                 options.div = this;
                 if ( ! data ) {
                     $this.data('multigraph', {
