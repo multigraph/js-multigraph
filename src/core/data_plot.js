@@ -39,6 +39,9 @@ var DataPlot = new jermaine.Model("DataPlot", function () {
         // It can be any objectded by the driver -- usually some kind of graphics
         // context object.  It can also be omitted if a driver does not need it.
         //var data = this.data().arraydata();
+
+        if (!this.visible()) { return; }
+
         var data = this.data();
         if (! data) { return; }
 

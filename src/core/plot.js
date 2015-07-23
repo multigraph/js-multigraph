@@ -17,6 +17,7 @@ var Plot = new jermaine.Model("Plot", function () {
     this.hasA("renderer").which.validatesWith(function (renderer) {
         return renderer instanceof Renderer;
     });
+    this.hasA("visible").which.isA("boolean").and.defaultsTo(true);
 
     this.respondsTo("normalize", function(graph) {
         var graphAxes = graph.axes(),
