@@ -115,6 +115,8 @@ window.multigraph = {
         'typeOf' 					: validationFunctions.typeOf
     },
 
+    'jermaine': require('../lib/jermaine/src/jermaine.js'),
+
     'jQuery' : $
 };
 window.sprintf = require('sprintf');
