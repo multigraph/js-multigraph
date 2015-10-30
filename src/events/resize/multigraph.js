@@ -12,7 +12,6 @@ module.exports = function($, window, errorHandler) {
 
         function respondGraph()
         {
-            console.log("respondCanvas ran");
             c.attr("width", container.width());
             c.attr("height", container.height());
             c.css("width", container.width());
