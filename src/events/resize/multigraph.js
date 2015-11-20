@@ -12,8 +12,8 @@ module.exports = function($, window, errorHandler) {
 
         function respondGraph()
         {
-            c.attr("width", container.width());
-            c.attr("height", container.height());
+            c.attr("width", container.width() * window.devicePixelRatio);
+            c.attr("height", container.height() * window.devicePixelRatio);
             c.css("width", container.width());
             c.css("height", container.height());
             multigraph.init();
