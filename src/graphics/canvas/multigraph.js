@@ -23,7 +23,7 @@ module.exports = function($, window) {
         this.height($div.height());
         if (this.width() > 0 && this.height() > 0) {
             // create the canvas
-            $("<canvas width=\""+this.width()+"\" height=\""+this.height()+"\"/>")
+            $("<canvas width=\""+this.width()*window.devicePixelRatio+"\" height=\""+this.height()*window.devicePixelRatio+"\" style=\"width:"+this.width()+"px; height:"+this.height()+"px;\"/>")
                 .appendTo($div);
 
             this.initializeSurface();
@@ -40,7 +40,9 @@ module.exports = function($, window) {
             width   = this.width(),
             height  = this.height(),
             i;
+
         context.setTransform(1, 0, 0, 1, 0, 0);
+        context.scale(window.devicePixelRatio, window.devicePixelRatio);
         context.transform(1, 0, 0, -1, 0, height);
         context.clearRect(0, 0, width, height);
         this.initializeGeometry(width, height, {"context" : context});
@@ -147,7 +149,7 @@ throw e;
 
     Multigraph.createCanvasGraphFromString = function (options) {
         var deferred;
-        
+
         try {
             //applyMixins(options);
             require('../../events/all.js')($, window, options.messageHandler.error);
@@ -172,4 +174,3 @@ throw e;
 
     return Multigraph;
 };
-
