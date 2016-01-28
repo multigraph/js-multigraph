@@ -16,6 +16,16 @@ var Labeler = require('../../core/labeler.js');
 //       "anchor": [1,1], "spacing": ["1M", "1D"], "densityfactor": 9.0 }
 //   ]
 // }
+//
+// Feature added 2015-12-16:
+//   The "format" attribute (for an axis of type number only) can be an
+//   array of strings to be displayed for the values 0..L-1 where L is the
+//   number of strings in the array.  For example:
+//        "format": ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov"]
+//   would cause "Jan" to be rendered as the label for value 0, "Feb" for value 1,
+//   and so on.  There is currently no way to customize the association between numerical
+//   values and strings -- it's hardcoded to be the integers starting with 0.
+
 Labeler.parseJSON = function (json, axis, defaults, spacing) {
     // This parser takes an optional final argument, spacing, which is a string representing
     // the spacing to be parsed for the labeler.  If that argument is not present, the spacing
@@ -31,7 +41,9 @@ Labeler.parseJSON = function (json, axis, defaults, spacing) {
         DataMeasure = require('../../core/data_measure.js'),
         DataValue = require('../../core/data_value.js'),
         DataFormatter = require('../../core/data_formatter.js'),
+        CategoryFormatter = require('../../core/category_formatter.js'),
         pF = require('../../util/parsingFunctions.js'),
+        vF = require('../../util/validationFunctions.js'),
         parseJSONPoint = function(p) { return new Point(p[0], p[1]); };
 
     // `parseAttribute` returns true or false depending on whether or not it set the attribute.
@@ -64,7 +76,15 @@ Labeler.parseJSON = function (json, axis, defaults, spacing) {
                                   function(v) { return DataMeasure.parse(axis.type(), v); }, //pF.parseDataMeasure(),
                                   "spacing");
         }
-        parseLabelerAttribute(json.format,        labeler.formatter,     parseDataFormatter(axis.type()),              "formatter");
+
+        if (vF.typeOf(json.format) === "array") {
+            parseLabelerAttribute(json.format,    labeler.formatter,     function(format) {
+                return new CategoryFormatter(json.format);
+            }, undefined);
+        } else {
+            parseLabelerAttribute(json.format,        labeler.formatter,     parseDataFormatter(axis.type()),          "formatter");
+        }
+
         parseLabelerAttribute(json.start,         labeler.start,         parseDataValue(axis.type()),                  "start");
         parseLabelerAttribute(json.angle,         labeler.angle,         undefined,                                    "angle");
         parseLabelerAttribute(json.position,      labeler.position,      parseJSONPoint,                               "position");

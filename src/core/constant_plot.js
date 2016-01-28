@@ -21,6 +21,8 @@ var ConstantPlot = new jermaine.Model("ConstantPlot", function () {
         // It can be any object used by the driver -- usually some kind of graphics
         // context object.  It can also be omitted if a driver does not need it.
 
+        if (!this.visible()) { return; }
+
         var haxis = this.horizontalaxis(),
             renderer = this.renderer(),
             constantValue = this.constantValue();
