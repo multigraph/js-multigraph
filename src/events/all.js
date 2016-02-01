@@ -8,6 +8,7 @@ module.exports = function($, window, errorHandler) {
         require('./mouse/graph.js')($, window, errorHandler);
         require('./mouse/multigraph.js')($, window, errorHandler);
         require('./multigraph.js')($, window, errorHandler);
+        require('./resize/multigraph.js')($, window, errorHandler);
         _INCLUDED = true;
     }
 };
