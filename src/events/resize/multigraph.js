@@ -16,10 +16,7 @@ module.exports = function($, window, errorHandler) {
             c.attr("height", container.height() * window.devicePixelRatio);
             c.css("width", container.width());
             c.css("height", container.height());
-
-            multigraph.width(container.width() * window.devicePixelRatio)
-                      .height(container.height() * window.devicePixelRatio);
-            multigraph.render();
+            multigraph.init();
         }
     });
 
