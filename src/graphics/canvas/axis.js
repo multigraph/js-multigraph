@@ -4,6 +4,7 @@ module.exports = function() {
     if (typeof(Axis.renderGrid)==="function") { return Axis; }
 
     Axis.respondsTo("renderGrid", function (graph, context) {
+        if (!this.visible()) { return; }
         this.prepareRender(context);
 
         // draw the grid lines
@@ -34,6 +35,7 @@ module.exports = function() {
     });
 
     Axis.respondsTo("render", function (graph, context) {
+        if (!this.visible()) { return; }
         var parallelOffset = this.parallelOffset(),
             perpOffset     = this.perpOffset(),
             pixelLength    = this.pixelLength(),
