@@ -125,7 +125,7 @@ var PeriodicArrayData = new jermaine.Model(function () {
             }
         }
         if (currentIndex === array.length) {
-            return emptyIterator;
+            currentIndex = 0;
         }
 
         //

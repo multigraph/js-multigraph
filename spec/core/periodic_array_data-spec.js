@@ -7,6 +7,7 @@ describe("PeriodicArrayData", function () {
         NumberValue = require('../../src/core/number_value.js'),
         DatetimeValue = require('../../src/core/datetime_value.js'),
         DatetimeMeasure = require('../../src/core/datetime_measure.js'),
+        NumberMeasure = require('../../src/core/number_measure.js'),
         DataVariable = require('../../src/core/data_variable.js'),
         DataValue = require('../../src/core/data_value.js'),
         testPeriodicArrayData,
@@ -23,11 +24,138 @@ describe("PeriodicArrayData", function () {
     }
 
 
-    describe("getIterator method", function () {
+    describe("getIterator method -- for number data", function () {
         var iterator,
             row;
 
-        it("should throw an error if the first parameter is not a string", function () {
+        it("should throw an error if the first parameter is not an array of strings", function () {
+            expect(function () {
+                testPeriodicArrayData = makePeriodicArrayData(
+                    [new DataVariable("x", 0, DataValue.NUMBER),
+                     new DataVariable("y", 1, DataValue.NUMBER)],
+                    [[NumberValue.parse('1'), NumberValue.parse('1')],
+                     [NumberValue.parse('2'), NumberValue.parse('5')],
+                     [NumberValue.parse('3'), NumberValue.parse('10')]
+                    ],
+                    NumberMeasure.parse('3')
+                );
+                iterator = testPeriodicArrayData.getIterator("?",NumberValue.parse('1'), NumberValue.parse('3'));
+            //}).toThrowError("ArrayData: getIterator method requires that the first parameter be an array of strings");
+            }).toThrow();
+        });
+
+
+
+        it("should return a Data.Iterator object", function () {
+            testPeriodicArrayData = makePeriodicArrayData(
+                [new DataVariable("x", 0, DataValue.NUMBER),
+                 new DataVariable("y", 1, DataValue.NUMBER)],
+                [[NumberValue.parse('1'), NumberValue.parse('1')],
+                 [NumberValue.parse('2'), NumberValue.parse('5')],
+                 [NumberValue.parse('3'), NumberValue.parse('10')]
+                ],
+                NumberMeasure.parse('3')
+            );
+            iterator = testPeriodicArrayData.getIterator(["x","y"],NumberValue.parse('1'), NumberValue.parse('3'));
+            expect(iterator.next).not.toBeUndefined();
+            expect(typeof(iterator.next)).toBe("function");
+            expect(iterator.hasNext).not.toBeUndefined();
+            expect(typeof(iterator.hasNext)).toBe("function");            
+        });
+
+        ddescribe("test some iterators for NumberValues", function() {
+
+            function makePAD(seq) {
+                var vals = seq.map(function(v) { return [NumberValue.parse(String(v[0])), NumberValue.parse(String(v[1]))]; });
+                return makePeriodicArrayData(
+                    [new DataVariable("x", 0, DataValue.NUMBER),
+                     new DataVariable("y", 1, DataValue.NUMBER)],
+                    vals,
+                    NumberMeasure.parse(String(seq.length))
+                );
+            }
+
+            function expectseq(pad, cols, a, b, seq) {
+                var iterator = pad.getIterator(cols,NumberValue.parse(String(a)), NumberValue.parse(String(b)));
+                var v;
+                while (seq.length > 0) {
+                    expect(iterator.hasNext()).toBe(true);
+                    v = seq.shift();
+                    row = iterator.next();
+                    expect(row[0] instanceof NumberValue).toBe(true);
+                    expect(row[0].getRealValue()).toBe(v[0]);
+                    expect(row[1].getRealValue()).toBe(v[1]);
+                }
+                expect(iterator.hasNext()).toBe(false);
+            }
+
+
+            it("test 1", function () {
+                testPeriodicArrayData = makePAD([[0,1],
+                                                 [1,5],
+                                                 [2,10],
+                                                 [3,15]]);
+                expectseq(testPeriodicArrayData, ["x","y"],
+                          -0.5, 3.5,
+                          [
+                              [0,1],
+                              [1,5],
+                              [2,10],
+                              [3,15]
+                          ]);
+            });
+            it("test 2", function () {
+                testPeriodicArrayData = makePAD([[0,1],
+                                                 [1,5],
+                                                 [2,10],
+                                                 [3,15]]);
+                expectseq(testPeriodicArrayData, ["x","y"],
+                           0.5, 3.5,
+                          [
+                              [1,5],
+                              [2,10],
+                              [3,15]
+                          ]);
+            });
+            it("test 3", function () {
+                testPeriodicArrayData = makePAD([[0,1],
+                                                 [1,5],
+                                                 [2,10],
+                                                 [3,15]]);
+                expectseq(testPeriodicArrayData, ["x","y"],
+                           1.5, 3.5,
+                          [
+                              [2,10],
+                              [3,15]
+                          ]);
+            });
+            iit("test 4", function () {
+                testPeriodicArrayData = makePAD([[0,1],
+                                                 [1,5],
+                                                 [2,10],
+                                                 [3,15]]);
+                expectseq(testPeriodicArrayData, ["x","y"],
+                          -1.5, 3.5,
+                          [
+                              [-1,15],
+                              [0,1],
+                              [1,5],
+                              [2,10],
+                              [3,15]
+                          ]);
+            });
+
+
+        });
+        
+    });
+
+
+    describe("getIterator method -- for datetime data", function () {
+        var iterator,
+            row;
+
+        it("should throw an error if the first parameter is not an array of strings", function () {
             expect(function () {
                 testPeriodicArrayData = makePeriodicArrayData(
                     [new DataVariable("time", 0, DataValue.DATETIME),
@@ -240,132 +368,3 @@ describe("PeriodicArrayData", function () {
     });
 
 });
-
-
-/*
-        it("should return data in the specified range when buffer is non-existent", function () {
-            expect(iterator0.hasNext()).toBe(true);
-            row = iterator0.next();
-            expect(row[0] instanceof NumberValue).toBe(true);
-            expect(row[0].getRealValue()).toBe(1903);
-            expect(iterator0.hasNext()).toBe(true);
-            row = iterator0.next();
-            expect(row[0].getRealValue()).toBe(1904);
-            expect(iterator0.hasNext()).toBe(true);
-            row = iterator0.next();
-            expect(row[0].getRealValue()).toBe(1905);
-            expect(iterator0.hasNext()).toBe(false);
-        });
-
-        it("should return data in the specified range when buffer 0", function () {
-            expect(iterator1.hasNext()).toBe(true);
-            row = iterator1.next();
-            expect(row[0] instanceof NumberValue).toBe(true);
-            expect(row[0].getRealValue()).toBe(1903);
-            expect(iterator1.hasNext()).toBe(true);
-            row = iterator1.next();
-            expect(row[0].getRealValue()).toBe(1904);
-            expect(iterator1.hasNext()).toBe(true);
-            row = iterator1.next();
-            expect(row[0].getRealValue()).toBe(1905);
-            expect(iterator1.hasNext()).toBe(false);
-        });
-
-        it("should return data in the specified range when buffer is non-zero", function () {
-            expect(iterator2.hasNext()).toBe(true);
-            row = iterator2.next();
-            expect(row[0] instanceof NumberValue).toBe(true);
-            expect(row[0].getRealValue()).toBe(1902);
-            expect(iterator2.hasNext()).toBe(true);
-            row = iterator2.next();
-            expect(row[0].getRealValue()).toBe(1903);
-            expect(iterator2.hasNext()).toBe(true);
-            row = iterator2.next();
-            expect(row[0].getRealValue()).toBe(1904);
-            expect(iterator2.hasNext()).toBe(true);
-            row = iterator2.next();
-            expect(row[0].getRealValue()).toBe(1905);
-            expect(iterator2.hasNext()).toBe(true);
-            row = iterator2.next();
-            expect(row[0].getRealValue()).toBe(1906);
-            expect(iterator2.hasNext()).toBe(false);
-       });
-
-        it("should project onto the specified column values", function () {
-            iterator1 = testPeriodicArrayData.getIterator(['column1', 'column4'],new NumberValue(1903), new NumberValue(1905));
-            expect(iterator1.hasNext()).toBe(true);
-            row = iterator1.next();
-            expect(row.length).toBe(2);
-        });
-
-
-    });
-
-    describe("columnIdToColumnNumber method", function () {
-        it("should throw an error if the parameter is not a string", function () {
-            expect(function () {
-                testPeriodicArrayData.columnIdToColumnNumber(1);
-            }).toThrow("Data: columnIdToColumnNumber expects parameter to be a string");
-        });
-
-        it("should throw an error if the column id doesn't exist", function () {
-            expect(function () {
-                testPeriodicArrayData.columnIdToColumnNumber("column100");
-            }).toThrow("Data: no column with the label column100");
-        });
-
-        it("should return the column number associated with the string id", function () {
-            expect(testPeriodicArrayData.columnIdToColumnNumber("column1")).toBe(0);
-        });
-    });
-
-    describe("columnIdToDataVariable method", function () {
-        it("should throw an error if the parameter is not a string", function () {
-            expect(function () {
-                testPeriodicArrayData.columnIdToDataVariable(1);
-            }).toThrow("Data: columnIdToDataVariable requires a string parameter");
-        });
-
-        it("should throw an error if the column id doesn't exist", function () {
-            expect(function () {
-                testPeriodicArrayData.columnIdToDataVariable("column100");
-            }).toThrow("Data: no column with the label column100");
-        });
-
-        it("should return a DataValue associated with the column id", function () {
-            var result = testPeriodicArrayData.columnIdToDataVariable("column2");
-            expect(result instanceof DataVariable).toBe(true);
-            expect(result.id()).toBe("column2");
-        });
-    });
-
-    describe("getColumnId method", function () {
-        it("should throw an error if the parameter is not an integer", function () {
-            expect(function () {
-                testPeriodicArrayData.getColumnId("hello");
-            }).toThrow("Data: getColumnId method expects an integer");
-        });
-
-        it("should throw an error if the column does not exist", function () {
-            expect(function () {
-                testPeriodicArrayData.getColumnId(100);
-            }).toThrow("Data: column 100 does not exist");
-        });
-
-        it("should return the ID associated with the column number", function () {
-            expect(testPeriodicArrayData.getColumnId(3)).toBe("column4");
-        });
-    });
-
-    describe("getColumns method", function () {
-        var i,
-            columns;
-
-        it("should return the metadata", function () {
-            columns = testPeriodicArrayData.getColumns();
-            for (i = 0; i < dataVariables.length; ++i) {
-                expect(columns.indexOf(dataVariables[i])).not.toBe(-1);
-            }
-        });
-    });
-*/
