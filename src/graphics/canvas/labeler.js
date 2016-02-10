@@ -7,14 +7,18 @@ module.exports = function() {
     if (typeof(Labeler.renderLabel)==="function") { return Labeler; }
 
     Labeler.respondsTo("measureStringWidth", function (context, string) {
-        return (new Text(string)).initializeGeometry({
+        var t = new Text(string);
+        t.font(this.font());
+        return t.initializeGeometry({
             "context" : context,
             "angle"   : this.angle()
         }).rotatedWidth();
     });
 
     Labeler.respondsTo("measureStringHeight", function (context, string) {
-        return (new Text(string)).initializeGeometry({
+        var t = new Text(string);
+        t.font(this.font());
+        return t.initializeGeometry({
             "context" : context,
             "angle"   : this.angle()
         }).rotatedHeight();
@@ -30,6 +34,7 @@ module.exports = function() {
             pixelAnchor,
             base;
 
+        formattedString.font(this.font());
         formattedString.initializeGeometry({
             "context" : context,
             "angle"   : angle

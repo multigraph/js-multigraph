@@ -56,6 +56,8 @@ var Text = new jermaine.Model("Text", function () {
      */
     this.hasA("rotatedHeight").which.isA("number");
 
+    this.hasA("font").which.isA("string").and.which.defaultsTo("");
+
     /**
      * Determines unrotated and rotated widths and heights for the stored string. Overridden by
      * implementations in graphics drivers.

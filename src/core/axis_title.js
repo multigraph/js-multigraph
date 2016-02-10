@@ -75,6 +75,8 @@ var AxisTitle = new jermaine.Model("AxisTitle", function () {
      */
     this.hasA("angle").which.isA("number");
 
+    this.hasA("font").which.isA("string").and.which.defaultsTo("");
+
     this.isBuiltWith("axis");
 
     /**

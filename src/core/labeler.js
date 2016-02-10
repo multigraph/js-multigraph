@@ -24,6 +24,7 @@ var Labeler = new jermaine.Model("Labeler", function () {
         return axis instanceof Axis;
     });
     this.hasA("formatter").which.validatesWith(DataFormatter.isInstance);
+    this.hasA("font").which.isA("string").and.which.defaultsTo("");
     this.hasA("start").which.validatesWith(DataValue.isInstance);
     this.hasA("angle").which.isA("number");
     this.hasA("position").which.validatesWith(function (position) {

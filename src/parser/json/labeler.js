@@ -8,6 +8,7 @@ var Labeler = require('../../core/labeler.js');
 //   "anchor" : POINT,
 //   "color" : COLOR(black),
 //   "spacing" : STRING,
+//   "font": STRING,
 //   "densityfactor" : DOUBLE(1.0),
 //   "label" : [
 //     { "format": "%Y", "start": STRING, "angle": 45, "position": [2,3],
@@ -91,6 +92,7 @@ Labeler.parseJSON = function (json, axis, defaults, spacing) {
         parseLabelerAttribute(json.anchor,        labeler.anchor,        parseJSONPoint,                               "anchor");
         parseLabelerAttribute(json.densityfactor, labeler.densityfactor, undefined,                                    "densityfactor");
         parseLabelerAttribute(json.color,         labeler.color,         RGBColor.parse,                               "color");
+        parseLabelerAttribute(json.font,          labeler.font,          undefined,                                    "font");
         parseLabelerAttribute(json.visible,       labeler.visible,       pF.parseBoolean,                              "visible");
 
     }

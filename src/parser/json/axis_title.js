@@ -1,6 +1,6 @@
 var AxisTitle = require('../../core/axis_title.js');
 
-// "title" { "base": 23.2, "anchor": [12, 4], "position": [3, 7], "angle": 45, "text" : "temperature" }
+// "title" { "base": 23.2, "anchor": [12, 4], "position": [3, 7], "angle": 45, "text" : "temperature", "font" : "Roboto" }
 // empty title:
 //   "title" {}
 //   "title" {"text" : "" }
@@ -23,6 +23,7 @@ AxisTitle.parseJSON = function (json, axis) {
         parseAttribute(json.base,     title.base);
         parseAttribute(json.position, title.position, parseJSONPoint);
         parseAttribute(json.angle,    title.angle);
+        parseAttribute(json.font,    title.font);
     }
 
     if (nonEmptyTitle === true) { 

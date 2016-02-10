@@ -10,7 +10,11 @@ module.exports = function() {
             rotatedHeight;
 
         graphicsContext.context.save();
-        if (graphicsContext.fontSize !== undefined) {
+        if (this.font() !== "") {
+            // the new way: use the "font" property
+            graphicsContext.context.font = this.font();
+        } else if (graphicsContext.fontSize !== undefined) {
+            // the old way, for backward compatibility ("fontSize" property of graphics context object):
             graphicsContext.context.font = graphicsContext.fontSize + " sans-serif";
         }
 
@@ -87,6 +91,9 @@ module.exports = function() {
     Text.respondsTo("drawText", function (context, anchor, base, position, angle) {
         context.save();
         this.setTransform(context, anchor, base, position, angle);
+        if (this.font() !== "") {
+            context.font = this.font();
+        }
         context.fillText(this.string(), 0, 0);
         context.restore();
     });

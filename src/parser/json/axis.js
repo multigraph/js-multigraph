@@ -12,7 +12,7 @@
 //           ...
 //        ]
 //    }
-//    "title" : { "base" : DOUBLE(0), "anchor" : POINT, "position" : POINT, "angle" : DOUBLE(0), "text" : "TITLETEXT" },
+//    "title" : { "base" : DOUBLE(0), "anchor" : POINT, "position" : POINT, "angle" : DOUBLE(0), "text" : "TITLETEXT", "font": STRING },
 //    "grid" : { "color" : COLOR(0xeeeeee), "visible" : BOOLEAN(false) },
 //    "pan" : { "allowed" : BOOLEAN(yes), "min" : DATAVALUE, "max" : DATAVALUE },
 //    "zoom" : { "allowed" : BOOLEAN(yes), "min" : DATAMEASURE, "max" : DATAMEASURE, "anchor" : DATAVALUE },

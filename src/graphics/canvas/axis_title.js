@@ -27,6 +27,7 @@ module.exports = function() {
 
         context.save();
         context.fillStyle = "rgba(0, 0, 0, 1)";
+        title.font(this.font());
         title.drawText(context, pixelAnchor, pixelBase, this.position(), this.angle());
         context.restore();
     });
