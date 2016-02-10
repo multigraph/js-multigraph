@@ -23,7 +23,7 @@ var Plot = require('../../core/plot.js');
 //   "verticalaxis" : { AXIS-ID(string): [ VARIABLE-ID(string), ... ] }
 //   "verticalaxis" : DATA-VALUE(number or string)                          <-- ConstantPlot
 //   "verticalaxis" : AXIS-ID(string)
-// 
+//   "visible" : BOOLEAN(true)
 //   "renderer" : {
 //     "type" : RENDERERTYPE(line),
 //     "options" : {
@@ -430,6 +430,10 @@ Plot.parseJSON = function (json, graph, messageHandler) {
 
         if (("renderer" in json) && (("style" in json) || ("options" in json))) {
             throw new Error("plot may not contain both 'renderer' and 'style', or 'renderer' and 'options'");
+        }
+
+        if (json.visible !== undefined) {
+            plot.visible(json.visible);
         }
 
         if ("renderer" in json) {
