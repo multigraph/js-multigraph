@@ -20,6 +20,7 @@ module.exports = function() {
             "pointsize"          : this.getOptionValue("pointsize"),
             "pointoutlinewidth"  : this.getOptionValue("pointoutlinewidth"),
             "pointoutlinecolor"  : this.getOptionValue("pointoutlinecolor"),
+            "linestroke"         : this.getOptionValue("linestroke"),
             "linecolor"          : this.getOptionValue("linecolor"),
             "linewidth"          : this.getOptionValue("linewidth")
         };
@@ -37,6 +38,9 @@ module.exports = function() {
         if (settings.linewidth > 0) {
             context.save();
             context.beginPath();
+            if (settings.linestroke === PointlineRenderer.DASHED) {
+                context.setLineDash([5,5]);
+            }
             context.lineWidth = settings.linewidth;
             context.strokeStyle = settings.linecolor.getHexString("#");
         }

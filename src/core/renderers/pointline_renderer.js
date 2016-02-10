@@ -43,6 +43,13 @@ var jermaine = require('../../../lib/jermaine/src/jermaine.js');
 //     DEFAULT VALUE:        PointlineRenderer.CIRCLE
 //     DESCRIPTION:          The shape to use for drawing points.
 // 
+//     OPTION NAME:          linestroke
+//     DATA TYPE:            One of the constants PointlineRenderer.SOLID,
+//                           PointlineRenderer.DASHED.  These
+//                           correspond to the strings "solid", "dashed" in MUGL files.
+//     DEFAULT VALUE:        PointlineRenderer.SOLID
+//     DESCRIPTION:          Whether to draw solid or dashed lines
+// 
 //     OPTION NAME:          pointopacity
 //     DATA TYPE:            number
 //     DEFAULT VALUE:        1.0
@@ -139,6 +146,54 @@ PointlineRenderer.ShapeOption = new jermaine.Model("PointlineRenderer.ShapeOptio
     });
 });
 
+///////////////////////////////////////////////////////////////////////
+
+PointlineRenderer.SOLID   = "solid";
+PointlineRenderer.DASHED  = "dashed";
+
+PointlineRenderer.strokes = [ 
+    PointlineRenderer.SOLID,
+    PointlineRenderer.DASHED
+];
+
+PointlineRenderer.isStroke = function (stroke) {
+    var i;
+    for (i=0; i<PointlineRenderer.strokes.length; ++i) {
+        if (PointlineRenderer.strokes[i] === stroke) { return true; }
+    }
+    return false;
+};
+
+PointlineRenderer.parseStroke = function (string) {
+    if (string.toLowerCase() === PointlineRenderer.SOLID)   { return PointlineRenderer.SOLID;   }
+    if (string.toLowerCase() === PointlineRenderer.DASHED)  { return PointlineRenderer.DASHED;   }
+    throw new Error("unknown line stroke: " + string);
+};
+
+/*
+ * This function converts a "stroke" enum object to a string.  In reality, the objects ARE
+ * the strings, so we just return the object.
+ */
+PointlineRenderer.serializeStroke = function (stroke) {
+    return stroke;
+};
+
+PointlineRenderer.StrokeOption = new jermaine.Model("PointlineRenderer.StrokeOption", function () {
+    this.isA(Renderer.Option);
+    this.hasA("value").which.validatesWith(PointlineRenderer.isStroke);
+    this.isBuiltWith("value");
+    this.respondsTo("serializeValue", function () {
+        return PointlineRenderer.serializeStroke(this.value());
+    });
+    this.respondsTo("parseValue", function (string) {
+        this.value( PointlineRenderer.parseStroke(string) );
+    });
+    this.respondsTo("valueEq", function (value) {
+        return (this.value()===value);
+    });
+});
+
+///////////////////////////////////////////////////////////////////////
 
 Renderer.declareOptions(PointlineRenderer, "PointlineRendererOptions", [
     {
@@ -155,6 +210,11 @@ Renderer.declareOptions(PointlineRenderer, "PointlineRendererOptions", [
         "name"          : "pointshape",
         "type"          : PointlineRenderer.ShapeOption,
         "default"       : PointlineRenderer.CIRCLE
+    },
+    {
+        "name"          : "linestroke",
+        "type"          : PointlineRenderer.StrokeOption,
+        "default"       : PointlineRenderer.SOLID
     },
     {
         "name"          : "pointsize",
