@@ -293,8 +293,6 @@ var Graph = new jermaine.Model("Graph", function () {
     });
 
     /**
-     * 
-     *
      * @method findNearestAxis
      * @param {} x
      * @param {} y
@@ -311,6 +309,7 @@ var Graph = new jermaine.Model("Graph", function () {
             d;
         for (i = 0; i < naxes; ++i) {
             axis = axes.at(i);
+            if (!axis.visible()) { continue; }
             if ((orientation === undefined) ||
                 (orientation === null) ||
                 (axis.orientation() === orientation)) {
