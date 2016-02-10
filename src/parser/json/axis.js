@@ -17,6 +17,7 @@
 //    "pan" : { "allowed" : BOOLEAN(yes), "min" : DATAVALUE, "max" : DATAVALUE },
 //    "zoom" : { "allowed" : BOOLEAN(yes), "min" : DATAMEASURE, "max" : DATAMEASURE, "anchor" : DATAVALUE },
 //    "binding" : { "id" : STRING!, "min" : DATAVALUE!, "max" : DATAVALUE! }
+//    "visible" : BOOLEAN(true)
 //  }
 
 
@@ -197,6 +198,10 @@ Axis.parseJSON = function (json, orientation, messageHandler, multigraph) {
 
         if (json.grid) {
             axis.grid(Grid.parseJSON(json.grid));
+        }
+
+        if (json.visible !== undefined) {
+            axis.visible(json.visible);
         }
 
         if ("pan" in json) {

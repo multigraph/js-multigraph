@@ -60,6 +60,8 @@ var Axis = new jermaine.Model("Axis", function () {
         return base instanceof Point;
     });
 
+    this.hasA("visible").which.isA("boolean").and.which.defaultsTo(true);
+
     /**
      * Stores the "min" value from the mugl file as a string, if there was one.
      * This value is stored as a string, rather than as a number or a DataValue,
