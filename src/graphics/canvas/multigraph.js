@@ -55,7 +55,7 @@ module.exports = function($, window) {
         var canvas = this.canvas();
         this.registerMouseEvents(canvas);
         this.registerTouchEvents(canvas);
-        this.registerResizeEvents(canvas);
+        //this.registerResizeEvents(canvas);
     });
 
     Multigraph.respondsTo("resizeSurface", function (width, height) {
