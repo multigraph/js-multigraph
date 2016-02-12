@@ -17,6 +17,30 @@ module.exports = function($, window) {
         });
     });
 
+    Multigraph.respondsTo("popout", function (popdiv) {
+        // Popout takes a single arg which is a jQuery selector, and temporarily moves the
+        // multigraph to that element.  It turns a function that can be called to pop the
+        // graph back "in" to its original place.  Note that the original canvas is actually
+        // not removed -- the popout function just adds a new canvas to the popout diff and
+        // swithces the multigraph to render in that canvas.  The returned popin function
+        // removes the new canvas from the popout div, and switches the multigraph back
+        // to its original canvas.
+        var origDiv = this.div();
+        $(popdiv).empty();
+        this.div($('<div style="width: 100%; height: 100%;"></div>').appendTo($(popdiv)));
+        this.init();
+        this.registerEvents();
+        var that = this;
+        return function() {
+            $(that.div()).remove();
+            that.div(origDiv);
+            that.width($(that.div()).width());
+            that.height($(that.div()).height());
+            that.initializeSurface();
+            that.render();
+        };
+    });
+
     Multigraph.respondsTo("init", function () {
         var $div = $(this.div());
         this.width($div.width());
