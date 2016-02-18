@@ -41,6 +41,25 @@ module.exports = function($, window) {
         };
     });
 
+    Multigraph.respondsTo("resize", function () {
+        // Call this function whenever the multigraph's containing div has changed size;
+        // this causes the multigraph to adjust to match the new size, and to re-render
+        // once at that size.
+        //
+        // Note that the containing application has to call this to tell multigraph
+        // that the div has changed size -- multigraph does not attempt to monitor
+        // and respond to size changes itself.
+        var $div = $(this.div());
+        this.width($div.width());
+        this.height($div.height());
+        this.resizeSurface(this.width()*window.devicePixelRatio, this.height()*window.devicePixelRatio);
+        $div.find("canvas").css({
+            width: this.width() + "px",
+            height: this.height() + "px"
+        });
+        this.render();
+    });
+
     Multigraph.respondsTo("init", function () {
         var $div = $(this.div());
         this.width($div.width());
