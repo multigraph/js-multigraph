@@ -18,6 +18,13 @@ module.exports = function($, window, errorHandler) {
             });
         },
 
+        destroy : function () {
+            return this.each(function() {
+                var $this = $(this);
+                $this.removeData("multigraph");
+            });
+        },
+
         init : function (options) {
             return this.each(function () {
                 var $this = $(this),
