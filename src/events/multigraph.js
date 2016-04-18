@@ -21,6 +21,9 @@ module.exports = function($, window, errorHandler) {
         destroy : function () {
             return this.each(function() {
                 var $this = $(this);
+                $this.data('multigraph').multigraph.done(function(m) {
+                    m.destroy();
+                });
                 $this.removeData("multigraph");
             });
         },

@@ -379,6 +379,13 @@ var Graph = new jermaine.Model("Graph", function () {
         }
     });
 
+    this.respondsTo("destroy", function() {
+        var i;
+        for (i = 0; i < this.axes().size(); ++i) {
+            this.axes().at(i).destroy();
+        }
+    });
+
     this.respondsTo("normalize", function () {
         var HORIZONTAL = Axis.HORIZONTAL,
             VERTICAL   = Axis.VERTICAL,

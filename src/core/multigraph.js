@@ -176,6 +176,13 @@ module.exports = function($) {
             }
         });
 
+        this.respondsTo("destroy", function() {
+            var i;
+            for (i = 0; i < this.graphs().size(); ++i) {
+                this.graphs().at(i).destroy();
+            }
+        });
+
 
     });
 

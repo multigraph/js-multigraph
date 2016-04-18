@@ -70,7 +70,7 @@ var AxisBinding = new jermaine.Model("AxisBinding", function () {
     this.respondsTo("removeAxis", function(axis) {
         var axes = this.axes(),
             i;
-        for (i=0; i<axes.length(); ++i) {
+        for (i=0; i<axes.length; ++i) {
             if (axes[i].axis === axis) {
                 axes.splice(i,1);
                 break;

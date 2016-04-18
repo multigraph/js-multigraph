@@ -207,6 +207,12 @@ var Axis = new jermaine.Model("Axis", function () {
     this.hasA("currentLabelDensity").which.isA("number");
     this.hasA("currentLabelerIndex").which.isA("number");
 
+    this.respondsTo("destroy", function() {
+        if (this.binding()) {
+            this.binding().removeAxis(this);
+        }
+    });
+
     /**
      * Decides which labeler to use: take the one with the largest density <= 0.8.
      * Unless all have density > 0.8, in which case we take the first one.  This assumes
