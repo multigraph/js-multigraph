@@ -5,7 +5,7 @@ module.exports = function($, window, errorHandler) {
 
     if (typeof(Multigraph.registerMouseEvents)==="function") { return Multigraph; }
 
-    Multigraph.respondsTo("registerMouseEvents", function (target) {
+    Multigraph.respondsTo("registerMouseEvents", function (target, options) {
         var base,
             mouseLast,
             mouseIsDown = false,
@@ -63,14 +63,15 @@ module.exports = function($, window, errorHandler) {
             mouseLast = eventLoc;
         });
 
-        $target.mousewheel(function (event, delta) {
-            var eventLoc = eventLocationToGraphCoords(event);
-            if (multigraph.graphs().size() > 0) {
-                multigraph.graphs().at(0).doWheelZoom(multigraph, eventLoc.x(), eventLoc.y(), delta);
-            }
-            event.preventDefault();
-        });
-
+        if (!options.noscroll) {
+            $target.mousewheel(function (event, delta) {
+                var eventLoc = eventLocationToGraphCoords(event);
+                if (multigraph.graphs().size() > 0) {
+                    multigraph.graphs().at(0).doWheelZoom(multigraph, eventLoc.x(), eventLoc.y(), delta);
+                }
+                event.preventDefault();
+            });
+        }
 
         $target.mouseleave(function (event) {
             mouseIsDown = false;

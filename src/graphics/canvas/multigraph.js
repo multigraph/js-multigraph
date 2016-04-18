@@ -94,10 +94,10 @@ module.exports = function($, window) {
         }
     });
 
-    Multigraph.respondsTo("registerEvents", function () {
+    Multigraph.respondsTo("registerEvents", function (options) {
         var canvas = this.canvas();
-        this.registerMouseEvents(canvas);
-        this.registerTouchEvents(canvas);
+        this.registerMouseEvents(canvas, options);
+        this.registerTouchEvents(canvas, options);
         //this.registerResizeEvents(canvas);
     });
 
@@ -150,7 +150,7 @@ module.exports = function($, window) {
         multigraph.div(options.div);
         $(options.div).css("cursor" , "pointer");
         multigraph.init();
-        multigraph.registerEvents();
+        multigraph.registerEvents(options);
         multigraph.registerCommonDataCallback(function (event) {
             multigraph.redraw();
         });
