@@ -97,7 +97,9 @@ module.exports = function($, window) {
     Multigraph.respondsTo("registerEvents", function (options) {
         var canvas = this.canvas();
         this.registerMouseEvents(canvas, options);
-        this.registerTouchEvents(canvas, options);
+        if (!options.noscroll) {
+            this.registerTouchEvents(canvas, options);
+        }
         //this.registerResizeEvents(canvas);
     });
 
